@@ -1,0 +1,643 @@
+import { readableTelegraphs, type TelegraphThreat } from './telegraphPriority';
+import { megaAlpha } from '../../data/megaAlpha';
+import { Group, type BufferGeometry, type Node } from 'three/webgpu';
+import { Rng } from '../../core/Rng';
+import { infectedDef } from '../../data/infected';
+import type { ActionDef } from '../../data/actions/schema';
+import { catalog, mountedActions } from '../../data/actions/catalog';
+import type { EffectKind, TelegraphKind, GameEvent } from '../../sim/world/types';
+import type { SimWorld } from '../../sim/world/SimWorld';
+import { FxPool, groundShape, particleShape, tracerLaunchS } from './FxPool';
+import { GibPool } from './GibPool';
+import type { VehicleFeedbackEvent } from './VehicleFeedback';
+import { HitStop } from './HitStop';
+import { Blasts } from './Blasts';
+/** Mounted guns (the L10 rotary minigun) draw the same tracer and muzzle as a carried gun. */
+const actions: Readonly<Record<string, ActionDef>> = { ...catalog, ...mountedActions };
+
+export type Gore = 'Full' | 'Reduced' | 'Off';
+export type { EffectKind, TelegraphKind } from '../../sim/world/types';
+export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low'; slowMotion?: boolean }
+export interface VfxTargets {
+  camera?(): import('three').Camera;
+  /** Resolve and pose the rendered gun synchronously at the shot tick. */
+  muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Drawn spout of a pouring watering can (gardener routine), null when none. */
+  spout?(id: number): { x: number; y: number; z: number } | null;
+  flash(id: number, strength: number): void;
+  detach(id: number, limb: number): { x: number; y: number; z: number } | void;
+  blood(coverage: number): void;
+  vehicle?(event: VehicleFeedbackEvent, bloodEnabled: boolean): void;
+  vehicleBloodEnabled?(enabled: boolean): void;
+  clearGore(): void;
+  shake(strength: number): void;
+  /** E27 camera roll kick (Bruno View.roll.kick) and the follow focus used for distance falloff. */
+  roll?(strength: number): void;
+  focus?(): { x: number; z: number };
+  /** E25 light field transient pools (fires, blast flashes, mega tint). */
+  light?: import('./Blasts').BlastLight;
+  /** Shared practical-light radiance for smoke, including powered strobes. */
+  field?: import('../LightField').LightField;
+  ambient?: Node<'float'>;
+  sunDirection?(): { x: number; y: number; z: number };
+}
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const limbs = 5;
+const heavyBlade = /machete|axe|katana|shovel/;
+const telegraphShapes = { lunge: 1, charge: 2, splash: 1, bloated: 4 } as const;
+const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
+/** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
+export const hitFlashRest = 0.35;
+/** PO #29 (Alphas "flashing pale under fire"): the first hit of a burst flashes at full strength, every further pulse of the
+ * same sustained fire (another pulse due within hitFlashStreak) at about half, so a near-black Alpha shot by the MG and several
+ * allies keeps its own look instead of strobing slate-grey three times a second. */
+export const hitFlashPeak = 0.45, hitFlashRepeat = 0.25, hitFlashStreak = hitFlashRest * 3;
+/** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
+ * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
+export class Vfx extends Group {
+  readonly particles = new FxPool(2048, 'particle');
+  readonly decals = new FxPool(600, 'ground', undefined, true);
+  readonly surfaceSplats = new FxPool(64, 'wall', undefined, true);
+  readonly telegraphs = new FxPool(256, 'ground', undefined, false, true);
+  readonly waves = new FxPool(16, 'ground');
+  readonly gibs: GibPool;
+  readonly hitStop = new HitStop();
+  /** E27 seven-beat blasts, fires, smoke columns/clouds, car parts and bullet time. */
+  readonly blasts: Blasts;
+  private readonly e15Blast = { tick: -1, x: 0, z: 0 };
+  private readonly rng: Rng;
+  private readonly goreRng: Rng;
+  private flashUntil = 0;
+  private flashNear = 1;
+  /** One reusable edge feather veil: no stacking, central player and HUD stay clear. */
+  private readonly featherVeil = typeof document === 'undefined' ? null : document.createElement('div');
+  private obstruction = { remainingTicks: 0, opacity: 0 };
+  private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
+  private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
+  private landingCursor = 0;
+  private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
+  private readonly stops: (() => void)[] = [];
+  private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
+  private readonly hitIds = new Uint32Array(512);
+  private readonly hitUntil = new Float64Array(512);
+  private readonly hitPeak = new Float32Array(512);
+  private hitCount = 0;
+  private hitCursor = 0;
+  /** alpha-white: start time of each target's last hit flash. Sustained fire (a soldier line, pellets) re-flashed
+   * every 0.1 s and left Alphas a permanent white mass; a target flashes at most once per rest period. */
+  private readonly hitStarted = new Map<number, number>();
+  private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
+  private enabled = true;
+  private colorblind = false;
+  private gore: Gore = 'Full';
+  private flashReduction = false;
+  private quality: 'high' | 'low' = 'high';
+  time = 0;
+  coverage = 0;
+  detached = 0;
+  dismemberedKills = 0;
+  kills = 0;
+  lastExplosionRadius = 0;
+  private readonly tracerRounds = new WeakMap<object, number>();
+  readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
+  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
+    const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
+    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
+    if (target) {
+      const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z;
+      range = Math.hypot(dx, dz) || 1; direction = { x: dx / range, z: dz / range };
+    }
+    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : 0;
+    const ray = { ...direction, y: slope };
+    if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
+    let distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
+    // Player shots carry a ray rather than a victim id. Stop the visual at the
+    // first body on that ray as well as cover, without changing projectile damage.
+    const hit = target ?? (sourceId === 1 ? this.world.combat?.query.ray(sourceId, muzzle, ray, distance) : null);
+    const hardHit = hit?.faction === 'environment' || !!hit?.vehicle;
+    if (hit) {
+      const dx = hit.transform.x - muzzle.x, dz = hit.transform.z - muzzle.z, along = dx * direction.x + dz * direction.z;
+      // Destructible cover is returned as a body by HitQuery.ray. Match its entry
+      // sphere so metal feedback starts on the near side, rather than inside it.
+      const radius = hit.combat?.radius ?? .4, perpendicular = Math.max(0, dx * dx + dz * dz - along * along);
+      distance = Math.min(distance, Math.max(0, hardHit ? along - Math.sqrt(Math.max(0, radius * radius - perpendicular)) : along));
+    }
+    const start = [muzzle.x, muzzle.y, muzzle.z];
+    this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
+    if (this.shots.length > 64) this.shots.shift();
+    this.burst(muzzle.x, muzzle.y, muzzle.z, 0xffe3a0, 3, .045, .12, 0, particleShape.spark);
+    // Round 3 punch: a bigger star with a white-hot centre a little ahead of the barrel, readable at zoom 1 and 0.5 on low too.
+    this.particles.spawn(this.time, .07, muzzle.x + direction.x * .1, muzzle.y, muzzle.z + direction.z * .1, direction.x * .8, 0, direction.z * .8, 1.05, particleShape.flash, 0xffd890);
+    if (this.quality === 'high') this.particles.spawn(this.time, .045, muzzle.x + direction.x * .15, muzzle.y, muzzle.z + direction.z * .15, 0, 0, 0, .45, particleShape.flash, 0xfff8e8);
+    // Muzzle tongue: a short hot streak out of the barrel, plus a brief warm pool on the ground (and the light field at night).
+    this.particles.spawn(this.time, .06, muzzle.x + direction.x * .12, muzzle.y, muzzle.z + direction.z * .12, direction.x * 30, slope * 30, direction.z * 30, .11, particleShape.spark, 0xfff2c0, 0, 1.05);
+    this.muzzleLight(muzzle.x + direction.x * .4, muzzle.z + direction.z * .4, muzzle.y);
+    if (this.quality === 'high') this.particles.spawn(this.time, .35, muzzle.x, muzzle.y, muzzle.z, direction.x * .4, .6, direction.z * .4, .38, particleShape.smoke, 0x827a70);
+    // Presentation-only cadence per shooter; entity keys disappear on level unload.
+    const round = source ? this.tracerRounds.get(source) ?? 0 : 0;
+    if (source) this.tracerRounds.set(source, round + 1);
+    if ((sourceId === 1 || round % 3 === 0) && distance > .01) {
+      const rayLength = Math.hypot(1, slope), speed = 320 / rayLength;
+      this.particles.spawn(this.time, distance / speed + tracerLaunchS, muzzle.x, muzzle.y, muzzle.z,
+        direction.x * speed, slope * speed, direction.z * speed, 1, particleShape.tracer, 0xffd88a, distance * rayLength, .065);
+    }
+    const ix = muzzle.x + direction.x * distance, iy = Math.max(.08, muzzle.y + slope * distance), iz = muzzle.z + direction.z * distance;
+    if ((!hit || hardHit) && (dust === 'miss' || distance < range - .3)) {
+      const metal = !!hit?.vehicle;
+      // Per surface: metal throws a bright glint and a fan of sparks; stone/asphalt a dust puff with chips; cover gets both.
+      // Seven contact slots on high (two on low, dust + spark only), all born at the bullet stop.
+      const high = this.quality === 'high';
+      // Round 3 punch within the same slots: a bigger dust kick and chips, faster longer sparks, a larger impact star and a metal glint pool.
+      if (!metal) this.burst(ix, iy, iz, 0xb9ab8e, high ? 2 : 1, .5, .7, 1.5, particleShape.smoke);
+      if (!metal && high) this.burst(ix, iy, iz, 0x4d4640, 2, .07, .55, 9.81, 0, .8, 1.8);
+      if (distance < range - .3) {
+        this.burst(ix, iy, iz, 0xffdf94, metal ? 6 : 2, .05, metal ? .34 : .24, 5, particleShape.spark, metal ? 1.9 : 1.4, metal ? 1.6 : .6);
+        if (high) this.particles.spawn(this.time, .08, ix, iy, iz, 0, 0, 0, metal ? .75 : .5, particleShape.flash, metal ? 0xfff6d8 : 0xffe2a8);
+        if (metal && high) this.blasts.flashPool(ix, iz, .9, 0xffe0a0, this.flashReduction ? .2 : .6, .06, this.world.districts?.supportBelow(ix, iz, iy) ?? 0);
+      }
+    } else if (hit && !hardHit) {
+      // Flesh: a short wet mist where the round enters (grey with gore Off), under the blood spray from the hit event.
+      const mist = this.gore === 'Off' ? 0x6f676c : this.colorblind ? 0xc7903a : 0x8e1822;
+      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, .32, ix - direction.x * .1, iy, iz - direction.z * .1, -direction.x * .8 + (this.rng.next() - .5), .3 + this.rng.next() * .4, -direction.z * .8 + (this.rng.next() - .5), .36 + this.rng.next() * .14, particleShape.smoke, mist, 0);
+    }
+    if (!dust) return;
+    // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
+    this.particles.spawn(this.time, .35, muzzle.x - direction.z * .25, muzzle.y - .1, muzzle.z + direction.x * .25, -direction.z * 1.2, 1.4, direction.x * 1.2, .07, 0, 0xd8b45a, 9.81);
+  }
+  private lastMuzzleLight = -1;
+  /** Shared muzzle light, at most every 50 ms: a brief ground pool always, the E25 light field only when practical lights are on (dusk/night). */
+  private muzzleLight(x: number, z: number, y: number): void {
+    if (this.time - this.lastMuzzleLight < .05) return;
+    this.lastMuzzleLight = this.time;
+    const ground = this.world.districts?.supportBelow(x, z, y - .3) ?? 0;
+    this.blasts.flashPool(x, z, 1.9, 0xffc070, this.flashReduction ? .25 : 1.15, .07, ground);
+    if (this.quality === 'high' && (this.targets.field?.strength.value ?? 0) > .2) this.targets.light?.(x, z, '#ffc878', this.flashReduction ? 1.5 : 4, 5, .06, false);
+  }
+  constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
+    super();
+    if (this.featherVeil) {
+      this.featherVeil.dataset.testid = 'flamingo-feathers';
+      this.featherVeil.setAttribute('aria-hidden', 'true');
+      this.featherVeil.style.cssText = 'position:fixed;inset:8% 0 18%;pointer-events:none;z-index:2;opacity:0;background:repeating-conic-gradient(from 15deg at 0% 50%,#ef9fc1 0deg 8deg,transparent 8deg 25deg);mask-image:radial-gradient(ellipse at center,transparent 0 38%,black 78%);';
+      document.querySelector('#game')?.append(this.featherVeil);
+    }
+    this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
+    this.gibs = new GibPool(geometries);
+    this.blasts = new Blasts(world, { camera: targets.camera, particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null, field: targets.field, ambient: targets.ambient, sunDirection: targets.sunDirection });
+    this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
+    for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
+  }
+  /** Exercise visible pooled geometry during loading; restore empty slots without sim events. */
+  prewarm(x: number, z: number): () => void {
+    const visible = this.visible; this.visible = true; // Compile critical warnings even with optional VFX off.
+    for (const pool of this.pools) pool.spawn(this.time, 1, x, pool.mode === 'particle' ? 1 : .03, z, 0, 0, 0, 2, 0, 0xffffff);
+    this.blasts.prewarm(x, z);
+    return () => { this.resetPools(); this.visible = visible; };
+  }
+  set(patch: VfxSettings): void {
+    if (patch.gore !== undefined && !['Full', 'Reduced', 'Off'].includes(patch.gore)) throw new RangeError('Invalid gore setting');
+    if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
+    if (patch.colorblind !== undefined) {
+      this.colorblind = patch.colorblind;
+      for (const tell of this.tells.values()) this.telegraphs.recolor(tell.slot, this.telegraphColor(tell.kind));
+    }
+    if (patch.vfx !== undefined) this.enabled = patch.vfx;
+    if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.particles.emission.value = patch.flashReduction ? .35 : 1; }
+    this.telegraphs.pulse.value = this.flashReduction ? 0 : 1;
+    this.blasts.set(patch);
+    if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.gibs.setQuality(this.quality); this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
+    if (patch.gore !== undefined && patch.gore !== this.gore) {
+      this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.surfaceSplats.reset(this.time); for (const landing of this.landings) landing.at = Infinity; this.gibs.reset(); this.targets.clearGore();
+      if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
+    }
+    this.targets.vehicleBloodEnabled?.(this.enabled && this.gore !== 'Off');
+    this.prioritizeTelegraphs();
+    this.visible = this.enabled || this.tells.size > 0;
+    if (!this.enabled) {
+      this.hitStop.reset(); this.targets.clearGore(); this.targets.blood(0);
+      for (let i = 0; i < this.hitCount; i++) this.targets.flash(this.hitIds[i], 0);
+      this.resetPools(true); for (const landing of this.landings) landing.at = Infinity;
+    } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
+  }
+  private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
+  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
+  private pulse(id: number): void {
+    const started = this.hitStarted.get(id);
+    if (started !== undefined && this.time - started < hitFlashRest) return;
+    const peak = started !== undefined && this.time - started < hitFlashStreak ? hitFlashRepeat : hitFlashPeak;
+    this.hitStarted.set(id, this.time);
+    if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
+    let slot = 0;
+    while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
+    if (slot === this.hitCount) {
+      if (this.hitCount < this.hitIds.length) this.hitCount++;
+      else { slot = this.hitCursor++ % this.hitIds.length; this.targets.flash(this.hitIds[slot], 0); }
+    }
+    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.hitPeak[slot] = peak; this.targets.flash(id, peak);
+  }
+  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0, speed = 1, lift = 0): void {
+    const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
+    for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4 * speed, this.rng.next() * 3 * speed + lift, (this.rng.next() - 0.5) * 4 * speed, size, shape, color, gravity, shape === particleShape.spark ? .35 : 1);
+  }
+  /** Slow, rising ash-green wisps around a body (render RNG only). */
+  private sickPuff(x: number, z: number, count: number, size: number, y: number): void {
+    const n = this.quality === 'low' ? Math.ceil(count / 2) : count;
+    for (let i = 0; i < n; i++) {
+      const a = this.rng.next() * Math.PI * 2, r = .25 + this.rng.next() * .35;
+      this.particles.spawn(this.time, .9 + this.rng.next() * .5, x + Math.cos(a) * r, y + this.rng.next() * .6, z + Math.sin(a) * r, Math.cos(a) * .5, .5 + this.rng.next() * .7, Math.sin(a) * .5, size * (.7 + this.rng.next() * .6), 0, 0x9fc46a, -.4);
+    }
+  }
+  private blood(event: Extract<GameEvent, { type: 'combat.hit' | 'combat.kill' }>, kill: boolean): void {
+    const { x, z } = event.position, source = this.world.entities.get(event.sourceId);
+    const dx = event.direction?.x ?? x - (source?.transform.x ?? x - 1), dz = event.direction?.z ?? z - (source?.transform.z ?? z);
+    const length = Math.hypot(dx, dz) || 1, direction = { x: dx / length, z: dz / length };
+    const heavy = event.actionId === 'weapon.kick' || (event.knockback ?? 0) >= .9 || event.amount >= 30;
+    // A hull ram downs a whole group in a few frames: 48 droplets each made a speckle cloud of hundreds of dots at night
+    // (QA L9-Q1, l9-enc-shortcut-ram f240-f300). Rams keep a short heavy splash; the ground decals carry the impact.
+    const count = event.damageType === 'vehicle' ? 10 : kill ? 48 : event.actionId === 'weapon.fists' ? 12 : heavy ? 40 : event.actionId === 'weapon.bat' ? 32 : event.actionId === 'weapon.crowbar' ? 28 : 24;
+    const n = this.gore === 'Off' ? 6 : Math.ceil(count / (this.quality === 'low' ? 4 : this.gore === 'Reduced' ? 2 : 1));
+    const color = this.gore === 'Off' ? 0x776c75 : this.colorblind ? 0xffba48 : 0xe3293c;
+    // Blood leaves the body where it stands: on the L3 ramp or deck that is the support height, not the street (y 0).
+    const victim = this.world.entities.get(event.targetId), base = this.world.districts?.supportBelow(x, z, (victim?.transform.y ?? .7) - .7) ?? 0;
+    for (let i = 0; i < n; i++) {
+      const spread = (this.rng.next() - .5) * (heavy ? 3 : 2), speed = (heavy ? 4.5 : 3) + this.rng.next() * 3;
+      const vx = direction.x * speed - direction.z * spread, vz = direction.z * speed + direction.x * spread;
+      const vy = 2.3 + this.rng.next() * (heavy ? 2.3 : 1.7), y = 1.1 + this.rng.next() * .25; // height above the support
+      const landingTime = (vy + Math.sqrt(vy * vy + 2 * 9.81 * y)) / 9.81;
+      // Tiny transient droplets; readable blood is the ground decal, never a body-sized capsule.
+      const dropletSize = this.gore === 'Off' ? .055 : heavy ? .025 : .018;
+      const size = dropletSize + this.rng.next() * .01;
+      this.particles.spawn(this.time, Math.min(landingTime, .18), x, base + y, z, vx, vy, vz, size, this.gore === 'Off' ? 0 : particleShape.drop, color, 9.81, size * 2.4);
+      if (this.gore !== 'Off' && i % (this.quality === 'low' ? 2 : 5) === 0) {
+        const landing = this.landings[this.landingCursor++ % this.landings.length];
+        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.y = this.world.districts?.supportBelow(landing.x, landing.z, base) ?? 0; landing.size = .18 + this.rng.next() * .15; landing.color = color;
+      }
+    }
+    // Full gore's small clots are supported ground decals, never airborne capsules.
+    const chunks = this.gore === 'Full' && this.quality === 'high' && (heavy || kill) ? kill ? 4 : 2 : 0;
+    for (let i = 0; i < chunks; i++) this.decals.spawn(this.time, 18, x + (i % 2 ? .12 : -.12), base + .016, z + (i < 2 ? -.08 : .08), i * 1.7, 0, 0, .09, 5, color);
+    this.lastSpray = { actionId: event.actionId, direction, droplets: n, chunks, gravity: 9.81 };
+    if (this.gore !== 'Off') {
+      this.decals.spawn(this.time, 18, x, base + .016, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.1 : .35, this.colorblind ? 0 : kill ? 6 : 5, color);
+      const distance = this.world.combat?.query.clearDistance({ x, z }, direction, 1.8) ?? 1.8;
+      if (distance < 1.75) this.surfaceSplats.spawn(this.time, 12, x + direction.x * Math.max(0, distance - .025), base + .8, z + direction.z * Math.max(0, distance - .025), Math.atan2(direction.z, direction.x) + Math.PI / 2, 0, 0, heavy ? .8 : .45, this.colorblind ? 0 : 5, color);
+    }
+  }
+  private readonly onVehicleDurabilityHit = (event: GameEvent): void => {
+    if (!(event.type === 'vehicle.durability-hit')) return;
+    if (event.source === 'attack' || event.after >= event.before) return;
+    const car = this.world.entities.get(event.sourceId), contact = this.world.entities.get(event.targetId);
+    if (car && contact && (contact.faction === 'environment' || contact.kind === 'vehicle')) {
+      const dx = contact.transform.x - car.transform.x, dz = contact.transform.z - car.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
+      const def = this.world.vehicles?.cars.get(event.sourceId)?.physics.def, c = Math.cos(car.transform.yaw), s = Math.sin(car.transform.yaw);
+      const edge = def ? Math.min((def.length / 2 + .04) * distance / Math.max(.001, Math.abs(dx * c - dz * s)), (def.width / 2 + .04) * distance / Math.max(.001, Math.abs(dx * s + dz * c))) : 1.5;
+      // Even the three low-tier streaks clear the overlapping hoods before fading.
+      this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .06, .45, 9.81, particleShape.spark, 2.5, 6);
+    }
+    return;
+  };
+  private readonly onCombatHit = (event: GameEvent): void => {
+    if (event.type === 'combat.hit' && event.blocked) {
+      const p = event.position;
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+      this.burst(p.x + c * .4 - s * .35, p.y + .3, p.z - s * .4 - c * .35, 0xffe8a0, 10, .045, .26, 2, particleShape.spark, 1.5, 2);
+      return;
+    }
+    if (event.type === 'combat.hit' && event.shieldGlance) {
+      const p = event.position, c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.x + c * .42 - s * .34, y = p.y + .35, z = p.z - s * .42 - c * .34;
+      this.burst(x, y, z, event.shieldBreak ? 0xfff2a0 : 0xffd86b, event.shieldBreak ? 28 : 12, .055, event.shieldBreak ? .75 : .3, 2.5, particleShape.spark, 2.2, event.shieldBreak ? 4.5 : 2.5);
+      if (event.shieldBreak) this.blasts.flashPool(x, z, 1.5, 0xffed9b, this.flashReduction ? .35 : 1.2, .16, this.world.districts?.supportBelow(x, z, y) ?? 0);
+      this.pulse(event.targetId);
+      return;
+    }
+    if (!(event.type === 'combat.hit' && event.amount > 0)) return;
+    this.blood(event, false);
+    if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
+    this.pulse(event.targetId);
+  };
+  private readonly onCombatKill = (event: GameEvent): void => {
+    if (!(event.type === 'combat.kill')) return;
+    // A knocked-down infected (PO "Infected recover") bleeds like a hard hit, without the kill pool or lost limbs: it gets up again.
+    const down = event.downed !== undefined;
+    this.kills++; this.blood(event, !down);
+    const def = actions[event.actionId], melee = def?.category === 'melee';
+    if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
+    const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
+    const heavy = heavyBlade.test(event.actionId);
+    const shotgun = event.actionId.includes('shotgun') && Math.hypot(event.position.x - (this.world.entities.get(event.sourceId)?.transform.x ?? 0), event.position.z - (this.world.entities.get(event.sourceId)?.transform.z ?? 0)) <= 3;
+    const vehicle = event.cause === 'vehicle' || event.actionId === 'vehicle.high-speed';
+    if (vehicle) { const car = this.world.vehicles?.cars.get(event.sourceId); if (car) this.updateVehicle(car.entity.id, Math.min(1, (this.vehicles.get(car.entity.id)?.blood ?? 0) + .08)); }
+    // Draw on every eligible kill, independent of the gore toggle; never consume the sim RNG.
+    const detach = !down && (explosive || shotgun || vehicle || heavy && this.goreRng.next() < 0.35);
+    if (this.gore === 'Full' && detach) {
+      this.dismemberedKills++;
+      const n = explosive ? limbs : 1, first = Math.floor(this.rng.next() * limbs);
+      for (let i = 0; i < n; i++) {
+        const limb = explosive ? i : first, position = this.targets.detach(event.targetId, limb); this.detached++;
+        this.gibs.spawn(this.time, position?.x ?? event.position.x, position?.y ?? 1, position?.z ?? event.position.z, this.rng, limb === 4);
+      }
+      if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
+      this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
+    }
+  };
+  private readonly onCombatHitStop = (event: GameEvent): void => {
+    if (!(event.type === 'combat.hit-stop')) return;
+    this.hitStop.hit(this.time, event.durationMs / 1000);
+  };
+  private readonly onCombatAttack = (event: GameEvent): void => {
+    if (!(event.type === 'combat.attack')) return;
+    const def = actions[event.actionId];
+    // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
+    if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
+    if (def?.category === 'ranged') {
+      // Rockets show their moving projectile. Keep the launch flash, without
+      // an instant horizontal gun tracer continuing past the clicked endpoint.
+      this.gunshot(event.sourceId, event.direction, event.actionId === 'weapon.rocket-launcher' ? 0 : def.range, event.position);
+      if (event.sourceId === 1 && event.actionId === 'weapon.shotgun') this.targets.shake(this.flashReduction ? .025 : .1);
+    }
+  };
+  private readonly onAllyAttack = (event: GameEvent): void => {
+    if (!(event.type === 'ally.attack' && event.from && event.to)) return;
+    const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
+    this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId, event.role === 'tank' || event.role === 'heli' ? undefined : event.hit === false ? 'miss' : 'hit');
+  };
+  private readonly onCombatExploded = (event: GameEvent): void => {
+    if (!(event.type === 'combat.exploded')) return;
+    if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onExplosion = (event: GameEvent): void => {
+    if (!(event.type === 'explosion')) return;
+    this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius, event.defId === 'explosion.rocket' ? event.position.y + .7 : .7); this.blasts.play(event);
+    // The data-driven rocket owns its capped screen pulse. Its deduplicated
+    // legacy combat.exploded feedback must not add the old 60% white wash.
+    if (event.defId === 'explosion.rocket') this.flashUntil = this.time;
+  };
+  private readonly onCombatEffect = (event: GameEvent): void => {
+    if (!(event.type === 'combat.effect')) return;
+    if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onInfectedSpecial = (event: GameEvent): void => {
+    if (!(event.type === 'infected.special')) return;
+    // Sim stepping can activate a move before the next render update.
+    const tell = this.tells.get(event.attackId);
+    if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
+  };
+  private readonly onTelegraph = (event: GameEvent): void => {
+    if (!(event.type === 'telegraph')) return;
+    if (this.tells.has(event.attackId)) return;
+    // A source has one current attack. Retire its previous tell synchronously,
+    // including paused sim stepping that can run many attacks between render frames.
+    if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
+
+    const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
+    const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
+    const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+    const move = 'move' in event ? event.move : undefined;
+    const area = 'area' in event ? event.area : undefined;
+    const target = 'target' in event ? event.target : undefined;
+    const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
+    const destination = source?.infected?.specialAttack?.destination;
+    const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+      : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
+      : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
+      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
+    const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+    if (!position) return;
+    const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
+    const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
+    const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
+    const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    if (slot < 0) return;
+    this.visible = true;
+    this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+    // Select once per presented update, even when many attacks arrive in one sim tick.
+    this.telegraphs.opacity(slot, 0);
+  };
+  private readonly onAttackResolved = (event: GameEvent): void => {
+    if (!(event.type === 'attack.resolved')) return;
+    const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
+  };
+  private readonly onHazardExploded = (event: GameEvent): void => {
+    if (!(event.type === 'hazard.exploded')) return;
+    this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onVehicleExploded = (event: GameEvent): void => {
+    if (!(event.type === 'vehicle.exploded')) return;
+    const car = this.world.vehicles?.cars.get(event.sourceId), p = this.world.entities.get(event.sourceId)?.transform, def = car?.physics.def;
+    const height = car?.entity.vehicle?.scripted && def && p ? p.y - (def.suspension + def.wheelRadius + .15) + .7 : undefined;
+    if (p) this.explosionOnce(event.tick, p.x, p.z, 6, height);
+  };
+  private readonly onNoise = (event: GameEvent): void => {
+    if (!(event.type === 'noise' && event.kind === 'scream')) return;
+    this.effect('screamer', event.position.x, event.position.z, event.radius);
+  };
+  private readonly onHazardElectrified = (event: GameEvent): void => {
+    if (!(event.type === 'hazard.electrified' || event.type === 'prop.ignited')) return;
+    const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1);
+  };
+  private readonly onOutbreakInfection = (event: GameEvent): void => {
+    if (!(event.type === 'outbreak.infection' && (event.phase === 'eyes' || event.phase === 'rise'))) return;
+    const p = this.world.entities.get(event.entityId)?.transform, rise = event.phase === 'rise';
+    if (p) this.sickPuff(p.x, p.z, rise ? 18 : 10, rise ? .2 : .14, rise ? .7 : .3);
+  };
+  private readonly onPickupCollected = (event: GameEvent): void => {
+    if (!(event.type === 'pickup.collected')) return;
+    const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1);
+  };
+  private readonly onVfxEffect = (event: GameEvent): void => {
+    if (!(event.type === 'vfx.effect')) return;
+    this.effect(event.kind, event.position.x, event.position.z, event.radius, event.position.y);
+  };
+  private readonly eventHandlers: Partial<Record<GameEvent['type'], (event: GameEvent) => void>> = {
+    'vehicle.durability-hit': this.onVehicleDurabilityHit,
+    'combat.hit': this.onCombatHit,
+    'combat.kill': this.onCombatKill,
+    'combat.hit-stop': this.onCombatHitStop,
+    'combat.attack': this.onCombatAttack,
+    'ally.attack': this.onAllyAttack,
+    'combat.exploded': this.onCombatExploded,
+    'explosion': this.onExplosion,
+    'combat.effect': this.onCombatEffect,
+    'infected.special': this.onInfectedSpecial,
+    'telegraph': this.onTelegraph,
+    'attack.resolved': this.onAttackResolved,
+    'hazard.exploded': this.onHazardExploded,
+    'vehicle.exploded': this.onVehicleExploded,
+    'noise': this.onNoise,
+    'hazard.electrified': this.onHazardElectrified,
+    'prop.ignited': this.onHazardElectrified,
+    'outbreak.infection': this.onOutbreakInfection,
+    'pickup.collected': this.onPickupCollected,
+    'vfx.effect': this.onVfxEffect,
+  };
+  readonly receive = (event: GameEvent): void => {
+    if (event.type === 'vehicle.feedback') {
+      let vehicle = this.vehicles.get(event.id);
+      if (!vehicle) { vehicle = { ...event, position: { ...event.position } }; this.vehicles.set(event.id, vehicle); }
+      else { vehicle.floor = event.floor; vehicle.healthFraction = event.healthFraction; vehicle.blood = event.blood; vehicle.position.x = event.position.x; vehicle.position.z = event.position.z; vehicle.yaw = event.yaw; }
+      this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
+    }
+    if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
+    // Combat warnings remain visible when optional effects are disabled.
+    if (!this.enabled && event.type !== 'telegraph' && event.type !== 'infected.special' && event.type !== 'attack.resolved') {
+      if (event.type === 'combat.attack' && actions[event.actionId]?.category === 'ranged') this.gunshot(event.sourceId, event.direction, event.actionId === 'weapon.rocket-launcher' ? 0 : actions[event.actionId].range, event.position);
+      else if (event.type === 'ally.attack' && event.from && event.to) {
+        const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
+        this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId);
+      }
+      return;
+    }
+
+    if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
+    if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
+    this.eventHandlers[event.type]?.(event);
+  };
+  private updateVehicle(id: number, blood = this.vehicles.get(id)?.blood ?? 0): void {
+    const e = this.world.entities.get(id); if (!e?.vehicle) return;
+    this.receive({ tick: this.world.tick, type: 'vehicle.feedback', id, position: { x: e.transform.x, z: e.transform.z }, yaw: e.transform.yaw, healthFraction: e.health.current / e.health.max, blood, ...(e.vehicle.floor ? { floor: true } : {}) });
+  }
+  /** One E15 base burst per blast: legacy hazard/combat/vehicle events and the E27 explosion event arrive together. */
+  private explosionOnce(tick: number, x: number, z: number, radius: number, height = .7): void {
+    const last = this.e15Blast;
+    if (last.tick === tick && Math.hypot(last.x - x, last.z - z) < .75) return;
+    last.tick = tick; last.x = x; last.z = z; this.effect('explosion', x, z, radius, height);
+  }
+  /** Radius is in metres. Shockwave max diameter is exactly 2 × splash radius. */
+  effect(kind: EffectKind, x: number, z: number, radius = 2, height = .7): void {
+    if (!this.enabled) return;
+    if (kind === 'explosion') {
+      const ground = height - .7;
+      // The white-out belongs to a blast near the player (as in Blasts.play): a distant fuel chain or tank round flashed the whole
+      // screen white for 0.1 s at any distance (gate 10-13: the L4 line break washed out the walk on Kessler Lane, 60 m away).
+      const focus = this.targets.focus?.() ?? this.world.entities.get(1)?.transform, near = focus ? Math.max(0, Math.min(1, 1.4 - Math.hypot(focus.x - x, focus.z - z) / 18)) : 1;
+      this.lastExplosionRadius = radius; if (near > 0) { this.flashUntil = this.time + 0.1; this.flashNear = near; }
+      // vqa-fix-3: a point-blank ring (the courier inside it) is dimmed so the wide white ellipse does not swallow her.
+      const ring = 1 - .55 * Blasts.pointBlank(focus, x, z), shade = (hex: number) => ((hex >> 16 & 255) * ring) << 16 | ((hex >> 8 & 255) * ring) << 8 | (hex & 255) * ring;
+      this.waves.spawn(this.time, 0.8, x, ground + 0.035, z, 0, 0, 0, radius * 2, groundShape.pressure, shade(0xffe19a), 1);
+      // Shock front: a thin bright pressure ring racing ahead of the dust ring in the first quarter second.
+      this.waves.spawn(this.time, .24, x, ground + .04, z, 0, 0, 0, radius * 2, groundShape.pressure, shade(0xfff6e2), 1);
+      // Hot core lobes and soot (E27 fireball shader); the old 64 flat orange discs merged into one blob.
+      this.blasts.core(x, ground, z, radius);
+      this.burst(x, ground + 1, z, 0xffa040, 24, .06, .6, 6, particleShape.spark, 2.2, 3);
+      // Round 3: sooty grey-brown instead of the pale lavender that washed out the first seconds of the column.
+      this.burst(x, ground + 0.8, z, 0x3a3234, 32, radius * 0.4, 2, -0.5, particleShape.smoke);
+      this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
+      if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
+      this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
+    } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
+    else if (kind === 'electric') {
+      this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0, particleShape.spark);
+      for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
+    }
+    else {
+      const smoke = kind.includes('smoke') || kind === 'toxic', sparkle = kind === 'objective' || kind === 'pickup', fire = kind.includes('fire');
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      // Fire tongues are the Blasts flame cards. Their old large orange dots become small rising ember trails.
+      this.burst(x, ground + (kind === 'ash' ? 3 : smoke ? 1.7 : .5), z, effectColors[kind], sparkle ? 8 : fire ? 8 : 24, sparkle || kind === 'ash' ? .1 : fire ? .045 : radius * .6, smoke ? 4 : 1.2, smoke || fire ? -1 : sparkle ? 0 : .5, smoke ? particleShape.smoke : fire ? particleShape.spark : 0);
+    }
+  }
+  /** Read fixed-tick warnings/veil on every rendered frame, including paused redraws. */
+  updateSpecialState(): void {
+    let remaining = 0;
+    for (const e of this.world.infected?.active ?? []) {
+      const a = e.infected?.specialAttack;
+      // Checkpoint/resume restores windups without replaying their consumed
+      // events. Read the locked attack and preserve its remaining sim ticks.
+      if (a?.stage === 'telegraph' && !this.tells.has(a.attackId)) {
+        this.receive({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: a.attackId,
+          special: a.move, move: a.move, duration: Math.max(0, (a.activeTick - this.world.tick) / 60),
+          startTick: a.startTick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target: a.target, area: a.area });
+      }
+      if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
+    }
+    this.prioritizeTelegraphs();
+    this.obstruction.remainingTicks = Math.max(0, Math.min(48, remaining));
+    this.obstruction.opacity = remaining > 0 && this.enabled ? (this.flashReduction ? .18 : .35) * Math.min(1, remaining / 12) : 0;
+    if (this.featherVeil) this.featherVeil.style.opacity = String(this.obstruction.opacity);
+  }
+  /** Explicit render clock. Paused test stepping uses this without advancing the sim. */
+  private waterClock = 0;
+  /** A calm civilian performing a 'water' routine pours a small arc of droplets from the can onto the flower it faces (~15 Hz). */
+  private waterStreams(seconds: number): void {
+    this.waterClock += seconds; if (this.waterClock < 1 / 15) return;
+    this.waterClock = 0;
+    for (const e of this.world.entities.iterate()) {
+      const c = e.civilian; if (!c?.activityUntil || c.state !== 'calm' || e.hidden) continue;
+      const a = c.schedule?.[c.scheduleStep ?? 0]; if (a?.activity !== 'water' || !a.facing || this.world.tick - (c.activityStarted ?? 0) < 40) continue;
+      const spout = this.targets.spout?.(e.id), t = .4, base = this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0;
+      if (spout) {
+        // The stream leaves the tilted spout and arcs onto the flowers (target a little above the soil).
+        const vx = (a.facing.x - spout.x) / t, vz = (a.facing.z - spout.z) / t, vy = (base + .3 - spout.y + 4.905 * t * t) / t;
+        for (let i = 0; i < (this.quality === 'low' ? 4 : 6); i++) this.particles.spawn(this.time, t + .05, spout.x, spout.y, spout.z, vx + (this.rng.next() - .5) * .2, vy + (this.rng.next() - .5) * .2, vz + (this.rng.next() - .5) * .2, .26, 0, 0x7cc4ff, 9.81);
+        continue;
+      }
+      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
+      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, base + .6, e.transform.z + oz,
+        (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
+    }
+  }
+  private prioritizeTelegraphs(): void {
+    if (!this.tells.size) return;
+    const player = this.world.entities.get(1)?.transform;
+    if (!player) return;
+    const readable = readableTelegraphs([...this.tells.values()], player, this.time);
+    for (const tell of this.tells.values()) this.telegraphs.opacity(tell.slot, readable.has(tell.slot) ? 1 : .015 / Math.max(1, this.tells.size - readable.size));
+  }
+  advance(seconds: number): void {
+    if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
+    this.time += seconds;
+    this.updateSpecialState();
+    for (const landing of this.landings) if (landing.at <= this.time) {
+      if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, landing.y + .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
+      landing.at = Infinity;
+    }
+    for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
+      const source = this.world.entities.get(tell.sourceId), brain = source?.infected;
+      const pending = brain && brain.attackId === attackId && (brain.specialAttack?.stage === 'telegraph' || brain.state === 'attack' || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
+      if (!pending) { if (brain?.attackId === attackId && tell.kind === 'bloated' && this.world.tick >= brain.until) this.effect('explosion', source!.transform.x, source!.transform.z, 3);
+        else if (brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source!.transform.x, source!.transform.z, 20);
+        this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }
+    }
+    this.prioritizeTelegraphs();
+    this.visible = this.enabled || this.tells.size > 0;
+    for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
+    if (this.enabled) this.waterStreams(seconds);
+    for (const pool of this.pools) pool.advance(this.time);
+    if (this.enabled) this.blasts.advance(this.time, seconds);
+    this.gibs.advance(this.time, seconds);
+    for (let i = 0; i < this.hitCount;) {
+      this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 10 * this.hitPeak[i]));
+      if (this.hitUntil[i] <= this.time) {
+        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount]; this.hitPeak[i] = this.hitPeak[this.hitCount];
+      } else i++;
+    }
+    if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {
+      for (const vehicle of this.vehicles.values()) {
+        if (this.world.entities.get(vehicle.id)?.vehicle?.scripted) continue;
+        // L9 floor vehicle: heavy smoke from the 25% stage on, never fire (it stays driveable until the scripted crash).
+        // The L9 floor hull's smoke is the Blasts exhaust trail (stage 3+); a second particle burst read as scattered dots.
+        if (!vehicle.floor && vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
+        if (vehicle.healthFraction < 0.15 && !vehicle.floor) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
+      }
+      for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind) && this.blasts.sourceVisible(e.transform.x, e.transform.z, h.radius + 5)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
+      // Smoke-grenade clouds are E27 puff volumes (Blasts); fire zones keep the E15 ember bursts.
+      for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire') this.effect(zone.kind, zone.x, zone.z, zone.radius);
+    }
+    // Wounded-infected droplets are based on visual time, never extra sim events or damage.
+    if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
+      let emitted = 0;
+      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
+    }
+  }
+  get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) * this.flashNear, this.blasts.flash) : 0; }
+  snapshot() {
+    return { obstruction: { ...this.obstruction }, shots: this.shots, enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
+      lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
+      telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
+      flash: this.flash, blasts: this.blasts.snapshot(), coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
+  }
+  dispose(): void { this.featherVeil?.remove(); for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
+}

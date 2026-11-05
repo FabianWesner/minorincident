@@ -1,0 +1,14 @@
+{
+ "name": "dress-l8-zoo-gate",
+ "note": "Opus visual QA #34 (verbatim): \"L8 drive-out, L9 and L10 are nearly empty: flat dark plane, pale purple road ribbon with hard ends, one tree, two vehicles ...\" L8 drive-out: the courier on the apron between the armored vehicle's pad and the east service gate. Look for: the steel gate leaves and brick piers read as part of the wall, the road continues outside past lamps and kerbs (no hard end), the guard tower and light tower stand beside, nothing blocks the apron.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "layout": { "district": "D-ZOO", "bbox": [[84, 50], [150, 100]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [111, 74], "yaw": 0, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [111, 74] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}

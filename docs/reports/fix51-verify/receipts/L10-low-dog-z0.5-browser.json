@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "95e65c650fa5f60ea94118ddf88709a7bbf40432e36a6560eaf71e349d8bbf39",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-06",
+      "clause": "reviewed living infected dog distinct from corgi at zoom0.5",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "runtimeMatches": true,
+        "execution": true,
+        "photosMatch": true,
+        "review": {
+          "row": "L10-06",
+          "visibleLivingDog": true,
+          "lowAnimalSilhouette": true,
+          "distinctFromCorgi": true,
+          "corgiVisible": true,
+          "evidence": [
+            {
+              "file": "dog-look-living-dog-0.jpg",
+              "sha256": "34e42ad78d4208509019253f3d1ab7688d057a445a6f94da6ed23e35f4b68b4b"
+            },
+            {
+              "file": "dog-look-living-dog-1.jpg",
+              "sha256": "0eb1cf6d5aa5a933be06f584a32721c01933a0795b5599571eec513526d5c2c7"
+            },
+            {
+              "file": "dog-look-living-dog-2.jpg",
+              "sha256": "51fc6b162bfc22655a8cb6a9315fb914352a825d4cb2438ba71dca63e5bf6cee"
+            }
+          ]
+        },
+        "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5-input.json",
+        "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5/review.json",
+        "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+      },
+      "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5/review.json"
+  }
+}

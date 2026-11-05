@@ -1,0 +1,36 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "ui-night-l6-gate",
+  "note": "Production L6 gate before closure, closed crate guidance, damaged leaf and broken leaf. Keep the one-bar panel inside every game zoom and both viewport orientations.",
+  "frames": 126,
+  "shots": [
+    0,
+    61,
+    81,
+    106
+  ],
+  "sheet": 10,
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 80,
+      "effect": {
+        "barricadeHit": "l6-gate-90",
+        "amount": 150
+      }
+    },
+    {
+      "frame": 100,
+      "effect": {
+        "barricadeHit": "l6-gate-90",
+        "amount": 100000
+      }
+    }
+  ]
+}

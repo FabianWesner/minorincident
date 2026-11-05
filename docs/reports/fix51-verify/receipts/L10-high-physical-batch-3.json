@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "fixtureHash": "f24892338c5e3112f179a234c6a03599aff625d7541ff7c9fae3ccc8e88f5de5",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-12",
+      "clause": "physical Mega fight reaches post-death release",
+      "value": {
+        "megaDead": true,
+        "steps": [
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex · 36 m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7089999914169312,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "install",
+            "text": "Install the cure in the dispersal device · 310 m",
+            "tick": 587,
+            "marker": {
+              "anchor": "cure-install",
+              "ring": {
+                "x": 4006.5,
+                "y": 0,
+                "z": -39
+              },
+              "drawn": [
+                4006.5,
+                0,
+                -39
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Activate the dispersal console · 12 m",
+            "tick": 5700,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "mega",
+            "text": "Kill the Mega Alpha · 830 m",
+            "tick": 9691,
+            "marker": {
+              "anchor": "cure-mega",
+              "ring": {
+                "x": 3172.6160168494666,
+                "y": 0.7,
+                "z": 52.53412260280187
+              },
+              "drawn": [
+                3173.62,
+                0.7,
+                52.83
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "release",
+            "text": "Release the cure at the console · 273 m",
+            "tick": 24967,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "target": "actual input reaches release and persistent mission Mega-dead state; direct-hit count/corpse identity remain separate",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/fix51-r10c/L10-high-batch-3/review.json"
+    }
+  ],
+  "observations": {
+    "inputPath": "docs/reports/fix51-r10c/L10-high-batch-3-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L10-high-batch-3/review.json",
+    "completionPath": "docs/reports/fix51-r10c/L10-high-batch-3/late-input-completion.json.gz",
+    "limits": "Protected courier, inherited production Resume; no timing/performance, immunity, direct rocket count or full motion qualification."
+  }
+}

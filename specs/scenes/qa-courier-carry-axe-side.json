@@ -1,0 +1,114 @@
+{
+ "name": "qa-courier-carry-axe-side",
+ "note": "PO loadout: fire-axe, bat, handgun + corgi-lure; each slot selected in turn.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    [
+     "weapon.fire-axe",
+     "weapon.bat",
+     "weapon.handgun"
+    ],
+    [
+     "ability.corgi-lure"
+    ]
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 60,
+   "actor": "courier",
+   "do": {
+    "select": "LEFT",
+    "index": 1
+   }
+  },
+  {
+   "frame": 120,
+   "actor": "courier",
+   "do": {
+    "select": "LEFT",
+    "index": 2
+   }
+  },
+  {
+   "frame": 180,
+   "actor": "courier",
+   "do": {
+    "select": "RIGHT",
+    "index": 0
+   }
+  },
+  {
+   "frame": 240,
+   "actor": "courier",
+   "do": {
+    "select": "LEFT",
+    "index": 0
+   }
+  },
+  {
+   "frame": 250,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      -3
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 380,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      0,
+      -3
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 4,
+  "azimuth": -60
+ },
+ "frames": 480,
+ "shots": [
+  30,
+  100,
+  160,
+  220,
+  235,
+  300,
+  420
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0
+ }
+}

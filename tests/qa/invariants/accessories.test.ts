@@ -1,0 +1,253 @@
+import { readFileSync } from 'node:fs';
+import { expect, test, vi } from 'vitest';
+import { Box3, Matrix4, Mesh, Texture, Vector3, type BufferGeometry, type Group, type InstancedMesh } from 'three';
+import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import manifest from '../../../src/assets/manifest.json';
+import { AssetRegistry } from '../../../src/assets/registry';
+import { CrowdAccessories, bakedSkull, skinnedBrow } from '../../../src/render/characters/CrowdAccessories';
+import { bakeInfected } from '../../../src/render/characters/bakeInfected';
+import { markCrowdAppearance, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
+import { regularInfectedModels } from '../../../src/data/crowdAppearance';
+import { characterNodes } from '../../../src/data/survivor';
+import { packCrowdParts } from '../../../src/assets/crowdParts';
+import type { EntitySnapshot } from '../../../src/sim/world/types';
+import type { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
+import { oracle } from './oracles';
+import { loadCivilianSource } from '../../../src/assets/civilianSource';
+import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
+import type { AssetDef } from '../../../src/assets/types';
+
+type Lod = 'lod0' | 'lod1' | 'lod2';
+const cache = new Map<string, Promise<Group>>();
+async function asset(id: string, lod: Lod): Promise<Group> {
+  const key = `${id}/${lod}`;
+  if (!cache.has(key)) cache.set(key, (async () => {
+    if (id.startsWith('npc.')) return loadCivilianSource(id, lod, async url => {
+      const bytes = readFileSync(`public${url}`);
+      return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+    });
+    const def = manifest.find(a => a.id === id)! as AssetDef;
+    const bytes = readFileSync(lod === 'lod0' ? def.glb! : def.lods![lod]!);
+    // This geometry oracle runs in Node. Keep real UVs/material slots while
+    // bypassing browser image decoding; rendered atlas pixels have native gates.
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => new Texture() }));
+    const parsed = await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), ''), { scene } = parsed;
+    scene.traverse(node => { const index = parsed.parser.associations.get(node)?.nodes; if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name; });
+    scene.userData.assetId = id; return scene;
+  })());
+  return cloneSkeleton(await cache.get(key)!) as Group;
+}
+function bounds(geometry: BufferGeometry, matrix = new Matrix4(), selected?: (i: number) => boolean): Box3 {
+  const result = new Box3(), point = new Vector3(), p = geometry.getAttribute('position');
+  for (let i = 0; i < p.count; i++) if (!selected || selected(i)) result.expandByPoint(point.fromBufferAttribute(p, i).applyMatrix4(matrix));
+  return result;
+}
+const accessoryVertices = new Map<string, Vector3[]>();
+async function authoredBounds(id: string, lod: Lod): Promise<Box3> {
+  const root = await asset(id, lod === 'lod2' ? 'lod1' : lod); root.updateMatrixWorld(true);
+  const pivot = root.getObjectByName('head'), inverse = pivot && !(pivot instanceof Mesh) ? pivot.matrixWorld.clone().invert() : new Matrix4();
+  const points: Vector3[] = [];
+  root.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    const p = node.geometry.getAttribute('position'), matrix = inverse.clone().multiply(node.matrixWorld);
+    for (let i = 0; i < p.count; i++) points.push(new Vector3().fromBufferAttribute(p, i).applyMatrix4(matrix));
+  });
+  accessoryVertices.set(`${id}/${lod}`, points);
+  return new Box3().setFromPoints(points);
+}
+function fittedAccessoryBounds(id: string, lod: Lod, matrix: Matrix4): Box3 {
+  return new Box3().setFromPoints(accessoryVertices.get(`${id}/${lod}`)!.map(p => p.clone().applyMatrix4(matrix)));
+}
+function authoredSkull(root: Group, headName = 'head') {
+  root.updateMatrixWorld(true); const head = root.getObjectByName(headName); if (!head) return null;
+  const inverse = head.matrixWorld.clone().invert(), box = new Box3(), point = new Vector3();
+  const skin = root.getObjectByName('skin_body') as import('three').SkinnedMesh | undefined;
+  if (skin) {
+    // A retained authored head may be a second skinned mesh under the body.
+    skin.traverse(node => {
+      const mesh = node as import('three').SkinnedMesh;
+      if (!mesh.isSkinnedMesh) return;
+      const p = mesh.geometry.getAttribute('position'), joints = mesh.geometry.getAttribute('skinIndex'), weights = mesh.geometry.getAttribute('skinWeight');
+      const headIndex = mesh.skeleton.bones.findIndex(b => b.name === headName), matrix = inverse.clone().multiply(mesh.matrixWorld);
+      for (let i = 0; i < p.count; i++) {
+        const js = [joints.getX(i), joints.getY(i), joints.getZ(i), joints.getW(i)], ws = [weights.getX(i), weights.getY(i), weights.getZ(i), weights.getW(i)];
+        if (js[ws.indexOf(Math.max(...ws))] === headIndex) box.expandByPoint(point.fromBufferAttribute(p, i).applyMatrix4(matrix));
+      }
+    });
+    return box.isEmpty() ? null : { size: box.getSize(new Vector3()), centre: box.getCenter(new Vector3()) };
+  }
+  head.traverse(node => {
+    if (!(node instanceof Mesh) || Array.isArray(node.material) || !/skin/i.test(node.material.name)) return;
+    const p = node.geometry.getAttribute('position'), index = node.geometry.index, matrix = inverse.clone().multiply(node.matrixWorld);
+    for (let i = 0; i < (index?.count ?? p.count); i++) box.expandByPoint(point.fromBufferAttribute(p, index ? index.getX(i) : i).applyMatrix4(matrix));
+  });
+  return box.isEmpty() ? null : { size: box.getSize(new Vector3()), centre: box.getCenter(new Vector3()) };
+}
+
+test('1 accessories: actual head-local bounds and scale for every crowd model × LOD × appearance tier', async () => {
+  vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => asset(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
+  const renderer = new CrowdAccessories();
+  const errors: string[] = [];
+  try {
+    await renderer.init();
+    const referenceRoot = await asset('npc.civilian-man-a', 'lod1');
+    prepareCivilianRig(referenceRoot, 'npc.civilian-man-a');
+    const referenceGeo = bakeInfected(referenceRoot, [], false, ['idle']).geometry;
+    packCrowdParts(referenceGeo);
+    markCrowdAppearance(referenceGeo);
+    const reference = bakedSkull(referenceGeo)!;
+    const ids = manifest.filter(a => a.category === 'accessory' && a.accessory && ['hat', 'glasses'].includes(a.accessory.slot)).map(a => a.id);
+    expect(ids.length).toBeGreaterThan(0);
+    // Group tableaux contain several people; their individually registered members are the crowd variants.
+    const models = [...new Set([...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.') && a.crowdSkin).map(a => a.id)])];
+    const raw = new Map<string, Box3>();
+    for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
+    const frameTops = new Map<string, number>();
+    for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly']) {
+      const base = model.replace(/\.aftermath$/, '');
+      const root = await asset(model, 'lod0'); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
+      const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
+      // Measure the base GLB's head-part frames; aftermath recolours them but retains the same rig and shape.
+      // This is independent of the renderer's cached spectacle-top values and fitted hat output.
+      const skin = root.getObjectByName('skin_body') as Mesh | undefined;
+      if (skin) {
+        const region = skin.geometry.getAttribute('_crowd_region'), p = skin.geometry.getAttribute('position'), matrix = inverse.clone().multiply(skin.matrixWorld);
+        for (let i = 0; i < p.count; i++) if (region?.getX(i) > 1.5) top = Math.max(top, point.fromBufferAttribute(p, i).applyMatrix4(matrix).y);
+      }
+      head.traverse(node => {
+        if (!(node instanceof Mesh) || Array.isArray(node.material) || !/pal_(leather|uiDark)$/.test(node.material.name)) return;
+        const positions = node.geometry.getAttribute('position'), index = node.geometry.index, matrix = inverse.clone().multiply(node.matrixWorld);
+        for (let i = 0; i < (index?.count ?? positions.count); i++) { point.fromBufferAttribute(positions, index ? index.getX(i) : i).applyMatrix4(matrix); if (point.x > .02 && point.y > .04) top = Math.max(top, point.y); }
+      });
+      expect(Number.isFinite(top), `${model}: source spectacle vertices`).toBe(true);
+      frameTops.set(model, top);
+    }
+    for (const id of ids) {
+      const def = manifest.find(a => a.id === id)!, size = raw.get(`${id}/lod0`)!.getSize(new Vector3());
+      for (const axis of ['x', 'y', 'z'] as const) if (Math.abs(size[axis] - def.dimensions[axis]) > def.dimensions[axis] * def.dimensions.tolerance) errors.push(`${id}: GLB ${axis} extent ${size[axis]} exceeds authored ${def.dimensions[axis]} ±${def.dimensions.tolerance * 100}%`);
+    }
+    // Independent source: vertices in the authored GLB head frame plus its per-model manifest fit.
+    // Tolerance is the source LOD's measured extent / 1024 (quantization), with a 2 mm floating-point floor.
+    let combinations = 0, eligible = 0, glassesHeads = 0;
+    const minimumSeats = new Map<string, number>(), measuredFrameTops = new Map<string, number>();
+    for (const model of models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
+      const root = await asset(model, lod);
+      if (model.startsWith('npc.')) prepareCivilianRig(root, model);
+      const baked = bakeInfected(root, [], false, ['idle']);
+      deinterleaveGeometry(baked.geometry); const geometry = mergeVertices(baked.geometry); packCrowdParts(geometry);
+      markCrowdAppearance(geometry);
+      const registeredSkull = bakedSkull(geometry), skull = registeredSkull ?? authoredSkull(root);
+      let civilianFrameTop = frameTops.get(model) ?? frameTops.get(model.replace(/\.aftermath$/, ''));
+      if (geometry.userData.crowdBinds) {
+        const skin = root.getObjectByName('skin_body') as Mesh, region = skin.geometry.getAttribute('_crowd_region'), p = skin.geometry.getAttribute('position'), inverse = root.getObjectByName('head')!.matrixWorld.clone().invert().multiply(skin.matrixWorld), point = new Vector3();
+        let top = -Infinity;
+        for (let i = 0; i < p.count; i++) if (region?.getX(i) > 1.5) top = Math.max(top, point.fromBufferAttribute(p, i).applyMatrix4(inverse).y);
+        if (Number.isFinite(top)) {
+          measuredFrameTops.set(model, Math.max(measuredFrameTops.get(model) ?? -Infinity, top));
+          civilianFrameTop = measuredFrameTops.get(model);
+        }
+        minimumSeats.set(model, Math.max(minimumSeats.get(model) ?? -Infinity, skull!.centre.y - skull!.size.y * .25 + .002));
+      }
+      // Glasses are authored into these civilian heads, not separate acc.* models.
+      // Their dark front-face vertices must remain on the face and owned by the head joint.
+      // Shared legacy build.py files contain an unexecuted depot-clerk spectacles
+      // branch for the lab staff too. Atlas sources declare geometric frame tags
+      // explicitly; fused painted eyewear is checked by the source-UV/pixel gates.
+      const geometricGlasses = root.getObjectByName('root')?.userData.spectacleTop !== undefined;
+      if (geometricGlasses) {
+        glassesHeads++;
+        const glassSkull = skull;
+        const headNode = root.getObjectByName('head')!; root.updateMatrixWorld(true);
+        const inverse = headNode.matrixWorld.clone().invert(), spectacles = new Box3(), point = new Vector3(), authoredFace: Vector3[] = [];
+        const skin = root.getObjectByName('skin_body') as Mesh | undefined;
+        if (skin) {
+          const p = skin.geometry.getAttribute('position'), region = skin.geometry.getAttribute('_crowd_region'), matrix = inverse.clone().multiply(skin.matrixWorld);
+          for (let i = 0; i < p.count; i++) if (region?.getX(i) > 1.5) { point.fromBufferAttribute(p, i).applyMatrix4(matrix); spectacles.expandByPoint(point); authoredFace.push(point.clone()); }
+        }
+        if (!glassSkull || spectacles.isEmpty()) errors.push(`${model}/${lod}: authored glasses need ${!glassSkull ? 'source head skin' : 'visible face geometry'}`);
+        else {
+          const top = glassSkull.centre.y + glassSkull.size.y / 2;
+          if (spectacles.getCenter(point).y > top + .02 || spectacles.min.y < glassSkull.centre.y - glassSkull.size.y / 2 - .02) errors.push(`${model}/${lod}: glasses outside skull face bounds`);
+          const parts = geometry.getAttribute('_parts'), positions = geometry.getAttribute('position'), epsilon = .002;
+          const headPoints = new Map<string, Vector3[]>(), cell = (p: Vector3) => p.toArray().map(n => Math.round(n / epsilon));
+          for (let i = 0; i < positions.count; i++) if (parts.getX(i) === characterNodes.indexOf('head')) {
+            const p = point.fromBufferAttribute(positions, i).clone();
+            if (geometry.userData.crowdBinds) p.applyMatrix4(new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16));
+            const key = cell(p).join(',');
+            if (!headPoints.has(key)) headPoints.set(key, []); headPoints.get(key)!.push(p);
+          }
+          const missing = authoredFace.filter(p => {
+            const [x, y, z] = cell(p);
+            for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) if (headPoints.get(`${x + dx},${y + dy},${z + dz}`)?.some(q => p.distanceToSquared(q) <= epsilon * epsilon)) return false;
+            return true;
+          }).length;
+          if (missing) errors.push(`${model}/${lod}: ${missing}/${authoredFace.length} native glasses vertices lost their authored head-part position/scale`);
+        }
+      }
+      (renderer as unknown as { fits: Map<string, Matrix4> }).fits.delete(model); renderer.registerSkull(model, geometry);
+      for (const tier of ['frail', 'average', 'athletic'] as const) for (const id of ids) {
+        const e = { id: 1, archetype: model.startsWith('inf.') ? 'infected.runner' : 'civilian', appearance: { entityId: 1, asset: model, accessories: [id], tier } } as EntitySnapshot;
+        combinations++;
+        const look = resolveCrowdAppearance(e);
+        if (!look.accessory) continue; // Uniforms deliberately reject accessories in production.
+        eligible++;
+        const def = manifest.find(a => a.id === id)! as unknown as { accessory: { fits: Record<string, { scale: [number, number, number]; offset: [number, number, number] }> } };
+        const skinned = !!geometry.userData.crowdBinds;
+        const fit = !skinned && def.accessory.fits[model.replace(/\.aftermath$/, '')] || def.accessory.fits['npc.civilian-man-a'];
+        const expectedTransform = new Matrix4().makeScale(...fit.scale).setPosition(...fit.offset);
+        if (skinned || !def.accessory.fits[model.replace(/\.aftermath$/, '')]) {
+          if (!skull) { errors.push(`${model}/${lod}: no authored head skin for accessory anchoring`); continue; }
+          if (!registeredSkull) errors.push(`${model}/${lod}: renderer cannot register the authored skin skull for ${id}`);
+          const ratio = skull!.size.clone().divide(reference.size);
+          expectedTransform.premultiply(new Matrix4().makeTranslation(...skull!.centre.toArray()).multiply(new Matrix4().makeScale(...ratio.toArray())).multiply(new Matrix4().makeTranslation(...reference.centre.clone().negate().toArray())));
+        }
+        if (id.startsWith('acc.hat-') && (civilianFrameTop !== undefined || minimumSeats.has(model))) {
+          // Both LODs share one fit; use the lower authored brim so switching LOD cannot move the hat.
+          const bottom = Math.min(...(['lod0', 'lod1'] as const).map(l => fittedAccessoryBounds(id, l, expectedTransform).min.y));
+          const seat = Math.max(civilianFrameTop === undefined ? -Infinity : civilianFrameTop + .012, minimumSeats.get(model) ?? -Infinity);
+          expectedTransform.premultiply(new Matrix4().makeTranslation(0, Math.max(0, seat - bottom), 0));
+        }
+        const expected = fittedAccessoryBounds(id, lod, expectedTransform);
+        const tolerance = Math.max(.002, expected.getSize(new Vector3()).length() / 1024);
+        const head = new Matrix4().makeRotationY(.43).setPosition(3, 1.4, -7), world = new Matrix4().makeRotationY(-.7).setPosition(11, .2, 9);
+        const otherJoint = new Matrix4().makeRotationX(-.9).setPosition(-13, 4, 22);
+        const poses = { clip: { parts: [...characterNodes] }, part: (_f: number, _o: number, _w: number, part: number, out: Matrix4) => out.copy(part === characterNodes.indexOf('head') ? head : otherJoint) } as CrowdPosePalette;
+        renderer.begin(); renderer.place(e, lod, poses, 0, [0, 1], world); renderer.finish();
+        const mesh = renderer.children.find(m => m.name === `${id}:${skinned && id.startsWith('acc.hat-') ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh;
+        const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
+        const headLocal = world.clone().multiply(head).invert().multiply(matrix);
+        if (process.env.QA_INVARIANTS_BREAK === 'accessories') headLocal.premultiply(new Matrix4().makeTranslation(0, .4, 0));
+        const actual = bounds(mesh.geometry, headLocal);
+        if (skinned && id.startsWith('acc.hat-')) {
+          // Q-187 replaces the former hair-sized 1.3–1.4x calibration with
+          // independent skull, eye-clearance and attachment requirements.
+          const brow = skinnedBrow(geometry)!, size = actual.getSize(new Vector3()), centre = actual.getCenter(new Vector3());
+          const seat = Math.max(brow.y, civilianFrameTop === undefined ? -Infinity : civilianFrameTop + .012);
+          if (!mesh.visible || mesh.count !== 1 || size.z > Math.min(brow.width, skull!.size.z) * 1.15 + 1e-6
+            || actual.min.y < seat - .002 || actual.min.y > Math.max(brow.y + .06, (civilianFrameTop ?? -Infinity) + .03)
+            || Math.abs(centre.z - skull!.centre.z) > .03 || Math.abs(centre.x - skull!.centre.x) > skull!.size.x * .3) errors.push(`${model}/${lod}/${tier}/${id}: bare skull fit or eye clearance failed: ${actual.min.toArray()}..${actual.max.toArray()}`);
+        } else if (!mesh.visible || mesh.count !== 1 || oracle.accessory({ attach: 'head', offset: [actual.min.distanceTo(expected.min), actual.max.distanceTo(expected.max)], tolerance })) errors.push(`${model}/${lod}/${tier}/${id}: head bounds ${actual.min.toArray()}..${actual.max.toArray()}, authored ${expected.min.toArray()}..${expected.max.toArray()}, tolerance ${tolerance}`);
+        // Frozen head pieces use the same four-influence contract as the body.
+        // Moving from head-local to bind space must preserve the authored fit.
+        const corpse = renderer.corpseSource(e, geometry, model, characterNodes.indexOf('head'));
+        if (corpse !== geometry) {
+          const piece = corpse.userData.corpseAccessory as BufferGeometry;
+          const inverseBind = new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16);
+          const corpseBounds = bounds(piece, inverseBind);
+          expect(piece.hasAttribute('_skin')).toBe(true);
+          const expectedCorpse = fittedAccessoryBounds(id, 'lod1', headLocal);
+          if (corpseBounds.min.distanceTo(expectedCorpse.min) > tolerance || corpseBounds.max.distanceTo(expectedCorpse.max) > tolerance) errors.push(`${model}/${lod}/${tier}/${id}: frozen head geometry differs from authored bounds`);
+        }
+      }
+      geometry.dispose(); baked.geometry.dispose();
+    }
+    expect(glassesHeads, 'authored glasses inventory must not be empty').toBeGreaterThan(0);
+    console.log(`[qa:invariants] accessories combinations=${combinations} eligible=${eligible} nativeGlassesHeads=${glassesHeads}`);
+    const distinct = [...new Set(errors)];
+    if (distinct.length) console.log(`[qa:invariants] accessory offenders: ${JSON.stringify(distinct.slice(0, 16))}`);
+    expect(distinct, `accessories invariant: ${distinct.length} bad head bounds across ${combinations} combinations`).toEqual([]);
+  } finally { renderer.dispose(); vi.restoreAllMocks(); }
+}, 180_000);

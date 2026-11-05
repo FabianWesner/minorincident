@@ -1,0 +1,83 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 6000,
+  "sheet": 750,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "megaCoarseFramesMin": 30,
+    "megaDetailedFramesMin": 30,
+    "megaCruiseErrorMax": 0.02,
+    "megaStepMaxM": 0.25,
+    "courierVisibleShareMin": 0.6,
+    "megaAlphaVisibleRatioMin": 0.9
+  },
+  "name": "l10-e3b-mega-arrival",
+  "note": "Persistent hunter advances at 0.7× nominal run along the connected R7 approach and into the game camera. Charge reaches 60 s before arrival; release stays gated on the living boss. Isolated arrival fixture; E3 assault performance covers the full mixed crowd.",
+  "hud": true,
+  "megaHud": true,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3927,
+        -100
+      ],
+      [
+        4077,
+        50
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4002,
+        -27
+      ],
+      "yaw": 210
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "authored": true
+  },
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      3760,
+      -25
+    ],
+    "route": "cure"
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ]
+}

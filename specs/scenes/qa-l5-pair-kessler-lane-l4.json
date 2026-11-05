@@ -1,0 +1,56 @@
+{
+ "name": "qa-l5-pair-kessler-lane-l4",
+ "note": "E23 recognition (AC18): Kessler Lane in L4 (clean, intact), the pair camera pair-kessler-lane; compare with qa-l5-pair-kessler-lane-l5.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 0,
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    28,
+    -11.399999999999999
+   ],
+   [
+    108,
+    68.6
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   54,
+   17,
+   14.600000000000001
+  ],
+  "target": [
+   68,
+   0,
+   28.6
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    68,
+    28.6
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

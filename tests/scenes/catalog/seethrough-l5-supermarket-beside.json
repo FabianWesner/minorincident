@@ -1,0 +1,21 @@
+{
+  "name": "seethrough-l5-supermarket-beside",
+  "note": "PO 10-15 (L5 seed 1, checkpoint survivor-4, courier at 83.75/38.84 beside prop.privacy-fence:383, WebGPU low, zoom 1.5): the supermarket beside her, NOT between the lens and her, was cut open and showed broken blue triangles (raw inner faces). It must stay whole, with no cut pixels.",
+  "seed": 1,
+  "time": "L5",
+  "ground": "district",
+  "layout": { "level": "L5", "district": "D-FAIR", "bbox": [[58, 14], [100, 62]] },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [83.75, 38.84], "state": "idle" }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.5 },
+  "frames": 30,
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0,
+    "seeThroughNeverCut": ["bld.supermarket"],
+    "drawCallsMax": 600
+  }
+}

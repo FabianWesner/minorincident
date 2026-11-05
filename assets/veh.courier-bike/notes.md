@@ -1,0 +1,3 @@
+Rebuilt as a two-wheel long-john front-loader. Wheelbase/radii remain 1.975 m and 0.335/0.405 m; cargo box moves 10 cm forward and saddle 7 cm rearward for knee clearance. No extra central wheel or open chainring: the drivetrain uses a small solid toothed gear. The default deployed stand is independently rotatable at its mount.
+
+All requested joints and attachment sockets are preserved through packing and in every explicitly authored LOD. README.md documents axes, coordinates, compatibility aliases, animation and reproducible commands. Source/reference artwork remains unchanged. Review PNGs use Cycles CPU; report.json measures the delivered files.

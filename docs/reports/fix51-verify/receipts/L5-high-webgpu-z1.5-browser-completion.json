@@ -1,0 +1,2766 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "backend": "webgpu",
+  "quality": "high",
+  "zoom": 1.5,
+  "levels": [
+    {
+      "level": "L5",
+      "tick": 16311,
+      "result": {
+        "time": 271.85,
+        "kills": 0,
+        "knockdowns": 296,
+        "damage": 10,
+        "deaths": 0,
+        "rescued": 1,
+        "optionalObjectives": [],
+        "survivors": [
+          "rosa"
+        ],
+        "rescuedSurvivors": [
+          {
+            "kind": "civilian",
+            "archetype": "npc.cashier",
+            "faction": "civilian",
+            "transform": {
+              "x": 38.38539999999803,
+              "z": -51.00517079491574,
+              "y": 0.9812499999999998,
+              "yaw": -2.001690089155066
+            },
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.rosa.aftermath",
+              "variant": "inf.cashier",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 58,
+                    "z": 41.3
+                  },
+                  "facing": {
+                    "x": 58,
+                    "z": 46.3
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "shop",
+              "waypoints": [
+                {
+                  "x": 58,
+                  "z": 41.3
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 0,
+              "entered": 13796,
+              "until": 13796,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 55.15566671063959,
+                "z": 41.590925365156714,
+                "y": 0.83,
+                "yaw": 0.3310917058450214
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 76,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3,
+                "fleeSpeed": 3.70833794567734,
+                "startleTicks": 30,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "survivor": {
+                "key": "rosa",
+                "mode": "follow",
+                "slot": 0,
+                "leader": 0,
+                "cover": false,
+                "waitAt": 15074,
+                "foundAt": 13634
+              },
+              "supportFeet": false,
+              "story": null,
+              "dangerUntil": 13796,
+              "hold": 3
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 29,
+            "appearance": {
+              "entityId": 29,
+              "asset": "npc.rosa.aftermath",
+              "tint": "#d4ad32",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "hidden": false,
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 118.94097317191182
+            },
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 16310
+            }
+          }
+        ],
+        "stationOccupants": [
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 27.785400000000003,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 2.047549980972523
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 27.785400000000003,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 27.785400000000003,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 27.785400000000003,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 27.785400000000003,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4690378081286326,
+                "fleeSpeed": 3.994594089128077,
+                "startleTicks": 37,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": 0
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 389,
+            "appearance": {
+              "entityId": 389,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#ac7a91",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.293000000000006
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.suburban-mom",
+            "faction": "civilian",
+            "transform": {
+              "x": 30.785400000000003,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 5.137742729892829
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.suburban-mom",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 30.785400000000003,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 30.785400000000003,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "bus-stop",
+              "waypoints": [
+                {
+                  "x": 30.785400000000003,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 30.785400000000003,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3013557761674746,
+                "fleeSpeed": 3.6958841064944865,
+                "startleTicks": 26,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -13
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 390,
+            "appearance": {
+              "entityId": 390,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#b95862",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.43000000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.cashier",
+            "faction": "civilian",
+            "transform": {
+              "x": 34.7854,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 3.6832314322532973
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.cashier",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 34.7854,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 34.7854,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "shop",
+              "waypoints": [
+                {
+                  "x": 34.7854,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 34.7854,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.2803724453784524,
+                "fleeSpeed": 3.700386530533433,
+                "startleTicks": 41,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -26
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 391,
+            "appearance": {
+              "entityId": 391,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#486e69",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.56700000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 40.7854,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 5.445782496574125
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 40.7854,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 40.7854,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 40.7854,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 40.7854,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3166012902976945,
+                "fleeSpeed": 3.4481671676039696,
+                "startleTicks": 41,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -39
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 392,
+            "appearance": {
+              "entityId": 392,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#486e69",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.70400000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.delivery-driver",
+            "faction": "civilian",
+            "transform": {
+              "x": 44.7854,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 1.3542773559106724
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.delivery-driver",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 44.7854,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 44.7854,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "carry-belongings",
+              "waypoints": [
+                {
+                  "x": 44.7854,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 44.7854,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.2540093858260661,
+                "fleeSpeed": 3.5686809781938793,
+                "startleTicks": 25,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -52
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 393,
+            "appearance": {
+              "entityId": 393,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#59627e",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.841
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.cashier",
+            "faction": "civilian",
+            "transform": {
+              "x": 47.7854,
+              "z": -63.4,
+              "y": 0.85,
+              "yaw": 3.743798885690845
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.cashier",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 47.7854,
+                    "z": -63.4
+                  },
+                  "facing": {
+                    "x": 47.7854,
+                    "z": -58.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "shop",
+              "waypoints": [
+                {
+                  "x": 47.7854,
+                  "z": -63.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 47.7854,
+                "z": -63.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.2109467218862846,
+                "fleeSpeed": 3.7456996574997903,
+                "startleTicks": 24,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -65
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 394,
+            "appearance": {
+              "entityId": 394,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#46734d",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 53.978
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 27.785400000000003,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 3.443049452761212
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 27.785400000000003,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 27.785400000000003,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 27.785400000000003,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 27.785400000000003,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4707161487312987,
+                "fleeSpeed": 3.453532992862165,
+                "startleTicks": 41,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -78
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 395,
+            "appearance": {
+              "entityId": 395,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#a86645",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.115
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bathrobe-neighbor",
+            "faction": "civilian",
+            "transform": {
+              "x": 30.785400000000003,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 1.109105639341724
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.bathrobe-neighbor",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 30.785400000000003,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 30.785400000000003,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "chat",
+              "waypoints": [
+                {
+                  "x": 30.785400000000003,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 30.785400000000003,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3982225874904544,
+                "fleeSpeed": 3.5431446059793235,
+                "startleTicks": 25,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -91
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 396,
+            "appearance": {
+              "entityId": 396,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#e5d9b9",
+              "accessories": [],
+              "handProp": null,
+              "tier": "frail"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.252
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.delivery-driver",
+            "faction": "civilian",
+            "transform": {
+              "x": 34.7854,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 2.747340858437178
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.delivery-driver",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 34.7854,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 34.7854,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "carry-belongings",
+              "waypoints": [
+                {
+                  "x": 34.7854,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 34.7854,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4883283314295113,
+                "fleeSpeed": 3.8393558925017715,
+                "startleTicks": 33,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -104
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 397,
+            "appearance": {
+              "entityId": 397,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#46734d",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.389
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.suburban-mom",
+            "faction": "civilian",
+            "transform": {
+              "x": 40.7854,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 1.2348259971049689
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.suburban-mom",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 40.7854,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 40.7854,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "bus-stop",
+              "waypoints": [
+                {
+                  "x": 40.7854,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 40.7854,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.2977602830855175,
+                "fleeSpeed": 3.4501851841807367,
+                "startleTicks": 27,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -117
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 398,
+            "appearance": {
+              "entityId": 398,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#a86645",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.526
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 44.7854,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 6.1393274540768585
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 44.7854,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 44.7854,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 44.7854,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 44.7854,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3938162728212773,
+                "fleeSpeed": 3.216644445806742,
+                "startleTicks": 36,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -130
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 399,
+            "appearance": {
+              "entityId": 399,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#e5d9b9",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.663000000000004
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bathrobe-neighbor",
+            "faction": "civilian",
+            "transform": {
+              "x": 47.7854,
+              "z": -62.4,
+              "y": 0.85,
+              "yaw": 3.688743115094154
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.bathrobe-neighbor",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 47.7854,
+                    "z": -62.4
+                  },
+                  "facing": {
+                    "x": 47.7854,
+                    "z": -57.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "chat",
+              "waypoints": [
+                {
+                  "x": 47.7854,
+                  "z": -62.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 47.7854,
+                "z": -62.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3139575001550838,
+                "fleeSpeed": 3.4044600584730507,
+                "startleTicks": 41,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -143
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 400,
+            "appearance": {
+              "entityId": 400,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#79865b",
+              "accessories": [],
+              "handProp": null,
+              "tier": "frail"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.800000000000004
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 27.785400000000003,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 4.349980613764404
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 27.785400000000003,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 27.785400000000003,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 27.785400000000003,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 27.785400000000003,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4133358891122043,
+                "fleeSpeed": 3.92976620644331,
+                "startleTicks": 38,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -156
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 401,
+            "appearance": {
+              "entityId": 401,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#79865b",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 54.937000000000005
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.suburban-mom",
+            "faction": "civilian",
+            "transform": {
+              "x": 30.785400000000003,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 0.4216498442770483
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.suburban-mom",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 30.785400000000003,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 30.785400000000003,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "bus-stop",
+              "waypoints": [
+                {
+                  "x": 30.785400000000003,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 30.785400000000003,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3374897980131208,
+                "fleeSpeed": 3.8128430780023335,
+                "startleTicks": 29,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -169
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 402,
+            "appearance": {
+              "entityId": 402,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#d4ad32",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.074000000000005
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bathrobe-neighbor",
+            "faction": "civilian",
+            "transform": {
+              "x": 34.7854,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 5.62895390312987
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.bathrobe-neighbor",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 34.7854,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 34.7854,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "chat",
+              "waypoints": [
+                {
+                  "x": 34.7854,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 34.7854,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3665033739060164,
+                "fleeSpeed": 3.5748576425760983,
+                "startleTicks": 28,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -182
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 403,
+            "appearance": {
+              "entityId": 403,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#d4ad32",
+              "accessories": [],
+              "handProp": null,
+              "tier": "frail"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.211000000000006
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bbq-dad",
+            "faction": "civilian",
+            "transform": {
+              "x": 40.7854,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 4.904036522588363
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.bbq-dad",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 40.7854,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 40.7854,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "walk-dog",
+              "waypoints": [
+                {
+                  "x": 40.7854,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 40.7854,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3440896065207197,
+                "fleeSpeed": 3.7878077771514653,
+                "startleTicks": 32,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -195
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 404,
+            "appearance": {
+              "entityId": 404,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#968d78",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.348000000000006
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.delivery-driver",
+            "faction": "civilian",
+            "transform": {
+              "x": 44.7854,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 2.497853015661392
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.delivery-driver",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 44.7854,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 44.7854,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "carry-belongings",
+              "waypoints": [
+                {
+                  "x": 44.7854,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 44.7854,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.2048249936662614,
+                "fleeSpeed": 3.4866856910288337,
+                "startleTicks": 20,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -208
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 405,
+            "appearance": {
+              "entityId": 405,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#6b517c",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.48500000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bbq-dad",
+            "faction": "civilian",
+            "transform": {
+              "x": 47.7854,
+              "z": -61.4,
+              "y": 0.85,
+              "yaw": 4.835385135988266
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.bbq-dad",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 47.7854,
+                    "z": -61.4
+                  },
+                  "facing": {
+                    "x": 47.7854,
+                    "z": -56.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "walk-dog",
+              "waypoints": [
+                {
+                  "x": 47.7854,
+                  "z": -61.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 47.7854,
+                "z": -61.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4418248531408608,
+                "fleeSpeed": 3.3950964104384185,
+                "startleTicks": 33,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -221
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 406,
+            "appearance": {
+              "entityId": 406,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#ac7a91",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.62200000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.bbq-dad",
+            "faction": "civilian",
+            "transform": {
+              "x": 27.785400000000003,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 6.021458267506407
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.bbq-dad",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 27.785400000000003,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 27.785400000000003,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "walk-dog",
+              "waypoints": [
+                {
+                  "x": 27.785400000000003,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 27.785400000000003,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3993995326338335,
+                "fleeSpeed": 3.989632263407111,
+                "startleTicks": 36,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -234
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 407,
+            "appearance": {
+              "entityId": 407,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#c4473d",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.75900000000001
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.jogger",
+            "faction": "civilian",
+            "transform": {
+              "x": 30.785400000000003,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 6.233474657422919
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.jogger",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 30.785400000000003,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 30.785400000000003,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "jog",
+              "waypoints": [
+                {
+                  "x": 30.785400000000003,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 30.785400000000003,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.469926585117355,
+                "fleeSpeed": 3.8634586237370967,
+                "startleTicks": 24,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -247
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 408,
+            "appearance": {
+              "entityId": 408,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#6b517c",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 55.896
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.cashier",
+            "faction": "civilian",
+            "transform": {
+              "x": 34.7854,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 1.4685073304133331
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.cashier",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 34.7854,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 34.7854,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "shop",
+              "waypoints": [
+                {
+                  "x": 34.7854,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 34.7854,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.4849205216625705,
+                "fleeSpeed": 3.6765928365290166,
+                "startleTicks": 43,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -260
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 409,
+            "appearance": {
+              "entityId": 409,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#f2efe4",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 56.033
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.cashier",
+            "faction": "civilian",
+            "transform": {
+              "x": 40.7854,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 0.2467499067411895
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.cashier",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 40.7854,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 40.7854,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "shop",
+              "waypoints": [
+                {
+                  "x": 40.7854,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 40.7854,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3853628725046292,
+                "fleeSpeed": 3.7138616485521196,
+                "startleTicks": 31,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "idle",
+                "start": -273
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 410,
+            "appearance": {
+              "entityId": 410,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#c4473d",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 56.17
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.suburban-mom",
+            "faction": "civilian",
+            "transform": {
+              "x": 44.7854,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 0.15774645941321397
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-woman-b.aftermath",
+              "variant": "inf.suburban-mom",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 44.7854,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 44.7854,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "bus-stop",
+              "waypoints": [
+                {
+                  "x": 44.7854,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 44.7854,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.218368808296509,
+                "fleeSpeed": 3.987433146685362,
+                "startleTicks": 30,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -286
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 411,
+            "appearance": {
+              "entityId": 411,
+              "asset": "npc.civilian-woman-b.aftermath",
+              "tint": "#6d5aa8",
+              "accessories": [],
+              "handProp": null,
+              "tier": "average"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 56.307
+            }
+          },
+          {
+            "kind": "civilian",
+            "archetype": "npc.delivery-driver",
+            "faction": "civilian",
+            "transform": {
+              "x": 47.7854,
+              "z": -60.4,
+              "y": 0.85,
+              "yaw": 1.8692000071573764
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "civilian": {
+              "state": "calm",
+              "ambient": false,
+              "adult": true,
+              "pet": null,
+              "owner": null,
+              "model": "npc.civilian-man-b.aftermath",
+              "variant": "inf.delivery-driver",
+              "schedule": [
+                {
+                  "activity": "look",
+                  "anchor": "l5/hidden",
+                  "target": {
+                    "x": 47.7854,
+                    "z": -60.4
+                  },
+                  "facing": {
+                    "x": 47.7854,
+                    "z": -55.4
+                  },
+                  "ticks": 21600
+                }
+              ],
+              "scheduleStep": 0,
+              "activityUntil": 0,
+              "activityStarted": 0,
+              "lastTravelProgress": 0,
+              "routine": "carry-belongings",
+              "waypoints": [
+                {
+                  "x": 47.7854,
+                  "z": -60.4
+                }
+              ],
+              "waypoint": 0,
+              "pauseUntil": 9007199254740991,
+              "entered": 0,
+              "until": 0,
+              "downTicks": 0,
+              "eyesGlow": false,
+              "veins": 0,
+              "attacker": 0,
+              "threat": {
+                "x": 47.7854,
+                "z": -60.4
+              },
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0,
+              "gore": false,
+              "knockedUntil": 0,
+              "l1": {
+                "walkSpeed": 1.3067890787031502,
+                "fleeSpeed": 3.600837904959917,
+                "startleTicks": 36,
+                "refuge": null,
+                "target": null,
+                "repickAt": 0,
+                "noticed": -1
+              },
+              "story": {
+                "clip": "npc-gesture",
+                "start": -299
+              },
+              "floorY": 0.15
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "id": 412,
+            "appearance": {
+              "entityId": 412,
+              "asset": "npc.civilian-man-b.aftermath",
+              "tint": "#f2efe4",
+              "accessories": [],
+              "handProp": null,
+              "tier": "athletic"
+            },
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 56.444
+            }
+          }
+        ]
+      },
+      "steps": [
+        {
+          "id": "emerge",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "look",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "metro",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "launchPolicy": "headless; macOS ANGLE/Metal; isolated profile; ephemeral non3300 preview port; no frame/CPU timing"
+}

@@ -1,0 +1,182 @@
+{
+ "note": "Known LOD fidelity defects on 2026-10-13 (qa-low-tier): backlog for an asset lane. Remove an entry once its LODs are rebuilt; never add one to make a new asset pass.",
+ "assets": {
+  "amb.flamingo": [
+   "lod1 top silhouette IoU",
+   "lod2 game silhouette IoU",
+   "lod2 side silhouette IoU",
+   "lod2 top silhouette IoU"
+  ],
+  "bld.cafe-corner": [
+   "lod2 material pal_foliage gone"
+  ],
+  "bld.clinic-annex": [
+   "lod2 material pal_asphalt gone",
+   "lod2 material pal_foliageDark gone",
+   "lod2 material pal_sidewalk gone"
+  ],
+  "bld.fire-station": [
+   "lod2 material pal_sidewalk gone",
+   "lod2 material pal_survivorRed gone"
+  ],
+  "bld.garage-detached": [
+   "lod2 material pal_foliage gone",
+   "lod2 material pal_grass gone",
+   "lod2 side silhouette IoU"
+  ],
+  "bld.hospital": [
+   "lod2 material pal_asphalt gone",
+   "lod2 material pal_sidewalk gone"
+  ],
+  "bld.hospital-exterior": [
+   "lod2 material pal_asphalt gone",
+   "lod2 material pal_sidewalk gone"
+  ],
+  "bld.house-b": [
+   "lod2 material pal_foliage gone"
+  ],
+  "bld.house-d": [
+   "lod1 material pal_mustardLight gone",
+   "lod1 material pal_navy gone",
+   "lod1 material pal_sidewalk gone",
+   "lod1 material pal_woodWarm gone",
+   "lod2 material pal_mustardLight gone",
+   "lod2 material pal_navy gone",
+   "lod2 material pal_sidewalk gone",
+   "lod2 material pal_woodWarm gone"
+  ],
+  "bld.house-e": [
+   "lod1 material pal_apronSage gone",
+   "lod1 material pal_navy gone",
+   "lod1 material pal_sidewalk gone",
+   "lod1 material pal_woodWarm gone",
+   "lod2 material pal_apronSage gone",
+   "lod2 material pal_navy gone",
+   "lod2 material pal_sidewalk gone",
+   "lod2 material pal_woodWarm gone"
+  ],
+  "bld.maple-hardware": [
+   "lod2 material pal_sidewalk gone"
+  ],
+  "bld.supermarket": [
+   "lod2 material pal_skinWarm gone",
+   "lod2 material pal_woodWarm gone"
+  ],
+  "decay.abandoned-checkpoint": [
+   "lod2 game silhouette IoU",
+   "lod2 top silhouette IoU"
+  ],
+  "decay.blown-sandbags": [
+   "lod1 side silhouette IoU",
+   "lod2 side silhouette IoU"
+  ],
+  "decay.burned-facade.house": [
+   "lod2 material pal_woodWarm gone"
+  ],
+  "decay.collapsed-facade": [
+   "lod2 material pal_uiDark gone"
+  ],
+  "house.driveway.anchor": [
+   "lod1 y extent",
+   "lod2 y extent"
+  ],
+  "house.driveway.empty": [
+   "lod1 y extent",
+   "lod2 y extent"
+  ],
+  "house.porch-a": [
+   "lod2 game silhouette IoU"
+  ],
+  "house.porch-b": [
+   "lod2 game silhouette IoU"
+  ],
+  "int.food-court": [
+   "lod2 material pal_khaki gone",
+   "lod2 material pal_silver gone"
+  ],
+  "int.supermarket": [
+   "lod2 material pal_skinWarm gone",
+   "lod2 material pal_woodWarm gone"
+  ],
+  "kit.army-checkpoint": [
+   "lod2 game silhouette IoU"
+  ],
+  "kit.car-wash": [
+   "lod2 material pal_silver gone"
+  ],
+  "prop.bbq": [
+   "lod2 front silhouette IoU",
+   "lod2 game silhouette IoU",
+   "lod2 side silhouette IoU",
+   "lod2 z extent"
+  ],
+  "prop.crowd-fence": [
+   "lod1 game silhouette IoU",
+   "lod2 game silhouette IoU"
+  ],
+  "prop.flamingo": [
+   "lod2 front silhouette IoU",
+   "lod2 game silhouette IoU",
+   "lod2 side silhouette IoU",
+   "lod2 top silhouette IoU"
+  ],
+  "prop.flower": [
+   "lod1 front silhouette IoU",
+   "lod1 game silhouette IoU",
+   "lod2 front silhouette IoU",
+   "lod2 game silhouette IoU",
+   "lod2 side silhouette IoU",
+   "lod2 top silhouette IoU"
+  ],
+  "prop.flower-bed": [
+   "lod1 x extent",
+   "lod2 x extent",
+   "lod2 y extent"
+  ],
+  "prop.flower-bed.large": [
+   "lod1 x extent",
+   "lod2 x extent",
+   "lod2 y extent"
+  ],
+  "prop.flower-bed.small": [
+   "lod1 x extent",
+   "lod2 side silhouette IoU",
+   "lod2 y extent"
+  ],
+  "prop.flower-box": [
+   "lod1 x extent",
+   "lod2 front silhouette IoU",
+   "lod2 side silhouette IoU",
+   "lod2 y extent"
+  ],
+  "prop.gnome": [
+   "lod2 top silhouette IoU"
+  ],
+  "prop.hmg-nest": [
+   "lod2 front silhouette IoU",
+   "lod2 side silhouette IoU"
+  ],
+  "prop.hose-reel": [
+   "lod2 side silhouette IoU"
+  ],
+  "prop.package-courier": [
+   "lod2 material pal_leatherShadow gone"
+  ],
+  "prop.recycling-bin": [
+   "lod2 front silhouette IoU"
+  ],
+  "veh.courier-bike": [
+   "lod1 material pal_asphalt gone",
+   "lod2 game silhouette IoU",
+   "lod2 material pal_asphalt gone",
+   "lod2 side silhouette IoU"
+  ],
+  "veh.helicopter": [
+   "lod2 front silhouette IoU"
+  ],
+  "veh.jeep-red": [
+   "lod1 side silhouette IoU",
+   "lod2 side silhouette IoU"
+  ]
+ }
+}

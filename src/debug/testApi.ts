@@ -1,0 +1,289 @@
+import { profileCpu } from './performance/profileCpu';
+import { LevelEightBot } from './bot/LevelEightBot';
+import { LevelSevenBot } from './bot/LevelSevenBot';
+import { LevelNineBot } from './bot/LevelNineBot';
+import { LevelTenBot } from './bot/LevelTenBot';
+import type { Tier } from '../levels/districts/types';
+import { LevelSixBot, type L6Profile } from './bot/LevelSixBot';
+import { weatherRayDither, weatherSurface } from '../render/WeatherView';
+import { LevelOneBot } from './bot/LevelOneBot';
+import type { Inspection } from './Inspection';
+import { LevelThreeBot, type L3Profile, type L3StreetChoice } from './bot/LevelThreeBot';
+import { LevelFourBot, type L4Profile, type L4RouteChoice } from './bot/LevelFourBot';
+import { LevelFiveBot, type L5Profile } from './bot/LevelFiveBot';
+import { LevelTwoBot, type L2Opening } from './bot/LevelTwoBot';
+import { missionControls } from '../sim/missions/controls';
+import { installL1Outbreak } from '../sim/outbreak/install';
+import { BarricadeBot } from './bot/BarricadeBot';
+import { stateHash } from '../sim/world/stateHash';
+import { propSequence } from './scenarios/propSequence';
+import { Driver } from './bot/Driver';
+import { runAudioL1Bot } from './audioBot';
+import { renderAudio } from './audioHarness';
+import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
+import { Vector3 } from 'three';
+import { CrowdFigureProbe } from '../render/characters/CrowdFigureProbe';
+import { corpseLayout } from '../render/characters/CorpseLayout';
+import type { Action, BindingMap } from '../data/bindings';
+import type { Recording } from '../input/Recorder';
+import type { Game } from '../Game';
+import type { EntityFilter, EntitySnapshot, GameEvent, GameStateSnapshot, InputFrame } from '../sim/world/types';
+import { deviceKinds, type DeviceKind, type DeviceOptions } from '../sim/interact/Interactables';
+import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind, type HazardOptions } from '../sim/interact/Hazards';
+import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
+import { replayApi } from '../telemetry/replayDriver';
+
+import { validateSave } from '../sim/progression/Save';
+import type { CampaignSave, CampaignSettings, ProgressionPreset } from '../sim/progression/Campaign';
+export type { ProgressionPreset } from '../sim/progression/Campaign';
+export type Settings = Omit<Parameters<Game['view']['settings']>[0], 'quality'> & Partial<import('../audio/AudioService').AudioSettings> & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting; quality?: CampaignSettings['quality']; textSize?: 1 | 1.25 | 1.5; colorblind?: boolean };
+export interface BotStatus { running: boolean; policy: string | null }
+
+/** Version 1.10: campaign saves/presets plus NPCs, crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
+type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
+export interface SSTestApi {
+  inspect: Pick<Inspection, 'enable' | 'setCamera' | 'follow' | 'timeScale' | 'anchors' | 'state' | 'jump' | 'lod'>;
+  version: string;
+  /** E13: copied campaign state; menu uses native UI; restore validates/applies without writing storage. */
+  campaign: {
+    state():CampaignSave|null; menu():void; save():boolean;
+    restore(save:CampaignSave):void;
+  };
+  /** E12 mission controls share the headless sim entry points; state is copied. */
+  missions: ReturnType<typeof missionControls>;
+  /** E08 authoring hooks use exactly the headless production NPC systems. */
+  npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; finish(id: number): void; courage(amount: number): void; quality(tier: 'high' | 'low'): void;
+    /** Fixture health, like teleport: prepares an injured/dead civilian without changing friendly-fire rules. */
+    health(id: number, current: number): void;
+    /** L1 v2 (lane D): install the outbreak layer + morning population on the loaded D-GROVE; returns stats. */
+    l1Outbreak(setup?: import('../sim/outbreak/install').L1OutbreakSetup): { civilians: number }; l1Stats(): Record<string, number> };
+  ready: Promise<void>;
+  pause(): void;
+  resume(): void;
+  step(ticks: number): Promise<void>;
+  setTimeScale(scale: number): void;
+  tick(): number;
+  loadLevel(id: string, opts?: { seed?: number; checkpoint?: string; tier?: Tier; progression?: ProgressionPreset }): Promise<void>;
+  loadScenario(name: string, opts?: { seed?: number }): Promise<void>;
+  /** Additive E01 harness hook: unload all scenario-owned sim and GPU resources. */
+  unloadScenario(): Promise<void>;
+  crowdFigures(): ReturnType<Game['view']['crowdFigures']>;
+  getState(): GameStateSnapshot & { districts?:ReturnType<import('../sim/world/DistrictWorld').DistrictWorld['getState']>|null; render: ReturnType<Game['view']['getState']> };
+  getEntity(id: number): EntitySnapshot | null;
+  query(filter: EntityFilter): EntitySnapshot[];
+  events(sinceTick?: number): GameEvent[];
+  input: {
+    set(frame: Partial<InputFrame>): void; clear(): void;
+    /** E03: physical binding map and validation message, also exposed by the Controls form. */
+    bindings(): BindingMap; rebind(action: Action, code: string): { ok: boolean; message: string };
+    /** Ground → client pixels using the current camera. Tests still send real device events. */
+    project(pos: { x: number; z: number }, plane?: 'destination' | 'player'): { x: number; y: number };
+    visible(pos: { x: number; z: number }): boolean;
+    /** Body-pick candidates of the last click (normalised capsule distance; <= 1 is a hit). */
+    lastPick(): { id: number; score: number; depth: number; drawn: boolean }[];
+    /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
+    record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
+  };
+  /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
+  spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
+  /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
+  /** E27: fire a data-driven blast (ExplosionDef id) or wreck a vehicle (it explodes 3 s later); state copies sim pools. */
+  explosions: { blast(id: string, pos: { x: number; z: number }): void; wreck(vehicleId: number): void; state(): ReturnType<import('../sim/combat/Explosions').Explosions['snapshot']> | null };
+  barricades: { intact(slotId: string): boolean; all(groupId: string): boolean; slots(): { id: number; state: import('../sim/interact/Barricades').BarricadeState }[] };
+  interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
+  teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
+  /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
+  /** Live cosmetic selection resolves after the chosen character is loaded and warmed. */
+  survivor: { select(variant: SurvivorVariant, tier?: GearTier): Promise<void>; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void;
+    /** E19 presentation hooks (normally set by the bicycle/mission sims). */
+    present(patch: { riding?: boolean; carrying?: string | null }): void };
+  setLoadout(left: string[], right: string[]): void;
+  physicsProps: { scriptedSequence(): string };
+  cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; /** Melee-down every live infected (they recover later, like a bat knockdown). */ downAll(): void; completeObjective(id?: string): void };
+  bot: { plan(): { frame: InputFrame; slot: number; target: EntitySnapshot['transform'] | null }; start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver' | 'no-axe' | 'evade-only', options?: { street?: L3StreetChoice; route?: L4RouteChoice; opening?: L2Opening }): void; stop(): void; status(): BotStatus };
+  /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
+  camera: { preset(name: string): void; follow(): void; zoom(ratio: number): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose, instant?: boolean): void };
+  /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
+  settings: { set(patch: Partial<Settings>): void };
+  /** E15 render-only clock/event probes. stepRender never advances simulation or its RNG; the next render consumes the new time. */
+  vfx: { stepRender(seconds: number): void; emit(event: Omit<Extract<GameEvent, { type: 'vfx.effect' }>, 'tick'> | WithoutTick<Extract<GameEvent, { type: 'telegraph' }>> | Omit<Extract<GameEvent, { type: 'attack.resolved' }>, 'tick'> | Omit<Extract<GameEvent, { type: 'vehicle.feedback' }>, 'tick'>): void };
+  /** E16: graph active with output muted in test mode. emit() uses the production sim event bus.
+   * render() returns a native OfflineAudioContext PCM WAV, for independent measurement. */
+  audio: {
+    /** Also loads the lazy sprite banks so the first play of every cue is deterministic. */
+    unlock():Promise<void>;snapshot():ReturnType<Game['audio']['snapshot']>;
+    play(id:string,options?:import('../audio/AudioGraph').PlayOptions,sourceId?:number):number|null;
+    emit(event:GameEvent):void;clearLog():void;
+    map(map:import('../audio/acoustics').AcousticMap):void;
+    emitters():{id:number;cue:string;priority:number;gain:number;rate:number;cutoff:number;position:import('../data/audioEvents').SoundPosition|null;panner:string|null;loop:boolean}[];
+    render(request:import('./audioHarness').AudioRenderRequest):Promise<import('./audioHarness').AudioRenderResult>;
+    /** Decode and scan each sprite slice; peak detects empty imports as well as truncated grids. */
+    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number;peak:number}[]>;
+    profile():{p50Ms:number;p95Ms:number;maxVoices:number;limit:number;ticks:number};
+    l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
+    interrupt():Promise<void>;
+  };
+  look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
+  /** E18 synthetic GPU cost in milliseconds; zero clears it. */
+  /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
+  weather: { probe(mode: 'up' | 'snow' | 'wet' | 'tracks' | 'precipitation' | 'dense-precipitation' | null, assetId?: string): void; override(kind: import('../data/weather').WeatherKind | null, intensity?: number): void; strike(at: { x: number; y: number; z: number }): void };
+  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void;
+    /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
+    figureJoints(on: boolean): void;
+    /** Blank-viewport probe: camera pose/matrices/near/far, visible scene children, the first mesh under five screen points, renderer and PostFx diagnostics. */
+    renderProbe(): Record<string, unknown>; corpseLayout(): { count: number; sunkPairs: number; heapPairs: number; repeatedPairs: number; maxDisplacementM: number; courierClear: boolean }; cpuProfile(): Record<string, number> };
+  perf(): ReturnType<Game['perf']>;
+  /** Telemetry replays (`?telemetry=record` keeps the input log in memory; tools/replay/play.ts feeds it back). */
+  replay: ReturnType<typeof replayApi>;
+  screenshotReady(): Promise<void>;
+  /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
+  lights: { addTransient(position: { x: number; z: number }, color: string, intensity: number, radius: number, ttl: number): void; state(): ReturnType<import('../render/LightField').LightField['snapshot']> | null };
+}
+declare global { interface Window { __SS__?: SSTestApi } }
+
+export class NotImplemented extends Error {
+  constructor(epic: string, method: string) { super(`NotImplemented ${epic}: ${method}`); this.name = 'NotImplemented'; }
+}
+function pending(epic: string, method: string): never { throw new NotImplemented(epic, method); }
+
+/** Called only by the query-gated dynamic import in main.ts. */
+export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
+  let physicalPlanner: LevelThreeBot | LevelFourBot | LevelSixBot | null = null, plannerLevel = '';
+  const teleport: SSTestApi['teleport'] = (id, pos) => {
+    missionControls(game.world).teleport(id, pos);
+    if (id === 1 || id === 'player') game.view.snapCamera();
+    game.view.update(1);
+  };
+  const api: SSTestApi = {
+    look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
+    inspect: { enable: (...args) => game.inspect!.enable(...args), setCamera: pose => game.inspect!.setCamera(pose), follow: id => game.inspect!.follow(id), timeScale: x => game.inspect!.timeScale(x), anchors: () => game.inspect!.anchors(), state: () => game.inspect!.state(), jump: id => game.inspect!.jump(id), lod: mode => game.inspect!.lod(mode) },
+    version: '1.12.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), finish: id => { const e = game.world.entities.get(id); if (!e?.civilian) throw new Error(`No civilian fixture ${id}`); game.world.npcs!.civilians.state(e, 'finished'); }, courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+      health: (id, current) => {
+        const e = game.world.entities.get(id);
+        if (!e?.civilian || !Number.isFinite(current) || current < 0 || current > e.health.max) throw new RangeError('Invalid civilian fixture health');
+        e.health.current = current;
+      },
+      l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
+      l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), teleport, load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
+    campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
+    pause: () => game.clock.pause(), resume: () => game.clock.resume(),
+    step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
+    lights: { addTransient: (position, color, intensity, radius, ttl) => { game.view.lightField?.addTransient(position, color, intensity, radius, ttl); }, state: () => game.view.lightField?.snapshot() ?? null },
+    loadLevel: (id, opts) => {
+      return game.loadLevel(id, opts);
+    },
+    loadScenario: (name, opts) => game.loadScenario(name, opts?.seed),
+    unloadScenario: () => game.loadScenario(null),
+    crowdFigures: () => game.view.crowdFigures(),
+    getState: () => ({ ...game.world.getState(), ...(game.world.districts?{districts:game.world.districts.getState()}:{}), render: game.view.getState() }), getEntity: (id) => game.world.getEntity(id),
+    query: (filter) => game.world.query(filter), events: (since) => game.world.events.events(since),
+    input: {
+      set: (frame) => { game.world.setInput(frame); game.input.inject(frame); },
+      clear: () => { game.input.clear(); game.world.clearInput(); },
+      bindings: () => game.input.bindings.get(), rebind: (action, code) => game.input.rebind(action, code),
+      lastPick: () => structuredClone(game.input.picker.last),
+      visible: (pos) => { const p = game.world.entities.get(1); return !!p && !!game.world.infected?.nav.visible(p.transform, pos, 0); },
+      project: (pos, plane = 'destination') => {
+        game.view.camera.updateMatrixWorld();
+        const floor = plane === 'player' ? game.world.entities.get(1)?.transform ?? pos : pos;
+        // Match RayCursor's walkable paving surface, including raised camp paving.
+        const point = new Vector3(pos.x, game.world.districts?.pavingHeight(floor.x,floor.z)??0, pos.z).project(game.view.camera);
+        const rect = game.view.renderer.domElement.getBoundingClientRect();
+        return { x: rect.left + (point.x + 1) / 2 * rect.width, y: rect.top + (1 - point.y) / 2 * rect.height };
+      },
+      record: () => {
+        if (!game.world.scenario || game.world.tick !== 0) throw new Error('Load and pause a scenario before recording at tick zero.');
+        game.input.recorder.start({ level: game.world.scenario, seed: game.world.seed });
+      },
+      stopRecording: () => game.input.recorder.stop(),
+      replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
+    },
+    spawn: (id, pos, opts) => {
+      if (id.startsWith('vehicle.')) { if (!game.world.vehicles) throw new Error('Load a survivor scenario'); const entityId = game.world.vehicles.spawn(id, pos); game.view.update(1); return entityId; }
+      const [prefix, kind] = id.split('.');
+      if (prefix === 'device' && (deviceKinds as readonly string[]).includes(kind) && game.world.interactables) return game.world.interactables.spawn(kind as DeviceKind, pos, opts as DeviceOptions);
+      if (((prefix === 'hazard' && (hazardKinds as readonly string[]).includes(kind)) || (prefix === 'prop' && (destructibleKinds as readonly string[]).includes(kind))) && game.world.hazards) return game.world.hazards.spawn(kind as HazardKind | DestructibleKind, pos, opts as HazardOptions);
+      if (prefix === 'pickup' && (pickupKinds as readonly string[]).includes(kind) && game.world.pickups) return game.world.pickups.spawn(kind as PickupKind, pos, (opts as { item?: string } | undefined)?.item);
+      if (game.world.combat && (id.startsWith('weapon.') || id.startsWith('ability.'))) return game.world.combat.pickups.spawn(id, pos);
+      // Patient Zero is a mission combat actor, outside the pooled E07 archetype catalog.
+      if (id === 'infected.patient-zero' && game.world.combat) return game.world.spawnDummy(id, pos, opts);
+      if (game.world.infected) return game.world.infected.spawn(id, pos, opts);
+      if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
+      throw new Error('Load an infected or combat scenario before spawning');
+    },
+    explosions: { blast: (id, pos) => game.world.explosions!.blast(id, pos), wreck: id => game.world.vehicles!.damage(id, 1e6), state: () => structuredClone(game.world.explosions?.snapshot() ?? null) },
+    barricades: { intact: id => game.world.barricades?.barricadeIntact(id) ?? false, all: id => game.world.barricades?.allBarricaded(id) ?? false, slots: () => game.world.entities.values().filter(e => e.barricade).map(e => ({ id: e.id, state: structuredClone(e.barricade!) })) },
+    interact: {
+      giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
+      barricade: (id, on) => game.world.interactables!.barricade(id, on), hit: (id, amount, type) => game.world.hazards!.hit(id, amount, type),
+    },
+    teleport,
+    survivor: {
+      select: async (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); await game.view.prepareCharacterVariant(); game.view.update(1); },
+      damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },
+      act: (action) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.act(action, game.world.tick); game.view.update(1); },
+      checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
+      present: (patch) => {
+        const pose = game.world.player?.entity.survivor; if (!pose) throw new Error('Load a survivor scenario first');
+        const player = game.world.entities.get(1) as { riding?: number } | undefined;
+        if (patch.riding !== undefined && player) { if (patch.riding) player.riding ??= -1; else delete player.riding; }
+        if (patch.carrying !== undefined) { if (patch.carrying) pose.carrying = patch.carrying; else delete pose.carrying; }
+      },
+    },
+    setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
+    physicsProps: { scriptedSequence: () => { propSequence(game.world); game.view.update(1); return stateHash(game.world.getState()); } },
+    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) {e.health.current = 0;e.infected!.recoverAt=-1;} }, downAll: () => { const damage = game.world.combat?.damage, player = game.world.entities.get(1); if (game.world.infected && damage && player) for (const e of [...game.world.infected.active]) if (e.health.current > 0 && !e.hidden && e.archetype !== 'infected.crow') damage.apply({ attackId: 0, actionId: 'weapon.bat', sourceId: 1, targetId: e.id, origin: player.transform, direction: { x: 1, z: 0 }, base: 1e6, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 }); }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
+    bot: { plan: () => {
+      if (plannerLevel !== game.world.scenario || !physicalPlanner) { plannerLevel = game.world.scenario ?? ''; physicalPlanner = plannerLevel === 'L3' ? new LevelThreeBot(game.world,'complete') : plannerLevel === 'L6' ? new LevelSixBot(game.world,'complete') : new LevelFourBot(game.world,'complete'); }
+      const frame=physicalPlanner.sample(), target=frame.attackTarget?game.world.entities.get(frame.attackTarget.id):undefined;
+      const loadout=game.world.combat!.runner.loadout, side=frame.attackTarget?.side;
+      const slot=side?loadout.activeEntries().findIndex(entry=>entry.side===side&&entry.index===loadout.state[side].index):-1;
+      return {frame:structuredClone(frame),slot,target:target?{...target.transform}:null};
+    }, start: (policy, options) => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); if (game.world.scenario === 'barricade-lab' && (!policy || policy === 'complete')) { game.driver = new BarricadeBot(game.world); return; } if (game.world.scenario === 'L1' && (!policy || policy === 'complete' || policy === 'newbie' || policy === 'idle')) { game.driver = new LevelOneBot(game.world, policy); return; } if (game.world.scenario === 'L2' && policy && policy !== 'driver' && policy !== 'evade-only') { game.driver = new LevelTwoBot(game.world, policy, options?.opening); return; } if (game.world.scenario === 'L3' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelThreeBot(game.world, policy as L3Profile, options?.street); return; } if (game.world.scenario === 'L4' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelFourBot(game.world, policy as L4Profile, options?.route); return; } if (game.world.scenario === 'L7') { game.driver = new LevelSevenBot(game.world, policy); return; } if (game.world.scenario === 'L8') { game.driver = new LevelEightBot(game.world, policy); return; } if (game.world.scenario === 'L9') { game.driver = new LevelNineBot(game.world, 'road', true, .7, policy); return; } if (game.world.scenario === 'L10') { game.driver = new LevelTenBot(game.world, policy); return; } if (game.world.scenario === 'L6' && policy && ['complete','newbie','evade-only','idle'].includes(policy)) { game.driver = new LevelSixBot(game.world, policy as L6Profile); return; } if (game.world.scenario === 'L5' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelFiveBot(game.world, policy as L5Profile); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelSevenBot || game.driver instanceof LevelEightBot || game.driver instanceof LevelNineBot || game.driver instanceof LevelTenBot ? game.driver.profile : game.driver instanceof BarricadeBot ? game.driver.profile : game.driver instanceof LevelOneBot ? game.driver.profile : game.driver instanceof LevelTwoBot ? game.driver.profile : game.driver instanceof LevelThreeBot ? game.driver.profile : game.driver ? 'driver' : null }) },
+    camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), zoom: ratio => { const rig = game.view.view; rig.zoom(Math.log(ratio / rig.getState().targetZoom), true); game.view.advance(0); game.view.update(1); }, shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose, instant) => game.view.view.cinematic(pose, instant) },
+    settings: { set: (patch) => { if (patch.textSize !== undefined || patch.colorblind !== undefined || patch.quality !== undefined) { game.ui.settings.patch(patch); game.ui.applySettings(); } if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); if (patch.quality !== undefined) game.setQuality(patch.quality); const quality = patch.quality !== undefined ? game.quality.tier : undefined; game.view.settings({ ...patch, quality }); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist','textSize','colorblind'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
+    vfx: {
+      stepRender: (seconds) => game.view.frame(seconds),
+      emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
+    },
+    audio: {
+      unlock:async()=>{ await game.audio.unlock(); await game.audio.registry.preloadLazy(); },snapshot:()=>game.audio.snapshot(),
+      play:(id,opts,sourceId)=>game.audio.play(id,opts,sourceId)?.id??null,
+      emit:event=>game.world.events.emit(event),clearLog:()=>{game.audio.log.length=0;},
+      map:map=>{game.audio.graph.map=map;},
+      emitters:()=>[...game.audio.graph.active.values()].map(v=>({id:v.id,cue:v.cue,priority:v.priority,gain:v.gain.gain.value,rate:v.source.playbackRate.value,cutoff:v.filter.frequency.value,position:v.position,panner:v.panner?.panningModel??null,loop:v.source.loop})),
+      profile:()=>{
+        const times:number[]=[];let maxVoices=0;
+         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size+game.audio.score.voices);}
+        times.sort((a,b)=>a-b);return {p50Ms:times[300],p95Ms:times[570],maxVoices,limit:game.audio.graph.limiter.limit,ticks:600};
+      },
+      render:renderAudio,l1Bot:()=>runAudioL1Bot(game),
+      decode:async format=>{
+        const {audioCategories,audioCues,audioFile}=await import('../data/audioCues');
+        const result=[];
+        for(const category of audioCategories){
+          const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());
+          for(const cue of Object.values(audioCues))if(cue.category===category){
+            if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);
+            let peak=0;const samples=buffer.getChannelData(0),start=Math.round(cue.offset*buffer.sampleRate),end=Math.min(samples.length,Math.round((cue.offset+cue.duration)*buffer.sampleRate));
+            for(let i=start;i<end;i++)peak=Math.max(peak,Math.abs(samples[i]));
+            result.push({id:cue.id,frames:end-start,peak});
+          }
+        }
+        return result;
+      },
+      interrupt:async()=>{
+        // Chromium cannot enter Safari's platform interruption state. Exercise the real handler with
+        // only the browser-provided state accessor replaced; suspend still calls the native context.
+        Object.defineProperty(game.audio.context,'state',{configurable:true,get:()=> 'interrupted'});
+        game.audio.context.dispatchEvent(new Event('statechange'));
+        delete (game.audio.context as unknown as {state?:string}).state;
+        await new Promise<void>(resolve=>setTimeout(resolve,50));
+      },
+    },
+    weather: { probe: (mode, assetId) => { game.view.weatherMask(mode === 'precipitation' || mode === 'dense-precipitation' ? 'weather' : mode ? assetId ?? null : null); weatherRayDither.value = mode === 'dense-precipitation' ? 0 : 1; weatherSurface.probe.value = mode === 'up' ? 1 : mode === 'snow' ? 2 : mode === 'wet' ? 3 : mode === 'tracks' ? 4 : 0; game.view.update(1); }, override: (kind, intensity) => { game.world.weather?.setOverride(kind, intensity); game.view.update(1); }, strike: at => game.world.weather?.strike(at) },
+    debug: { corpseLayout: () => corpseLayout(game.world).audit(), cpuProfile: () => profileCpu(game), renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; }, renderProbe: () => game.view.renderProbe() },
+    perf: () => game.perf(), screenshotReady: () => game.screenshotReady(), replay: replayApi(game),
+  };
+  window.__SS__ = api; return api;
+}

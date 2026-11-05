@@ -1,0 +1,63 @@
+{
+ "name": "look-l10-fields-r4-evac-z1",
+ "note": "look-l10-l8-2 (QA batch 20: \"The night fields are mostly empty dark green apart from the courier's lamp\"): R4 military zone: a flood-lit evac point in the field (light tower, iso tents, generator, ambulance, sandbags), crop rows and a burning car. Look for: ground that reads as a place, warm pools off the route verge, nothing floating or sunk, no clipping, no flicker.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    1950,
+    -145
+   ],
+   [
+    2150,
+    -5
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.0
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    2030,
+    -75
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      2070,
+      -75
+     ]
+    ]
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

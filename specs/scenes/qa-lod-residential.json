@@ -1,0 +1,26 @@
+{
+  "name": "qa-lod-residential",
+  "note": "PKG-17/18/19: driveway, planter, flower, pool and sprinkler tiers at the game camera (lod bands in metrics.lods)",
+  "ground": "grass",
+  "size": 40,
+  "props": [
+    { "id": "drive-hoop", "asset": "house.driveway.hoop", "at": [-8, 0], "yaw": 0 },
+    { "id": "drive-anchor", "asset": "house.driveway.anchor", "at": [-3.2, 4.2], "yaw": 0 },
+    { "id": "drive-empty", "asset": "house.driveway.empty", "at": [-3.2, -4.2], "yaw": 0 },
+    { "id": "bed-large", "asset": "prop.flower-bed.large", "at": [1.5, 4.5], "yaw": 90 },
+    { "id": "bed-small", "asset": "prop.flower-bed.small", "at": [1.5, 1.6], "yaw": 90 },
+    { "id": "box", "asset": "prop.flower-box", "at": [1.5, -0.6], "yaw": 90 },
+    { "id": "flower-1", "asset": "prop.flower", "at": [1.5, -2.2], "yaw": 90 },
+    { "id": "flower-2", "asset": "prop.flower", "at": [1.5, -3.0], "yaw": 90 },
+    { "id": "pool", "asset": "prop.kiddie-pool", "at": [5.5, 2.5], "yaw": 0 },
+    { "id": "sprinkler", "asset": "prop.sprinkler", "at": [5.5, -2], "yaw": 0 }
+  ],
+  "actors": [
+    { "id": "walker", "kind": "pedestrian", "at": [3.5, 0], "yaw": 90,
+      "look": { "model": "npc.civilian-elderly", "tint": "#7a9e6a" } }
+  ],
+  "camera": { "mode": "game", "target": [1, 0], "zoom": 1.0 },
+  "frames": 40,
+  "shots": [40],
+  "expect": { "consoleErrors": 0 }
+}

@@ -1,0 +1,69 @@
+{
+  "result": "TIME BOX COMPLETE — NO-GO",
+  "summary": "40 native routes and all 40 desktop backend/quality cells were attempted on the merged game. Current physical coverage: 36 completed, 4 unresolved route failures. Acceptance remains 15 PASS, 25 FAIL, 129 NOT CHECKED; 10 exact PO review requests. All four quiet L4 A/B cells pass. No game-source change or reduction of counts/targets was adopted.",
+  "work": [
+    "Candidate game source is the merged dd7aabe6c tree, unchanged by this lane. [Build and host identities](builds.json) retain the frozen candidate and freshly rebuilt PROD 0c410e111 artifacts. No push or deployment.",
+    "Added only the authorized L4-07 clarification to the source criterion: reachability starts at the first physical breach/gate opening. First attack ≤10s, rate≥6/min and the 90% bound remain unchanged. Read-only ground, active-vault and positive-damage rail-crossing queries preserve all other geometry and body clearance. [Rail counterexamples](l4-barrier-proof.json) reject a short bound, an undamageable rail and an unbreakable shed.",
+    "L4 remains FAIL after the clarification. Final low/high complete/stationary receipts record the opening scope, bounded-path minimum and every unproven legal route. [Static geometry diagnosis](l4-geometry-diagnosis.json) locates the two surviving low-tier unresolved actors near the reception kit; their initial static positions are body-clear, so overlap is not established as the cause.",
+    "Proved and corrected the omitted starting-cell centre in the independent L1 path checker. A 9.33 m continuous full-radius path fits the unchanged 23.27 m bound; the actual native final state stays deb3bfd1. [Reproducible proof](start-cell-proof.json).",
+    "Automated L3's exact first-of fallback tick and cause. The actual high-tier idle fallback fires at 8 inside, tick 2794, with 0 officers naturally turned; the latter remains a separate FAIL. A process-local threshold 7 fault is detected, then restored. [Control and counterexample](fallback-boundary-proof.json).",
+    "Automated every L6 retreat/exit tick against fixed initial destinations and all three gate branches at four courier positions each. Both ordinary native final states match their original controls. A deliberately moving marker is detected. [Proof](l6-marker-proof.json).",
+    "Qualified complete native clause coverage for L1-08, L3-11 and L6-10. Prior historical FAILs remain attributed and cannot be cleared automatically by a current passing subset.",
+    "Rejected the L3 self-defence, lateral-formation and retired-waiting-admission trials: they did not satisfy officer shares, squad loss or increasing density while preserving authored totals. The stream-front trials still produced zero natural officer turns. All game changes were reverted; diagnostic receipts are linked below.",
+    "Retained the physical L5 high/WebGL2 search stop and L7 low/WebGPU evacuation stop. The instrumented L7 rerun completed with a different combat/rescue sequence; it does not resolve the original survivor 74 m behind. [Both attempts and follower trajectory](l7-diagnosis.json).",
+    "The shared pool uses one headless GPU Chrome root. A diagnostic briefly overlapped both functional clients (three contexts on that root); follow-up jobs were then serialized. No functional frame timings are used. Quiet performance uses exclusive single-context admission. The brief's L4 low character 120 / infected 80 budgets remain intact (high 190 / 120).",
+    "All 40 final native state hashes equal the initial merged-head receipts. [Equivalence](native-equivalence.json). The final acceptance audit rebuilds all 169 rows and validates 40 native routes, 20 controls, 94 checkpoint cases and40 current desktop receipts. [Audit](../fix51-verify/audit.json).",
+    "The default L10 worker has a proven six-minute budget defect. Actual production save/Resume batches completed both low-tier playthroughs through credits without objective skips; both high-tier continuations encountered separate real-input route failures and remain unqualified. Original aborts and failed continuations are retained. [Method and replay](l10-batching.md), [outcomes](l10-physical-summary.json). Integrating batching into the general worker remains open.",
+    "L4-07 remains FAIL after the authorized clarification: bounded-path minima are 56.14%/76.81% at low and 61.82%/70.89% at high (complete/stationary). Every-infected legal-route coverage remains unproven. Scope starts after the actual opening; all attack values and targets and the native final states match the original receipts. [Four-route scope proof](l4-scope-proof.json).",
+    "Quiet L4 performance passes at low/high on WebGPU and WebGL2. The first-minute native hold samples contain 29–37 living infected at low and 41–78 at high; they do not certify the later population peak or phones. Character/infected caps 120/80 at low and 190/120 at high are unchanged. [Full measurements](perf-summary.json).",
+    "Repaired the L10 evaluator fault fixtures to mutate normalPeak, the field the merged evaluator actually reads. All 23 broken evaluator fixtures and 10 process-local production faults are detected; numeric targets are unchanged. The inventory no longer tells owners to fix stale numeric failures when the current measured clauses pass."
+  ],
+  "gates": [
+    {
+      "command": "npx tsc --noEmit",
+      "result": "PASS",
+      "evidence": "../fix51-verify/validation/typecheck.log"
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS",
+      "evidence": "../fix51-verify/validation/lint.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "evidence": "../fix51-verify/validation/test.log"
+    },
+    {
+      "command": "native observer equivalence",
+      "result": "PASS 40/40",
+      "evidence": "native-equivalence.json"
+    },
+    {
+      "command": "acceptance audit / evaluator proof",
+      "result": "PASS 169 rows /23 broken fixtures detected",
+      "evidence": "../fix51-verify/audit.json"
+    },
+    {
+      "command": "physical desktop matrix",
+      "result": "36 complete /4 route failures",
+      "evidence": "physical-coverage.json"
+    },
+    {
+      "command": "quiet L4 A/B vs PROD 0c410e111",
+      "result": "PASS 4/4 cells",
+      "evidence": "perf-summary.json"
+    },
+    {
+      "command": "npm run qa:threat (alone; 600s budget)",
+      "result": "PASS 0 flags; 364.2s",
+      "evidence": "threat-gate.json"
+    }
+  ],
+  "remainingLaneActions": [
+    "Resolve the four physical route failures described below: L5 high/WebGL2 search; L7 low/WebGPU escort; L10 high/WebGL2 console approach; L10 high/WebGPU research-campus approach. Distinguish input-policy failures from demonstrated game defects; retain the original attempts.",
+    "Finish the objective automation and visual/device coverage in every remaining row below. Passing subsets, aggregate attack rates and native completion do not close compound criteria.",
+    "Integrate bounded production Resume batching into the standard L10 browser worker, retaining ten-minute reservations and no objective skips.",
+    "Complete the ten exact subjective PO requests below. Existing objective failures and harmless/babysitting findings continue to block GO."
+  ]
+}

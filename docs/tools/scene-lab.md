@@ -1,0 +1,604 @@
+# Scene Lab (QA agents)
+
+Scene Lab builds a small isolated scene from real game content and steps it in a headless browser. Use it to check
+a house, a backyard, a sitting pedestrian, a horde or an explosion without playing a level.
+
+It runs the real game modules: the composition loader, `DistrictWorld` (collision and navigation), `DistrictView`
+(static instancing, LOD, foliage, grass), the renderer and PostFx, the courier, the L1 pedestrian and infected crowd,
+the corgi, vehicle physics and the explosion system. The rules are L1's: the morning light, the L1 infected brain
+and pedestrian looks. If a scene passes here, the same content behaves the same way in the game.
+
+- Runtime: `src/debug/scenelab/` (`SceneLab.ts`, `spec.ts`, `geometry.ts` for clipping, `motion.ts` for foot metrics). The browser exposes it as `window.__SCENE__` with `?test=1&scenelab`.
+- Runner and MCP server: `tools/scenelab/` (`cli.ts`, `mcp.ts`, `session.ts`, `mcp-smoke.ts`).
+- Examples: `specs/scenes/*.json`. The `qa-*` specs are the standing QA sweep (couriers, corgi, pedestrians, infected, D-GROVE chunks and `qa-grove-clipping-all`); run them with `npm run scene -- specs/scenes/qa-*.json` and add `--backend webgpu` for the character ones.
+
+## CLI
+
+For an intermittent black viewport across reloads, replay the supplied paths in their
+original order in one browser (the lock is required):
+
+```sh
+SCENE_PORT=3414 sh tools/e2e-lock.sh npx tsx tools/scenelab/reload-diagnostic.ts first.json second.json --repeat 3 --out test-results/reloads
+# Historical specs can be read directly from a commit with --revision <SHA>.
+```
+
+This records console messages, canvas pixel brightness and
+`window.__SCENE__.renderDiagnostics()` every 12 simulation frames (change with
+`--interval`). The hook reports backend/context loss, bound target, framebuffer
+completeness, renderer memory and cache releases, plus current/retired PostFx target
+identities, sizes and disposal events. Resize also emits target disposal events;
+they do not alone indicate a dead target. It does not consume GL errors or change
+render state. Contact sheets and `diagnostics.json` preserve each repetition;
+an entirely dark sample also keeps its PNG and makes the command fail. Visual
+review must still confirm ground and courier visibility; brightness alone cannot.
+Supply the actual retained batch order: a reconstructed order cannot close the finding.
+
+```sh
+npm run scene -- specs/scenes/bench-sitter.json
+npm run scene -- specs/scenes/*.json                      # several scenes, one browser
+npm run scene -- specs/scenes/courier-turns.json --frames 600 --shots 0,120,480 --video 4
+npm run scene -- specs/scenes/house.json --backend webgpu --tier low --out test-results/scenes/x
+npm run scene -- specs/scenes/courier-turns.json --query skin=0   # extra game URL params (A/B)
+```
+
+- **Headless and locked.** It always runs headless and takes the shared e2e browser lock (`tools/e2e-lock.sh`), so it may wait for another lane first.
+- **Private server.** It starts its own Vite dev server on `SCENE_PORT` (default 3341, never 3300), so you always test the current sources. `SCENE_SERVER=preview` serves `dist/` instead.
+  Set `SCENE_DIST=/absolute/path/to/immutable-dist` with preview mode to keep a capture batch on a separate production build while work continues.
+- **Deterministic.** The seed comes from the spec (default 1), and the sim runs on fixed 60 Hz ticks. Every tick also renders one frame. Before advancing the next tick, Scene Lab waits for the previous tick's pending district LOD/terrain loads. Accelerated stepping otherwise consumes the two-second movement prefetch horizon before browser download/decode tasks can run. The game clock gives those tasks real time; this barrier gives the same requests time to finish without changing simulation inputs or LOD selection. It never repairs a frame already drawn: the zero stand-in gate still samples every tick, and missing prefetch fails on first entry. Use `tools/qa/lod-pop-probe.ts --realtime` to audit actual streaming at game speed; use `tools/qa/lod-standins-negative.ts` to prove the Scene Lab gate still detects missing prefetch.
+- **Outputs.** Each spec writes to `test-results/scenes/<name>[-webgpu][-low]/`:
+  - `shot-NNNN.png`: the frame number after N ticks, taken once LOD0 streaming has settled.
+  - `video.webm`: 20 fps, when `--video` or the spec's `video` is set.
+  - `metrics.json`: everything below, plus `checks`, `consoleErrors` and `timing`.
+- **Exit code.** It exits 1 when an `expect` gate fails or the scene throws. stdout gets a short JSON summary.
+- **Speed.** A scene usually takes 5–8 s once the browser is open, and about 17 s with a video.
+
+### Parallel lanes and capacity probes
+
+The Mac's shared lock budgets **three live browsers**, rather than three commands. One Scene Lab CLI/MCP
+session costs one unit. A Playwright command reserves its worker count (one or two; the default is two).
+Keep several related specs in a single CLI invocation so they reuse the existing browser/page.
+Every lane must set a unique `SCENE_PORT`; a running server on another lane's port can serve different sources.
+Use `E2E_UNITS=2 sh tools/e2e-lock.sh ...` for an opaque wrapper that will launch two browsers.
+A nested wrapper can reuse its parent's reservation but cannot enlarge it.
+
+Native timing/perf probes run through `tools/perf/quiet-run.sh` directly, with one Playwright worker.
+It reserves at least four slot files to cover the legacy range and explicit four-unit runs, checks host load,
+and prevents another browser lane entering midway through measurement. `E2E_SLOTS=1` on an ordinary
+lock wrapper only serializes that caller; it does not make the machine quiet. Coordinate capacity defaults
+across worktrees. The normal default is three; four is an explicit throughput override, not an extra worker per lane.
+
+Measured on the M4/16 GiB Mac: actual CLI lanes delivered 14.4/25.4/33.1/38.0 scenes per minute at N=1/2/3/4.
+Three kept 87% of four's throughput, with 6,630 versus 7,551 MiB peak summed RSS. A shared warm browser
+and a shared immutable preview did not produce a material gain. See the [report and sources](../reports/render-test-parallel.md)
+for workload limits, memory accounting and all results. This is a capacity estimate for the measured fixtures;
+timing gates still need exclusive runs.
+
+Reproduce the probes after `npm run build`; keep the benchmark's ports 3471–3476 free:
+
+```sh
+SCENE_PORT=3471 SCENE_SERVER=preview sh tools/perf/quiet-run.sh npx tsx tools/scenelab/parallel-benchmark.ts --mode isolated --parallel 3 --rounds 2
+SCENE_PORT=3471 SCENE_SERVER=preview sh tools/perf/quiet-run.sh npx tsx tools/scenelab/parallel-benchmark.ts --mode warm --parallel 3 --rounds 2
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode lanes --parallel 3
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode lanes --parallel 3 --shared-preview
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode playwright --parallel 2
+node tools/scenelab/summarize-benchmark.mjs
+```
+
+The shared-preview prototype copies `dist/`, identifies it by commit plus served-content digest, and owns
+one Vite preview process for the benchmark. It is not a persistent service for other lanes. The browser probe
+also accepts `--channel chromium` (unified headless) and `--cdp` with `--mode warm` (attach to its own browser).
+`SceneSession.open(browser)` can borrow a headless browser; each session gets an isolated context, and
+`close()` closes that context while leaving the owner's browser alive.
+
+## Health-bar fixtures
+
+`barArchetypes: ["infected.runner"]` temporarily enables the shared bar for named definitions while the view initializes; the production definitions are restored immediately. Use this to exercise Alpha's bar contract before its archetype is available. Shipped infected zoo definitions already enable bars.
+`infectedCap: 200` overrides this fixture's L1 cap (low tier uses half); omit it for ordinary scenes. This supports the 200/100 pooled-bar stress fixture without changing campaign caps.
+
+## Writing a spec
+
+```jsonc
+{
+  "name": "bench-sitter",
+  "seed": 1,
+  "ground": "sidewalk",            // grass | asphalt | sidewalk | district (baked ground of layout.district)
+  "size": 20,                       // square slab edge in metres (synthetic scenes)
+  "time": "L1",                     // L1 (game morning), L2, L3, L4/golden, L5, L6, night
+  "props": [{ "id": "bench", "asset": "prop.bench", "at": [0, 0], "yaw": 90, "scale": 0.95 }],
+  "actors": [
+    { "id": "sitter", "kind": "pedestrian", "at": [2.5, -3],
+      "look": { "model": "npc.civilian-man-b", "tint": "#d8b04a", "handProp": "coffee" },
+      "state": { "sit": "bench" } }
+  ],
+  "camera": { "mode": "close", "target": [0, 0.7, 0], "radius": 5, "azimuth": 150 },
+  "frames": 300, "shots": [0, 300],
+  "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}
+```
+
+**Coordinates.** Positions are game metres on the ground plane: `[x, z]`, and props may also give `[x, y, z]`. Yaw is in
+degrees about +Y, with the same convention as layout placements. A yaw-0 asset faces its manifest `forward` (+X), and
+a yaw-0 actor faces +X.
+
+### Static content
+
+- **`props`** take any manifest id (`src/assets/manifest.json`): `bld.*`, `prop.*`, `veh.*` (static) or `house.*` kit pieces. They are placed with the same record the Blender layout exporter writes, so collision, navigation, light groups and crowns match a shipped district.
+- **`layout`** copies placements from a shipped district: `{ "district": "D-GROVE", "bbox": [[x0, z0], [x1, z1]], "assets": ["prop.flower-bed*", "prop.picket-fence"], "ids": [...], "recenter": true }`.
+  - `level: "L2"` applies the shipped L2 dressing and road-clearance rules before cropping. `level: "L4"` / `"L5"` pick the D-FAIR copy (the clean army city / its devastated W5 twin; use `tier: 5`, `time: "L5"`). Scene Lab powers every placement, so the L5 power-out is only visible in the game, not here.
+  - `assets` accepts a trailing `*` as a prefix match.
+  - `recenter` moves the crop so its centre is at the origin.
+  - `ground: "district"` keeps that district's baked roads and paving, and its surface and lawn polygons (so the bicycle's pavement rule and kerb heights work).
+- **Displaced furniture fixtures:** a pushable in `props` may supply `rotation: [x, y, z, w]` (quaternion) to reproduce a tipped pose. Give it an explicit `id`. This represents displacement during play; authored layouts are checked separately for clear roads.
+- **Static instances are baked at load.** Adding a prop with `place` reloads the scene, and the frame counter goes back to 0.
+
+### Actors
+
+| kind | notes |
+| --- | --- |
+| `courier` | The player entity; at most one. God mode is on by default (`"god": false` turns it off). She is empty-handed as at the L1 start; `"loadout": ["weapon.bat", "weapon.fists"]` arms her. `look.model`: `female` or `male`. With no courier, the player is hidden in a corner. |
+| `pedestrian` | An L1 pedestrian (outbreak layer). `look`: `model` (`npc.civilian-man-a`/`-b`, `npc.civilian-woman-a`/`-b`, `npc.civilian-elderly`), `tint`, `accessories` (`cap`, `glasses`, `backpack`, `scarf`), `handProp` (`coffee`, `bag`, `phone`, `cane`, `watering-can`), `tier`, `role`. |
+| `infected` | `archetype` (default `infected.runner`; see `src/data/infected.ts`). `count` and `spread` spawn a ring; the ids become `<id>-1` … `<id>-N`. Under L1 rules, runners get a pedestrian look. Infected see in a cone, so give them a `yaw` that faces their target. |
+| `animal` | A healthy zoo animal: `species` is `lion`, `gorilla`, `elephant`, `zebra` or `flamingo`. Uses `Civilians.spawn(..., { zooAnimal })` and the same-id outbreak lifecycle. Natural runner bites convert it; `{ infect: { by: "biter" } }` isolates the visible transition. Healthy animals have no infected brain or health bar. |
+| `corgi` | The companion. It always follows the courier. |
+
+**Spawn positions** must be on free navigation, not inside a collider. Otherwise the scene throws `... outside navigation`.
+
+### Actions
+
+Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, "actor": "courier", "do": {...} }`) and through MCP `command`.
+
+| Action | Applies to | What it does |
+| --- | --- | --- |
+| `"idle"` / `{ "idle": true }` | all | Stand still. |
+| `{ "walk": [[x, z], ...], "loop": true }`, `{ "run": [...] }` | courier, pedestrian | Follow a path. The courier is driven like a keyboard player, so turns are crisp. A path that doubles back gives 180° turns. |
+| `{ "moveTo": [x, z], "pace": "walk" }` | courier, pedestrian | Click-to-move with the game's pathfinding. |
+| `{ "turn": deg }` | all | Turn to face that yaw; the courier turns on the spot. |
+| `{ "sit": "<placement id or asset id>" }` | pedestrian | Sit on that prop, using the same seat rule as L1. |
+| `{ "attack": "<actor id>", "seconds": 2, "side": "RIGHT" }` | courier | The real target-attack input; `side` (default `LEFT`) is the loadout slot used, so a `["weapon.bat", "weapon.pistol"]` loadout fires the pistol with `"side": "RIGHT"`. |
+| `{ "aim": "<actor id>", "seconds": 2, "move": [0, 0] }` | courier | Ordinary pointer aim without firing; optional walking direction for aim/turn blend review. |
+| `{ "select": "LEFT" \| "RIGHT" }` | courier | Switch the equipped slot. Only the selected slot's weapon is in her right hand; the other is hidden while stowed. |
+| `{ "click": "<actor id>", "part": "head" }` | courier | One click on the drawn body part (`head`, `chest`, `hip`, `feet`) of that actor, resolved by the game's click pick (`src/input/ClickPick.ts`). `metrics.clicks` lists each click (picked actor, swing tick) and `swings`; see `qa-click-group`. |
+| `"chase"` / `{ "chase": "<actor id>" }` | infected | Chase. |
+| `{ "hit": { "from": "<actor id>" or [x, z], "heavy": true } }` | all | A heavy hit is a knockdown. |
+| `{ "survivor": { "slot": 0 } }` | pedestrian | An E23 follower: it follows the courier in its slot behind her (alternating sides, 2-5 m, 3.8 m/s) and crouches while an infected is within 8 m. See `qa-l5-group`. |
+| `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
+| `{ "flee": [x, z] }` | pedestrian | Flee from that point. |
+| `{ "mountBike": "<vehicle id>" }`, `{ "dismount": true }` | courier | A real interact press next to the bike. |
+| `{ "handover": { "building": "<placement or asset id>", "meet": "courier" or [x, z], "pauseS": 2.2 } }` | pedestrian | The L1 hand-over walk (`src/sim/missions/doorRoute.ts`): out of the building's street door (`src/data/buildingDoors.ts`) with the parcel, to arm's length in front of `meet`, give and wave, back in the same way. `"legacy": true` replays the pre-2026-10-08 straight-line walk (A/B with `--query doors=0`, which also freezes the animated doors). |
+
+### Vehicles
+
+`"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
+
+- **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **L9 floor vehicle (E31):** a `vehicles` entry accepts `"floor": true` (the mission zero-HP policy: staged damage, 60% speed cap at zero, never destroyed or exited) and `"health": <hp>` (durability set through the real damage path). Catalog: `veh-apc-floor-stages`, `veh-apc-floor-drive`.
+- **Static vehicle damage:** `veh.*` props accept `decay: "wrecked"` or `"burned"`. Vehicles without authored variants retain their shell with darkened surfaces and extinguished lamps; the manifest still lists only authored variants.
+- **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
+- **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
+- **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
+- **Traffic:** `traffic` is the kinematic ambient-traffic box.
+
+### Mega Alpha pursuit (E32, L10-S3)
+
+`"megaAlpha": { "id": "mega", "at": [x, z], "route": { "nodes": [...], "links": [...] }, "resident": [[x0, z0], [x1, z1]] }`
+installs the shipped `MegaPursuit` (`src/sim/ai/MegaPursuit.ts`) and introduces the one Mega Alpha at `at` as actor `id`
+(camera targets may name it). It always pursues the courier (no sight, hearing or lure), at 0.7 x her run. Outside the optional
+`resident` box it runs coarse (the off-region 2 Hz route advance); `route` is an authored node graph. `metrics.megaAlpha`: `cruiseMs`,
+`detailedMedianMs`, `cruiseError`, `stepMaxM`, `modes` (frames per coarse/detailed/close/recover/breach), `stuckLevelMax`, `distanceMinM`,
+distance/mode/band `samples` every 30 frames and the pursuit `state`. Catalog: `inf-mega-pursuit` (follow camera on the Mega through a
+container yard), `inf-mega-arrival` (off-region start, arrival at a waiting courier).
+
+### House emergence
+
+`"emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 }` runs the game's own L1 beat-9
+emergence (`src/sim/outbreak/HouseEmergence.ts`) at that house placement: from `frame` on, `count` residents are
+spawned inside the house behind the front door, the door swings open with the first one and stays open, and each one
+stumbles out over the threshold, across the porch, down the treads and through the gate before chasing the courier.
+They become actors `resident-0` .. (`id` renames them). Any building whose door has `emerge` data in
+`src/data/buildingDoors.ts` works (currently `bld.house-a` and `bld.clinic-annex`); the door is the same animated leaf the
+hand-over walks use (`metrics.doors`, gate `doorClosedFramesMax`), held open once the first resident steps out (`SimWorld.openDoor`).
+`metrics.emergence` gives the door, the release point and the frame the door opened;
+each resident's `firstDrawn.outM` is how far past the threshold it was first drawn (negative = inside).
+See `specs/scenes/qa-l1-house-emergence*.json`.
+
+### Effects and timeline
+
+`"script": [{ "frame": 20, "effect": { "wreck": "sedan" } }]`
+
+- **Effects:**
+  - `{ "weaponPickup": "weapon.shotgun", "at": [x, z], "surfaceY": 0.385, "yaw": 90 }`: the real action pickup view and interaction; optional `surfaceY` is the authored shelf top in world metres, yaw is degrees.
+  - `{ "metroShutter": 0.5 }`: pose the shipped metro leaf with the L5 render path (0 open, 1 closed). `tools/l5/scenes/` isolates the shotgun shelf and all three door poses.
+  - `{ "blast": "explosion.car", "at": [x, z] }`: see `src/data/explosions.ts` for the ids.
+  - `{ "wreck": "<vehicle id>" }`: the car explodes about 3 s later.
+  - `{ "fire": [x, z] }` and `{ "smoke": [x, z] }`.
+- **Other script steps:** `{ "frame": N, "camera": {...} }` and `{ "frame": N, "time": "night" }`.
+
+### Camera
+
+All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` or an actor id.
+
+- **`game`:** `{ "mode": "game", "target": [x, z], "zoom": 1 }`. The game camera (radius 19 × zoom, polar 0.30π, azimuth 45°).
+- **`follow`:** `{ "mode": "follow", "actor": "courier", "zoom": 0.6 }`. The same angle, tracking an actor every frame.
+- **`close`:** `{ "mode": "close", "target": ..., "radius": 5, "azimuth": 150 }`. The game angle at a short radius.
+- **`orbit`:** `{ "mode": "orbit", "target": ..., "radius": 10, "azimuth": 45, "polar": 54, "spin": 30 }`. `spin` is in degrees per second.
+- **`pose`:** `{ "mode": "pose", "position": [...], "target": [...] }`.
+
+### Expectations
+
+`expect` sets gates; the runner exits 1 if one fails:
+
+- `consoleErrors` (default 0)
+- `propSinkMaxCm`: deepest drawn pushable vertex below the drawn ground; use `1` for the 1 cm furniture contact gate.
+- `propGroundSamplesMin`: minimum contact samples, so an empty or undrawn fixture cannot pass.
+- `clippingMax` (static placement, actor bone, and native hand versus held-prop mesh intersections)
+- `heldPropIntersectionsMax` (native hand triangles versus the held prop, after the actual LOD reduction; use `0`)
+- `heldPropSamplesMin` (minimum sampled hand/prop pairs, preventing an absent prop from passing)
+- `heldPropHoldMin` (mug/phone: lowest drawn prop centre between hip 0 and shoulders 1, over every frame and LOD band; `metrics.heldProps.holds.<actor>` gives `heightMin`, `straightMax` and frames per `lods`). The seated drinker before the 10-13 fix: 0.34; now 0.53. Use 0.5.
+- `heldPropArmStraightMax` (mug/phone: shoulder-wrist distance over arm length; 1 is a hanging straight arm). Use 0.95.
+- `seeThroughLowPropsMax` (placements lower than an occluder, 1.1 m, drawn with the courier-hole cut material; `metrics.seeThrough.cutLowProps`). Use 0.
+- `seeThroughCutPixelsMax` / `seeThroughCutInsideMin` (PO 10-14 "buildings that are not in the way get transparent"): the end frame against the same frame with the solid-occluder cut forced off. Pixels that differ outside the hole disc around the courier (radius `solidRadius`, whole screen while a roof hugs the lens) are buildings or vehicles cut with nothing in the way: use 0. Inside the disc a real occluder must differ (`...InsideMin`). Result in `metrics.json` `seeThroughCut`; `metrics.seeThrough.occluders` names the placement that opened the hole. Scenes: `seethrough-open-sidewalk-l4`, `seethrough-behind-building-l4`.
+- Top-level `vehicleSilhouettes: ["<vehicle id>"]` measures every frame from 0 through `frames`, independently of sheet thinning. It compares the selected vehicle with its own unfaded body mask at the identical pose/camera, with its shadows disabled in all passes. Retained body coverage must be >= 60% when the camera segments do not hit the vehicle, or >= 30% when it blocks the player. Empty canvas reads fail; individual samples are saved in `metrics.json.vehicleSilhouettes`. Scenes: `apc-sedan-contact`, `seethrough-sedan-silhouette`, `seethrough-apc-*`.
+- `seeThroughOpenFramesMin` (frames the solid-occluder hole was open; a cutaway fixture must actually open it). `metrics.seeThrough` also reports `solidRadiusMax`.
+- `footSlideMaxCm`
+- `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
+- `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
+- `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
+- `megaCruiseErrorMax` (E32-AC10: |median detailed-mode speed of the Mega Alpha / cruise 0.7 x run - 1|; use 0.02) and `megaStepMaxM` (largest single-tick move while resident: no teleport; use 0.25). Need `megaAlpha`.
+- `corgiCourierOverlapMaxCm`: corgi trunk/head/muzzle capsule penetration into the drawn courier body, including both legs (cm). Requires contact samples.
+- `corgiRunLagMaxM`: greatest distance behind the courier along her movement direction while she runs above 2.5 m/s. Requires running samples. Both companion gates report worst frames in `metrics.companion`.
+- `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
+- `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
+- `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)
+- `vehicleRideRemainingMaxM` (remaining L2 route distance; prevents a stationary ride passing its motion gates)
+- `wheelSinkMaxCm` (drawn tyre tread against drawn ground)
+- `yawDriftMaxDeg`
+- `torsoPitchMaxDeg`
+- `clickMissMax` (clicks on a drawn body that picked another actor or nothing, or did not start a swing within 100 ms / right after the running swing and cooldown; out-of-reach picks count as approaches)
+- `drawCallsMax`
+- `trianglesMax`
+- `emergeOutsideMax` (`emerge` residents first drawn past the door threshold, or never drawn)
+- `lodPlaceholderFramesMax` (frames a placement was drawn from a coarser stand-in mesh than its selected LOD band, so its real LOD0/LOD1 had not arrived; `metrics.lodPlaceholders` names asset and tiers; use 0)
+- `farLodCloseMax` (frames any actor drew its far LOD, lod2, within 14 m of the camera; `metrics.actors.<id>.farLodCloseFrames`)
+- `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
+- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime. `emerge` residents pass through their door here too.
+
+`clipping` takes these options:
+
+- `ignore: [["a", "b"], ...]`: pairs of placement ids or asset ids.
+- `ignoreFoliage: true`: skip pairs with a tree, bush or hedge (crowns rise behind houses and bushes stand in beds by design).
+- `sameAsset: true`: also check chains of one asset. Fence and hedge runs share end posts by design, so they are skipped by default.
+- `slackCm` (default 2).
+
+### Night navigation contrast (E31-AC16)
+
+`"contrast": { "district": "D-CURE" }` (or `{ "route": [[[x, z], ...]], "halfWidthM": 4 }`) measures how well the route reads from the
+presented canvas, at every contact-sheet frame after frame 0 (the follow camera settles) and the last frame; with a driven vehicle as camera target the samples around the hull are skipped. Samples sit on the authored route (`layouts/<district>/routes.json`):
+the carriageway cross-section (centre, +-0.5 and +-0.9 of the half width) against the nearest verge on screen (1.5 / 3 / 4.5 m beyond the
+edge), every 2 m (`stepM`). Each pair is a luminance ratio `(hi + 0.02) / (lo + 0.02)` (`flare` in `tools/scenelab/contrast.ts`; the
+WCAG `.05` offset would demand a daylight-bright road at 3:1 and is reported as `wcag05` only). A pair where both sides are at least
+0.06 luminance (a lamp or fire pool) counts as 3:1: it reads by brightness. The value of a frame is the **median** pair, so a dark corner
+cannot hide a black road. `navContrastMin` gates the median over the sampled frames (the typical view), `navContrastFloor` (2.0) the worst frame, so a frame beside a fire pool may dip but no stretch of road goes black (~1.1).
+
+- `navContrastMin` (E31-AC16 night scenes: 2.5), `navContrastFloor` (2.0), `playerContrastMin` (90th percentile of a 48 px box above the screen centre against the verge),
+  `landmarkContrastMin` (`contrast.landmarks: [[x, z, height], ...]` facade samples against the verge).
+- At zoom < 1 the verge is off screen: the nav/player gates are skipped there (the zoom 1 and 1.5 matrix rows carry them).
+- `metrics.json` has `contrast[]` per sampled frame (`median`, `wcag05`, `routeL`, `vergeL`, `player`). Catalog: `--filter 'night-read-*'`
+  (R1-R6 on D-CURE and the L9 road/crawl site). The lighting side is the preset field `roadLift` (`src/data/timeOfDay.ts`): a moon-pale
+  sheen on asphalt and ground-level road paint, strongest around the survivor and easing to 40 % at the screen edge.
+
+## Layout sweep (gate for layout changes)
+
+- `npm run scene:layout` runs `specs/scenes/layout-sweep/*.json`: L2 on D-GROVE as a 4x3 grid of `layout: { level: 'L2' }` crops and L3 on D-CORRIDOR as 6 cells (the L3 layout copy is applied automatically for that district, tier 2), each with `expect.staticOverlapMax: 0` (mesh pairs from `clipping.static`; `python3 tools/scenelab/sweep-summary.py <out>` lists them). Regenerate the specs with `python3 tools/scenelab/gen-layout-sweep.py`.
+- The fast twin is `tests/unit/levels/layout-overlap.test.ts` (oriented collision boxes, no browser). Both fail on a prop or car that a level rule dropped through a fence, wall, lamp, mailbox, tree or another prop.
+- Rule for authors: level additions go through `src/levels/placementClearance.ts` (`findClearSpot`, `resolveOverlaps`): they move to the nearest clear spot and stay out of gardens; vehicles slide along their own axis first, so a "crashed" car stops with the bumper against the post. Never hand-place near a collider.
+
+## Reading metrics.json
+
+- **`checks`.** Pass/fail per `expect` gate.
+- **`consoleErrors`.** Console errors, page errors, failed requests and HTTP 4xx/5xx.
+- **`metrics.perf`.** p50, p95 and max per frame:
+  - `drawCalls` and `triangles`: the view pass, from the renderer `?profile` counters, including the PostFx scene pass.
+  - `shadowDrawCalls` and `shadowTriangles`.
+  - `stepMs`: CPU time of one sim tick plus render submission. It is not GPU time, so use the E18 perf suite for frame budgets.
+  - `lastFrame.categories`: draws per crowd, buildings, props, other and shadows.
+- **`metrics.actors.<id>`.** `position`, `yawDeg` and `state` (pedestrian, infected or corgi state, or the courier's animation). `drawnFrames` counts the frames in which the actor was actually drawn, and `lod` counts frames per detail tier. `motion` holds:
+  - `contacts`: planted-foot periods. A foot is planted while its lowest sole point is within 1.2 cm of the ground. This is the rule in `tools/playeranim` and `tools/crowdfoot`.
+  - `slideMaxCm`, `slideP95Cm`, `worstSlideFrame`: horizontal travel of a planted heel or toe. Above about 3 cm reads as skating. A worst frame of 1–5 is the spawn settle.
+  - `yawDriftMaxDeg`: foot rotation while planted. Turning on the spot shows up here.
+  - `liftMaxCm`: highest step.
+  - `sinkMaxCm`: feet below the ground.
+  - `jitterRunMax`: longest run of consecutive frames in which a sole reverses vertically by at least 0.8 cm.
+  - `torsoPitchMinDeg` and `torsoPitchMaxDeg`: hip to shoulders against vertical, positive leaning forward. The courier runs at about 3–11°. L1 infected lurch at 20–30° and hunch at about 50° when idle.
+  - Seated, knocked-down and rising clips are excluded from the foot metrics. The corgi has paws: slide only, no yaw drift. A paw that skims within 1.2 cm of the ground during its swing counts as sliding, so the corgi's slide also catches paws dragging through the floor (see `sinkMaxCm`).
+- **`metrics.bodies`.** Actor pairs whose torso (hip to shoulders, 10 cm), neck (6 cm) and head (a 20 cm capsule above the head pivot, 11 cm) capsules interpenetrate by more than 2 cm, sampled every third frame: `a`, `b`, the worst `depthCm`, its `frame` and `count`. Seated, knocked-down and dying actors are skipped. It catches crowds and melee rings piling into each other (qa-courier-attack-bat had 15.8 cm before the 1.08 m melee ring; a hit contact reads 4-6 cm).
+- **`trace`.** `"trace": true` in a spec adds each actor's per-frame samples to `metrics.actors.<id>.track`: `frame`, `clip` (or `label`, e.g. the corgi clip), `speed`, sim position `at` and the foot points. Use it to find the frame and clip behind a slide or sink.
+- **`metrics.props`.** Maximum sinking depth in cm, number of drawn-ground samples, and current per-prop signed gaps (positive is above ground). Probes use the actual selected LOD mesh vertices and the same drawn height field as vehicles.
+- **`metrics.lods`.** The current detail band of every placement (`lod0`, `lod1`, `lod2` or `culled`).
+- **`metrics.visibility`.** Sim counts against drawn counts per kind in the last frame, such as infected alive in the sim against infected figures drawn. A gap with the subject on screen is a crowd or visibility bug.
+- **`metrics.vehicles`.** Position, yaw, health and speed per vehicle id.
+- **`clipping.static`.** Placement pairs whose LOD0 meshes cut through each other. Each entry has `a`, `b`, the asset ids, `intersectingTriangles` and the contact `region` box (with `regionCm`). Any entry is real interpenetration (for example, `flowerbed-fence` reported 1208 triangle pairs where the picket fence ran through the flower bed; both the fence and the remaining 14 × 9 cm contact are fixed in the layout, the scene is a gate now).
+- **`clipping.actors`.** Rig bones (`thighL`, `shinR`, `spine`, `neck`, `upperArmL`, `foreArmR`, …) against prop meshes. `crossing: true` means the bone centre line pierces a prop surface. Otherwise `clearanceCm` is less than the bone's flesh radius minus `slackCm`, so the skin is inside the prop. The entry also gives the prop id, the worst `frame` and `count` (sampled frames with the hit). `bench-sitter` uses the game's seat anchors (`src/sim/npc/seats.ts`) and the authored squashed bench scale. With the full-height bench it pierced in 6 of 7 bones (the pelvis was about 6 cm under the 52 cm seat top); after the seat-anchor fix and the bench `hipX` 0.31 it reports nothing. A bone hit also carries `at`, the world point where the bone centre line pierces the surface.
+
+**Limits:**
+
+- Bones are probed on every third frame.
+- Pushable props (such as benches) are checked at their authored pose.
+- The courier's skeleton comes from the rig nodes, and crowd figures from the crowd pose palette (`CrowdFigureProbe` joints).
+- Vehicles are not part of the clipping report.
+
+## Common checks
+
+- **Asset in isolation.** One `props` entry and an `orbit` camera with `spin` and `video` give a turntable in game lighting. Check `metrics.lods`, `perf.triangles` and `clipping.static` (pieces of a kit fighting each other).
+- **Layout clipping.** Crop a district with `layout.bbox` and set `expect.clippingMax: 0`.
+- **Seated or posed actors.** Use `sit` or another action plus `clippingMax: 0`, and screenshot with a `close` camera.
+- **Locomotion.** Use courier `run` paths with turns and gate on `footSlideMaxCm` and `yawDriftMaxDeg`. Compare `--query skin=0` with the default.
+- **Crowds.** Spawn `count` infected, then check `visibility` (sim against drawn), `perf.drawCalls` and per-actor `lod`.
+- **Effects.** Script a `wreck` or `blast`, record a `video`, and check `consoleErrors`.
+
+## Contact sheets and the scene catalog (the QA sweep)
+
+Agents read images, not videos. A **contact sheet** is ONE `sheet.jpg`: a grid of labelled low-res snapshots (`f120` in each cell, 320 px wide, at most 24 cells, under 400 KB).
+
+```sh
+npm run scene -- specs/scenes/qa-ped-flee.json --sheet 30     # a snapshot every 30 frames -> test-results/scenes/<name>/sheet.jpg
+```
+
+- `--sheet N` (or `"sheet": N` in a spec) overrides nothing else: `--shots` and `--video` still work next to it. More than 24 cells are thinned evenly.
+- MCP `run_scene {path | spec, sheet?, frames?, shots?, video?}` runs a whole scene and returns the gates plus the sheet inline. Use it to look at what happened over time; `screenshot` is for one hi-res frame.
+- **Always open the sheet.** Gates catch numbers; the sheet shows a flat wall, a figure standing inside the courier, a black patch on the ground.
+
+**Catalog.** `specs/scenes/catalog/*.json` holds ready-to-run, gated scenes at the game camera. Names are prefixed by area: `bld-<district>-<family>` (turntable of every building family per district, LOD and clipping check; regenerate with `node tools/scenelab/gen-building-scenes.mjs`), `ped-*`, `inf-*`, `corgi-*`, `courier-*`, `fight-*` (every weapon vs 1 and 3 chasing infected, plus the 4-5 dummy racks), `bike-*`, `car-*`, `door-*`, `fx-*`, `area-grove-*`. Many entries only `extends` a spec in `specs/scenes/`, so the original stays the single source.
+
+```sh
+npm run scene:catalog                              # all scenes, <= 2 browsers (e2e lock), about 6 minutes
+npm run scene:catalog -- --filter 'fight-*'        # a glob on the scene name, comma separated: 'fx-*,car-*'
+npm run scene:catalog -- --list --filter 'bld-grove-*'
+```
+
+It writes `test-results/scene-catalog/index.md` (scene, pass/fail, every gate with value/limit, link to the sheet) and `<scene>/sheet.jpg` + `metrics.json`. No full-size PNGs are kept; re-run one scene with `npm run scene -- specs/scenes/catalog/<x>.json --shots ...` for hi-res frames. Options: `--jobs 1|2`, `--backend webgpu`, `--size 960x540`, `--out dir`. Exit code 1 when a gate fails: a red catalog scene is a real defect at the time of writing, not noise.
+
+**How a lane uses it.** After a gameplay or visual change: (1) run `npm run scene:catalog -- --filter '<your area>*'` (e.g. `fight-*`, `bld-corridor-*`, `ped-*`); (2) open each `sheet.jpg` and describe what you saw in your report; (3) if your change needs a new case, add a spec to `specs/scenes/catalog/` with gates (`consoleErrors`, `undrawnFramesMax`, `clippingMax`, `footSinkMaxCm`, `propSinkMaxCm` as fits) and a `note` saying what to look for. Do not loosen a gate to make a scene pass.
+
+## Quality x zoom matrix (deploy gate)
+
+PO 2026-10-13: "Low zoom. Bank isn't fully rendered. Coffee cup still wrong. [...] This isn't a bug that I should ever face."
+Every catalog run used to be one tier (high) at the authored zoom, so low-tier LODs, close-zoom LOD bands and the large
+close-zoom courier hole were never seen. `--matrix` runs each selected scene at the high **and** low quality tier, and
+scenes with a `game`/`follow` camera at zoom 1 **and** the closest player zoom (`zoomLimits[0]` = 0.5), as rows named
+`<scene>@<tier>-z<zoom>` (other cameras: one row per tier).
+
+```sh
+npm run scene:matrix                                    # seat-*, ped-*, corgi-*, area-grove-* on WebGPU, all four variants
+npm run scene:catalog -- --matrix --filter 'fight-*'   # any area
+```
+
+Open the sheets of **both tiers** for your area. Catalog scenes added for the 10-13 reports: `seat-bench-l1-start` (L1 start
+bench + seated coffee drinker with the hole open; gates `seeThroughLowPropsMax`, `seeThroughOpenFramesMin`, `heldPropHoldMin`,
+`heldPropArmStraightMax`), `corgi-firestation-apron` (corgi over the 0.40 m apron slabs at zoom 0.5) and
+`area-grove-garden-path` (daisies vs the stone path).
+
+**Static guards in the unit suite (no browser, run with `npm run test:unit`, also on the Hetzner runner):**
+
+| Guard | File | Catches |
+| --- | --- | --- |
+| LOD fidelity, all 206 static props/buildings/vehicles | `tests/unit/assets/lod-fidelity.test.ts` | an LOD whose extent shrinks > 12 %, whose top/front/side/game-view silhouette IoU against LOD0 drops below 0.8, or that loses a material carrying > 5 % of the surface. 40 assets failing on 2026-10-13 are listed in `lod-fidelity.baseline.json` (asset backlog); any new defect fails. Report: `test-results/lod-fidelity.json`. |
+| Decoration surface, every district and tier GLB | `tests/unit/levels/decoration-surface.test.ts` | a drawn daisy on paving, a path, a road or gravel, or one not listed in the layout's `decorations` (shared rule `src/levels/districts/decorationSurface.ts`, render filter `src/render/decorationFilter.ts`). |
+| Walkable support seams, every district | `tests/sim/world/support-seams.test.ts` | a narrow trench between raised walkable tops into which `groundHeight` drops (corgi, pedestrians, pickups, shadows sink there while the courier's capsule spans it). |
+| Bus ride smoothness | `tests/e2e/levels/l4-bus-ride-smooth.spec.ts` | set-piece screen jitter on WebGL and WebGPU, high and low, at 60/120 Hz, uneven 120 Hz, 30 Hz and an uneven phone cadence (more than one sim tick per frame). |
+
+Why each 10-13 report slipped through, and the rule now: (1) all visual QA ran at high and the default zoom: run the matrix;
+(2) LOD sheets covered only assets a lane touched: the LOD fidelity test covers all; (3) a fix was verified on one path (the
+mug hold only in the standing unit test, the bus only at <= 1 tick per frame): metrics are per actor over every LOD band and
+the ride spec runs both tiers, both backends and phone cadences; (4) metrics compared against the same query that was wrong
+(corgi paw sink was measured against the sim floor that had the seam): the seam guard checks the support query itself.
+
+## Figure look gate (`look`)
+
+Top-level `look: { whiteShareMax, lumaRiseMax?, hueDriftMaxDeg?, minPixels? }` measures the crowd figures' own pixels at every sheet frame (the frame with vs without the crowd view, courier and HUD bars hidden): `lookWhiteShare` (pale unsaturated share), `lookLumaRise` (mean brightness / frame 0) and `lookHueDriftDeg` (saturation-weighted hue vs frame 0, the live look; for near-grey looks with chroma < 0.12 on either side, e.g. a face-down worker, hue is unreliable so it compares absolute luma and chroma difference, scaled to degrees). Samples are in `metrics.json` `lookSamples`. Catalog: `alpha-hit-corpse-*` (every Alpha and Mega look shot down and lying; a hit flash must keep the figure's own colours and the body its look, see `docs/reports/alpha-white/`).
+
+## L10 pursuit and cure catalog
+
+`scene:matrix` includes `l10-q1-*`: seeded dog idle/coats/pounce/pack, obstructed and
+coarse/detailed Mega pursuit, charge/slam/grab timelines, distance-band HUD fixtures,
+both courier cure-backpack rigs, Alpha/Mega scale and R1–R7 production crops.
+Use `--query ui=1` for the UI quality-pin regression; every run records `actualTier`
+and gates `requestedQuality` after loading and stepping. Ring fixtures also gate
+band text, player centering and absence of an exact Mega entity marker.
+
+The `l10-q1-alpha-silhouette` fixture runs at high/low and zoom 0.5/1/1.5. Its
+`alphaSilhouetteBlackWhiteEdgeNoise` canvas gate measures abrupt black/white edges in an
+isolated actor crop, and `alphaSilhouetteRoughness` bounds outline pixels per sqrt(area) of
+the dark body (the old LOD2 hair-lock spikes exceed it at the close zoom rows). There is no
+expected-failure exemption. Inspect the sheet even when it passes: this diagnostic does not
+replace visual silhouette review.
+See `docs/reports/l10-q1/README.md` for scope, batch recipes and captured evidence.
+
+## MCP server
+
+`npm run scene:mcp` starts a stdio MCP server (`@modelcontextprotocol/sdk` 1.32.1, MIT).
+
+**Session.**
+
+- **Browser and lock.** It opens one headless browser on the first scene call, and takes the e2e browser lock only then.
+- **Idle close.** It closes the browser after `SCENE_MCP_IDLE` seconds idle (default 300). The `close` tool closes it at once.
+- **Outputs.** Files go to `test-results/scenes/mcp/`.
+
+**Tools:**
+
+| Tool | What it does |
+| --- | --- |
+| `load_scene` | Loads `{spec}` or `{path}`, with optional `backend` and `tier`. |
+| `place` | Adds a prop: `{asset, at, yaw, scale, id}`. Reloads the scene. |
+| `spawn_actor` | Spawns an actor: `{kind, id, at, yaw, look, archetype, count, spread, state}`. |
+| `command` | Gives an actor an action: `{actor, action}`. With `actor: "fx"`, the action is an effect. |
+| `run_scene` | Runs a whole scene (path or spec) with `sheet`, `frames`, `shots`, `video`; returns gates and the contact sheet inline. |
+| `step` | Advances the scene: `{frames}`. |
+| `set_time` | Sets the lighting preset: `{preset}`. |
+| `set_camera` | Sets the camera: `{camera}`. |
+| `screenshot` | `{name}`. Returns the PNG path and an inline 320 px thumbnail. |
+| `metrics` | The metrics above. |
+| `clipping` | The clipping report. |
+| `describe` | Placement, actor and vehicle ids. |
+| `reset` | Reloads the current spec, including spawned actors and placed props. |
+| `close` | Closes the browser and releases the lock. |
+
+**Claude Code.** Use a project-scoped `.mcp.json` at the repository root; this is an example and is not committed:
+
+```json
+{
+  "mcpServers": {
+    "scene-lab": { "command": "npx", "args": ["tsx", "tools/scenelab/mcp.ts"], "env": { "SCENE_PORT": "3341" } }
+  }
+}
+```
+
+The command form is `claude mcp add scene-lab --scope project -- npx tsx tools/scenelab/mcp.ts`. The first call can
+wait for the shared browser lock, so raise the tool timeout with `MCP_TOOL_TIMEOUT=600000`.
+
+**Codex.** Codex reads MCP servers from its own config (`~/.codex/config.toml` or a profile), so add a
+`[mcp_servers.scene-lab]` table there. This changes your Codex config; Scene Lab does not change it for you.
+
+```toml
+[mcp_servers.scene-lab]
+command = "sh"
+args = ["-c", "cd /path/to/minorincident && npx tsx tools/scenelab/mcp.ts"]
+tool_timeout_sec = 600
+```
+
+**Smoke test.** `npx tsx tools/scenelab/mcp-smoke.ts` is a scripted client. It runs load, spawn_actor, command, step,
+set_time, screenshot, metrics and clipping.
+
+## Real level inspection
+
+Scene Lab can also operate the full running mission via the [inspection camera](inspect.md):
+
+```sh
+npm run scene -- --inspect-level L2 --bot complete
+npm run scene -- --inspect-level L1 --anchor mission/lab-door --out test-results/inspect/L1
+```
+
+The CLI captures three objective anchors (or the requested anchor) and renderer metrics with console-error gates. MCP adds `inspect_level` (level, optional bot), `inspect_camera` (position/target, anchor, follow, timeScale, LOD distance), and `inspect_state` (camera, anchors, entities). The existing `screenshot` tool captures both isolated scenes and running levels. The same headless browser, shared lock, private server and output rules apply. Use `load_scene` to return to isolated scene tools.
+### Gate interaction regression
+
+`npm run scene -- docs/scenes/gate-lockin.json` isolates the shipped `gate-1` yard gate.
+`layout.anchors` copies named gameplay anchors from the source layout and applies the crop's
+recentering shift. `{ "interact": true }` sends one real courier interaction press. The scene
+closes/reopens the gate on each face and walks through it in both directions; sim regressions
+in `tests/sim/interact/gate-lockin.test.ts` assert the toggle, navigation and sight state.
+
+## Crowd and street furniture gate
+
+`propPenetrationFramesMax` gates the longest consecutive run of actor capsule ground-footprint intersections
+with non-walkable street-furniture/parked-vehicle colliders or resting E26 cuboids (2 mm contact tolerance). The metric uses simulation
+geometry independently of the navigation blockers and render LOD, samples each fixed tick, and reports every
+actor/prop pair under `metrics.propPenetration`. Hidden/dead/downed actors, seated residents and flying/perched infected
+are excluded.
+
+```sh
+npm run scene -- tests/scenes/ped-props/grove-bench.json
+SCENE_PORT=3377 sh tools/e2e-lock.sh npx tsx tools/scenelab/prop-penetration.ts
+```
+
+The second command runs the shipped L1–L6 populations with the complete bot for 1,200 ticks per level,
+and writes one capsule report per level to `test-results/ped-props/campaign/`. Any penetration lasting
+more than two consecutive ticks fails the gate. `tests/e2e/levels/prop-penetration.spec.ts` applies the same
+gate to the production build.
+
+`{ "grab": "officer" }` on an infected starts the real outbreak grab of that pedestrian. Use it for deterministic officer shove and colleague rescue captures; it runs the same grab lifecycle as gameplay.
+`{ "frame": 210, "spawnActor": { "id": "approach", "kind": "infected", "at": [13, 0], "state": { "chase": "officer" } } }` spawns an actor through the existing Scene Lab spawn API. This keeps carry captures calm until the intended approach begins.
+
+### Alpha support move fixtures
+
+Infected commands `{ "special": "alpha.grab-throw", "target": "courier" }` and
+`{ "special": "alpha.roar", "target": "courier" }` enter the production shared scheduler,
+with a copied target and fixed direction/area. `{ "corpse": true }` creates a permanent
+retained death pose which returns its brain to the existing pool on the next tick.
+Courier `{ "god": false }` enables real impact damage/knockdown (isolation defaults to god mode).
+The named fixtures are `tests/scenes/alpha-s3/qa-alpha-grab-throw.json` and
+`tests/scenes/alpha-s3/qa-alpha-roar.json`; their long timeline retains ordinary AI between specials.
+
+### W6 decay contract (L7-S1)
+
+`tier: 6` selects the heaviest world decay tier, independently of CLI `--tier high|low`
+render quality. Synthetic `props` remain present through W6; layout crops honor exact
+`minTier`/`maxTier` bounds. District authoring must explicitly extend retained W5
+placements and their colliders to `maxTier: 6`, add W6 layers and keep removed nodes
+out of the W6 range. Existing W0–W5 records are not automatically promoted.
+Reviewed asset `decay` names remain manifest variants (`w5`, `wrecked`, etc.); W6
+does not imply a new filename or silently substitute an unreviewed variant.
+A district with a new baked layer at tier 6 must supply its `w6.glb`; older
+districts continue loading their existing base/W1–W5 GLBs when inspected at W6.
+`tests/scenes/l7-tier/{before,after}.json` compare the same game camera and assets at
+W5/W6 with the existing L6 night preset. District dressing and an L7 lighting preset
+belong to the subsequent district lanes.
+
+### Zebra and flamingo specials (Z-S3)
+
+`tests/scenes/zoo-s3/qa-zoo-{zebra-kick,zebra-stampede,flamingo-dive}.json`
+use the production `special` command. Herd/flock recruitment uses existing living,
+visible, ready animals within 12 m; it never spawns participants. The serialized
+attack lists its members/leader, and the flock's impact and obstruction expiry ticks.
+`tools/scenelab/zoo-s3-capture.ts` captures the fixed game camera, including the
+shared animal locomotion control. Scene Lab now samples actual animal paw geometry
+instead of dummy humanoid feet. Cooldown and checkpoint controls use the real
+mission checkpoint API in `tests/sim/ai/zoo-s3.test.ts`.
+
+### Crowd appearance variety
+
+`metrics.variety.infected` and `.pedestrian` report the number of visible living figures, distinct rendered looks,
+`per20` samples, `largestSameLookShare` and `largestModelShare`. Samples use stable entity order; the final sample
+uses the last twenty figures when the crowd size is not a multiple of twenty. A smaller crowd reports its actual size.
+Only channels present in the selected geometry count: hair, skin, shirt, lower garments and a drawn head accessory.
+LOD2 omits accessories. Regular infected include runner/sprinter brains; scripted special archetypes are excluded.
+
+Fixtures in `tests/scenes/crowd-variety/` cover fourteen L2 infected, twenty infected and twenty L1 pedestrians.
+Their gates are `infectedVarietyMin`, `pedestrianVarietyMin`, `sameLookShareMax` and `infectedModelShareMax`.
+Run `SCENE_PORT=33791 sh tools/e2e-lock.sh npx tsx tools/scenelab/crowd-variety.ts after` for desktop/phone images
+and a native headless Metal frame p95 comparison at the E18 200/100 caps. For isolated performance measurements,
+wrap that command in `tools/perf/quiet-run.sh` (which reserves the browser locks).
+
+`MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_BROWSER=1 npm run verify -- E18` sends functional simulation and browser
+checks to Hetzner; CPU timing, renderer counters, pixels and native frame measurements stay on the Mac.
+
+### L7 encounter follower fixture
+
+`l7Group: true` routes authored `survivor` actors through the production L7
+three-column formation, without creating a mission population.
+`tests/scenes/l7-encounters/qa-l7-horde-passage.json` isolates 120 regular infected,
+two Alphas, rocket clearance and six followers at one fixed game camera. The
+production population controller lives on `world.l7Encounters`; its copied state
+is exposed as `__SS__.getState().l7`. The existing checkpoint seams retain its
+roster, pending director requests, emergence audit and passage state.
+
+## L10 finale catalog
+
+`scene:matrix` also includes the existing `l10-minigun-heat`,
+`l10-cure-install-defend`, `l10-cure-mist`, `qa-l10-epilogue` and
+`l10-region-seam` fixtures, plus `qa-l10-charge-radius`,
+`qa-l10-final-release` and `qa-l10-title-credits`. These reuse the S6–S9
+fixtures and production mission/rotation nodes. Q1's threat and region entries
+remain in the filter.
+
+`expect.cure` gives closed numeric ranges on `metrics.cure`: charge ticks,
+inside/boundary/outside frame counts, incorrect charge increments, release event
+count, front radius, late infected deaths, damage to healthy controls, survivor
+count, movement during the playable phase, active fan frames, pull scale and
+visible title/credits frames and shared smoke-pool occupancy/cap violations. Boundary coverage samples within 15 cm of 25 m;
+charge eligibility itself uses the exact production 25 m radius. The report
+retains one release-relative timeline sample per second. `expect.actorHealth`
+gates each named infected species and control separately; a missing actor or
+probe fails the gate. Mist includes all five infected zoo species, dog/cat/crow, Alpha
+and runners, with courier/corgi/healthy civilian/healthy zebra controls.
+
+Run the deliberately broken variants with
+`SCENE_SERVER=preview SCENE_PORT=<private-port> E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/l10-q2-negative.ts webgpu`
+(or `webgl2`). The runner succeeds only when missing release and missing charge
+activation produce their expected gate failures. Negative specs live outside
+the catalog. Ending fixtures attach the normal campaign presentation, so title
+and credits gates require their actual UI to be visible.
+
+Trailing `--backend` / `--filter` options override the matrix script defaults.
+
+Evidence and remaining acceptance work: `docs/reports/l10-q2/README.md`.
+
+For bounded browser batches, `--matrix --tier high` and `--matrix --tier low` retain every matrix zoom while selecting one quality tier. Omitting `--tier` keeps the full high/low matrix. Release the browser slot between batches.

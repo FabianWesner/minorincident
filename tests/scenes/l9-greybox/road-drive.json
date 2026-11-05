@@ -1,0 +1,62 @@
+{
+  "name": "l9-greybox-road-drive",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -65,
+        -375
+      ],
+      [
+        65,
+        -275
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "sedan",
+      "asset": "vehicle.sedan",
+      "at": [
+        -15,
+        -330
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          15,
+          -330
+        ],
+        [
+          15,
+          -310
+        ]
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "sedan",
+    "zoom": 1.5
+  },
+  "frames": 240,
+  "shots": [
+    0,
+    240
+  ],
+  "sheet": 60,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "wheelSinkMaxCm": 2,
+    "wheelFloatMaxCm": 2.5,
+    "wheelSpikeMaxCm": 3
+  }
+}

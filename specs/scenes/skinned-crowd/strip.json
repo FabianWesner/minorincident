@@ -1,0 +1,72 @@
+{
+ "name": "strip",
+ "note": "skinned-crowd prototype. --query skinCrowd=1 skinned bodies, skinCrowd=rigid same bodies on the dominant joint, no flag = main rigid crowd.",
+ "ground": "asphalt",
+ "time": "golden",
+ "size": 30,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    9,
+    0
+   ],
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "ped",
+   "kind": "pedestrian",
+   "at": [
+    11,
+    11
+   ],
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "m0",
+   "kind": "infected",
+   "at": [
+    -6,
+    -0.6
+   ],
+   "yaw": 90,
+   "state": "chase",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "m1",
+   "kind": "infected",
+   "at": [
+    -6,
+    0.6
+   ],
+   "yaw": 90,
+   "state": "chase",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "m0",
+  "zoom": 0.5
+ },
+ "frames": 150,
+ "shots": [
+  40,
+  80,
+  120
+ ],
+ "sheet": 12
+}

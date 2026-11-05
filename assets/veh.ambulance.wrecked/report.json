@@ -1,0 +1,111 @@
+{
+  "id": "veh.ambulance.wrecked",
+  "baseId": "veh.ambulance",
+  "decay": "wrecked",
+  "delivery": "delivered-awaiting-independent-QA",
+  "source": {
+    "lod0": {
+      "triangles": 4174,
+      "draws": 8,
+      "bytes": 279580
+    },
+    "lod1": {
+      "triangles": 3774,
+      "draws": 8,
+      "bytes": 247356
+    },
+    "lod2": {
+      "triangles": 1982,
+      "draws": 8,
+      "bytes": 145564
+    }
+  },
+  "production": [
+    {
+      "id": "veh.ambulance.wrecked",
+      "lod": 0,
+      "path": "public/assets/models/veh.ambulance.wrecked.glb",
+      "bytes": 71944,
+      "triangles": 4174,
+      "materials": 4,
+      "draws": 8,
+      "dimensions": [
+        6.643499851226807,
+        3.3675181612039538,
+        2.94088458943586
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.ambulance.wrecked",
+      "lod": 1,
+      "path": "public/assets/models/veh.ambulance.wrecked.lod1.glb",
+      "bytes": 63832,
+      "triangles": 3774,
+      "materials": 4,
+      "draws": 8,
+      "dimensions": [
+        6.643499851226807,
+        3.3674725322455723,
+        2.94088458943586
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.ambulance.wrecked",
+      "lod": 2,
+      "path": "public/assets/models/veh.ambulance.wrecked.lod2.glb",
+      "bytes": 42808,
+      "triangles": 1982,
+      "materials": 4,
+      "draws": 8,
+      "dimensions": [
+        6.615000009536743,
+        3.367507764701645,
+        2.7112476005761423
+      ],
+      "errors": []
+    }
+  ],
+  "pixelSizes": [
+    {
+      "lod": 0,
+      "pixelBounds": [
+        169,
+        108,
+        317,
+        253
+      ],
+      "maxPixels": 148
+    },
+    {
+      "lod": 1,
+      "pixelBounds": [
+        169,
+        108,
+        317,
+        253
+      ],
+      "maxPixels": 148
+    },
+    {
+      "lod": 2,
+      "pixelBounds": [
+        167,
+        109,
+        316,
+        255
+      ],
+      "maxPixels": 149
+    }
+  ],
+  "contactSheets": [
+    "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/comparison.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/lod-contact.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/game-camera.png"
+  ],
+  "interfaces": [
+    "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+  ],
+  "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: White box and red stripe survive; crushed cab, open left shell rupture, missing driver door and dead emergency lights.\n\nLimitations: Rear lettering/medical mark disappear in LOD2; the side rupture is deliberately angular and the undamaged roof stays flat.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+}

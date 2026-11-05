@@ -1,0 +1,11 @@
+{
+  "name": "l5-po-dale-discovery",
+  "note": "PO #21: survivor-2 checkpoint, real discovery prompt and Dale emerging at the same sound anchor; production L5 controller.",
+  "ground": "district", "time": "L5", "tier": 5, "size": 220,
+  "layout": { "level": "L5", "district": "D-FAIR" },
+  "l5Aftermath": { "found": ["rosa", "sam"] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [-6.7, 2.6], "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "hud": true, "frames": 150, "sheet": 15, "shots": [1, 58, 65, 149],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

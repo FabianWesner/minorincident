@@ -1,0 +1,30 @@
+{
+  "name": "l3-blvd-contact-escape",
+  "note": "Sustained crowd contact on the production Boulevard sidewalk: the courier takes a few hits, swings once and runs through the existing wreck passage. God mode is disabled. Review the crowded breakaway, retained bodies, readable hits and the courier's health at high/low quality and zoom 1/0.5. Click navigation must retain its quarter-speed escape floor during sustained body contact. The unchanged real-input mission route is the survival gate.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {"level": "L3", "district": "D-CORRIDOR", "bbox": [[15, -42], [95, -10]]},
+  "actors": [
+    {"id": "courier", "kind": "courier", "at": [29.25, -23.25], "god": false, "loadout": ["weapon.fire-axe", "weapon.handgun"]},
+    {"id": "behind-1", "kind": "infected", "at": [25, -23.25]},
+    {"id": "behind-2", "kind": "infected", "at": [27, -23.25]},
+    {"id": "behind-3", "kind": "infected", "at": [28, -24.25]},
+    {"id": "front-1", "kind": "infected", "at": [30.5, -23.25], "yaw": 180},
+    {"id": "front-2", "kind": "infected", "at": [33, -23.25], "yaw": 180},
+    {"id": "front-3", "kind": "infected", "at": [36, -23.25], "yaw": 180},
+    {"id": "front-4", "kind": "infected", "at": [39, -23.25], "yaw": 180},
+    {"id": "body", "kind": "infected", "at": [26, -23.25]}
+  ],
+  "script": [
+    {"frame": 1, "actor": "courier", "do": {"god": false}},
+    {"frame": 1, "actor": "body", "do": {"hit": {"amount": 500}}},
+    {"frame": 60, "actor": "courier", "do": {"attack": "front-1", "seconds": 0.3, "inPlace": true}},
+    {"frame": 80, "actor": "courier", "do": {"moveTo": [86, -23.25], "pace": "run"}}
+  ],
+  "camera": {"mode": "game", "target": "courier", "zoom": 1},
+  "frames": 960,
+  "sheet": 160,
+  "trace": true,
+  "expect": {"consoleErrors": 0, "undrawnFramesMax": 0, "actorHealth": {"courier": [1, 100]}, "actorTravel": {"courier": [45, 80]}}
+}

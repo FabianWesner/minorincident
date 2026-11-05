@@ -1,0 +1,23 @@
+{
+  "name": "inf-truck-boxed",
+  "note": "PO 10-09 \"sometimes Zombies are stuck somewhere, like this one is not moving at all\" (an infected pressed against the side of the parked L2 fire truck). Two infected stand in the 1.1-1.4 m slots between the fire engine and two cars parked along it (narrower than the 0.65 m nav clearance: no A* cells there); the courier waits beyond the far car, then runs off. Look for: both walk out of the slots and come for her; nobody stands frozen against the truck.",
+  "ground": "asphalt",
+  "size": 44,
+  "props": [
+    { "id": "truck", "asset": "veh.fire-engine", "at": [0, 0], "yaw": 0 },
+    { "id": "car-w", "asset": "veh.sedan-blue", "at": [-3.1, 3.35], "yaw": 0 },
+    { "id": "car-e", "asset": "veh.pickup-red", "at": [3.3, 3.5], "yaw": 0 }
+  ],
+  "actors": [
+    { "id": "z1", "kind": "infected", "at": [0, 1.75], "yaw": -20 },
+    { "id": "z2", "kind": "infected", "at": [-1.8, 1.75], "yaw": -20 },
+    { "id": "courier", "kind": "courier", "at": [11, 7], "yaw": 180 }
+  ],
+  "script": [
+    { "frame": 360, "actor": "courier", "do": { "run": [[14, 12], [4, 14], [-10, 12]] } }
+  ],
+  "camera": { "mode": "game", "target": [2, 7], "zoom": 1.6 },
+  "frames": 900,
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "stuckActorFramesMax": 30 }
+}

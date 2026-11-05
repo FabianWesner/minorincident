@@ -1,0 +1,46 @@
+{
+  "extends": "qa-l10-epilogue.json",
+  "name": "qa-l10-title-credits",
+  "note": "Last second of playable epilogue, five-second Minor Incident title then credits. Exact release-relative clock; game camera with production fan/mist, bounded survivor cast and title/credits phase gates.",
+  "frames": 480,
+  "sheet": 60,
+  "script": [],
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "releaseReady": true,
+    "authored": true,
+    "epilogueElapsed": 8940
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0,
+    "cure": {
+      "titleFrames": [
+        300,
+        300
+      ],
+      "creditsFrames": [
+        110,
+        130
+      ],
+      "pullScale": [
+        6.9,
+        7.1
+      ],
+      "fanFrames": [
+        400,
+        480
+      ],
+      "mistPuffs": [
+        10,
+        400
+      ],
+      "smokeOverBudget": [
+        0,
+        0
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "name": "gun-pose-standing",
+  "note": "PO 10-10: shoulder-height handgun aim, barrel-aligned forearm, muzzle flash/tracer from the visible muzzle, and no gun/body clipping. Frames 0/115 are idle; 26/32/40 show firing at the game camera angle.",
+  "ground": "asphalt",
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 90,
+      "loadout": [
+        "weapon.handgun",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "z1",
+      "kind": "infected",
+      "at": [
+        7,
+        1.2
+      ],
+      "yaw": 270,
+      "state": "idle"
+    },
+    {
+      "id": "z2",
+      "kind": "infected",
+      "at": [
+        11,
+        -1.5
+      ],
+      "yaw": 270,
+      "state": "idle"
+    },
+    {
+      "id": "z3",
+      "kind": "infected",
+      "at": [
+        15,
+        0.6
+      ],
+      "yaw": 270,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "attack": "z1",
+        "seconds": 1
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1,
+      0
+    ],
+    "zoom": 0.65
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    26,
+    32,
+    40,
+    70,
+    115
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  },
+  "sheet": 10,
+  "time": "L3"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "perf-heap-held-props",
+  "note": "Pooled RoutineProps records retain the same coffee, rifle and pistol placement. Review at the game camera on both tiers, zooms and backends; exact hand/muzzle and dropped-cup transforms are gated by T-E22-20-props/dropped.",
+  "ground": "sidewalk",
+  "time": "L4",
+  "size": 24,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 3], "god": true },
+    { "id": "coffee", "kind": "pedestrian", "at": [0, 0], "look": { "model": "npc.civilian-man-b", "handProp": "coffee", "tint": "#df8b29" }, "state": "idle" },
+    { "id": "rifle", "kind": "pedestrian", "at": [2, 0], "look": { "model": "npc.national-guard", "handProp": "rifle" }, "state": "idle" },
+    { "id": "pistol", "kind": "pedestrian", "at": [-2, 0], "look": { "model": "npc.police-officer", "handProp": "pistol" }, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 90,
+  "sheet": 30,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "heldPropSamplesMin": 30 }
+}

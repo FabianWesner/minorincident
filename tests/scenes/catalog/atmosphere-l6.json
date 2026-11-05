@@ -1,0 +1,14 @@
+{
+  "extends": "qa-l6-po-headlamp.json",
+  "name": "atmosphere-l6",
+  "note": "Atmosphere profile L6: game follow camera; review courier red/teal, corgi, infected eyes, ground and lamp edge visibility on both tiers/backends at every player zoom. No timing claim from shared-host samples.",
+  "frames": 30,
+  "sheet": 15,
+  "shots": [],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

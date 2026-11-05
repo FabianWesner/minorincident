@@ -1,0 +1,47 @@
+/** E08 balance: all durations are fixed 60 Hz ticks; sampling uses the npc RNG stream. */
+export const npcs = {
+  grabTicks: 90, staggerTicks: [60, 120], downTicks: [240, 480], petDownTicks: [120, 240],
+  risingTicks: 72, eyesTicks: 120, petInfectionChance: .45,
+  panicRadius: 12, routineSpeed: 1.5, fleeSpeed: 4.8,
+  density: [60, 40, 24, 12, 6, 3], caps: [15, 40, 60, 80, 150, 200],
+  turnChainLimit: [8, 20, 30, 40, 80, 100],
+  reviveTicks: 120, downedTicks: 1200, corgiRecoveryTicks: 600,
+} as const;
+export const civilianRoles = [
+  { role: 'jogger', routine: 'jog', variant: 'inf.jogger', color: '#3178ac' },
+  { role: 'cashier', routine: 'shop', variant: 'inf.cashier', color: '#e5d9b9' },
+  { role: 'bbq-dad', routine: 'walk-dog', variant: 'inf.bbq-dad', color: '#a86645' },
+  { role: 'suburban-mom', routine: 'bus-stop', variant: 'inf.suburban-mom', color: '#79865b' },
+  { role: 'delivery-driver', routine: 'carry-belongings', variant: 'inf.delivery-driver', color: '#d4ad32' },
+  { role: 'bathrobe-neighbor', routine: 'chat', variant: 'inf.bathrobe-neighbor', color: '#ac7a91' },
+] as const;
+/**
+ * L1 v2 pedestrians (specs/epic-19 section 5.1). Shirt tints combine with the five civilian silhouettes so that no two
+ * neighbours share a model+tint pair; hand props drop on startle or bite, accessories stay through infection (5.7).
+ */
+export const l1Pedestrians = {
+  models: ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'],
+  shirts: ['#3178ac', '#e5d9b9', '#a86645', '#79865b', '#d4ad32', '#ac7a91', '#c4473d', '#f2efe4', '#6d5aa8', '#e08a3c', '#2f4858', '#e07fa0'],
+  accessories: ['none', 'cap', 'glasses', 'backpack', 'scarf'],
+  handProps: ['coffee', 'bag', 'phone', 'cane', 'watering-can'],
+  /** Refuge or edge counts as reached within this radius (escaped). */
+  refugeReachM: 1.2,
+  /** Seconds spent knocking/fumbling at a refuge door (houses, shops) before being let in; edges are instant. */
+  doorOpenS: 2.5,
+  /** Bite reach of an infected that is not already holding someone. */
+  grabReachM: 1.0,
+  /** A grabbing infected farther than this from its victim has been knocked away (rescue). */
+  grabBreakM: 1.8,
+  /** Share of non-elderly, non-jogger adults that rise athletic ("young adults"). */
+  athleticShare: 0.25,
+} as const;
+
+/** Civilian crowd models prepared at every town load. Shared with transition prefetch. */
+export const coreCivilianModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', ...l1Pedestrians.models, 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
+
+/** L3's complete cast: all corridor pedestrians, officers and checkpoint soldiers.
+ * Laboratory/depot/firefighter batches are discovered if a future authored entity needs them. */
+export const l3CivilianModels = [...l1Pedestrians.models, 'npc.police-officer', 'npc.national-guard'];
+
+/** L1 delivery route, lab outbreak and fire-station rescue; no police or soldiers. */
+export const l1CivilianModels = [...l1Pedestrians.models, 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive'];

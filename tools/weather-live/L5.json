@@ -1,0 +1,41 @@
+{
+  "extends": "../../specs/scenes/weather-lab-rain.json",
+  "name": "weather-live-L5",
+  "weather": null,
+  "time": "L5",
+  "weatherWarmup": 60,
+  "weatherTimeline": [
+    {
+      "tick": 0,
+      "kind": "ash"
+    },
+    {
+      "tick": 3600,
+      "kind": "fog",
+      "blend": 60,
+      "preset": {
+        "flakes": 0.35,
+        "wind": 0.04,
+        "clouds": 0.2
+      }
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        2
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 3600,
+  "shots": [
+    0,
+    1800,
+    3600
+  ],
+  "sheet": 1800
+}

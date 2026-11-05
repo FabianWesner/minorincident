@@ -1,0 +1,107 @@
+{
+  "name": "l7-district-plaza-w5",
+  "note": "Fixed game camera: inspect retained Fairhaven silhouette, ragged W6 shells, collapse kit, wrecks and grounded walking courier. Same night lighting isolates geometry from mood.",
+  "seed": 29,
+  "tier": 5,
+  "time": "L6",
+  "ground": "district",
+  "dof": false,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -77,
+        -57
+      ],
+      [
+        43,
+        63
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -19,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            -10,
+            0
+          ],
+          [
+            -10,
+            12
+          ]
+        ],
+        "loop": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "pose",
+    "position": [
+      3,
+      24,
+      23
+    ],
+    "target": [
+      -17,
+      0,
+      3
+    ]
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    180
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -12.4,
+          8
+        ],
+        "radius": 1.8,
+        "duration": 120
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -12.4,
+          -10
+        ],
+        "radius": 1.8,
+        "duration": 120
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -20,
+          24.6
+        ],
+        "radius": 1.8,
+        "duration": 120
+      }
+    }
+  ]
+}

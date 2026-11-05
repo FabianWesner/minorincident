@@ -1,0 +1,5 @@
+# Visual review
+
+Reviewed production LOD contact and game-size peer views. Larger, darker and broader than the small crater; torn tank skins and surviving red markings identify fuel-truck aftermath. The skins derive from the integrated veh.fuel-truck tank ring and retain its silver/red identity. All tiers keep two folded pieces and a red patch; there are no intact headlights, emissive pieces or Blender light substitutes. Closed skin thickness and corrected winding prevent missing/black upper faces. The source reference contains only the asphalt crater, so tank remnants intentionally add the requested fuel-truck story. Remaining faults: fragments are small compared with the broad depression at 135 px; the torn rim is still simpler than the reference. Current concave terrain/physics consumption is a runtime blocker, documented in notes.md. Orchestrator acceptance is independent.
+
+Evidence: `test-results/l5-war-debris-and-craters/decay.fuel-truck-crater/comparison.png`, `lod-contact.png`, `game-reference-peer.jpg`. Headless WebGL2, Metal, shared browser lock, no WebGPU claim.

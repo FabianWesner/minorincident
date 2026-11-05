@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "f391528642e59e50e87144a28037c615102c6d8dde589efcaacbe1ec580db3c1",
+  "fixtureHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-browser-batch4.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 23,
+      "simSeconds": 17,
+      "maxNoProgressSeconds": 16.316666666666666,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "epilogue",
+          "text": "Watch the cure spread · 149/150 s",
+          "tick": 0,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "credits",
+          "text": "Minor Incident",
+          "tick": 37,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "batch": {
+    "index": 4,
+    "yielded": false,
+    "startSaveHash": "61c8e75aa0f842586cb4d0c206d0dc00368147bbaa0b966d3384513b39cb2a86",
+    "endSaveHash": null,
+    "startSeconds": 1353.8833333333334,
+    "endSeconds": 1354.0166666666667,
+    "savePath": null
+  },
+  "observations": {
+    "runtime": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1.5000000000000002
+    },
+    "productionResume": true
+  }
+}

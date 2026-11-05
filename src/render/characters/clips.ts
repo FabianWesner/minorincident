@@ -1,0 +1,403 @@
+import { AnimationClip, AnimationMixer, Box3, Mesh, SkinnedMesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
+import library from './library.json';
+import skinLibrary from './library.skin.json';
+import type { CharacterRig } from './rig';
+import { chainNodes, courierBones, shoulderOffset } from './CourierRig';
+
+/** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
+export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
+/** Skin pilot: Mesh2Motion CC0 clips retargeted offline (tools/skinpilot/retarget.ts); same schema, overrides by name. */
+export const skinClips: typeof authoredClips = new Map(skinLibrary.map(clip => [clip.name, clip as unknown as (typeof library)[number]]));
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
+  // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
+  // medium, the athletic sprint covers ground in long low strides.
+  'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, 'dog-gallop': 1.1, ride: 3.2 };
+/** Skin pilot gait: longer strides at a calmer cadence (the library run cycles ~5×/s at 4.5 m/s on
+ * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
+export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: .9, stance: .52, lift: .05 }, run: { stride: 1.45, stance: .27, lift: .095 } };
+/** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
+export function cadenceStride(name: string, scale: number, speed: number): number {
+  const authored = (strides[name] ?? 0) * scale;
+  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7 : crowdRunCadence[name] ?? (name === 'run' ? 2.7 : 2);
+  // Crowd walks also keep a minimum cadence: a slow figure takes shorter steps instead of over-long strides its legs cannot plant.
+  const slowest = minimumCadence[name];
+  const stride = slowest ? Math.min(authored, Math.max(.35 * scale, Math.max(0, speed) / slowest)) : authored;
+  // Crowd figures with shorter legs (children, short rigs) step faster rather than further (Froude scaling).
+  const legs = slowest || crowdRunCadence[name] ? Math.sqrt(Math.min(1, Math.max(.4, scale))) : 1;
+  return Math.max(stride, Math.max(0, speed) / (cyclesPerSecond / legs));
+}
+/** Crowd running cadence caps (cycles/s): above them strides lengthen. Chibi legs cannot plant a 2.5 m stride, so the
+ * tier gaits run at 3+ steps-pairs per second (frail chops quickest) and the stance stays within reach. */
+const crowdRunCadence: Record<string, number> = { 'infected-run': 3, 'infected-sprint': 3, 'civ-flee': 3, 'infected-lurch': 3, 'infected-frail': 3.3 };
+/** Minimum crowd gait cadence (cycles/s) per clip. */
+const minimumCadence: Record<string, number> = { shamble: 1.5, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
+/** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
+export const gaitShape: Record<string, { stance: number; lift: number }> = {
+  walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
+  run: { stance: .5, lift: .085 }, 'infected-run': { stance: .5, lift: .085 }, 'civ-flee': { stance: .5, lift: .08 },
+  'infected-frail': { stance: .56, lift: .03 }, 'infected-lurch': { stance: .5, lift: .07 }, 'infected-sprint': { stance: .4, lift: .12 },
+};
+const worldScale = new Vector3(), worldOrigin = new Vector3();
+/** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
+const libraryLeg = .516;
+// Rig topology stays fixed during animation; bone transforms and parents remain live.
+const strideBones = new WeakMap<Object3D, { hip?: Object3D; shin?: Object3D; foot?: Object3D; animal?: Object3D }>();
+function strideRig(root: Object3D) {
+  let bones = strideBones.get(root);
+  if (!bones) {
+    bones = { hip: root.getObjectByName('hip'), shin: root.getObjectByName('shinL'), foot: root.getObjectByName('footL'), animal: root.getObjectByName('legFL') };
+    strideBones.set(root, bones);
+  }
+  return bones;
+}
+/** Rest-pose stride ratio in rig-local units, independent of world/model scale. */
+function strideProportion(root: Object3D): number {
+  const { shin, foot, animal } = strideRig(root);
+  const leg = shin && foot && !animal ? -(shin.position.y + foot.position.y) : libraryLeg;
+  return leg > .2 && leg < libraryLeg ? leg / libraryLeg : 1;
+}
+/** World-space stride multiplier: model scale times the shorter-legged rig's
+ * stride ratio. Stance baking uses only the local ratio so scaling is applied once. */
+export function strideScale(root: Object3D): number {
+  // GLTF scene wrappers can sit above the normalized rig root. Bone offsets
+  // are in the hip parent's coordinates, including that internal asset scale.
+  const frame = strideRig(root).hip?.parent ?? root;
+  return frame.getWorldScale(worldScale).y * strideProportion(root);
+}
+export const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
+const upperBody = /^(torso|spine|chest|neck|clavicle|head|arm|foreArm|hand)/;
+
+/** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
+ * offsets so the locomotion action retains control of planted feet. */
+const restPoses = new WeakMap<Object3D, { node: Object3D; position: Vector3; quaternion: Quaternion }[]>();
+/** Sampling one action must not become the rest pose of the next action. */
+export function retargetClip(root: Object3D, name: string, additive = false, overrides?: typeof authoredClips): AnimationClip {
+  let rest = restPoses.get(root);
+  if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
+  const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
+  for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
+  try { return buildRetargetedClip(root, name, additive, overrides === skinClips && /^(mount|dismount)$/.test(name) ? skinClips.get('idle') : overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined, overrides === skinClips); }
+  finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
+}
+function buildRetargetedClip(root: Object3D, name: string, additive: boolean, source = authoredClips.get(name), gait?: { stride: number; stance: number; lift: number }, skinned = false): AnimationClip {
+  if (!source) throw new Error(`Missing authored clip ${name}`);
+  const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
+  const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
+  const skinLocomotion = !!gait;
+  const skinPlanted = skinned && /^(unarmed-(jab|cross|uppercut)|bat-|hurt)/.test(name);
+  const skinnedAnimal = root.getObjectByName('root')?.userData.crowdQuadruped === true;
+  const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket', ...skinned ? ['spine','chest','neck','clavicleL','clavicleR'] : []];
+  for (const nodeName of contract) {
+    // Converted quadrupeds put limbs beside body under hip/torso. Roll their whole rig for death.
+    const wholeAnimal = name === 'animal-death' && nodeName === 'body' && (root.getObjectByName('body')?.parent?.name === 'torso' || skinnedAnimal && !root.getObjectByName('body'));
+    const node = root.getObjectByName(wholeAnimal ? 'hip' : nodeName);
+    if (!node || additive && !upperBody.test(nodeName)) continue;
+    let animalGait = 1;
+    if (skinnedAnimal && /^corgi-(walk|trot|gallop)$/.test(name) && /^leg[FB][LR]$/.test(nodeName)) {
+      root.updateWorldMatrix(true, true);
+      const paw = root.getObjectByName(nodeName.replace('leg', 'paw'));
+      const soles = root.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
+      if (paw && soles?.[paw.name]?.length) {
+        const floor = Math.min(...soles[paw.name].map(p => paw.localToWorld(new Vector3().fromArray(p)).y));
+        const reach = node.getWorldPosition(new Vector3()).y - floor;
+        // Dog angles swing a long elephant leg over a metre beyond its
+        // support reach. Retarget the same gait to its actual stride length.
+        animalGait = Math.min(1, Math.atan((strides[name] ?? .8) * strideScale(root) * .25 / Math.max(.1, reach)) / .73);
+      }
+    }
+    if (name.startsWith('corgi-') && name !== 'corgi-sit' && /^legF[LR]$/.test(nodeName)) tracks.push(new VectorKeyframeTrack(`${nodeName}.scale`, [0, source.duration], [...node.scale.toArray(), ...node.scale.toArray()]));
+    for (const path of ['rotation', 'translation'] as const) {
+      const track = source.tracks.find(t => t.node === nodeName && t.path === path), times = track?.times ?? [0, source.duration];
+      const values: number[] = [];
+      if (path === 'rotation') {
+        for (let i = 0; i < times.length; i++) {
+          q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          if (animalGait < 1) q.slerp(new Quaternion(), 1 - animalGait);
+          // Continuous animal anatomy cannot separate at the rigid clip's
+          // exaggerated neck/paw folds. Retain the whole-body fall and soften
+          // local articulation, so the mane and limb roots stay connected.
+          if (skinnedAnimal && name === 'animal-death' && !wholeAnimal) q.slerp(new Quaternion(), .75);
+          // Source-fitted head dressings must leave the face visible while
+          // cowering. This authored fit is shared by live and offline samples.
+          if (name === 'npc-cower' && nodeName === 'head' && typeof node.userData.cowerHeadLift === 'number') q.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), node.userData.cowerHeadLift));
+          if ((skinLocomotion || skinPlanted) && nodeName === 'hip') q.slerp(new Quaternion(), skinLocomotion ? .82 : .7);
+          // Forward-reaching infected need their arms beside the body and bent
+          // legs lowered as the back pose settles, rather than pointing upward.
+          if (/^(die|death-back)$/.test(name) && Math.max(root.getObjectByName('foreArmL')?.position.x ?? 0, root.getObjectByName('foreArmR')?.position.x ?? 0) > .08 && /^(arm|foreArm|leg)[LR]$/.test(nodeName)) {
+            const side = nodeName.endsWith('R') ? 'R' : 'L';
+            const shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+            // A reconstructed forward shoe needs its asymmetric bind advance lowered
+            // beside the other leg when the existing back-death pose settles.
+            const advance = Math.max(0, node.position.x + (shin?.position.x ?? 0) + (foot?.position.x ?? 0));
+            const shoeFit = root.getObjectByName('root')?.userData.meshSoles === true && nodeName.startsWith('leg') ? Math.atan2(advance, Math.abs((shin?.position.y ?? 0) + (foot?.position.y ?? 0))) * 1.2 : 0;
+            const resting = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (nodeName.startsWith('foreArm') ? 0 : nodeName.startsWith('leg') ? -30 : -100) * Math.PI / 180 - shoeFit);
+            q.slerp(resting, Math.max(0, Math.min(1, (times[i] / source.duration - .5) * 2)));
+          }
+          if (!additive) q.premultiply(node.quaternion);
+          values.push(q.x, q.y, q.z, q.w);
+        }
+        const rotation = new QuaternionKeyframeTrack(`${node.name}.quaternion`, times, values);
+        if (skinned && name.startsWith('unarmed-') && !skinClips.has(name)) softenChamber(rotation, source.duration, name === 'unarmed-knee');
+        tracks.push(rotation);
+      } else {
+        for (let i = 0; i < times.length; i++) for (let c = 0; c < 3; c++) {
+          let delta = track?.values[i * 3 + c] ?? 0;
+          if (skinLocomotion && nodeName === 'hip') delta = c === 2 ? delta * .3 - .008 * Math.sin(times[i] / source.duration * Math.PI * 2) : 0;
+          if (skinPlanted && nodeName === 'hip') delta *= .2;
+          if (c === 1 && nodeName === 'hip' && groundClips.test(name)) delta *= Math.max(0, hipHeight - .15) / .55;
+          values.push(delta + (additive ? 0 : node.position.getComponent(c)));
+        }
+        tracks.push(new VectorKeyframeTrack(`${node.name}.position`, times, values));
+      }
+    }
+  }
+  if (!additive && skinned && /^(idle|walk|run|mount|dismount)$/.test(name)) fitCourierLocomotion(root, name, source.duration, tracks);
+  if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
+  if (!additive && name === 'corgi-sit') fitCorgiSit(root, tracks);
+  return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Seat the existing rigid dog rig on its rump. The library's 8-degree
+ * crouch barely changes its silhouette; fit the pitch and support to this mesh. */
+function fitCorgiSit(root: Object3D, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+  if (root.userData.placeholder) return;
+  const body = root.getObjectByName('body'); if (!body) return;
+  const rotation = tracks.find(t => t.name === 'body.quaternion')!, position = tracks.find(t => t.name === 'body.position')!;
+  const vertices: Vector3[] = [], point = new Vector3(), q = new Quaternion(), axis = new Vector3(0, 0, 1);
+  root.updateWorldMatrix(true, true);
+  body.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    for (let p = node.parent; p && p !== body; p = p.parent) if (/^(head|tail|packSocket|leg)/.test(p.name)) return;
+    const positions = node.geometry.attributes.position, indices = node.geometry.index;
+    for (let i = 0; i < (indices?.count ?? positions.count); i++) {
+      point.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld); body.worldToLocal(point);
+      vertices.push(point.clone());
+    }
+  });
+  if (!vertices.length) return;
+  const restFloor = Math.min(...vertices.map(v => v.y + body.position.y));
+  for (let i = 0; i < rotation.times.length; i++) {
+    q.fromArray(rotation.values, i * 4);
+    const blend = Math.min(1, Math.abs(2 * Math.atan2(q.z, q.w)) / (8 * Math.PI / 180));
+    q.setFromAxisAngle(axis, blend * 25 * Math.PI / 180).premultiply(body.quaternion).toArray(rotation.values, i * 4);
+  }
+  const sample = rotation.InterpolantFactoryMethodLinear();
+  for (let i = 0; i < position.times.length; i++) {
+    q.fromArray(sample.evaluate(position.times[i]));
+    const blend = Math.min(1, Math.abs(2 * Math.atan2(q.z, q.w)) / (25 * Math.PI / 180));
+    const bottom = Math.min(...vertices.map(v => point.copy(v).applyQuaternion(q).y));
+    position.values[i * 3 + 1] = restFloor * (1 - blend) - bottom;
+  }
+  for (const name of ['legFL', 'legFR']) {
+    const leg = root.getObjectByName(name); if (!leg) continue;
+    const track = tracks.find(t => t.name === `${name}.quaternion`)!;
+    const scales: number[] = [];
+    const bodyPosition = position.InterpolantFactoryMethodLinear();
+    const bounds = new Box3().setFromObject(leg, true), sole = leg.worldToLocal(new Vector3(0, bounds.min.y, 0)).y;
+    for (let i = 0; i < track.times.length; i++) {
+      q.fromArray(sample.evaluate(track.times[i]));
+      const height = point.copy(leg.position).applyQuaternion(q).y + bodyPosition.evaluate(track.times[i])[1];
+      q.invert().multiply(leg.quaternion).toArray(track.values, i * 4);
+      scales.push(leg.scale.x, height / Math.max(.001, -sole), leg.scale.z);
+    }
+    tracks.push(new VectorKeyframeTrack(`${name}.scale`, track.times, scales));
+  }
+}
+
+/** Fit the retained motion to the courier's short torso and hanging-arm rest pose.
+ * The source walk's spine delta leans backwards relative to its idle reference;
+ * attenuating only the pelvis made that worse. Measure the actual hip-to-chest
+ * line, keeping source twist/roll, and fit pitch and relaxed arms in that frame.
+ * Baked once per rig: the mixer still owns fades, phase and frozen evaluations. */
+function fitCourierLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+  const rotation = (node: string) => tracks.find(t => t.name === `${node}.quaternion`);
+  const sampler = (node: string) => rotation(node)?.InterpolantFactoryMethodLinear();
+  const hip = sampler('hip')!, torso = sampler('torso')!, head = sampler('head')!;
+  const rig = Object.fromEntries(['torso', 'armL', 'armR'].map(n => [n, root.getObjectByName(n)!])) as unknown as CharacterRig;
+  // Skeleton v2: the spine/chest/clavicle source motion stays; the fit acts on the whole chain above the waist.
+  const bones = courierBones(root), chain = bones ? new Map(chainNodes(bones).map(node => [node, sampler(node.name)])) : undefined;
+  const local = new Map<Object3D, Quaternion>();
+  const sampled = (node: Object3D) => local.get(node) ?? node.quaternion;
+  const spineOffset = root.getObjectByName('torso')!.position;
+  const sourceHip = skinClips.get(name === 'mount' || name === 'dismount' ? 'idle' : name)!.tracks.find(t => t.node === 'hip' && t.path === 'rotation')!;
+  const unscaledHip = new QuaternionKeyframeTrack('hip', sourceHip.times, sourceHip.values).InterpolantFactoryMethodLinear();
+  const times: number[] = [], values = new Map(['torso', 'neck', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'].map(n => [n, [] as number[]]));
+  const h = new Quaternion(), q = new Quaternion(), correction = new Quaternion(), axis = new Vector3(0, 0, 1), above = new Quaternion(), neck = new Quaternion();
+  const chestOffset = new Vector3();
+  const frames = Math.round(duration * 60);
+  for (let i = 0; i <= frames; i++) {
+    const time = i / frames * duration, phase = i / frames * Math.PI * 2;
+    times.push(time); h.fromArray(hip.evaluate(time)); q.fromArray(torso.evaluate(time));
+    // Chain above the torso joint (spine * chest), and the shoulder midpoint in the torso frame.
+    above.identity();
+    if (bones && chain) {
+      for (const [node, track] of chain) local.set(node, new Quaternion().fromArray(track ? track.evaluate(time) : [0, 0, 0, 1]).normalize());
+      above.copy(local.get(bones.spine)!).multiply(local.get(bones.chest)!);
+    }
+    shoulderOffset(rig, bones, chestOffset, sampled);
+    // Local spine counter-rotation was authored against the full pelvis. Keep
+    // that relationship before reducing torso twist for the courier proportions.
+    const originalWorld = new Quaternion().fromArray(unscaledHip.evaluate(time)).multiply(q).multiply(above);
+    const world = originalWorld.clone(), forward = new Vector3(1, 0, 0).applyQuaternion(world);
+    world.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), -.6 * Math.atan2(-forward.z, forward.x)));
+    const inverseAbove = above.clone().invert();
+    const base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(inverseAbove).applyQuaternion(world);
+    const target = (name === 'run' ? 10 + Math.cos(phase * 2) : name === 'walk' ? 4 + .7 * Math.cos(phase * 2) : 2.5 + .7 * Math.sin(phase)) * Math.PI / 180;
+    const angle = Math.atan2(chest.x, chest.y) - target + Math.asin(Math.max(-1, Math.min(1, (base.x * Math.cos(target) - base.y * Math.sin(target)) / Math.hypot(chest.x, chest.y))));
+    correction.setFromAxisAngle(axis, angle);
+    q.copy(h).invert().multiply(correction).multiply(world).multiply(inverseAbove).toArray(values.get('torso')!, i * 4);
+    // Keep the large face looking ahead while the spine inclines; v2 spreads that head turn over the neck (45 %).
+    const face = world.clone().invert().multiply(correction.clone().invert()).multiply(originalWorld);
+    if (bones) {
+      const sourceNeck = new Quaternion().fromArray(sampler('neck')?.evaluate(time) ?? [0, 0, 0, 1]).normalize();
+      face.multiply(sourceNeck).multiply(new Quaternion().fromArray(head.evaluate(time)));
+      neck.identity().slerp(face, .45).toArray(values.get('neck')!, i * 4);
+      neck.invert().multiply(face).toArray(values.get('head')!, i * 4);
+    } else face.multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
+    for (const [side, sign] of [['L', 1], ['R', -1]] as const) {
+      const swing = -Math.cos(phase) * sign;
+      const shoulder = name === 'run' ? -12 + swing * 30 : name === 'walk' ? swing * 22 : -4 + 2 * Math.sin(phase + sign * .4);
+      const elbow = name === 'run' ? 72 + 8 * swing : name === 'walk' ? 24 + 8 * swing : 20 + 3 * Math.sin(phase + sign);
+      // Shoulder swing is authored in the chest frame; v2 arms hang from the clavicle.
+      const arm = new Quaternion().setFromAxisAngle(axis, shoulder * Math.PI / 180);
+      if (bones) arm.premultiply(local.get(bones[`clavicle${side}`])!.clone().invert());
+      arm.toArray(values.get(`arm${side}`)!, i * 4);
+      new Quaternion().setFromAxisAngle(axis, elbow * Math.PI / 180).toArray(values.get(`foreArm${side}`)!, i * 4);
+      new Quaternion().toArray(values.get(`hand${side}`)!, i * 4);
+    }
+  }
+  for (const [node, v] of values) {
+    const index = tracks.findIndex(t => t.name === `${node}.quaternion`);
+    if (index >= 0) tracks[index] = new QuaternionKeyframeTrack(`${node}.quaternion`, times, v);
+  }
+}
+
+/** Authored fallback kicks exported a held guard then a 100+ degree chamber
+ * jump. A spherical quadratic uses that chamber as the anticipation control
+ * pose, reaches the original contact exactly, and leaves recovery untouched. */
+function softenChamber(track: QuaternionKeyframeTrack, duration: number, direct = false): void {
+  const from = new Quaternion(), chamber = new Quaternion();
+  let jump = -1;
+  for (let i = 1; i < track.times.length && track.times[i] < duration * .1; i++) {
+    from.fromArray(track.values, (i - 1) * 4); chamber.fromArray(track.values, i * 4);
+    if (from.angleTo(chamber) > Math.PI / 7) { jump = i; break; }
+  }
+  if (jump < 0) return;
+  const sample = track.InterpolantFactoryMethodLinear(), contactTime = duration * .2;
+  from.fromArray(track.values, 0); chamber.fromArray(track.values, jump * 4);
+  const contact = new Quaternion().fromArray(sample.evaluate(contactTime));
+  const times = [...new Set([0, ...track.times, contactTime])].sort((a, b) => a - b), values: number[] = [];
+  const a = new Quaternion(), b = new Quaternion();
+  for (const t of times) {
+    if (t < contactTime) {
+      const u = t / contactTime;
+      // The four-tick knee cannot afford a separate, deeper chamber: travel
+      // directly to contact at constant angular speed instead of overshooting.
+      if (direct) a.copy(from).slerp(contact, u);
+      else a.copy(from).slerp(chamber, u).slerp(b.copy(chamber).slerp(contact, u), u);
+    } else a.fromArray(sample.evaluate(t));
+    a.toArray(values, values.length);
+  }
+  track.times = new Float32Array(times); track.values = new Float32Array(values);
+}
+
+/** Bake flat-ground support into target-specific tracks. The authored pelvis keeps
+ * its weight shift/counter-rotation; each rig's actual limb lengths determine the
+ * knee arc. Stance travels backwards by exactly the runtime full-cycle distance. */
+function plantLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[], gait?: { stride: number; stance: number; lift: number }): void {
+  const hip = root.getObjectByName('hip');
+  if (!hip) return;
+  const hipTrack = tracks.find(t => t.name === 'hip.position')!;
+  const position = hipTrack.InterpolantFactoryMethodLinear();
+  const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
+  const { stance, lift } = gait ?? gaitShape[name], stride = (gait?.stride ?? strides[name]) * strideProportion(root);
+  // A grouped NPC can have a rotated sub-root above its hip. Express actor
+  // travel in that parent's coordinates, rather than sliding along its local X.
+  const forward = new Vector3(1, 0, 0).applyQuaternion(root.getWorldQuaternion(new Quaternion()));
+  if (hip.parent) forward.applyQuaternion(hip.parent.getWorldQuaternion(new Quaternion()).invert());
+  const footTarget = (phase: number): Vector3 => {
+    if (phase <= stance) return forward.clone().multiplyScalar(stride * (stance / 2 - phase));
+    const t = (phase - stance) / (1 - stance);
+    // Match the backward stance velocity at toe-off and heel contact.
+    const smooth = t * t * (3 - 2 * t) - (1 - stance) / stance * (2 * t * t * t - 3 * t * t + t);
+    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * lift, 0));
+  };
+  // Lower the mean pelvis only as far as this rig requires for a softly bent
+  // support knee. Clamping an unreachable ankle would turn support into sliding.
+  let lowering = 0;
+  for (const [side, offset] of [['L', 0], ['R', .5]] as const) {
+    const leg = root.getObjectByName(`leg${side}`), shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+    if (!leg || !shin || !foot) continue;
+    const ankle = hip.position.clone().add(leg.position).add(shin.position).add(foot.position);
+    const reach = (shin.position.length() + foot.position.length()) * .98;
+    for (let i = 0; i <= 120; i++) {
+      const hq = new Quaternion().fromArray(rotation.evaluate(i / 120 * duration)).normalize();
+      const hp = new Vector3().fromArray(position.evaluate(i / 120 * duration));
+      const target = ankle.clone().add(footTarget((i / 120 + offset) % 1)).sub(hp).sub(leg.position.clone().applyQuaternion(hq));
+      lowering = Math.max(lowering, -target.y - Math.sqrt(Math.max(0, reach * reach - target.x * target.x - target.z * target.z)));
+    }
+  }
+  for (let i = 1; i < hipTrack.values.length; i += 3) hipTrack.values[i] -= lowering;
+  for (const [side, offset] of [['L', 0], ['R', .5]] as const) {
+    const leg = root.getObjectByName(`leg${side}`), shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+    if (!leg || !shin || !foot) continue;
+    const ankle = hip.position.clone().add(leg.position).add(shin.position).add(foot.position);
+    const a = shin.position.length(), b = foot.position.length();
+    const times: number[] = [], thighValues: number[] = [], shinValues: number[] = [], footValues: number[] = [];
+    for (let i = 0, frames = Math.round(duration * 120); i <= frames; i++) {
+      const time = i / frames * duration, phase = (i / frames + offset) % 1;
+      const hq = new Quaternion().fromArray(rotation.evaluate(time)).normalize();
+      const hp = new Vector3().fromArray(position.evaluate(time));
+      const target = ankle.clone().add(footTarget(phase)).sub(hp).applyQuaternion(hq.clone().invert()).sub(leg.position);
+      const d = Math.min(a + b - .0001, target.length()), axis = target.clone().normalize();
+      const along = (a * a + d * d - b * b) / (2 * d);
+      const bend = forward.clone().applyQuaternion(hq.clone().invert());
+      bend.addScaledVector(axis, -bend.dot(axis)).normalize();
+      const knee = axis.clone().multiplyScalar(along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
+      const thigh = new Quaternion().setFromUnitVectors(shin.position.clone().normalize(), knee.clone().normalize());
+      const lower = axis.multiplyScalar(d).sub(knee).applyQuaternion(thigh.clone().invert());
+      const sq = new Quaternion().setFromUnitVectors(foot.position.clone().normalize(), lower.normalize());
+      const fq = hq.clone().multiply(thigh).multiply(sq).invert().multiply(foot.quaternion);
+      times.push(time); thigh.toArray(thighValues, thighValues.length); sq.toArray(shinValues, shinValues.length); fq.toArray(footValues, footValues.length);
+    }
+    for (const [node, values] of [[leg, thighValues], [shin, shinValues], [foot, footValues]] as const) {
+      const index = tracks.findIndex(t => t.name === `${node.name}.quaternion`);
+      tracks[index] = new QuaternionKeyframeTrack(`${node.name}.quaternion`, times, values);
+    }
+  }
+}
+
+/** Deterministic sampler for crowd baking; reset actions to avoid accumulating poses. */
+const samplers = new WeakMap<Object3D, { mixer: AnimationMixer; clips: Map<string, AnimationClip> }>();
+const floorBounds = new WeakMap<Object3D, Mesh[]>();
+const bounds = new Box3(), partBounds = new Box3();
+/** Model-specific accessory thickness (especially backpacks) determines the floor
+ * contact of a corpse; the shared authored joint pose itself stays unchanged. */
+export function settleGroundPose(root: Object3D, resting = false): void {
+  let meshes = floorBounds.get(root);
+  if (!meshes) { meshes = []; root.traverse(node => { if (node instanceof Mesh) { node.geometry.computeBoundingBox(); meshes!.push(node); } }); floorBounds.set(root, meshes); }
+  root.updateMatrixWorld(true); bounds.makeEmpty();
+  for (const mesh of meshes) {
+    let visible = true;
+    for (let parent: Object3D | null = mesh; parent; parent = parent.parent) if (!parent.visible || parent.name.startsWith('stump_')) { visible = false; break; }
+    if (!visible || mesh.userData.crowdEye) continue;
+    if (mesh instanceof SkinnedMesh) {
+      mesh.skeleton.update(); mesh.computeBoundingBox();
+      if (mesh.boundingBox) bounds.union(partBounds.copy(mesh.boundingBox).applyMatrix4(mesh.matrixWorld));
+    } else if (mesh.geometry.boundingBox) bounds.union(partBounds.copy(mesh.geometry.boundingBox).applyMatrix4(mesh.matrixWorld));
+  }
+  const hip = root.getObjectByName('hip') ?? root.getObjectByName('body');
+  const floor = root.getWorldPosition(worldOrigin).y + .015;
+  if (hip && Number.isFinite(bounds.min.y) && (bounds.min.y < floor || resting)) { hip.position.y += (floor - bounds.min.y) / (hip.parent ?? root).getWorldScale(worldScale).y; root.updateMatrixWorld(true); }
+}
+export function sampleClip(root: Object3D, name: string, seconds: number): void {
+  let sampler = samplers.get(root);
+  if (!sampler) { sampler = { mixer: new AnimationMixer(root), clips: new Map() }; samplers.set(root, sampler); }
+  let clip = sampler.clips.get(name);
+  if (!clip) { sampler.mixer.stopAllAction(); clip = retargetClip(root, name); sampler.clips.set(name, clip); }
+  sampler.mixer.stopAllAction();
+  const action = sampler.mixer.clipAction(clip).reset().setLoop(LoopOnce, 1); action.clampWhenFinished = true; action.play();
+  sampler.mixer.setTime(Math.max(0, Math.min(clip.duration, seconds)));
+  if (groundClips.test(name) || name === 'animal-death') settleGroundPose(root, /^(die|death-|animal-death)/.test(name) && seconds >= clip.duration * .95);
+}
+export type Clip = (rig: CharacterRig, seconds: number) => void;

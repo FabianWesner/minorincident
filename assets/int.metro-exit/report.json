@@ -1,0 +1,114 @@
+{
+  "id": "int.metro-exit",
+  "status": "integrated",
+  "authoredLods": true,
+  "determinism": "12/12 geometry hashes match across two final builds",
+  "tiers": {
+    "lod0": {
+      "source": {
+        "triangles": 5076,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 364856,
+        "bounds": {
+          "min": [
+            -6,
+            -3.8,
+            0
+          ],
+          "max": [
+            6,
+            3.8,
+            5.81
+          ]
+        },
+        "dimensions": {
+          "x": 12,
+          "y": 5.81,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 5076,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 88812
+      },
+      "geometryHash": "8df99a66f0a03d0236349376f38d4c448c645400de99af20ebe0844cb20499e4"
+    },
+    "lod1": {
+      "source": {
+        "triangles": 2054,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 153636,
+        "bounds": {
+          "min": [
+            -6,
+            -3.8,
+            0
+          ],
+          "max": [
+            6,
+            3.8,
+            5.81
+          ]
+        },
+        "dimensions": {
+          "x": 12,
+          "y": 5.81,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 2054,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 46080
+      },
+      "geometryHash": "6dfc72bddf58c8b866e2ae706e7789a94fc8a003f91176156d2b131a328a33f1"
+    },
+    "lod2": {
+      "source": {
+        "triangles": 1120,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 94724,
+        "bounds": {
+          "min": [
+            -6,
+            -3.8,
+            0
+          ],
+          "max": [
+            6,
+            3.8,
+            5.81
+          ]
+        },
+        "dimensions": {
+          "x": 12,
+          "y": 5.81,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 1120,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 33744
+      },
+      "geometryHash": "902353e3c07f60556435d8717312c29f24c63377aca258ccff59d96920dd5b6e"
+    }
+  },
+  "evidence": {
+    "turntable": "test-results/l6-metro-and-shelter-kit/int.metro-exit/comparison.png",
+    "lods": "test-results/l6-metro-and-shelter-kit/int.metro-exit/lod-contact.png",
+    "gameReferencePeer": "test-results/l6-metro-and-shelter-kit/int.metro-exit/game-reference-peer.png",
+    "loading": "test-results/l6-metro-and-shelter-kit/int.metro-exit/game-reference-peer.json"
+  },
+  "interfaceNotes": "assets/int.metro-exit/notes.md"
+}

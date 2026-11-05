@@ -1,0 +1,408 @@
+{
+  "id": "bld.gym",
+  "errors": [],
+  "triangles": 95278,
+  "materials": 19,
+  "drawCalls": 32,
+  "animatedDrawCalls": 0,
+  "fileKB": 9075.38671875,
+  "dimensions": [
+    16.040000457316637,
+    5.074999809265137,
+    14.039999961853027
+  ],
+  "hash": "1e8fad4cbae352070e8643dd49a59e30edeca329ed6f2cba446af30046ce51f5",
+  "runtime": {
+    "id": "bld.gym",
+    "errors": [],
+    "triangles": 91982,
+    "materials": 19,
+    "drawCalls": 28,
+    "animatedDrawCalls": 0,
+    "fileKB": 974.35546875,
+    "dimensions": [
+      16.040000915527344,
+      5.074977074747181,
+      14.039886852752431
+    ],
+    "hash": "5200c59429029d00ae4e6a34c548edf04a81d09664a9f1862bc990cd0592f64c"
+  },
+  "nodes": [
+    {
+      "name": "col:counter",
+      "pivot": [
+        -7.079999923706055,
+        0.8799999952316284,
+        4.050000190734863
+      ]
+    },
+    {
+      "name": "col:floor",
+      "pivot": [
+        0,
+        0.17000000178813934,
+        0
+      ]
+    },
+    {
+      "name": "col:wall_back",
+      "pivot": [
+        0,
+        2.5999999046325684,
+        -6.849999904632568
+      ]
+    },
+    {
+      "name": "col:wall_left",
+      "pivot": [
+        -7.849999904632568,
+        2.5999999046325684,
+        0
+      ]
+    },
+    {
+      "name": "door_entry_0_mesh",
+      "pivot": [
+        0.6800000667572021,
+        0.36000001430511475,
+        -6.480000019073486
+      ]
+    },
+    {
+      "name": "door_entry_0",
+      "pivot": [
+        0.6800000667572021,
+        0.36000001430511475,
+        -6.480000019073486
+      ]
+    },
+    {
+      "name": "door_entry_1_mesh",
+      "pivot": [
+        3.120000123977661,
+        0.36000001430511475,
+        -6.480000019073486
+      ]
+    },
+    {
+      "name": "door_entry_1",
+      "pivot": [
+        3.120000123977661,
+        0.36000001430511475,
+        -6.480000019073486
+      ]
+    },
+    {
+      "name": "static_emi_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_asphalt",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_backpackTeal",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_brass",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_brick",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_canvasTan",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_denim",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_foliage",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_grass",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_picketWhite",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_policeBlue",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_redDark",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_schoolBusYellow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_sidewalk",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_survivorRed",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_tealDark",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_trouserViolet",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_uiDark",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "static_pal_woodWarm",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "wheel_tray_0_mesh",
+      "pivot": [
+        0.23999999463558197,
+        0.4359999895095825,
+        6.380000114440918
+      ]
+    },
+    {
+      "name": "wheel_tray_0",
+      "pivot": [
+        0.23999999463558197,
+        0.4359999895095825,
+        6.380000114440918
+      ]
+    },
+    {
+      "name": "wheel_tray_1_mesh",
+      "pivot": [
+        1.059999942779541,
+        0.4359999895095825,
+        6.380000114440918
+      ]
+    },
+    {
+      "name": "wheel_tray_1",
+      "pivot": [
+        1.059999942779541,
+        0.4359999895095825,
+        6.380000114440918
+      ]
+    },
+    {
+      "name": "wheel_tray_2_mesh",
+      "pivot": [
+        0.23999999463558197,
+        0.4359999895095825,
+        5.800000190734863
+      ]
+    },
+    {
+      "name": "wheel_tray_2",
+      "pivot": [
+        0.23999999463558197,
+        0.4359999895095825,
+        5.800000190734863
+      ]
+    },
+    {
+      "name": "wheel_tray_3_mesh",
+      "pivot": [
+        1.059999942779541,
+        0.4359999895095825,
+        5.800000190734863
+      ]
+    },
+    {
+      "name": "wheel_tray_3",
+      "pivot": [
+        1.059999942779541,
+        0.4359999895095825,
+        5.800000190734863
+      ]
+    },
+    {
+      "name": "interior",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "light:sconce_3.42",
+      "pivot": [
+        3.4200000762939453,
+        3.059999942779541,
+        -6.199999809265137
+      ]
+    },
+    {
+      "name": "light:sconce_-2.7",
+      "pivot": [
+        -2.700000047683716,
+        3.059999942779541,
+        -6.199999809265137
+      ]
+    },
+    {
+      "name": "light:sconce_-6.65",
+      "pivot": [
+        -6.650000095367432,
+        3.059999942779541,
+        -6.199999809265137
+      ]
+    },
+    {
+      "name": "light:sconce_left_6.0",
+      "pivot": [
+        -7.199999809265137,
+        3.0399999618530273,
+        -6
+      ]
+    },
+    {
+      "name": "light:sconce_left_-2.45",
+      "pivot": [
+        -7.199999809265137,
+        3.0399999618530273,
+        2.450000047683716
+      ]
+    },
+    {
+      "name": "roof_pal_canvasTan",
+      "pivot": [
+        8.020000457763672,
+        3.759999990463257,
+        0
+      ]
+    },
+    {
+      "name": "roof_pal_picketWhite",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "roof_pal_uiDark",
+      "pivot": [
+        0,
+        4.965000152587891,
+        0
+      ]
+    },
+    {
+      "name": "roof",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "root",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "front",
+      "pivot": [
+        8.050000457316637,
+        2.5374999046325684,
+        0.019999980926513672
+      ]
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+import { AmbientLight, Box3, DirectionalLight, HemisphereLight, Mesh, SkinnedMesh, PerspectiveCamera, RenderTarget, Scene, Vector3, WebGPURenderer, type Object3D } from 'three/webgpu';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { Crowd } from './crowd';
+import { AssetRegistry, type PlaceholderLog } from './registry';
+import { PaletteMaterial } from '../render/PaletteMaterial';
+import { anchorsFor } from '../data/placedLights';
+import { footprint } from '../render/LightField';
+import { Lighting } from '../render/Lighting';
+import { Materials } from '../render/Materials';
+import manifest from './manifest.json' with { type: 'json' };
+import type { AssetDef } from './types';
+
+export interface AssetViewerApi {
+  ready: Promise<void>;
+  lighting?(night: boolean, powered: boolean): Promise<void>;
+  view(index: number, roll?: number): Promise<void>;
+  /** Batch inspection reuses the renderer and releases the previous asset. */
+  selectAsset?(id: string): Promise<void>;
+  /** Fit the complete visible silhouette, supplied as normalized screen bounds. */
+  frame?(bounds: [number, number, number, number]): void;
+  visibility(name: string, visible: boolean): Promise<void>;
+  inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
+  deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
+  info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
+  goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number; removedTriangles: number }>;
+  crowdProbe?(): Promise<{ instances: number; materials: number; drawCalls: number; poseError: number }>;
+}
+declare global { interface Window { __ASSET__?: AssetViewerApi } }
+
+/** The game WebGPU renderer (WebGL2 fallback), palette swap and golden-hour lights. */
+export async function assetViewer(): Promise<void> {
+  const params = new URLSearchParams(location.search);
+  let id = params.get('asset') ?? 'veh.fire-engine';
+  const renderer = new WebGPURenderer({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
+  renderer.info.autoReset = false;
+  renderer.setPixelRatio(1); renderer.setSize(innerWidth, innerHeight); await renderer.init();
+  document.querySelector('#stage')!.appendChild(renderer.domElement);
+  const scene = new Scene(); renderer.setClearColor('#2a2730');
+  scene.add(new HemisphereLight('#ffe2b6', '#635078', 2), new AmbientLight('#ffe8c8', .3));
+  const sun = new DirectionalLight('#ffd5a2', 3); sun.position.set(5,8,5); scene.add(sun);
+  const camera = new PerspectiveCamera(25, innerWidth / innerHeight, .01, 500);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  const events: PlaceholderLog[] = [];
+  const inspectionLighting = new Lighting(new Scene(), undefined, renderer);
+  const inspectionMaterials = new Materials(inspectionLighting);
+  const createRegistry = () => new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
+    // Explicit inspection shows pending source files without stale registration metadata.
+    manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
+      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [], dimensions: { ...def.dimensions, tolerance: Number.POSITIVE_INFINITY } } : {}) } : def) : undefined,
+  });
+  let registry = createRegistry();
+  const decay = document.querySelector<HTMLSelectElement>('#decay')!;
+  for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
+  decay.disabled = !registry.definition(id).decayVariants.length;
+  let object: Object3D, extent = 1;
+  let powered = true;
+  const center = new Vector3(), size = new Vector3();
+  function render(): void {
+    // Isolated inspection follows the game's zoom-relative fog convention.
+    // Large interiors need a distant camera to fit, without fog hiding their surfaces.
+    const fogOffset = Math.max(0, camera.position.distanceTo(controls.target) - 19);
+    inspectionLighting.fogNear.value = 55 + fogOffset;
+    inspectionLighting.fogFar.value = 140 + fogOffset;
+    inspectionLighting.field.update(center.x, center.z, 0); inspectionLighting.field.render(renderer);
+    renderer.info.reset(); renderer.render(scene,camera);
+  }
+  async function view(index: number, roll?: number): Promise<void> {
+    const angle = index === 4 ? Math.PI / 4 : index * Math.PI / 2;
+    const elevation = index === 4 ? Math.PI * .2 : .32;
+    const width = Math.abs(Math.sin(angle))*size.x + Math.abs(Math.cos(angle))*size.z;
+    const depth = Math.abs(Math.cos(angle))*size.x + Math.abs(Math.sin(angle))*size.z;
+    const height = Math.cos(elevation)*size.y + Math.sin(elevation)*depth;
+    const distance = Math.max(width/camera.aspect,height) / Math.tan(camera.fov*Math.PI/360) * .6;
+    camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
+    controls.target.copy(center); controls.update(); camera.lookAt(center);
+    if (roll !== undefined) camera.rotateZ(roll);
+    await renderer.compileAsync(scene,camera); render(); render();
+  }
+  function applyAssetPower(): void {
+    inspectionLighting.field.setStatic(anchorsFor(id).filter(a => a.pool).map(anchor => ({ ...footprint(anchor), on: powered })));
+    object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
+  }
+  async function load(): Promise<void> {
+    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); object.traverse(node => { if (node instanceof Mesh && node.geometry.userData.viewerGore) node.geometry.dispose(); }); }
+    object = params.has('crowd') && params.has('test')
+      ? new Crowd((await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
+      : await registry.loadAsset(id, (document.querySelector<HTMLSelectElement>('#quality')?.value ?? 'high') as 'high' | 'lod1' | 'lod2', decay.value || undefined);
+    exploded = false;
+    scene.add(object); applyAssetPower();
+    const silhouette = registry.definition(id).crowdSkin ? object.getObjectByName('skin_body') ?? object : object;
+    new Box3().setFromObject(silhouette).getCenter(center);
+    new Box3().setFromObject(silhouette).getSize(size); extent = Math.max(size.x,size.y,size.z);
+    await view(4);
+    const picker = document.querySelector<HTMLSelectElement>('#nodes')!; picker.replaceChildren();
+    object.traverse((node) => { if (node.name) { const option = document.createElement('option'); option.text = node.name; picker.add(option); } });
+  }
+  controls.addEventListener('change', render);
+  document.querySelector('#quality')!.addEventListener('change', () => { void load(); });
+  decay.addEventListener('change', () => { void load(); });
+  document.querySelector('#wireframe')!.addEventListener('click', () => {
+    object.traverse((node) => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) if ('wireframe' in material) material.wireframe = !material.wireframe; }); render();
+  });
+  let exploded = false;
+  document.querySelector('#explode')!.addEventListener('click', () => {
+    exploded = !exploded;
+    for (const name of registry.definition(id).animatedNodes) {
+      const node = object.getObjectByName(name);
+      if (node) node.position.y += (exploded ? 1 : -1) * extent * .15;
+    }
+    render();
+  });
+  document.querySelector('#nodes')!.addEventListener('change', (event) => {
+    const node = object.getObjectByName((event.target as HTMLSelectElement).value);
+    if (node) { node.getWorldPosition(controls.target); controls.update(); render(); }
+  });
+  async function deliveryView(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void> {
+    document.querySelector<HTMLSelectElement>('#quality')!.value = quality;
+    await load();
+    const elevation = Math.PI * .2, angle = Math.PI / 4;
+    camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
+    controls.target.copy(center); controls.update(); camera.lookAt(center);
+    await renderer.compileAsync(scene, camera); render(); render();
+  }
+  async function inspectionView(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible = true): Promise<void> {
+    document.querySelector<HTMLSelectElement>('#quality')!.value = quality;
+    await load();
+    const roof = object.getObjectByName('roof'); if (roof) roof.visible = roofVisible;
+    const angle = azimuth * Math.PI / 180, elevation = Math.PI * .2;
+    const width = Math.abs(Math.sin(angle)) * size.x + Math.abs(Math.cos(angle)) * size.z;
+    const depth = Math.abs(Math.cos(angle)) * size.x + Math.abs(Math.sin(angle)) * size.z;
+    const height = Math.cos(elevation) * size.y + Math.sin(elevation) * depth;
+    const distance = Math.max(width / camera.aspect, height) / Math.tan(camera.fov * Math.PI / 360) * .65;
+    camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
+    controls.target.copy(center); controls.update(); camera.lookAt(center);
+    await renderer.compileAsync(scene, camera); render(); render();
+  }
+  const ready = load();
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, lighting: async (night, on) => {
+    powered = on; inspectionLighting.set(night ? 'night' : 'golden');
+    applyAssetPower(); inspectionLighting.applyLook();
+    await view(4);
+  }, frame: ([left, top, right, bottom]) => {
+    const height = camera.position.distanceTo(controls.target) * 2 * Math.tan(camera.fov * Math.PI / 360), before = camera.position.clone();
+    camera.translateX(((left + right) / 2 - .5) * height * camera.aspect);
+    camera.translateY((.5 - (top + bottom) / 2) * height);
+    controls.target.add(camera.position.clone().sub(before));
+    camera.position.sub(controls.target).multiplyScalar(Math.max(right - left, bottom - top) / .85).add(controls.target);
+    camera.updateMatrixWorld(true); render(); render();
+  }, deliveryView, inspectionView, selectAsset: async next => {
+    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
+    await registry.dispose(); events.length = 0; id = next; registry = createRegistry();
+    document.querySelector<HTMLSelectElement>('#quality')!.value = 'high';
+    decay.replaceChildren(new Option('Base', ''));
+    for (const name of registry.definition(id).decayVariants) decay.add(new Option(name, name));
+    decay.disabled = !registry.definition(id).decayVariants.length;
+    await load();
+  }, visibility: async (name, visible) => {
+    const node = object.getObjectByName(name);
+    if (!node) throw new Error(`Missing asset node ${name}`);
+    node.visible = visible; await view(4);
+  }, info: () => {
+    const nodes: string[] = []; object.traverse((node) => { if (node.name) nodes.push(node.name); });
+    return { placeholder: !!object.userData.placeholder, drawCalls: renderer.info.render.drawCalls, triangles: renderer.info.render.triangles, nodes, events };
+  }, goreProbe: async (name) => {
+    const limb=object.getObjectByName(name), cap=object.getObjectByName(`stump_${name}`);
+    if (!limb || !cap || cap.parent !== limb.parent) throw new Error(`Missing surviving-side cap for ${name}`);
+    const hiddenBefore=!cap.visible, jointError=limb.getWorldPosition(new Vector3()).distanceTo(cap.getWorldPosition(new Vector3()));
+    let capTriangles=0;
+    cap.traverse(node=>{if(node instanceof Mesh)capTriangles+=(node.geometry.index?.count ?? node.geometry.attributes.position.count)/3;});
+    let removedTriangles = 0;
+    if (registry.definition(id).crowdSkin) {
+      // The body is one skin: keep its bones and remove the same owned triangles as the crowd shader.
+      const removed = new Set<string>(); limb.traverse(node => removed.add(node.name));
+      object.traverse(node => {
+        if (!(node instanceof SkinnedMesh) || !['skin_body', 'skin_eyes'].includes(node.name)) return;
+        const original = node.geometry, geometry = original.clone(), semantic = geometry.getAttribute('_crowd_part'), joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), index = geometry.index;
+        const owner = (i: number) => {
+          if (semantic) return semantic.getX(i);
+          let major = 0; for (let k = 1; k < 4; k++) if (weights.getComponent(i, k) > weights.getComponent(i, major)) major = k;
+          return joints.getComponent(i, major);
+        };
+        const kept: number[] = [];
+        for (let t = 0; t < (index?.count ?? geometry.getAttribute('position').count); t += 3) {
+          const triangle = [0, 1, 2].map(k => index ? index.getX(t + k) : t + k);
+          if (triangle.some(i => removed.has(node.skeleton.bones[owner(i)].name))) removedTriangles++;
+          else kept.push(...triangle);
+        }
+        geometry.setIndex(kept); geometry.userData.viewerGore = true; node.geometry = geometry; if (!kept.length) node.visible = false;
+        if (original.userData.viewerGore) original.dispose();
+      });
+    } else limb.removeFromParent();
+    cap.visible=true;
+    await renderer.compileAsync(scene,camera); render(); render();
+    return {hiddenBefore,visibleAfter:cap.visible,capTriangles,jointError,removedTriangles};
+  }, crowdProbe: async () => {
+    if (!(object instanceof Crowd)) throw new Error('Not the crowd-bake probe');
+    const { crowdPoseError } = await import('./crowdProbe');
+    const poseError = await crowdPoseError(renderer,object.clip);
+    // Count the asset pass directly; screen presentation can add a renderer pass.
+    const target = new RenderTarget(innerWidth,innerHeight);
+    object.setTime(.25); renderer.setRenderTarget(target); render();
+    const drawCalls = renderer.info.render.drawCalls;
+    renderer.setRenderTarget(null); target.dispose(); render();
+    return { instances: object.instanceCount, materials: object.children.length, drawCalls, poseError };
+  } };
+  await ready;
+  window.addEventListener('resize', () => { renderer.setSize(innerWidth,innerHeight); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); render(); });
+  window.addEventListener('pagehide', () => { controls.dispose(); if (object instanceof Crowd) object.dispose(); void registry.dispose(); inspectionMaterials.dispose(); inspectionLighting.dispose(); renderer.dispose(); }, { once: true });
+}

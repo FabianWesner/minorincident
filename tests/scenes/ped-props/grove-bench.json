@@ -1,0 +1,97 @@
+{
+  "name": "ped-props-grove-bench",
+  "seed": 2,
+  "ground": "district",
+  "size": 30,
+  "time": "L1",
+  "props": [],
+  "actors": [
+    {
+      "id": "woman",
+      "kind": "pedestrian",
+      "at": [
+        -49,
+        -3.8
+      ],
+      "look": {
+        "model": "npc.civilian-woman-a",
+        "accessories": [
+          "shoulder-bag"
+        ]
+      },
+      "state": {
+        "walk": [
+          [
+            -41,
+            -3.8
+          ],
+          [
+            -49,
+            -3.8
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "man",
+      "kind": "pedestrian",
+      "at": [
+        -41,
+        -2.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-a"
+      },
+      "state": {
+        "walk": [
+          [
+            -49,
+            -2.8
+          ],
+          [
+            -41,
+            -2.8
+          ]
+        ],
+        "loop": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -45,
+      -3.8
+    ],
+    "zoom": 0.8
+  },
+  "frames": 600,
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    600
+  ],
+  "sheet": 30,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "propPenetrationFramesMax": 0
+  },
+  "layout": {
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -53,
+        -11.8
+      ],
+      [
+        -37,
+        4.2
+      ]
+    ],
+    "recenter": false
+  }
+}

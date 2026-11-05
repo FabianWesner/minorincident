@@ -1,0 +1,22 @@
+{
+ "name": "veh-apc-floor-stages",
+ "note": "E31 L9-S5: the L9 mission APC (floor policy) at 100 / 75 / 50 / 25 / 0 percent durability, left to right, game camera on the 0 percent vehicle. Look for: every hull keeps its shape and wheels grounded, the 0 percent and 25 percent hulls show the existing smoke puffs (heavy smoke stage), none of them is swapped for the wrecked shell, burned or exploded, no fire, and the 0 percent vehicle sits still but stays an intact driveable body. (APC dents, glass and light overlays belong to L9-A1.)",
+ "seed": 31,
+ "ground": "asphalt",
+ "size": 60,
+ "time": "L4",
+ "vehicles": [
+  { "id": "apc-100", "asset": "vehicle.military-apc", "at": [-16, 0], "yaw": 90, "floor": true, "health": 1000 },
+  { "id": "apc-75", "asset": "vehicle.military-apc", "at": [-8, 0], "yaw": 90, "floor": true, "health": 750 },
+  { "id": "apc-50", "asset": "vehicle.military-apc", "at": [0, 0], "yaw": 90, "floor": true, "health": 500 },
+  { "id": "apc-25", "asset": "vehicle.military-apc", "at": [8, 0], "yaw": 90, "floor": true, "health": 250 },
+  { "id": "apc-0", "asset": "vehicle.military-apc", "at": [16, 0], "yaw": 90, "floor": true, "health": 0 }
+ ],
+ "camera": { "mode": "game", "target": "apc-0", "zoom": 1 },
+ "script": [
+  { "frame": 60, "camera": { "mode": "pose", "position": [0, 9, 36], "target": [0, 1, 0] } }
+ ],
+ "frames": 120,
+ "sheet": 20,
+ "expect": { "consoleErrors": 0 }
+}

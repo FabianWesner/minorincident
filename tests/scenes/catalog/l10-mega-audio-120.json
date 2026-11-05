@@ -1,0 +1,58 @@
+{
+  "name": "l10-mega-audio-120",
+  "note": "E32-AC13/14: production HUD and persistent Mega at 120 m. Ring stays player-centered with band text; no exact dot or bearing, even at 20 m inside ordinary minimap range. Open all quality/zoom pairs.",
+  "seed": 10,
+  "ground": "asphalt",
+  "size": 400,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    }
+  ],
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -120,
+      0
+    ],
+    "resident": [
+      [
+        -180,
+        -180
+      ],
+      [
+        180,
+        180
+      ]
+    ]
+  },
+  "megaHud": true,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "shots": [
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

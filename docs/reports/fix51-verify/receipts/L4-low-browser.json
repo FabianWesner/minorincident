@@ -1,0 +1,487 @@
+{
+  "version": 1,
+  "level": "L4",
+  "tier": "low",
+  "sourceHash": "710a965e75362a3a634730b032b1d68d1f840cb9dd52f4d6fd039fa9dfeb0a23",
+  "fixtureHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
+  "browserHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
+  "captureBrowserHash": "5c1a9c35cb1dc1a63bfc6a11277df6d498426555ddab04cffa1a0174ae8831c0",
+  "runtimeEquivalence": "docs/reports/fix51-r10b/row03-type-only-equivalence.json",
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "frameTiming": false,
+  "errors": [],
+  "issues": [],
+  "run": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 92,
+      "simSeconds": 84,
+      "maxNoProgressSeconds": 11.166666666666666,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 241
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy · 57 m",
+          "tick": 15,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1858,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2127,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "observations": {
+    "source": "docs/reports/fix51-r10b/row03-low-acceptance-ledger.json.gz",
+    "fullRoute": false,
+    "survivalProtected": true,
+    "supplementaryEvidence": {
+      "L4-16": {
+        "file": "docs/reports/fix51-r10b/L4-low-acceptance-ledger.json.gz",
+        "producerScopeProof": "docs/reports/fix51-r10b/L4-16-proof.json",
+        "fullRow": false
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "L4-02",
+      "clause": "pre-pickup living civilian census excluding soldiers",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "value": {
+        "count": 32,
+        "samples": 10
+      },
+      "target": "at least 40 living civilians before MG pickup",
+      "status": "FAIL",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-03",
+      "clause": "actual MG pickup klaxon and attack start share simulation tick",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2124
+        ],
+        "gunTicks": [
+          2124
+        ],
+        "turnTicks": [
+          2124
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2124,
+            "observedWorldTick": 2124,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 46.976,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 46.976,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 46.976,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 46.976,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 307,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 308,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 309,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 310,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2124,
+          "ids": [
+            {
+              "id": 162,
+              "x": -39.513124999999995,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 163,
+              "x": -38.59375,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 164,
+              "x": -37.7,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 165,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -24,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 171,
+              "x": -16,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "target": "same simulation tick for pickup, war start, actual looping klaxon voices, and first living admitted alarm cohort",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "living cellar sample within7m of entry anchor",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "anchor": {
+          "x": 75.3,
+          "z": -6.4,
+          "radius": 2,
+          "yaw": 0
+        },
+        "entry": {
+          "x": -79.29999999999998,
+          "z": -45.2801,
+          "radius": 1.4,
+          "yaw": -1.5707963267948966
+        },
+        "player": {
+          "x": 75.3,
+          "y": 0.8500000238418579,
+          "z": -6.4,
+          "yaw": 2.9321531433504737
+        },
+        "doorway": {
+          "x": -79.29999999999998,
+          "z": -45.2801,
+          "yaw": -1.5707963267948966
+        },
+        "actors": [
+          {
+            "id": 1,
+            "archetype": "player.survivor",
+            "companion": false,
+            "x": 75.3,
+            "y": 0.8500000238418579,
+            "z": -6.4,
+            "pendingAdmission": false
+          },
+          {
+            "id": 29,
+            "archetype": "char.corgi",
+            "companion": true,
+            "x": 76.47880886202383,
+            "y": 0.3,
+            "z": -7,
+            "pendingAdmission": false
+          }
+        ]
+      },
+      "target": "sample contains only courier and companion; whole-island entrant census remains open",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "decoded low-pass battle activity at sampled cellar graph",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "samples": 371,
+        "activeSamples": 87,
+        "thresholdRms": 1e-7,
+        "firstTick": 14642,
+        "lastTick": 14907,
+        "spanSeconds": 4.410666666666657,
+        "maxRms": 0.044979985481097585,
+        "filters": [
+          750
+        ],
+        "positiveGainVoices": 7
+      },
+      "target": "positive decoded battle PCM and low-pass voices; signal detection is not a listening verdict",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "post-bar six-second decoded activity coverage",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "NOT CHECKED",
+      "value": {
+        "samples": 371,
+        "activeSamples": 87,
+        "thresholdRms": 1e-7,
+        "firstTick": 14642,
+        "lastTick": 14907,
+        "spanSeconds": 4.410666666666657,
+        "maxRms": 0.044979985481097585,
+        "filters": [
+          750
+        ],
+        "positiveGainVoices": 7
+      },
+      "target": "observed decoded activity span at least6s; short observed span is inconclusive, not proof of silence",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual same-basement L5 handover",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "doorDelta": 0,
+        "from": {
+          "anchor": {
+            "x": 75.3,
+            "z": -6.4,
+            "radius": 2,
+            "yaw": 0
+          },
+          "entry": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "radius": 1.4,
+            "yaw": -1.5707963267948966
+          },
+          "player": {
+            "x": 75.3,
+            "y": 0.8500000238418579,
+            "z": -6.4,
+            "yaw": 2.9321531433504737
+          },
+          "doorway": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "yaw": -1.5707963267948966
+          },
+          "actors": [
+            {
+              "id": 1,
+              "archetype": "player.survivor",
+              "companion": false,
+              "x": 75.3,
+              "y": 0.8500000238418579,
+              "z": -6.4,
+              "pendingAdmission": false
+            },
+            {
+              "id": 29,
+              "archetype": "char.corgi",
+              "companion": true,
+              "x": 76.47880886202383,
+              "y": 0.3,
+              "z": -7,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        "to": {
+          "anchor": {
+            "x": 75.3,
+            "z": -5.4,
+            "radius": 2,
+            "yaw": 0
+          },
+          "entry": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "radius": 2,
+            "yaw": -1.5707963267948966
+          },
+          "player": {
+            "x": 75.3,
+            "y": 0.705,
+            "z": -5.4,
+            "yaw": 0.3205919885488634
+          },
+          "actors": [
+            {
+              "id": 1,
+              "archetype": "player.survivor",
+              "companion": false,
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "pendingAdmission": false
+            },
+            {
+              "id": 18,
+              "archetype": "char.corgi",
+              "companion": true,
+              "x": 76.03806023374436,
+              "y": 0.3,
+              "z": -6.191341716182545,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "target": "same street doorway and personally reviewed basement interior in consecutive campaign levels",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "reviewed visible companion in cellar",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "review": "docs/reports/fix51-r10b/L4-frame-review.json",
+        "what": "Orange companion visible behind heroine in cellar frames."
+      },
+      "target": "companion visibly resolved in cellar",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    }
+  ]
+}

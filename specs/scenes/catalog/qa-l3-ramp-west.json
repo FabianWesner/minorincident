@@ -1,0 +1,9 @@
+{
+ "name": "qa-l3-ramp-west",
+ "note": "Q-129: raised L3 highway, west ramp/deck junction: no dark seam line across the deck, filler matches the road",
+ "ground": "district", "time": "L3", "tier": 2,
+ "layout": { "district": "D-CORRIDOR", "level": "L3", "bbox": [[132, -14], [214, 14]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [169.5, 0.6], "yaw": 180 }],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "frames": 40, "shots": [0, 40]
+}

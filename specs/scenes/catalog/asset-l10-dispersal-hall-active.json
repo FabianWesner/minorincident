@@ -1,0 +1,47 @@
+{
+ "name": "asset-l10-dispersal-hall-active",
+ "note": "Dispersal running: the two bladed turbine stages turn in the open casing gap. Look for: stages centred on the shaft, blades clear of the steam chest and casing ends, cradles clear of the rotor.",
+ "ground": "sidewalk",
+ "size": 50,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    12,
+    4
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   4,
+   -3
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "dispersal": {
+  "active": true
+ }
+}

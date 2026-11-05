@@ -1,0 +1,255 @@
+// Radial impulse with upward bias, mass-scaled linear falloff, applied one tick later, and bullet time:
+// adapted from Bruno Simon folio-2025 Explosions.js + Time.js bulletTime (MIT, 41046b5). Ticker waits become sim ticks.
+import { downed } from './Damage';
+import * as RAPIER from '@dimforge/rapier3d-compat';
+import { SimPhase } from '../../core/EventBus';
+import { blastDamage, explosionDef, type BlastClass, type ExplosionDef } from '../../data/explosions';
+import type { ExplosionBeat } from '../../data/audioEvents';
+import type { SimWorld } from '../world/SimWorld';
+import type { EntitySnapshot } from '../world/types';
+
+export interface BlastOptions {
+  /** Entity credited with damage (hazard, car, thrower). Defaults to the player. */
+  sourceId?: number;
+  /** Upgrade-resolved radius (throwables); defaults to the def radius. */
+  radius?: number;
+  /** Authored below-ground set pieces (L9 gully): presentation origin, simulation ground is still flat. */
+  height?: number;
+  /** Safe story blasts keep the visual wreck fire without spawning damaging ground fires. */
+  fires?: boolean;
+  /** False when the caller already resolved damage (E05 throwables/projectiles keep their own resolver). */
+  damage?: boolean;
+  /** Player projectile attribution; environmental blasts keep their definition id. */
+  attackId?: number; actionId?: string; multiplier?: number; directTargetId?: number;
+}
+/** Detached car body panels (E27-AC05): cosmetic physics bodies that tumble and settle; 30 s lifetime. */
+export interface CarPart { body: RAPIER.RigidBody; kind: 'door' | 'hood'; sourceId: number; until: number; half: [number, number, number] }
+interface Pending { at: number; body: RAPIER.RigidBody; x: number; y: number; z: number }
+type Scheduled = { at: number; kind: 'stage'; def: string; x: number; z: number; sourceId: number }
+  | { at: number; kind: 'beat'; beat: ExplosionBeat; size: 'small' | 'medium' | 'large' | 'mega'; x: number; z: number; sourceId: number };
+
+/** Bodies respond less as they get heavier: cones fly, benches tumble, cars hop (spec 07 §2 explosion column). */
+export const massResponse = (mass: number): number => Math.min(1.25, Math.max(.4, (50 / mass) ** .25));
+const audioSize = (c: BlastClass): 'small' | 'medium' | 'large' | 'mega' => c === 'mega' || c === 'large' || c === 'medium' ? c : 'small';
+const MAX_FIRES = 24, MAX_PARTS = 12;
+
+/** E27 core: one deterministic entry point for every blast (hazards, throwables, cars, scripted megas). */
+export class Explosions {
+  readonly pending: Pending[] = [];
+  readonly scheduled: Scheduled[] = [];
+  readonly parts: CarPart[] = [];
+  private readonly nearby: number[] = [];
+  private readonly area = { x: 0, z: 0, r: 0 };
+  private readonly impulse = { x: 0, y: 0, z: 0 };
+  /** Last blast per sim tick, for probes and tests. */
+  last: { tick: number; id: string; x: number; z: number; radius: number } | null = null;
+  constructor(private readonly world: SimWorld) {
+    world.events.on('sim.tick', () => this.applyImpulses(), SimPhase.ai);
+    world.events.on('sim.tick', () => this.update(), SimPhase.missions);
+  }
+  blast(id: string, at: { x: number; z: number }, opts: BlastOptions = {}): void {
+    const d = explosionDef(id), sourceId = opts.sourceId ?? 1, tick = this.world.tick;
+    if (!Number.isFinite(at.x) || !Number.isFinite(at.z)) throw new RangeError('Blast position must be finite');
+    if (d.stages) {
+      for (const s of d.stages) this.scheduled.push({ at: tick + s.delay, kind: 'stage', def: s.def, x: at.x + s.offset.x, z: at.z + s.offset.z, sourceId });
+      this.update(); return;
+    }
+    const r = opts.radius ?? d.radius;
+    this.last = { tick, id, x: at.x, z: at.z, radius: r };
+    this.world.events.emit({ type: 'explosion', tick, defId: id, cls: d.class, fx: d.fx, sourceId, position: { x: at.x, y: opts.height ?? .7, z: at.z }, radius: r });
+    const size = audioSize(d.class);
+    this.world.events.emit({ type: 'explosion.beat', tick, sourceId, position: { x: at.x, y: .7, z: at.z }, beat: 'crack', size });
+    this.scheduled.push({ at: tick + 4, kind: 'beat', beat: 'debris', size, x: at.x, z: at.z, sourceId }, { at: tick + 15, kind: 'beat', beat: 'roar', size, x: at.x, z: at.z, sourceId });
+    this.damage(d, at, r, sourceId, opts.damage !== false, opts);
+    this.queueImpulses(d, at, r);
+    if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
+    if (opts.fires !== false) this.ignite(d, at, r);
+    if (d.gas) this.world.hazards?.spawn(d.gas.kind, at, { radius: r, duration: d.gas.seconds });
+    const player = this.world.entities.get(1);
+    if (d.slowMo && player && player.health.current > 0 && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) <= d.slowMo.within)
+      this.world.events.emit({ type: 'explosion.slowmo', tick, defId: id, scale: d.slowMo.scale, seconds: d.slowMo.seconds });
+  }
+  private damage(d: ExplosionDef, at: { x: number; z: number }, r: number, sourceId: number, apply: boolean, opts: BlastOptions): void {
+    const world = this.world, damage = world.combat?.damage, query = world.combat?.query;
+    this.area.x = at.x; this.area.z = at.z; this.area.r = r;
+    // Per call: a chained blast inside damage.apply gathers its own list.
+    const candidates = query ? this.candidates(query, at, r) : [];
+    // Copy once: hit events chain into hazards that query neighbours themselves.
+    for (const id of [...world.spatial.query(this.area, this.nearby)]) {
+      const target = world.entities.get(id);
+      if (!target || id === sourceId || target.barricade || (target.health.current <= 0 && !downed(target)) || target.hidden || target.attachedTo !== undefined) continue;
+      const dx = target.transform.x - at.x, dz = target.transform.z - at.z, distance = Math.hypot(dx, dz);
+      if (distance > r || (query && !this.visible(query, candidates, at, target.transform, target.id))) continue;
+      const amount = blastDamage(d, distance, r), scale = d.damage ? amount / d.damage : 0;
+      // The escape APC is a mission objective, not a valid target for its own
+      // player's rocket splash. Keep the blast's knockback/presentation, while
+      // ensuring a boarding-ring salvo can never fail the run.
+      if (target.vehicle) {
+        const ownRocket = target.archetype === 'vehicle.military-apc' && sourceId === 1 && opts.actionId === 'weapon.rocket-launcher';
+        if (!ownRocket) world.vehicles?.damage(id, apply ? amount * d.vehicle : 0);
+        continue;
+      }
+      // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
+      if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
+      if (!apply || !damage || amount <= 0) continue;
+      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+    }
+    // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
+    if (!damage || d.barricade <= 0) return;
+    for (const e of world.entities.values()) {
+      const s = e.barricade?.slot; if (!s || !e.barricade!.intact || e.health.current <= 0) continue;
+      const ax = s.b.x - s.a.x, az = s.b.z - s.a.z, t = Math.max(0, Math.min(1, ((at.x - s.a.x) * ax + (at.z - s.a.z) * az) / (ax * ax + az * az)));
+      const distance = Math.hypot(s.a.x + ax * t - at.x, s.a.z + az * t - at.z), amount = blastDamage(d, distance, r) * d.barricade;
+      if (amount > 0) damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: e.id, origin: at, direction: { x: 0, z: 0 }, base: amount, multiplier: opts.multiplier ?? 1, type: 'explosive', knockback: 0, stagger: 0 });
+    }
+  }
+  /** Full cover (static walls, braced barricades) between blast and target shields it; loose props and other explosives
+   * do not (a stack of tanks still chains), nor does cover the blast starts inside. */
+  private visible(query: import('./HitQuery').HitQuery, candidates: readonly import('./HitQuery').CoverWall[], at: { x: number; z: number }, to: { x: number; z: number }, targetId: number): boolean {
+    const dx = to.x - at.x, dz = to.z - at.z, distance = Math.hypot(dx, dz);
+    if (distance < 1e-6) return true;
+    // perf-w5d: static walls come from this blast's candidates (those near its radius); dynamic walls are tested in full.
+    for (const w of candidates) if (this.blocks(w, at, dx, dz, distance, targetId)) return false;
+    for (const w of query.dynamicWalls) if (this.blocks(w, at, dx, dz, distance, targetId)) return false;
+    return true;
+  }
+  /** Static cover walls that could lie between a blast and any target within its radius (1 m margin), in array order. */
+  private candidates(query: import('./HitQuery').HitQuery, at: { x: number; z: number }, r: number): import('./HitQuery').CoverWall[] {
+    const list: import('./HitQuery').CoverWall[] = [], reach = r + 1;
+    for (const w of query.walls) if (Math.abs(w.x - at.x) <= w.halfX + reach && Math.abs(w.z - at.z) <= w.halfZ + reach) list.push(w);
+    return list;
+  }
+  /** One wall's slab test of the blast-to-target segment (the original per-wall rule, scalar). */
+  private blocks(w: import('./HitQuery').CoverWall, at: { x: number; z: number }, dx: number, dz: number, distance: number, targetId: number): boolean {
+    if (w.entityId === targetId || (w.entityId !== undefined && !this.world.entities.get(w.entityId)?.barricade) || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) return false;
+    let near = 0, far = distance;
+    const ux = dx / distance, uz = dz / distance;
+    if (Math.abs(ux) < 1e-12) { if (at.x < w.x - w.halfX || at.x > w.x + w.halfX) return false; }
+    else { const a = (w.x - w.halfX - at.x) / ux, b = (w.x + w.halfX - at.x) / ux; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+    if (Math.abs(uz) < 1e-12) { if (at.z < w.z - w.halfZ || at.z > w.z + w.halfZ) return false; }
+    else { const a = (w.z - w.halfZ - at.z) / uz, b = (w.z + w.halfZ - at.z) / uz; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+    return far >= near && near < distance - 1e-8;
+  }
+  /** Bruno: direction = horizontal × (1/upward) + up, normalised; strength fades linearly from 1 m to the radius. */
+  private push(d: ExplosionDef, at: { x: number; z: number }, r: number, body: RAPIER.RigidBody): void {
+    if (!body.isEnabled() || !body.isDynamic()) return;
+    const p = body.translation(), dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
+    const fade = Math.max(0, Math.min(1, (r - distance) / Math.max(1e-6, r - 1)));
+    if (fade <= 0 || d.impulse <= 0) return;
+    const h = 1 / d.upward, nx = distance > 1e-6 ? dx / distance * h : 0, nz = distance > 1e-6 ? dz / distance * h : 0, length = Math.hypot(nx, 1, nz);
+    const mass = body.mass(), speed = d.impulse * fade * massResponse(mass);
+    this.pending.push({ at: this.world.tick + 1, body, x: nx / length * speed * mass, y: 1 / length * speed * mass, z: nz / length * speed * mass });
+  }
+  private queueImpulses(d: ExplosionDef, at: { x: number; z: number }, r: number): void {
+    const props = this.world.props;
+    if (props) {
+      let woken = 0;
+      for (const item of props.items) if (!item.fixed && !item.braced && Math.hypot(item.pose.p[0] - at.x, item.pose.p[2] - at.z) < r) { if (item.body.isFixed()) item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false); this.push(d, at, r, item.body); woken++; }
+      if (woken) props.burst(this.world.tick + 300);
+    }
+    for (const piece of this.world.hazards?.debris.pieces ?? []) if (piece.until) this.push(d, at, r, piece.body);
+    for (const car of this.world.vehicles?.cars.values() ?? []) this.push(d, at, r, car.physics.body);
+    for (const part of this.parts) if (part.until) this.push(d, at, r, part.body);
+    // Retained death poses use the existing thrown-body presentation path.
+    // They have no colliders/brains and never deal contact damage. A 70 kg
+    // cosmetic body follows the same radial/upward impulse curve as the props.
+    const query = this.world.combat?.query, candidates = query ? this.candidates(query, at, r) : [];
+    if (d.impulse > 0) for (const e of this.world.entities.iterate()) {
+      if (!e.corpse || !e.infected || e.hidden || e.attachedTo !== undefined || !this.corpseClear(e, e.transform)) continue;
+      if (this.world.infected?.active.some(source => source.infected?.specialAttack?.projectile?.objectId === e.id && source.infected.specialAttack.stage === 'active')) continue;
+      const dx = e.transform.x - at.x, dz = e.transform.z - at.z, distance = Math.hypot(dx, dz);
+      const fade = Math.max(0, Math.min(1, (r - distance) / Math.max(1e-6, r - 1)));
+      if (!fade || query && !this.visible(query, candidates, at, e.transform, e.id)) continue;
+      const horizontal = 1 / d.upward, length = distance ? Math.hypot(horizontal, 1) : 1, speed = d.impulse * fade * massResponse(70);
+      const previous = e.corpseBlast;
+      e.corpseBlast = { delay: 1, x: (previous?.x ?? 0) + (distance ? dx / distance : 0) * horizontal / length * speed,
+        y: (previous?.y ?? 0) + speed / length, z: (previous?.z ?? 0) + (distance ? dz / distance : 0) * horizontal / length * speed };
+    }
+  }
+  private applyImpulses(): void {
+    for (let i = this.pending.length - 1; i >= 0; i--) {
+      const p = this.pending[i]; if (p.at > this.world.tick) continue;
+      this.impulse.x = p.x; this.impulse.y = p.y; this.impulse.z = p.z;
+      if (p.body.isValid() && p.body.isEnabled()) p.body.applyImpulse(this.impulse, true);
+      this.pending.splice(i, 1);
+    }
+    for (const e of this.world.entities.iterate()) {
+      const flight = e.corpseBlast;
+      if (!flight) continue;
+      if (!e.corpse || e.hidden) { delete e.corpseBlast; continue; }
+      if (--flight.delay > 0) continue;
+      e.corpseThrown = true;
+      const next = { x: e.transform.x + flight.x / 60, y: e.transform.y + flight.y / 60 - 9.81 / 7200, z: e.transform.z + flight.z / 60 };
+      if (!this.corpseClear(e, next) || this.world.combat && !this.world.combat.query.visible(e.transform, next)) { next.x = e.transform.x; next.z = e.transform.z; flight.x = flight.z = 0; }
+      flight.y -= 9.81 / 60;
+      const floor = (this.world.districts?.supportBelow(next.x, next.z, Math.max(e.transform.y, next.y) - .7) ?? 0) + .7;
+      if (next.y <= floor && flight.y < 0) { next.y = floor; delete e.corpseBlast; }
+      Object.assign(e.transform, next);
+      this.world.spatial.set(e.id, next.x, next.z);
+    }
+  }
+  /** Match the frozen death pose's feet/head strip (CrowdView.corpsePosition).
+   * Conservatively stop before walls instead of settling a body through one. */
+  private corpseClear(e: EntitySnapshot, at: { x: number; z: number }): boolean {
+    const nav = this.world.infected?.nav;
+    return !nav || nav.clear(at.x, at.z, .38) && nav.clear(at.x - Math.cos(e.transform.yaw) * .9, at.z + Math.sin(e.transform.yaw) * .9, .38);
+  }
+  /** Doors and hood fly off the wreck as cosmetic bodies (pooled, never more than 12). */
+  private detachParts(carId: number): void {
+    const car = this.world.vehicles!.cars.get(carId)!, physics = this.world.physics.world!, t = car.physics.transform, def = car.physics.def;
+    const c = Math.cos(t.yaw), s = Math.sin(t.yaw);
+    const specs: { kind: CarPart['kind']; half: [number, number, number]; local: [number, number, number]; v: [number, number, number] }[] = [
+      { kind: 'hood', half: [.55, .04, def.width * .42], local: [def.length * .3, .55, 0], v: [2.5, 7.5, 0] },
+      { kind: 'door', half: [.5, .38, .04], local: [.1, .3, def.width / 2 + .05], v: [.6, 4.5, 5] },
+      { kind: 'door', half: [.5, .38, .04], local: [.1, .3, -def.width / 2 - .05], v: [-.4, 4, -5] },
+    ];
+    for (const spec of specs) {
+      let part = this.parts.find(p => !p.until);
+      if (!part && this.parts.length < MAX_PARTS) {
+        const body = physics.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setLinearDamping(.3).setAngularDamping(.6));
+        physics.createCollider(RAPIER.ColliderDesc.cuboid(...spec.half).setDensity(40).setCollisionGroups(0x00020002), body);
+        part = { body, kind: spec.kind, sourceId: carId, until: 0, half: spec.half }; this.parts.push(part);
+      }
+      if (!part) break;
+      const [lx, ly, lz] = spec.local, [vx, vy, vz] = spec.v;
+      part.kind = spec.kind; part.sourceId = carId; part.until = this.world.tick + 1800; part.body.setEnabled(true);
+      part.body.setTranslation({ x: t.x + lx * c + lz * s, y: t.y + ly, z: t.z - lx * s + lz * c }, true);
+      part.body.setRotation({ x: 0, y: Math.sin(t.yaw / 2), z: 0, w: Math.cos(t.yaw / 2) }, true);
+      part.body.setLinvel({ x: vx * c + vz * s, y: vy, z: -vx * s + vz * c }, true);
+      part.body.setAngvel({ x: vz * .8, y: 1.5, z: -vx * 1.2 }, true);
+    }
+  }
+  /** Aftermath fires: E11 fire hazards that damage, ignite flammables, spread once and burn out. */
+  private ignite(d: ExplosionDef, at: { x: number; z: number }, r: number): void {
+    const hazards = this.world.hazards; if (!hazards || !d.fires.count) return;
+    let active = 0;
+    for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil) active++;
+    const phase = (this.world.tick % 17) * .37;
+    for (let i = 0; i < d.fires.count && active < MAX_FIRES; i++, active++) {
+      const angle = phase + i * Math.PI * 2 / d.fires.count, distance = r * (.18 + .12 * (i % 2));
+      hazards.spawn('fire', { x: at.x + Math.cos(angle) * distance, z: at.z + Math.sin(angle) * distance }, { radius: d.fires.radius, duration: d.fires.seconds, spread: d.fires.spread });
+    }
+  }
+  /** Fire count for the spread cap (shared with Hazards). */
+  static readonly maxFires = MAX_FIRES;
+  private update(): void {
+    const tick = this.world.tick;
+    for (let i = 0; i < this.scheduled.length;) {
+      const s = this.scheduled[i]; if (s.at > tick) { i++; continue; }
+      this.scheduled.splice(i, 1);
+      if (s.kind === 'stage') {
+        this.world.events.emit({ type: 'explosion.beat', tick, sourceId: s.sourceId, position: { x: s.x, y: .7, z: s.z }, beat: 'boom', size: audioSize(explosionDef(s.def).class) });
+        this.blast(s.def, s, { sourceId: s.sourceId });
+      } else this.world.events.emit({ type: 'explosion.beat', tick, sourceId: s.sourceId, position: { x: s.x, y: .7, z: s.z }, beat: s.beat, size: s.size });
+    }
+    for (const part of this.parts) if (part.until && tick >= part.until) { part.until = 0; part.body.setEnabled(false); }
+  }
+  /** Physics-world replacement (decay tier rebuild) invalidates the pooled bodies. */
+  reset(worldReset = false): void {
+    if (!worldReset) for (const part of this.parts) this.world.physics.world?.removeRigidBody(part.body);
+    this.parts.length = 0; this.pending.length = 0;
+  }
+  snapshot() {
+    return { scheduled: this.scheduled.map(s => ({ ...s })), parts: this.parts.filter(p => p.until).map(p => ({ kind: p.kind, sourceId: p.sourceId, until: p.until, position: { ...p.body.translation() }, rotation: { ...p.body.rotation() } })) };
+  }
+}

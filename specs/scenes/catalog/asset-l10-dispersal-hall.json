@@ -1,0 +1,44 @@
+{
+ "name": "asset-l10-dispersal-hall",
+ "note": "L10 turbine hall block with the exposed turbine train and roller door (+X), courier for scale. Look for: walls and roof closed, turbine casing on its cradles, stacks upright, no floating parts. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read.",
+ "ground": "sidewalk",
+ "size": 50,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    12,
+    4
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   4,
+   -3
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

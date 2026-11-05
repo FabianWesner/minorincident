@@ -1,0 +1,63 @@
+{
+ "name": "look-l8-habitats-elephant",
+ "note": "look-l10-l8-2 (QA batch 26: \"L8 is mostly APC and dark lawn\"): L8 west loop past the elephant paddock: mud floor, water hole, hay feeder; grass verges and tree groves between the wall and the paddock. Look for: ground that reads as a place, warm pools off the route verge, nothing floating or sunk, no clipping, no flicker.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "dof": false,
+ "layout": {
+  "district": "D-ZOO",
+  "bbox": [
+   [
+    -176,
+    -46
+   ],
+   [
+    -16,
+    120
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -96,
+    50
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      -96,
+      24
+     ]
+    ]
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

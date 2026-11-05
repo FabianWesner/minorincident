@@ -1,0 +1,11 @@
+{
+  "name": "seethrough-bike-ride",
+  "extends": "../../../specs/scenes/catalog/bike-ride.json",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughLensPlacements": ["bld.cafe-corner@-72.7,15.8"]
+  },
+  "sheet": 30
+}

@@ -1,0 +1,16 @@
+{
+  "name": "collision-placement-l4-perimeter",
+  "seed": 1,
+  "frames": 120,
+  "sheet": 30,
+  "extends": "l4-hold-perimeter.json",
+  "note": "PO 10-19: all ground actors respect the military perimeter. Infected approach the fixed boundary and vault above the wire under the same collision guard. Inspect closed corners, lift, crossing and landing.",
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

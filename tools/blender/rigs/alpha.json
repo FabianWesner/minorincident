@@ -1,0 +1,140 @@
+{
+ "nodes": {
+  "armL": {
+   "parent": "torso",
+   "world": [
+    0.109,
+    0.425,
+    1.5285
+   ]
+  },
+  "armR": {
+   "parent": "torso",
+   "world": [
+    0.109,
+    -0.425,
+    1.5285
+   ]
+  },
+  "backpackSocket": {
+   "parent": "torso",
+   "world": [
+    -0.1941,
+    0.0,
+    1.5242
+   ]
+  },
+  "footL": {
+   "parent": "shinL",
+   "world": [
+    -0.0347,
+    0.3551,
+    0.2737
+   ]
+  },
+  "footR": {
+   "parent": "shinR",
+   "world": [
+    -0.0012,
+    -0.3551,
+    0.2737
+   ]
+  },
+  "foreArmL": {
+   "parent": "armL",
+   "world": [
+    0.3046,
+    0.6661,
+    1.3575
+   ]
+  },
+  "foreArmR": {
+   "parent": "armR",
+   "world": [
+    0.3218,
+    -0.6661,
+    1.3767
+   ]
+  },
+  "handL": {
+   "parent": "foreArmL",
+   "world": [
+    0.569,
+    0.8224,
+    1.4163
+   ]
+  },
+  "handR": {
+   "parent": "foreArmR",
+   "world": [
+    0.5731,
+    -0.8192,
+    1.4778
+   ]
+  },
+  "head": {
+   "parent": "torso",
+   "world": [
+    0.2583,
+    0.0,
+    1.6734
+   ]
+  },
+  "hip": {
+   "parent": "root",
+   "world": [
+    0.0,
+    0.0,
+    0.9164
+   ]
+  },
+  "legL": {
+   "parent": "hip",
+   "world": [
+    0.0,
+    0.2224,
+    0.9385
+   ]
+  },
+  "legR": {
+   "parent": "hip",
+   "world": [
+    0.0,
+    -0.2224,
+    0.9385
+   ]
+  },
+  "root": {
+   "parent": null,
+   "world": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "shinL": {
+   "parent": "legL",
+   "world": [
+    0.1938,
+    0.3156,
+    0.5356
+   ]
+  },
+  "shinR": {
+   "parent": "legR",
+   "world": [
+    0.2274,
+    -0.3156,
+    0.5515
+   ]
+  },
+  "torso": {
+   "parent": "hip",
+   "world": [
+    0.0,
+    0.0,
+    1.1534
+   ]
+  }
+ }
+}

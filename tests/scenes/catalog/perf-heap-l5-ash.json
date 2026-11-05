@@ -1,0 +1,16 @@
+{
+  "name": "perf-heap-l5-ash",
+  "extends": "../../../specs/scenes/qa-l5-pair-plaza-l5.json",
+  "note": "E28-AC10 L5 ash at pair-plaza, game camera quality/zoom matrix; T-E23-19 measures native peak and collected heap.",
+  "weather": "ash",
+  "camera": {
+    "mode": "game",
+    "target": [
+      -14,
+      6
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30
+}

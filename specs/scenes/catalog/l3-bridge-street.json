@@ -1,0 +1,12 @@
+{
+ "name": "l3-bridge-street",
+ "note": "PO 10-15 'L3: The bridge is on the air' (L3 seed 1, player (-159.09, -0.20) at the bridgehead, game camera). Look for: the bridge deck meets the street the player walks on (no deck end hanging in mid-air above the bank, no step between road and deck), rails, hazard posts and lamps standing on the road, nothing floating. tests/unit/levels/l3-static.test.ts guards the bridge's deck height against the street.",
+ "seed": 1,
+ "time": "L3",
+ "ground": "district",
+ "layout": { "district": "D-CORRIDOR", "level": "L3", "bbox": [[-182, -14], [-146, 14]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [-159.09, -0.2] }],
+ "camera": { "mode": "game", "target": [-163, 0], "zoom": 1 },
+ "frames": 30,
+ "expect": { "consoleErrors": 0 }
+}

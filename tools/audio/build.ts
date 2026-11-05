@@ -1,0 +1,182 @@
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import { audioCategories, audioCues, categoryDuration } from '../../src/data/audioCues';
+import { synthesize, wave } from '../../src/audio/synthesis';
+import imports from '../../assets/audio/imports.json';
+const scoreOnly = process.argv.includes('--score-only');
+/** `--score-only calm-L1` rebuilds only the named streams; plain `--score-only` rebuilds every stream. */
+const scoreNames = new Set(scoreOnly ? process.argv.slice(2).filter(arg => arg !== '--score-only') : []);
+const selected = new Set(scoreOnly ? [] : process.argv.length > 2 ? process.argv.slice(2) : audioCategories);
+for (const category of selected)
+    if (!audioCategories.includes(category))
+        throw new Error(`Unknown audio category: ${category}`);
+const rate = 48000, output = 'public/assets/audio', temp = mkdtempSync(join(tmpdir(), 'minor-incident-audio-'));
+mkdirSync(output, { recursive: true });
+const cache = process.env.AUDIO_MASTER_CACHE ?? join(tmpdir(), 'minor-incident-audio-masters');
+const hash = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
+const pcmCache = new Map<string, Float32Array>();
+const licenses = ['# Audio sources and licenses', '',
+    'Built with `npx tsx tools/audio/build.ts`; source recipes: `assets/audio/imports.json`.',
+    'CC-BY recordings remain under their own license. Edits: excerpts, EQ, fades, loudness normalization, Opus/AAC encoding.',
+    'Residual synthesized system cues: Minor Incident contributors, self-made (MIT), `src/audio/synthesis.ts`.',
+    'No Bruno SFX or John Murphy recordings/samples are used.', '', '| File | License | Author / source / license URL | SHA256 |', '| --- | --- | --- | --- |'];
+function run(args: string[]): Buffer {
+    const result = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-threads', '1', ...args], { maxBuffer: 256 * 1024 * 1024 });
+    if (result.status !== 0) throw new Error(`Audio processing failed: ${result.stderr.toString()}`);
+    return result.stdout;
+}
+function master(id: string): string {
+    const source = imports.sources[id as keyof typeof imports.sources];
+    if (!source) throw new Error(`Unknown recording: ${id}`);
+    const root = join(cache, source.pack), download = join(root, source.downloadFile), path = join(root, source.member);
+    mkdirSync(root, { recursive: true });
+    if (!existsSync(download)) {
+        const result = spawnSync('curl', ['--fail', '--location', '--retry', '2', '--max-time', '120', '--silent', '--show-error', source.downloadUrl, '-o', download]);
+        if (result.status !== 0) throw new Error(`Recording download failed: ${id}`);
+    }
+    if (hash(download) !== source.downloadSha256) throw new Error(`Recording download hash changed: ${id}`);
+    if (!existsSync(path)) {
+        const result = spawnSync('bsdtar', ['-xf', download, '-C', root, source.member]);
+        if (result.status !== 0) throw new Error(`Recording extraction failed: ${id}`);
+    }
+    if (hash(path) !== source.sha256) throw new Error(`Recording master hash changed: ${id}`);
+    return path;
+}
+/** `level`: active-part RMS target in dBFS for voice pools; a gentle compressor evens crest factors first, and the slice peak stays below the sprite ceiling. */
+interface Recipe { source: string; start: number; filter?: string; level?: number; }
+function recording(recipe: Recipe, duration: number, loop = false, music = false): Float32Array {
+    const key = `${recipe.source}:${recipe.start}:${duration}:${recipe.filter ?? ''}:${recipe.level ?? ''}:${music}:${loop}`;
+    if (!pcmCache.has(key)) {
+        // Sample trimming also works for older tiny FLACs whose seek tables are broken.
+        // Recorded loops read `seam` seconds past their end and blend that continuation into the head (equal power):
+        // the loop point is then continuous, so a 2 s voice bed no longer dips to silence every period ("hu-hu-hu").
+        const seam = loop && !music ? Math.min(0.5, duration / 4) : 0, total = duration + seam;
+        const raw = run(['-i', master(recipe.source), '-t', String(total),
+            '-af', `atrim=start=${recipe.start}:duration=${total},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${recipe.level !== undefined ? 'acompressor=threshold=0.06:ratio=3:attack=5:release=80,' : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${total}`,
+            '-ac', '1', '-ar', String(rate), '-f', 'f32le', '-']);
+        let samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
+        const body = Math.round(duration * rate), blend = Math.round(seam * rate);
+        if (blend > 0 && samples.length >= body + blend) {
+            for (let i = 0; i < blend; i++) { const a = Math.PI / 2 * i / blend; samples[i] = samples[i] * Math.sin(a) + samples[body + i] * Math.cos(a); }
+            samples = samples.slice(0, body);
+        }
+        // Short recordings (single hits) are zero-padded to the cue length; only an empty decode is an error.
+        if (samples.length < Math.round(duration * rate)) { const padded = new Float32Array(Math.round(duration * rate)); padded.set(samples); samples = padded; }
+        let peak = 0;
+        for (const value of samples) peak = Math.max(peak, Math.abs(value));
+        if (peak < 0.00001) throw new Error(`Recording slice is silent: ${recipe.source} at ${recipe.start}s`);
+        let trim = music ? 1 : peak > 0 ? 0.5 / peak : 1;
+        if (recipe.level !== undefined) {
+            // Mean power of the 50 ms windows within 20 dB of the loudest one (the audible part, not the padding).
+            const win = rate / 20, powers: number[] = [];
+            for (let i = 0; i + win <= samples.length; i += win) { let sum = 0; for (let j = i; j < i + win; j++) sum += (samples[j] * trim) ** 2; powers.push(sum / win); }
+            const loudest = Math.max(...powers), active = powers.filter(p => p > loudest / 100);
+            const rms = 10 * Math.log10(active.reduce((a, b) => a + b, 0) / active.length);
+            trim *= Math.min(10 ** ((recipe.level - rms) / 20), 0.59 / 0.5);
+        }
+        const fade = Math.min(Math.round((seam > 0 ? 0 : loop ? 0.04 : 0.004) * rate), Math.floor(samples.length / 8));
+        for (let i = 0; i < samples.length; i++)
+            samples[i] *= trim * Math.min(1, i / Math.max(1, fade), (samples.length - 1 - i) / Math.max(1, fade));
+        pcmCache.set(key, samples);
+    }
+    return pcmCache.get(key)!;
+}
+/** Synthesized slices never exceed the ceiling (recorded slices are already peak-normalised to 0.5, music to -2 dBTP). */
+function capPeak(samples: Float32Array, max: number): Float32Array {
+    let peak = 0;
+    for (const value of samples) peak = Math.max(peak, Math.abs(value));
+    if (peak > max) for (let i = 0; i < samples.length; i++) samples[i] *= max / peak;
+    return samples;
+}
+/** Pickup fanfares: a synthesised body (peak 0.5) plus recorded foley layers (each peak-normalised to 0.5, scaled by `gain`) placed at `at` seconds. */
+interface Layer extends Recipe { at: number; duration: number; gain: number; }
+const fanfareLayers = imports.fanfare as Record<string, Layer[]>;
+function layered(id: string, body: Float32Array): Float32Array {
+    const out = Float32Array.from(body);
+    for (const layer of fanfareLayers[id]) {
+        const part = recording(layer, layer.duration), start = Math.round(layer.at * rate);
+        for (let i = 0; i < part.length && start + i < out.length; i++) out[start + i] += part[i] * layer.gain;
+    }
+    return capPeak(out, 0.7);
+}
+function encode(name: string, samples: Float32Array, bitrate = '64k'): void {
+    const wav = join(temp, `${name}.wav`);
+    writeFileSync(wav, wave([samples], rate));
+    for (const [ext, codec] of [['webm', 'libopus'], ['m4a', 'aac']])
+        run(['-y', '-i', wav, '-c:a', codec, '-b:a', bitrate, ...(ext === 'm4a' ? ['-movflags', '+faststart'] : []), `${output}/${name}.${ext}`]);
+}
+function notice(sourceIds: string[]): string {
+    return [...new Set(sourceIds)].map(id => {
+        const s = imports.sources[id as keyof typeof imports.sources];
+        return `${s.license}: ${s.title} — ${s.author}; [source](${s.url}); [license](${s.licenseUrl})`;
+    }).filter((line, index, all) => all.indexOf(line) === index).join('<br>') || 'self-made (MIT): Minor Incident contributors; src/audio/synthesis.ts';
+}
+try {
+    for (const category of audioCategories) {
+        if (selected.has(category)) {
+            const samples = new Float32Array(Math.ceil(categoryDuration(category) * rate));
+            for (const cue of Object.values(audioCues)) {
+                if (cue.category !== category) continue;
+                const recipe = (imports.cues as Record<string, Recipe>)[cue.id];
+                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
+            }
+            if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
+            // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
+            encode(category, samples, category === 'ambience' ? '32k' : category === 'l1arc' ? '48k' : category.startsWith('music-') ? '48k' : '64k');
+            pcmCache.clear();
+        }
+        for (const ext of ['webm', 'm4a']) {
+            const file = `${category}.${ext}`;
+            const ids = Object.values(audioCues).filter(c => c.category === category).flatMap(c => {
+                const recipe = (imports.cues as Record<string, Recipe>)[c.id]; return recipe ? [recipe.source] : (fanfareLayers[c.id] ?? []).map(layer => layer.source);
+            });
+            licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${notice(ids)} | ${hash(`${output}/${file}`)} |`);
+        }
+    }
+    for (const [state, stream] of Object.entries(imports.streams) as [string, { source: string; start: number; duration: number; crossfade?: number }][]) {
+        const name = `score-${state}`;
+        if ((scoreOnly && (!scoreNames.size || scoreNames.has(state))) || process.argv.length <= 2 || !existsSync(`${output}/${name}.webm`)) {
+            const wav = join(temp, `${name}.wav`), { start, duration, crossfade } = stream;
+            // Preserve the recordings' stereo image; only positional SFX sprites are mono.
+            // `crossfade`: start..start+duration is a whole number of bars, so the tail is blended (equal power)
+            // into the bars just before `start`; the file then loops into its first sample without a seam.
+            // Loops get one static gain plus a peak limiter: dynamic loudnorm would leave a level step at the seam.
+            const loop = crossfade
+                ? ['-filter_complex', `[0:a]asplit[a][b];[a]atrim=start=${start}:duration=${duration},asetpts=PTS-STARTPTS[body];[b]atrim=start=${start - crossfade}:duration=${crossfade},asetpts=PTS-STARTPTS[head];[body][head]acrossfade=d=${crossfade}:c1=qsin:c2=qsin[out]`, '-map', '[out]']
+                : ['-af', `atrim=start=${start}:duration=${duration},asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=9,afade=t=in:d=0.04,afade=t=out:st=${duration - 0.04}:d=0.04`];
+            run(['-y', '-i', master(stream.source), ...(crossfade ? [] : ['-t', String(duration)]), ...loop, '-ar', String(rate), '-ac', '2', wav]);
+            // Measure the completed excerpt, then trim it: single-pass normalization can drift
+            // on a slow build when an output duration cuts the normalizer's lookahead tail.
+            const analysis = spawnSync('ffmpeg', ['-hide_banner', '-i', wav, '-af', 'loudnorm=I=-18:TP=-2:LRA=9:print_format=json', '-f', 'null', '-'], { encoding: 'utf8' });
+            if (analysis.status !== 0) throw new Error(`Music loudness analysis failed: ${state}`);
+            const match = analysis.stderr.match(/\{\s*"input_i"[\s\S]*?\}/);
+            if (!match) throw new Error(`Missing music loudness measurement: ${state}`);
+            const measured = JSON.parse(match[0]) as { input_i: string; input_tp: string };
+            const trim = crossfade ? -18 - Number(measured.input_i) : Math.min(-18 - Number(measured.input_i), -2 - Number(measured.input_tp));
+            for (const [ext, codec] of [['webm', 'libopus'], ['m4a', 'aac']])
+                run(['-y', '-i', wav, '-af', `volume=${trim}dB${crossfade ? ',alimiter=limit=0.7:attack=2:release=60:level=false' : ''}`, '-c:a', codec, '-b:a', '96k', ...(ext === 'm4a' ? ['-movflags', '+faststart'] : []), `${output}/${name}.${ext}`]);
+        }
+        for (const ext of ['webm', 'm4a'])
+            licenses.push(`| ${name}.${ext} | ${imports.sources[stream.source as keyof typeof imports.sources].license} | ${notice([stream.source])}; excerpt ${stream.start}–${stream.start + stream.duration}s${stream.crossfade ? `, ${stream.crossfade}s loop crossfade` : ''} | ${hash(`${output}/${name}.${ext}`)} |`);
+    }
+    licenses.push('', '## Exact source per sprite slice', '', '| Cue | Source recording | Start in master (s) | Sprite offset / duration (s) |', '| --- | --- | --- | --- |');
+    for (const [id, recipe] of Object.entries(imports.cues)) {
+        const cue = audioCues[id];
+        if (!cue) throw new Error(`Recipe has no cue: ${id}`);
+        licenses.push(`| ${id} | ${notice([recipe.source])} | ${recipe.start} | ${cue.offset.toFixed(3)} / ${cue.duration.toFixed(3)} |`);
+    }
+    for (const [id, layers] of Object.entries(fanfareLayers)) {
+        const cue = audioCues[id];
+        if (!cue) throw new Error(`Fanfare has no cue: ${id}`);
+        for (const layer of layers) licenses.push(`| ${id} (layer) | ${notice([layer.source])} | ${layer.start} | ${cue.offset.toFixed(3)} + ${layer.at}s / ${layer.duration}s; synthesised body: self-made (MIT), src/audio/fanfare.ts |`);
+    }
+    writeFileSync(`${output}/LICENSES.md`, licenses.join('\n') + '\n');
+    mkdirSync('assets/audio', { recursive: true });
+    writeFileSync('assets/audio/LICENSES.md', licenses.join('\n') + '\n');
+}
+finally {
+    rmSync(temp, { recursive: true, force: true });
+}

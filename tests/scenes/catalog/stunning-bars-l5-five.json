@@ -1,0 +1,19 @@
+{
+ "extends": "../../../specs/scenes/qa-l5-group.json",
+ "name": "stunning-bars-l5-five",
+ "note": "PO #26: all five L5 followers keep full health bars, including healthy followers. Larger groups use compact teal pips; any bar proves the small-group rule.",
+ "camera": {
+  "mode": "game",
+  "target": [5.5, -39.3],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 30,
+ "shots": [
+  59
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "healthBarsMin": 1
+ }
+}

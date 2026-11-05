@@ -1,0 +1,5 @@
+{
+  "extends": "interior-cull-po-l5.json",
+  "name": "e18-l5-plaza",
+  "note": "E18 performance regression: PO 27 interior culling: closed shops skip stock; cut/occupied shops reveal stock in the same frame. The exact PO position is between nav cells: assemble on the east sidewalk, place the courier at the reported point at frame 0."
+}

@@ -1,0 +1,85 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.15
+  },
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "qa-l4-systems-block",
+  "actors": [
+    {
+      "id": "soldier",
+      "kind": "pedestrian",
+      "at": [
+        -7,
+        0
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "at": [
+        6,
+        0
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    },
+    {
+      "id": "civilian",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 90,
+      "actor": "civilian",
+      "do": {
+        "run": [
+          [
+            0,
+            -5
+          ]
+        ]
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    27,
+    147
+  ]
+}

@@ -1,0 +1,233 @@
+{
+ "name": "qa-long-gun-assault-rifle",
+ "note": "PO 10-12: \"the way the player holds the MP looks wrong\". Courier holds the gun upright, barrel along the aim, stock at the shoulder (MG at the hip), right hand on the grip, left hand on the fore-end; idle, aim, fire and walk.",
+ "ground": "asphalt",
+ "size": 40,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.assault-rifle",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "t",
+   "kind": "infected",
+   "at": [
+    12,
+    0
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 34,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 90,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 44,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 0,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 54,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 225,
+    "polar": 70
+   }
+  },
+  {
+   "frame": 64,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     0
+    ],
+    "zoom": 0.3
+   }
+  },
+  {
+   "frame": 70,
+   "actor": "courier",
+   "do": {
+    "aim": "t",
+    "seconds": 4
+   }
+  },
+  {
+   "frame": 104,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 90,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 114,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 0,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 124,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 225,
+    "polar": 70
+   }
+  },
+  {
+   "frame": 134,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     0
+    ],
+    "zoom": 0.3
+   }
+  },
+  {
+   "frame": 150,
+   "actor": "courier",
+   "do": {
+    "attack": "t",
+    "seconds": 0.5,
+    "side": "LEFT"
+   }
+  },
+  {
+   "frame": 154,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 90,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 160,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "radius": 2.4,
+    "azimuth": 0,
+    "polar": 78
+   }
+  },
+  {
+   "frame": 200,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      -6
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 200,
+   "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 0.3
+   }
+  }
+ ],
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   0,
+   0.95,
+   0
+  ],
+  "radius": 2.4,
+  "azimuth": 90,
+  "polar": 78
+ },
+ "frames": 260,
+ "shots": [
+  40,
+  50,
+  60,
+  70,
+  110,
+  120,
+  130,
+  140,
+  156,
+  162,
+  236,
+  250
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

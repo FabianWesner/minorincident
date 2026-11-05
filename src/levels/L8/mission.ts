@@ -1,0 +1,17 @@
+import { dialogue } from '../../data/dialogue';
+import type { Anchor, MissionDef } from '../../sim/missions/types';
+import type { DistrictId } from '../districts/types';
+
+export function levelEightMission(resolve: (district: DistrictId, name: string) => Anchor): MissionDef {
+  const anchors = Object.fromEntries(['player-start', 'arrival', 'exit', ...[1, 2, 3, 4].map(n => `tunnel-outlet-${n}`), ...['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].map(s => `animal-${s}`)].map(name => [name, resolve('D-ZOO', name)]));
+  return {
+    id: 'L8', l8: true, briefing: dialogue['L8.briefing'],
+    anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['breached', 'player-boarded', 'aboard', 'apc-destroyed'], counters: [],
+    checkpoints: ['sanctuary', 'breach', 'escape-route'], cinematics: {},
+    steps: [{ id: 'escape', type: 'custom', text: 'Bring the survivors to the armored vehicle and board', anchor: 'exit', waypoint: true,
+      start: { kind: 'start' }, complete: { kind: 'state', key: 'player-boarded', equals: true }, fail: [{ trigger: { kind: 'state', key: 'apc-destroyed', equals: true }, reason: 'target-destroyed' }] },
+    { id: 'depart', type: 'custom', text: 'Wait for everyone to board the armored vehicle', anchor: 'exit', waypoint: false,
+      start: { kind: 'objectives', ids: ['escape'], mode: 'all' }, complete: { kind: 'state', key: 'aboard', equals: true }, fail: [{ trigger: { kind: 'state', key: 'apc-destroyed', equals: true }, reason: 'target-destroyed' }] }],
+    finish: ['depart'], onStart: [], onComplete: [],
+  };
+}

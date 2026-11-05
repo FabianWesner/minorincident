@@ -1,0 +1,81 @@
+{
+ "ground": "sidewalk",
+ "size": 20,
+ "props": [
+  {
+   "id": "bench",
+   "asset": "prop.bench",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 90,
+   "scale": [
+    0.95,
+    0.551,
+    0.95
+   ]
+  }
+ ],
+ "actors": [
+  {
+   "id": "sitter",
+   "kind": "pedestrian",
+   "at": [
+    0.1,
+    -1.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tint": "#df8b29",
+    "accessories": [
+     "cap"
+    ],
+    "handProp": "coffee"
+   },
+   "state": {
+    "sit": "bench",
+    "seconds": 600
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0.0,
+   0.7,
+   0.6
+  ],
+  "radius": 7,
+  "azimuth": 45
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ },
+ "name": "seat-bench-tipped",
+ "frames": 420,
+ "shots": [
+  100,
+  125,
+  150,
+  300,
+  400
+ ],
+ "sheet": 30,
+ "script": [
+  {
+   "frame": 120,
+   "effect": {
+    "moveProp": "bench",
+    "by": [
+     0,
+     0.4
+    ],
+    "tip": true
+   }
+  }
+ ],
+ "note": "PO 10-12: the bench is tipped over at frame 120. The sitter stands up and leaves it; no sitting pose without a seat."
+}

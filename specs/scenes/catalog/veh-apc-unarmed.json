@@ -1,0 +1,17 @@
+{
+ "name": "veh-apc-unarmed",
+ "note": "L8-L9 unarmed APC transport (veh.military-apc decay variant 'unarmed', left) beside the armed set piece (right), game-camera turntable. Look for: no turret/gun/shield/muzzle on the transport, closed roof hatch (no hole), same hull/wheels/livery, six wheels grounded, antenna present, no floating or sunk parts and no LOD pops while the camera orbits.",
+ "seed": 8,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "props": [
+  { "id": "apc-unarmed", "asset": "veh.military-apc", "decay": "unarmed", "at": [-4.2, 0], "yaw": 0 },
+  { "id": "apc-armed", "asset": "veh.military-apc", "at": [4.2, 0], "yaw": 0 }
+ ],
+ "camera": { "mode": "orbit", "target": [0, 1.4, 0], "radius": 22, "azimuth": 40, "polar": 58, "spin": 60 },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": { "ignoreFoliage": true },
+ "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}

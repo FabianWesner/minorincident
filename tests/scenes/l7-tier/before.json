@@ -1,0 +1,67 @@
+{
+  "name": "l7-tier-before",
+  "seed": 29,
+  "tier": 5,
+  "time": "L6",
+  "ground": "asphalt",
+  "size": 40,
+  "dof": false,
+  "props": [
+    {
+      "id": "wreck",
+      "asset": "veh.military-truck",
+      "decay": "wrecked",
+      "at": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "rubble",
+      "asset": "decay.rubble-pile",
+      "at": [
+        -6,
+        5
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -5,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            5,
+            0
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 2
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

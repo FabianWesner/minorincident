@@ -1,0 +1,4 @@
+# Performance revision — pick.soda
+The orchestrator's dense-pickup budget supersedes the original 6–12k Side budget. Simplified radial profiles and markings retain the red can, metal rim/base, rabbit badge, SODA lettering and pull-tab silhouette. LOD0 has 1,904 triangles (82.1% fewer than the original 10,656), six palette material groups; all eight node names and physics extras retained. Hero is regenerated at 1600×900, 96 samples, with companion game view. LOD1 and LOD2 are authored lower-segment versions of the same build. No manifest registration performed.
+
+Final verification: corrected hero inspected; all three GLBs audited for exact original node set, palette materials, COLOR_0 and draw/triangle budgets. LOD0/1/2 load error-free on WebGPU and WebGL2; LOD0 has three identical consecutive game frames on each backend.

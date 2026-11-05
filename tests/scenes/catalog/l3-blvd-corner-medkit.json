@@ -1,0 +1,87 @@
+{
+  "name": "l3-blvd-corner-medkit",
+  "note": "The existing avenue pack is on the walking line immediately after the cross-street turn, before the exposed jam approach. Production walk-over regression verifies the same authored pickup.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        -22,
+        -38
+      ],
+      [
+        12,
+        -12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -13.75,
+        -22.75
+      ],
+      "god": false
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "hit": {
+          "amount": 80
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          -9,
+          -23.6
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          0,
+          -22.75
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 300,
+  "sheet": 50,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        60,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        10,
+        16
+      ]
+    }
+  }
+}

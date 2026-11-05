@@ -1,0 +1,235 @@
+{
+  "id": "bld.cafe-corner",
+  "tier": "hero",
+  "lods": {
+    "lod0": {
+      "id": "bld.cafe-corner",
+      "level": 0,
+      "triangles": 95455,
+      "draw_calls": 39,
+      "nodes_ok": true,
+      "missing_nodes": [],
+      "geometry_hash": "401426e19cedc88752c82064e925105296bce781f2c44d5bd86c8afe1e24c595",
+      "bytes": 1296940,
+      "finite": true,
+      "vertex_ao": true,
+      "degenerate_triangles": 0,
+      "single_sided": true,
+      "textures": 0,
+      "materials": [
+        "emi_lavender",
+        "emi_windowGlow",
+        "pal_asphalt",
+        "pal_backpackTeal",
+        "pal_brass",
+        "pal_brick",
+        "pal_canvasTan",
+        "pal_foliage",
+        "pal_foliageDark",
+        "pal_orange",
+        "pal_picketWhite",
+        "pal_purple",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm",
+        "emi_survivorRed",
+        "pal_windowGlow"
+      ],
+      "bounds": {
+        "min": [
+          -3.6990402185415205,
+          -0.0003545267717932621,
+          -9.360000610351562
+        ],
+        "max": [
+          3.6990402185415205,
+          4.758054923410218,
+          9.360000610351562
+        ]
+      },
+      "centered": true,
+      "ground_contact": true
+    },
+    "lod1": {
+      "id": "bld.cafe-corner",
+      "level": 1,
+      "triangles": 12594,
+      "draw_calls": 39,
+      "nodes_ok": true,
+      "missing_nodes": [],
+      "geometry_hash": "541e4f8a7ca30e2fbd082cf8c993b8b6b463837280a3baec42295508c44774fc",
+      "bytes": 176940,
+      "finite": true,
+      "vertex_ao": true,
+      "degenerate_triangles": 0,
+      "single_sided": true,
+      "textures": 0,
+      "materials": [
+        "emi_lavender",
+        "emi_windowGlow",
+        "pal_asphalt",
+        "pal_backpackTeal",
+        "pal_brass",
+        "pal_brick",
+        "pal_canvasTan",
+        "pal_foliage",
+        "pal_foliageDark",
+        "pal_orange",
+        "pal_picketWhite",
+        "pal_purple",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm",
+        "emi_survivorRed",
+        "pal_windowGlow"
+      ],
+      "bounds": {
+        "min": [
+          -3.700066771626447,
+          0.0002513718997227965,
+          -9.360000610351562
+        ],
+        "max": [
+          3.700066771626447,
+          4.758054923410218,
+          9.360000610351562
+        ]
+      },
+      "centered": true,
+      "ground_contact": true
+    },
+    "lod2": {
+      "id": "bld.cafe-corner",
+      "level": 2,
+      "triangles": 3146,
+      "draw_calls": 29,
+      "nodes_ok": true,
+      "missing_nodes": [],
+      "geometry_hash": "2b6835c51f5f90aebb22ff8d6e36e8b896bf3232cfe2720b6c0ba4d7eaadc86f",
+      "bytes": 66420,
+      "finite": true,
+      "vertex_ao": true,
+      "degenerate_triangles": 0,
+      "single_sided": true,
+      "textures": 0,
+      "materials": [
+        "emi_lavender",
+        "emi_windowGlow",
+        "pal_asphalt",
+        "pal_backpackTeal",
+        "pal_brass",
+        "pal_brick",
+        "pal_foliageDark",
+        "pal_orange",
+        "pal_picketWhite",
+        "pal_purple",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm",
+        "emi_survivorRed",
+        "pal_windowGlow"
+      ],
+      "bounds": {
+        "min": [
+          -3.707490963757149,
+          0.0006252539970252879,
+          -9.360000610351562
+        ],
+        "max": [
+          3.707240786671613,
+          4.758054923410218,
+          9.360000610351562
+        ]
+      },
+      "centered": true,
+      "ground_contact": true
+    }
+  },
+  "renderer": "Eevee",
+  "backface_culling": true,
+  "webgl2_ok": true,
+  "webgpu_ok": false,
+  "deterministic_rebuild": true,
+  "lod_ratios": {
+    "lod1": 0.13193651458802577,
+    "lod2": 0.032957938295531924
+  },
+  "optimization": "dedup \u2192 prune \u2192 weld \u2192 quantize \u2192 meshopt; control assemblies preserved",
+  "webgpu_note": "Manual check required by repository policy",
+  "viewer_checks": [
+    {
+      "lod": 0,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 39,
+        "triangles": 95455,
+        "size": [
+          7.398,
+          4.758,
+          18.72
+        ]
+      },
+      "errors": []
+    },
+    {
+      "lod": 1,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 39,
+        "triangles": 12594,
+        "size": [
+          7.4,
+          4.758,
+          18.72
+        ]
+      },
+      "errors": []
+    },
+    {
+      "lod": 2,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 29,
+        "triangles": 3146,
+        "size": [
+          7.415,
+          4.757,
+          18.72
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "matches_reference": true,
+  "rounds": 4,
+  "quantization": {
+    "position_bits": 14,
+    "normal_bits": 6,
+    "ao_levels": 128
+  },
+  "gaps": [
+    "Complex transparent window interiors represented by shallow warm displays",
+    "Runtime bloom and WebGPU remain game integration/manual checks"
+  ],
+  "review_images": [
+    "renders/hero.png",
+    "renders/turnaround.png",
+    "renders/game.png",
+    "renders/pose-test.png",
+    "renders/night.png",
+    "renders/comparison.png",
+    "renders/three-webgl2-front.png",
+    "renders/three-webgl2-rear.png",
+    "renders/three-webgl2-game.png",
+    "renders/three-webgl2-lod1.png",
+    "renders/three-webgl2-lod2.png"
+  ],
+  "source_hash_basis": "Canonical per-material mesh coordinates and polygon topology, independent of join ordering",
+  "viewer_note": "Existing study viewer has no Meshopt decoder; WebGL2 captures use NodeIO-decoded delivery geometry. Compressed source exports were separately decoded and audited."
+}

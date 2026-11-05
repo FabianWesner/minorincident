@@ -1,0 +1,75 @@
+{
+  "name": "atmosphere-l8",
+  "note": "Atmosphere profile L8: game follow camera; review courier red/teal, corgi, infected eyes, ground and lamp edge visibility on both tiers/backends at every player zoom. No timing claim from shared-host samples.",
+  "seed": 25,
+  "time": "L8-zoo",
+  "dof": false,
+  "ground": "asphalt",
+  "size": 42,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 135,
+      "loadout": [
+        "weapon.bat",
+        "weapon.handgun"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "id": "threat",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        4,
+        3
+      ],
+      "yaw": 210,
+      "state": "idle"
+    }
+  ],
+  "props": [
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        -4,
+        2
+      ]
+    },
+    {
+      "id": "bench",
+      "asset": "prop.bench",
+      "at": [
+        -5,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

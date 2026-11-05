@@ -1,0 +1,5 @@
+Reference study: 2.1 m crown height, broad 1.9 m arm spread, head and crest around one third of apparent standing height. Long arms plant curled knuckles ahead of the squat hind feet. Open mouth, tusk-like canines, small ears, crest, dark purple charcoal fur, warm gray bare chest and hands. Silver saddle covers the back and haunches. No clothing or accessories appear in the reference.
+
+Rigid empty nodes sit at neck, shoulder, elbow, wrist, hip, knee and ankle; geometry is merged only within a rigid part and material. Proximal blood caps are exported at zero scale with hidden/stumpFor extras. Applied subdivision and density reduction retain the soft sculpted forms. Palette materials use linearized official token colors; no textures.
+
+Final animal LOD chain: model.glb (24,526 triangles), model.lod1.glb (6,520), model.lod2.glb (3,852). Reproduce all final renders and exports with build.py --view final-set --render assets/inf.gorilla/renders/hero.png --width 1600 --height 900 --samples 96 --glb assets/inf.gorilla/model.glb through the mandated blender_run.py wrapper.

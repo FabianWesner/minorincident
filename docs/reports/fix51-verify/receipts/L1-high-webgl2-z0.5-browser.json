@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "level": "L1",
+  "tier": "high",
+  "sourceHash": "7cac854ffae35645b2f86025faf6f777073987e6e0258396dc8f162c64ce64c0",
+  "fixtureHash": "77d20af48731f5fe2972a715266f8a4515a7f59c09b881f4b3d016a78f8b4660",
+  "browserHash": "77d20af48731f5fe2972a715266f8a4515a7f59c09b881f4b3d016a78f8b4660",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 0.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-webgl2-z0.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 218,
+      "simSeconds": 215,
+      "maxNoProgressSeconds": 14,
+      "deaths": 0,
+      "assists": 2,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot · 55 m",
+          "tick": 9,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex · 108 m",
+          "tick": 1020,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.9584696292877197,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "escape",
+          "text": "Get away from the facility · 63 m",
+          "tick": 5815,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049936652183533,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself · 62 m",
+          "tick": 5861,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station · 99 m",
+          "tick": 7436,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.53,
+              "z": 41.27
+            },
+            "drawn": null,
+            "playerY": 0.9649999737739563,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L1",
+      "tick": 10947,
+      "x": -75.7,
+      "z": 40.9,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #183 (chase) 1.1 m away took no damage from 8 s of attacks (hp 4/60)",
+      "captures": [
+        "captures/accept-L1-10947-enemy-unhittable.jpg"
+      ],
+      "step": "firestation",
+      "objective": "Get inside the fire station · 1 m"
+    },
+    {
+      "level": "L1",
+      "tick": 11568,
+      "x": -75.7,
+      "z": 40.9,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #284 (chase) 1.1 m away took no damage from 8 s of attacks (hp 30/60)",
+      "captures": [
+        "captures/accept-L1-11568-enemy-unhittable.jpg"
+      ],
+      "step": "firestation",
+      "objective": "Get inside the fire station · 1 m"
+    },
+    {
+      "level": "L1",
+      "tick": 12222,
+      "x": -75.7,
+      "z": 40.9,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #286 (attack) 1.1 m away took no damage from 8 s of attacks (hp 60/60)",
+      "captures": [
+        "captures/accept-L1-12222-enemy-unhittable.jpg"
+      ],
+      "step": "firestation",
+      "objective": "Get inside the fire station · 1 m"
+    },
+    {
+      "level": "L1",
+      "tick": 12471,
+      "x": -75.7,
+      "z": 40.9,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #106 (chase) 1.1 m away took no damage from 8 s of attacks (hp 60/60)",
+      "captures": [
+        "captures/accept-L1-12471-enemy-unhittable.jpg"
+      ],
+      "step": "firestation",
+      "objective": "Get inside the fire station · 1 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 0.5
+}

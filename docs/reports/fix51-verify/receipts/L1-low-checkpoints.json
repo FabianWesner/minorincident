@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "level": "L1",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "checks": [
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L1/accident",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "accident",
+        "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
+        "snapshotSha256": "fdc4b13c4a8e827485237bf8cf41c9c4de4ac0d9ba68a44b460405ed9f7a0cdb",
+        "damage": 100,
+        "expected": {
+          "id": "accident",
+          "anchor": {
+            "x": 23.1,
+            "y": 0.7099999785423279,
+            "z": 38.289,
+            "yaw": 1.7436178114407177
+          },
+          "gates": {
+            "fire-shutter": false
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fists"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            81,
+            82
+          ],
+          "removedPickups": [
+            80
+          ],
+          "cure": false
+        },
+        "observed": {
+          "id": "accident",
+          "position": {
+            "x": 23.1,
+            "z": 38.289
+          },
+          "gates": {
+            "fire-shutter": false
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fists"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L1/bat",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "bat",
+        "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
+        "snapshotSha256": "4798182715b7b3abf4048485db73b36794ebbb300a31411036f9f826bea7af62",
+        "damage": 100,
+        "expected": {
+          "id": "bat",
+          "anchor": {
+            "x": 23.257389068603516,
+            "y": 0.9649999737739563,
+            "z": 37.310020446777344,
+            "yaw": 1.6508496192221687
+          },
+          "gates": {
+            "fire-shutter": false
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fists"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            81,
+            82
+          ],
+          "removedPickups": [
+            80
+          ],
+          "cure": false
+        },
+        "observed": {
+          "id": "bat",
+          "position": {
+            "x": 23.257389068603516,
+            "z": 37.310020446777344
+          },
+          "gates": {
+            "fire-shutter": false
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fists"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-checkpoints.json"
+    }
+  ],
+  "errors": [],
+  "control": {
+    "observed": "bb811ff8",
+    "control": "bb811ff8",
+    "identical": true
+  }
+}

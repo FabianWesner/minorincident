@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "fixtureHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgpu",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L10",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 360,
+      "simSeconds": 355,
+      "maxNoProgressSeconds": 8.883333333333333,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun"
+      ],
+      "steps": [
+        {
+          "id": "residential-fringe",
+          "text": "Recover the handgun at the checkpoint · 221 m",
+          "tick": 7,
+          "marker": {
+            "anchor": "cure-residential",
+            "ring": {
+              "x": 767,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              767,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "industrial-area",
+          "text": "Recover the shotgun at the checkpoint · 490 m",
+          "tick": 3971,
+          "marker": {
+            "anchor": "cure-industrial",
+            "ring": {
+              "x": 1257,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              1257,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "military-zone",
+          "text": "Recover the machine gun at the checkpoint · 600 m",
+          "tick": 13587,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1857,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              1857,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L10",
+      "tick": 21313,
+      "x": 1747.5,
+      "z": 53.1,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "Driver could not finish step military-zone (\"Recover the machine gun at the checkpoint · 113 m\") after 0 s on it (6 min level cap: true); stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L10-21313-cannot-finish.jpg"
+      ],
+      "step": "military-zone",
+      "objective": "Recover the machine gun at the checkpoint · 113 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

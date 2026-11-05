@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "a7393a15db6ed4431899d31e1e7704f73292e7d6d31c8f21e539737ff3ade6d8",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L9-03",
+      "clause": "road full driving camera visibility",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "completed": true,
+        "observations": 88,
+        "positiveTicks": [
+          422,
+          926,
+          969,
+          1102,
+          1166,
+          1422,
+          1806,
+          1872,
+          1936,
+          2582,
+          2903,
+          2971,
+          3035,
+          3290,
+          3740,
+          3804,
+          3868,
+          3997,
+          4704,
+          4768
+        ],
+        "firstInactiveTick": 5649,
+        "maximumSamplingSeconds": 1.4666666666666666,
+        "largestOccupiedGapSeconds": 14.683333333333334,
+        "largestMovingGapSeconds": 14.683333333333334,
+        "excludedSlowSeconds": 0,
+        "excludedIntervals": [],
+        "conservativeGapSeconds": 16.15,
+        "targetSeconds": 60,
+        "pass": true,
+        "method": "Actual occupied APC/courier x/z intervals; existing fix51-road >=0.5m/s moving threshold. Exclude slow intervals only when same vehicle and sampling<=1.5s; unknown/long intervals and exit boundary count fully. Add maximum sampling interval to the largest moving-clock gap. Raw occupancy gap is retained.",
+        "occupiedClockDiagnostic": {
+          "observations": 88,
+          "positiveTicks": [
+            422,
+            926,
+            969,
+            1102,
+            1166,
+            1422,
+            1806,
+            1872,
+            1936,
+            2582,
+            2903,
+            2971,
+            3035,
+            3290,
+            3740,
+            3804,
+            3868,
+            3997,
+            4704,
+            4768
+          ],
+          "firstInactiveTick": 5649,
+          "maximumSamplingSeconds": 1.4666666666666666,
+          "largestGapSeconds": 14.683333333333334,
+          "conservativeGapSeconds": 16.15,
+          "targetSeconds": 60,
+          "pass": true
+        },
+        "runtimeMatches": true,
+        "fullRouteConsolePass": true,
+        "inputPath": "docs/reports/fix51-r10c/L9-high-webgl2-z1.5-road.json",
+        "reviewPath": "docs/reports/fix51-r10c/L9-high-road-reviewed.json"
+      },
+      "target": "complete physical authored route; living submitted on-camera infected every60 driving seconds; existing >=0.5m/s motion clock, unknown intervals counted, maximum sample interval added; all captures reviewed",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-road-browser.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "toolSha256": "a523fbbc28a7db491d3294d85c724ca6b58dfd5c6627fa3c1a8f625dab3c91bb",
+    "motionEvaluatorSha256": "e20fdeb8295730d026d2707290d16e750f4d7c5ff70db92dea1c3cdeac9d6a32",
+    "inputPath": "docs/reports/fix51-r10c/L9-high-webgl2-z1.5-road.json",
+    "reviewPath": "docs/reports/fix51-r10c/L9-high-road-reviewed.json",
+    "sheet": {
+      "file": "docs/reports/sweep-c3/L9-03/sheets/L9-high-webgl2-z1.5-road-1793860476885/sheet-01.jpg",
+      "sha256": "6d94584377d2a397c219a69641a5085768e71d40074232e2fe96b06cc609fa1c"
+    },
+    "logArchive": "docs/reports/sweep-c3/L9-03/high-road/log-l9-route.jsonl.gz"
+  }
+}

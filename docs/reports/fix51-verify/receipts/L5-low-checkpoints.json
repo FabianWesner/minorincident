@@ -1,0 +1,574 @@
+{
+  "version": 1,
+  "level": "L5",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "checks": [
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/outside",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "outside",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "dfba4a22bda9084e3031070385b2d626101990fd7e4fb2c86bb217d6c48c59c6",
+        "damage": 100,
+        "expected": {
+          "id": "outside",
+          "anchor": {
+            "x": -79.29999999999998,
+            "y": 0.7049999833106995,
+            "z": -44.2801,
+            "yaw": -1.5707963267948966
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "outside",
+          "position": {
+            "x": -79.29999999999998,
+            "z": -44.2801
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/survivor-1",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "survivor-1",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "1722131622c9cfda034b391bb90b0296431950fa2e5757c06a25b30d98d21eda",
+        "damage": 100,
+        "expected": {
+          "id": "survivor-1",
+          "anchor": {
+            "x": -31.137277603149414,
+            "y": 0.8500000238418579,
+            "z": -44.74943542480469,
+            "yaw": -3.116029776211724
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            31
+          ],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "survivor-1",
+          "position": {
+            "x": -31.137277603149414,
+            "z": -44.74943542480469
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/survivor-2",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "survivor-2",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "e81835537edb08fc395770655ec374e6f2993ea3e85ed64cff66aac3a9007c10",
+        "damage": 100,
+        "expected": {
+          "id": "survivor-2",
+          "anchor": {
+            "x": -33.17979431152344,
+            "y": 0.7089999914169312,
+            "z": -2.960272789001465,
+            "yaw": 3.8241088060063415
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            30,
+            31
+          ],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "survivor-2",
+          "position": {
+            "x": -33.17979431152344,
+            "z": -2.960272789001465
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/survivor-3",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "survivor-3",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "e92bb934e51137e40e4eb6c7d46314011cd58c15b1e3911de25557267a2f6366",
+        "damage": 100,
+        "expected": {
+          "id": "survivor-3",
+          "anchor": {
+            "x": -46.994911193847656,
+            "y": 0.7049999833106995,
+            "z": 49.265785217285156,
+            "yaw": -0.7155435787634244
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            30,
+            31,
+            32
+          ],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "survivor-3",
+          "position": {
+            "x": -46.994911193847656,
+            "z": 49.265785217285156
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/survivor-4",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "survivor-4",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "9bbe1204fdc5141663c43b4922fd0b2b0fd8f1f4a75dde3e7164398fefa2883b",
+        "damage": 100,
+        "expected": {
+          "id": "survivor-4",
+          "anchor": {
+            "x": -4.803534507751465,
+            "y": 0.7089999914169312,
+            "z": 2.694951295852661,
+            "yaw": 0.23155469862689143
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            28,
+            30,
+            31,
+            32
+          ],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "survivor-4",
+          "position": {
+            "x": -4.803534507751465,
+            "z": 2.694951295852661
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L5/survivor-5",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "survivor-5",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "628e4ce3727af990bca92919fb2f92d736cf17f2afeacdfc556678f538992149",
+        "damage": 100,
+        "expected": {
+          "id": "survivor-5",
+          "anchor": {
+            "x": 57.57737350463867,
+            "y": 0.8500000238418579,
+            "z": 41.31705093383789,
+            "yaw": 0.04032007814377062
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            28,
+            29,
+            30,
+            31,
+            32
+          ],
+          "pickups": [
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "survivor-5",
+          "position": {
+            "x": 57.57737350463867,
+            "z": 41.31705093383789
+          },
+          "gates": {
+            "l5-metro-shutter": true
+          },
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+    }
+  ],
+  "errors": [],
+  "control": {
+    "observed": "24f9ebfe",
+    "control": "24f9ebfe",
+    "identical": true
+  }
+}

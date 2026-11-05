@@ -1,0 +1,33 @@
+{
+  "id": "pick.nail-ammo",
+  "tier": "Side",
+  "triangles": 836,
+  "draw_calls": 6,
+  "materials": [
+    "pal_schoolBusYellow",
+    "pal_sidewalk",
+    "pal_woodWarm"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "rounds": 5,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Individual nails replaced by three chunky bundles; small barcode and wear removed. Silver and dark print share a vertex-colored material."
+  ],
+  "lods": {
+    "lod0": {
+      "triangles": 836,
+      "draw_calls": 6
+    },
+    "lod1": {
+      "triangles": 548,
+      "draw_calls": 6
+    },
+    "lod2": {
+      "triangles": 500,
+      "draw_calls": 6
+    }
+  }
+}

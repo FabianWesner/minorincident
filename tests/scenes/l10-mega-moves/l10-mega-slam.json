@@ -1,0 +1,56 @@
+{
+  "name": "l10-mega-slam",
+  "note": "E32 L10-S4: real Mega Alpha scheduler, game camera, windup then locked attack and recovery. Inspect oversized arm clearance, readable amber tell, feet, facing, hit/release, safe dodge (sim tests).",
+  "seed": 10,
+  "ground": "asphalt",
+  "size": 50,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -4,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -0.5,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -2,
+      2.5,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 144,
+  "sheet": 12,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0
+  }
+}

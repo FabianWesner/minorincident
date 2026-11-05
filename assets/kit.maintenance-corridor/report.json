@@ -1,0 +1,114 @@
+{
+  "id": "kit.maintenance-corridor",
+  "status": "integrated",
+  "authoredLods": true,
+  "determinism": "12/12 geometry hashes match across two final builds",
+  "tiers": {
+    "lod0": {
+      "source": {
+        "triangles": 2844,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 202076,
+        "bounds": {
+          "min": [
+            -5,
+            -2.3,
+            0
+          ],
+          "max": [
+            5,
+            2.3,
+            3.9
+          ]
+        },
+        "dimensions": {
+          "x": 10,
+          "y": 3.9,
+          "z": 4.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 2844,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 52932
+      },
+      "geometryHash": "9f98f45ab1002d7ea92a1b3f0dcffaac180205a63a0609d7f5ab6c7ff76c005d"
+    },
+    "lod1": {
+      "source": {
+        "triangles": 1700,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 121780,
+        "bounds": {
+          "min": [
+            -5,
+            -2.3,
+            0
+          ],
+          "max": [
+            5,
+            2.3,
+            3.9
+          ]
+        },
+        "dimensions": {
+          "x": 10,
+          "y": 3.9,
+          "z": 4.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 1700,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 35092
+      },
+      "geometryHash": "f9d95c891e88367e9a9b539e106d9f13316dfdc52952650b7859b33294af8df5"
+    },
+    "lod2": {
+      "source": {
+        "triangles": 1056,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 81092,
+        "bounds": {
+          "min": [
+            -5,
+            -2.3,
+            0
+          ],
+          "max": [
+            5,
+            2.3,
+            3.9
+          ]
+        },
+        "dimensions": {
+          "x": 10,
+          "y": 3.9,
+          "z": 4.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 1056,
+        "draws": 7,
+        "materials": 7,
+        "bytes": 26680
+      },
+      "geometryHash": "94aaa4d8cdc00f1a4ceafe7da597e33a44bf8355b967ca9306dc4a7ac67aee82"
+    }
+  },
+  "evidence": {
+    "turntable": "test-results/l6-metro-and-shelter-kit/kit.maintenance-corridor/comparison.png",
+    "lods": "test-results/l6-metro-and-shelter-kit/kit.maintenance-corridor/lod-contact.png",
+    "gameReferencePeer": "test-results/l6-metro-and-shelter-kit/kit.maintenance-corridor/game-reference-peer.png",
+    "loading": "test-results/l6-metro-and-shelter-kit/kit.maintenance-corridor/game-reference-peer.json"
+  },
+  "interfaceNotes": "assets/kit.maintenance-corridor/notes.md"
+}

@@ -1,0 +1,59 @@
+{
+ "name": "qa-alpha-silhouette-close",
+ "note": "Alpha silhouette QA: inf.alpha beside the regular worker at the game camera; run with --matrix (high/low, zoom 0.5/1/1.5). Look for a clean hulking human outline, no spikes or perforation.",
+ "seed": 7,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 100,
+ "dof": false,
+ "actors": [
+  {
+   "id": "alpha",
+   "kind": "infected",
+   "look": {
+    "model": "inf.alpha"
+   },
+   "at": [
+    -1.6,
+    0
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.firefighter"
+  },
+  {
+   "id": "worker",
+   "kind": "infected",
+   "look": {
+    "model": "infected.runner"
+   },
+   "at": [
+    3.5,
+    0
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.firefighter"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -1.6,
+   1.2,
+   0
+  ],
+  "zoom": 0.5
+ },
+ "frames": 12,
+ "shots": [
+  6
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "actorHitsMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000
+ }
+}

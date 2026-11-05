@@ -1,0 +1,44 @@
+{
+ "name": "asset-l10-dispersal-tank-bullet",
+ "note": "L10 twin horizontal pressure vessels with catwalk bridge, courier for scale. Look for: saddles reach the ground, catwalk railings closed, manifold and outlet on the ground. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    7,
+    7
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   2,
+   2
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

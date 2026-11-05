@@ -1,0 +1,209 @@
+import { applyL1Aftermath, type L1Aftermath } from '../continuity';
+import { overlapsRoad, inside } from '../districts/validate';
+import { pushableProps } from '../../data/pushableProps';
+import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
+import { l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
+import { FootprintIndex, findClearSpot, moveOffSolids, freestanding, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
+import type { DistrictLayout, Placement, Tier } from '../districts/types';
+
+/** The L2 composition tier (static test asserts it): placements outside it are not part of the town the player sees. */
+const L2_TIER: Tier = 1;
+
+/** Kinds of the W1 "wounded, but still standing" dressing (E20 section 5.7); counted by the static AC15 test. */
+export type DressingKind = 'corpse' | 'abandoned' | 'crashed' | 'bin' | 'belongings' | 'broken-window' | 'blood' | 'emergency' | 'smoking' | 'fighting' | 'station' | 'checkpoint' | 'river';
+/** `entity`: not a static placement: an entity the L2 controller spawns (dead bystanders) or L2Props code art (broken windows). */
+export interface Dressing { kind: DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; count?: number; lit?: boolean; entity?: boolean }
+const H = Math.PI / 2;
+/**
+ * Static L2 dressing manifest. Asset ids are manifest ids; ids that are not integrated yet (`decay.dropped-belongings`,
+ * `decay.broken-glass`) render as registry placeholders until the art lane lands them. Counts per entry default to 1;
+ */
+export const l2Dressing: readonly Dressing[] = [
+  // Corpses: bystanders killed in the first hours, lying where they fell (dead pedestrians of the civilian crowd, spawned by the
+  // L2 controller, so they cost no extra batch; the asset is their crowd model).
+  ...([[-36.8, 8.4, 'npc.civilian-man-a'], [-35.6, 10.2, 'npc.civilian-woman-b'], [10.4, -35.6, 'npc.civilian-man-b'], [12.2, -36.4, 'npc.civilian-woman-a'], [-24, -34.4, 'npc.civilian-elderly'], [44.2, 26.4, 'npc.civilian-man-a'], [-46.4, 34.4, 'npc.civilian-woman-a']] as const)
+    .map(([x, z, assetId], i) => ({ kind: 'corpse' as const, assetId, x, z, yaw: i * 1.7, entity: true })),
+  // Abandoned vehicles, doors open, pulled onto the kerb.
+  { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 26.9, yaw: .12 },
+  { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
+  { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
+  { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -28.0, yaw: .1 },
+  { kind: 'abandoned', assetId: 'veh.courier-van', x: -61.6, z: -22, yaw: H + .1 },
+  { kind: 'abandoned', assetId: 'veh.courier-van', x: -70.4, z: -24, yaw: H - .08 },
+  // Crashed: into a lamp post, into each other at the Juniper junction, nose into a hydrant.
+  { kind: 'crashed', assetId: 'veh.sedan-green', x: -6.6, z: 26.4, yaw: .7 },
+  { kind: 'crashed', assetId: 'veh.sedan-red', x: 11.2, z: -2.6, yaw: 2.3 },
+  { kind: 'crashed', assetId: 'veh.suv-green', x: 16.4, z: 3.2, yaw: -.9 },
+  { kind: 'crashed', assetId: 'veh.sedan-green', x: 48.8, z: -33.1, yaw: Math.PI - .5 },
+  // Exactly one smoking vehicle (E27 small smoke column at its bonnet).
+  { kind: 'smoking', assetId: 'veh.sedan-green', x: 33.6, z: 27.6, yaw: 2.9 },
+  // Emergency vehicles left with their lights on.
+  { kind: 'emergency', assetId: 'veh.police-sedan', x: -20, z: -28.2, yaw: Math.PI - .3, lit: true },
+  { kind: 'emergency', assetId: 'veh.police-sedan', x: 52.4, z: 8, yaw: H + .2, lit: true },
+  // Knocked-over bins and spilled bags.
+  ...([[-60, -34.4], [-41, -26.6], [-24, -34.6], [-2, -26.8], [18, -34.4], [-60, 33.2], [-36, 26.4], [-16, 26.6], [12, 33.3], [40, 33.2], [55, -3.5], [-62, 8]] as const)
+    .map(([x, z], i) => ({ kind: 'bin' as const, assetId: i % 2 ? 'prop.trash-bags' : 'prop.trash-bin', x, z, yaw: i * 1.3 })),
+  // Scattered belongings.
+  // Scattered belongings (stand-ins from the town's own props until `decay.dropped-belongings` lands).
+  ...([[-43.6, -35.2], [-33.2, -20], [-8, 34.6], [20, 34.4], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: ['prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.pallet', 'prop.wheelbarrow', 'prop.recycling-bin'][i], x, z, yaw: i })),
+  // Broken shop and house windows (code art in L2Props until `decay.broken-glass` lands: a dark pane and glass on the pavement).
+  ...([[-66.2, -38.4, 0], [-35.6, -37.4, 0], [-19.6, -34.6, 0], [5.6, -26.6, Math.PI], [-10.7, 33.6, 0]] as const).map(([x, z, yaw]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z, yaw, entity: true })),
+  // Main Row by the courier depot (the L1 pickup spot): a car run into the kerb, a blood trail, spilled bags.
+  { kind: 'crashed', assetId: 'veh.sedan-red', x: -35.2, z: -27.4, yaw: Math.PI + .12 },
+  { kind: 'blood', assetId: 'decal.blood-trail', x: -35.4, z: -31.4, yaw: 1.2 },
+  { kind: 'bin', assetId: 'prop.trash-bags', x: -30.6, z: -35.8, yaw: .4 },
+  // Blood trails and pools.
+  ...([[-30.6, -12], [-30.6, 16], [0, -31], [-50, 30], [50, -8], [12, 30.4]] as const).map(([x, z], i) => ({ kind: 'blood' as const, assetId: i % 3 === 2 ? 'decal.blood-pool' : 'decal.blood-trail', x, z, yaw: i * .9 })),
+  // Small signs of fighting: a dropped baton and a tear-gas canister by the police car.
+  { kind: 'fighting', assetId: 'wpn.police-baton', x: -17.6, z: -30.6, yaw: .6 },
+  // Fire Station 3 bay: benches for the frightened civilians.
+  // Both stand on the apron (slab top .4 m), outside the building footprint, facing out of the bays (station-local +x).
+  ...([[3.0, -1.9], [3.0, -4.4]] as const).map(([lx, lz]) => { const [x, z] = stationPoint(lx, lz); return { kind: 'station' as const, assetId: 'prop.bench', x, z, yaw: l2Station.yaw }; }),
+  // Police bridge checkpoint at the east end of Elm Street: vehicles, barriers, fences, kit, light tower.
+  { kind: 'checkpoint', assetId: 'veh.police-suv', x: 78.4, z: 25.9, yaw: .05, lit: true },
+  { kind: 'checkpoint', assetId: 'veh.police-sedan', x: 83.3, z: 27.6, yaw: H + .06, lit: true },
+  { kind: 'checkpoint', assetId: 'veh.police-sedan', x: 69.6, z: 26.3, yaw: Math.PI + .1, lit: true },
+  ...([[75.4, 25.2], [75.4, 34.8], [84, 24.6]] as const).map(([x, z]) => ({ kind: 'checkpoint' as const, assetId: 'prop.barricade', x, z, yaw: x < 80 ? 0 : H })),
+  ...([[72.6, 27.6], [72.6, 32.6], [71.2, 30.1]] as const).map(([x, z]) => ({ kind: 'checkpoint' as const, assetId: 'prop.traffic-cone', x, z })),
+  ...([[86.6, 30.2]] as const).map(([x, z]) => ({ kind: 'river' as const, assetId: 'bld.river-bridge', x: x + 8, z, yaw: 0 })),
+];
+
+/** D-GROVE placements the L2 dressing replaces, matched by asset and position: the numeric suffix of a placement id shifts
+ * whenever the generator adds or removes a prop before it (a regenerated layout moved all of these by four). */
+const SUPERSEDED: readonly (readonly [asset: string, x: number, z: number])[] = [
+  ['bld.mainstreet-brick', -55.64, -42.19], ['kit.edge-roadwork', 82.8, 30], ['veh.courier-van', -48.79, -37.15], ['prop.bench', -53.5, -37.5],
+  ['prop.privacy-fence', 80.37, 26.44], ['prop.privacy-fence', 80.37, 28.81], ['prop.privacy-fence', 80.37, 31.19], ['prop.privacy-fence', 80.37, 33.56], ['prop.privacy-fence', 81.5, 35],
+];
+const supersededIds = (layout: DistrictLayout): Set<string> => new Set(layout.placements.filter(p => SUPERSEDED.some(([asset, x, z]) => p.id.startsWith(`${asset}:`) && Math.abs(p.position[0] - x) < .05 && Math.abs(p.position[2] - z) < .05)).map(p => p.id));
+/**
+ * Interaction rings are keep-out zones for props (PO 10-08: a hydrant beside the boarding ring made it hard to enter): the courier
+ * must be able to walk straight in from the apron. Ring + `CLEAR_M` around the three station rings and a corridor of the same
+ * half-width along the apron approaches. The parked truck has its own clearance zone. Buildings and fences stay;
+ * loose street props (hydrants, lamps, crates) are dropped.
+ */
+export const RING_CLEAR_M = 1.2;
+const RINGS: readonly (readonly [string, number])[] = [['l2-board', 2.2], ['l2-truck', 2.2], ['l2-axe-rack', 1.5], ['l2-start', 1.2]];
+const CORRIDORS: readonly (readonly [string, string])[] = [['l2-start', 'l2-axe-rack'], ['l2-start', 'l2-board'], ['l2-axe-rack', 'l2-board']];
+const segDist = (px: number, pz: number, [ax, az]: readonly number[], [bx, bz]: readonly number[]) => {
+  const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((px - ax) * dx + (pz - az) * dz) / (dx * dx + dz * dz)));
+  return Math.hypot(px - (ax + dx * t), pz - (az + dz * t));
+};
+/** Distance from a point to the nearest station ring edge or approach corridor centre line (minus the ring/clearance radius). */
+export function stationKeepOutGap(x: number, z: number): number {
+  const ring = Math.min(...RINGS.map(([n, r]) => Math.hypot(x - l2Anchors[n][0], z - l2Anchors[n][1]) - r));
+  const corridor = Math.min(...CORRIDORS.map(([a, b]) => segDist(x, z, l2Anchors[a], l2Anchors[b]) - .6));
+  return Math.min(ring, corridor);
+}
+/** True when the placement's collider hull (the axis-aligned wall the nav grid and the truck sweep see) stays `margin` clear of the fire truck's whole swept lane. */
+const truckLaneClear = (p: Placement, x: number, z: number, margin: number) => {
+  const pts = footprints({ ...p, position: [x, p.position[1], z] }, 0, true).flatMap(f => f.poly);
+  if (!pts.length) return true;
+  const x0 = Math.min(...pts.map(q => q[0])), x1 = Math.max(...pts.map(q => q[0])), z0 = Math.min(...pts.map(q => q[1])), z1 = Math.max(...pts.map(q => q[1]));
+  const wall = { x: (x0 + x1) / 2, z: (z0 + z1) / 2, y: 0, halfX: (x1 - x0) / 2, halfZ: (z1 - z0) / 2, halfY: 1 };
+  return l2TruckPath.every((q, i) => i % 10 !== 0 || !truckWallOverlap(q, 7.4, 2.1, wall, margin));
+};
+const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.includes('fence');
+/** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
+const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
+
+/** The market's front (east wall, facing +X) and loading (south wall, facing +Z) doors: glazed double doors the mission opens (PO 10-15 "no visible door"). */
+const MARKET_DOORS: Placement[] = ([['l2-market-door-front', -51.35, -42.2, 0], ['l2-market-door-loading', -55.6, -37.65, -Math.PI / 2]] as const).map(([id, x, z, yaw]) => ({
+  id, assetId: 'kit.market-doors', position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2',
+  visualAabb: { min: [x - 1.4, 0, z - 1.4], max: [x + 1.4, 2.9, z + 1.4] },
+}));
+
+/**
+ * L2 copy of the D-GROVE layout (same town as L1, a few hours later): authored L2 anchors, the market, the W1 dressing,
+ * the checkpoint at the east end of Elm Street, and no courier bicycle. Feeds collision, navigation and rendering alike.
+ * The L1 aftermath (burned annex, outbreak house, and this run's own carryover when the save has it) is applied on top.
+ */
+export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermath | null = null): DistrictLayout[] {
+  return structuredClone(layouts).map(layout => {
+    if (layout.district !== 'D-GROVE') return layout;
+    delete layout.anchors['bike-start'];
+    layout.anchors['player-start'] = { position: [l2Anchors['l2-start'][0], 0, l2Anchors['l2-start'][1]], yaw: 0 };
+    for (const [name, [x, z]] of Object.entries(l2Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    // Extra toys for the escape: a dumpster at the alley neck off Larch Street and the car alarm by the cluster.
+    layout.anchors['dumpster-3'] = { position: [53.2, 0, 15], yaw: 0 }; layout.anchors['dumpster-3-end'] = { position: [55.8, 0, 15], yaw: 0 };
+    layout.anchors['alarm-car-5'] = { position: [48.6, 0, 12.4], yaw: 0 };
+    const superseded = supersededIds(layout);
+    layout.placements = layout.placements.filter(p => !superseded.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
+    // A tree's canopy can screen the required axe even when its trunk is outside the interaction ring.
+    const blocking = new Set(layout.placements.filter(p => {
+      const canopy = p.assetId.startsWith('prop.street-tree') ? (p.visualAabb.max[0] - p.visualAabb.min[0]) / 2 : 0;
+      return looseProp(p.assetId) && stationKeepOutGap(p.position[0], p.position[2]) < RING_CLEAR_M + 1.5 + canopy;
+    }).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !blocking.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !blocking.has(c.id));
+    // Loose inherited furniture cannot start in a driving lane. Check the whole footprint.
+    const onRoad = new Set(layout.placements.filter(p => pushableProps[p.assetId] && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !onRoad.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !onRoad.has(c.id.split('/')[0]));
+    // The market is a fixed building: loose street furniture of the base layout that it swallows goes.
+    const swallowed = new Set(layout.placements.filter(p => looseProp(p.assetId) && firstOverlap(MARKET, footprints(p)) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !swallowed.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !swallowed.has(c.id.split('/')[0]));
+    // Main Row corner: the fire engine's outer front corner clears the lamp only when it is on the pavement.
+    const cornerLamp = layout.placements.find(p => p.assetId === 'prop.street-lamp' && Math.abs(p.position[0] + 37) < .05 && Math.abs(p.position[2] + 34) < .05);
+    if (cornerLamp) {
+      cornerLamp.position[2] -= 1.5;
+      cornerLamp.visualAabb.min[2] -= 1.5; cornerLamp.visualAabb.max[2] -= 1.5;
+      // Compound colliders are rebuilt from this placement by DistrictWorld.
+      layout.colliders = layout.colliders.filter(c => c.id !== cornerLamp.id);
+    }
+    layout.placements.push(MARKET, ...MARKET_DOORS);
+    // Placement rule (PO 10-09 "barricades through fence", a car with a lamp post through its bonnet): dressing never cuts into a
+    // fence, wall, building, mailbox, hydrant, lamp, tree, bench or another prop and stays out of gardens. A dressing piece that
+    // does is moved to the nearest clear spot (vehicles first slide along their own axis, so a "crashed" car stops with its
+    // bumper against the post). Base layout geometry never moves for it.
+    const obstacles: Footprint[] = obstaclesOf(layout, L2_TIER);
+    const index = new FootprintIndex(obstacles);
+    for (const [i, d] of l2Dressing.entries()) {
+      if (d.entity) continue;
+      const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
+      const placement: Placement = { id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : d.kind === 'station' ? .4 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } };
+      if (d.kind === 'station' && d.assetId === 'prop.bench') placement.fixed = true;
+      // Checkpoint barriers are intentional; belongings and bins belong beside the road.
+      if (pushableProps[d.assetId] && d.kind !== 'checkpoint') {
+        placement.allowRoad = false;
+        if (overlapsRoad(layout, placement.visualAabb)) {
+          let found = false;
+          for (let r = .5; r <= 12 && !found; r += .5) for (const [dx, dz] of [[r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, r], [r, -r], [-r, -r]]) {
+            const box = { min: [d.x + dx - 1, 0, d.z + dz - 1] as [number, number, number], max: [d.x + dx + 1, 1.5, d.z + dz + 1] as [number, number, number] };
+            if (overlapsRoad(layout, box) || !inside([d.x + dx, d.z + dz], layout.bounds)) continue;
+            placement.position = [d.x + dx, 0, d.z + dz]; placement.visualAabb = box; found = true; break;
+          }
+          if (!found) throw new Error(`No roadside position for ${placement.id}`);
+        }
+      }
+      // The bridge is a fixed set piece. Apron benches retain the civilians' seat anchors and sit on the apron slab (top .4 m).
+      if (!decal && d.kind !== 'station' && d.kind !== 'river' && footprints(placement, 0, true).length) {
+        const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
+        // The rescue fire truck's lane stays free: a piece that stood off the lane is never slid onto it (T-E20-20: a crashed sedan moved onto the Juniper/Main Row junction).
+        const keepLane = truckLaneClear(placement, d.x, d.z, .125);
+        const spot = findClearSpot(layout, placement, obstacles, { index,
+          slide: d.assetId.startsWith('veh.'),
+          margin: d.assetId.startsWith('veh.') ? .1 : .3, // props keep a hand's width off fences and posts, cars may touch
+          accept: (x, z) => {
+            if (stationKeepOutGap(x, z) < RING_CLEAR_M) return false;
+            if (keepLane && !truckLaneClear(placement, x, z, .125)) return false;
+            // Checkpoint barriers and cones close the road: they stand on the asphalt, never beside a mailbox on the pavement.
+            const onRoad = overlapsRoad(layout, { min: [x - half[0], 0, z - half[1]], max: [x + half[0], 1.5, z + half[1]] });
+            return roadside ? !onRoad : d.kind !== 'checkpoint' || d.assetId.startsWith('veh.') || onRoad;
+          },
+        });
+        if (!spot) throw new Error(`No clear spot for ${placement.id} (${d.assetId}) near ${d.x}, ${d.z}`);
+        const [dx, dz] = [spot[0] - placement.position[0], spot[1] - placement.position[2]];
+        placement.position = [spot[0], placement.position[1], spot[1]];
+        placement.visualAabb = { min: [placement.visualAabb.min[0] + dx, 0, placement.visualAabb.min[2] + dz], max: [placement.visualAabb.max[0] + dx, placement.visualAabb.max[1], placement.visualAabb.max[2] + dz] };
+      }
+      if (!decal) { const added = footprints(placement, 0, true); obstacles.push(...added); index.add(added); }
+      layout.placements.push(placement);
+    }
+    layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });
+    layout.lightGroups.push({ id: 'l2', offAt: 5 });
+    moveOffSolids(layout, freestanding);
+    return applyL1Aftermath(layout, aftermath);
+  });
+}

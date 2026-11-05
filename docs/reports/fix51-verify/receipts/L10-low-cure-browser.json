@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "fixtureHash": "b15023a74769ad1426367b051556e32050548d86a78859ed37ef75c830e589de",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-09",
+      "clause": "reviewed airborne research subtitles and backpack canister",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "runtimeMatches": true,
+        "traversed": true,
+        "carried": true,
+        "consolePass": true,
+        "review": {
+          "row": "L10-09",
+          "reviewedAt": "2026-11-04T14:07:10.841453+00:00",
+          "recording": {
+            "airborne": true,
+            "notVaccine": true,
+            "healthySafety": true,
+            "killsInfected": true,
+            "neverReverses": true,
+            "regionalDispersal": true,
+            "evidence": [
+              {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-2-1793800249521/captures/late-input-L10-cure-t12222-low-z0-5.jpg",
+                "sha256": "2cd6b84b19208749ae78931ec6081fe6d87db1c40403d62fc649ce7f7d2d4539"
+              },
+              {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-2-1793800249521/captures/late-input-L10-cure-t12222-low-z1-5.jpg",
+                "sha256": "d3338e89f0155cd3f31a188d05f487f10f4da1bdd487e35af104490fc36acecc"
+              }
+            ]
+          },
+          "backpack": {
+            "visible": true,
+            "noExtraSlot": true,
+            "evidence": [
+              {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-2-1793800249521/captures/late-input-L10-research-exit-t12357-low-z0-5.jpg",
+                "sha256": "7378178cafd74d67e17030f8845f3101bd9d0b94775fb99a3877b94d325cbfc7"
+              },
+              {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-2-1793800249521/captures/late-input-L10-research-exit-t12357-low-z1-5.jpg",
+                "sha256": "b67d31aab114e9d9d6db6d1e59d32110acc98dc5ab5f32be0ee3ab5475dd951a"
+              }
+            ]
+          }
+        },
+        "inputPath": "docs/reports/fix51-r10c/L10-low-batch-2-input.json",
+        "reviewPath": "docs/reports/fix51-r10c/L10-low-batch-2/review.json"
+      },
+      "target": "actual physical terminal→cure→corridor; complete research subtitle meaning and visible canister without extra weapon slot at both zooms; no skips or runtime errors",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-cure-browser.json"
+    },
+    {
+      "id": "L10-09",
+      "clause": "carried canister restored by actual checkpoint death",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "f8aff7947037f118e6bf1dfb3b59d30a11469fb60120ea45b25d23cd47695579",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research",
+          "anchor": {
+            "x": 2805.06982421875,
+            "y": 0.7099999785423279,
+            "z": 44.92478942871094,
+            "yaw": -6.322130128742835
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            247
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research",
+          "position": {
+            "x": 2805.06982421875,
+            "z": 44.92478942871094
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+    "inputPath": "docs/reports/fix51-r10c/L10-low-batch-2-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L10-low-batch-2/review.json"
+  }
+}

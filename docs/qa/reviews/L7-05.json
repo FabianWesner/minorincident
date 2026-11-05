@@ -1,0 +1,37 @@
+{
+  "row": "L7-05",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "7085d27818bb3bdc3b7c1355bc2877910bacb42f",
+  "clauses": [
+    {
+      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
+      "verdict": "FAIL",
+      "note": "Fresh current-source 8765679a low/high complete and stationary receipts. Bounded-path reachability passes 100% at all four policies. The full unchanged row still fails: low complete player/group windups 0.8131917777275808/min (<6); high complete has zero windups and zero/min. Passive first attacks are 83.9667 s low and 22.6667 s high (>10 s). Five measured clause failures; no design or criterion change."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L7-05/L7-low-complete.json.gz",
+      "sha256": "a7a04b0832d78cea5ec8fbe6c7529a2917bbd44c950c332b09ef0028e4cb2dd2",
+      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-05/L7-low-stationary.json.gz",
+      "sha256": "8bc599fa46237cfdb1b5f48a887184ad5ea7500e16e0a0e015db3375a0f459fe",
+      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-05/L7-high-complete.json.gz",
+      "sha256": "6198ee7ca54afb00bb2fbdcaf94bdc4615376f653e73f8f1a37ef9c9a536e46a",
+      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-05/L7-high-stationary.json.gz",
+      "sha256": "fffb3abb491bd0bd3ed1a1a048a874765a6cfbb483325cc3e9353287de3ba08e",
+      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+    }
+  ],
+  "notes": "Historical FAIL remains open after full current-source remeasurement. No visual/manual clauses apply."
+}

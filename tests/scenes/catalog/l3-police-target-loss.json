@@ -1,0 +1,135 @@
+{
+  "extends": "../../../specs/scenes/catalog/fight-police-squad-vs4.json",
+  "name": "l3-police-target-loss",
+  "note": "Police continue their short moves to cover when a volley knocks their targets down. Review the pauses between targets: no frozen sidestep, no snap back to the post, continuous grounded steps, guns lowered between targets and bodies retained. The ally-combat-feel and lost-target regressions supply the movement gates.",
+  "script": [
+    {
+      "frame": 110,
+      "actor": "wave-1",
+      "do": {
+        "hit": {
+          "amount": 500
+        }
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "wave-2",
+      "do": {
+        "hit": {
+          "amount": 500
+        }
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "wave-3",
+      "do": {
+        "hit": {
+          "amount": 500
+        }
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "wave-4",
+      "do": {
+        "hit": {
+          "amount": 500
+        }
+      }
+    }
+  ],
+  "frames": 300,
+  "sheet": 25,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2,
+        0
+      ],
+      "yaw": 0,
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "officer-1",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "officer-2",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        -1.4
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "officer-3",
+      "kind": "pedestrian",
+      "at": [
+        -0.4,
+        1.4
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "wave",
+      "kind": "infected",
+      "at": [
+        3,
+        0
+      ],
+      "count": 4,
+      "spread": 1,
+      "yaw": 180,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
+}

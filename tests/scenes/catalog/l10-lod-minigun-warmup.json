@@ -1,0 +1,79 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3940,
+        -80
+      ],
+      [
+        4090,
+        45
+      ]
+    ]
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "time": "L10-night",
+  "frames": 360,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "minigunRoundsMin": 20,
+    "minigunMountedFramesMin": 200,
+    "minigunFeetMin": 3
+  },
+  "name": "l10-lod-minigun-warmup",
+  "note": "Resident mounted minigun in the game camera, manned and firing to show the body, rotating barrels and heat state at both qualities. Native first-play residency regression separately requires this white body shader to compile behind the L10 loading card.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3990.8,
+        -33
+      ],
+      "floorY": 3.08
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "mountGun": true
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "fireGun": {
+          "at": [
+            3970,
+            -33
+          ],
+          "seconds": 5
+        }
+      }
+    }
+  ],
+  "sheet": 60,
+  "dof": false
+}

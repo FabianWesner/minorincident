@@ -1,0 +1,114 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 25s, 30393 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-89603-1792619560; queueing for a slot
+[runner] slot 0 acquired; load 0.14 0.23 0.31
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-89603-1792619560[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 641[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/sim/explosion-corpses.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 660[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-corpse-explosion.pipe-bomb @E27-AC02 @E27-AC15 retained body uses the exact outward/upward curve one tick later without damage or new rigid bodies[33m 390[2mms[22m[39m
+   [32m✓[39m T-E27-corpse-explosion.propane @E27-AC02 @E27-AC15 retained body uses the exact outward/upward curve one tick later without damage or new rigid bodies[32m 90[2mms[22m[39m
+   [32m✓[39m T-E27-corpse-explosion.car @E27-AC02 @E27-AC15 retained body uses the exact outward/upward curve one tick later without damage or new rigid bodies[32m 79[2mms[22m[39m
+   [32m✓[39m T-E27-corpse-explosion.gas-tanks @E27-AC02 @E27-AC15 retained body uses the exact outward/upward curve one tick later without damage or new rigid bodies[32m 57[2mms[22m[39m
+[31m   [31m×[31m T-E27-corpse-restore @E27-AC15 pending and midair body motion survives a real mission checkpoint with identical landing and original id[39m[32m 26[2mms[22m[39m
+   [32m✓[39m T-E27-corpse-cover @E27-AC15 full cover and the radius boundary protect retained bodies; zero-impulse effects leave them fixed[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/zoo-s1.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 980[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-19-lion-pounce @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore[33m 302[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/sim/ai/alpha.test.ts [2m([22m[2m30 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1100[2mms[22m[39m
+   [32m✓[39m T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning[32m 182[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence[32m 9[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence[32m 8[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence[32m 3[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence[32m 6[2mms[22m[39m
+[31m   [31m×[31m T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks[39m[32m 64[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 84[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 52[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 56[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 82[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 34[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 45[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 41[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 53[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 31[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 34[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 30[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 16[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 14[2mms[22m[39m
+   [32m✓[39m T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state[32m 16[2mms[22m[39m
+   [32m✓[39m T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns[32m 26[2mms[22m[39m
+   [32m✓[39m T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns[32m 20[2mms[22m[39m
+   [32m✓[39m T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first[32m 34[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture[32m 82[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture[32m 31[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture[32m 7[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler[32m 8[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler[32m 7[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler[32m 13[2mms[22m[39m
+   [32m✓[39m T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/explosions.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1299[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-05 @E27 @E27-AC05 a car explosion lifts the body ≥ 0.5 m, detaches doors and hood, chars the wreck and leaves fires ≥ 20 s[33m 474[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/sim/explosion-corpses.test.ts[2m > [22mT-E27-corpse-restore @E27-AC15 pending and midair body motion survives a real mission checkpoint with identical landing and original id
+[31m[1mError[22m: Missing objective text[39m
+[36m [2m❯[22m new Mission src/sim/missions/Mission.ts:[2m61:67[22m[39m
+    [90m 59|[39m   private startTick: number;
+    [90m 60|[39m   constructor(readonly world: SimWorld, readonly def: MissionDef) {
+    [90m 61|[39m     const errors = validateMission(def); if (errors.length) throw new …
+    [90m   |[39m                                                                   [31m^[39m
+    [90m 62|[39m     this.l10 = def.id === 'L10' ? new LevelTenFinale(this) : null;
+    [90m 63|[39m     this.l9 = def.l9 ? new LevelNineCrash(this) : null;
+[90m [2m❯[22m SimWorld.loadMission src/sim/world/SimWorld.ts:[2m124:16[22m[39m
+[90m [2m❯[22m tests/sim/explosion-corpses.test.ts:[2m38:34[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/sim/ai/alpha.test.ts[2m > [22mT-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks
+[31m[1mAssertionError[22m: expected 100 to be 75 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 75[39m
+[31m+ 100[39m
+
+[36m [2m❯[22m tests/sim/ai/alpha.test.ts:[2m49:46[22m[39m
+    [90m 47|[39m   step(w, 1); const active = e.infected!.until;
+    [90m 48|[39m   step(w, active - w.tick - 1); expect(soldier.health.current).toBe(10…
+    [90m 49|[39m   step(w, 1); expect(soldier.health.current).toBe(75); expect(soldier.…
+    [90m   |[39m                                              [31m^[39m
+    [90m 50|[39m   const saved = { ...soldier.transform };
+    [90m 51|[39m   expect(updateAlly(w, soldier, () => true)).toBe(true); expect(soldie…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m69 passed[39m[22m[90m (71)[39m
+[2m   Start at [22m 21:54:08
+[2m   Duration [22m 4.48s[2m (transform 59%, tests 29%, import 12%)[22m
+
+[remote] done exit=1 (runner 2.31.10.108, sync 25s, remote total 68s)

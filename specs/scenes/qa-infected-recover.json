@@ -1,0 +1,17 @@
+{
+ "name": "qa-infected-recover",
+ "note": "PO rule 10-08: a melee 'kill' only knocks the infected down; it twitches on the ground and gets back up after 10-20 s.",
+ "ground": "asphalt",
+ "size": 30,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 0, "loadout": ["weapon.bat", "weapon.fists"] },
+  { "id": "z-1", "kind": "infected", "at": [3, 0.5], "yaw": 180, "state": "chase" }
+ ],
+ "script": [
+  { "frame": 30, "actor": "courier", "do": { "attack": "z-1", "seconds": 4 } }
+ ],
+ "camera": { "mode": "close", "target": "courier", "radius": 7, "azimuth": 40 },
+ "frames": 1500,
+ "shots": [60, 300, 600, 900, 1200, 1350, 1499],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "inf-chase-l2",
+  "note": "L2 dressing of D-GROVE (wrecks, debris, street clutter) around the house row where L2 infected froze in fence gaps: two runners chase the courier along the street. Look for: they keep after her past the clutter and never freeze or wander off while she is near.",
+  "ground": "district",
+  "time": "L2",
+  "tier": 1,
+  "layout": { "district": "D-GROVE", "level": "L2", "bbox": [[-58, -16], [10, 16]] },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-40, -1.5], "yaw": 0 },
+    { "id": "z1", "kind": "infected", "at": [-47, -1.5], "yaw": 0, "look": { "tier": "average" } },
+    { "id": "z2", "kind": "infected", "at": [-48, 1.5], "yaw": 0, "look": { "tier": "athletic" } }
+  ],
+  "script": [
+    { "frame": 20, "actor": "courier", "do": { "run": [[-28, -1.5], [-22, 2], [-12, 2], [-6, -2], [4, -2]] } }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.2 },
+  "frames": 780,
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "lostTargetNearFramesMax": 0, "overshootMaxM": 2, "stuckActorFramesMax": 30, "courierSwingsMin": 1 }
+}

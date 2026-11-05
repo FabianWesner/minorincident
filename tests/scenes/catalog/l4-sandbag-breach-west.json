@@ -1,0 +1,18 @@
+{
+  "name": "l4-sandbag-breach-west",
+  "note": "Q-282/Q-283: west Reception Plaza army defense line. The floodlight reveals the shadowed sack layers and pallets. The brief breach cut keeps the full frame; after it, the yellow ring is on clear ground in front of the cover. Bodies stay outside the intact stacks.",
+  "seed": 1,
+  "hud": true,
+  "l4Convoy": "hold",
+  "time": "L4",
+  "ground": "district",
+  "layout": { "level": "L4", "district": "D-FAIR", "bbox": [[-90, -70], [140, 70]] },
+  "camera": { "mode": "game", "target": [-32, 6.1], "zoom": 1 },
+  "script": [
+    { "frame": 0, "spawnActor": { "id": "courier", "kind": "courier", "at": [-31.2, 6.1], "loadout": ["weapon.army-mg", "weapon.fire-axe"] } },
+    { "frame": 1, "effect": { "barricadeHit": "l4-wall-35", "amount": 10000 } }
+  ],
+  "frames": 180,
+  "shots": [0, 30, 179],
+  "expect": { "consoleErrors": 0, "collisionFailuresMax": 0, "drawCallsMax": 600, "trianglesMax": 1500000, "trianglesMaxLow": 500000 }
+}

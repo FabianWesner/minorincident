@@ -1,0 +1,61 @@
+{
+  "name": "l4-district-emergence-west",
+  "note": "L4-D1: west Alpha street-mouth anchor, viewed at the game camera. Check standing foot support, correct facing toward the plaza, silhouette and visibility; this is layout isolation, not encounter scheduling.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 0,
+  "layout": {
+    "district": "D-FAIR",
+    "level": "L4",
+    "bbox": [
+      [
+        -66.6,
+        -4
+      ],
+      [
+        -46.6,
+        16
+      ]
+    ],
+    "assets": [
+      "prop.sandbag-pallet"
+    ],
+    "anchors": [
+      "l4-alpha-west"
+    ]
+  },
+  "actors": [
+    {
+      "id": "west",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -56.6,
+        6
+      ],
+      "yaw": 4.332,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -56.6,
+      6
+    ],
+    "zoom": 1.3
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    59
+  ],
+  "sheet": 20,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "clippingMax": 0,
+    "footSinkMaxCm": 1.2
+  }
+}

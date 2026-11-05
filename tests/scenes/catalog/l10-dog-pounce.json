@@ -1,0 +1,48 @@
+{
+  "name": "l10-dog-pounce",
+  "note": "Runtime seeded dog coats and flat amber pounce arrow on the supporting ground throughout the 0.65 s windup, before damage. Review game-camera high/low and zoom 1/0.5: low quadrupeds distinct from courier, runners and corgi; telegraph visible and oriented toward victim.",
+  "seed": 11,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 36,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle",
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "dog",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        9,
+        0
+      ],
+      "yaw": 180,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 18,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "footSinkMaxCm": 1
+  }
+}

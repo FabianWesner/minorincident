@@ -1,0 +1,52 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "qa-l6-room-boundary",
+  "note": "Raw segment input toward x36,z0 must stop at the authored shelter floor boundary x30. The courier must reach x29 but never cross x30; T-E24-17-room-boundary proves the same via raw input, and qa-l6-gate-route separately retains the x>=95 tunnel/gate route assertion.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        0
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": {
+        "walk": [
+          [
+            36,
+            0
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 300,
+  "shots": [
+    1,
+    100,
+    200,
+    300
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorMaxX": {
+      "courier": [
+        29,
+        30
+      ]
+    },
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  },
+  "sheet": 60
+}

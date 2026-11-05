@@ -1,0 +1,85 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+  "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+  "results": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "status": "PASS",
+      "evidence": [
+        {
+          "index": 1,
+          "startTick": 13112,
+          "endTick": 28538,
+          "finished": false,
+          "receipt": "l10/L10-low-batch1.json.gz",
+          "completion": "l10/L10-low-batch1-completion.json.gz"
+        },
+        {
+          "index": 2,
+          "startTick": 28538,
+          "endTick": 28458,
+          "finished": false,
+          "receipt": "l10/L10-low-batch2.json.gz",
+          "completion": "l10/L10-low-batch2-completion.json.gz"
+        },
+        {
+          "index": 3,
+          "startTick": 28458,
+          "endTick": 6534,
+          "finished": true,
+          "receipt": "l10/L10-low-batch3.json.gz",
+          "completion": "l10/L10-low-batch3-completion.json.gz"
+        }
+      ],
+      "originalBudgetAbort": "docs/reports/fix51-r4/attempts/L10-low-initial.json",
+      "wallSeconds": 1436
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "status": "PASS",
+      "evidence": [
+        {
+          "index": 1,
+          "startTick": 12488,
+          "endTick": 28515,
+          "finished": false,
+          "receipt": "l10/L10-low-webgpu-z1.5-batch1.json.gz",
+          "completion": "l10/L10-low-webgpu-z1.5-batch1-completion.json.gz"
+        },
+        {
+          "index": 2,
+          "startTick": 28515,
+          "endTick": 28498,
+          "finished": false,
+          "receipt": "l10/L10-low-webgpu-z1.5-batch2.json.gz",
+          "completion": "l10/L10-low-webgpu-z1.5-batch2-completion.json.gz"
+        },
+        {
+          "index": 3,
+          "startTick": 28498,
+          "endTick": 8433,
+          "finished": true,
+          "receipt": "l10/L10-low-webgpu-z1.5-batch3.json.gz",
+          "completion": "l10/L10-low-webgpu-z1.5-batch3-completion.json.gz"
+        }
+      ],
+      "originalBudgetAbort": "docs/reports/fix51-r4/attempts/L10-low-webgpu-z1.5-initial.json",
+      "wallSeconds": 1466
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "status": "NOT CHECKED",
+      "reason": "No visible progress for 91.5 s; stopping without advancing the objective"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "status": "NOT CHECKED",
+      "reason": "No visible progress for 90.1 s; stopping without advancing the objective"
+    }
+  ]
+}

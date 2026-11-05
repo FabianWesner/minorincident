@@ -1,0 +1,60 @@
+{
+  "name": "collision-placement-corgi-fence",
+  "seed": 1,
+  "frames": 120,
+  "sheet": 30,
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        -104.14,
+        0.7599999999999998
+      ],
+      [
+        -76.14,
+        28.759999999999998
+      ]
+    ],
+    "assets": [
+      "prop.*"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -90,
+        0
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -90.14,
+        14.76
+      ],
+      "state": "follow"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "zoom": 1,
+    "actor": "corgi"
+  },
+  "note": "PO #27: corgi full visible footprint clears courier, fences and wrecks at the reported world coordinates. Game camera, both tiers and zooms. Building facades are excluded to inspect the initial contact. The game camera follows the dog; foreground walls can occlude later frames.",
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "size": 220
+}

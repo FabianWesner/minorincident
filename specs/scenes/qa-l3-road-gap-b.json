@@ -1,0 +1,9 @@
+{
+ "name": "qa-l3-road-gap-b",
+ "note": "P1-113: raised L3 highway deck edge near (176.51, -0.68) with the tilted beam and rubble strip: no dark void",
+ "ground": "district", "time": "L3", "tier": 2,
+ "layout": { "district": "D-CORRIDOR", "level": "L3", "bbox": [[132, -14], [214, 14]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [176.51, -0.68], "yaw": 0 }],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1.5 },
+ "frames": 40, "shots": [0, 40]
+}

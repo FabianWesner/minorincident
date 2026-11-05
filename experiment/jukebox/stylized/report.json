@@ -1,0 +1,36 @@
+{
+  "slug": "jukebox",
+  "iterations": 2,
+  "triangles": 1496,
+  "meshes": 7,
+  "materials": [
+    "emi_sirenRed",
+    "emi_windowGlow",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_survivorRed",
+    "pal_uiDark",
+    "pal_woodWarm"
+  ],
+  "glb_bytes": 104328,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "rounded upright cabinet",
+    "amber and red neon arch with pillars",
+    "record display",
+    "broad song selector",
+    "U-shaped speaker surround",
+    "chunky diamond grille"
+  ],
+  "dropped_details": [
+    "lettering and song lists",
+    "coin slots",
+    "bolts",
+    "chrome filigree",
+    "record grooves",
+    "fine grille mesh"
+  ],
+  "notes": "Static geometry merged by seven existing palette materials; final hero and game renders and both browser backends verified."
+}

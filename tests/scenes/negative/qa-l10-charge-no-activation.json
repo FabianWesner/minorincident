@@ -1,0 +1,20 @@
+{
+  "extends": "../catalog/qa-l10-charge-radius.json",
+  "name": "qa-l10-charge-no-activation",
+  "note": "Deliberately broken: omit activation and movement. Retained charge and boundary/outside coverage gates must reject this scene.",
+  "script": [],
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "authored": true,
+    "anchors": {
+      "cure-console": [
+        0,
+        0
+      ],
+      "cure-disperse-ready": [
+        0,
+        0
+      ]
+    }
+  }
+}

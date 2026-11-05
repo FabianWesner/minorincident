@@ -1,0 +1,44 @@
+{
+ "name": "asset-l10-minigun",
+ "note": "L10 mounted rotary minigun on its sandbag pivot mount, courier standing 3.4 m behind it for scale. Look for: barrel cluster readable at zoom 0.5, shield plate and sandbags not sunk or floating, courier clear of the mount, LOD swap (low tier) without a silhouette jump. The orange heat sleeves are the heatGlow node, which the runtime shows only while overheating.",
+ "ground": "sidewalk",
+ "size": 24,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "wpn.minigun-mounted",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -3.4,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -1.2,
+   0.0
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

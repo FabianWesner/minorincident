@@ -1,0 +1,55 @@
+{
+  "sourceHash": "b4d22e8d9f13940a99b41edfbe0a066b3a19b3768881256eb0400f5d905c0879",
+  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "backend": "webgl",
+  "quality": "low",
+  "zoom": 1.5,
+  "levels": [
+    {
+      "level": "L2",
+      "tick": 6736,
+      "result": {
+        "time": 112.26666666666667,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 4,
+        "optionalObjectives": []
+      },
+      "steps": [
+        {
+          "id": "calm",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "board",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "doors",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bridge",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "axe",
+          "optional": true,
+          "status": "cancelled"
+        }
+      ]
+    }
+  ],
+  "launchPolicy": "headless; macOS ANGLE/Metal; isolated profile; ephemeral non3300 preview port; no frame/CPU timing"
+}

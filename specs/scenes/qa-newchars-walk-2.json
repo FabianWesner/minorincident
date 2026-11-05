@@ -1,0 +1,157 @@
+{
+ "name": "qa-newchars-walk-2",
+ "ground": "sidewalk",
+ "size": 30,
+ "time": "L1",
+ "actors": [
+  {
+   "id": "p0",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -4.8
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mia.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      -4.8
+     ],
+     [
+      -6,
+      -4.8
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p1",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -2.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.sam.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      -2.4
+     ],
+     [
+      -6,
+      -2.4
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p2",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    0.0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-a.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      0.0
+     ],
+     [
+      -6,
+      0.0
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p3",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    2.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-b.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      2.4
+     ],
+     [
+      -6,
+      2.4
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p4",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    4.8
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-woman-b.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      4.8
+     ],
+     [
+      -6,
+      4.8
+     ]
+    ],
+    "loop": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1.05
+ },
+ "frames": 300,
+ "shots": [
+  30,
+  100,
+  180,
+  260
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

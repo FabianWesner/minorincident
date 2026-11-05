@@ -1,0 +1,297 @@
+{
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "observerHash": "d670b5f6ea8dfd19759dbac228488c9fe988422b1866480ea8f6eef07dbd0c71",
+  "revision": "3487b52b368db3ebfbeb6fa06c1ae689b8b7c63c",
+  "toolSha256": "eb5cb73ad1d6c9b89c094d76517e430f6bc50c1a7ed5fee57687bdf71382ed33",
+  "method": "Read-only actual native cure grant and route movement observations; canonical final state identical. Separately replay the naturally reached post-grant production Resume snapshot with and without only the canister flag/item. All actors, positions, objectives, time and RNG identical. Four cardinal keyboard inputs for120ticks each; compare every-tick XYZ trajectory hashes exactly, retaining displacements to rule out an entirely blocked setup. Checkpoint death and physical subtitle/backpack appearance are separate evidence.",
+  "rows": [
+    {
+      "tier": "low",
+      "grant": {
+        "tick": 35682,
+        "before": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ]
+        },
+        "after": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ]
+        },
+        "carried": true,
+        "installed": false,
+        "item": true
+      },
+      "movement": {
+        "before": {
+          "best60TickMetres": 4.501303793196814,
+          "median60TickMetres": 4.497243626167915,
+          "windows": 35557
+        },
+        "carried": {
+          "best60TickMetres": 4.505357339637445,
+          "median60TickMetres": 4.49714078910103,
+          "windows": 21000
+        }
+      },
+      "controlledMovement": [
+        {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "73145d085d319e1a12a8de4f392893bfb7fe0fdeed6cd8066bf376c98c829480",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "73145d085d319e1a12a8de4f392893bfb7fe0fdeed6cd8066bf376c98c829480",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": -1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "bf649ab655916f5e31cea1557adb4a510f0847f1a4f2d4232ec5d1ca96282bcb",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "bf649ab655916f5e31cea1557adb4a510f0847f1a4f2d4232ec5d1ca96282bcb",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": 1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "3b6a02f6a08754bb83d6e6768a02ff643a5f3a42a4e7a40fa71a677e765975ce",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "3b6a02f6a08754bb83d6e6768a02ff643a5f3a42a4e7a40fa71a677e765975ce",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": -1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "d6910b0bf6f8bc6a2bc53603f2ad1cdfd24f1d3ee4f599105a1024fc6d3a560f",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "d6910b0bf6f8bc6a2bc53603f2ad1cdfd24f1d3ee4f599105a1024fc6d3a560f",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "snapshotSha256": "0f12543626e93c4095c51d31306ab344b2ff2b71ecb49b15d856b7043a9e54e5",
+      "nativeStateHash": "dfd494df",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "grant": {
+        "tick": 35728,
+        "before": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ]
+        },
+        "after": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ]
+        },
+        "carried": true,
+        "installed": false,
+        "item": true
+      },
+      "movement": {
+        "before": {
+          "best60TickMetres": 4.501303793196814,
+          "median60TickMetres": 4.497251021245441,
+          "windows": 35667
+        },
+        "carried": {
+          "best60TickMetres": 4.825009658192144,
+          "median60TickMetres": 4.497107589517475,
+          "windows": 21087
+        }
+      },
+      "controlledMovement": [
+        {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "1ca6e144f42b35c910e48244f14032ba9fc6e2b7ea2cd6a1944c5b2f743dcf20",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "1ca6e144f42b35c910e48244f14032ba9fc6e2b7ea2cd6a1944c5b2f743dcf20",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": -1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "1935f8c507f5ae37a13031928cccbcfa5d9b46586748ca4dbcb449ed7c220aad",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "1935f8c507f5ae37a13031928cccbcfa5d9b46586748ca4dbcb449ed7c220aad",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": 1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "3a97e7d82a3fabc81382320c1a93b8199dbf2ffcfe58cb95c93549265d9d61de",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "3a97e7d82a3fabc81382320c1a93b8199dbf2ffcfe58cb95c93549265d9d61de",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": -1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "881cbea4cd8bdac00f11fa6449f9e5e8e12d2f0d8ac6c99107cc54175bc75f42",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.755084991455078,
+              "trajectorySha256": "881cbea4cd8bdac00f11fa6449f9e5e8e12d2f0d8ac6c99107cc54175bc75f42",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "snapshotSha256": "115eae29d427ac3cb8bdd4d20fcc6a50be593eee5a7ee429bc63a0d14c22084a",
+      "nativeStateHash": "e6a360b4",
+      "controlIdentical": true
+    }
+  ]
+}

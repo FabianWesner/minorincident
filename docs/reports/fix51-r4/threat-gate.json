@@ -1,0 +1,97 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "524ea45a6eb129b64f196c59e4b418b6a039f3d1",
+  "command": "npm run qa:threat",
+  "exitCode": 0,
+  "wallSeconds": 366.2815029621124,
+  "flagCount": 0,
+  "log": "gates/threat.log",
+  "flags": [],
+  "seconds": 364.20916283400004,
+  "levels": [
+    {
+      "level": "L1",
+      "flags": [],
+      "passiveFlags": [],
+      "nativeStateHash": "683109bc"
+    },
+    {
+      "level": "L2",
+      "flags": [],
+      "passiveFlags": [],
+      "nativeStateHash": "10c40cb1"
+    },
+    {
+      "level": "L3",
+      "flags": [
+        "step/checkpoint:SLOW_FOLLOWER:31",
+        "phase/corridor:SLOW_FOLLOWER:32",
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "d5fbb2e6"
+    },
+    {
+      "level": "L4",
+      "flags": [
+        "wave/war-0@1969:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "3df159ee"
+    },
+    {
+      "level": "L5",
+      "flags": [
+        "step/look:SLOW_FOLLOWER:18",
+        "phase/search:SLOW_FOLLOWER:18"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "0fda3ce6"
+    },
+    {
+      "level": "L6",
+      "flags": [
+        "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/entry-2@6623:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+        "wave/entry-5@9825:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+        "wave/entry-3@12454:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+        "wave/entry-6@13006:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+        "wave/entry-4@13685:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+        "wave/entry-7@14139:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "30919520"
+    },
+    {
+      "level": "L7",
+      "flags": [],
+      "passiveFlags": [],
+      "nativeStateHash": "879c70b4"
+    },
+    {
+      "level": "L8",
+      "flags": [
+        "wave/tunnel-breach:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "75101309"
+    },
+    {
+      "level": "L9",
+      "flags": [],
+      "passiveFlags": [],
+      "nativeStateHash": "0eb17b31"
+    },
+    {
+      "level": "L10",
+      "flags": [
+        "step/hold:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "nativeStateHash": "7b651fb6"
+    }
+  ],
+  "pass": true
+}

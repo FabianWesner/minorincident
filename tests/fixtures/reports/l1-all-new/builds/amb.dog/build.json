@@ -1,0 +1,82 @@
+{
+  "id": "amb.dog",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/amb.dog",
+  "elapsedSeconds": 9.884,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/amb.dog/model.glb",
+      "sourceSha256": "ab293b3c0401a5034c21e78b20a1af0bf993e845c847ec7ab6c18bab63ad24dd",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/amb.dog/source/assembled-lod0.glb",
+      "bodySha256": "7cc67e1c2f7e82cb60ee32336f51a12c0a61fd1238e4b4ed452acb57a1b33103",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/amb.dog.lod0.glb",
+          "bytes": 181060,
+          "sha256": "c87d504c47c79f1d58a768df59ab841eaff1615c76154ec4130589846aab3183",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/amb.dog.lod0.low.glb",
+          "bytes": 140956,
+          "sha256": "090c3eff9f41181fe267488e58e81a02c3f5dd590e360e589b2f568a6a6ab6ab",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/amb.dog/model.glb",
+      "sourceSha256": "ab293b3c0401a5034c21e78b20a1af0bf993e845c847ec7ab6c18bab63ad24dd",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/amb.dog/source/assembled-lod1.glb",
+      "bodySha256": "f64a9ac72706a0afb6677eb33df297ef4c8e4c405ca01de0f25bec65511490f4",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/amb.dog.lod1.glb",
+          "bytes": 96388,
+          "sha256": "05c6c43a1321338252fc49e6b879d1a56167967850c3ae9f2e283e596050341a",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/amb.dog.lod1.low.glb",
+          "bytes": 96388,
+          "sha256": "05c6c43a1321338252fc49e6b879d1a56167967850c3ae9f2e283e596050341a",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/amb.dog/model.glb",
+      "sourceSha256": "ab293b3c0401a5034c21e78b20a1af0bf993e845c847ec7ab6c18bab63ad24dd",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/amb.dog/source/assembled-lod2.glb",
+      "bodySha256": "51c901a347e86edf718e7ef96be691c7d65e0cd9fdad47086e2a25d81c7d2347",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/amb.dog.lod2.glb",
+          "bytes": 80556,
+          "sha256": "4c8b7d4fe9cf6d95c710c6f116c62ff57c6abdc63b0a0c7981ac968c94f8873e",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/amb.dog.lod2.low.glb",
+          "bytes": 80556,
+          "sha256": "4c8b7d4fe9cf6d95c710c6f116c62ff57c6abdc63b0a0c7981ac968c94f8873e",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "amb.dog:lod0:infected": "/assets/civilians/amb.dog.lod0.infected.96eb710dfc9ed4de.bin.gz",
+    "amb.dog:lod1:infected": "/assets/civilians/amb.dog.lod1.infected.0208df9fc21b3f17.bin.gz",
+    "amb.dog:lod2:infected": "/assets/civilians/amb.dog.lod2.infected.dbe594809a2ec1bf.bin.gz"
+  }
+}

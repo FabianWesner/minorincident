@@ -1,0 +1,28 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "524ea45a6eb129b64f196c59e4b418b6a039f3d1",
+  "method": "Synthetic independent native grids; remove exactly one damageable rail in a clone; preserve every other blocker, clearance and distance bound; original grid unchanged.",
+  "results": [
+    {
+      "name": "damageable rail admits an independently clear attack-through path",
+      "accepted": true,
+      "distance": 8
+    },
+    {
+      "name": "unchanged short distance bound rejects the crossing",
+      "accepted": false,
+      "distance": null
+    },
+    {
+      "name": "zero damage share cannot prove attack-through",
+      "accepted": false,
+      "distance": null
+    },
+    {
+      "name": "an unbreakable shed beyond the rail still blocks the route",
+      "accepted": false,
+      "distance": null
+    }
+  ]
+}

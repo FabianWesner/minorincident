@@ -1,0 +1,116 @@
+{
+  "name": "l9-apc-ram",
+  "note": "L9-S1 mass-only drive-through with six infected; game camera.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 70,
+  "dof": false,
+  "time": "L6",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        8.0,
+        0.7
+      ]
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        8.8,
+        -0.7
+      ]
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        9.6,
+        0.7
+      ]
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        10.4,
+        -0.7
+      ]
+    },
+    {
+      "id": "infected-4",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        11.2,
+        0.7
+      ]
+    },
+    {
+      "id": "infected-5",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        12.0,
+        -0.7
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc"
+  },
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 80,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": 1,
+          "seconds": 3
+        }
+      }
+    }
+  ],
+  "frames": 260,
+  "shots": [
+    0,
+    160,
+    260
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

@@ -1,0 +1,24 @@
+// Adapted from folio-2025 by Bruno Simon (MIT).
+import { EventBus } from './EventBus';
+import type { Lifecycle } from './Lifecycle';
+
+type FrameEvent = { tick: number; type: 'frame'; seconds: number };
+/** Browser-only frame source. Simulation receives elapsed seconds, never RAF IDs. */
+export class Ticker implements Lifecycle {
+  readonly events = new EventBus<FrameEvent>(event => ({ ...event }));
+  private handle: number | null = null;
+  private previous: number | null = null;
+  private frames = 0;
+  private disposed = false;
+  init(): void { this.handle = requestAnimationFrame(this.frame); }
+  private readonly frame = (now: number): void => {
+    const seconds = this.previous === null ? 0 : Math.max(0, (now - this.previous) / 1000);
+    this.previous = now;
+    // A throwing frame listener must not end the frame loop (it froze the game for good); the error still surfaces.
+    try { this.events.emit({ type: 'frame', tick: ++this.frames, seconds }); }
+    finally { if (!this.disposed) this.handle = requestAnimationFrame(this.frame); }
+  };
+  update(): void {}
+  reset(): void { this.previous = null; }
+  dispose(): void { this.disposed = true; if (this.handle !== null) cancelAnimationFrame(this.handle); this.handle = null; this.events.dispose(); }
+}

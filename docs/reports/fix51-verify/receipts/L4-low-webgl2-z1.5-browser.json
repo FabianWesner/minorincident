@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "level": "L4",
+  "tier": "low",
+  "sourceHash": "18d75597489d3d442d0501f9daf8d576847107c6dd008b75f661379d054deb1b",
+  "fixtureHash": "f46f97d7dfd6775eb8f136fe60d75fa4deccb7e2e314775cdd0446f1f0056916",
+  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L4-03",
+      "clause": "actual MG pickup klaxon and attack start share simulation tick",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2172
+        ],
+        "gunTicks": [
+          2172
+        ],
+        "turnTicks": [
+          2172
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2172,
+            "observedWorldTick": 2172,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 42.650666666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 42.650666666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 42.650666666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 42.650666666666666,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 312,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 313,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 314,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 315,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2172,
+          "ids": [
+            {
+              "id": 162,
+              "x": -39.513124999999995,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 163,
+              "x": -38.59375,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 164,
+              "x": -37.7,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 165,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 166,
+              "x": -24,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -16,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -15.1,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        "routeZoom": 1.5,
+        "proofPath": "docs/reports/fix53-b/L4-03.json",
+        "proofSha256": "3984528fc88d37b0303f844073be3c15c74e217c3e22a1f493f98b47a7d42612"
+      },
+      "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-02",
+      "clause": "actual pre-pickup reception civilian census excluding soldiers",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "FAIL",
+      "value": {
+        "samples": 12,
+        "firstTick": 1830,
+        "lastTick": 2160,
+        "minimum": 32,
+        "maximum": 32,
+        "routeZoom": 1.5,
+        "input": "docs/reports/fix53-b/L4-opening/matrix.json.gz",
+        "sha256": "7940aebb2f506c8df94c567ac2cf7ac2a18435ec7b66eeb819e78a985a09a691"
+      },
+      "target": "at least40 civilians until pickup; routines/overlap still require separate qualification",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
+    }
+  ],
+  "observations": {
+    "input": "docs/reports/fix53-b/L4-opening/matrix.json.gz",
+    "inputSha256": "7940aebb2f506c8df94c567ac2cf7ac2a18435ec7b66eeb819e78a985a09a691",
+    "scope": "90second opening only; no full-level completion or performance claim"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "../l9-handover/l9-crash-handover.json",
+  "name": "l9-q2-zero-handover",
+  "note": "Q2 regression: 0-HP APC enters mandatory crash, survives crawl and commits axe-only inventory; game-camera matrix.",
+  "crossingCrash": {
+    "health": 0,
+    "handover": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+ "name": "qa-l4-kessler-cellar",
+ "note": "E22 beat 7: the pavement of Lakeshore Avenue in front of the hardware store's cellar door (the store's south side, facing the game camera); the second camera shows the sealed cellar yard in the empty east lot with its one warm bulb, a person alone in the room and the aisle to the barrable door clear.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[50, -14], [88, 50]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [56, 41.7], "yaw": 90, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": { "walk": [[66.4, 41.7]] } },
+  { "id": "inside", "kind": "pedestrian", "at": [75.3, -6.4], "yaw": 180, "look": { "model": "npc.civilian-man-b", "tint": "#4d7fb0" }, "state": { "walk": [[74.6, -1.6]] } }
+ ],
+ "script": [
+  { "frame": 90, "camera": { "mode": "pose", "position": [86, 14, 7], "target": [75, 0, -4] } }
+ ],
+ "camera": { "mode": "game", "target": [62, 42], "zoom": 2.0 },
+ "frames": 200,
+ "shots": [20, 80, 150, 199],
+ "expect": { "consoleErrors": 0 }
+}

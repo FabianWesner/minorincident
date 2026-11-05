@@ -1,0 +1,195 @@
+{
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "observerHash": "d670b5f6ea8dfd19759dbac228488c9fe988422b1866480ea8f6eef07dbd0c71",
+  "revision": "5697e135e561f6c492f1a388c0a7751256b09b0f",
+  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "seedSaveSha256": "a05ae2adb54fa4711c33a6624c591a011d1d68ba7de882c4037d24e33b37dcbe",
+  "toolSha256": "8f0c5b5bef65cf88742709d404666e1c4428e777e62cc821ddfbe57c76519a14",
+  "out": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-high-batch-3-1793804218796",
+  "levels": [
+    "L10"
+  ],
+  "tier": "high",
+  "method": "Shared headless Metal WebGL2 physical WASD/mouse/mission UI; actual production Resume save from preceding physical slice. Protected courier, no objective skips or actor relocation. Read-only ledger; no frame timing. At bounded yield pause Settings saves live Resume snapshot. Each photo pauses and restores quality/zoom.",
+  "result": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 473,
+        "maxNoProgressSeconds": 58.483333333333334,
+        "deaths": 0,
+        "assists": 2,
+        "attacks": {
+          "weapon.rocket-launcher": 382
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex · 36 m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7089999914169312,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "install",
+            "text": "Install the cure in the dispersal device · 310 m",
+            "tick": 587,
+            "marker": {
+              "anchor": "cure-install",
+              "ring": {
+                "x": 4006.5,
+                "y": 0,
+                "z": -39
+              },
+              "drawn": [
+                4006.5,
+                0,
+                -39
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Activate the dispersal console · 12 m",
+            "tick": 5700,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "mega",
+            "text": "Kill the Mega Alpha · 830 m",
+            "tick": 9691,
+            "marker": {
+              "anchor": "cure-mega",
+              "ring": {
+                "x": 3172.6160168494666,
+                "y": 0.7,
+                "z": 52.53412260280187
+              },
+              "drawn": [
+                3173.62,
+                0.7,
+                52.83
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "release",
+            "text": "Release the cure at the console · 273 m",
+            "tick": 24967,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L10",
+        "tick": 16103,
+        "x": 3580.8,
+        "z": -0.7,
+        "severity": "P2",
+        "kind": "enemy-unhittable",
+        "text": "Infected #411 (chase) 2.0 m away took no damage from 8 s of attacks (hp 45/45)",
+        "captures": [
+          "captures/late-input-L10-16103-enemy-unhittable.jpg"
+        ],
+        "step": "mega",
+        "objective": "Kill the Mega Alpha · 70 m"
+      },
+      {
+        "level": "L10",
+        "tick": 18012,
+        "x": 3591.4,
+        "z": -14.2,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance 9.0 m, no marker: false); HUD: \"Kill the Mega Alpha · 9 m\"",
+        "captures": [
+          "captures/late-input-L10-18012-stuck-navigating.jpg"
+        ],
+        "step": "mega",
+        "objective": "Kill the Mega Alpha · 9 m"
+      },
+      {
+        "level": "L10",
+        "tick": 19810,
+        "x": 3619.1,
+        "z": -43.1,
+        "severity": "P2",
+        "kind": "stuck-at-ring",
+        "text": "22 s without objective progress standing at the ring (3.0 m); HUD: \"Kill the Mega Alpha · 3 m\"",
+        "captures": [
+          "captures/late-input-L10-19810-stuck-at-ring.jpg"
+        ],
+        "step": "mega",
+        "objective": "Kill the Mega Alpha · 3 m"
+      }
+    ],
+    "yielded": true
+  },
+  "error": null
+}

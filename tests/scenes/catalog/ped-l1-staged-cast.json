@@ -1,0 +1,23 @@
+{
+  "name": "ped-l1-staged-cast",
+  "note": "L1's staged cast: common walkers, later depot/lab/fire-station story actors, and their infection-preserving silhouettes. Review all tiers at game zoom 1 and 0.5 after ready; no missing crowd figures.",
+  "ground": "sidewalk",
+  "size": 50,
+  "dof": false,
+  "actors": [
+    { "id": "man-a", "kind": "pedestrian", "at": [-5, -3], "look": { "model": "npc.civilian-man-a" } },
+    { "id": "man-b", "kind": "pedestrian", "at": [-2.5, -3], "look": { "model": "npc.civilian-man-b" } },
+    { "id": "woman-a", "kind": "pedestrian", "at": [0, -3], "look": { "model": "npc.civilian-woman-a" } },
+    { "id": "woman-b", "kind": "pedestrian", "at": [2.5, -3], "look": { "model": "npc.civilian-woman-b" } },
+    { "id": "elderly", "kind": "pedestrian", "at": [5, -3], "look": { "model": "npc.civilian-elderly" } },
+    { "id": "clerk", "kind": "pedestrian", "at": [-5, 3], "look": { "model": "npc.depot-clerk" } },
+    { "id": "tech-a", "kind": "pedestrian", "at": [-2.5, 3], "look": { "model": "npc.lab-tech-a" } },
+    { "id": "tech-b", "kind": "pedestrian", "at": [0, 3], "look": { "model": "npc.lab-tech-b" } },
+    { "id": "guard", "kind": "pedestrian", "at": [2.5, 3], "look": { "model": "npc.lab-guard" } },
+    { "id": "firefighter", "kind": "pedestrian", "at": [5, 3], "look": { "model": "npc.firefighter-alive" } }
+  ],
+  "camera": { "mode": "game", "target": [0, 0, 0], "zoom": 1 },
+  "frames": 60,
+  "sheet": 30,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "lodPlaceholderFramesMax": 0 }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "bld.church",
+  "status": "integrated",
+  "dimensions": {
+    "x": 18,
+    "y": 13.7999,
+    "z": 10.6499,
+    "tolerance": 0.015
+  },
+  "budget": {
+    "triangles": 30000,
+    "materials": 8,
+    "fileKB": 1500,
+    "drawCalls": 8
+  },
+  "authoredLodTriangles": {
+    "lod1": 12000,
+    "lod2": 4000
+  },
+  "tiers": [
+    {
+      "lod": 0,
+      "triangles": 8148,
+      "drawCalls": 7,
+      "materials": 5,
+      "productionBytes": 124728,
+      "sourceTriangles": 8148,
+      "sourceBytes": 575824,
+      "sourceSha256": "64939250ff57ab40808984226a3fe9fc4d462debf03e5e02c351bf58e19595ee"
+    },
+    {
+      "lod": 1,
+      "triangles": 3252,
+      "drawCalls": 7,
+      "materials": 5,
+      "productionBytes": 51448,
+      "sourceTriangles": 3252,
+      "sourceBytes": 218484,
+      "sourceSha256": "3371b467df5417d1b81167c906f018acdf6d0fdfb8b6eeef708088edb5291022"
+    },
+    {
+      "lod": 2,
+      "triangles": 1740,
+      "drawCalls": 7,
+      "materials": 5,
+      "productionBytes": 30612,
+      "sourceTriangles": 1740,
+      "sourceBytes": 121320,
+      "sourceSha256": "81cc696b21ac78c4b2c707efa2fa9fd385869f7bc0c260a52057c22ea0361d0e"
+    }
+  ],
+  "independentAcceptance": "pending"
+}

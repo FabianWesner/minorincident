@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "checks": [
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L9/crossing-start",
+      "tier": "high",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "crossing-start",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc",
+        "damage": 100,
+        "expected": {
+          "id": "crossing-start",
+          "anchor": {
+            "x": -550,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.bat",
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.rocket-launcher",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "crossing-start",
+          "position": {
+            "x": -550,
+            "z": 0
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.bat",
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.rocket-launcher",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L9/outskirts-approach",
+      "tier": "high",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "outskirts-approach",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "1f05bb9cbb101c541983bb8e27212c5446a24994bcb68a981733af16a13375fa",
+        "damage": 100,
+        "expected": {
+          "id": "outskirts-approach",
+          "anchor": {
+            "x": 468.2260437011719,
+            "y": 0.9954323768615723,
+            "z": 3.419754981994629,
+            "yaw": -0.05724150811981929
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.bat",
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.rocket-launcher",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "outskirts-approach",
+          "position": {
+            "x": 468.2260437011719,
+            "z": 3.419754981994629
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.bat",
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.rocket-launcher",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json"
+    }
+  ],
+  "errors": [],
+  "control": {
+    "observed": "bf08aa33",
+    "control": "bf08aa33",
+    "identical": true
+  }
+}

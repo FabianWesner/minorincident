@@ -1,0 +1,1963 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "8bd09076dd2d39975a812741d89fef1ecc7ac7929c6124281dea740955fc370c",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L9-01",
+      "clause": "native first drive input and movement",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "firstDrive": 0,
+        "firstMotion": 2
+      },
+      "target": "drive and movement within30ticks of Begin",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-02",
+      "clause": "authored route group census and detour clearance",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": [
+        {
+          "id": "road-1",
+          "route": "road",
+          "at": [
+            -300,
+            -330
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "detourClearance": 25
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "at": [
+            240,
+            -330
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "detourClearance": 25
+        },
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "at": [
+            -250,
+            240
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "detourClearance": 25
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "at": [
+            0,
+            240
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "detourClearance": 25
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "at": [
+            200,
+            240
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "detourClearance": 25
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "at": [
+            -300,
+            -22.5
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "detourClearance": 29.962570166335343
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "at": [
+            -150,
+            -30
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "detourClearance": 40
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "at": [
+            -60,
+            -30
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "detourClearance": 40
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "at": [
+            60,
+            -30
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "detourClearance": 40
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "at": [
+            150,
+            -30
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "detourClearance": 40
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "at": [
+            240,
+            -30
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "detourClearance": 40
+        }
+      ],
+      "target": "road2×6; countryside3×6; shortcut6×at least8 with2Alphas; every authored group detour≥20m",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-02",
+      "clause": "actual admitted route group member census",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": [
+        {
+          "id": "road-1",
+          "route": "road",
+          "tick": 770,
+          "expectedCount": 6,
+          "ids": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "actors": [
+            {
+              "id": 758,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -330.65
+            },
+            {
+              "id": 759,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -330.65
+            },
+            {
+              "id": 760,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -330.65
+            },
+            {
+              "id": 761,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -330.65
+            },
+            {
+              "id": 762,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -329.35
+            },
+            {
+              "id": 763,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "tick": 3530,
+          "expectedCount": 6,
+          "ids": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911
+          ],
+          "actors": [
+            {
+              "id": 906,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -330.65
+            },
+            {
+              "id": 907,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -330.65
+            },
+            {
+              "id": 908,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -330.65
+            },
+            {
+              "id": 909,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -330.65
+            },
+            {
+              "id": 910,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -329.35
+            },
+            {
+              "id": 911,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 140,
+          "expectedCount": 6,
+          "ids": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "actors": [
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "tick": 2310,
+          "expectedCount": 6,
+          "ids": [
+            927,
+            928,
+            929,
+            930,
+            931,
+            932
+          ],
+          "actors": [
+            {
+              "id": 927,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 928,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 239.35
+            },
+            {
+              "id": 929,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 0.65,
+              "z": 239.35
+            },
+            {
+              "id": 930,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 931,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 240.65
+            },
+            {
+              "id": 932,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 6670,
+          "expectedCount": 6,
+          "ids": [
+            1208,
+            1209,
+            1210,
+            1211,
+            1212,
+            1213
+          ],
+          "actors": [
+            {
+              "id": 1208,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 239.35
+            },
+            {
+              "id": 1209,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 239.35
+            },
+            {
+              "id": 1210,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.025,
+              "z": 239.9995190528383
+            },
+            {
+              "id": 1211,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 202.2,
+              "z": 239.35
+            },
+            {
+              "id": 1212,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 240.65
+            },
+            {
+              "id": 1213,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 140,
+          "expectedCount": 8,
+          "ids": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "actors": [
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 890,
+          "expectedCount": 8,
+          "ids": [
+            764,
+            765,
+            766,
+            767,
+            768,
+            769,
+            770,
+            771
+          ],
+          "actors": [
+            {
+              "id": 764,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 765,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 766,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 767,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 768,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "tick": 1040,
+          "expectedCount": 8,
+          "ids": [
+            768,
+            769,
+            770,
+            771,
+            772,
+            773,
+            774,
+            775,
+            776
+          ],
+          "actors": [
+            {
+              "id": 768,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": -60,
+              "z": -33
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -30.65
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -30.65
+            },
+            {
+              "id": 772,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -30.65
+            },
+            {
+              "id": 773,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -29.35
+            },
+            {
+              "id": 774,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -29.35
+            },
+            {
+              "id": 775,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -29.35
+            },
+            {
+              "id": 776,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "tick": 1550,
+          "expectedCount": 8,
+          "ids": [
+            814,
+            815,
+            816,
+            817,
+            818,
+            819,
+            820,
+            821
+          ],
+          "actors": [
+            {
+              "id": 814,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
+            {
+              "id": 815,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -30.65
+            },
+            {
+              "id": 816,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -30.65
+            },
+            {
+              "id": 817,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -30.65
+            },
+            {
+              "id": 818,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -29.35
+            },
+            {
+              "id": 819,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -29.35
+            },
+            {
+              "id": 820,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -29.35
+            },
+            {
+              "id": 821,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1077,
+            1078,
+            1079,
+            1080,
+            1081,
+            1082,
+            1083,
+            1084
+          ],
+          "actors": [
+            {
+              "id": 1077,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 1078,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 1079,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 1080,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 1081,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 1082,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 1083,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 1084,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091,
+            1092,
+            1093
+          ],
+          "actors": [
+            {
+              "id": 1085,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1086,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1087,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1088,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1089,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1090,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1091,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1092,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1093,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        }
+      ],
+      "target": "road2×6; countryside3×6; shortcut6×8 total members including2Alphas; exact distinct production entity IDs",
+      "status": "FAIL",
+      "receipt": "docs/reports/sweep-c/L9-02-census.json"
+    },
+    {
+      "id": "L9-04",
+      "clause": "safe route retains more durability than risky shortcut",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "safe": 1000,
+        "shortcut": 860
+      },
+      "target": "both routes complete; safe pre-crash durability strictly greater",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-04",
+      "clause": "shortcut durability billing per unique contact onset",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1162,
+          "sourceId": 667,
+          "targetId": 753,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1994,
+          "sourceId": 667,
+          "targetId": 762,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2410,
+          "sourceId": 667,
+          "targetId": 769,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 980,
+          "after": 970
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2424,
+          "sourceId": 667,
+          "targetId": 774,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 970,
+          "after": 960
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3036,
+          "sourceId": 667,
+          "targetId": 814,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 960,
+          "after": 950
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3047,
+          "sourceId": 667,
+          "targetId": 815,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 950,
+          "after": 940
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3055,
+          "sourceId": 667,
+          "targetId": 816,
+          "source": "contact",
+          "contactId": 7,
+          "attackId": null,
+          "before": 940,
+          "after": 930
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3398,
+          "sourceId": 667,
+          "targetId": 864,
+          "source": "contact",
+          "contactId": 8,
+          "attackId": null,
+          "before": 930,
+          "after": 920
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3423,
+          "sourceId": 667,
+          "targetId": 861,
+          "source": "contact",
+          "contactId": 9,
+          "attackId": null,
+          "before": 920,
+          "after": 910
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3483,
+          "sourceId": 667,
+          "targetId": 867,
+          "source": "contact",
+          "contactId": 10,
+          "attackId": null,
+          "before": 910,
+          "after": 900
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3542,
+          "sourceId": 667,
+          "targetId": 866,
+          "source": "contact",
+          "contactId": 11,
+          "attackId": null,
+          "before": 900,
+          "after": 890
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3920,
+          "sourceId": 667,
+          "targetId": 922,
+          "source": "contact",
+          "contactId": 12,
+          "attackId": null,
+          "before": 890,
+          "after": 880
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3951,
+          "sourceId": 667,
+          "targetId": 919,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 880,
+          "after": 870
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3990,
+          "sourceId": 667,
+          "targetId": 926,
+          "source": "contact",
+          "contactId": 14,
+          "attackId": null,
+          "before": 870,
+          "after": 860
+        }
+      ],
+      "target": "nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-05",
+      "clause": "zero durability driving and smoke state",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "tier": "high",
+        "mode": "zero",
+        "setup": "One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.",
+        "initial": {
+          "tick": 0,
+          "carId": 667,
+          "hp": 1000,
+          "position": {
+            "x": -550,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "passengers": [
+            {
+              "id": 668,
+              "seat": 0,
+              "phase": "seated",
+              "started": 0,
+              "from": {
+                "x": -553.35,
+                "z": 0,
+                "y": 0.3,
+                "yaw": 0
+              },
+              "pauseUntil": 0
+            }
+          ]
+        },
+        "finished": true,
+        "finalHash": "f5507b89",
+        "controlIdentical": null,
+        "firstDrive": 0,
+        "firstMotion": 2,
+        "drivenMetres": 1498.1048004211953,
+        "zero": {
+          "ticks": 15868,
+          "movingTicks": 11834,
+          "minCap": 0.39999999999999997,
+          "maxCap": 0.6,
+          "smokingTicks": 15868
+        },
+        "peakChunks": 25,
+        "preCrashDurability": 0,
+        "hits": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1487,
+            "sourceId": 667,
+            "targetId": 669,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 11558,
+            "sourceId": 667,
+            "targetId": 1045,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 11740,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 11746,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 3,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 11842,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 5,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 11938,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 6,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12034,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 7,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12130,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 8,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12226,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 9,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12322,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 10,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12418,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 11,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12482,
+            "sourceId": 667,
+            "targetId": 1045,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 12,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12514,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "attack",
+            "contactId": null,
+            "attackId": 13,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12620,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "contact",
+            "contactId": 16,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 12654,
+            "sourceId": 667,
+            "targetId": 1045,
+            "source": "contact",
+            "contactId": 18,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 14949,
+            "sourceId": 667,
+            "targetId": 991,
+            "source": "contact",
+            "contactId": 19,
+            "attackId": null,
+            "before": 0,
+            "after": 0
+          }
+        ],
+        "signals": [
+          {
+            "tick": 15869,
+            "name": "l9.crash-approach"
+          },
+          {
+            "tick": 16049,
+            "name": "l9.bridge-collapse"
+          },
+          {
+            "tick": 16169,
+            "name": "l9.crash-impact"
+          },
+          {
+            "tick": 16709,
+            "name": "l9.crawl-finished"
+          }
+        ],
+        "objectives": [
+          {
+            "tick": 16169,
+            "id": "reach-outskirts"
+          }
+        ],
+        "states": [
+          {
+            "tick": 1,
+            "phase": "driving",
+            "hp": 0,
+            "position": {
+              "x": -550,
+              "y": 1.0482969284057617,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 15869,
+            "phase": "approach",
+            "hp": 0,
+            "position": {
+              "x": 468.0792541503906,
+              "y": 0.9954344034194946,
+              "z": -2.6258931159973145,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16049,
+            "phase": "fall",
+            "hp": 0,
+            "position": {
+              "x": 508,
+              "y": 1.0499999999999998,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16169,
+            "phase": "impact",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16349,
+            "phase": "crawl",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16709,
+            "phase": "done",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          }
+        ],
+        "encounters": {
+          "spawned": [
+            "road-wanderer-0",
+            "road-wanderer-5",
+            "shortcut-wanderer-0",
+            "countryside-1",
+            "dry-shortcut-1",
+            "road-wanderer-6",
+            "road-1",
+            "dry-shortcut-2",
+            "road-wanderer-1",
+            "shortcut-wanderer-1",
+            "road-wanderer-2",
+            "road-wanderer-3",
+            "road-2",
+            "road-wanderer-4",
+            "dry-shortcut-5",
+            "dry-shortcut-6",
+            "shortcut-wanderer-3",
+            "shortcut-wanderer-4",
+            "countryside-wanderer-0",
+            "countryside-wanderer-1",
+            "countryside-3"
+          ],
+          "ids": {
+            "road-wanderer-0": [
+              669
+            ],
+            "road-wanderer-5": [
+              670
+            ],
+            "shortcut-wanderer-0": [
+              671
+            ],
+            "countryside-1": [
+              742,
+              743,
+              744,
+              745,
+              746,
+              747
+            ],
+            "dry-shortcut-1": [
+              748,
+              749,
+              750,
+              751,
+              752,
+              753,
+              754,
+              755
+            ],
+            "crossing-patrol-0": [
+              756
+            ],
+            "road-wanderer-6": [
+              757
+            ],
+            "road-1": [
+              758,
+              759,
+              760,
+              761,
+              762,
+              763
+            ],
+            "crossing-patrol-1": [
+              764
+            ],
+            "dry-shortcut-2": [
+              765,
+              766,
+              767,
+              768,
+              769,
+              770,
+              771,
+              772
+            ],
+            "road-wanderer-1": [
+              773
+            ],
+            "shortcut-wanderer-1": [
+              774
+            ],
+            "crossing-patrol-2": [
+              775
+            ],
+            "crossing-patrol-3": [
+              776
+            ],
+            "crossing-patrol-4": [
+              814
+            ],
+            "road-wanderer-2": [
+              815
+            ],
+            "crossing-patrol-5": [
+              856
+            ],
+            "crossing-patrol-6": [
+              857
+            ],
+            "road-wanderer-3": [
+              858
+            ],
+            "crossing-patrol-7": [
+              908
+            ],
+            "road-2": [
+              909,
+              910,
+              911,
+              912,
+              913,
+              914
+            ],
+            "crossing-patrol-8": [
+              955
+            ],
+            "crossing-patrol-9": [
+              990
+            ],
+            "road-wanderer-4": [
+              991
+            ],
+            "crossing-patrol-10": [
+              1045
+            ],
+            "crossing-patrol-11": [
+              1083
+            ],
+            "dry-shortcut-5": [
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091
+            ],
+            "dry-shortcut-6": [
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100
+            ],
+            "shortcut-wanderer-3": [
+              1101
+            ],
+            "shortcut-wanderer-4": [
+              1102
+            ],
+            "crossing-patrol-12": [
+              1103
+            ],
+            "crossing-patrol-13": [
+              1143
+            ],
+            "crossing-patrol-14": [
+              1144
+            ],
+            "crossing-patrol-15": [
+              1145
+            ],
+            "crossing-patrol-16": [
+              1146
+            ],
+            "crossing-patrol-17": [
+              1147
+            ],
+            "crossing-patrol-18": [
+              1148
+            ],
+            "crossing-patrol-19": [
+              1149
+            ],
+            "crossing-patrol-20": [
+              1150
+            ],
+            "countryside-wanderer-0": [
+              1151
+            ],
+            "countryside-wanderer-1": [
+              1152
+            ],
+            "crossing-patrol-21": [
+              1223
+            ],
+            "countryside-3": [
+              1294,
+              1295,
+              1296,
+              1297,
+              1298,
+              1299
+            ]
+          },
+          "patrol": {
+            "nextAt": 16150,
+            "serial": 22
+          }
+        }
+      },
+      "target": "actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-06",
+      "clause": "native safe rough/road traversal without wedge",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "canonical": true,
+        "zero": true,
+        "zeroDistance": 1498.1048004211953
+      },
+      "target": "ordinary safe route and0HP detour both complete without relocation",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-07",
+      "clause": "canonical crash once and wreck objective ordering",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "signals": [
+          {
+            "tick": 6848,
+            "name": "l9.crash-approach"
+          },
+          {
+            "tick": 7028,
+            "name": "l9.bridge-collapse"
+          },
+          {
+            "tick": 7148,
+            "name": "l9.crash-impact"
+          },
+          {
+            "tick": 7688,
+            "name": "l9.crawl-finished"
+          }
+        ],
+        "objectives": [
+          {
+            "tick": 7148,
+            "id": "reach-outskirts"
+          }
+        ],
+        "states": [
+          {
+            "tick": 1,
+            "phase": "driving",
+            "hp": 1000,
+            "position": {
+              "x": -550,
+              "y": 1.0482969284057617,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 6848,
+            "phase": "approach",
+            "hp": 1000,
+            "position": {
+              "x": 468.2260437011719,
+              "y": 0.9954323768615723,
+              "z": 3.419754981994629,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 7028,
+            "phase": "fall",
+            "hp": 1000,
+            "position": {
+              "x": 508,
+              "y": 1.0499999999999998,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 7148,
+            "phase": "impact",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 7328,
+            "phase": "crawl",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 7688,
+            "phase": "done",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          }
+        ]
+      },
+      "target": "exactly one impact; wreck objective at/after impact; completed crash sequence",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-07",
+      "clause": "zero crash once and wreck objective ordering",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "signals": [
+          {
+            "tick": 15869,
+            "name": "l9.crash-approach"
+          },
+          {
+            "tick": 16049,
+            "name": "l9.bridge-collapse"
+          },
+          {
+            "tick": 16169,
+            "name": "l9.crash-impact"
+          },
+          {
+            "tick": 16709,
+            "name": "l9.crawl-finished"
+          }
+        ],
+        "objectives": [
+          {
+            "tick": 16169,
+            "id": "reach-outskirts"
+          }
+        ],
+        "states": [
+          {
+            "tick": 1,
+            "phase": "driving",
+            "hp": 0,
+            "position": {
+              "x": -550,
+              "y": 1.0482969284057617,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 15869,
+            "phase": "approach",
+            "hp": 0,
+            "position": {
+              "x": 468.0792541503906,
+              "y": 0.9954344034194946,
+              "z": -2.6258931159973145,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16049,
+            "phase": "fall",
+            "hp": 0,
+            "position": {
+              "x": 508,
+              "y": 1.0499999999999998,
+              "z": 0,
+              "yaw": 0
+            },
+            "driver": 1,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16169,
+            "phase": "impact",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16349,
+            "phase": "crawl",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          },
+          {
+            "tick": 16709,
+            "phase": "done",
+            "hp": 0,
+            "position": {
+              "x": 517.7,
+              "y": -4.45,
+              "z": 0,
+              "yaw": 1.5707963267948966
+            },
+            "driver": null,
+            "wheels": 4,
+            "entityPresent": true
+          }
+        ]
+      },
+      "target": "exactly one impact; wreck objective at/after impact; completed crash sequence",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    },
+    {
+      "id": "L9-09",
+      "clause": "detailed chunk cap during native safe and zero routes",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "value": {
+        "safe": 25,
+        "zero": 25
+      },
+      "target": "at most25 detailed resident chunks",
+      "status": "PASS",
+      "receipt": "docs/reports/fix55-c/L9-native.json"
+    }
+  ],
+  "observations": {
+    "proofPath": "docs/reports/fix55-c/L9-native.json"
+  }
+}

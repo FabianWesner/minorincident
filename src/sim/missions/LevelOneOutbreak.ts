@@ -1,0 +1,481 @@
+import { Rng } from '../../core/Rng';
+import { l1v2 } from '../../data/l1v2';
+import { type L1AccidentEventName } from '../outbreak/types';
+import { installL1Outbreak } from '../outbreak/install';
+import type { Mission } from './Mission';
+import type { L1State } from './types';
+import type { EntitySnapshot } from '../world/types';
+import { L1Story } from './L1Story';
+import { doorExit, doorId, emergeResident, layoutHouseDoors, walkResidents } from '../outbreak/HouseEmergence';
+import { respawnAtCheckpoint } from './Respawn';
+import { doorLaneOf, doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
+
+const TICKS = 60;
+/** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
+const story = {
+  techWalkMs: 1.6, takeBoxS: 1.5, standoffM: 1.4, awayFromLabM: 30, exitSearchS: 12, exitSearchM: 4,
+  /** Accident sequence anchors (sim lookups) and the exits: [anchor, heading in degrees, 0 = +X east, 90 = +Z south]. */
+  anchors: { 'l1.flicker': 'lab-smoke-window', 'l1.blast': 'lab-exit-window', 'l1.ringing': 'lab-door', 'l1.smoke': 'lab-smoke-vent', 'l1.screams': 'lab-door', 'l1.infectedExit': 'lab-exit-front' } as Record<L1AccidentEventName, string>,
+  exits: [['lab-exit-front', 125], ['lab-exit-front', 95], ['lab-exit-side', 170], ['lab-exit-window', 215], ['lab-exit-window', 250]] as [string, number][],
+  /** Infected looks for the lab staff (existing variants until the lab-staff models are registered). */
+  staffModels: ['npc.lab-guard', 'npc.lab-tech-b', 'npc.civilian-woman-b', 'npc.civilian-man-a'],
+  staffTints: ['#2f4858', '#e5d9b9', '#c4473d', '#6d5aa8'],
+  variants: ['inf.delivery-driver', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom', 'inf.bathrobe-neighbor'],
+  techRole: 'delivery-driver', techModel: 'npc.lab-tech-a', techTint: '#f1f1ec',
+  /** Fair moment (QA1-05): windows burst first, the side door next, the front door (and the technician) last. */
+  exitDelayS: { 'lab-exit-window': 3, 'lab-exit-side': 3.5, 'lab-exit-front': 4.5 } as Record<string, number>,
+  /** Grace for a player at the door: exits are disoriented ~3 s, bites on the player hit softly for the first 8 s. */
+  graceDamage: .25, graceS: 8, staggerS: 1.5,
+  blastPushM: 3.2, blastPushRangeM: 12,
+  eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
+};
+const fresh = (): L1State => ({
+  phase: 'morning', carrying: false, delivered: false, away: false, techId: 0, hx: 0, hz: 0,
+  handoverAt: 0, deliveredAt: 0, flickerAt: 0, exitAt: 0, warned: false, fired: 0,
+  exitIds: [], exitHeadingsDeg: [], runs: [], turnedIds: [], escapedIds: [], graceUntil: 0, house: null, labExit: null,
+});
+
+/**
+ * L1 v2 story controller (spec epic-19 section 3, beats 2 to 10). Scripted only up to the infected exit: the
+ * technician hand-over, the 4 to 6 s calm, the accident events (rendered and voiced by lane H) and the five exits.
+ * From beat 6 on the outbreak is systemic (lanes C and D); this class then only counts results.
+ */
+export class LevelOneOutbreak {
+  /** PO UAT story beats (clerk, technician, garage rack, fire station). */
+  readonly story: L1Story;
+  constructor(private readonly mission: Mission) { this.story = new L1Story(mission); }
+  private get l1(): L1State { return this.mission.state.l1!; }
+  private anchor(name: string) { return this.mission.def.anchors[name]; }
+
+  prepare(): void {
+    const { world, state } = this.mission, ai = world.infected, npcs = world.npcs;
+    state.l1 = fresh();
+    world.combat?.clearLoadout();
+    // Caps 60 (high) / 30 (low): the director halves levelCap on the low tier.
+    if (ai) { ai.director.levelCap = l1v2.director.capHigh; ai.director.reserved = 0; ai.director.strict = false; }
+    if (!ai || !npcs) return;
+    // Lane D: pedestrians, panic, bites and transformations (after setQuality, so the tier is already known).
+    const outbreak = npcs.civilians.outbreak ?? installL1Outbreak(world);
+    // The technician is a pedestrian entity driven by the script alone; he turns in place (same id, look) at the exit.
+    const spawn = this.anchor('lab-tech-spawn'), nav = ai.nav;
+    const cell = nav.nearestCell(spawn.x, spawn.z), p = nav.clear(spawn.x, spawn.z, .35) ? { x: spawn.x, z: spawn.z } : { x: nav.x(cell), z: nav.z(cell) };
+    const id = outbreak.spawnPedestrian(p, { role: story.techRole, model: story.techModel, tint: story.techTint, tier: 'average' });
+    const e = world.entities.get(id)!, c = e.civilian!;
+    c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff';
+    Object.assign(e.transform, spawn); this.face(e, this.anchor('lab-door'));
+    world.solids.admit(e, 'l1.technician.wait', 0, false);
+    world.spatial.set(id, spawn.x, spawn.z);
+    this.l1.techId = id;
+  }
+
+  /** Called by the mission when an objective completes (before its onComplete actions). */
+  completed(id: string): void {
+    const { world } = this.mission, l1 = this.l1;
+    // The parcel changes hands inside the clerk beat (matched hand-to-hand), not at the objective tick.
+    // Checkpoint restores replay completed objectives: only a live, in-order completion plays its beat.
+    const live = (anchor: string, m = 4) => { const a = this.anchor(anchor), p = world.entities.get(1)?.transform; return !!p && Math.hypot(p.x - a.x, p.z - a.z) <= Math.max(m, a.radius + 1); };
+    if (id === 'pickup') { if (world.npcs?.civilians.outbreak && l1.phase === 'morning' && !l1.delivered && live('parcel-counter')) this.story.pickup(); else l1.carrying = !l1.delivered; }
+    if (id === 'weapon') { world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']); if (live('garage-bat')) this.story.garage(); }
+
+  }
+  noteTurned(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.turnedIds.includes(id)) l1.turnedIds.push(id); }
+  noteEscaped(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.escapedIds.includes(id)) l1.escapedIds.push(id); }
+  /** Result screen numbers: delivery, living infected now, pedestrians turned, pedestrians who escaped. */
+  result(): { delivered: boolean; infected: number; turned: number; escaped: number } {
+    const l1 = this.l1, ai = this.mission.world.infected, ob = this.mission.world.npcs?.civilians.outbreak;
+    return { delivered: l1.delivered, infected: ai ? ai.active.filter(e => e.health.current > 0).length : 0, turned: ob ? ob.stats.turned : l1.turnedIds.length, escaped: ob ? ob.stats.escaped : l1.escapedIds.length };
+  }
+
+  /**
+   * Cheat/test path (`completeObjective` with no active objective): fast-forwards the scripted gap (hand-over, calm,
+   * accident) to the infected exit so the generic graph walk can continue. Never used by gameplay or bots.
+   */
+  advance(): boolean {
+    const l1 = this.mission.state.l1, tick = this.mission.world.tick;
+    if (!l1 || l1.phase === 'spread') return false;
+    if (!l1.delivered) { l1.delivered = true; l1.deliveredAt = tick; l1.carrying = false; this.mission.setState('delivered', true); }
+    l1.flickerAt = tick - 20 * TICKS; l1.exitAt = tick; this.accident(tick);
+    return this.mission.state.l1!.phase === 'spread';
+  }
+
+  /** Checkpoint restore (tests/debug `loadCheckpoint` only; gameplay deaths use `respawn`): shift the story timeline. */
+  restore(delta: number): void {
+    const l1 = this.l1;
+    for (const key of ['handoverAt', 'deliveredAt', 'flickerAt', 'exitAt', 'graceUntil'] as const) if (l1[key]) l1[key] += delta;
+    if (l1.house?.next) l1.house.next += delta;
+    for (const w of [...l1.house?.walking ?? [], ...l1.labExit?.walking ?? []]) w.until += delta;
+    for (const run of l1.runs) run.until += delta;
+    if (l1.exitIds.length) respawnAtCheckpoint(this.mission.world, this.mission.world.entities.get(1)!.transform);
+  }
+
+  private face(e: EntitySnapshot, at: { x: number; z: number }): void { e.transform.yaw = -Math.atan2(at.z - e.transform.z, at.x - e.transform.x); }
+  private place(e: EntitySnapshot, x: number, z: number, towards: { x: number; z: number }): void {
+    const dx = x - e.transform.x, dz = z - e.transform.z;
+    e.transform.x = x; e.transform.z = z;
+    if (Math.hypot(dx, dz) > 1e-4) e.transform.yaw = -Math.atan2(dz, dx); else this.face(e, towards);
+    this.mission.world.spatial.set(e.id, x, z);
+    this.mission.world.solids.admit(e, 'l1.technician.walk', 0, false);
+  }
+
+  update(): void {
+    const { world, state } = this.mission, l1 = state.l1; if (!l1) return;
+    const tick = world.tick, player = world.entities.get(1)!, tech = world.entities.get(l1.techId);
+    // Do not rewrite a just-completed respawn's destination when the objective activates during death.
+    if (player.health.current > 0 && tick >= player.survivor!.invulnerableUntil && state.steps.weapon?.status === 'active' && state.checkpoint === 'accident') {
+      const bat = this.anchor('garage-bat'), cp = player.survivor!.checkpoint;
+      const retry = bat && world.solids.find({ x: bat.x, z: bat.z, y: player.transform.y }, .35, 1, 4);
+      if (bat && retry && Math.hypot(cp.x - bat.x, cp.z - bat.z) > 25) this.mission.checkpoint('accident', retry);
+    }
+    this.story.update();
+    // The technician is script-driven until he turns: ambient civilian logic (alarm, flee) must not move him.
+    if (tech?.civilian) { tech.civilian.state = 'calm'; tech.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
+    if (!l1.delivered) this.handover(tick, player);
+    else if (l1.phase === 'calm' || l1.phase === 'accident') this.accident(tick);
+    // Choreography changes ownership above. Update the rendered courier in the same tick as the clerk/technician.
+    if (player.survivor) {
+      if (l1.carrying) player.survivor.carrying = 'prop.package-courier';
+      else delete player.survivor.carrying;
+    }
+    if (l1.labExit?.walking?.length) this.labWalk(tick);
+    if (l1.runs.length) this.run(tick);
+    if (l1.graceUntil && tick >= l1.graceUntil) {
+      l1.graceUntil = 0;
+      for (const id of l1.exitIds) { const e = world.entities.get(id); if (e?.combat && e.infected) e.combat.damageMultiplier = 1; }
+    }
+    if (l1.phase === 'spread' && tick % 300 === 0 && l1.graceUntil === 0 && world.npcs?.civilians.outbreak?.stats.bites === 0) {
+      // Robust start: until the first bite, idle exit infected are re-sent to the nearest pedestrian wherever they are.
+      for (const id of l1.exitIds) { const e = world.entities.get(id), t = e && e.health.current > 0 ? this.pedestrianTarget(e.transform, 120) : null; if (t) world.infected!.rush(id, t, tick + 10 * TICKS); }
+    }
+    if (l1.phase === 'spread') { this.streets(tick); this.horde(tick, player); }
+    if (l1.phase === 'spread' && !l1.away) {
+      const lab = this.anchor('lab-gate');
+      if (Math.hypot(player.transform.x - lab.x, player.transform.z - lab.z) >= story.awayFromLabM) { l1.away = true; this.mission.setState('away', true); }
+    }
+  }
+
+  /** Beat 4: the technician comes out, takes the box and walks back in; then "Delivered". */
+  private handover(tick: number, player: EntitySnapshot): void {
+    const { world, state } = this.mission, l1 = this.l1, tech = world.entities.get(l1.techId);
+    if (!tech) return;
+    const spawn = this.anchor('lab-tech-spawn'), door = this.anchor('lab-exit-front');
+    if (l1.handoverAt === 0) {
+      const step = state.steps.deliver, a = this.anchor('lab-door');
+      const near = (player.transform.x - a.x) ** 2 + (player.transform.z - a.z) ** 2 <= a.radius ** 2;
+      if (step?.status === 'active' && l1.carrying && near && player.health.current > 0 && (world.inputFrame.interact || step.interaction >= TICKS)) {
+        const way = findDoorway(world, 'bld.clinic-annex', door), nav = world.infected?.nav, from = way?.door ?? door;
+        const dx = player.transform.x - from.x, dz = player.transform.z - from.z, d = Math.hypot(dx, dz) || 1;
+        l1.hx = player.transform.x - dx / d * story.standoffM; l1.hz = player.transform.z - dz / d * story.standoffM;
+        // PO 2026-10-08: out through the annex door (the view swings both leaves open), around props on the walk grid, back the same way.
+        l1.techRoute = way && nav ? [{ x: spawn.x, z: spawn.z }, ...doorRoute(nav, way, { x: l1.hx, z: l1.hz })] : [{ x: spawn.x, z: spawn.z }, { x: door.x, z: door.z }, { x: l1.hx, z: l1.hz }];
+        const meet = l1.techRoute[l1.techRoute.length - 1]; l1.hx = meet.x; l1.hz = meet.z;
+        // PO 10-22 ("the animation for the package handover at the labor was much better previously"): the annex door
+        // seal kept him hidden until 1.2 m outside the open door and hid him again right after he took the box.
+        if (way && nav) tech.doorLane = doorLaneOf(way, l1.techRoute.slice(1));
+        l1.handoverAt = tick; l1.phase = 'handover'; this.story.handoverStart(l1.techId, from);
+      } else { this.place(tech, spawn.x, spawn.z, a); return; }
+    }
+    const route = l1.techRoute ?? [{ x: spawn.x, z: spawn.z }, { x: door.x, z: door.z }, { x: l1.hx, z: l1.hz }], total = routeLength(route);
+    const walkS = total / story.techWalkMs, pauseS = story.takeBoxS;
+    // Any press during the beat fast-forwards to the moment the technician has the box.
+    if (this.story.skipping && (tick - l1.handoverAt) / TICKS < walkS + pauseS) l1.handoverAt = tick - Math.ceil((walkS + pauseS) * TICKS);
+    // The technician holds the signing pose until the line has been read.
+    if (!this.story.skipping && this.story.reading && tick - l1.handoverAt >= Math.ceil((walkS + pauseS) * TICKS) - 1) l1.handoverAt++;
+    const t = (tick - l1.handoverAt) / TICKS;
+    const point = (m: number) => routeAt(route, m);
+    let pos: { x: number; z: number };
+    if (t < walkS) { pos = point(t * story.techWalkMs); this.story.handoverPose(tech, 'out'); }
+    else if (t < walkS + pauseS) {
+      // Nervous glance, then he signs and takes the box (matched with the courier's hand-over).
+      pos = { x: l1.hx, z: l1.hz }; const into = t - walkS;
+      if (into < .6) { this.story.handoverPose(tech, 'glance'); if (tick === l1.handoverAt + Math.ceil(walkS * TICKS)) this.story.say(tech.id, 'handover.tech'); }
+      else { this.story.handoverPose(tech, 'sign', into >= 1.05); if (tick === l1.handoverAt + Math.ceil((walkS + .6) * TICKS)) world.player?.act('hand-over', tick); if (into >= 1.05) l1.carrying = false; }
+    }
+    else if (t < 2 * walkS + pauseS) { l1.carrying = false; this.story.handoverPose(tech, 'in'); pos = point(total - (t - walkS - pauseS) * story.techWalkMs); if (t - walkS - pauseS > .4) this.story.handoverEnd(undefined); }
+    else {
+      delete tech.doorLane; this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech); l1.techRoute = null;
+      l1.delivered = true; l1.deliveredAt = tick; l1.phase = 'calm'; l1.carrying = false;
+      // 4 to 6 s of nothing, then the accident: a fresh seeded stream, so a retry after death replays the same timing.
+      const rng = new Rng(world.seed, 'l1-story');
+      l1.flickerAt = tick + Math.round((l1v2.accident.calmS[0] + rng.next() * (l1v2.accident.calmS[1] - l1v2.accident.calmS[0])) * TICKS);
+      l1.exitAt = l1.flickerAt + Math.round((l1v2.accident.exitDelayS[0] + rng.next() * (l1v2.accident.exitDelayS[1] - l1v2.accident.exitDelayS[0])) * TICKS);
+      this.mission.setState('delivered', true);
+      this.mission.signal('l1.delivered');
+      this.mission.radio('L1.delivered');
+      return;
+    }
+    this.place(tech, pos.x, pos.z, { x: player.transform.x, z: player.transform.z });
+    if (t >= walkS && t < walkS + pauseS) this.face(tech, player.transform);
+  }
+
+  /** Beat 5: corgi warning, then flicker -> blast -> ringing -> smoke -> screams; the infected exit at 8 to 10 s. */
+  private accident(tick: number): void {
+    const l1 = this.l1;
+    const tech = this.mission.world.entities.get(l1.techId), spawn = this.anchor('lab-tech-spawn');
+    if (tech) this.place(tech, spawn.x, spawn.z, this.anchor('lab-door'));
+    if (tick < l1.flickerAt) return;
+    if (!l1.warned) { l1.warned = true; l1.phase = 'accident'; this.mission.signal('l1.corgi-warn'); }
+    for (; l1.fired < story.eventOrder.length; l1.fired++) {
+      const name = story.eventOrder[l1.fired];
+      if (tick < l1.flickerAt + Math.round(l1v2.accident.eventAtS[name.slice(3) as 'flicker'] * TICKS)) return;
+      this.emit(name);
+    }
+    if (tick >= l1.exitAt) { this.emit('l1.infectedExit'); this.release(tick); }
+  }
+  private emit(type: L1AccidentEventName): void {
+    if (type === 'l1.blast') this.blastPush();
+    // The annex front doors burst open with the screams; the staff run out of them at the exit beat.
+    if (type === 'l1.screams') { const l1 = this.l1, w = this.mission.world; l1.labExit ??= this.labDoor(); if (l1.labExit) w.openDoor(doorId(l1.labExit), { x: l1.labExit.x, z: l1.labExit.z, nx: l1.labExit.nx, nz: l1.labExit.nz }, w.tick); }
+    const a = this.anchor(story.anchors[type]);
+    this.mission.world.events.emit({ type, tick: this.mission.world.tick, anchor: story.anchors[type], position: { x: a.x, z: a.z } });
+  }
+
+  /** Beat 6: five infected through the exits, the technician (same entity) among them, in different directions. */
+  private release(tick: number): void {
+    const { world } = this.mission, l1 = this.l1, ai = world.infected;
+    l1.phase = 'spread'; l1.exitIds = []; l1.exitHeadingsDeg = [];
+    l1.labExit ??= this.labDoor();
+    if (ai) {
+      const rng = new Rng(world.seed, 'l1-exit');
+      for (const [i, [exit, heading]] of story.exits.entries()) {
+        const at = this.anchor(exit), rad = heading * Math.PI / 180;
+        const speed = l1v2.speedTiers.average.baseMs * (1 + (rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
+        // PO P1 10-08 ("they all come from the place where the package was delivered"): the staff come out of the annex
+        // front door after the technician, two abreast in a column (HouseEmergence), never appear at the exits.
+        const from = i === 0 || !l1.labExit ? at : { x: l1.labExit.ox, z: l1.labExit.oz };
+        const id = i === 0 ? this.infectTechnician(at) : l1.labExit ? this.staffOut(tick, i) : this.spawnInfected(at, story.variants[i]);
+        if (id === 0) continue;
+        l1.exitIds.push(id); l1.exitHeadingsDeg.push(heading);
+        // Out of one door the staff would all chase the same nearby pedestrians: three of them go for the courier, who used
+        // to be cut off by the window and side exits (difficulty: the newbie bot must still take hits).
+        const player = world.entities.get(1)!.transform, chase = l1.labExit && i !== 4;
+        const target = chase ? { x: player.x, z: player.z } : this.pedestrianTarget(from) ?? this.farPoint(from, rad);
+        const exiting = world.entities.get(id);
+        if (exiting?.combat) { exiting.combat.damageMultiplier = story.graceDamage; exiting.combat.staggerUntil = tick + Math.round(story.staggerS * TICKS); }
+        if (i === 0) {
+          // The technician is still inside: scripted indoor leg to the front door, then the real infected AI is rushed outward.
+          l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + 60 * TICKS, via: { x: at.x, z: at.z } });
+        } else if (l1.labExit) {
+          // Rushed when it reaches the street (labWalk), after a short disoriented beat.
+          l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + 60 * TICKS, rushAt: Number.MAX_SAFE_INTEGER });
+        } else {
+          const delay = Math.round((story.exitDelayS[exit] ?? 0) * TICKS);
+          if (delay === 0) ai.rush(id, target, tick + story.exitSearchS * TICKS);
+          else {
+            const brain = world.entities.get(id)?.infected?.l1; if (brain) brain.pauseUntil = tick + delay;
+            l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + delay + 60, rushAt: tick + delay });
+          }
+        }
+      }
+    }
+    l1.graceUntil = tick + story.graceS * TICKS;
+    world.combat?.setLoadout(['weapon.fists'], ['weapon.fists']);
+    this.mission.setState('exited', true);
+    this.mission.requestCheckpoint('accident');
+  }
+  /** The annex front door the staff come out of (the building data in src/data/buildingDoors.ts), with its way to the street. */
+  private labDoor(): L1State['labExit'] {
+    const { world } = this.mission, district = world.districts?.districts[0], front = this.anchor('lab-exit-front');
+    if (!district || !front) return null;
+    const door = layoutHouseDoors(district.layout, district.origin, undefined, id => id === 'bld.clinic-annex').sort((a, b) => Math.hypot(a.x - front.x, a.z - front.z) - Math.hypot(b.x - front.x, b.z - front.z))[0];
+    const exit = door && doorExit(world, door, front);
+    // Panicked staff burst out at a run right behind the technician (a stumble here let the courier walk away unharmed).
+    return door && exit ? { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], speedMs: l1v2.speedTiers.average.baseMs } : null;
+  }
+  /** Staff member `i` (1..4) of the accident: just inside the open annex doors, two abreast, running out. */
+  private staffOut(tick: number, i: number): number {
+    const exit = this.l1.labExit!, k = i - 1;
+    const id = emergeResident(this.mission.world, exit, tick, { inside: .5 + Math.floor(k / 2) * .75, lateral: k % 2 ? .42 : -.42,
+      look: { role: story.techRole, model: story.staffModels[k % story.staffModels.length], tint: story.staffTints[k % story.staffTints.length] } });
+    const walk = exit.walking?.find(entry => entry.id === id);
+    if (walk) {
+      // Hold the row inside until the technician clears the front-door plane.
+      walk.startAt = tick + 2 * TICKS;
+      if (i <= 2) {
+        walk.branchAt = .9; walk.route = this.labDepartureRoute(i);
+        // The original deadline covers only the porch. Include each added leg
+        // so ordinary pursuit cannot interrupt the physical departure fan.
+        let previous = { x: exit.x + exit.nx * walk.branchAt, z: exit.z + exit.nz * walk.branchAt };
+        for (const [x, z] of walk.route) {
+          walk.until += Math.ceil(Math.hypot(x - previous.x, z - previous.z) / exit.speedMs! * TICKS);
+          previous = { x, z };
+        }
+      }
+    }
+    return id;
+  }
+  /** Two staff clear the porch onto opposite, navigable sides before ordinary AI resumes. */
+  private labDepartureRoute(staffIndex: number): [number, number][] {
+    const exit = this.l1.labExit!, nav = this.mission.world.infected!.nav;
+    const outward = Math.atan2(exit.nz, exit.nx), from = { x: exit.x + exit.nx * 1.1, z: exit.z + exit.nz * 1.1 };
+    const point = (offset: number, distance: number): [number, number] | null => {
+      const angle = outward + offset, cell = nav.nearestCell(from.x + Math.cos(angle) * distance, from.z + Math.sin(angle) * distance, .35);
+      return cell >= 0 ? [nav.x(cell), nav.z(cell)] : null;
+    };
+    const first = point(staffIndex === 1 ? Math.PI / 3 : -Math.PI / 3, 2);
+    const second = point(staffIndex === 1 ? Math.PI * 4 / 9 : -Math.PI / 3, staffIndex === 1 ? 4 : 5);
+    if (first && second && nav.visible(from, { x: first[0], z: first[1] }, .35)
+      && nav.visible({ x: first[0], z: first[1] }, { x: second[0], z: second[1] }, .35)) return [first, second];
+    return exit.route;
+  }
+  /** Staff on their walk out of the annex door: at the street each gets a short disoriented beat, then rushes. */
+  private labWalk(tick: number): void {
+    const l1 = this.l1;
+    for (const id of walkResidents(this.mission.world, l1.labExit!, tick)) { const run = l1.runs.find(r => r.id === id); if (run) run.rushAt = tick; }
+  }
+  /** An exiting lab-staff member: a pedestrian turned at once (same pipeline as the technician), looks kept. */
+  private spawnInfected(at: { x: number; z: number }, variant: string): number {
+    const { world } = this.mission, ai = world.infected!, outbreak = world.npcs?.civilians.outbreak;
+    for (let r = 0; r <= story.exitSearchM; r += .5) for (let k = 0; k < 8; k++) {
+      const p = { x: at.x + Math.cos(k * Math.PI / 4) * r, z: at.z + Math.sin(k * Math.PI / 4) * r };
+      if (!ai.nav.clear(p.x, p.z, .45) || ai.active.some(o => o.health.current > 0 && Math.hypot(o.transform.x - p.x, o.transform.z - p.z) < .9)) continue;
+      if (!outbreak) return ai.spawn('infected.runner', p, { variant });
+      const id = outbreak.spawnPedestrian(p, { role: story.techRole, model: story.staffModels[(this.l1.exitIds.length - 1) % story.staffModels.length], tint: story.staffTints[(this.l1.exitIds.length - 1) % story.staffTints.length] });
+      outbreak.turnNow(world.entities.get(id)!);
+      return id;
+    }
+    return 0;
+  }
+  /** The technician turns as infected #1: same entity id and look (lane D `turnNow`). */
+  private infectTechnician(at: { x: number; z: number }): number {
+    const { world } = this.mission, l1 = this.l1, e = world.entities.get(l1.techId), outbreak = world.npcs?.civilians.outbreak;
+    if (!e || !outbreak) return this.spawnInfected(at, story.variants[0]);
+    const requested = { ...e.transform };
+    outbreak.turnNow(e, 'average');
+    Object.assign(e.transform, requested);
+    world.solids.admit(e, 'l1.technician.exit', 0, false);
+    // Held still until he reaches the door (scripted indoor leg), then the real AI is rushed outward.
+    const brain = e.infected?.l1; if (brain) brain.pauseUntil = world.tick + 60 * TICKS;
+    return e.id;
+  }
+
+  private pendingTurns(): number {
+    let n = 0; for (const e of this.mission.world.entities.iterate()) if (e.infection) n++; return n;
+  }
+
+  /** Small, fixed street groups (PO 10-10), using L3's off-screen population and wander leash.
+   * No respawn refill: ids remain in the mission state even after a resident is knocked down. */
+  private streets(tick: number): void {
+    const { world } = this.mission, ai = world.infected, outbreak = world.npcs?.civilians.outbreak;
+    if (!ai || !outbreak || tick % 3) return;
+    const p = world.entities.get(1)!.transform, bat = this.anchor('garage-bat'), lab = this.anchor('lab-door');
+    // Populate as the courier leaves the Annex toward the bat, so the streets are occupied before the final leg.
+    // A stationary forecourt/perimeter observer does not start the authored street population.
+    if (!this.l1.streetGroups && (Math.hypot(p.x - bat.x, p.z - bat.z) > 70 || Math.hypot(p.x - lab.x, p.z - lab.z) < 12)) return;
+    const groups = this.l1.streetGroups ??= l1v2.street.groups.map(([x, z]) => ({ x, z, ids: [] }));
+    ai.director.strict = true;
+    ai.director.reserved = this.l1.house?.house === '' ? 0 : Math.max(0, l1v2.house.count - (this.l1.house?.ids.length ?? 0));
+    for (const group of groups) {
+      if (group.ids.length >= l1v2.street.size) continue;
+      if (ai.director.count + this.pendingTurns() >= ai.director.cap - ai.director.reserved || !ai.pool.length) return;
+      const cell = ai.nav.nearestCell(group.x + (group.ids.length - 1) * 1.5, group.z, .45);
+      if (cell < 0) continue;
+      const at = { x: ai.nav.x(cell), z: ai.nav.z(cell) };
+      if (!ai.director.safe('infected.runner', at)) continue;
+      // Already-infected street residents have no carried prop to drop at population time.
+      const id = outbreak.spawnPedestrian(at, { handProp: null }), e = world.entities.get(id)!;
+      outbreak.turnNow(e);
+      if (e.infected?.l1) Object.assign(e.infected.l1, { homeX: group.x, homeZ: group.z, leashM: l1v2.street.leashM });
+      group.ids.push(id);
+      return; // One resident per three ticks, matching L3's street cadence.
+    }
+  }
+
+  /**
+   * Beat 9 (PO rule 2026-10-07, supersedes the section 5.9 top-ups): when the courier leaves the garage with the bat, the
+   * residents of ONE house near the garage come out one by one (1.5 to 4 s apart): the front door swings open and stays
+   * open, each resident stumbles out of the house over the threshold (HouseEmergence: spawned inside behind the door,
+   * never on the yard or the pavement) and joins the normal AI toward the courier at the doorstep. The PO 10-10 street
+   * groups supplement these residents along the escape routes.
+   */
+  private horde(tick: number, player: EntitySnapshot): void {
+    const { world, state } = this.mission, l1 = this.l1, outbreak = world.npcs?.civilians.outbreak, ai = world.infected, h = l1v2.house;
+    if (!outbreak || !ai || state.steps.weapon.status !== 'completed') return;
+    const p = player.transform;
+    if (!l1.house) {
+      const bat = this.anchor('garage-bat');
+      // "On leaving the garage": the courier steps out with the bat (or has been inside for 4 s).
+      if (Math.hypot(p.x - bat.x, p.z - bat.z) < l1v2.director.hordeLeaveGarageM && tick - state.steps.firestation.started < 4 * TICKS) return;
+      l1.house = this.houseDoor() ?? { door: 0, house: '', x: 0, z: 0, nx: 0, nz: 1, floor: [], sx: 0, sz: 0, route: [], ox: 0, oz: 0, next: 0, ids: [] };
+      l1.house.next = tick + Math.round(h.firstAfterS * TICKS);
+      return;
+    }
+    const house = l1.house;
+    if (!house.house) return;
+    // A checkpoint load keeps the door open (the world map is not part of the mission snapshot).
+    if (house.ids.length) world.openDoor(doorId(house), { x: house.x, z: house.z, nx: house.nx, nz: house.nz }, tick - 60);
+    for (const id of walkResidents(world, house, tick)) ai.rush(id, { x: p.x, z: p.z }, tick + story.exitSearchS * TICKS);
+    if (house.ids.length >= h.count || tick < house.next || !ai.pool.length || ai.director.count + this.pendingTurns() >= ai.director.cap) return;
+    const rng = new Rng(world.seed, `l1-house-${house.ids.length}`);
+    emergeResident(world, house, tick);
+    ai.director.reserved = Math.max(0, h.count - house.ids.length);
+    house.next = tick + Math.round((h.staggerS[0] + rng.next() * (h.staggerS[1] - h.staggerS[0])) * TICKS);
+  }
+
+  /**
+   * The house: the nearest house front door 6 to 25 m from the garage door that faces the game camera (which looks from
+   * +X +Z, so the door and every resident coming out of it are in view) and whose doorstep has a walkable route to the
+   * garage. Deterministic per layout.
+   */
+  private houseDoor(): L1State['house'] {
+    const { world } = this.mission, nav = world.infected?.nav, district = world.districts?.districts[0], garage = this.anchor('garage-door'), [min, max] = l1v2.house.doorM;
+    if (!nav || !district) return null;
+    const doors = layoutHouseDoors(district.layout, district.origin, this.mission.def.anchors, id => id.startsWith('bld.house-'))
+      .map(d => ({ ...d, d: Math.hypot(d.x - garage.x, d.z - garage.z) }))
+      .filter(d => d.d >= min && d.d <= max && d.nx + d.nz > 0)
+      .sort((a, b) => a.d - b.d || a.house.localeCompare(b.house));
+    for (const door of doors) {
+      const exit = doorExit(world, door, garage); if (!exit) continue;
+      return { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [] };
+    }
+    return null;
+  }
+  /** The nearest live pedestrian within 30 m of an exit: the first infected go for them before the player. */
+  private pedestrianTarget(at: { x: number; z: number }, maxM = 30): { x: number; z: number } | null {
+    let best: { x: number; z: number } | null = null, bestD = maxM;
+    for (const e of this.mission.world.entities.iterate()) {
+      if (!e.civilian?.l1 || e.hidden || e.infection || e.id === this.l1.techId || !['calm', 'alarmed', 'flee'].includes(e.civilian.state)) continue;
+      const d = Math.hypot(e.transform.x - at.x, e.transform.z - at.z); if (d < bestD) { bestD = d; best = { x: e.transform.x, z: e.transform.z }; }
+    }
+    return best;
+  }
+  /** Blast push along a clear direction (open ground, no prop or parked bicycle at the end), preferring away from the vent. */
+  private blastPush(): void {
+    const { world } = this.mission, player = world.entities.get(1)!, v = this.anchor('lab-smoke-vent'), nav = world.infected?.nav;
+    const dx = player.transform.x - v.x, dz = player.transform.z - v.z, d = Math.hypot(dx, dz);
+    if (!nav || d >= story.blastPushRangeM || d < .01) return;
+    const base = Math.atan2(dz, dx), p = player.transform;
+    for (const turn of [0, .5, -.5, 1, -1, 1.5, -1.5]) {
+      const a = base + turn, ux = Math.cos(a), uz = Math.sin(a);
+      for (let dist = story.blastPushM; dist >= 1.2; dist -= .8) {
+        const end = { x: p.x + ux * dist, z: p.z + uz * dist };
+        if (!nav.clear(end.x, end.z, .6) || !nav.visible(p, end, .5)) continue;
+        if ([...world.entities.iterate()].some(o => o.id !== 1 && (o.bicycle || o.interactable || o.hazard || o.destructible) && Math.hypot(o.transform.x - end.x, o.transform.z - end.z) < 1.6)) continue;
+        world.knockback(player, { x: ux, z: uz }, dist); return;
+      }
+    }
+  }
+  /** A point 32 m from the exit along a heading, snapped to clear ground. */
+  private farPoint(at: { x: number; z: number }, rad: number): { x: number; z: number } {
+    const nav = this.mission.world.infected!.nav, x = at.x + Math.cos(rad) * 32, z = at.z + Math.sin(rad) * 32, cell = nav.nearestCell(x, z);
+    return cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x, z };
+  }
+  /** Technician indoor leg only (interior is not walkable nav); at the door the infected AI takes over via `rush`. */
+  private run(tick: number): void {
+    const { world } = this.mission, l1 = this.l1, ai = world.infected!;
+    for (let i = l1.runs.length - 1; i >= 0; i--) {
+      const run = l1.runs[i], e = world.entities.get(run.id);
+      if (!e?.infected || e.health.current <= 0) { l1.runs.splice(i, 1); continue; }
+      if (!run.via) {
+        if (tick >= (run.rushAt ?? 0)) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); }
+        continue;
+      }
+      const vx = run.via.x - e.transform.x, vz = run.via.z - e.transform.z, d = Math.hypot(vx, vz);
+      // Several infected share one doorstep: within 1.2 m of it (body spacing) counts as out.
+      if (!e.pendingAdmission && (d < 1.2 || tick >= run.until)) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); continue; }
+      if (d < .01) { world.solids.admit(e, 'l1.technician.exit', 0, false); continue; }
+      e.transform.x += vx / d * run.speed / TICKS; e.transform.z += vz / d * run.speed / TICKS; e.transform.yaw = -Math.atan2(vz, vx);
+      world.spatial.set(e.id, e.transform.x, e.transform.z);
+      world.solids.admit(e, 'l1.technician.exit', 0, false);
+    }
+  }
+}

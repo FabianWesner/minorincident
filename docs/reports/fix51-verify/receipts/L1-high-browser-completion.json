@@ -1,0 +1,54 @@
+{
+  "sourceHash": "b4d22e8d9f13940a99b41edfbe0a066b3a19b3768881256eb0400f5d905c0879",
+  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "backend": "webgl",
+  "quality": "high",
+  "zoom": 1.5,
+  "levels": [
+    {
+      "level": "L1",
+      "tick": 8547,
+      "result": {
+        "time": 142.45,
+        "kills": 0,
+        "knockdowns": 10,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 2,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 49,
+        "turned": 9,
+        "escaped": 6
+      },
+      "steps": [
+        {
+          "id": "pickup",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "deliver",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "weapon",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "firestation",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "launchPolicy": "headless; macOS ANGLE/Metal; isolated profile; ephemeral non3300 preview port; no frame/CPU timing"
+}

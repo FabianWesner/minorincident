@@ -1,0 +1,63 @@
+{
+  "name": "e18-courier-armed-male",
+  "note": "Batch 7 P1: inspect the courier low skin at the game camera, standing with the bat and running with it; complete high/low and 0.5/1/1.5 zoom matrix on both backends.",
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 45,
+      "look": {
+        "gearTier": 2,
+        "model": "male"
+      },
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            5,
+            0
+          ],
+          [
+            -5,
+            0
+          ]
+        ],
+        "loop": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "shots": [
+    1,
+    45,
+    90,
+    135,
+    180
+  ],
+  "sheet": 5,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

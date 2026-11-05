@@ -1,0 +1,103 @@
+import type { PaletteToken } from '../data/palette';
+export const statuses = ['placeholder', 'reference', 'upscaled', 'scripted', 'modeled', 'integrated', 'final'] as const;
+export type AssetStatus = typeof statuses[number];
+export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
+/** Fit of one accessory family on one base rig: scale about the head node, then translate (glTF Y-up head-node space, base source metres). */
+export interface AccessoryFit { scale: [number, number, number]; offset: [number, number, number] }
+export interface AccessoryDef {
+  slot: 'hat' | 'hair';
+  attach: 'head';
+  /** Neutral material: the crowd tints it per instance (hair colours, hat colours). */
+  tint: 'hair' | 'hat';
+  /** Base assets whose head fits this piece; `hasHeadwear` bases already wear a hat or bun and need the base headwear hidden. */
+  fits: Record<string, AccessoryFit & { hasHeadwear?: boolean }>;
+}
+export interface AssetDef {
+  /** Welded crowd body on the production joints; selected directly without a query flag. */
+  crowdSkin?: boolean;
+  /** Opaque figure atlas; low-tier siblings use the .low.glb suffix. */
+  textureMode?: 'baseColor';
+  /** Optional lower-resolution atlas image for one shared textured-figure map. */
+  textureAtlasLow?: string;
+  /** Runtime leaf crowns in asset-local Y-up metres; layouts export these as foliage empties. */
+  foliage?: { colors: [string, string]; tokens?: [PaletteToken, PaletteToken]; crowns: { position: [number, number, number]; radius: [number, number, number] }[] };
+  /** E06 code icons and category-specific fallbacks use the same manifest/status gates. */
+  icon?: string;
+  /** Transparent ground decal image; no GLB or LOD is needed for its two-triangle quad. */
+  decalTexture?: string;
+  actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
+  id: string;
+  /** Alternate inventory ID sharing a canonical model and its node/LOD contract. */
+  aliasOf?: string;
+  /** Living skin: per-owner material batches and per-tier draws cannot exceed this shipped rig. */
+  rigidDrawBase?: string;
+  /** Living rigid skins must not exceed their shipped base's draws at any tier. */
+  rigDrawBase?: { id: string; member?: string };
+  /** Living adult skin: total owner/material draws must not exceed this shipped base per LOD. */
+  animatedDrawBase?: string;
+  /** Presentation supplied by images, UI or procedural effects rather than a GLB. */
+  nonModel?: 'ui' | 'ability' | 'procedural';
+  /** Implementation of a non-model presentation without a shipped image. */
+  presentationSource?: string;
+  /** District code placeholder palette and collision ownership. */
+  world?: { token: import("../data/palette").PaletteToken; solid: boolean };
+  category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui' | 'accessory';
+  /** Crowd accessory (hat or hair piece) parented to a base rig's head node; see assets/<id>/notes.md. */
+  accessory?: AccessoryDef;
+  status: AssetStatus;
+  tier: 'hero' | 'side' | 'distant';
+  script?: string;
+  glb: string;
+  /** Existing standalone exports are inspected without rebuilding their scripts. */
+  sourceGlb?: string;
+  /** Optional E18 mobile export (<id>.low.glb); otherwise low reuses declared lod1. */
+  lowGlb?: string;
+  lods?: { lod1?: string; lod2?: string };
+  /** Regenerate these tiers from LOD0 when supplied LODs violate size or density contracts. */
+  generatedLodRatios?: { lod1?: number; lod2?: number };
+  /** Reviewed authored tiers: preserve geometry/normals instead of delivery decimation. */
+  authoredLodRatios?: { lod1: number; lod2: number };
+  /** Reviewed distance variants: absolute caps; native vehicles/houses also have monotone file sizes. */
+  authoredLodTriangles?: { lod1: number; lod2: number };
+  /** Semantic pivots whose named source nodes remain in the LOD but whose tiny detail mesh is intentionally omitted. */
+  lodOptionalGeometryNodes?: string[];
+  dimensions: { x: number; y: number; z: number; tolerance: number };
+  forward: '+X';
+  /** Uniform metres conversion applied to the entire exported assembly once. */
+  sourceScale?: number;
+  /** Stronger lossless attribute compression for large scenery exports. */
+  compactMeshopt?: boolean;
+  /** Forward in the standalone export, when it has no front marker (glTF Y-up). */
+  sourceForward?: '+X' | '-X' | '+Z' | '-Z';
+  frontNodes: string[];
+  requiredNodes: string[];
+  animatedNodes: string[];
+  sockets: string[];
+  budget: { triangles: number; materials: number; fileKB: number; drawCalls: number };
+  /** One-line reason for a per-asset budget override above the standard caps. */
+  budgetNote?: string;
+  /** LOD0 cap for authored decay exports; base hero meshes retain their own budget. */
+  decayTriangleBudget?: number;
+  /** Stricter delivery limits for damage siblings; unset fields inherit the integrated base budget. */
+  decayBudget?: Partial<AssetDef["budget"]>;
+  /** Ruin variants may be shorter (collapsed tower/cupola); footprint axes stay on the base value. */
+  decayDimensions?: Partial<{ x: number; y: number; z: number }>;
+  /** Limits for a particular damage recipe; other shipped variants keep their budgets. */
+  decayBudgets?: Record<string, Partial<AssetDef["budget"]>>;
+  decayAuthoredLodTriangles?: { lod1: number; lod2: number };
+  /** A variant that removes parts (the unarmed APC has no turret/gun/muzzle) declares its own node contract. */
+  decayNodes?: Record<string, Partial<Pick<AssetDef, "requiredNodes" | "animatedNodes" | "sockets">>>;
+  decayVariants: string[];
+}
+export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {
+  return statuses.indexOf(status) >= statuses.indexOf(minimum);
+}
+/** Variants use the same node contract and LOD suffixes as the base asset. */
+export function variantPath(path: string, decay?: string): string {
+  return decay ? path.replace(/(\.lod[12])?\.glb$/, `.${decay}$1.glb`) : path;
+}
+
+/** Compare a derivative with the current shipped tier of its declared base. */
+export function drawComparisonPath(base: AssetDef, lod: number): string | undefined {
+  return lod === 0 ? base.glb : base.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+}

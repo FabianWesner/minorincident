@@ -1,0 +1,2313 @@
+{
+  "name": "l7-district-horde-high",
+  "note": "Authored plaza pair camera, production collision-safe horde positions and persistent W6 fires; inspect before/after rocket impulse, foot support and smoke readability.",
+  "seed": 29,
+  "tier": 6,
+  "time": "L6",
+  "ground": "district",
+  "dof": false,
+  "infectedCap": 200,
+  "layout": {
+    "level": "L7",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -77,
+        -57
+      ],
+      [
+        43,
+        63
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "pose",
+    "position": [
+      3,
+      24,
+      23
+    ],
+    "target": [
+      -17,
+      0,
+      3
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -19,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "runner-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-4",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-5",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-6",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-7",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-8",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-9",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-10",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-11",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-12",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-13",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-14",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-15",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-16",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-17",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-18",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-19",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-20",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-21",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-22",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-23",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-24",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-25",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-26",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-27",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-28",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-29",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-30",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-31",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-32",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-33",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-34",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-35",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-36",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-37",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-38",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-39",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-40",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-41",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-42",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-43",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-44",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-45",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-46",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-47",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-48",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-49",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-50",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-51",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-52",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-53",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-54",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-55",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-56",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-57",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-58",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-59",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-60",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-61",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-62",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-63",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-64",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-65",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-66",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-67",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-68",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-69",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-70",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-71",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-72",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-73",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-74",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-75",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-76",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-77",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-78",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-79",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-80",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-81",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-82",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-83",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-84",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-85",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-86",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-87",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        22.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-88",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        22.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-89",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        22.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-90",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        22.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-91",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        22.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-92",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        25
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-93",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        25
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-94",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        25
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-95",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        25
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-96",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        25
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-97",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        27.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-98",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        27.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-99",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        27.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-100",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        27.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-101",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        27.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-102",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-103",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-104",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-105",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-106",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-107",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        30
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-108",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-109",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-110",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-111",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-112",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-113",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-114",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        32.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-115",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-116",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-117",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-118",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-119",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-120",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-121",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-122",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-123",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-124",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-125",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-126",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-127",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-128",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-129",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-130",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-131",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-132",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-133",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-134",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-135",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-136",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-137",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-138",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-139",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-140",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-141",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-142",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-143",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-144",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-145",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-146",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-147",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-148",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-149",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-150",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-151",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-152",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-153",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-154",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        -2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-155",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-156",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-157",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-158",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-159",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-160",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -4,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-161",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-162",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-163",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-164",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-165",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        2.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-166",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-167",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-168",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-169",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-170",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-171",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-172",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-173",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-174",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -14,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-175",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9,
+        7.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-176",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-177",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-178",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-179",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-180",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        10
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-181",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-182",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-183",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-184",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-185",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-186",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        12.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-187",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -31.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-188",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -26.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-189",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-190",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-191",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-192",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        15
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-193",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-194",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-195",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -6.5,
+        17.5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-196",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -34,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-197",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -29,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-198",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24,
+        20
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "runner-199",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -11.5,
+        20
+      ],
+      "state": "chase"
+    }
+  ],
+  "frames": 66,
+  "shots": [
+    0,
+    66
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -20,
+          24.6
+        ],
+        "radius": 1.2,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          12.2,
+          -12
+        ],
+        "radius": 1.4,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -12.4,
+          8
+        ],
+        "radius": 1.2,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -12.4,
+          -10
+        ],
+        "radius": 1.2,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -6,
+          44.4
+        ],
+        "radius": 1.0,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          15.8,
+          12.6
+        ],
+        "radius": 1.0,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          30,
+          -43.4
+        ],
+        "radius": 1.0,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -58.4,
+          22
+        ],
+        "radius": 1.0,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -47,
+          -29
+        ],
+        "radius": 1.6,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          23.9,
+          -8.5
+        ],
+        "radius": 1.6,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          40,
+          12.2
+        ],
+        "radius": 1.6,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -68,
+          -1.2
+        ],
+        "radius": 1.6,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -31.9,
+          -51
+        ],
+        "radius": 1.6,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          271,
+          23
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          247,
+          4
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          211,
+          27
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          173,
+          3
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          135,
+          27
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          95,
+          5
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          -34,
+          -19
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          5,
+          14
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          57,
+          -26
+        ],
+        "radius": 1.8,
+        "duration": 7200
+      }
+    },
+    {
+      "frame": 45,
+      "effect": {
+        "blast": "explosion.rocket",
+        "at": [
+          -26,
+          -4
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+ "name": "ped-zoo-staff",
+ "note": "L8 zoo staff (src/data/zooStaff.ts) beside ordinary visitors at the game camera, golden light. Look for: staff uniform green clearly distinct from the visitors' shirts, cap/backpack/prop attached, no sunk feet or clipping, same silhouettes as the civilian bases.",
+ "seed": 8,
+ "ground": "sidewalk",
+ "size": 24,
+ "time": "L4",
+ "actors": [
+  { "id": "visitor-a", "kind": "pedestrian", "at": [-5, 0], "yaw": 0, "look": { "model": "npc.civilian-man-a", "tint": "#3178ac", "accessories": [], "handProp": "coffee" }, "state": "idle" },
+  { "id": "visitor-b", "kind": "pedestrian", "at": [-5, 2], "yaw": 0, "look": { "model": "npc.civilian-woman-b", "tint": "#e5d9b9", "accessories": ["glasses"], "handProp": "phone" }, "state": "idle" },
+  { "id": "visitor-c", "kind": "pedestrian", "at": [-5, -2], "yaw": 0, "look": { "model": "npc.civilian-man-b", "tint": "#c4473d", "accessories": ["scarf"], "handProp": null }, "state": "idle" },
+  { "id": "keeper", "kind": "pedestrian", "at": [0, 0], "yaw": 0, "look": { "model": "npc.civilian-man-a", "tint": "#2f7a4f", "accessories": ["cap"], "handProp": "bag" }, "state": "idle" },
+  { "id": "vet", "kind": "pedestrian", "at": [0, 2], "yaw": 0, "look": { "model": "npc.civilian-woman-b", "tint": "#276b5a", "accessories": ["cap", "backpack"], "handProp": "bag" }, "state": "idle" },
+  { "id": "grounds", "kind": "pedestrian", "at": [0, -2], "yaw": 0, "look": { "model": "npc.civilian-man-b", "tint": "#2f7a4f", "accessories": ["cap"], "handProp": "watering-can" }, "state": "idle" }
+ ],
+ "camera": { "mode": "close", "target": [-2.5, 0.9, 0], "radius": 15, "azimuth": 100 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "clippingMax": 0 }
+}

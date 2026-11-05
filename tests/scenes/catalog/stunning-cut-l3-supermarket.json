@@ -1,0 +1,24 @@
+{
+ "name": "stunning-cut-l3-supermarket",
+ "note": "QA #50 (L3 tick 5418, -91.07,6.7, supermarket): \"when the roof lens cut removes a large roof, the building reads as a black hollow box with a lit rim.\" The opened building must read as an interior (floor and a dim warm fill), with the courier readable in the cut.",
+ "seed": 1,
+ "time": "L3",
+ "ground": "district",
+ "layout": { "level": "L3", "district": "D-CORRIDOR", "bbox": [[-121, -24], [-61, 36]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-91.07, 6.7], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "frames": 60,
+ "sheet": 30,
+ "shots": [59],
+ "expect": {
+  "consoleErrors": 0,
+  "courierVisibleShareMin": 0.6,
+  "seeThroughCutInsideMin": 500,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000
+ }
+}

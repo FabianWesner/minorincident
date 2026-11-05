@@ -1,0 +1,57 @@
+{
+  "row": "L10-03",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "17dab51b92fc7db2e9a7f2da6e705c6073626ecb",
+  "clauses": [
+    {
+      "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
+      "verdict": "FAIL",
+      "note": "Fresh current-source low/high competent and stationary native ledgers reproduce research-campus concurrent dog peak5 against unchanged2\u20134 bound. This is a measuredFAIL, not historical inference. All four native runs retained; complete routes finish; stationary outcomes are explicitly tick-budget and do not establish route completion. Species/group/pickup clauses retain their existing checks and any unmeasured scope; a current counterexample suffices for FAIL. No population, target, timer or cap was changed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
+      "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
+      "what": "Immutable current native L10-low-complete.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-stationary.json.gz",
+      "sha256": "134ee0496eccea97b2d6bf95b30b161029ce370dec68a248aae9886643486265",
+      "what": "Immutable current native L10-low-stationary.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-fixtures.json.gz",
+      "sha256": "c7b4f2f71c32f2fc0b166f62cff7d101d00d672783e608b474b46e94cefe17f5",
+      "what": "Immutable current native L10-low-fixtures.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-checkpoints.json.gz",
+      "sha256": "c581bd29e13fa617b72bb00899efa0a58c9f4fbf2044d2418b4267e1dbba4c20",
+      "what": "Immutable current native L10-low-checkpoints.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+      "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
+      "what": "Immutable current native L10-high-complete.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-stationary.json.gz",
+      "sha256": "032518be2f558199988e1770e1bf55fed8db5fc15cae156e16cc3e752a233e23",
+      "what": "Immutable current native L10-high-stationary.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-fixtures.json.gz",
+      "sha256": "a523956f29593e063c2465c28fb2388ef3ec0c6c54a4c0815807d878782025bd",
+      "what": "Immutable current native L10-high-fixtures.json; exact region census and source/observer hashes retained, no visual claim."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-checkpoints.json.gz",
+      "sha256": "0b6c516821d047785d37007ff66fbbb5e97aa32847fd7d016f778ab741c6aa5b",
+      "what": "Immutable current native L10-high-checkpoints.json; exact region census and source/observer hashes retained, no visual claim."
+    }
+  ],
+  "notes": "Current5-dog counterexample retained; game change not small/established within sweep. No criterion/checker change."
+}

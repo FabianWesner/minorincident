@@ -1,0 +1,25 @@
+{
+  "extends": "pileup-game.json",
+  "name": "pileup-escape-game",
+  "frames": 600,
+  "shots": [
+    420,
+    510,
+    600
+  ],
+  "trace": true,
+  "script": [
+    {
+      "frame": 421,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            5,
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}

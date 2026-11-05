@@ -1,0 +1,41 @@
+/** One <=8min physical L10 batch, resuming an actual production save; never skip an objective. */
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,mkdirSync,rmSync} from 'node:fs';
+import {resolve,dirname} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {SAVE_KEY,validateSave} from '../../src/sim/progression/Save.ts';
+const [backend,tier,indexText]=process.argv.slice(2),index=Number(indexText);
+assert(['webgpu','webgl2'].includes(backend)&&['low','high'].includes(tier)&&Number.isInteger(index)&&index>0);
+const suffix=backend==='webgl2'?'':`-webgpu-z1.5`,cell=`L10-${tier}${suffix}`;
+const origin='http://127.0.0.1:4901',out=`test-results/fix51-r4/l10-batches/${backend}-${tier}/${index}`;
+const previous=index===1?`test-results/fix51-browser/${cell}/accept-completion.json`:`test-results/fix51-r4/l10-batches/${backend}-${tier}/${index-1}/batch-completion.json`;
+const save=JSON.parse(readFileSync(previous,'utf8')).campaign;
+assert(validateSave(save),'only an actual valid production save may seed Resume');assert(save.cureResume,'unfinished L10 must have a live Resume snapshot');
+mkdirSync(out,{recursive:true});const profile=resolve(out,'profile');mkdirSync(profile,{recursive:true});
+writeFileSync(`${profile}/pool-storage.json`,JSON.stringify({cookies:[],origins:[{origin,localStorage:[{name:SAVE_KEY,value:JSON.stringify(save)}]}]}));
+// The original input driver is unchanged. The only injected action at its
+// sample boundary is a normal paused Settings selection, which saves live L10.
+const inputPath=resolve('tools/playtest/session.ts'),source=readFileSync(inputPath,'utf8');
+let code=source.replace(/from '(\.[^']+)'/g,(_all,path)=>`from '${resolve(dirname(inputPath),path)}'`);
+const needle='      log({ checkpointYield: e.checkpoint, level: e.level, tick: e.tick, finished: run.finished });';
+assert(code.includes(needle));
+code=code.replace(needle,`      await page.keyboard.press('Escape');
+      await page.getByTestId('pause-settings').click();
+      await page.getByTestId('setting-quality').selectOption(o.quality);
+      await page.getByTestId('settings-back').click();
+      log({ productionResumeSave: await page.evaluate(() => JSON.parse(localStorage.getItem('minor-incident.campaign') ?? '{}').cureResume?.current?.tick) });
+${needle}`);
+const script=resolve(out,'session.ts');writeFileSync(script,code);
+const options={origin,out:resolve(out),levels:['L10'],quality:tier,zoom:1.5,heroine:'female',entry:'continue',profile,levelMinutes:9,sampleSeconds:480,stopAfterLevel:true,tag:'batch',noSkip:true};
+const result=spawnSync('sh',['tools/e2e-lock.sh',process.execPath,'--import','tsx/esm',script,JSON.stringify(options)],{stdio:'inherit',timeout:725000,env:{...process.env,E2E_UNITS:'1',BROWSER_POOL_WAIT_MS:'120000',PLAYTEST_GOD:'1',PLAYTEST_BACKEND:backend,PLAYTEST_NO_FRAME_TIMING:'1',PLAYTEST_FRAME_GATE:'0',PLAYTEST_CPU_PROFILE:'0'}});
+rmSync(`${out}/captures`,{recursive:true,force:true});rmSync(profile,{recursive:true,force:true});
+assert.equal(result.status,0,`batch process failed (${result.signal??result.error??result.status})`);
+const completion=JSON.parse(readFileSync(`${out}/batch-completion.json`,'utf8')),runs=JSON.parse(readFileSync(`${out}/runs-batch.json`,'utf8')),issues=JSON.parse(readFileSync(`${out}/issues-batch.json`,'utf8'));
+assert.equal(completion.backend,backend==='webgl2'?'webgl':'webgpu');assert.equal(completion.quality,tier);assert.equal(completion.camera.zoom,1.5);
+assert(runs.length===1&&runs[0].level==='L10'&&!runs[0].skipped.length);
+const startTick=save.cureResume.current.tick,endTick=completion.campaign.cureResume?.current?.tick;
+const startSeconds=save.cureResume.current.state.stats.time,endSeconds=completion.campaign.cureResume?.current?.state.stats.time??completion.mission?.stats.time;
+if(!runs[0].finished){assert(validateSave(completion.campaign));assert(endSeconds>startSeconds,'cumulative mission time must advance; production Resume rebases local ticks');}
+const metadata={version:2,backend,tier,index,startTick,endTick,startSeconds,endSeconds,resumeStartSha256:createHash('sha256').update(JSON.stringify(save.cureResume.current)).digest('hex'),finished:runs[0].finished,run:runs[0],issues,inputDriverSha256:createHash('sha256').update(source).digest('hex'),batchRunnerSha256:createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),injectedDriverSha256:createHash('sha256').update(code).digest('hex'),method:'Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.'};
+writeFileSync(`${out}/batch.json`,JSON.stringify(metadata,null,2)+'\n');console.log(JSON.stringify({backend,tier,index,startTick,endTick,finished:metadata.finished,issues:issues.length}));

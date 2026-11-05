@@ -1,0 +1,57 @@
+{
+  "row": "L3-15",
+  "status": "PASS",
+  "reviewer": "Codex fix62-a",
+  "date": "2026-11-05",
+  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "clauses": [
+    {
+      "clause": "Player visible inside the 80-infected horde (silhouette/outline).",
+      "verdict": "PASS",
+      "note": "Personally inspected all6 final captures: native stationary handgun route has84/175 living drawn infected roots in camera; courier head/red-blue torso/pack/legs remain identifiable in a clear central strip. Native yard framing locks at actualzoom1 and is explicitly not claimed as zoom extremes. Independent explicit80-infected fixture at actualzoom0.5/1.5 in both tiers shows the whole courier above overlapping bodies; same-frame ID-mask visible/reference share1.0 in all4 cells. Gold contour is uniform-switched and crossing bars move above her body; no infected count or bar count reduction. Corrected native presentation clock205.75s prevents the paused harness's frozen muzzle flash from polluting evidence."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix62-a/L3-15-native.json.gz",
+      "sha256": "39a9da2efcf5116d40644b13401b7fd2b1db711c4dac3890db0714db85efbc40",
+      "what": "Personally reviewed current production material/health-bar visibility at84/175 native living drawn infected, plus actual unlocked0.5/1.5 explicit80-infected cells and independent same-frame pixel coverage."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-15-zoom.json.gz",
+      "sha256": "a20dad7cae6644a30a84e1aeae39fa8ba14c55617ce6c0381a96ff3f760f4d6c",
+      "what": "Personally reviewed current production material/health-bar visibility at84/175 native living drawn infected, plus actual unlocked0.5/1.5 explicit80-infected cells and independent same-frame pixel coverage."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-15-image-review.json",
+      "sha256": "f366e68c39d26df2d25133ee7e72e64155cdc89c9f6ae8d119f107410b1da478",
+      "what": "Personally reviewed current production material/health-bar visibility at84/175 native living drawn infected, plus actual unlocked0.5/1.5 explicit80-infected cells and independent same-frame pixel coverage."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/horde-01.jpg",
+      "sha256": "6f4db88e7bb199a8fc82f46db403d854940ee7fd1b9f58f66b520e12cbb2386f",
+      "what": "Personally reviewed current production material/health-bar visibility at84/175 native living drawn infected, plus actual unlocked0.5/1.5 explicit80-infected cells and independent same-frame pixel coverage."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/horde-02.jpg",
+      "sha256": "21c3bffc37bdae0a43a1a5f1b2606659d2b0b7d9e3704da220f67135fac89856",
+      "what": "Personally reviewed current production material/health-bar visibility at84/175 native living drawn infected, plus actual unlocked0.5/1.5 explicit80-infected cells and independent same-frame pixel coverage."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-15-final-browser.json.gz",
+      "sha256": "2084c44c3e6e241007b69af719516d0cc6fe9054aad94fd856a846fc4e4abf29",
+      "what": "Courier head, red-blue torso and shoes remain identifiable at both requested actual zoom limits in80living-infected fixture; share1.0, all bars retained."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-15-final-image-review.json",
+      "sha256": "85459767ee58095026f9ae87e80ed2b40cb977b6ea731718e57c994e5a7d448e",
+      "what": "Courier head, red-blue torso and shoes remain identifiable at both requested actual zoom limits in80living-infected fixture; share1.0, all bars retained."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/horde-final-final-0.jpg",
+      "sha256": "34a1bd367515117a7ee0b61fd4d556bfcb57e061848039fdb14f2cd68050d7af",
+      "what": "Courier head, red-blue torso and shoes remain identifiable at both requested actual zoom limits in80living-infected fixture; share1.0, all bars retained."
+    }
+  ],
+  "notes": "Closes the horde readability defect. Native game input and controlled80-infected fixture are labelled separately; survival protection is only for presentation. Frozen-clock attempt retained under rejected/ and excluded. Final-source refresh on ba261cb1a: both tiers and actualzoom0.5/1.5 personally re-reviewed."
+}

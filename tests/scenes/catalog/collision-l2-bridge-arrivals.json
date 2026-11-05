@@ -1,0 +1,10 @@
+{
+  "extends": "collision-l2-release.json",
+  "name": "collision-l2-bridge-arrivals",
+  "note": "Production L2 quota after 20 seconds of rescue bites/conversions, followed by admitted fixture placement on the bridge approach. The low tier reserves the authored cluster and first two street beats within the unchanged 30-infected cap. Inspect the approaching horde, officers firing from the line and separate feet at the gate. Only fixture setup moves the courier; the controller, AI and attacks are production systems.",
+  "l2Release": "bridge",
+  "actors": [{ "id": "courier", "kind": "courier", "at": [69, 38], "state": "idle" }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "frames": 720,
+  "sheet": 45
+}

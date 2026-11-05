@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "lib": ["ES2022"], "types": [] },
+  "include": ["src/sim", "src/core", "src/physics", "src/levels", "tests/fixtures/scenarios"],
+  "exclude": ["src/core/Ticker.ts"]
+}

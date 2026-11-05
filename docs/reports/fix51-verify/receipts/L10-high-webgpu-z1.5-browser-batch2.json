@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "59a2d216f038424dafe59e3db72946a228c8cbbb81a8dd37f39d9c73c00d6364",
+  "fixtureHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "browserHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgpu",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser-batch2.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 378,
+      "simSeconds": 373,
+      "maxNoProgressSeconds": 90.028,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "steps": [
+        {
+          "id": "research-campus",
+          "text": "Reach the research campus · 234 m",
+          "tick": 2,
+          "marker": {
+            "anchor": "cure-research-entry",
+            "ring": {
+              "x": 2467,
+              "y": 0,
+              "z": -5
+            },
+            "drawn": [
+              2467,
+              0,
+              -5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L10",
+      "tick": 4147,
+      "x": 2240.8,
+      "z": -46.5,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 230.0 m, no marker: false); HUD: \"Reach the research campus · 230 m\"",
+      "captures": [
+        "captures/accept-L10-4147-stuck-navigating.jpg"
+      ],
+      "step": "research-campus",
+      "objective": "Reach the research campus · 230 m"
+    },
+    {
+      "level": "L10",
+      "tick": 22371,
+      "x": 2243.7,
+      "z": -46.1,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "No visible progress for 90.0 s; stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L10-22371-cannot-finish.jpg"
+      ],
+      "step": "research-campus",
+      "objective": "Reach the research campus · 227 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5,
+  "batch": {
+    "index": 2,
+    "yielded": false,
+    "startSaveHash": "13808dfb72264e3996d2c0234c6b24e84827fd6d24ad67ef02594a756c2f476e",
+    "endSaveHash": null,
+    "startSeconds": 475.28333333333336,
+    "endSeconds": 475.28333333333336,
+    "savePath": null
+  },
+  "observations": {
+    "runtime": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1.5
+    },
+    "productionResume": true
+  }
+}

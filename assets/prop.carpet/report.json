@@ -1,0 +1,65 @@
+{
+  "id": "prop.carpet",
+  "triangles": {
+    "lod0": 10828,
+    "lod1": 1204,
+    "lod2": 262
+  },
+  "dimensions_blender": [
+    0.8680000305175781,
+    1.1751198768615723,
+    0.5060000419616699
+  ],
+  "draw_calls": 6,
+  "materials": [
+    "pal_redDark",
+    "pal_canvasTan",
+    "pal_brass",
+    "pal_cardiganRose"
+  ],
+  "nodes": [
+    "root",
+    "rolledCarpet",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 168364,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 30800,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 16980,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11119320280753602,
+    "lod2": 0.024196527521241226
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.carpet",
+    "geometry_hash": "ff20f674c1620175fba78498126aa34638d50f4dab795227568e5277bbe85ef8",
+    "second_geometry_hash": "ff20f674c1620175fba78498126aa34638d50f4dab795227568e5277bbe85ef8",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

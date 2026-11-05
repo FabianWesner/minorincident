@@ -1,0 +1,53 @@
+{
+  "id": "prop.lab-signs",
+  "tier": "side",
+  "triangles": {
+    "lod0": 8958,
+    "lod1": 8916,
+    "lod2": 8916
+  },
+  "draw_calls": 19,
+  "materials": [
+    "pal_denim",
+    "pal_foliageLight",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_silver",
+    "pal_survivorRed",
+    "pal_uiDark"
+  ],
+  "dimensions_blender": [
+    0.2960944175720215,
+    4.052500009536743,
+    1.2674999237060547
+  ],
+  "bbox_blender": {
+    "min": [
+      -0.14804720878601074,
+      -2.026250123977661,
+      0.0
+    ],
+    "max": [
+      0.14804720878601074,
+      2.026249885559082,
+      1.2674999237060547
+    ]
+  },
+  "nodes": [
+    "root",
+    "sign_authorized",
+    "col:authorized",
+    "sign_nobike",
+    "col:nobike",
+    "sign_hazard",
+    "col:hazard",
+    "sign_deliveries",
+    "col:deliveries",
+    "keypad",
+    "col:keypad",
+    "front"
+  ],
+  "baked_ao": true,
+  "backface_culling": true,
+  "render_engine": "Eevee"
+}

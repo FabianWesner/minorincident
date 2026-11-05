@@ -1,0 +1,64 @@
+{
+ "name": "world-fill-l10-r2-fringe",
+ "note": "world-fill (PO #34): R2 residential fringe: hedges / garden walls / privacy fences past the sidewalk, bins, parked cars, front-yard trees, house roofs. Look for roadside mass in every frame within ~4-12 m of the road edge (no flat dark plane), nothing on the lane, no floating or sunk props, no clipping, no flicker.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    1015,
+    -45
+   ],
+   [
+    1215,
+    95
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.0
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1095,
+    25
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      1135,
+      25
+     ]
+    ]
+   }
+  }
+ ]
+}

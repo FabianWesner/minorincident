@@ -1,0 +1,18 @@
+{
+ "name": "l8-tunnel-outlet",
+ "note": "L8 service-tunnel outlet 3 (kit.zoo-tunnel-mouth:419, north loop, door facing the camera side) at the game camera, night sanctuary light: the game's own HouseEmergence door contract. Closed steel double door on a masonry bunker; at frame 30 the leaves swing open and six infected walk out of the dark vestibule over the sill and across the paved apron onto the path, then chase the courier. Look for: nobody visible before the doors open (no pop-in), doors fully open and not clipping the apron, infected first drawn behind the door plane (emergeOutsideMax 0), feet on the apron, facing along their walk, no clipping with the wall or lamp.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "layout": { "district": "D-ZOO", "bbox": [[-50, -86], [-10, -52]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-30, -57], "yaw": 90, "loadout": ["weapon.bat", "weapon.fists"] }
+ ],
+ "emerge": { "house": "kit.zoo-tunnel-mouth:419", "count": 6, "staggerS": 0.4, "frame": 30 },
+ "camera": { "mode": "game", "target": [-30, -66] },
+ "frames": 420,
+ "shots": [0, 28, 45, 70, 110, 170, 260, 416],
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "emergeOutsideMax": 0, "doorClosedFramesMax": 0, "farLodCloseMax": 0 }
+}

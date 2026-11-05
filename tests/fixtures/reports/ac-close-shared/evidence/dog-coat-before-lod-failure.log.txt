@@ -1,0 +1,16 @@
+[scene] starting vite preview on http://127.0.0.1:4052
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [[{"key":"inf.dog:lod2","lod":"lod2"}],[{"key":"inf.dog.black:lod2","lod":"lod2"}],[{"key":"inf.dog.cream:lod2","lod":"lod2"}]]
+    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/dog-coat-capture.ts:31:10) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.0.0

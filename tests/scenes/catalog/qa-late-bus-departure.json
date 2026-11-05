@@ -1,0 +1,12 @@
+{
+  "extends": "../l7-departure/departure.json",
+  "name": "qa-late-bus-departure",
+  "note": "E29-AC15: physical boarding and departure with the production scripted bus engine events. Sim regression asserts positional cab audio and one stop before handover; inspect the real departure camera and wheel contact on both tiers/backends/zooms.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "footSinkMaxCm": 0
+  }
+}

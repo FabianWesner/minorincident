@@ -1,0 +1,34 @@
+{
+  "slug": "light-tower",
+  "iterations": 2,
+  "triangles": 1460,
+  "meshes": 13,
+  "materials": [
+    "pal_schoolBusYellow",
+    "pal_uiDark",
+    "pal_sidewalk",
+    "pal_picketWhite",
+    "emi_windowGlow"
+  ],
+  "glb_bytes": 90416,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "yellow generator box",
+    "four chunky wheels",
+    "tall telescoping mast",
+    "twin glowing rectangular floodlights",
+    "broad side grille",
+    "rear carry handle"
+  ],
+  "dropped_details": [
+    "bolts and hinges",
+    "tire tread and lug nuts",
+    "fine panel seams",
+    "small controls and gauges",
+    "cables",
+    "lettering"
+  ],
+  "notes": "Two iterations produced a readable toy silhouette using existing palette tokens, joined static materials and separate wheel pivots; both Three.js backends passed without errors."
+}

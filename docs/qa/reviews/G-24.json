@@ -1,0 +1,62 @@
+{
+  "row": "G-24",
+  "status": "PASS",
+  "reviewer": "fix51-r10g/Sol",
+  "date": "2026-11-03",
+  "commit": "ce8180065be67df55824915d9edb53fc1b68162d",
+  "clauses": [
+    {
+      "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or \u2264 15 m); dead ones show none; normal animals none.",
+      "verdict": "PASS",
+      "note": "I inspected all20 full-size native Metal captures. Alpha, lion, gorilla, elephant, zebra and flamingo show six full bars nearby, no bars while far/full-health, and six half bars while far/damaged. Native lethal damage leaves all six at0HP with no bar during falling corpse poses. All five healthy zoo species show none. Pixel fills are512/full and256/half; the actual far-healthy frames have0 red pixels in each former bar region."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-r10g/G-24-review.json",
+      "sha256": "f7f8cd1f5dd6f617b9032299feb0041d35ff6a2c7aafa328bf8e51773be4a69c",
+      "what": "All20 full-size captures inspected. Every species/state/backend/quality matches the criterion; previous near-bar pixel regions reject the actual far-healthy missing bars as a negative control."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgl2-low.json",
+      "sha256": "89a840a397a5efa817e3910a47bd8786e982124e3c2c149729e320edf62dee2f",
+      "what": "webgl2/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgl2-low.jpg",
+      "sha256": "4269c1799f535ce559ef156e09c9155c785b87cd7ef09ca1b5b63294a08b31ef",
+      "what": "webgl2/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgl2-high.json",
+      "sha256": "7049a0f5cdd39824d90e7e482a1969ab45b179ba2fa04cce4a3678bf0b40a4a2",
+      "what": "webgl2/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgl2-high.jpg",
+      "sha256": "8f667665ac580bfcb5cf935b4f1653cde4cde1760166c4c9f42523830b7935fd",
+      "what": "webgl2/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgpu-low.json",
+      "sha256": "44932068900c132c9bc8bafb98bbf28037ee6799db6f9c264bf7603975ec30d6",
+      "what": "webgpu/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgpu-low.jpg",
+      "sha256": "25d0554c5f53f0963976f8905831bde16688b81124dbea979106d00fd138ab3d",
+      "what": "webgpu/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgpu-high.json",
+      "sha256": "f68e3abb9b35b96c4e68e679abf12fdde659b2d38bc2b5462225f1ae8a16cec6",
+      "what": "webgpu/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-24-webgpu-high.jpg",
+      "sha256": "29596159e47ec5ca3107fe585c383afcf797f7315016ff56162ff143af510d31",
+      "what": "webgpu/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+    }
+  ],
+  "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim."
+}

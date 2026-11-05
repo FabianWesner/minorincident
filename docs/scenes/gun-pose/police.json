@@ -1,0 +1,34 @@
+{
+  "extends": "standing.json",
+  "name": "gun-pose-police",
+  "actors": [
+    {
+      "id": "police",
+      "kind": "pedestrian",
+      "look": {
+        "model": "npc.police-officer",
+        "handProp": "pistol"
+      },
+      "at": [
+        0,
+        0
+      ],
+      "state": {
+        "ally": {
+          "role": "officer",
+          "weapon": "pistol"
+        }
+      }
+    },
+    {
+      "id": "z1",
+      "kind": "infected",
+      "at": [
+        7,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": []
+}

@@ -1,0 +1,408 @@
+{
+  "sourceHash": "40435d16a4403fbf1e9d4c798472a680c914af6ef13c1742aa8d62533cd02d60",
+  "observerHash": "a00fd21863c18c74b3bdf315c32c809a061bc72231834db13dac7d724531b7e9",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "method": "Real current receipts qualify every numeric clause at both tiers; process-local missing/failing check controls retain NOT CHECKED/FAIL; historical findings remain FAIL.",
+  "results": [
+    {
+      "id": "L5-05",
+      "checks": [
+        {
+          "id": "L5-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 140.06666666666666,
+            "playerWindups": 12,
+            "groupWindups": 0,
+            "attacksPerMinute": 5.140409328891004
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L5-low-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "real player/group windups per minute",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5.140409328891004,
+          "target": "3 ≤ value ≤ Infinity",
+          "receipt": "L5-low-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L5-low-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "competent route visible infected encounters per40m",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 6.286266526875908,
+          "target": "1 ≤ value ≤ Infinity",
+          "receipt": "L5-low-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L5",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 228.35,
+            "playerWindups": 896,
+            "groupWindups": 0,
+            "attacksPerMinute": 235.42807094372674
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L5-low-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L5",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 0.05,
+            "windowSeconds": 228.35
+          },
+          "target": "≤20 s",
+          "receipt": "L5-low-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "real player/group windups per minute",
+          "level": "L5",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 235.42807094372674,
+          "target": "3 ≤ value ≤ Infinity",
+          "receipt": "L5-low-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L5",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L5-low-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 156.73333333333332,
+            "playerWindups": 20,
+            "groupWindups": 1,
+            "attacksPerMinute": 7.656316461080391
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L5-high-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "real player/group windups per minute",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 8.03913228413441,
+          "target": "3 ≤ value ≤ Infinity",
+          "receipt": "L5-high-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L5-high-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "competent route visible infected encounters per40m",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 8.580443889970852,
+          "target": "1 ≤ value ≤ Infinity",
+          "receipt": "L5-high-complete.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L5",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 228.35,
+            "playerWindups": 957,
+            "groupWindups": 0,
+            "attacksPerMinute": 251.45609809502955
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L5-high-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L5",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 18.15,
+            "windowSeconds": 228.35
+          },
+          "target": "≤20 s",
+          "receipt": "L5-high-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "real player/group windups per minute",
+          "level": "L5",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 251.45609809502955,
+          "target": "3 ≤ value ≤ Infinity",
+          "receipt": "L5-high-stationary.json"
+        },
+        {
+          "id": "L5-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L5",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L5-high-stationary.json"
+        }
+      ],
+      "fullNumericContract": "PASS",
+      "missingHighReachability": "NOT CHECKED",
+      "failingClause": "FAIL",
+      "historicalFailPreserved": "FAIL"
+    },
+    {
+      "id": "L7-05",
+      "checks": [
+        {
+          "id": "L7-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 75.73333333333333,
+            "playerWindups": 8,
+            "groupWindups": 1,
+            "attacksPerMinute": 6.338028169014085
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L7-low-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "real player/group windups per minute",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 7.130281690140846,
+          "target": "6 ≤ value ≤ Infinity",
+          "receipt": "L7-low-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L7-low-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 239.76666666666668,
+            "playerWindups": 2724,
+            "groupWindups": 22,
+            "attacksPerMinute": 681.6627276518838
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L7-low-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 2.716666666666667,
+            "windowSeconds": 239.76666666666668
+          },
+          "target": "≤10 s",
+          "receipt": "L7-low-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "real player/group windups per minute",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 687.1680800778535,
+          "target": "6 ≤ value ≤ Infinity",
+          "receipt": "L7-low-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L7-low-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 73.76666666666667,
+            "playerWindups": 1,
+            "groupWindups": 7,
+            "attacksPerMinute": 0.8133755083596927
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L7-high-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "real player/group windups per minute",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 6.507004066877542,
+          "target": "6 ≤ value ≤ Infinity",
+          "receipt": "L7-high-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L7-high-complete.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 239.76666666666668,
+            "playerWindups": 8070,
+            "groupWindups": 40,
+            "attacksPerMinute": 2019.463367162519
+          },
+          "target": "nonzero player windups in each combat policy",
+          "receipt": "L7-high-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 7.166666666666667,
+            "windowSeconds": 239.76666666666668
+          },
+          "target": "≤10 s",
+          "receipt": "L7-high-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "real player/group windups per minute",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 2029.4730988461004,
+          "target": "6 ≤ value ≤ Infinity",
+          "receipt": "L7-high-stationary.json"
+        },
+        {
+          "id": "L7-05",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "L7-high-stationary.json"
+        }
+      ],
+      "fullNumericContract": "PASS",
+      "missingHighReachability": "NOT CHECKED",
+      "failingClause": "FAIL",
+      "historicalFailPreserved": "FAIL"
+    }
+  ]
+}

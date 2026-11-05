@@ -1,0 +1,82 @@
+{
+  "id": "npc.civilian-elderly",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-elderly",
+  "elapsedSeconds": 17.349,
+  "manualSteps": [
+    "Rejected source: cane is fused into the body; separate it from the hand before migration. Rigid renderer retained."
+  ],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-elderly/lod0.glb",
+      "sourceSha256": "fb52c343b0bb4d0e28fc2da2d99cca9a82e877f348bc397eb7186da1eb23aa57",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+          "bytes": 305176,
+          "sha256": "2367eea8105d371a40293979acb837d8d27fe09c386a4b6b40fac7c595a5b669",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.low.glb",
+          "bytes": 219764,
+          "sha256": "e89b55564a6f5217862951f77310947bfedc1626945200c948cfb416e805b357",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-elderly/lod1.glb",
+      "sourceSha256": "ba8f8259d74d6373f825198005b81b27868a40b4e41ecdcaea5a1c82bec6a189",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+          "bytes": 153652,
+          "sha256": "6802094233707a0f7fc1d5a2a16f7dde3f572314a5f699e17d907ef3e468389e",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.low.glb",
+          "bytes": 153652,
+          "sha256": "6802094233707a0f7fc1d5a2a16f7dde3f572314a5f699e17d907ef3e468389e",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-elderly/lod2.glb",
+      "sourceSha256": "7d8fe5c0194c4a5807e5cdede40d1d9a808e8f46f45f2a8a571ee5a151303c7b",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb",
+          "bytes": 110076,
+          "sha256": "62ce17c839a895a876ee48da01bc2e36a88116d33bf7e682116cd58554e5181f",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.low.glb",
+          "bytes": 110076,
+          "sha256": "62ce17c839a895a876ee48da01bc2e36a88116d33bf7e682116cd58554e5181f",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.civilian-elderly:lod0:infected": "/assets/civilians/npc.civilian-elderly.lod0.infected.1e832a3d58de35ab.bin.gz",
+    "npc.civilian-elderly:lod0": "/assets/civilians/npc.civilian-elderly.lod0.e1a3281e328685f3.bin.gz",
+    "npc.civilian-elderly:lod1:infected": "/assets/civilians/npc.civilian-elderly.lod1.infected.8eb48f47813bf610.bin.gz",
+    "npc.civilian-elderly:lod1": "/assets/civilians/npc.civilian-elderly.lod1.a52eae63242ae000.bin.gz",
+    "npc.civilian-elderly:lod2:infected": "/assets/civilians/npc.civilian-elderly.lod2.infected.d10f8d1345acb654.bin.gz",
+    "npc.civilian-elderly:lod2": "/assets/civilians/npc.civilian-elderly.lod2.db4ee81c56d72b24.bin.gz"
+  },
+  "accepted": false
+}

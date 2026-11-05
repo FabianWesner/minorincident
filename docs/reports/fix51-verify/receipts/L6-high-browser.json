@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "level": "L6",
+  "tier": "high",
+  "sourceHash": "710a965e75362a3a634730b032b1d68d1f840cb9dd52f4d6fd039fa9dfeb0a23",
+  "fixtureHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
+  "browserHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "frameTiming": false,
+  "errors": [],
+  "issues": [],
+  "run": [],
+  "observations": {
+    "fullRoute": false,
+    "method": "Controlled production presentation; ordinary L6 physical runs are separately retained and did not finish.",
+    "captureFiles": [
+      "docs/reports/fix51-r10b/L6-contrast.json",
+      "docs/reports/fix51-r10b/L6-eyes.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "L6-14",
+      "clause": "courier mask contrast against projected2m ring at both underground spots and zooms",
+      "tier": "high",
+      "policy": "controlled-render-webgl2",
+      "status": "PASS",
+      "value": [
+        {
+          "spot": "l6-shelter-fails",
+          "zoom": 0.5,
+          "contrast": 4.1845887858629585,
+          "pixels": 14943
+        },
+        {
+          "spot": "l6-shelter-fails",
+          "zoom": 1.5,
+          "contrast": 4.280735338679575,
+          "pixels": 1354
+        },
+        {
+          "spot": "l6-tunnel-retreat",
+          "zoom": 0.5,
+          "contrast": 3.9760703015249907,
+          "pixels": 14866
+        },
+        {
+          "spot": "l6-tunnel-retreat",
+          "zoom": 1.5,
+          "contrast": 3.875503977151841,
+          "pixels": 1386
+        }
+      ],
+      "target": "at least3:1; low/high; zoom0.5/1.5; both designated spots",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-browser.json"
+    },
+    {
+      "id": "L6-14",
+      "clause": "brightest pixels belong to infected eye cores across underground cast",
+      "tier": "high",
+      "policy": "controlled-render-webgl2",
+      "status": "NOT CHECKED",
+      "value": {
+        "bodyPixels": 1306,
+        "eyeRectanglePixels": 86,
+        "rectangleUpperBound": 0.23187806679836925,
+        "nonEyePeak": 0.09782290864253458,
+        "reason": "A rectangle upper bound and one model/pose cannot establish actual eye cores as brightest for each infected in both phases."
+      },
+      "target": "brightest pixels of each infected are its eyes",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-browser.json"
+    }
+  ]
+}

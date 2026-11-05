@@ -1,0 +1,146 @@
+{
+  "name": "l4-corpses-persist",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 32,
+  "dof": false,
+  "note": "PO 10-14: ten permanent corpses stay drawn through two minutes; world persistence is separately asserted throughout the production L4 war. No time or count-based corpse deletion.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        3
+      ]
+    },
+    {
+      "id": "body-0",
+      "kind": "infected",
+      "at": [
+        -2.4,
+        0.0
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-1",
+      "kind": "infected",
+      "at": [
+        -1.2,
+        0.0
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-2",
+      "kind": "infected",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-3",
+      "kind": "infected",
+      "at": [
+        1.2,
+        0.0
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-4",
+      "kind": "infected",
+      "at": [
+        2.4,
+        0.0
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-5",
+      "kind": "infected",
+      "at": [
+        -2.4,
+        1.6
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-6",
+      "kind": "infected",
+      "at": [
+        -1.2,
+        1.6
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-7",
+      "kind": "infected",
+      "at": [
+        0.0,
+        1.6
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-8",
+      "kind": "infected",
+      "at": [
+        1.2,
+        1.6
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "body-9",
+      "kind": "infected",
+      "at": [
+        2.4,
+        1.6
+      ],
+      "state": {
+        "corpse": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1
+    ],
+    "zoom": 1
+  },
+  "frames": 7320,
+  "sheet": 600,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "groundingCorpsesMin": 10
+  }
+}

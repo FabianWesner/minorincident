@@ -1,0 +1,120 @@
+// QA drivers used by every pre-deploy check: the real-input playtest driver (tools/playtest) and Scene Lab specs.
+// A broken stuck detector or spec validator silently turns the PO-style QA green.
+import { readdirSync, readFileSync } from 'node:fs';
+import { expect, test, vi } from 'vitest';
+import manifest from '../../src/assets/manifest.json';
+import type { AssetDef } from '../../src/assets/types';
+import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
+import { frameInterval, type FrameState } from '../../tools/playtest/frames';
+import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
+import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
+import { PNG } from 'pngjs';
+import { courierBodyPixels } from '../../tools/scenelab/run';
+import { hueDistance, lookStats, LOW_CHROMA } from '../../tools/scenelab/look';
+import { edgeNoise } from '../../tools/scenelab/edge-noise';
+
+const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
+
+test('playtest stuck detection: following a moving ring is progress; a parked courier, a 30 s loop or a static zero-distance objective is not', () => {
+  const follow = new PlaytestProgress(); follow.update(sample(0));
+  for (let t = 1; t <= 45; t++) expect(follow.update(sample(t, { player: { x: t * 2.2, z: 15 }, marker: { x: t * 2.2 + 12, z: 15 } })).seconds).toBeLessThan(2);
+  const parked = new PlaytestProgress(); parked.update(sample(0));
+  expect(parked.update(sample(31, { marker: { x: 80, z: 15 } })).seconds).toBe(31);
+  const loop = new PlaytestProgress(); loop.update(sample(0)); loop.update(sample(1, { player: { x: 3, z: 15 }, marker: { x: 15, z: 15 } }));
+  for (let t = 2; t <= 35; t++) loop.update(sample(t, { player: { x: t % 2 ? 3 : 0, z: 15 }, marker: { x: t % 2 ? 15 : 12, z: 15 } }));
+  expect(loop.update(sample(36)).seconds).toBeGreaterThan(30);
+  const bring = new PlaytestProgress(); bring.update(sample(0, { text: 'Waiting for departure · 42 s' }));
+  expect(bring.update(sample(10, { text: 'Waiting for departure · 32 s' })).seconds).toBe(0);
+  bring.update(sample(11, { text: 'Bring the injured survivor · 0 m', distance: 0 }));
+  expect(bring.update(sample(42, { text: 'Bring the injured survivor · 0 m', distance: 0 })).seconds).toBe(31);
+  const respawn = new PlaytestProgress(); respawn.update(sample(0, { player: { x: 50, z: 15 }, marker: { x: 62, z: 15 } }));
+  expect(respawn.update(sample(.1, { player: { x: 2, z: 15 }, marker: { x: 14, z: 15 } })).reason).toBe('view-change');
+  const detour = new PlaytestProgress(), barrier = (t: number, z: number) => sample(t, { player: { x: 0, z }, marker: { x: 380, z: 0 }, distance: Math.hypot(380, z), text: 'Bring the cure to the dispersal complex' });
+  detour.update(barrier(0, 0));
+  for(let t=1;t<=30;t++) expect(detour.update(barrier(t, -t*2)).seconds).toBeLessThan(3);
+  for(let t=31;t<=65;t++) detour.update(barrier(t, t%2?-58:-60));
+  expect(detour.update(barrier(66, -60)).seconds).toBeGreaterThan(30);
+  const runaway = new PlaytestProgress(); runaway.update(barrier(0, 0));
+  for(let t=1;t<=80;t++) runaway.update(barrier(t,-t*2));
+  expect(runaway.update(barrier(81,-162)).seconds).toBeGreaterThan(30);
+  const fight = new PlaytestProgress(); fight.update(sample(0,{enemies:[{id:1,hp:100}]}));
+  expect(fight.update(sample(20,{enemies:[{id:1,hp:75}]})).reason).toBe('damage');
+  expect(fight.update(sample(41,{enemies:[{id:1,hp:75}]})).seconds).toBe(21);
+  expect(fight.update(sample(42,{enemies:[{id:1,hp:100}]})).reason).toBeNull();
+  expect(fight.update(sample(43,{enemies:[{id:1,hp:75}]})).reason).toBeNull();
+  expect(fight.update(sample(44,{enemies:[{id:1,hp:50}]})).reason).toBe('damage');
+  expect(fight.update(sample(65,{enemies:[{id:2,hp:100}]})).seconds).toBe(21);
+});
+
+test('playtest session: success only after real credits; an unresponsive renderer fails in budget; frame stalls are guarded outside loading', async () => {
+  expect(needsZoomInput(1.51, 1.5)).toBe(false);
+  expect(needsZoomInput(1.52, 1.5)).toBe(false);
+  expect(needsZoomInput(NaN, 1.5)).toBe(true);
+  expect(needsZoomInput(1.53, 1.5)).toBe(true);
+  const done = { level: 'L10', phase: 'progression', creditsFinished: true, endingPhase: 'done', completedLevels: 10 };
+  expect(campaignEndingComplete(done)).toBe(true);
+  for (const partial of [{ creditsFinished: false }, { endingPhase: 'credits' }, { completedLevels: 9 }, { phase: 'playing' }]) expect(campaignEndingComplete({ ...done, ...partial })).toBe(false);
+  for (const phase of ['playable', 'title', 'credits']) expect(campaignEndingWaiting(phase)).toBe(true);
+  expect(campaignEndingWaiting('done')).toBe(false);
+  vi.useFakeTimers();
+  try {
+    const failure = expect(observeWithin(new Promise<never>(() => {}), 100)).rejects.toThrow('browser renderer is unresponsive');
+    await vi.advanceTimersByTimeAsync(100); await failure;
+    expect(vi.getTimerCount()).toBe(0);
+    expect(await observeWithin(Promise.resolve('frame'))).toBe('frame');
+  } finally { vi.useRealTimers(); }
+  const playing = (at: number): FrameState => ({ at, level: 'L10', tick: 0, phase: 'playing', loading: false, x: 547, z: 0 });
+  const loading = { ...playing(100), loading: true };
+  expect(frameInterval(playing(0), loading, null)).toMatchObject({ loading: true, playMs: 0 });
+  expect(frameInterval(loading, playing(3000), 2990).playMs).toBe(10);
+  expect(frameInterval(playing(3300), { ...playing(4170), tick: 2965 }, 3000).playMs).toBe(870);
+});
+
+test('Scene Lab: spec validation and colour probes keep QA failures meaningful', () => {
+  const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
+  const errors = validateSpec({ props: [{ asset: 'prop.nope', at: [0, 0] }], actors: [{ kind: 'courier' }, { kind: 'courier' }], ground: 'district' }, assets).join('\n');
+  expect(errors).toMatch(/unknown manifest id prop\.nope/); expect(errors).toMatch(/at most one courier/); expect(errors).toMatch(/needs layout\.district/);
+  for (const file of readdirSync('specs/scenes').filter(f => f.endsWith('.json')))
+    expect(validateSpec(JSON.parse(readFileSync(`specs/scenes/${file}`, 'utf8')) as SceneSpec, assets), file).toEqual([]);
+  const pixels = (...rgb: number[][]) => { const png = new PNG({ width: rgb.length, height: 1 }); png.data.set(rgb.flatMap(c => [...c, 255])); return png; };
+  const empty = pixels([0, 0, 0], [0, 0, 0]), clear = pixels([100, 100, 100], [100, 100, 100]);
+  const mask = pixels([255, 0, 255], [0, 0, 0]); // body, then its cast shadow
+  expect(courierBodyPixels(pixels([100, 100, 100], [0, 0, 0]), empty, clear, empty, mask, mask)).toEqual({ visible: 1, reference: 1 });
+  expect(courierBodyPixels(pixels([0, 0, 0], [100, 100, 100]), empty, clear, empty, mask, empty)).toEqual({ visible: 0, reference: 1 }); // A shadow cannot hide a genuinely occluded body.
+  expect(courierBodyPixels(clear, empty, clear, empty, empty, empty)).toEqual({ visible: 2, reference: 2 }); // Driven-vehicle reference.
+  expect(courierBodyPixels(empty, empty, empty, empty, mask, mask)).toEqual({ visible: 1, reference: 1 }); // Fog/DOF does not occlude geometry.
+  const colour = (rgb: number[][]) => lookStats(rgb.flatMap(c => [...c, 255]), new Uint8Array(rgb.length * 4));
+  const red = colour([[255, 0, 0]]), cyan = colour([[0, 255, 255]]);
+  expect(red.hueChroma).toBeGreaterThan(LOW_CHROMA); expect(cyan.hueChroma).toBeGreaterThan(LOW_CHROMA);
+  expect(hueDistance(red.hue!, cyan.hue!)).toBe(180); // A genuine coherent colour change stays gated.
+  const mixed = colour([[255, 0, 0], [0, 254, 254]]);
+  expect(mixed.chroma).toBeGreaterThan(.9); expect(mixed.hueChroma).toBeLessThan(.01);
+  // Opposing hues have no stable aggregate angle; brightness/white checks still detect a white fallback.
+  const white = colour([[255, 255, 255]]);
+  expect(white.hueChroma).toBe(0); expect(white.whiteShare).toBe(1); expect(white.luma).toBeGreaterThan(red.luma);
+
+  // Exact body selection retains low-contrast pixels and excludes a bright non-body pixel.
+  const body = lookStats(pixels([50, 50, 50], [255, 255, 255]).data, pixels([50, 50, 50], [0, 0, 0]).data, mask.data);
+  expect(body).toMatchObject({ pixels: 1, whiteShare: 0 }); expect(body.luma).toBeCloseTo(50);
+  expect(lookStats(pixels([50, 50, 50], [255, 255, 255]).data, null, mask.data)).toEqual(body);
+  expect(lookStats(clear.data, null).pixels).toBe(0);
+  const flash = lookStats(pixels([100, 100, 100], [0, 0, 0]).data, empty.data, mask.data);
+  expect(flash.luma / body.luma).toBeGreaterThan(1.6); // A real body brightening remains a failure.
+  expect(lookStats(pixels([255, 255, 255], [0, 0, 0]).data, empty.data, mask.data).whiteShare).toBe(1);
+  const shape = (inside: (x: number, y: number) => boolean, painted = false) => {
+    const png = new PNG({ width: 128, height: 128 });
+    for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+      const selected = inside(x, y), value = selected && (x + y) % 2 ? 220 : selected ? 0 : 100;
+      png.data.set(painted ? [value, value, value, 255] : selected ? [255, 0, 255, 255] : [0, 0, 0, 255], (y * 128 + x) * 4);
+    }
+    return png;
+  };
+  const square = (x: number, y: number) => x >= 20 && x < 108 && y >= 20 && y < 108;
+  const geometry = shape(square), painted = shape(square, true), rect = [0, 0, 1, 1];
+  const compact = edgeNoise(painted.data, 128, 128, rect, geometry.data);
+  expect(compact.silhouetteRoughness).toBeLessThan(15.5); // Paint perforations do not change the geometric outline.
+  expect(compact.extremeEdgeShare).toBeGreaterThan(.1); // Real black/white pixel noise is still measured on the normal frame.
+  const spiky = shape((x, y) => x >= 20 && x < 108 && (y >= 70 && y < 108 || y >= 20 && y < 70 && x % 4 < 2));
+  expect(edgeNoise(painted.data, 128, 128, rect, spiky.data).silhouetteRoughness).toBeGreaterThan(15.5);
+  expect(edgeNoise(painted.data, 128, 128, rect, new Uint8Array(128 * 128 * 4)).silhouetteRoughness).toBe(Infinity);
+});

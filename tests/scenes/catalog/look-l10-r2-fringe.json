@@ -1,0 +1,63 @@
+{
+ "name": "look-l10-r2-fringe",
+ "note": "look-l10 game-camera dressing check. R2 residential fringe: front yards with lit windows, verge grass, hedges, sodium lamps, parked cars, gas station. Look for: a silhouette and a light point in every frame, nothing floating or sunk, no prop in the walkable lane, night still dark.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    1000,
+    -45
+   ],
+   [
+    1220,
+    95
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1090,
+    25
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "frames": 240,
+ "sheet": 40,
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      1180,
+      25
+     ]
+    ]
+   }
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "lodPlaceholderFramesMax": 0
+ }
+}

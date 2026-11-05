@@ -1,0 +1,18 @@
+{
+  "name": "qa-alpha-roar", "seed": 37, "ground": "asphalt", "size": 64, "time": "L4", "dof": false,
+  "note": "Game camera: 18m roar ring stays through windup, then regular humans converge toward Alpha's fixed origin. Lion and outside regular control must remain unbuffed. Expiry f358 and second activation f958 use independent sim ticks; check ring readability, facing versus travel, feet and invisible activity.",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [20, 0] },
+    { "id": "alpha", "kind": "infected", "archetype": "infected.alpha", "at": [0, 0], "yaw": 180, "state": "idle" },
+    { "id": "regular", "kind": "infected", "archetype": "infected.runner", "at": [-12, 0], "yaw": 180, "state": "idle" },
+    { "id": "outside", "kind": "infected", "archetype": "infected.runner", "at": [-18.01, 2], "yaw": 180, "state": "idle" },
+    { "id": "lion", "kind": "infected", "archetype": "infected.lion", "at": [-6, 4], "yaw": 180, "state": "idle" }
+  ],
+  "script": [
+    { "frame": 10, "actor": "alpha", "do": { "special": "alpha.roar", "target": "courier" } },
+    { "frame": 910, "actor": "alpha", "do": { "special": "alpha.roar", "target": "courier" } }
+  ],
+  "camera": { "mode": "game", "target": [-4, 0], "zoom": 2.6 },
+  "frames": 1000, "shots": [0, 10, 57, 58, 150, 357, 358, 958], "sheet": 60,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "actorHitsMax": 0 }
+}

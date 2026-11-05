@@ -1,0 +1,188 @@
+import { Rng } from '../../core/Rng';
+import { catalog } from '../../data/actions/catalog';
+import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
+import type { GearTier, SurvivorVariant } from '../../data/survivor';
+import type { L1Aftermath } from '../../levels/continuity';
+import { l7DefaultArsenal } from '../../data/l7';
+/** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
+export type Level = 1|2|3|4|5|6|7|8|9|10;
+export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
+export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
+export interface CampaignSave {
+  version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
+  ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
+  /** Last selected campaign action, restored when a new level loadout is materialized. */
+  selectedAction?: string;
+  usage:Record<string,number>;
+  /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
+  survivors?:string[];
+  /** Actual safe-space doorway used in L4, with the outward heading for the L5 return. */
+  shelterEntry?: { x: number; z: number; yaw: number };
+  /** L8/E31: the same unarmed APC and its complete living roster, retained across handover/save. */
+  /** L9 authored crash resume payload; the S7 handover clears this after committing L10. */
+  l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
+  /** Committed crash transaction: history only; never usable equipment or L10 followers. */
+  crossingHandover?: { applied: true; checkpoint: 'cure-crash'; anchor: import('../world/types').Transform; corgi?: import('../world/types').EntitySnapshot; preCrashDurability: number; lostWeapons: string[]; shelteredPassengers: import('../world/types').EntitySnapshot[] };
+  /** Latest live L10 state and last reached retry snapshot; uses the existing mission/chunk seams. */
+  cureResume?: { current: import('../missions/types').MissionCheckpoint; checkpoint: import('../missions/types').MissionCheckpoint; cameraZoom?: number };
+  transport?:import('../vehicles/Vehicles').VehicleTransfer;
+  stationOccupants?:import('../world/types').EntitySnapshot[];
+  rescuedSurvivors?:import('../world/types').EntitySnapshot[];
+  results?:Record<string, import('../missions/types').MissionResult>;
+  pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'};
+  /** Campaign world-state continuity: what this run's L1 left behind in the town (src/levels/continuity.ts). */
+  world?:{L1?:L1Aftermath; infectionCleared?: { level: 10; releasedAt: number }};
+}
+export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
+  // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
+  // E21: the handgun from the L3 armory is carried on (L4 starts with it). L2's fire axe is a pickup, not an unlock.
+  1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
+  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],7:[],8:[],9:[],10:[],
+};
+/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after L10. */
+export const lastLevel:Level=10;
+/** Entity IDs a level must keep free while it spawns its own cast: L9 restores the L8 transport (APC + occupants) only after
+ * the crossing's props and lamps exist, so a dressed district would otherwise hand out the incoming IDs first. */
+export function reservedCampaignIds(level:string,campaign?:CampaignSave):number[]|undefined {return level==='L9'&&campaign?.transport?[campaign.transport.vehicle.id,...campaign.transport.occupants.map(e=>e.id)]:undefined;}
+export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<lastLevel?(finished+1) as Level:null;}
+/** PO 2026-10-12: the only L3 firearm is the armory handgun; no weapon choice after any level (the L4 machine gun is the army's pickup). */
+export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
+  if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
+  return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
+}
+export function rackSize(level:number):number {return level<2?1:level<4?2:level<7?3:4;}
+/** A carried rack may exceed the level's size by the weapons picked up on the way (Pickups adds a slot per pickup); bounded for saves. */
+export const carriedRackMax=6;
+export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel,carried=false):boolean {
+  return [racks.LEFT,racks.RIGHT].every(r=>Array.isArray(r)&&r.length>=1&&r.length<=(carried?Math.max(rackSize(level),carriedRackMax):rackSize(level))&&new Set(r).size===r.length&&r.every(id=>save.ownedActions.includes(id)));
+}
+export function meetsPrerequisite(save:CampaignSave,id:string):boolean {
+  return id.startsWith('level.')?(save.pending?.level??save.completedLevels)>=Number(id.at(-1)):save.upgrades.includes(id)||save.ownedActions.includes(id);
+}
+export function eligible(save:CampaignSave,d:UpgradeDef):boolean {
+  return !save.upgrades.includes(d.id)&&(!d.grant||!save.ownedActions.includes(d.grant))&&d.prerequisites.every(p=>meetsPrerequisite(save,p))&&(!d.weapon||save.ownedActions.includes(d.weapon));
+}
+/** Save-seeded weighted sampling without replacement, isolated from combat RNG. */
+export function offer(save:CampaignSave,level=save.completedLevels+1):string[] {
+  const rng=new Rng(save.seed,`upgrade-offer-${level}`),pool=Object.values(upgrades).filter(d=>eligible(save,d)),cards:string[]=[];
+  while(cards.length<3){
+    if(!pool.length)throw new Error('Insufficient valid upgrades');
+    const weights=pool.map(d=>1+d.actions.reduce((n,id)=>n+Math.min(4,save.usage[id]??0),0));
+    let roll=rng.next()*weights.reduce((a,b)=>a+b,0),index=0;
+    while(index<weights.length-1&&(roll-=weights[index])>=0)index++;
+    cards.push(pool.splice(index,1)[0].id);
+  }return cards;
+}
+export function modifiers(save:Pick<CampaignSave,'upgrades'>):Modifiers {
+  const m:Modifiers={health:0,speed:0,melee:0,magazine:0,reload:0,charges:0,radius:0,knockback:0,ramArmor:0,boost:0};
+  for(const id of save.upgrades)for(const [key,value]of Object.entries(upgrades[id].modifiers))m[key as keyof Modifiers]+=value;
+  return m;
+}
+/** Weighted stats + owned weapon tiers + abilities; neither rack order nor unused slots inflate power. */
+export function powerScore(save:CampaignSave):number {
+  const m=modifiers(save);
+  return Math.round(100+m.health+100*m.speed+100*m.melee+10*m.magazine+100*m.reload+20*m.charges+100*m.radius+100*m.knockback+100*m.ramArmor+100*m.boost+
+    save.ownedActions.reduce((n,id)=>n+(catalog[id].category==='ability'?60:(catalog[id].tier+1)*20),0)+save.upgrades.filter(id=>upgrades[id].family==='perk').length*20);
+}
+export function gearTier(save:CampaignSave):GearTier {
+  // The crash removes combat weapons, not the courier's earned clothing. Its existing
+  // loss history also keeps old saves and the standalone L10 preset on the same outfit tier.
+  const lost = save.crossingHandover?.lostWeapons;
+  const score=powerScore(lost ? { ...save, ownedActions: [...new Set([...save.ownedActions, ...lost])] } : save);
+  return (score<240?0:score<400?1:score<500?2:score<640?3:4);
+}
+export function beginRewards(save:CampaignSave,level:Level):void {
+  if(save.pending||level!==save.completedLevels+1||level>5)throw new Error('Rewards unavailable');
+  for(const id of fixedUnlocks[level])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
+  save.unlockedLevel=Math.max(save.unlockedLevel,level+1) as Level;
+  save.pending={level,cards:[],phase:'unlock'};
+}
+export function revealCards(save:CampaignSave):void {
+  if(!save.pending||save.pending.phase!=='unlock'){throw new Error('Rewards unavailable');}
+  save.pending.cards=offer(save,save.pending.level);save.pending.phase='cards';
+}
+export function pickUpgrades(save:CampaignSave,picks:string[]):void {
+  const p=save.pending;
+  if(!p||p.phase!=='cards'||picks.length!==2||new Set(picks).size!==2||picks.some(id=>!p.cards.includes(id)||!eligible(save,upgrades[id])))throw new Error('Pick two offered upgrades');
+  for(const id of picks){save.upgrades.push(id);const grant=upgrades[id].grant;if(grant)save.ownedActions.push(grant);}
+  save.completedLevels=p.level;p.phase='racks';
+}
+export function finishRewards(save:CampaignSave,racks:CampaignSave['racks']):void {
+  if(save.pending?.phase!=='racks'||!validRacks(save,racks))throw new Error('Invalid racks');
+  save.racks=structuredClone(racks);delete save.pending;
+}
+/**
+ * PO decision 2026-10-07: no reward screens between levels. The data model stays (unlocks, 2 upgrades, racks); this finishes
+ * whatever phase is pending with the defaults the old screens pre-selected: the first weapon alternative, the first two offered
+ * upgrades, and the best melee on LEFT / best other action on RIGHT.
+ */
+export function completePending(save:CampaignSave):void {
+  const p=save.pending;if(!p)return;
+  if(p.phase==='unlock')revealCards(save);
+  if(save.pending!.phase==='cards')pickUpgrades(save,save.pending!.cards.slice(0,2));
+  if(save.pending?.phase==='racks'){
+    const size=rackSize(save.unlockedLevel),melee=save.ownedActions.filter(id=>catalog[id].category==='melee').reverse(),ranged=save.ownedActions.filter(id=>catalog[id].category!=='melee').reverse();
+    finishRewards(save,{LEFT:melee.slice(0,size),RIGHT:(ranged.length?ranged:['weapon.kick']).slice(0,size)});
+  }
+}
+export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
+/** Optional prior history keeps the actual arriving group when replaying L7/L8 from a menu or QA preset. */
+export function preset(name:ProgressionPreset, previous?:CampaignSave|null):CampaignSave {
+  if (name === 'L9-default') {
+    const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; return save;
+  }
+  if (name === 'L10-default') {
+    const save = preset('L8-default');
+    const lostWeapons = save.ownedActions.filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+    save.completedLevels = 9; save.unlockedLevel = 10;
+    save.crossingHandover = { applied: true, checkpoint: 'cure-crash', anchor: { x: 0, y: .7, z: 0, yaw: 0 }, preCrashDurability: 0, lostWeapons, shelteredPassengers: [] };
+    save.ownedActions = ['weapon.fire-axe', ...save.ownedActions.filter(id => catalog[id].category === 'ability')];
+    save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
+    return save;
+  }
+  if(!/^L[2-8]-default$/.test(name))throw new Error('Unknown progression preset');
+  const target=Number(name[1]),save=newCampaign();
+  for(let level=1;level<Math.min(target,6);level++){
+    // The default L2 run takes the optional fire axe; later presets retain it.
+    if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+    autoRewards(save,level as Level);
+  }
+  if(target>=5&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+  // L5's authored L4 end arsenal has the machine gun, not the legacy reward launchers.
+  if(target===5)save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher'&&id!=='weapon.pipe-bomb');
+  if(target>=5)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
+  if(target===7) {
+    save.completedLevels=6;save.unlockedLevel=7;
+    save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher');
+    for(const id of [...l7DefaultArsenal.LEFT,...l7DefaultArsenal.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
+    save.racks={LEFT:[...l7DefaultArsenal.LEFT],RIGHT:[...l7DefaultArsenal.RIGHT]};
+  }
+  if(target===8) {
+    save.completedLevels=7;save.unlockedLevel=8;
+    for(const id of ['weapon.shotgun','weapon.rocket-launcher'])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
+    save.racks={LEFT:['weapon.bat','weapon.fire-axe'],RIGHT:['weapon.rocket-launcher','weapon.army-mg','weapon.shotgun','weapon.handgun']};
+  }
+  const arrival = target === 7 ? 'L6' : target === 8 ? 'L7' : null;
+  if (arrival && previous?.results?.[arrival]?.escapedSurvivors) save.results = { [arrival]: structuredClone(previous.results[arrival]) };
+  if(target===6){
+    save.survivors=["dale","rosa","okafor","mia","sam"];
+    // The ordinary L5 route collects the basement shotgun before this handover.
+    if(!save.ownedActions.includes('weapon.shotgun'))save.ownedActions.push('weapon.shotgun');
+    save.racks.RIGHT.push('weapon.shotgun');
+  }
+  return save;
+}
+
+/** A debug level-list start gets a structurally valid fixture at that level's normal campaign boundary. */
+export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSave {
+  let save:CampaignSave;
+  if(level===1) save=newCampaign(current?.character??'female',current?.seed??1);
+  else if(level===10) save=preset('L10-default');
+  else if(level===9) save=preset('L9-default');
+  else save=preset(`L${level}-default` as ProgressionPreset,current);
+  // Level-list starts use the level's normal boundary arsenal, but still honor the
+  // weapon the player was carrying when it exists in that arsenal.
+  if (current?.selectedAction && [...save.racks.LEFT, ...save.racks.RIGHT].includes(current.selectedAction)) save.selectedAction = current.selectedAction;
+  if(current){save.character=current.character;save.seed=current.seed;save.settings=structuredClone(current.settings);}
+  return save;
+}

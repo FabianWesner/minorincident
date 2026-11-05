@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "high",
+  "sourceHash": "59a2d216f038424dafe59e3db72946a228c8cbbb81a8dd37f39d9c73c00d6364",
+  "fixtureHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "browserHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgpu",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-webgpu-z1.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L8",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 360,
+      "simSeconds": 355,
+      "maxNoProgressSeconds": 59.197,
+      "deaths": 3,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "",
+          "tick": 12,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8399999737739563,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L8",
+      "tick": 1238,
+      "x": 0,
+      "z": 70,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/accept-L8-1238-stuck-navigating.jpg"
+      ],
+      "step": "escape",
+      "objective": ""
+    },
+    {
+      "level": "L8",
+      "tick": 6481,
+      "x": 96.5,
+      "z": 76.2,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Bring the survivors to the armored vehicle and board · 0 m\"",
+      "captures": [
+        "captures/accept-L8-6481-stuck-at-ring.jpg"
+      ],
+      "step": "escape",
+      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
+    },
+    {
+      "level": "L8",
+      "tick": 9011,
+      "x": 96.5,
+      "z": 76.2,
+      "severity": "P3",
+      "kind": "retry",
+      "text": "Mission failed screen: Mission failed",
+      "captures": [
+        "captures/accept-L8-9011-retry.jpg"
+      ],
+      "step": "escape",
+      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
+    },
+    {
+      "level": "L8",
+      "tick": 14164,
+      "x": 96.5,
+      "z": 76.4,
+      "severity": "P3",
+      "kind": "retry",
+      "text": "Mission failed screen: Mission failed",
+      "captures": [
+        "captures/accept-L8-14164-retry.jpg"
+      ],
+      "step": "escape",
+      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
+    },
+    {
+      "level": "L8",
+      "tick": 18355,
+      "x": 96.5,
+      "z": 76.2,
+      "severity": "P3",
+      "kind": "retry",
+      "text": "Mission failed screen: Mission failed",
+      "captures": [
+        "captures/accept-L8-18355-retry.jpg"
+      ],
+      "step": "escape",
+      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
+    },
+    {
+      "level": "L8",
+      "tick": 21269,
+      "x": 96.5,
+      "z": 76.2,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "Driver could not finish step escape (\"Bring the survivors to the armored vehicle and board · 0 m\") after 21 s on it (6 min level cap: true); stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L8-21269-cannot-finish.jpg"
+      ],
+      "step": "escape",
+      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

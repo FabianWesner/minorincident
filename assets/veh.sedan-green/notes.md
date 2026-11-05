@@ -1,0 +1,3 @@
+# Sedan build decisions
+
+The reference is a weathered green four-door family sedan with a three-box silhouette, warm rectangular headlights, eight-pocket steel wheels, inset grille, thin rubber/chrome side trim, and scattered edge rust. The model faces +X and uses the manifest's 4.4 × 1.8 × 1.9 m frame. All four wheels and all four doors keep axle/hinge origins; lamp assemblies have separate pivots. No branded text or image textures are used. Geometry markings stand at least 6 mm clear of paint. Glass is a tinted purple-grey single shell with reduced specular reflection; interior seats are modeled for opened doors.

@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "level": "L3",
+  "tier": "high",
+  "sourceHash": "59a2d216f038424dafe59e3db72946a228c8cbbb81a8dd37f39d9c73c00d6364",
+  "fixtureHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "browserHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgpu",
+      "status": "PASS",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-webgpu-z1.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L3",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 164,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 4.9,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 247
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "armory",
+          "text": "Take a handgun from the armory · 19 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": {
+              "x": -139.2,
+              "y": 0,
+              "z": -8.4
+            },
+            "drawn": [
+              -139.2,
+              0.05,
+              -8.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "defend",
+          "text": "Help defend the station · 10 m",
+          "tick": 823,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "checkpoint",
+          "text": "Get inside the army checkpoint · 364 m",
+          "tick": 1370,
+          "marker": {
+            "anchor": "l3-zone",
+            "ring": {
+              "x": 225,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              225,
+              0.05,
+              0
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

@@ -1,0 +1,18 @@
+{
+  "name": "veh-wreck-compare",
+  "ground": "asphalt",
+  "size": 70,
+  "props": [
+    { "id": "sedan", "asset": "veh.sedan-green", "at": [0, -3] },
+    { "id": "wreck", "asset": "veh.wreck", "at": [0, 3] }
+  ],
+  "camera": { "mode": "game", "target": [0, 0], "zoom": 1.4 },
+  "frames": 4,
+  "shots": [0, 1, 2, 3],
+  "script": [
+    { "frame": 1, "camera": { "mode": "close", "target": [0, 0.8, 0], "radius": 12, "azimuth": 135 } },
+    { "frame": 2, "camera": { "mode": "close", "target": [0, 0.8, 0], "radius": 12, "azimuth": 315 } },
+    { "frame": 3, "camera": { "mode": "close", "target": [0, 0.8, 0], "radius": 60, "azimuth": 135 } }
+  ],
+  "expect": { "consoleErrors": 0 }
+}

@@ -1,0 +1,74 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "trace": true,
+  "frames": 90,
+  "sheet": 3,
+  "shots": [
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "tracers-courier",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -7,
+        7
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.bat"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        7,
+        -7
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "actor": "courier",
+      "do": {
+        "aim": "target",
+        "seconds": 0.3
+      }
+    },
+    {
+      "frame": 26,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 1,
+        "move": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

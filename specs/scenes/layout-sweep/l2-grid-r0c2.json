@@ -1,0 +1,41 @@
+{
+ "name": "l2-grid-r0c2",
+ "note": "L2 layout sweep cell r0 c2: shipped L2 dressing and placement rules, static mesh clipping gate.",
+ "ground": "district",
+ "time": "L2",
+ "tier": 1,
+ "layout": {
+  "level": "L2",
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -5,
+    -55
+   ],
+   [
+    47.5,
+    -13.5
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   21.25,
+   0,
+   -36.75
+  ],
+  "zoom": 1.5
+ },
+ "frames": 4,
+ "shots": [
+  4
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "staticOverlapMax": 0
+ }
+}

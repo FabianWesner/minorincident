@@ -1,0 +1,8909 @@
+{
+  "version": 1,
+  "lane": "fix51-r2c",
+  "backend": "webgl2",
+  "headless": true,
+  "metal": true,
+  "run": {
+    "level": "L8",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 197,
+    "simSeconds": 0,
+    "maxNoProgressSeconds": 59.36666666666667,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.rocket-launcher": 30
+    },
+    "weaponsStart": [
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.rocket-launcher",
+      "weapon.army-mg",
+      "weapon.shotgun",
+      "weapon.handgun"
+    ],
+    "weaponsEnd": [
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.rocket-launcher",
+      "weapon.army-mg",
+      "weapon.shotgun",
+      "weapon.handgun"
+    ],
+    "steps": [
+      {
+        "id": "escape",
+        "text": "",
+        "tick": 24,
+        "marker": {
+          "anchor": null,
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.8399999737739563,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "depart",
+        "text": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 3/13 aboard \u00b7 10 still to board",
+        "tick": 6831,
+        "marker": {
+          "anchor": "exit",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.9954348802566528,
+          "pinVisible": false
+        }
+      }
+    ]
+  },
+  "issues": [
+    {
+      "level": "L8",
+      "tick": 1237,
+      "x": 0,
+      "z": 70,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L8-1237-stuck-navigating.jpg"
+      ],
+      "step": "escape",
+      "objective": ""
+    },
+    {
+      "level": "L8",
+      "tick": 8237,
+      "x": 96.1,
+      "z": 74,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 5/13 aboard \u00b7 8 still to board\"",
+      "captures": [
+        "captures/campaign-L8-8237-stuck-navigating.jpg"
+      ],
+      "step": "depart",
+      "objective": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 5/13 aboard \u00b7 8 still to board"
+    }
+  ],
+  "photoScope": "Variants photographed while paused. Actual quality/zoom fields are authoritative; cinematic camera locks can override requested zoom. Photo variants do not establish physical play at those variants.",
+  "cameraAbsence": null,
+  "photos": [
+    {
+      "file": "captures/campaign-L8-escape-t631-low-z1-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 631,
+      "quality": "low",
+      "zoom": 1.5,
+      "actualZoom": 1.5,
+      "targetZoom": 1.5,
+      "actualQuality": "low",
+      "objective": "",
+      "player": {
+        "x": 0,
+        "z": 70,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 13,
+      "sha256": "0c9b2eed69a6c15246536521c52511b17fb8d0cd36709f5ec3fa8e9654e4218e"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t631-low-z0-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 631,
+      "quality": "low",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "low",
+      "objective": "",
+      "player": {
+        "x": 0,
+        "z": 70,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 13,
+      "sha256": "e85dafedde76eab41d16b74ed0a0fe314deb446520b53855d4941311ec54ad65"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t631-high-z1-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 631,
+      "quality": "high",
+      "zoom": 1.5,
+      "actualZoom": 1.5000000000000002,
+      "targetZoom": 1.5000000000000002,
+      "actualQuality": "high",
+      "objective": "",
+      "player": {
+        "x": 0,
+        "z": 70,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 13,
+      "sha256": "298a76a99fd3fd6deea24a65ec86a35c4157ce4b8c855ff33ac548b65d5c0b2c"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t631-high-z0-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 631,
+      "quality": "high",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "high",
+      "objective": "",
+      "player": {
+        "x": 0,
+        "z": 70,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 13,
+      "sha256": "ed266f497e58b19b9f3f5f7088d506268b54711bac3be7c172afd972b0920652"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t4245-low-z1-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 4245,
+      "quality": "low",
+      "zoom": 1.5,
+      "actualZoom": 1.5,
+      "targetZoom": 1.5,
+      "actualQuality": "low",
+      "objective": "Bring the survivors to the armored vehicle and board \u00b7 68\u00a0m",
+      "player": {
+        "x": 28.596416473388672,
+        "z": 72.7645263671875,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 12,
+      "sha256": "572342c1546264c176cf5cfad92768c9d20c2d82adca025c50411c50195b5150"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t4245-low-z0-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 4245,
+      "quality": "low",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "low",
+      "objective": "Bring the survivors to the armored vehicle and board \u00b7 68\u00a0m",
+      "player": {
+        "x": 28.596416473388672,
+        "z": 72.7645263671875,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 12,
+      "sha256": "9c150661358e50d27af0c66906f467eca0725d51c65830301378294487c96b72"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t4245-high-z1-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 4245,
+      "quality": "high",
+      "zoom": 1.5,
+      "actualZoom": 1.5000000000000002,
+      "targetZoom": 1.5000000000000002,
+      "actualQuality": "high",
+      "objective": "Bring the survivors to the armored vehicle and board \u00b7 68\u00a0m",
+      "player": {
+        "x": 28.596416473388672,
+        "z": 72.7645263671875,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 12,
+      "sha256": "3ec72deb04c5ae426941a57920f0176301d5bd3cb2f3f2131a208a0b55ab28fb"
+    },
+    {
+      "file": "captures/campaign-L8-escape-t4245-high-z0-5.jpg",
+      "level": "L8",
+      "step": "escape",
+      "tick": 4245,
+      "quality": "high",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "high",
+      "objective": "Bring the survivors to the armored vehicle and board \u00b7 68\u00a0m",
+      "player": {
+        "x": 28.596416473388672,
+        "z": 72.7645263671875,
+        "hp": 100
+      },
+      "enemies": 0,
+      "allies": 12,
+      "sha256": "76fa57a09ecca59898a73b2b1c3a71f840ed74deb16b38a7c14fe38cc3bd3429"
+    },
+    {
+      "file": "captures/campaign-L8-depart-t6830-low-z1-5.jpg",
+      "level": "L8",
+      "step": "depart",
+      "tick": 6830,
+      "quality": "low",
+      "zoom": 1.5,
+      "actualZoom": 1.5,
+      "targetZoom": 1.5,
+      "actualQuality": "low",
+      "objective": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 3/13 aboard \u00b7 10 still to board",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 6,
+      "allies": 0,
+      "sha256": "408322a80fba003b200503890a22663251f21084e3a835223e0c4ed48e81749c"
+    },
+    {
+      "file": "captures/campaign-L8-depart-t6830-low-z0-5.jpg",
+      "level": "L8",
+      "step": "depart",
+      "tick": 6830,
+      "quality": "low",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "low",
+      "objective": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 3/13 aboard \u00b7 10 still to board",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 6,
+      "allies": 0,
+      "sha256": "94c5c322eabec927c66ff08de9aa054402774621306c8170a6fc791fccdae7b9"
+    },
+    {
+      "file": "captures/campaign-L8-depart-t6830-high-z1-5.jpg",
+      "level": "L8",
+      "step": "depart",
+      "tick": 6830,
+      "quality": "high",
+      "zoom": 1.5,
+      "actualZoom": 1.5000000000000002,
+      "targetZoom": 1.5000000000000002,
+      "actualQuality": "high",
+      "objective": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 3/13 aboard \u00b7 10 still to board",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 6,
+      "allies": 0,
+      "sha256": "db7b7d205e9399088dbe401e3a6aeb31959f4974ce22acae41860d9f049d36b8"
+    },
+    {
+      "file": "captures/campaign-L8-depart-t6830-high-z0-5.jpg",
+      "level": "L8",
+      "step": "depart",
+      "tick": 6830,
+      "quality": "high",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "high",
+      "objective": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 3/13 aboard \u00b7 10 still to board",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 6,
+      "allies": 0,
+      "sha256": "7fc5dd164b5529bae1d20d56510e0f54fadc845d6b4dcb63ac3b82be11e7acb9"
+    },
+    {
+      "file": "captures/campaign-L8-null-t10386-low-z1-5.jpg",
+      "level": "L8",
+      "step": null,
+      "tick": 10386,
+      "quality": "low",
+      "zoom": 1.5,
+      "actualZoom": 1.5,
+      "targetZoom": 1.5,
+      "actualQuality": "low",
+      "objective": "",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 13,
+      "allies": 0,
+      "sha256": "1dd3f07ac59b36328ad4713f36462886eaa512f079685258f25a724c87b930c5"
+    },
+    {
+      "file": "captures/campaign-L8-null-t10386-low-z0-5.jpg",
+      "level": "L8",
+      "step": null,
+      "tick": 10386,
+      "quality": "low",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "low",
+      "objective": "",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 13,
+      "allies": 0,
+      "sha256": "c4bdd379f6b92c55d951d8ed94d3b236e0573d2f1bbb5d6ed1f1be0830c0a304"
+    },
+    {
+      "file": "captures/campaign-L8-null-t10386-high-z1-5.jpg",
+      "level": "L8",
+      "step": null,
+      "tick": 10386,
+      "quality": "high",
+      "zoom": 1.5,
+      "actualZoom": 1.5000000000000002,
+      "targetZoom": 1.5000000000000002,
+      "actualQuality": "high",
+      "objective": "",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 13,
+      "allies": 0,
+      "sha256": "3348f483086af0248e3529f1da5091e518f9ca1b50a11da78f4cc8cd7d12870f"
+    },
+    {
+      "file": "captures/campaign-L8-null-t10386-high-z0-5.jpg",
+      "level": "L8",
+      "step": null,
+      "tick": 10386,
+      "quality": "high",
+      "zoom": 0.5,
+      "actualZoom": 0.5,
+      "targetZoom": 0.5,
+      "actualQuality": "high",
+      "objective": "",
+      "player": {
+        "x": 96.09867858886719,
+        "z": 73.98737335205078,
+        "hp": 100
+      },
+      "enemies": 13,
+      "allies": 0,
+      "sha256": "b745087bf7e778105a27d99a638e34eb581e24949221a91a70ac4adcd878ac79"
+    }
+  ],
+  "samples": [
+    {
+      "level": "L8",
+      "tick": 0,
+      "seconds": 0,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1
+    },
+    {
+      "level": "L8",
+      "tick": 29,
+      "seconds": 0.48333333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1
+    },
+    {
+      "level": "L8",
+      "tick": 49,
+      "seconds": 0.8166666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 79,
+      "seconds": 1.3166666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 109,
+      "seconds": 1.8166666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 139,
+      "seconds": 2.316666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 169,
+      "seconds": 2.816666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 199,
+      "seconds": 3.316666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 230,
+      "seconds": 3.8333333333333335,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 260,
+      "seconds": 4.333333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 290,
+      "seconds": 4.833333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 320,
+      "seconds": 5.333333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 351,
+      "seconds": 5.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 381,
+      "seconds": 6.35,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 412,
+      "seconds": 6.866666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 442,
+      "seconds": 7.366666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 472,
+      "seconds": 7.866666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 503,
+      "seconds": 8.383333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 533,
+      "seconds": 8.883333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 563,
+      "seconds": 9.383333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 593,
+      "seconds": 9.883333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 623,
+      "seconds": 10.383333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5
+    },
+    {
+      "level": "L8",
+      "tick": 632,
+      "seconds": 10.533333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 661,
+      "seconds": 11.016666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 691,
+      "seconds": 11.516666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 722,
+      "seconds": 12.033333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 752,
+      "seconds": 12.533333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 783,
+      "seconds": 13.05,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 813,
+      "seconds": 13.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 844,
+      "seconds": 14.066666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 875,
+      "seconds": 14.583333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 905,
+      "seconds": 15.083333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 936,
+      "seconds": 15.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 966,
+      "seconds": 16.1,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 996,
+      "seconds": 16.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1025,
+      "seconds": 17.083333333333332,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1055,
+      "seconds": 17.583333333333332,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1086,
+      "seconds": 18.1,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1116,
+      "seconds": 18.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1147,
+      "seconds": 19.116666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1177,
+      "seconds": 19.616666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1208,
+      "seconds": 20.133333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1238,
+      "seconds": 20.633333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1265,
+      "seconds": 21.083333333333332,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1295,
+      "seconds": 21.583333333333332,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1326,
+      "seconds": 22.1,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1356,
+      "seconds": 22.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1387,
+      "seconds": 23.116666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1418,
+      "seconds": 23.633333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1449,
+      "seconds": 24.15,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1479,
+      "seconds": 24.65,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1509,
+      "seconds": 25.15,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1540,
+      "seconds": 25.666666666666668,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1570,
+      "seconds": 26.166666666666668,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1600,
+      "seconds": 26.666666666666668,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1630,
+      "seconds": 27.166666666666668,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1661,
+      "seconds": 27.683333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1691,
+      "seconds": 28.183333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1721,
+      "seconds": 28.683333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1751,
+      "seconds": 29.183333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1782,
+      "seconds": 29.7,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1812,
+      "seconds": 30.2,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1842,
+      "seconds": 30.7,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1873,
+      "seconds": 31.216666666666665,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1903,
+      "seconds": 31.716666666666665,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1934,
+      "seconds": 32.233333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1965,
+      "seconds": 32.75,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 1995,
+      "seconds": 33.25,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2025,
+      "seconds": 33.75,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2055,
+      "seconds": 34.25,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2085,
+      "seconds": 34.75,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2116,
+      "seconds": 35.266666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2146,
+      "seconds": 35.766666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2177,
+      "seconds": 36.28333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2207,
+      "seconds": 36.78333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2237,
+      "seconds": 37.28333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2268,
+      "seconds": 37.8,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2298,
+      "seconds": 38.3,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2329,
+      "seconds": 38.81666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2360,
+      "seconds": 39.333333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2390,
+      "seconds": 39.833333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2420,
+      "seconds": 40.333333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2450,
+      "seconds": 40.833333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2480,
+      "seconds": 41.333333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2511,
+      "seconds": 41.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2541,
+      "seconds": 42.35,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2571,
+      "seconds": 42.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2602,
+      "seconds": 43.36666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2632,
+      "seconds": 43.86666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2662,
+      "seconds": 44.36666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2692,
+      "seconds": 44.86666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2723,
+      "seconds": 45.38333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2748,
+      "seconds": 45.8,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2778,
+      "seconds": 46.3,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2808,
+      "seconds": 46.8,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2839,
+      "seconds": 47.31666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2869,
+      "seconds": 47.81666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2899,
+      "seconds": 48.31666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2929,
+      "seconds": 48.81666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2960,
+      "seconds": 49.333333333333336,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 2991,
+      "seconds": 49.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3021,
+      "seconds": 50.35,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3051,
+      "seconds": 50.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3082,
+      "seconds": 51.36666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3112,
+      "seconds": 51.86666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3143,
+      "seconds": 52.38333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3173,
+      "seconds": 52.88333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3204,
+      "seconds": 53.4,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3234,
+      "seconds": 53.9,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3264,
+      "seconds": 54.4,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3294,
+      "seconds": 54.9,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3325,
+      "seconds": 55.416666666666664,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3356,
+      "seconds": 55.93333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3386,
+      "seconds": 56.43333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3416,
+      "seconds": 56.93333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3446,
+      "seconds": 57.43333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3476,
+      "seconds": 57.93333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3506,
+      "seconds": 58.43333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3537,
+      "seconds": 58.95,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3567,
+      "seconds": 59.45,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3597,
+      "seconds": 59.95,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": false,
+      "visibleInfected": [],
+      "aliveInfected": 0,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3628,
+      "seconds": 60.46666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 4,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3658,
+      "seconds": 60.96666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3689,
+      "seconds": 61.483333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3719,
+      "seconds": 61.983333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3750,
+      "seconds": 62.5,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3780,
+      "seconds": 63,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3810,
+      "seconds": 63.5,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3840,
+      "seconds": 64,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3871,
+      "seconds": 64.51666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3902,
+      "seconds": 65.03333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3933,
+      "seconds": 65.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3963,
+      "seconds": 66.05,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 3993,
+      "seconds": 66.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        425
+      ],
+      "aliveInfected": 12,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4023,
+      "seconds": 67.05,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 11,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4054,
+      "seconds": 67.56666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 9,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4084,
+      "seconds": 68.06666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 9,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4115,
+      "seconds": 68.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 9,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4145,
+      "seconds": 69.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 9,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4175,
+      "seconds": 69.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 9,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4205,
+      "seconds": 70.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 13,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4236,
+      "seconds": 70.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4250,
+      "seconds": 70.83333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4280,
+      "seconds": 71.33333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4310,
+      "seconds": 71.83333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4341,
+      "seconds": 72.35,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4371,
+      "seconds": 72.85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4401,
+      "seconds": 73.35,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4432,
+      "seconds": 73.86666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        455,
+        458,
+        460
+      ],
+      "aliveInfected": 25,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4462,
+      "seconds": 74.36666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        455,
+        456,
+        458,
+        460,
+        487
+      ],
+      "aliveInfected": 37,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4492,
+      "seconds": 74.86666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        455,
+        489,
+        491,
+        493
+      ],
+      "aliveInfected": 37,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4522,
+      "seconds": 75.36666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4553,
+      "seconds": 75.88333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4583,
+      "seconds": 76.38333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4613,
+      "seconds": 76.88333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4644,
+      "seconds": 77.4,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4674,
+      "seconds": 77.9,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 33,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4704,
+      "seconds": 78.4,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        519
+      ],
+      "aliveInfected": 45,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4734,
+      "seconds": 78.9,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        519,
+        521,
+        523,
+        525
+      ],
+      "aliveInfected": 49,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4764,
+      "seconds": 79.4,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        519,
+        521,
+        523,
+        525
+      ],
+      "aliveInfected": 49,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4795,
+      "seconds": 79.91666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        519,
+        521,
+        523,
+        525
+      ],
+      "aliveInfected": 49,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4825,
+      "seconds": 80.41666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 45,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4856,
+      "seconds": 80.93333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 45,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4887,
+      "seconds": 81.45,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 45,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4917,
+      "seconds": 81.95,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 45,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4947,
+      "seconds": 82.45,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        413,
+        417,
+        553,
+        559
+      ],
+      "aliveInfected": 57,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 4978,
+      "seconds": 82.96666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        413,
+        415,
+        417,
+        553,
+        557,
+        559
+      ],
+      "aliveInfected": 61,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5009,
+      "seconds": 83.48333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        553,
+        555,
+        557
+      ],
+      "aliveInfected": 58,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5039,
+      "seconds": 83.98333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        553,
+        555,
+        557
+      ],
+      "aliveInfected": 58,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5070,
+      "seconds": 84.5,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        553,
+        555,
+        557,
+        559
+      ],
+      "aliveInfected": 58,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5100,
+      "seconds": 85,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        553,
+        555,
+        557
+      ],
+      "aliveInfected": 58,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5131,
+      "seconds": 85.51666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        553,
+        555,
+        557,
+        559
+      ],
+      "aliveInfected": 58,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5162,
+      "seconds": 86.03333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        555
+      ],
+      "aliveInfected": 59,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5193,
+      "seconds": 86.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 70,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5224,
+      "seconds": 87.06666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        471
+      ],
+      "aliveInfected": 70,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5254,
+      "seconds": 87.56666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        444,
+        471
+      ],
+      "aliveInfected": 70,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5285,
+      "seconds": 88.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        442,
+        444,
+        471
+      ],
+      "aliveInfected": 70,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5315,
+      "seconds": 88.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 67,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5345,
+      "seconds": 89.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 67,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5375,
+      "seconds": 89.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 67,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5405,
+      "seconds": 90.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        473
+      ],
+      "aliveInfected": 71,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5435,
+      "seconds": 90.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        473
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5462,
+      "seconds": 91.03333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        446,
+        477
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5492,
+      "seconds": 91.53333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        446,
+        477
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5523,
+      "seconds": 92.05,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        446,
+        477,
+        507,
+        537,
+        539,
+        587
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5553,
+      "seconds": 92.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        446,
+        477,
+        507,
+        509,
+        537,
+        539,
+        541,
+        585,
+        587,
+        591
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5583,
+      "seconds": 93.05,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        477,
+        507,
+        509,
+        537,
+        539,
+        541,
+        585,
+        587,
+        591
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5613,
+      "seconds": 93.55,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        509,
+        541,
+        543,
+        585,
+        587,
+        591
+      ],
+      "aliveInfected": 71,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5644,
+      "seconds": 94.06666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        509,
+        543,
+        585,
+        587,
+        589,
+        591
+      ],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5674,
+      "seconds": 94.56666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        509,
+        543,
+        589
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5705,
+      "seconds": 95.08333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        509,
+        543,
+        589
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5735,
+      "seconds": 95.58333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        589,
+        617
+      ],
+      "aliveInfected": 74,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5766,
+      "seconds": 96.1,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        571,
+        589,
+        617
+      ],
+      "aliveInfected": 74,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5796,
+      "seconds": 96.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        569,
+        571,
+        573,
+        575,
+        589,
+        617
+      ],
+      "aliveInfected": 74,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5826,
+      "seconds": 97.1,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        569,
+        571,
+        573,
+        575,
+        589,
+        617
+      ],
+      "aliveInfected": 74,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5856,
+      "seconds": 97.6,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        569,
+        571,
+        573
+      ],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5887,
+      "seconds": 98.11666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        573
+      ],
+      "aliveInfected": 74,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5917,
+      "seconds": 98.61666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        571,
+        573,
+        575
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5947,
+      "seconds": 99.11666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        571,
+        573,
+        575
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 5977,
+      "seconds": 99.61666666666666,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        569,
+        571,
+        573,
+        575,
+        607
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6008,
+      "seconds": 100.13333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        607
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6038,
+      "seconds": 100.63333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        607
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6068,
+      "seconds": 101.13333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        607
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6098,
+      "seconds": 101.63333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6128,
+      "seconds": 102.13333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        601,
+        607,
+        631
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6159,
+      "seconds": 102.65,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        601,
+        607,
+        631
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6189,
+      "seconds": 103.15,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        631
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6220,
+      "seconds": 103.66666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        605
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6250,
+      "seconds": 104.16666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6280,
+      "seconds": 104.66666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        647
+      ],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6311,
+      "seconds": 105.18333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6341,
+      "seconds": 105.68333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 72,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6371,
+      "seconds": 106.18333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6401,
+      "seconds": 106.68333333333334,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6432,
+      "seconds": 107.2,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6463,
+      "seconds": 107.71666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6493,
+      "seconds": 108.21666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6523,
+      "seconds": 108.71666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6553,
+      "seconds": 109.21666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6584,
+      "seconds": 109.73333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6615,
+      "seconds": 110.25,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6645,
+      "seconds": 110.75,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6676,
+      "seconds": 111.26666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6706,
+      "seconds": 111.76666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6736,
+      "seconds": 112.26666666666667,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6767,
+      "seconds": 112.78333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6797,
+      "seconds": 113.28333333333333,
+      "step": "escape",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": null,
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6828,
+      "seconds": 113.8,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        647,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6831,
+      "seconds": 113.85,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        647,
+        649,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6862,
+      "seconds": 114.36666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6892,
+      "seconds": 114.86666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6922,
+      "seconds": 115.36666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6953,
+      "seconds": 115.88333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669,
+        671,
+        673
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 6983,
+      "seconds": 116.38333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 870,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669,
+        671
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7013,
+      "seconds": 116.88333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 860,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7044,
+      "seconds": 117.4,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 850,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7074,
+      "seconds": 117.9,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 850,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7105,
+      "seconds": 118.41666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 840,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7136,
+      "seconds": 118.93333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 830,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7167,
+      "seconds": 119.45,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 830,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7198,
+      "seconds": 119.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 820,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7228,
+      "seconds": 120.46666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 810,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7258,
+      "seconds": 120.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 810,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7288,
+      "seconds": 121.46666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 800,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7318,
+      "seconds": 121.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 790,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7348,
+      "seconds": 122.46666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 790,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651
+      ],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7378,
+      "seconds": 122.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 780,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7409,
+      "seconds": 123.48333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 770,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7439,
+      "seconds": 123.98333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 770,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7469,
+      "seconds": 124.48333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 770,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7500,
+      "seconds": 125,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 750,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7530,
+      "seconds": 125.5,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 750,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7560,
+      "seconds": 126,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 750,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7590,
+      "seconds": 126.5,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 740,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7621,
+      "seconds": 127.01666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 730,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7652,
+      "seconds": 127.53333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 730,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7682,
+      "seconds": 128.03333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 720,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7713,
+      "seconds": 128.55,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 710,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7744,
+      "seconds": 129.06666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 710,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7775,
+      "seconds": 129.58333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 700,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7805,
+      "seconds": 130.08333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 690,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7836,
+      "seconds": 130.6,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 690,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7866,
+      "seconds": 131.1,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 680,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7896,
+      "seconds": 131.6,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 670,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7927,
+      "seconds": 132.11666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 670,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7958,
+      "seconds": 132.63333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 660,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 7989,
+      "seconds": 133.15,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 650,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8019,
+      "seconds": 133.65,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 650,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        649,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8050,
+      "seconds": 134.16666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 640,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8081,
+      "seconds": 134.68333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 630,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8111,
+      "seconds": 135.18333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 630,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8142,
+      "seconds": 135.7,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 630,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8167,
+      "seconds": 136.11666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 620,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8197,
+      "seconds": 136.61666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 610,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8228,
+      "seconds": 137.13333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 610,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8254,
+      "seconds": 137.56666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 600,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8284,
+      "seconds": 138.06666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 590,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8315,
+      "seconds": 138.58333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 590,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        633,
+        647,
+        651
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8345,
+      "seconds": 139.08333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 580,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        647,
+        651
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8376,
+      "seconds": 139.6,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 570,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        651
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8406,
+      "seconds": 140.1,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 570,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        651
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8436,
+      "seconds": 140.6,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 550,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        651
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8467,
+      "seconds": 141.11666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 540,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        651
+      ],
+      "aliveInfected": 75,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8497,
+      "seconds": 141.61666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 540,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633,
+        651
+      ],
+      "aliveInfected": 76,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8527,
+      "seconds": 142.11666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 540,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8558,
+      "seconds": 142.63333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 520,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8588,
+      "seconds": 143.13333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 520,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 77,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8619,
+      "seconds": 143.65,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 520,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8650,
+      "seconds": 144.16666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 510,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8680,
+      "seconds": 144.66666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8711,
+      "seconds": 145.18333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        633
+      ],
+      "aliveInfected": 78,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8741,
+      "seconds": 145.68333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 79,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8772,
+      "seconds": 146.2,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8801,
+      "seconds": 146.68333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8832,
+      "seconds": 147.2,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8863,
+      "seconds": 147.71666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8893,
+      "seconds": 148.21666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8923,
+      "seconds": 148.71666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8953,
+      "seconds": 149.21666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579
+      ],
+      "aliveInfected": 80,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 8983,
+      "seconds": 149.71666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9014,
+      "seconds": 150.23333333333332,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9045,
+      "seconds": 150.75,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9075,
+      "seconds": 151.25,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9105,
+      "seconds": 151.75,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        647,
+        669
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9135,
+      "seconds": 152.25,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 500,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9166,
+      "seconds": 152.76666666666668,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 490,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        647,
+        651,
+        669
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9196,
+      "seconds": 153.26666666666668,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 490,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9226,
+      "seconds": 153.76666666666668,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 480,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        579,
+        609,
+        647,
+        649,
+        651,
+        669
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9256,
+      "seconds": 154.26666666666668,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 480,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        579,
+        609,
+        649,
+        651
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9286,
+      "seconds": 154.76666666666668,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        649,
+        651
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9317,
+      "seconds": 155.28333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        649
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9348,
+      "seconds": 155.8,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        649,
+        651
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9378,
+      "seconds": 156.3,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9408,
+      "seconds": 156.8,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9438,
+      "seconds": 157.3,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9468,
+      "seconds": 157.8,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9499,
+      "seconds": 158.31666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        609
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9529,
+      "seconds": 158.81666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        609,
+        359
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9559,
+      "seconds": 159.31666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        609,
+        649,
+        359,
+        361
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9589,
+      "seconds": 159.81666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        609,
+        649,
+        359,
+        361
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9620,
+      "seconds": 160.33333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        609,
+        649,
+        359,
+        361
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9651,
+      "seconds": 160.85,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        647,
+        359
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9681,
+      "seconds": 161.35,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        647,
+        669
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9711,
+      "seconds": 161.85,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        647,
+        669,
+        364
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9742,
+      "seconds": 162.36666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        609,
+        364
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9772,
+      "seconds": 162.86666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9803,
+      "seconds": 163.38333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9833,
+      "seconds": 163.88333333333333,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9864,
+      "seconds": 164.4,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9894,
+      "seconds": 164.9,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 470,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9924,
+      "seconds": 165.4,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 460,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9955,
+      "seconds": 165.91666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 450,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 9985,
+      "seconds": 166.41666666666666,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 430,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        365
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10016,
+      "seconds": 166.93333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 430,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        441,
+        364,
+        363,
+        365
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10046,
+      "seconds": 167.43333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 430,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        363,
+        365
+      ],
+      "aliveInfected": 81,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10076,
+      "seconds": 167.93333333333334,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 430,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        364,
+        363,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10107,
+      "seconds": 168.45,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 410,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        359,
+        364,
+        363,
+        365
+      ],
+      "aliveInfected": 82,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10137,
+      "seconds": 168.95,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 400,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        359,
+        361,
+        364,
+        363,
+        365,
+        366
+      ],
+      "aliveInfected": 83,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10167,
+      "seconds": 169.45,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 400,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        359,
+        361,
+        364,
+        363,
+        365,
+        366
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10198,
+      "seconds": 169.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 390,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        669,
+        671,
+        359,
+        361,
+        364,
+        365,
+        366
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10228,
+      "seconds": 170.46666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 390,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        669,
+        671,
+        359,
+        361,
+        364,
+        365,
+        366
+      ],
+      "aliveInfected": 84,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10258,
+      "seconds": 170.96666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 380,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        669,
+        671,
+        359,
+        361,
+        364,
+        365,
+        366,
+        360
+      ],
+      "aliveInfected": 86,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10288,
+      "seconds": 171.46666666666667,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 370,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        361,
+        364,
+        365,
+        366,
+        360
+      ],
+      "aliveInfected": 86,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10319,
+      "seconds": 171.98333333333332,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 370,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360
+      ],
+      "aliveInfected": 88,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10349,
+      "seconds": 172.48333333333332,
+      "step": "depart",
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 350,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        577,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360
+      ],
+      "aliveInfected": 87,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10379,
+      "seconds": 172.98333333333332,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 350,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        577,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 88,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10387,
+      "seconds": 173.11666666666667,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 350,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        577,
+        579,
+        609,
+        633,
+        647,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 88,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10416,
+      "seconds": 173.6,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 340,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        577,
+        579,
+        609,
+        633,
+        647,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 89,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10446,
+      "seconds": 174.1,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 320,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        567,
+        577,
+        579,
+        609,
+        633,
+        647,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10479,
+      "seconds": 174.65,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 320,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        513,
+        567,
+        577,
+        579,
+        583,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10510,
+      "seconds": 175.16666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 310,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        513,
+        545,
+        567,
+        579,
+        583,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10540,
+      "seconds": 175.66666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 310,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        513,
+        545,
+        567,
+        579,
+        583,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10570,
+      "seconds": 176.16666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 310,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        513,
+        545,
+        567,
+        579,
+        583,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10600,
+      "seconds": 176.66666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 300,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        513,
+        545,
+        567,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 90,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10630,
+      "seconds": 177.16666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 300,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        545,
+        567,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 91,
+      "zoom": 1.5000000000000002
+    },
+    {
+      "level": "L8",
+      "tick": 10660,
+      "seconds": 177.66666666666666,
+      "hp": 100,
+      "deaths": 0,
+      "vehicleArmor": {
+        "id": 406,
+        "current": 300,
+        "max": 1000
+      },
+      "quality": "low",
+      "breached": true,
+      "visibleInfected": [
+        437,
+        513,
+        545,
+        567,
+        579,
+        609,
+        633,
+        651,
+        669,
+        671,
+        359,
+        364,
+        365,
+        360,
+        362
+      ],
+      "aliveInfected": 92,
+      "zoom": 1.5000000000000002
+    }
+  ],
+  "frameTiming": false,
+  "timingScope": "Gameplay clocks only; RAF/performance traces are discarded and no performance conclusions are made.",
+  "sourceScope": "Final build.",
+  "actualPlayerRoute": [
+    {
+      "tick": 24,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 146,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 209,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 284,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 346,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 417,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 487,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 551,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 613,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 635,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 712,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 776,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 837,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 900,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 966,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1024,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1089,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1151,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1221,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1289,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1360,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1430,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1499,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1567,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1634,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1705,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1774,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1843,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1914,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 1979,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2050,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2119,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2192,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2269,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2342,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2415,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2490,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2551,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2614,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2687,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2750,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2823,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2897,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 2960,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3020,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3091,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3150,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3222,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3288,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3357,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3430,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3501,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3571,
+      "x": 0,
+      "z": 70,
+      "driving": null
+    },
+    {
+      "tick": 3644,
+      "x": 1.4583691358566284,
+      "z": 69.97224426269531,
+      "driving": null
+    },
+    {
+      "tick": 3727,
+      "x": 4.693917751312256,
+      "z": 70.90718841552734,
+      "driving": null
+    },
+    {
+      "tick": 3808,
+      "x": 9.669472694396973,
+      "z": 71.33370971679688,
+      "driving": null
+    },
+    {
+      "tick": 3886,
+      "x": 15.519457817077637,
+      "z": 71.33370971679688,
+      "driving": null
+    },
+    {
+      "tick": 3963,
+      "x": 21.294509887695312,
+      "z": 71.33370971679688,
+      "driving": null
+    },
+    {
+      "tick": 4043,
+      "x": 25.06002426147461,
+      "z": 71.33284759521484,
+      "driving": null
+    },
+    {
+      "tick": 4121,
+      "x": 28.596416473388672,
+      "z": 72.7645263671875,
+      "driving": null
+    },
+    {
+      "tick": 4194,
+      "x": 28.596416473388672,
+      "z": 72.7645263671875,
+      "driving": null
+    },
+    {
+      "tick": 4251,
+      "x": 28.59642219543457,
+      "z": 72.74261474609375,
+      "driving": null
+    },
+    {
+      "tick": 4377,
+      "x": 33.31153106689453,
+      "z": 68.94329071044922,
+      "driving": null
+    },
+    {
+      "tick": 4440,
+      "x": 37.343685150146484,
+      "z": 68.97018432617188,
+      "driving": null
+    },
+    {
+      "tick": 4500,
+      "x": 37.343685150146484,
+      "z": 68.97018432617188,
+      "driving": null
+    },
+    {
+      "tick": 4575,
+      "x": 40.54871368408203,
+      "z": 68.97018432617188,
+      "driving": null
+    },
+    {
+      "tick": 4650,
+      "x": 45.134760605636984,
+      "z": 68.39068206585944,
+      "driving": null
+    },
+    {
+      "tick": 4723,
+      "x": 45.68523747846484,
+      "z": 68.84487567096949,
+      "driving": null
+    },
+    {
+      "tick": 4785,
+      "x": 45.726661682128906,
+      "z": 68.84500122070312,
+      "driving": null
+    },
+    {
+      "tick": 4861,
+      "x": 48.98506164550781,
+      "z": 68.81724548339844,
+      "driving": null
+    },
+    {
+      "tick": 4934,
+      "x": 54.46011734008789,
+      "z": 68.81724548339844,
+      "driving": null
+    },
+    {
+      "tick": 4995,
+      "x": 56.617252349853516,
+      "z": 68.8441390991211,
+      "driving": null
+    },
+    {
+      "tick": 5076,
+      "x": 62.125675201416016,
+      "z": 68.8163833618164,
+      "driving": null
+    },
+    {
+      "tick": 5141,
+      "x": 64.35780334472656,
+      "z": 68.84327697753906,
+      "driving": null
+    },
+    {
+      "tick": 5210,
+      "x": 66.68421173095703,
+      "z": 70.1224136352539,
+      "driving": null
+    },
+    {
+      "tick": 5282,
+      "x": 67.82534790039062,
+      "z": 70.10548400878906,
+      "driving": null
+    },
+    {
+      "tick": 5359,
+      "x": 71.0835952758789,
+      "z": 70.07772827148438,
+      "driving": null
+    },
+    {
+      "tick": 5421,
+      "x": 73.68001556396484,
+      "z": 70.11942291259766,
+      "driving": null
+    },
+    {
+      "tick": 5558,
+      "x": 76.9202651977539,
+      "z": 70.13883972167969,
+      "driving": null
+    },
+    {
+      "tick": 5620,
+      "x": 76.9202651977539,
+      "z": 70.13883972167969,
+      "driving": null
+    },
+    {
+      "tick": 5682,
+      "x": 76.9202651977539,
+      "z": 70.13883972167969,
+      "driving": null
+    },
+    {
+      "tick": 5818,
+      "x": 78.7374496459961,
+      "z": 70.13700866699219,
+      "driving": null
+    },
+    {
+      "tick": 5887,
+      "x": 78.7374496459961,
+      "z": 70.13700866699219,
+      "driving": null
+    },
+    {
+      "tick": 5983,
+      "x": 82.66178131103516,
+      "z": 70.10132598876953,
+      "driving": null
+    },
+    {
+      "tick": 6135,
+      "x": 88.59324645996094,
+      "z": 70.11417388916016,
+      "driving": null
+    },
+    {
+      "tick": 6205,
+      "x": 88.59324645996094,
+      "z": 70.11417388916016,
+      "driving": null
+    },
+    {
+      "tick": 6293,
+      "x": 92.13224792480469,
+      "z": 73.6531753540039,
+      "driving": null
+    },
+    {
+      "tick": 6419,
+      "x": 94.4069595336914,
+      "z": 77.17305755615234,
+      "driving": null
+    },
+    {
+      "tick": 6521,
+      "x": 97.12235260009766,
+      "z": 77.17219543457031,
+      "driving": null
+    },
+    {
+      "tick": 6593,
+      "x": 97.12235260009766,
+      "z": 77.17219543457031,
+      "driving": null
+    },
+    {
+      "tick": 6660,
+      "x": 97.12235260009766,
+      "z": 77.17219543457031,
+      "driving": null
+    },
+    {
+      "tick": 6727,
+      "x": 97.12235260009766,
+      "z": 77.17219543457031,
+      "driving": null
+    },
+    {
+      "tick": 6791,
+      "x": 97.13573455810547,
+      "z": 76.34640502929688,
+      "driving": null
+    },
+    {
+      "tick": 6831,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 6924,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 6990,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7056,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7126,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7191,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7251,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7315,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7364,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7450,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7516,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7578,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7647,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7715,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7780,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7840,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7908,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 7972,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8037,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8103,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8166,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8227,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8286,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8347,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8419,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8481,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8545,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8607,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8672,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8739,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8808,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8879,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 8943,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9007,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9069,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9129,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9194,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9262,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9326,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9392,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9455,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9518,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9581,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9644,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9709,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9773,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9836,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9899,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 9962,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10027,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10090,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10155,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10219,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10285,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10348,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10387,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10446,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10516,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10582,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    },
+    {
+      "tick": 10651,
+      "x": 96.09867858886719,
+      "z": 73.98737335205078,
+      "driving": 406
+    }
+  ],
+  "firstVisibleEnemyEvidence": [
+    {
+      "tick": 3993,
+      "seconds": 66.55,
+      "id": 425,
+      "nearestSample": {
+        "id": 425,
+        "x": 29.416778192498725,
+        "z": 64.96369056479494,
+        "distance": 8.691181565046145,
+        "drawn": true,
+        "projected": [
+          0.8097969963188957,
+          0.11199236564500906,
+          0.9932056232750056
+        ]
+      }
+    },
+    {
+      "tick": 4432,
+      "seconds": 73.86666666666666,
+      "id": 455,
+      "nearestSample": {
+        "id": 455,
+        "x": 45.50146836508448,
+        "z": 64.90627072465657,
+        "distance": 9.12376404851409,
+        "drawn": true,
+        "projected": [
+          0.8842501725674062,
+          -0.21074585194926004,
+          0.9924788505101105
+        ]
+      }
+    },
+    {
+      "tick": 4432,
+      "seconds": 73.86666666666666,
+      "id": 458,
+      "nearestSample": {
+        "id": 458,
+        "x": 46.79938886632451,
+        "z": 65.13300904316871,
+        "distance": 10.214865944560705,
+        "drawn": true,
+        "projected": [
+          0.9937468620904086,
+          -0.3344374910824342,
+          0.9922003098549702
+        ]
+      }
+    },
+    {
+      "tick": 4432,
+      "seconds": 73.86666666666666,
+      "id": 460,
+      "nearestSample": {
+        "id": 460,
+        "x": 45.09217423255301,
+        "z": 63.65403147275212,
+        "distance": 9.405607694830218,
+        "drawn": true,
+        "projected": [
+          0.9096826567109353,
+          -0.08525020906957323,
+          0.9927614535933098
+        ]
+      }
+    },
+    {
+      "tick": 4462,
+      "seconds": 74.36666666666666,
+      "id": 456,
+      "nearestSample": {
+        "id": 456,
+        "x": 46.11889534241596,
+        "z": 63.942403546732315,
+        "distance": 10.113500555426493,
+        "drawn": true,
+        "projected": [
+          0.9573067273592332,
+          -0.15606343167066408,
+          0.9926019896104993
+        ]
+      }
+    },
+    {
+      "tick": 4462,
+      "seconds": 74.36666666666666,
+      "id": 487,
+      "nearestSample": {
+        "id": 487,
+        "x": 48,
+        "z": 68.74000000000017,
+        "distance": 10.658800636245322,
+        "drawn": true,
+        "projected": [
+          0.8858838209239189,
+          -0.7508924188978359,
+          0.9912624968447797
+        ]
+      }
+    },
+    {
+      "tick": 4492,
+      "seconds": 74.86666666666666,
+      "id": 489,
+      "nearestSample": {
+        "id": 489,
+        "x": 48,
+        "z": 67.3400000000003,
+        "distance": 10.780285112950585,
+        "drawn": true,
+        "projected": [
+          0.9655010640892545,
+          -0.6038474243339079,
+          0.9915794789646007
+        ]
+      }
+    },
+    {
+      "tick": 4492,
+      "seconds": 74.86666666666666,
+      "id": 491,
+      "nearestSample": {
+        "id": 491,
+        "x": 48,
+        "z": 68.74100000000023,
+        "distance": 10.658779087427009,
+        "drawn": true,
+        "projected": [
+          0.8867744524845423,
+          -0.7454507676241733,
+          0.9912612876200338
+        ]
+      }
+    },
+    {
+      "tick": 4492,
+      "seconds": 74.86666666666666,
+      "id": 493,
+      "nearestSample": {
+        "id": 493,
+        "x": 48,
+        "z": 68.04000000000023,
+        "distance": 10.696835469421037,
+        "drawn": true,
+        "projected": [
+          0.9268684740371453,
+          -0.6733347780994725,
+          0.9914233366447139
+        ]
+      }
+    },
+    {
+      "tick": 4704,
+      "seconds": 78.4,
+      "id": 519,
+      "nearestSample": {
+        "id": 519,
+        "x": 48,
+        "z": 68.60000000000018,
+        "distance": 2.3276790211144816,
+        "drawn": true,
+        "projected": [
+          0.17116165183942003,
+          -0.03319994597222786,
+          0.9928786664704936
+        ]
+      }
+    },
+    {
+      "tick": 4734,
+      "seconds": 78.9,
+      "id": 521,
+      "nearestSample": {
+        "id": 521,
+        "x": 48,
+        "z": 68.60000000000018,
+        "distance": 2.3276790211144816,
+        "drawn": true,
+        "projected": [
+          0.1711383237973531,
+          -0.033100061289703116,
+          0.9928788900245639
+        ]
+      }
+    },
+    {
+      "tick": 4734,
+      "seconds": 78.9,
+      "id": 523,
+      "nearestSample": {
+        "id": 523,
+        "x": 48,
+        "z": 67.90100000000031,
+        "distance": 2.4998053550929353,
+        "drawn": true,
+        "projected": [
+          0.21467464974223394,
+          0.015505098420756354,
+          0.9929883437036631
+        ]
+      }
+    },
+    {
+      "tick": 4734,
+      "seconds": 78.9,
+      "id": 525,
+      "nearestSample": {
+        "id": 525,
+        "x": 48,
+        "z": 67.20000000000032,
+        "distance": 2.8396727811580833,
+        "drawn": true,
+        "projected": [
+          0.25707020364355854,
+          0.06283666863630896,
+          0.9930949293939167
+        ]
+      }
+    },
+    {
+      "tick": 4947,
+      "seconds": 82.45,
+      "id": 413,
+      "nearestSample": {
+        "id": 413,
+        "x": 64.15495745374253,
+        "z": 71.31901632779089,
+        "distance": 9.071620362161863,
+        "drawn": true,
+        "projected": [
+          0.5553476753642674,
+          -0.8988970626557433,
+          0.9909996469203857
+        ]
+      }
+    },
+    {
+      "tick": 4947,
+      "seconds": 82.45,
+      "id": 417,
+      "nearestSample": {
+        "id": 417,
+        "x": 65.46442968312203,
+        "z": 71.29056382691289,
+        "distance": 10.32977302542948,
+        "drawn": true,
+        "projected": [
+          0.6909774225491443,
+          -1.0467602861268417,
+          0.9906691877308241
+        ]
+      }
+    },
+    {
+      "tick": 4947,
+      "seconds": 82.45,
+      "id": 553,
+      "nearestSample": {
+        "id": 553,
+        "x": 48,
+        "z": 68.3900000000002,
+        "distance": 7.447392567215152,
+        "drawn": true,
+        "projected": [
+          -0.36639177898169123,
+          0.5252304424281828,
+          0.994136161400427
+        ]
+      }
+    },
+    {
+      "tick": 4947,
+      "seconds": 82.45,
+      "id": 559,
+      "nearestSample": {
+        "id": 559,
+        "x": 48,
+        "z": 69.09000000000013,
+        "distance": 7.440128518611349,
+        "drawn": true,
+        "projected": [
+          -0.41039269320520716,
+          0.4906629710513229,
+          0.9940583120867552
+        ]
+      }
+    },
+    {
+      "tick": 4978,
+      "seconds": 82.96666666666667,
+      "id": 415,
+      "nearestSample": {
+        "id": 415,
+        "x": 66.12874886869668,
+        "z": 72.1382119007663,
+        "distance": 10.065757877601875,
+        "drawn": true,
+        "projected": [
+          0.5405517652308507,
+          -1.0374555269849943,
+          0.9906898172611355
+        ]
+      }
+    },
+    {
+      "tick": 4978,
+      "seconds": 82.96666666666667,
+      "id": 557,
+      "nearestSample": {
+        "id": 557,
+        "x": 48.00013731294194,
+        "z": 68.79653380207841,
+        "distance": 8.617246533764375,
+        "drawn": true,
+        "projected": [
+          -0.4647985182118416,
+          0.5817136122223854,
+          0.9942633943116457
+        ]
+      }
+    },
+    {
+      "tick": 5009,
+      "seconds": 83.48333333333333,
+      "id": 555,
+      "nearestSample": {
+        "id": 555,
+        "x": 47.98827646732175,
+        "z": 68.40003251342485,
+        "distance": 9.12185436875377,
+        "drawn": true,
+        "projected": [
+          -0.4586626206049261,
+          0.6028131657404988,
+          0.9943142133427123
+        ]
+      }
+    },
+    {
+      "tick": 5224,
+      "seconds": 87.06666666666666,
+      "id": 471,
+      "nearestSample": {
+        "id": 471,
+        "x": 75.00397019337814,
+        "z": 62.57873867513643,
+        "distance": 10.809677835383125,
+        "drawn": true,
+        "projected": [
+          1.0023496908722136,
+          0.07683890540031091,
+          0.9931307470946316
+        ]
+      }
+    },
+    {
+      "tick": 5254,
+      "seconds": 87.56666666666666,
+      "id": 444,
+      "nearestSample": {
+        "id": 444,
+        "x": 66.71539801229859,
+        "z": 58.13030327452684,
+        "distance": 12.026509983046648,
+        "drawn": true,
+        "projected": [
+          0.5512015647009116,
+          0.7543820751353205,
+          0.9947111802096286
+        ]
+      }
+    },
+    {
+      "tick": 5285,
+      "seconds": 88.08333333333333,
+      "id": 442,
+      "nearestSample": {
+        "id": 442,
+        "x": 73.39990699588616,
+        "z": 57.88140182071818,
+        "distance": 13.435173778179564,
+        "drawn": true,
+        "projected": [
+          0.9994404816322396,
+          0.4838159546365999,
+          0.9940610075036631
+        ]
+      }
+    },
+    {
+      "tick": 5405,
+      "seconds": 90.08333333333333,
+      "id": 473,
+      "nearestSample": {
+        "id": 473,
+        "x": 75.75742102331361,
+        "z": 60.93850461233851,
+        "distance": 9.463092507870297,
+        "drawn": true,
+        "projected": [
+          0.6627394775670497,
+          0.46629736974400404,
+          0.9940513344212745
+        ]
+      }
+    },
+    {
+      "tick": 5462,
+      "seconds": 91.03333333333333,
+      "id": 446,
+      "nearestSample": {
+        "id": 446,
+        "x": 66.00824970599741,
+        "z": 60.91978395994699,
+        "distance": 11.978703946529532,
+        "drawn": true,
+        "projected": [
+          0.07897617116605929,
+          0.9092151925216476,
+          0.995032013207752
+        ]
+      }
+    },
+    {
+      "tick": 5462,
+      "seconds": 91.03333333333333,
+      "id": 477,
+      "nearestSample": {
+        "id": 477,
+        "x": 76.99018704575204,
+        "z": 53.959137186919726,
+        "distance": 16.495819772729913,
+        "drawn": true,
+        "projected": [
+          0.9907533416852842,
+          0.731391291729554,
+          0.9946878202396046
+        ]
+      }
+    },
+    {
+      "tick": 5523,
+      "seconds": 92.05,
+      "id": 507,
+      "nearestSample": {
+        "id": 507,
+        "x": 79.0623542749492,
+        "z": 55.080577722478026,
+        "distance": 15.379388498066575,
+        "drawn": true,
+        "projected": [
+          0.9554165048249768,
+          0.6984754158985697,
+          0.9945721358455649
+        ]
+      }
+    },
+    {
+      "tick": 5523,
+      "seconds": 92.05,
+      "id": 537,
+      "nearestSample": {
+        "id": 537,
+        "x": 78.52834437977418,
+        "z": 56.46989210078285,
+        "distance": 13.9110087659657,
+        "drawn": true,
+        "projected": [
+          0.8682511554385801,
+          0.6617279631615365,
+          0.9944897867944932
+        ]
+      }
+    },
+    {
+      "tick": 5523,
+      "seconds": 92.05,
+      "id": 539,
+      "nearestSample": {
+        "id": 539,
+        "x": 79.42635749953455,
+        "z": 56.666648039311944,
+        "distance": 13.92161854709816,
+        "drawn": true,
+        "projected": [
+          0.9218499986634562,
+          0.612942887400223,
+          0.994380882939674
+        ]
+      }
+    },
+    {
+      "tick": 5523,
+      "seconds": 92.05,
+      "id": 587,
+      "nearestSample": null
+    },
+    {
+      "tick": 5553,
+      "seconds": 92.55,
+      "id": 509,
+      "nearestSample": null
+    },
+    {
+      "tick": 5553,
+      "seconds": 92.55,
+      "id": 541,
+      "nearestSample": {
+        "id": 541,
+        "x": 79.8637195327366,
+        "z": 55.04704907415058,
+        "distance": 15.376152586748596,
+        "drawn": true,
+        "projected": [
+          0.9310418449339515,
+          0.7179993083003683,
+          0.9946124539757912
+        ]
+      }
+    },
+    {
+      "tick": 5553,
+      "seconds": 92.55,
+      "id": 585,
+      "nearestSample": {
+        "id": 585,
+        "x": 63.81517180127994,
+        "z": 66.33862313619693,
+        "distance": 13.64496680197075,
+        "drawn": true,
+        "projected": [
+          -0.43861348255109145,
+          0.9155558468518094,
+          0.995015601364277
+        ]
+      }
+    },
+    {
+      "tick": 5553,
+      "seconds": 92.55,
+      "id": 591,
+      "nearestSample": null
+    },
+    {
+      "tick": 5613,
+      "seconds": 93.55,
+      "id": 543,
+      "nearestSample": {
+        "id": 543,
+        "x": 80.05203891850898,
+        "z": 54.92653407542387,
+        "distance": 15.531331227976528,
+        "drawn": true,
+        "projected": [
+          0.9284649892313671,
+          0.7269716630266413,
+          0.994637178293069
+        ]
+      }
+    },
+    {
+      "tick": 5644,
+      "seconds": 94.06666666666666,
+      "id": 589,
+      "nearestSample": {
+        "id": 589,
+        "x": 58.912846043716655,
+        "z": 69.19791535440024,
+        "distance": 18.031985005931208,
+        "drawn": true,
+        "projected": [
+          -0.7929538208177536,
+          0.9594479611926973,
+          0.9951863506389205
+        ]
+      }
+    },
+    {
+      "tick": 5735,
+      "seconds": 95.58333333333333,
+      "id": 617,
+      "nearestSample": {
+        "id": 617,
+        "x": 62.754032204518346,
+        "z": 67.28170471253341,
+        "distance": 14.755072577323178,
+        "drawn": true,
+        "projected": [
+          -0.5482286669820371,
+          0.9019506244054664,
+          0.9950541911441724
+        ]
+      }
+    },
+    {
+      "tick": 5766,
+      "seconds": 96.1,
+      "id": 571,
+      "nearestSample": {
+        "id": 571,
+        "x": 81.10090197281234,
+        "z": 53.30164081776278,
+        "distance": 17.10240339433125,
+        "drawn": true,
+        "projected": [
+          1.0115938921962928,
+          0.7891810618596501,
+          0.994737670021503
+        ]
+      }
+    },
+    {
+      "tick": 5796,
+      "seconds": 96.6,
+      "id": 569,
+      "nearestSample": {
+        "id": 569,
+        "x": 79.07881332526603,
+        "z": 56.46146336139844,
+        "distance": 13.657473832385733,
+        "drawn": true,
+        "projected": [
+          0.7291531437541519,
+          0.7534616478991645,
+          0.9946922644074874
+        ]
+      }
+    },
+    {
+      "tick": 5796,
+      "seconds": 96.6,
+      "id": 573,
+      "nearestSample": {
+        "id": 573,
+        "x": 80.93999769996837,
+        "z": 52.23761389291514,
+        "distance": 18.02588686131809,
+        "drawn": true,
+        "projected": [
+          0.9989462006201675,
+          0.8461929321254091,
+          0.9948993871948112
+        ]
+      }
+    },
+    {
+      "tick": 5796,
+      "seconds": 96.6,
+      "id": 575,
+      "nearestSample": {
+        "id": 575,
+        "x": 78.27939366720662,
+        "z": 56.91505105196995,
+        "distance": 13.199116360382504,
+        "drawn": true,
+        "projected": [
+          0.6620609915932888,
+          0.7674497193908497,
+          0.9947235626887676
+        ]
+      }
+    },
+    {
+      "tick": 5977,
+      "seconds": 99.61666666666666,
+      "id": 607,
+      "nearestSample": {
+        "id": 607,
+        "x": 82.79274521819721,
+        "z": 51.22959417893764,
+        "distance": 18.872186228606374,
+        "drawn": true,
+        "projected": [
+          0.8878174493519084,
+          0.9650718373851347,
+          0.9951658004885682
+        ]
+      }
+    },
+    {
+      "tick": 6128,
+      "seconds": 102.13333333333334,
+      "id": 601,
+      "nearestSample": {
+        "id": 601,
+        "x": 86.5389986428016,
+        "z": 56.42483381231599,
+        "distance": 13.84261412572769,
+        "drawn": true,
+        "projected": [
+          0.5764248094800344,
+          0.8522744750904184,
+          0.9949134635982939
+        ]
+      }
+    },
+    {
+      "tick": 6128,
+      "seconds": 102.13333333333334,
+      "id": 631,
+      "nearestSample": {
+        "id": 631,
+        "x": 86.40660691394959,
+        "z": 54.384810837080614,
+        "distance": 15.880625130274494,
+        "drawn": true,
+        "projected": [
+          0.6473596905128173,
+          0.931270188031414,
+          0.9950900212749604
+        ]
+      }
+    },
+    {
+      "tick": 6220,
+      "seconds": 103.66666666666667,
+      "id": 605,
+      "nearestSample": {
+        "id": 605,
+        "x": 83.21338945854289,
+        "z": 59.29709338964568,
+        "distance": 12.346828302642773,
+        "drawn": true,
+        "projected": [
+          0.2581085903350862,
+          0.8890940573924633,
+          0.99499023039389
+        ]
+      }
+    },
+    {
+      "tick": 6280,
+      "seconds": 104.66666666666667,
+      "id": 647,
+      "nearestSample": {
+        "id": 647,
+        "x": 92.5680852230801,
+        "z": 53.63232131677956,
+        "distance": 19.87066649728722,
+        "drawn": true,
+        "projected": [
+          0.9465969398865027,
+          0.962693301504268,
+          0.995177571278827
+        ]
+      }
+    },
+    {
+      "tick": 6828,
+      "seconds": 113.8,
+      "id": 633,
+      "nearestSample": {
+        "id": 633,
+        "x": 90.29134541649226,
+        "z": 64.82769454547524,
+        "distance": 10.845498347913543,
+        "drawn": true,
+        "projected": [
+          0.18453841434565757,
+          0.8553801503832966,
+          0.9953408080398612
+        ]
+      }
+    },
+    {
+      "tick": 6828,
+      "seconds": 113.8,
+      "id": 651,
+      "nearestSample": {
+        "id": 651,
+        "x": 92.22082524487625,
+        "z": 66.95080851616035,
+        "distance": 8.034363151313949,
+        "drawn": true,
+        "projected": [
+          0.18666881401279478,
+          0.7066394121931754,
+          0.9950341817844891
+        ]
+      }
+    },
+    {
+      "tick": 6828,
+      "seconds": 113.8,
+      "id": 669,
+      "nearestSample": {
+        "id": 669,
+        "x": 99.55359494146037,
+        "z": 63.771101739042784,
+        "distance": 10.784648936065041,
+        "drawn": true,
+        "projected": [
+          0.7324162824076654,
+          0.5339827743659386,
+          0.994678253348431
+        ]
+      }
+    },
+    {
+      "tick": 6828,
+      "seconds": 113.8,
+      "id": 671,
+      "nearestSample": {
+        "id": 671,
+        "x": 99.48317829106307,
+        "z": 57.729670993719054,
+        "distance": 16.606255574519775,
+        "drawn": true,
+        "projected": [
+          0.9404421181121836,
+          0.7680870652358622,
+          0.9951962762724281
+        ]
+      }
+    },
+    {
+      "tick": 6828,
+      "seconds": 113.8,
+      "id": 673,
+      "nearestSample": {
+        "id": 673,
+        "x": 99.30399531093113,
+        "z": 59.565565126631675,
+        "distance": 14.773713405217691,
+        "drawn": true,
+        "projected": [
+          0.8687411159517632,
+          0.7054932783990333,
+          0.9950681239819047
+        ]
+      }
+    },
+    {
+      "tick": 6831,
+      "seconds": 113.85,
+      "id": 649,
+      "nearestSample": {
+        "id": 649,
+        "x": 86.74155834776386,
+        "z": 64.0071953563016,
+        "distance": 13.68063054224117,
+        "drawn": true,
+        "projected": [
+          0.04428070459752048,
+          0.9294363807128135,
+          0.9957802212309337
+        ]
+      }
+    },
+    {
+      "tick": 6862,
+      "seconds": 114.36666666666666,
+      "id": 441,
+      "nearestSample": {
+        "id": 441,
+        "x": 97.96128633438354,
+        "z": 49.76611502805369,
+        "distance": 24.29276975586472,
+        "drawn": true,
+        "projected": [
+          0.9223985822137365,
+          0.8658806491577811,
+          0.9963911310061893
+        ]
+      }
+    },
+    {
+      "tick": 8832,
+      "seconds": 147.2,
+      "id": 567,
+      "nearestSample": null
+    },
+    {
+      "tick": 8923,
+      "seconds": 148.71666666666667,
+      "id": 579,
+      "nearestSample": {
+        "id": 579,
+        "x": 76.43716806170167,
+        "z": 66.33830416332576,
+        "distance": 21.0969963659224,
+        "drawn": true,
+        "projected": [
+          -0.39849386490673816,
+          0.9834553569694892,
+          0.9966347626082466
+        ]
+      }
+    },
+    {
+      "tick": 9105,
+      "seconds": 151.75,
+      "id": 609,
+      "nearestSample": null
+    },
+    {
+      "tick": 9529,
+      "seconds": 158.81666666666666,
+      "id": 359,
+      "nearestSample": {
+        "id": 359,
+        "x": 92.96853290471492,
+        "z": 78.89898002494036,
+        "distance": 5.824233178126583,
+        "drawn": true,
+        "projected": [
+          -0.3846285434491722,
+          -0.04773217141016399,
+          0.9950007655738604
+        ]
+      }
+    },
+    {
+      "tick": 9559,
+      "seconds": 159.31666666666666,
+      "id": 361,
+      "nearestSample": {
+        "id": 361,
+        "x": 90.66915523686127,
+        "z": 75.84675606625085,
+        "distance": 5.739079012162453,
+        "drawn": true,
+        "projected": [
+          -0.3223152448706217,
+          0.20315487129396087,
+          0.9954031429312686
+        ]
+      }
+    },
+    {
+      "tick": 9711,
+      "seconds": 161.85,
+      "id": 364,
+      "nearestSample": null
+    },
+    {
+      "tick": 9772,
+      "seconds": 162.86666666666667,
+      "id": 365,
+      "nearestSample": null
+    },
+    {
+      "tick": 10016,
+      "seconds": 166.93333333333334,
+      "id": 363,
+      "nearestSample": {
+        "id": 363,
+        "x": 100.76041333054032,
+        "z": 72.2049730588014,
+        "distance": 4.990863813719797,
+        "drawn": true,
+        "projected": [
+          0.31346452876000996,
+          -0.10434984486461892,
+          0.9949099610843912
+        ]
+      }
+    },
+    {
+      "tick": 10137,
+      "seconds": 168.95,
+      "id": 366,
+      "nearestSample": {
+        "id": 366,
+        "x": 99.61913092799281,
+        "z": 71.49584228522788,
+        "distance": 4.312923802827816,
+        "drawn": true,
+        "projected": [
+          0.2848137089199854,
+          0.0015382655085234287,
+          0.9950514519965461
+        ]
+      }
+    },
+    {
+      "tick": 10258,
+      "seconds": 170.96666666666667,
+      "id": 360,
+      "nearestSample": {
+        "id": 360,
+        "x": 93.34208350915603,
+        "z": 71.16280298544413,
+        "distance": 3.946772629554458,
+        "drawn": true,
+        "projected": [
+          0.002927934666662737,
+          0.29891689160826634,
+          0.9955309657340002
+        ]
+      }
+    },
+    {
+      "tick": 10349,
+      "seconds": 172.48333333333332,
+      "id": 577,
+      "nearestSample": null
+    },
+    {
+      "tick": 10379,
+      "seconds": 172.98333333333332,
+      "id": 362,
+      "nearestSample": {
+        "id": 362,
+        "x": 91.81132712382322,
+        "z": 74.72978466144983,
+        "distance": 4.3511558392154,
+        "drawn": true,
+        "projected": [
+          -0.2224950413077119,
+          0.20206221059052132,
+          0.9954013905014831
+        ]
+      }
+    },
+    {
+      "tick": 10479,
+      "seconds": 174.65,
+      "id": 513,
+      "nearestSample": null
+    },
+    {
+      "tick": 10479,
+      "seconds": 174.65,
+      "id": 583,
+      "nearestSample": null
+    },
+    {
+      "tick": 10510,
+      "seconds": 175.16666666666666,
+      "id": 545,
+      "nearestSample": null
+    },
+    {
+      "tick": 10660,
+      "seconds": 177.66666666666666,
+      "id": 437,
+      "nearestSample": null
+    }
+  ],
+  "followerChanges": [
+    {
+      "tick": 0,
+      "followers": []
+    }
+  ],
+  "boardingLedger": [
+    {
+      "tick": 6831,
+      "aboard": 3,
+      "eligible": 13
+    },
+    {
+      "tick": 6924,
+      "aboard": 4,
+      "eligible": 13
+    },
+    {
+      "tick": 7056,
+      "aboard": 5,
+      "eligible": 13
+    },
+    {
+      "tick": 9455,
+      "aboard": 5,
+      "eligible": 12
+    },
+    {
+      "tick": 9581,
+      "aboard": 5,
+      "eligible": 11
+    },
+    {
+      "tick": 9709,
+      "aboard": 5,
+      "eligible": 9
+    },
+    {
+      "tick": 9773,
+      "aboard": 5,
+      "eligible": 8
+    },
+    {
+      "tick": 10155,
+      "aboard": 5,
+      "eligible": 7
+    },
+    {
+      "tick": 10285,
+      "aboard": 5,
+      "eligible": 6
+    }
+  ],
+  "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+  "commandConfiguration": {
+    "runner": "node --import tsx/esm tools/playtest/play.ts",
+    "level": "L8",
+    "backend": "webgl2",
+    "quality": "low",
+    "zoom": 1.5,
+    "entry": "debug",
+    "mode": "campaign",
+    "noSkip": true,
+    "l9Route": null,
+    "acceptanceCaptures": true,
+    "threatAudit": true,
+    "performanceAnalysis": false
+  }
+}

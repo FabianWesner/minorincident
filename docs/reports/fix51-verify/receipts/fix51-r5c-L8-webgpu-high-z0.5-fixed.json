@@ -1,0 +1,94 @@
+{
+  "sourceHash": "8b4a3e448909c1236814b0d9aac55c221d6050c01f423424ba3d718eaaf11459",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "31cce4711dbffe6d89d1be27bca56102864c80589cdc737beb06ef05f854fa59",
+  "driverSha256": "1b8686c0c55c9a954df3c875e2ecf3e9432a8b424f6845c11ddc09ff21afbbad",
+  "generatedAt": "2026-11-03T04:13:39.122Z",
+  "cell": "L8-webgpu-high-z0.5-fixed",
+  "level": "L8",
+  "backend": "webgpu",
+  "quality": "high",
+  "zoom": 0.5,
+  "variant": "fixed",
+  "method": "Headless ordinary WASD/mouse, mortal, no objective skips; camera set explicitly; named L9 route uses logged map assist; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L8",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 133,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 59.64,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 16
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "escape",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8399999737739563,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "depart",
+            "text": "The zoo is breached · Wait for everyone to board the armored vehicle · 2/13 aboard · 11 still to board",
+            "tick": 6262,
+            "marker": {
+              "anchor": "exit",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.9954349994659424,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L8",
+        "tick": 1228,
+        "x": 0,
+        "z": 70,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+        "captures": [
+          "captures/physical-L8-1228-stuck-navigating.jpg"
+        ],
+        "step": "escape",
+        "objective": ""
+      }
+    ],
+    "yielded": false
+  },
+  "error": null
+}

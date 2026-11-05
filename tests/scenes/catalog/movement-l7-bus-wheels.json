@@ -1,0 +1,36 @@
+{
+  "extends": "../l7-departure/departure.json",
+  "name": "movement-l7-bus-wheels",
+  "note": "Production L7 departure with courier and corgi at the door. Keep the ordinary game follow camera on the moving bus for wheel review; the cinematic city shot has its existing departure scenes. The corgi remains a hidden passenger.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -70.5,
+        47.5
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -69,
+        47.5
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "departure-bus",
+    "zoom": 1
+  },
+  "frames": 480,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "l7Departure": "follow"
+}

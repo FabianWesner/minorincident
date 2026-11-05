@@ -1,0 +1,7 @@
+# bld.bus-stop
+
+Repaired authored base plus base-owned W2/W3 twins. Visually inspected the intact and both variant references in the main checkout. Reuses the original native roof arc, posts, bench and poster coordinates, 1.23 width factor and +90° author-to-production rotation. AABB is 2.0414 × 2.675 × 4.9692 m at every tier; feet stay at the original ground/origin. Roof lips and splice boss extrema are retained explicitly. No rescaling/AABB fitting of decay variants. 24/12/8 closed roof arc segments; distance recipes reduce map blocks and omit the small discarded board. Eight palette-owner batches per tier including hideable roof. The previous script's generic decimated tiers and loose manifest budgets are replaced.
+
+W2: two intact rear panes, one jagged broken pane, boarded poster and abandoned teal bag/parcel. W3: every rear pane smashed, torn side pane, damaged route plate, broad side/bench soot and roof scorch. Roof and bench stand in both stages; no rubble or collapse. Glass remnants are explicit closed profiles around missing space, not perforated decimation. Shared nav/door/root transforms remain unchanged. entranceSocket (.94,0,0), benchSocket (0,0,.57), navSocket (1.1,0,0) in Blender units. Fixed ss_physics and end/bench collider proxies. Fixture-free shelter.
+
+Deliveries: assets/bld.bus-stop/model.w2[.lod1/.lod2].glb and model.w3[.lod1/.lod2].glb, corresponding public variants. No separate dotted runtime registration. Per-ID wrapper scripts delegate to the base recipe. Projected footprint IoU=1.0 on all six base/twin tier comparisons.

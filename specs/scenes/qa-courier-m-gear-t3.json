@@ -1,0 +1,65 @@
+{
+  "name": "qa-courier-m-gear-t3",
+  "note": "Male courier (TRELLIS.2 rebind, PO 10-25) copy of qa-courier-gear-t3: Female courier (textured heroine body) at gear tier 3: the ray-fitted tier gear must hug her body standing, walking and running (PO P1: no placeholder boxes, nothing floating). Close camera from the front-left, then the back.",
+  "ground": "sidewalk",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": -30,
+      "look": {
+        "model": "male",
+        "gearTier": 3
+      },
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 80,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            3,
+            -1.5
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 200,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -4,
+            1.5
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": "courier",
+    "radius": 3.2,
+    "azimuth": 20
+  },
+  "frames": 330,
+  "shots": [
+    60,
+    150,
+    250,
+    290
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

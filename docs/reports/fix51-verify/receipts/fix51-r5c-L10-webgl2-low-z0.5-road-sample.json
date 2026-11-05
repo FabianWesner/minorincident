@@ -1,0 +1,76 @@
+{
+  "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "960d87492dee52fbc3869aacea884cc437f5232bfe076c86cca1270c0334fd0e",
+  "driverSha256": "cd3441fe338cf1b0d8f1470d46663e46bc8761144297dbc09e58f7d637554759",
+  "generatedAt": "2026-11-03T05:49:52.106Z",
+  "cell": "L10-webgl2-low-z0.5-road-sample",
+  "level": "L10",
+  "backend": "webgl2",
+  "quality": "low",
+  "zoom": 0.5,
+  "variant": "road-sample",
+  "originSavePath": "docs/reports/fix51-verify/receipts/L10-low-browser-batch1-save.json.gz",
+  "originSaveHash": "b325dc6804d45e2812d6697467cf59ef035d361dec637654e17c5d02c808fad0",
+  "qualification": "Bounded40s progressed-save physical visual sample; ordinary WASD/mouse; survival protected; no skips; not a full-level route or console qualification.",
+  "method": "Actual unedited production save, fresh profile, explicit runtime backend/quality/zoom checked; capture setting changes affect presentation only; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 40,
+        "simSeconds": 35,
+        "maxNoProgressSeconds": 1.1,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 8
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg"
+        ],
+        "steps": [
+          {
+            "id": "research-campus",
+            "text": "Reach the research campus · 221 m",
+            "tick": 4,
+            "marker": {
+              "anchor": "cure-research-entry",
+              "ring": {
+                "x": 2467,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2467,
+                0,
+                -5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "yielded": true
+  },
+  "error": null
+}

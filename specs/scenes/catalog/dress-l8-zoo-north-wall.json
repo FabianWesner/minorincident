@@ -1,0 +1,14 @@
+{
+ "name": "dress-l8-zoo-north-wall",
+ "note": "Opus visual QA #34 (verbatim): \"L8 drive-out ... flat dark plane\". L8 north wall: the camera looks across the wall into the town behind it (road ring, lamps, flats and houses). Look for: glow and silhouettes beyond the wall, no bare dark plane at the top of the frame, no building drawn through the wall.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "layout": { "district": "D-ZOO", "bbox": [[-40, -120], [60, -60]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [10, -82], "yaw": 0, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [10, -82] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}

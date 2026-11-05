@@ -1,0 +1,3023 @@
+{
+  "version": 2,
+  "level": "L9",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-05T20:15:01.481Z",
+  "policies": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "tier": "low",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json"
+    },
+    {
+      "tier": "high",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json"
+    }
+  ],
+  "globals": [
+    {
+      "id": "G-01",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Open prior FAIL: WebGPU L5 low cold 7.142 s; high cold/warm 6.642/6.723 s, over 6 s. WebGL2 not measured.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/batch51-qa/perf/summary.json"
+      ],
+      "expected": "Cold load, real level click → playable (loading card closed / Begin ready): **≤ 6.0 s worst of N**, every level, WebGPU + WebGL2, low + high.",
+      "checks": [],
+      "historical": {
+        "id": "G-01",
+        "level": "global",
+        "status": "FAIL",
+        "value": "WebGPU L5 low cold 7.142 s; high cold/warm 6.642/6.723 s, over 6 s. WebGL2 not measured.",
+        "evidence": [
+          "docs/reports/batch51-qa/perf/summary.json"
+        ],
+        "method": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix."
+      },
+      "remaining": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix."
+    },
+    {
+      "id": "G-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Campaign handover (level N complete → level N+1 playable): **≤ 6.0 s** on all nine edges (L8→L9 was 14.38 s, Q-272).",
+      "checks": [],
+      "historical": {
+        "id": "G-02",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run tools/qa/release-ab-handover.mjs on all nine real campaign handovers; retain actual outgoing save, transition start and first playable frame, requiring <=6 s each."
+      },
+      "remaining": "NEXT: Run tools/qa/release-ab-handover.mjs on all nine real campaign handovers; retain actual outgoing save, transition start and first playable frame, requiring <=6 s each."
+    },
+    {
+      "id": "G-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Open prior FAIL: L3 low real-input armory/first-handgun period: playable frame 566.7 ms at tick1031 (~17.18 sim s). Concurrent staged-fixture browser was active, so this is not a quiet A/B regression measurement and needs isolated attribution. Quiet L1/L8/L9 low/high openings recorded no playable frame >200 ms; other first weapon actions remain incomplete.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/batch51-qa/startup.json",
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/gates/visual-L3-low.log"
+      ],
+      "expected": "No gameplay frame **> 200 ms** after the card closes, including the first 10 s of movement and first pickup/equip/shot of each weapon (Q-309).",
+      "checks": [],
+      "historical": {
+        "id": "G-03",
+        "level": "global",
+        "status": "FAIL",
+        "value": "L3 low real-input armory/first-handgun period: playable frame 566.7 ms at tick1031 (~17.18 sim s). Concurrent staged-fixture browser was active, so this is not a quiet A/B regression measurement and needs isolated attribution. Quiet L1/L8/L9 low/high openings recorded no playable frame >200 ms; other first weapon actions remain incomplete.",
+        "evidence": [
+          "docs/reports/batch51-qa/startup.json",
+          "docs/reports/batch51-qa/visual-runs.json",
+          "docs/reports/batch51-qa/gates/visual-L3-low.log"
+        ],
+        "method": "installFrameProbe records RAF intervals clipped to playable, unpaused time. Retained L3 low interval is not loading or photo-paused time. NEXT: repeat L3 first pickup/shot in a sole quiet context with node-builder logging; then all other first weapon actions. Do not infer a new regression or material cause from the concurrent diagnostic."
+      },
+      "remaining": "installFrameProbe records RAF intervals clipped to playable, unpaused time. Retained L3 low interval is not loading or photo-paused time. NEXT: repeat L3 first pickup/shot in a sole quiet context with node-builder logging; then all other first weapon actions. Do not infer a new regression or material cause from the concurrent diagnostic."
+    },
+    {
+      "id": "G-04",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Open prior FAIL: Inherited >=66 ms spikes: L1 low 83.4 ms at fire-station shutter (PROD 133.3); L3 high 83.3 ms in station defense (same as PROD). New L10 high console charge: 100.0 ms at44.425 s and66.6 ms at53.925 s; no material build within +/-1 s.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/batch51-qa/perf/summary.json",
+        "docs/reports/batch51-qa/perf/attempts.json"
+      ],
+      "expected": "No frame **> 50 ms** at scripted transitions (objective change, blast, breach, power-off, crash, gate close).",
+      "checks": [],
+      "historical": {
+        "id": "G-04",
+        "level": "global",
+        "status": "FAIL",
+        "value": "Inherited >=66 ms spikes: L1 low 83.4 ms at fire-station shutter (PROD 133.3); L3 high 83.3 ms in station defense (same as PROD). New L10 high console charge: 100.0 ms at44.425 s and66.6 ms at53.925 s; no material build within +/-1 s.",
+        "evidence": [
+          "docs/reports/batch51-qa/perf/summary.json",
+          "docs/reports/batch51-qa/perf/attempts.json"
+        ],
+        "method": "Continuous 60 s RAF traces, nearest objective and material-build timestamps. PO clarification accepts 50.0/50.1 ms quantisation and permits +16.7 ms over PROD; inherited spikes are P2, not regressions. Other transitions remain unmeasured."
+      },
+      "remaining": "Continuous 60 s RAF traces, nearest objective and material-build timestamps. PO clarification accepts 50.0/50.1 ms quantisation and permits +16.7 ms over PROD; inherited spikes are P2, not regressions. Other transitions remain unmeasured."
+    },
+    {
+      "id": "G-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "Frame p95 **≤ 16.7 ms** desktop high, **≤ 33.3 ms** low/phone profile at each level's peak scene; draw calls ≤ 600 / 300, triangles ≤ 1.5 M / 500 k, sim p95 ≤ 4 / 6 ms, heap ≤ 400 / 250 MB, infected ≤ 200 / 100.",
+      "checks": [
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 14,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 14,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 31,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 31,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "G-05",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run npm run test:perf in an exclusive quiet slot at each level peak, low/high; retain renderer calls/triangles, sim p95, heap and live population alongside frame p95."
+      },
+      "remaining": "Quiet-window renderer/sim/heap budget matrix at each peak; current native receipts qualify only infected counts."
+    },
+    {
+      "id": "G-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Zero visible defects on the player, the corgi and any vehicle the player uses (clipping, floating parts, detached limbs, pale/transparent heroine in fog, gear boxes). Any finding = **P1**.",
+      "checks": [],
+      "historical": {
+        "id": "G-06",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Review real-input captures for every level at low/high and zoom 0.5/1.5, including every used vehicle and critical occluders; inspect full-size crops of suspected defects."
+      },
+      "remaining": "NEXT: Review real-input captures for every level at low/high and zoom 0.5/1.5, including every used vehicle and critical occluders; inspect full-size crops of suspected defects."
+    },
+    {
+      "id": "G-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Fresh current-source L2 fire engine, L7 boundary and L8 canopy fixtures: 12/12 low/high x zoom0.5/1.5 cells, courier visibility share100%, zero console errors. Full moving fence/wall/horde/corpse coverage is not established.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "The player is never fully hidden: camera-side fences, walls, hordes and corpses cut/dither or draw a silhouette (Q-314 alley fence, Q-318 horde).",
+      "checks": [],
+      "historical": {
+        "id": "G-07",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Fresh current-source L2 fire engine, L7 boundary and L8 canopy fixtures: 12/12 low/high x zoom0.5/1.5 cells, courier visibility share100%, zero console errors. Full moving fence/wall/horde/corpse coverage is not established.",
+        "evidence": [
+          "docs/reports/batch51-qa/visual-fixtures.json"
+        ],
+        "method": "tools/qa/visual-p1-captures.ts --phase after --backend webgpu --only bounds-l7,vehicle-l2,canopy-l8; full-size critical frame review plus final per-level sheets. NEXT: real-input near-camera fences, horde and corpse occlusion at every critical route pose."
+      },
+      "remaining": "tools/qa/visual-p1-captures.ts --phase after --backend webgpu --only bounds-l7,vehicle-l2,canopy-l8; full-size critical frame review plus final per-level sheets. NEXT: real-input near-camera fences, horde and corpse occlusion at every critical route pose."
+    },
+    {
+      "id": "G-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"crash-approach\",\"x\":470,\"z\":0,\"samples\":6847,\"maxDisplacement\":0},{\"id\":\"crawl-end\",\"x\":547,\"z\":0,\"samples\":540,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"approach\",\"marker\":\"crash-approach\",\"x\":470,\"z\":0},{\"tick\":6848,\"step\":\"\",\"marker\":null},{\"tick\":7148,\"step\":\"reach-outskirts\",\"marker\":\"crawl-end\",\"x\":547,\"z\":0},{\"tick\":7688,\"step\":\"\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"crash-approach\",\"x\":470,\"z\":0,\"samples\":6847,\"maxDisplacement\":0},{\"id\":\"crawl-end\",\"x\":547,\"z\":0,\"samples\":540,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"approach\",\"marker\":\"crash-approach\",\"x\":470,\"z\":0},{\"tick\":6848,\"step\":\"\",\"marker\":null},{\"tick\":7148,\"step\":\"reach-outskirts\",\"marker\":\"crawl-end\",\"x\":547,\"z\":0},{\"tick\":7688,\"step\":\"\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"crash-approach\",\"x\":470,\"z\":0,\"samples\":6847,\"maxDisplacement\":0},{\"id\":\"crawl-end\",\"x\":547,\"z\":0,\"samples\":540,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"approach\",\"marker\":\"crash-approach\",\"x\":470,\"z\":0},{\"tick\":6848,\"step\":\"\",\"marker\":null},{\"tick\":7148,\"step\":\"reach-outskirts\",\"marker\":\"crawl-end\",\"x\":547,\"z\":0},{\"tick\":7688,\"step\":\"\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"crash-approach\",\"x\":470,\"z\":0,\"samples\":6847,\"maxDisplacement\":0},{\"id\":\"crawl-end\",\"x\":547,\"z\":0,\"samples\":540,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"approach\",\"marker\":\"crash-approach\",\"x\":470,\"z\":0},{\"tick\":6848,\"step\":\"\",\"marker\":null},{\"tick\":7148,\"step\":\"reach-outskirts\",\"marker\":\"crawl-end\",\"x\":547,\"z\":0},{\"tick\":7688,\"step\":\"\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
+      "checks": [
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "crash-approach",
+                "x": 470,
+                "z": 0,
+                "samples": 6847,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "crawl-end",
+                "x": 547,
+                "z": 0,
+                "samples": 540,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "approach",
+                "marker": "crash-approach",
+                "x": 470,
+                "z": 0
+              },
+              {
+                "tick": 6848,
+                "step": "",
+                "marker": null
+              },
+              {
+                "tick": 7148,
+                "step": "reach-outskirts",
+                "marker": "crawl-end",
+                "x": 547,
+                "z": 0
+              },
+              {
+                "tick": 7688,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "crash-approach",
+                "x": 470,
+                "z": 0,
+                "samples": 6847,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "crawl-end",
+                "x": 547,
+                "z": 0,
+                "samples": 540,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "approach",
+                "marker": "crash-approach",
+                "x": 470,
+                "z": 0
+              },
+              {
+                "tick": 6848,
+                "step": "",
+                "marker": null
+              },
+              {
+                "tick": 7148,
+                "step": "reach-outskirts",
+                "marker": "crawl-end",
+                "x": 547,
+                "z": 0
+              },
+              {
+                "tick": 7688,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "crash-approach",
+                "x": 470,
+                "z": 0,
+                "samples": 6847,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "crawl-end",
+                "x": 547,
+                "z": 0,
+                "samples": 540,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "approach",
+                "marker": "crash-approach",
+                "x": 470,
+                "z": 0
+              },
+              {
+                "tick": 6848,
+                "step": "",
+                "marker": null
+              },
+              {
+                "tick": 7148,
+                "step": "reach-outskirts",
+                "marker": "crawl-end",
+                "x": 547,
+                "z": 0
+              },
+              {
+                "tick": 7688,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "crash-approach",
+                "x": 470,
+                "z": 0,
+                "samples": 6847,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "crawl-end",
+                "x": 547,
+                "z": 0,
+                "samples": 540,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "approach",
+                "marker": "crash-approach",
+                "x": 470,
+                "z": 0
+              },
+              {
+                "tick": 6848,
+                "step": "",
+                "marker": null
+              },
+              {
+                "tick": 7148,
+                "step": "reach-outskirts",
+                "marker": "crawl-end",
+                "x": 547,
+                "z": 0
+              },
+              {
+                "tick": 7688,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "G-08",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Add a read-only per-tick marker-position/HUD-distance observer to tools/playtest/session.ts for every step; compare world marker and arrow with the authored fixed action/destination anchor, including offscreen targets."
+      },
+      "remaining": "Compare HUD arrow, distance and ring with each real destination; distinguish fixed-gate handoffs and Mega intro from player-following markers."
+    },
+    {
+      "id": "G-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
+      "checks": [],
+      "historical": {
+        "id": "G-09",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+      },
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+    },
+    {
+      "id": "G-10",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+      ],
+      "expected": "Pickups (weapons, medkits, headlamp, rocket) are taken **on approach** (≤ 1.5 m ground, ≤ 2.2 m shelf), no E/click/standing still. PO: \"You should just take it when I come close to it\".",
+      "checks": [
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "isolated ground/shelf weapon approach with E continuously false",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-10",
+          "clause": "isolated ground/shelf weapon approach with E continuously false",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "G-10",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Use tools/playtest/session.ts to walk through every ground/shelf pickup without E or stopping; record pickup event, distance and physical key trace at the <=1.5/2.2 m crossing."
+      },
+      "remaining": "Run the16-cell moving-input pickup fixture at both qualities, including the authored L6 headlamp, and retain native route distance checks."
+    },
+    {
+      "id": "G-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS) Manual review PASS (STALE, fix51-r10g/Sol): All four native Metal backend/quality cells: survivor-only handgun is visible without a ring; courier pickup has one yellow ring before collection. After exactly one collection, courier moves5.796m away and returns within0.151m; original entity and marker stay absent with no replacement. I inspected all eight full-size screenshots. Native per-level duplicate ledgers and L1 persistence fixtures independently qualify non-respawn.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+        "docs/reports/fix51-r10g/G-11-review.json",
+        "docs/reports/fix51-r10g/G-11-webgl2-low.json",
+        "docs/reports/fix51-r10g/G-11-webgl2-low.jpg",
+        "docs/reports/fix51-r10g/G-11-webgl2-high.json",
+        "docs/reports/fix51-r10g/G-11-webgl2-high.jpg",
+        "docs/reports/fix51-r10g/G-11-webgpu-low.json",
+        "docs/reports/fix51-r10g/G-11-webgpu-low.jpg",
+        "docs/reports/fix51-r10g/G-11-webgpu-high.json",
+        "docs/reports/fix51-r10g/G-11-webgpu-high.jpg"
+      ],
+      "expected": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
+      "checks": [
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "pickup remains removed for 120 ticks after transaction",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one transaction and no original entity",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-11",
+          "clause": "pickup remains removed for 120 ticks after transaction",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one transaction and no original entity",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "G-11",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Use tools/playtest/session.ts through survivor weapon collection; observe ring visibility and entity generations before/after collection and after revisiting each location."
+      },
+      "remaining": "Inspect survivor-only pickup rings; revisit collected locations to qualify no respawn beyond the native duplicate/removal probes.",
+      "review": {
+        "tag": "O",
+        "instruction": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
+        "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\")."
+      },
+      "reviewDecision": {
+        "row": "G-11",
+        "status": "PASS",
+        "reviewer": "fix51-r10g/Sol",
+        "date": "2026-11-03",
+        "commit": "eb8746663ed895be1c32a0a9834865b5fc0161bb",
+        "clauses": [
+          {
+            "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
+            "verdict": "PASS",
+            "note": "All four native Metal backend/quality cells: survivor-only handgun is visible without a ring; courier pickup has one yellow ring before collection. After exactly one collection, courier moves5.796m away and returns within0.151m; original entity and marker stay absent with no replacement. I inspected all eight full-size screenshots. Native per-level duplicate ledgers and L1 persistence fixtures independently qualify non-respawn."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-r10g/G-11-review.json",
+            "sha256": "554ea87fc3df639684dd5060d332e698cac62868418094502f7c97380d9ed72f",
+            "what": "I inspected all eight full-size captures and checked the four complete ledgers."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgl2-low.json",
+            "sha256": "b77939ca3638896a0e28120c28e135b113f8daf1f2ea39ff53239f13c98d864e",
+            "what": "webgl2/low: Native ledger, renderer identities and raw capture SHA-256."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgl2-low.jpg",
+            "sha256": "f8266174f214c83eb41a231935f793374a9c8823d2da0911b4f9ce7b68dc6735",
+            "what": "webgl2/low: Compact before/after contact sheet; both full-size originals inspected."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgl2-high.json",
+            "sha256": "eaaace4fc1b065ca8b56f174a6849cb8efad6dc757f4b893bcfd27932dbd22d2",
+            "what": "webgl2/high: Native ledger, renderer identities and raw capture SHA-256."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgl2-high.jpg",
+            "sha256": "88c6a55ccd216b99d0978d5ee98ebbd1604a3d80f18615a9bc4a2ab2b9bdb432",
+            "what": "webgl2/high: Compact before/after contact sheet; both full-size originals inspected."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgpu-low.json",
+            "sha256": "9ccd7d626ccd83f593c70df5c3572d9de9f89abe76931b253bb7749ed342ee30",
+            "what": "webgpu/low: Native ledger, renderer identities and raw capture SHA-256."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgpu-low.jpg",
+            "sha256": "3c8cb1a1d02dffdb92dbab6598828fd3658de69a46ba79c9e4e9fca7ad05d3b3",
+            "what": "webgpu/low: Compact before/after contact sheet; both full-size originals inspected."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgpu-high.json",
+            "sha256": "225e9010ba314c765c32efeab71bc48902c5a2bd33fea0ac135100fb69a4e948",
+            "what": "webgpu/high: Native ledger, renderer identities and raw capture SHA-256."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-11-webgpu-high.jpg",
+            "sha256": "972cb84b16c5b2cc6c9dd2624c5e1e642125c0a92805525edbbc95994abd15d6",
+            "what": "webgpu/high: Compact before/after contact sheet; both full-size originals inspected."
+          }
+        ],
+        "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "G-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS) Manual review PASS (STALE, fix51-r10g/Sol): I inspected every saved full-size capture. All35 actual-roster survivors show separate teal pips, including named, bandaged, sitting/lying model variants and the L7 fallback bodies (11 models). Sizes6,5,1 show correct compact/full transitions. Every group size1–35 has exact rendered identity/count coverage on both qualities and native backends. Pixel checks pass for every captured bar. Render-only suppression removes all35 bars and is detected. This qualifies the shared follower-bar renderer with the roster in view; campaign route occluders remain in their own rows.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+        "docs/reports/fix51-r10g/G-12-review.json",
+        "docs/reports/fix51-r10g/G-12-webgl2-low.json",
+        "docs/reports/fix51-r10g/G-12-webgl2-low.jpg",
+        "docs/reports/fix51-r10g/G-12-webgl2-high.json",
+        "docs/reports/fix51-r10g/G-12-webgl2-high.jpg",
+        "docs/reports/fix51-r10g/G-12-webgpu-low.json",
+        "docs/reports/fix51-r10g/G-12-webgpu-low.jpg",
+        "docs/reports/fix51-r10g/G-12-webgpu-high.json",
+        "docs/reports/fix51-r10g/G-12-webgpu-high.jpg"
+      ],
+      "expected": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
+      "checks": [
+        {
+          "id": "G-12",
+          "clause": "35-follower production eligibility and cap",
+          "value": {
+            "eligible": 35,
+            "cap": "Infinity"
+          },
+          "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-12",
+          "clause": "35-follower production eligibility and cap",
+          "value": {
+            "eligible": 35,
+            "cap": "Infinity"
+          },
+          "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "G-12",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run tools/qa/l6-retreat-bars.ts and count eligible on-screen follower IDs against HealthBars.snapshot at group sizes 1,5,24,29,35, including healthy/injured and overlapping poses; require a visible bar for every eligible follower."
+      },
+      "remaining": "Render and inspect all35 following health bars simultaneously; production eligibility/cap is measured, pixels remain open.",
+      "review": {
+        "tag": "O",
+        "instruction": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
+        "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35)."
+      },
+      "reviewDecision": {
+        "row": "G-12",
+        "status": "PASS",
+        "reviewer": "fix51-r10g/Sol",
+        "date": "2026-11-03",
+        "commit": "2d17eb096ccbe9637a3eb65cdea80a83126f7b27",
+        "clauses": [
+          {
+            "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
+            "verdict": "PASS",
+            "note": "I inspected every saved full-size capture. All35 actual-roster survivors show separate teal pips, including named, bandaged, sitting/lying model variants and the L7 fallback bodies (11 models). Sizes6,5,1 show correct compact/full transitions. Every group size1–35 has exact rendered identity/count coverage on both qualities and native backends. Pixel checks pass for every captured bar. Render-only suppression removes all35 bars and is detected. This qualifies the shared follower-bar renderer with the roster in view; campaign route occluders remain in their own rows."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-r10g/G-12-review.json",
+            "sha256": "6c6dab18546924ffd592c3afb35fc1716ec5d5b723d847566965ad6c255dfab4",
+            "what": "All140 actual-roster group-size samples validated;16 production captures and one35-bar negative control inspected full-size. Individual observations and hashes retained."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgl2-low.json",
+            "sha256": "6f0aa715f70526c84c3eaa4dabd9bfaefe1bd92bdaedb0dec4f623c3df8e47e2",
+            "what": "webgl2/low:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgl2-low.jpg",
+            "sha256": "e572791713dc8b07c8f58fb09d6ee20f97fa8346ec4094ee848f0796372496c8",
+            "what": "webgl2/low:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgl2-high.json",
+            "sha256": "a6c26e1ffec7efaafc8bdc27dd73b8289482a9b136b0d5607d0fac729ee761d1",
+            "what": "webgl2/high:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgl2-high.jpg",
+            "sha256": "530c9ed76abb74ecf05c58a3d249db27c8506e24e1d0399fed305262d274e543",
+            "what": "webgl2/high:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgpu-low.json",
+            "sha256": "3455f9de9bf41df5ba298596b6c4c5e1a4544aad5552a989078d0e0fa8702254",
+            "what": "webgpu/low:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgpu-low.jpg",
+            "sha256": "fe9608e07e39d9bd56e7a9f46a55c289a36d7c44cb96921915a268fb6e3210f2",
+            "what": "webgpu/low:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgpu-high.json",
+            "sha256": "218d465699acbd0f7e6287fe677be6f5c902e18cbf3fc5558faaa0a477cb21d4",
+            "what": "webgpu/high:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-12-webgpu-high.jpg",
+            "sha256": "a95bf4d0d058ea28e9ddc17de68fe0a152aeb819ee63d05cc7691acd641d9ee3",
+            "what": "webgpu/high:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+          }
+        ],
+        "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "G-13",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 0,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": null,
+            "followers": []
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 0,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": null,
+            "followers": []
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        }
+      ],
+      "historical": {
+        "id": "G-13",
+        "level": "global",
+        "status": "FAIL",
+        "value": "Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+        "evidence": [
+          "docs/reports/batch51-qa/native-threat.json"
+        ],
+        "method": "Inspect qualified civilian followerSpeeds records, excluding companion-only records and grabbed/bitten/knocked-down samples; compare each median with its phase group median. The94.8% result is a borderline strict-target miss, not proof of large visible babysitting."
+      },
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: **No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\""
+    },
+    {
+      "id": "G-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
+      "checks": [],
+      "historical": {
+        "id": "G-14",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Add a read-only permanent-corpse ID/lifetime ledger to the full real-input runs; revisit corpses at level end and review pile height, floating bodies and stretched limbs."
+      },
+      "remaining": "NEXT: Add a read-only permanent-corpse ID/lifetime ledger to the full real-input runs; revisit corpses at level end and review pile height, floating bodies and stretched limbs."
+    },
+    {
+      "id": "G-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
+      "checks": [],
+      "historical": {
+        "id": "G-15",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+      },
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+    },
+    {
+      "id": "G-16",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); low/stationary weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); high/complete weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); high/stationary weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "The weapon rack at level start offers only the weapons the story has given by that level: L1 none (bat in L1), L2 +axe, L3 +handgun, L4 +MG, L5 +shotgun, L6 none new, L7 +rocket, L8 none, L9 driving, L10 axe only.",
+      "checks": [
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.rocket-launcher",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.rocket-launcher",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.rocket-launcher",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.rocket-launcher",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "G-16",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Compare the weaponsStart and pickup ledgers from progressed-save real-input L1-L10 runs with the story loadout; explicitly check axe-only L10 after the real L9 crash."
+      },
+      "remaining": "NEXT: Compare the weaponsStart and pickup ledgers from progressed-save real-input L1-L10 runs with the story loadout; explicitly check axe-only L10 after the real L9 crash."
+    },
+    {
+      "id": "G-17",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Fresh L10 low/high moving-runner observer: 232 pose samples; maximum drawn hip-to-head lean 38.00 degrees. Full per-variant low-quality sliding/splay and foot-placement review is not established.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42°, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
+      "checks": [],
+      "historical": {
+        "id": "G-17",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Fresh L10 low/high moving-runner observer: 232 pose samples; maximum drawn hip-to-head lean 38.00 degrees. Full per-variant low-quality sliding/splay and foot-placement review is not established.",
+        "evidence": [
+          "docs/reports/batch51-qa/visual-runs.json",
+          "docs/reports/batch51-qa/L10.jpg"
+        ],
+        "method": "Read-only moving-runner pose observer plus inspected final sheet. NEXT: moving low-quality frame strips for every body/variant in wander/chase, including all seven L10 runner variants; inspect feet/legs and require lean <=42 degrees."
+      },
+      "remaining": "Read-only moving-runner pose observer plus inspected final sheet. NEXT: moving low-quality frame strips for every body/variant in wander/chase, including all seven L10 runner variants; inspect feet/legs and require lean <=42 degrees."
+    },
+    {
+      "id": "G-18",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
+      "checks": [],
+      "historical": {
+        "id": "G-18",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+      },
+      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+    },
+    {
+      "id": "G-19",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[668],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":7688} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[668],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":7688} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[668],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":7688} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[668],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":7688} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "Corgi: never damaged, no HP bar, never targeted, never inside geometry or a vehicle hull, inside with the player when a door/shutter closes.",
+      "checks": [
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              668
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 7688
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              668
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 7688
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              668
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 7688
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              668
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 7688
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "G-19",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Observe corgi health/targeting/collision and bar events throughout real-input L1-L10; capture actual door/shutter closures and vehicle entry, including the final corgi position."
+      },
+      "remaining": "Inspect no corgi HP bar, geometry/hull clearance and inside-door/shutter placement; native target/damage/health samples are measured."
+    },
+    {
+      "id": "G-20",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
+      "checks": [
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "G-20",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Use tools/playtest/session.ts and a read-only final-objective/transition tick ledger on every level; verify five live invulnerable seconds when action continues."
+      },
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
+    },
+    {
+      "id": "G-21",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"545aeccf1bdc861e817f59c99993aafebc74cac39eebe138a89b1b5d5729c8ae\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1f05bb9cbb101c541983bb8e27212c5446a24994bcb68a981733af16a13375fa\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
+        "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json"
+      ],
+      "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists.",
+      "checks": [
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L9/crossing-start",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "crossing-start",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139",
+            "damage": 100,
+            "expected": {
+              "id": "crossing-start",
+              "anchor": {
+                "x": -550,
+                "y": 0.705,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "crossing-start",
+              "position": {
+                "x": -550,
+                "z": 0
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L9/outskirts-approach",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "outskirts-approach",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "545aeccf1bdc861e817f59c99993aafebc74cac39eebe138a89b1b5d5729c8ae",
+            "damage": 100,
+            "expected": {
+              "id": "outskirts-approach",
+              "anchor": {
+                "x": 468.2260437011719,
+                "y": 0.9954323768615723,
+                "z": 3.419754981994629,
+                "yaw": -0.05724150811981929
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "outskirts-approach",
+              "position": {
+                "x": 468.2260437011719,
+                "z": 3.419754981994629
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L9/crossing-start",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "crossing-start",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc",
+            "damage": 100,
+            "expected": {
+              "id": "crossing-start",
+              "anchor": {
+                "x": -550,
+                "y": 0.705,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "crossing-start",
+              "position": {
+                "x": -550,
+                "z": 0
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L9/outskirts-approach",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "outskirts-approach",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "1f05bb9cbb101c541983bb8e27212c5446a24994bcb68a981733af16a13375fa",
+            "damage": 100,
+            "expected": {
+              "id": "outskirts-approach",
+              "anchor": {
+                "x": 468.2260437011719,
+                "y": 0.9954323768615723,
+                "z": 3.419754981994629,
+                "yaw": -0.05724150811981929
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "outskirts-approach",
+              "position": {
+                "x": 468.2260437011719,
+                "z": 3.419754981994629
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "G-21",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run mortal checkpoint death/retry exercises for every later checkpoint using tools/playtest/session.ts; compare follower/pickup/gate snapshots, inventory and restored location before/after death."
+      },
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists."
+    },
+    {
+      "id": "G-22",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
+      "checks": [],
+      "historical": {
+        "id": "G-22",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run npm run qa:threat at low and high; retain each actual announced-cohort ledger, first player attack and reachable count, including a deliberately broken fixture proof."
+      },
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune)."
+    },
+    {
+      "id": "G-23",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "No geometry that looks meaningful but is not: no walk-through walls/gates (Q-289, Q-307), no dead-end street that looks like the route (Q-291), no untextured placeholder props or black voids at the map edge (Q-282).",
+      "checks": [],
+      "historical": {
+        "id": "G-23",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run."
+      },
+      "remaining": "NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run."
+    },
+    {
+      "id": "G-24",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (STALE, fix51-r10g/Sol): I inspected all20 full-size native Metal captures. Alpha, lion, gorilla, elephant, zebra and flamingo show six full bars nearby, no bars while far/full-health, and six half bars while far/damaged. Native lethal damage leaves all six at0HP with no bar during falling corpse poses. All five healthy zoo species show none. Pixel fills are512/full and256/half; the actual far-healthy frames have0 red pixels in each former bar region.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+        "docs/reports/fix51-r10g/G-24-review.json",
+        "docs/reports/fix51-r10g/G-24-webgl2-low.json",
+        "docs/reports/fix51-r10g/G-24-webgl2-low.jpg",
+        "docs/reports/fix51-r10g/G-24-webgl2-high.json",
+        "docs/reports/fix51-r10g/G-24-webgl2-high.jpg",
+        "docs/reports/fix51-r10g/G-24-webgpu-low.json",
+        "docs/reports/fix51-r10g/G-24-webgpu-low.jpg",
+        "docs/reports/fix51-r10g/G-24-webgpu-high.json",
+        "docs/reports/fix51-r10g/G-24-webgpu-high.jpg"
+      ],
+      "expected": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
+      "checks": [
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+          "level": "L9"
+        },
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "G-24",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run Scene Lab current-source Alpha/zoo-species fixtures through healthy-near, healthy-far, hurt and dead states; inspect world bars and normal animals at low/high."
+      },
+      "remaining": "Render eligibility transitions for Alpha and all infected zoo species; current fixture qualifies production eligibility, not world-space bar pixels.",
+      "review": {
+        "tag": "O",
+        "instruction": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
+        "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none."
+      },
+      "reviewDecision": {
+        "row": "G-24",
+        "status": "PASS",
+        "reviewer": "fix51-r10g/Sol",
+        "date": "2026-11-03",
+        "commit": "ce8180065be67df55824915d9edb53fc1b68162d",
+        "clauses": [
+          {
+            "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
+            "verdict": "PASS",
+            "note": "I inspected all20 full-size native Metal captures. Alpha, lion, gorilla, elephant, zebra and flamingo show six full bars nearby, no bars while far/full-health, and six half bars while far/damaged. Native lethal damage leaves all six at0HP with no bar during falling corpse poses. All five healthy zoo species show none. Pixel fills are512/full and256/half; the actual far-healthy frames have0 red pixels in each former bar region."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-r10g/G-24-review.json",
+            "sha256": "f7f8cd1f5dd6f617b9032299feb0041d35ff6a2c7aafa328bf8e51773be4a69c",
+            "what": "All20 full-size captures inspected. Every species/state/backend/quality matches the criterion; previous near-bar pixel regions reject the actual far-healthy missing bars as a negative control."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgl2-low.json",
+            "sha256": "89a840a397a5efa817e3910a47bd8786e982124e3c2c149729e320edf62dee2f",
+            "what": "webgl2/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgl2-low.jpg",
+            "sha256": "4269c1799f535ce559ef156e09c9155c785b87cd7ef09ca1b5b63294a08b31ef",
+            "what": "webgl2/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgl2-high.json",
+            "sha256": "7049a0f5cdd39824d90e7e482a1969ab45b179ba2fa04cce4a3678bf0b40a4a2",
+            "what": "webgl2/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgl2-high.jpg",
+            "sha256": "8f667665ac580bfcb5cf935b4f1653cde4cde1760166c4c9f42523830b7935fd",
+            "what": "webgl2/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgpu-low.json",
+            "sha256": "44932068900c132c9bc8bafb98bbf28037ee6799db6f9c264bf7603975ec30d6",
+            "what": "webgpu/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgpu-low.jpg",
+            "sha256": "25d0554c5f53f0963976f8905831bde16688b81124dbea979106d00fd138ab3d",
+            "what": "webgpu/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgpu-high.json",
+            "sha256": "f68e3abb9b35b96c4e68e679abf12fdde659b2d38bc2b5462225f1ae8a16cec6",
+            "what": "webgpu/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+          },
+          {
+            "file": "docs/reports/fix51-r10g/G-24-webgpu-high.jpg",
+            "sha256": "29596159e47ec5ca3107fe585c383afcf797f7315016ff56162ff143af510d31",
+            "what": "webgpu/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+          }
+        ],
+        "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "G-25",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/batch51-qa/quality-repro.json",
+        "docs/reports/batch51-qa/gates/visual-L4.log"
+      ],
+      "expected": "Zero console errors over a full real-input play-through of the level.",
+      "checks": [],
+      "historical": {
+        "id": "G-25",
+        "level": "global",
+        "status": "FAIL",
+        "value": "L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+        "evidence": [
+          "docs/reports/batch51-qa/quality-repro.json",
+          "docs/reports/batch51-qa/gates/visual-L4.log"
+        ],
+        "method": "Real WASD/mouse route with console/page-error listeners, followed by fresh-context native L4 turn checkpoint and physical Escape > Settings > quality select > Back > Resume. First low switch progressed tick 88->147; high switch and subsequent low remained at147. P1; next lane must fix renderer resource lifetime and repeat normal menu switching plus the complete mortal route."
+      },
+      "remaining": "Complete physical WASD/mouse playthroughs at both qualities for all10 levels; native completion is not browser console qualification."
+    },
+    {
+      "id": "G-26",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
+      "checks": [],
+      "historical": {
+        "id": "G-26",
+        "level": "global",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run current-source character/accessory/held-prop and live-seat Scene Lab matrices for every adult body and routine, comparing actual heights with the heroine; review full-size images."
+      },
+      "remaining": "NEXT: Run current-source character/accessory/held-prop and live-seat Scene Lab matrices for every adult body and routine, comparing actual heights with the heroine; review full-size images."
+    },
+    {
+      "id": "G-27",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, vqa-1/Opus): Scope L1, L2, L3, L7, L8, L9, L10 (L4-L6 not reviewed). Harmless: L10 last 30 s of the console charge with 0 infected on screen; L9 6 % of observations with infected on screen and a 136 s empty approach drive; L7 no threat for 6 min while the group stood at the pharmacy corner. Boring: L10 Mega does not come to the arena; the objective sends the player 300 m back and then 335 m back again on an empty road. Not stunning: L10 research/military/corridor flat empty slabs, L3 zoom-1 smoke curtain, L8 dark monotone night. Glitches are listed separately in the README (P1: L2 fire engine cut in half on foot; L10 courier hidden at the console). Open prior FAIL: All ten levels have scoped glitches/stunning/boring-harmless-babysitting judgments in the README. L9 low road has a verified >60 s moving enemy-free interval; native L10 R1/R2 are crossable with zero attack windups. Those harmless/pressure findings block GO.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/vqa-1/README.md",
+        "docs/reports/vqa-1/L2-hull-and-door-camera.jpg",
+        "docs/reports/vqa-1/L3-smoke-z1-high.jpg",
+        "docs/reports/vqa-1/L10-R2-roofs-maxzoom.jpg",
+        "docs/reports/vqa-1/L10-hold-and-mega.jpg",
+        "docs/reports/vqa-1/misc-L1-L3-L7-L8-L9.jpg",
+        "docs/reports/batch51-qa/L10.jpg",
+        "docs/reports/batch51-qa/README.md",
+        "docs/reports/batch51-qa/l9-road-low-gap.json",
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "expected": "Opus answers three questions per level: glitches (list), stunning (verdict + missing), **boring / harmless / babysitting** (list). Any \"harmless\" or \"babysitting\" finding blocks GO.",
+      "checks": [],
+      "historical": {
+        "id": "G-27",
+        "level": "global",
+        "status": "FAIL",
+        "value": "All ten levels have scoped glitches/stunning/boring-harmless-babysitting judgments in the README. L9 low road has a verified >60 s moving enemy-free interval; native L10 R1/R2 are crossable with zero attack windups. Those harmless/pressure findings block GO.",
+        "evidence": [
+          "docs/reports/batch51-qa/L10.jpg",
+          "docs/reports/batch51-qa/README.md",
+          "docs/reports/batch51-qa/l9-road-low-gap.json",
+          "docs/reports/batch51-qa/native-threat.json"
+        ],
+        "method": "Manual frame review and actual attack/visibility ledgers; do not equate god-mode zero damage alone with harmlessness. Sol performs the requested visual review while Claude reviewers are paused."
+      },
+      "remaining": "Manual frame review and actual attack/visibility ledgers; do not equate god-mode zero damage alone with harmlessness. Sol performs the requested visual review while Claude reviewers are paused.",
+      "review": {
+        "tag": "P",
+        "instruction": "For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately."
+      },
+      "reviewDecision": {
+        "row": "G-27",
+        "status": "FAIL",
+        "reviewer": "vqa-1/Opus",
+        "date": "2026-11-04",
+        "commit": "e5f6ae5a2256b28c1f8d180cba824edad0f48744",
+        "clauses": [
+          {
+            "clause": "For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately.",
+            "verdict": "FAIL",
+            "note": "Scope L1, L2, L3, L7, L8, L9, L10 (L4-L6 not reviewed). Harmless: L10 last 30 s of the console charge with 0 infected on screen; L9 6 % of observations with infected on screen and a 136 s empty approach drive; L7 no threat for 6 min while the group stood at the pharmacy corner. Boring: L10 Mega does not come to the arena; the objective sends the player 300 m back and then 335 m back again on an empty road. Not stunning: L10 research/military/corridor flat empty slabs, L3 zoom-1 smoke curtain, L8 dark monotone night. Glitches are listed separately in the README (P1: L2 fire engine cut in half on foot; L10 courier hidden at the console)."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/vqa-1/README.md",
+            "sha256": "452c6c5db2c83959c6024893ee720d97bd67dfe09e69b9ed8c7f1dc435d5f71d",
+            "what": "Per-level glitches / stunning / boring-harmless-babysitting judgments for L1, L2, L3, L7, L8, L9, L10 with ticks, positions and coverage limits."
+          },
+          {
+            "file": "docs/reports/vqa-1/L2-hull-and-door-camera.jpg",
+            "sha256": "176d4d0d471865314968eebf54636319486bfedd4a944b69484274e073fcf431",
+            "what": "L2: ride hull reveal (high z0.5), fire engine cut in half on foot (low z0.5), rescue-door camera at zoom 0.5 before/at/after the 57 m over-pull."
+          },
+          {
+            "file": "docs/reports/vqa-1/L3-smoke-z1-high.jpg",
+            "sha256": "8b6ae109ac16a8c4bb83c1df211c9914f3ba7f2780abac84e053e21f7481be81",
+            "what": "L3 zoom 1 high: smoke columns covering infected (health bars without bodies) and porthole cut-outs."
+          },
+          {
+            "file": "docs/reports/vqa-1/L10-R2-roofs-maxzoom.jpg",
+            "sha256": "a5d081994580ad242ad74440ab3bb230643808b6e87a853e47bb45037ca90c22",
+            "what": "L10 R2 at max zoom (1.5 x region 1.3): near-side roofs filling the frame, faint infected under the dithered roof."
+          },
+          {
+            "file": "docs/reports/vqa-1/L10-hold-and-mega.jpg",
+            "sha256": "de7379bf5715cc31a994e4c3cc2f929e7ee99f11c22dbd98941a431e08e2f974",
+            "what": "L10: courier hidden at the console charge, arena, Mega fight, death flash, empty walk back to release."
+          },
+          {
+            "file": "docs/reports/vqa-1/misc-L1-L3-L7-L8-L9.jpg",
+            "sha256": "11efad0f8519d6bd9943472dd27277f23c2f1ed8a288bffd04998a578c43d6b2",
+            "what": "L1 station black void, L3 yard police, L7 group at the pharmacy fence, L8 black burning APC and mission-failed card, L9 arrow decals."
+          }
+        ],
+        "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "id": "L9-01",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Low/high APC cab/driver poses are reviewed. This does not establish<=0.5 s availability,carry IDs/durability or every corgi/leg clipping pose.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+      "checks": [],
+      "historical": {
+        "id": "L9-01",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Low/high APC cab/driver poses are reviewed. This does not establish<=0.5 s availability,carry IDs/durability or every corgi/leg clipping pose.",
+        "evidence": [
+          "docs/reports/batch51-qa/L9.jpg"
+        ],
+        "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+      },
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+    },
+    {
+      "id": "L9-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, Codex sweep-c3): Current-source first admitted entity census on all six ordinary native routes, each repeated without observer and final states identical. Both tiers retain actual9 entities in each of dry-shortcut-3 and dry-shortcut-6 against literal8 inclusive-of-Alpha criterion:8 runners plus1Alpha. Shortcut total2Alphas is correct. The other four shortcut groups have8 and road/countryside6 each; no actor/count/target/cap changed. Actual detour>=20m remains unmeasured; current count counterexample suffices for FAIL. Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/sweep-c3/L9-02/census.json"
+      ],
+      "expected": "Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m.",
+      "checks": [],
+      "historical": {
+        "id": "L9-02",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas."
+      },
+      "remaining": "NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas.",
+      "review": {
+        "tag": "O",
+        "instruction": "Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m.",
+        "clause": "Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m."
+      },
+      "reviewDecision": {
+        "row": "L9-02",
+        "status": "FAIL",
+        "reviewer": "Codex sweep-c3",
+        "date": "2026-11-05",
+        "commit": "f4f8d7a12070150defdf6c51dc4152b38d84e2fd",
+        "clauses": [
+          {
+            "clause": "Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m.",
+            "verdict": "FAIL",
+            "note": "Current-source first admitted entity census on all six ordinary native routes, each repeated without observer and final states identical. Both tiers retain actual9 entities in each of dry-shortcut-3 and dry-shortcut-6 against literal8 inclusive-of-Alpha criterion:8 runners plus1Alpha. Shortcut total2Alphas is correct. The other four shortcut groups have8 and road/countryside6 each; no actor/count/target/cap changed. Actual detour>=20m remains unmeasured; current count counterexample suffices for FAIL."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c3/L9-02/census.json",
+            "sha256": "35a0881c21ea61419355607d4d354521fe08a2bd295ffc843f44941b84ddd2c0",
+            "what": "Immutable current exact entity IDs/archetypes at first resident admission; all six routes and observer-free state controls finish identically."
+          }
+        ],
+        "notes": "Measured literal count failure. Authored eight runners are not eight total infected when a ninth Alpha is admitted. Detour route clause remains open.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "L9-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review PASS (STALE, Codex sweep-c3): Fresh current-source six-route physical WASD matrix completes at both tiers with zero skips or console/page errors. All32 original-size panels personally inspected, raw hashes verified then raws deleted. Wide first-threat photos show upright living redbar infected ahead/beside APC; tight0.5 photos crop contacts and do not establish interval coverage. Archived full body observations recomputed by unchanged >=0.5m/s x/z driving evaluator, unknown/long intervals count fully and maximum sample interval added. Conservative gaps low road17.35/countryside13.68333/shortcut9.65s; high road16.15/countryside14.26667/shortcut15.03333s, all<=60. Every route completed with ordinary APC damage and protected courier; exact original producer hashes/logs retained, no rebinding, target/clock/game changes. Open prior FAIL: Explicit low road route:123.03 s without a drawn/on-camera infected sample,33.20–156.23 s. This includes64.23 s moving >=0.5 m/s and61.18 s >=1 m/s, so excluding stops still fails60 s. Countryside and shortcut pass their sampled low/high windows; explicit high road was not run.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/sweep-c3/L9-03/low-road/input.json",
+        "docs/reports/sweep-c3/L9-03/low-road/admitted-review.json",
+        "docs/reports/sweep-c3/L9-03/low-countryside/input.json",
+        "docs/reports/sweep-c3/L9-03/low-countryside/admitted-review.json",
+        "docs/reports/sweep-c3/L9-03/low-dry-shortcut/input.json",
+        "docs/reports/sweep-c3/L9-03/low-dry-shortcut/admitted-review.json",
+        "docs/reports/sweep-c3/L9-03/high-road/input.json",
+        "docs/reports/sweep-c3/L9-03/high-road/admitted-review.json",
+        "docs/reports/sweep-c3/L9-03/high-countryside/input.json",
+        "docs/reports/sweep-c3/L9-03/high-countryside/admitted-review.json",
+        "docs/reports/sweep-c3/L9-03/high-dry-shortcut/input.json",
+        "docs/reports/sweep-c3/L9-03/high-dry-shortcut/admitted-review.json",
+        "docs/reports/batch51-qa/L9.jpg",
+        "docs/reports/batch51-qa/l9-road-low-gap.json",
+        "docs/reports/batch51-qa/visual-runs.json"
+      ],
+      "expected": "Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s).",
+      "checks": [],
+      "historical": {
+        "id": "L9-03",
+        "level": "L9",
+        "status": "FAIL",
+        "value": "Explicit low road route:123.03 s without a drawn/on-camera infected sample,33.20–156.23 s. This includes64.23 s moving >=0.5 m/s and61.18 s >=1 m/s, so excluding stops still fails60 s. Countryside and shortcut pass their sampled low/high windows; explicit high road was not run.",
+        "evidence": [
+          "docs/reports/batch51-qa/L9.jpg",
+          "docs/reports/batch51-qa/l9-road-low-gap.json",
+          "docs/reports/batch51-qa/visual-runs.json"
+        ],
+        "method": "Compare actual on-camera/drawn body samples with actual player x/z intervals; exclude slow/stationary intervals conservatively. Trace follows the authored road at z≈-330; the earlier default high drive is a different direct path. NEXT: fix road presence, then repeat all three prescribed routes at both tiers with the same observer."
+      },
+      "remaining": "Compare actual on-camera/drawn body samples with actual player x/z intervals; exclude slow/stationary intervals conservatively. Trace follows the authored road at z≈-330; the earlier default high drive is a different direct path. NEXT: fix road presence, then repeat all three prescribed routes at both tiers with the same observer.",
+      "reviewDecision": {
+        "row": "L9-03",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c3",
+        "date": "2026-11-05",
+        "commit": "2c0a131467e2a4b5ffc3413ddf499cfb2e0a3d5f",
+        "clauses": [
+          {
+            "clause": "Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s).",
+            "verdict": "PASS",
+            "note": "Fresh current-source six-route physical WASD matrix completes at both tiers with zero skips or console/page errors. All32 original-size panels personally inspected, raw hashes verified then raws deleted. Wide first-threat photos show upright living redbar infected ahead/beside APC; tight0.5 photos crop contacts and do not establish interval coverage. Archived full body observations recomputed by unchanged >=0.5m/s x/z driving evaluator, unknown/long intervals count fully and maximum sample interval added. Conservative gaps low road17.35/countryside13.68333/shortcut9.65s; high road16.15/countryside14.26667/shortcut15.03333s, all<=60. Every route completed with ordinary APC damage and protected courier; exact original producer hashes/logs retained, no rebinding, target/clock/game changes."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-road/input.json",
+            "sha256": "9ab9ae8794484f32a5719ddaaa7beebb6e1a0591af3269ea7f284b40579f61c5",
+            "what": "Current low-road full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-road/admitted-review.json",
+            "sha256": "f48c6a096040c5cc620d557a782076211aa450b21c3e4cab4ef5603e46761394",
+            "what": "Current low-road full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-countryside/input.json",
+            "sha256": "1e467464c2210f3049c9649858ebcbd2d17d3a6c4042b19476ef01f73321977f",
+            "what": "Current low-countryside full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-countryside/admitted-review.json",
+            "sha256": "eb153885f2328d0ed44fd61167d4a59002d5ef21337ed1d0b86eeb07dc5a8f16",
+            "what": "Current low-countryside full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-dry-shortcut/input.json",
+            "sha256": "fbc29076399d7e931129b0451d0c38f77f4aa5882c497d1828673506186e0bc0",
+            "what": "Current low-dry-shortcut full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/low-dry-shortcut/admitted-review.json",
+            "sha256": "f75c17394588118289a552e1ede3351668b11a3d6e84208a0414253597cdf6b7",
+            "what": "Current low-dry-shortcut full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-road/input.json",
+            "sha256": "7b10039e6b2b6364339b45401e6a6b12a68fd34bb490fea5ffd79a3ca1b823e4",
+            "what": "Current high-road full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-road/admitted-review.json",
+            "sha256": "a305c53e91237c5fc47639bdca8469075d7ec345978a5506313df403b56420e0",
+            "what": "Current high-road full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-countryside/input.json",
+            "sha256": "d35502668bb4133188dbc33924f1cc38e66a0b6b6587ed587eeb075126fdb7ef",
+            "what": "Current high-countryside full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-countryside/admitted-review.json",
+            "sha256": "94a28e55c736df9173ef0fee18550390dce58e9b146b66bfbf2ded793ccc2978",
+            "what": "Current high-countryside full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-dry-shortcut/input.json",
+            "sha256": "7207a79ffc4f154df29f43d85d5437c3ac55723db278648a17f9a3422a3c8bf6",
+            "what": "Current high-dry-shortcut full route or personally inspected image/log review; original hashes retained."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-03/high-dry-shortcut/admitted-review.json",
+            "sha256": "4d851b1c7e65699252bcd0c50b84a7e9a428bb4aeb5a1dd147a1c8c64a08b42d",
+            "what": "Current high-dry-shortcut full route or personally inspected image/log review; original hashes retained."
+          }
+        ],
+        "notes": "Full unchanged criterion re-reviewed. Historical failure closes only after all six current source cells passed. No source/checker changes.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "L9-04",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut.",
+      "checks": [
+        {
+          "id": "L9-04",
+          "clause": "actual contact/attack durability transactions",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "after = max(0, before−10) for contact and attack",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "L9-04",
+          "clause": "actual contact/attack durability transactions",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "after = max(0, before−10) for contact and attack",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "L9-04",
+          "clause": "actual contact/attack durability transactions",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "after = max(0, before−10) for contact and attack",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "L9-04",
+          "clause": "actual contact/attack durability transactions",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "after = max(0, before−10) for contact and attack",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "L9-04",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
+      },
+      "remaining": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
+    },
+    {
+      "id": "L9-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review PASS (STALE, Codex sweep-c3): Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes. Not measured by this batch run.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/sweep-c3/L9-05/qualification.json",
+        "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
+        "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
+        "docs/reports/sweep-c3/L9-05/physical-speed.json.gz",
+        "docs/reports/sweep-c3/L9-05/second-review/review.json",
+        "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
+        "docs/reports/sweep-c3/L9-05/first-review/review.json",
+        "docs/reports/sweep-c3/L9-05/retry-review/review.json",
+        "docs/reports/sweep-c3/L9-05/native.json.gz",
+        "docs/reports/sweep-c3/L9-05/coverage-proof.json"
+      ],
+      "expected": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
+      "checks": [],
+      "historical": {
+        "id": "L9-05",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash."
+      },
+      "remaining": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash.",
+      "review": {
+        "tag": "O",
+        "instruction": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
+        "clause": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable."
+      },
+      "reviewDecision": {
+        "row": "L9-05",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c3",
+        "date": "2026-11-05",
+        "commit": "a63290d2fd906d9720f30c131b4f98ce48a25a9f",
+        "clauses": [
+          {
+            "clause": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
+            "verdict": "PASS",
+            "note": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c3/L9-05/qualification.json",
+            "sha256": "71af0128866c2d8b9b599de85e944fca16242aa20631e1672b0a21be56169e89",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
+            "sha256": "e12d7e7ea34e4b8caacf5593057c3e293d441394641e79a5c3e10a3c2125f63a",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
+            "sha256": "27e4ebe0844c3d82061c46dd5994730784554093f4fd931fa00fceaa0baa2818",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/physical-speed.json.gz",
+            "sha256": "f030efca6b827f4cb41846e724f0c5f4a3279adb7eb545e386b02cf97075d97b",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/second-review/review.json",
+            "sha256": "f2bb9a9e2146122db7aedf5b4bc603bdd3e757b6324b6bd1950033ed2072d85b",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
+            "sha256": "295db0c5b1c56cd637b9dd6866a8ca2338779fb4e42fe18ef8028f313a9d5aee",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/first-review/review.json",
+            "sha256": "feb17bedb9c66756c3abd3de60fd0f16756c078b41293abe2fa5f82ff7c04b34",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/retry-review/review.json",
+            "sha256": "0c1b8bd3b5291262e1c6c6ac31f3b7dea7ed980c9e0dfc3e0377525b6f488f1d",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/native.json.gz",
+            "sha256": "b541d8a6d7fb5360c2f9eed602123a5c2dba6fb65162cc3004d744b7c268ebc0",
+            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/coverage-proof.json",
+            "sha256": "bd9a691989c3fbeed3e6b1b9e41f52ab17d02b75f427ecf8876636a40912f0cb",
+            "what": "Eight temporary source-bound invalid-evidence controls reject; exact original bytes restored."
+          }
+        ],
+        "notes": "Separate uninterrupted physics comparison, rendered smoke review and full physical zero-durability continuation; no perf claim.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "L9-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "No giant flat world arrow in reviewed drives; armor HUD changes with collisions. All six starts finish, but an adversarial off-road wedge test is not run.",
+      "automatedComplete": false,
+      "receipt": [],
+      "expected": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
+      "checks": [],
+      "historical": {
+        "id": "L9-06",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "No giant flat world arrow in reviewed drives; armor HUD changes with collisions. All six starts finish, but an adversarial off-road wedge test is not run.",
+        "evidence": [
+          "docs/reports/batch51-qa/L9.jpg"
+        ],
+        "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+      },
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+    },
+    {
+      "id": "L9-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); low/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS) Manual review PASS (STALE, Codex sweep-c3): Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+        "docs/reports/sweep-c3/L9-05/qualification.json",
+        "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
+        "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
+        "docs/reports/sweep-c3/L9-05/second-review/review.json",
+        "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
+        "docs/reports/sweep-c3/L9-05/native.json.gz",
+        "docs/reports/sweep-c3/L9-07/coverage-proof.json"
+      ],
+      "expected": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+      "checks": [
+        {
+          "id": "L9-07",
+          "clause": "crash impact count on ordinary route",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 1,
+          "target": "1 ≤ value ≤ 1",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "wreck objective starts after crash impact",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "objectiveTick": 7148,
+            "impactTick": 7148
+          },
+          "target": "objectiveTick ≥ impactTick",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "crash impact count on ordinary route",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 1,
+          "target": "1 ≤ value ≤ 1",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "wreck objective starts after crash impact",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "objectiveTick": 7148,
+            "impactTick": 7148
+          },
+          "target": "objectiveTick ≥ impactTick",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "crash impact count on ordinary route",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 1,
+          "target": "1 ≤ value ≤ 1",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "wreck objective starts after crash impact",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "objectiveTick": 7148,
+            "impactTick": 7148
+          },
+          "target": "objectiveTick ≥ impactTick",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "crash impact count on ordinary route",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 1,
+          "target": "1 ≤ value ≤ 1",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        },
+        {
+          "id": "L9-07",
+          "clause": "wreck objective starts after crash impact",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "objectiveTick": 7148,
+            "impactTick": 7148
+          },
+          "target": "objectiveTick ≥ impactTick",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "L9-07",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Ordinary damaged-APC drives reach the scripted crash sequence. Full-HP and0-HP pair,whole falling hull and exact wreck-objective event order are not fully retained.",
+        "evidence": [
+          "docs/reports/batch51-qa/L9.jpg"
+        ],
+        "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record one uninterrupted crash from full HP and one from zero HP, with vehicle-part visibility and wreck objective event order."
+      },
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+      "review": {
+        "tag": "O",
+        "instruction": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+        "clause": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash."
+      },
+      "reviewDecision": {
+        "row": "L9-07",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c3",
+        "date": "2026-11-05",
+        "commit": "49a2d32d12effbc75e1a553d8ecfa193c4771557",
+        "clauses": [
+          {
+            "clause": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+            "verdict": "PASS",
+            "note": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c3/L9-05/qualification.json",
+            "sha256": "71af0128866c2d8b9b599de85e944fca16242aa20631e1672b0a21be56169e89",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
+            "sha256": "e12d7e7ea34e4b8caacf5593057c3e293d441394641e79a5c3e10a3c2125f63a",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
+            "sha256": "27e4ebe0844c3d82061c46dd5994730784554093f4fd931fa00fceaa0baa2818",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/second-review/review.json",
+            "sha256": "f2bb9a9e2146122db7aedf5b4bc603bdd3e757b6324b6bd1950033ed2072d85b",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
+            "sha256": "295db0c5b1c56cd637b9dd6866a8ca2338779fb4e42fe18ef8028f313a9d5aee",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-05/native.json.gz",
+            "sha256": "b541d8a6d7fb5360c2f9eed602123a5c2dba6fb65162cc3004d744b7c268ebc0",
+            "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+          },
+          {
+            "file": "docs/reports/sweep-c3/L9-07/coverage-proof.json",
+            "sha256": "0d7b76ff498dc0fa2e3ef5002bf8743b51f28b580bcc68349d68ee55aec63f78",
+            "what": "Eight source-bound duplicate impact, early objective/HUD, missing hull/wheel, unfinished, unseen and stale controls reject; exactbytes restored."
+          }
+        ],
+        "notes": "Full unchanged row, native event-order controls plus current physical whole-hull fall review.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+      }
+    },
+    {
+      "id": "L9-08",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture actual crossing transaction into L10: {\"setup\":\"normal L9 completion → completeCampaignLevel → fresh L10 with same save\",\"run\":{\"level\":\"L9\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":128.13333333333333,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"approach\",\"t\":114.13333333333334},{\"id\":\"reach-outskirts\",\"t\":128.13333333333333}],\"furthestObjective\":\"reach-outskirts\",\"activeObjectives\":[],\"ou… (full values in JSON) (target onfoot;exactlyaxe;full ordinary health;corgi safe; PASS); high/controlled-fixture actual crossing transaction into L10: {\"setup\":\"normal L9 completion → completeCampaignLevel → fresh L10 with same save\",\"run\":{\"level\":\"L9\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":128.13333333333333,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"approach\",\"t\":114.13333333333334},{\"id\":\"reach-outskirts\",\"t\":128.13333333333333}],\"furthestObjective\":\"reach-outskirts\",\"activeObjectives\":[],\"ou… (full values in JSON) (target onfoot;exactlyaxe;full ordinary health;corgi safe; PASS)",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+      ],
+      "expected": "L10 starts on foot with exactly [axe], ordinary health, corgi safe.",
+      "checks": [
+        {
+          "id": "L9-08",
+          "clause": "actual crossing transaction into L10",
+          "value": {
+            "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+            "run": {
+              "level": "L9",
+              "policy": "complete",
+              "seed": 1,
+              "completed": true,
+              "time": 128.13333333333333,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {},
+              "objectiveTimeline": [
+                {
+                  "id": "approach",
+                  "t": 114.13333333333334
+                },
+                {
+                  "id": "reach-outskirts",
+                  "t": 128.13333333333333
+                }
+              ],
+              "furthestObjective": "reach-outskirts",
+              "activeObjectives": [],
+              "outcome": "complete",
+              "blocker": null,
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 514,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "handover": {
+              "applied": true,
+              "corgi": {
+                "kind": "companion",
+                "archetype": "char.corgi",
+                "faction": "survivor",
+                "transform": {
+                  "x": 467.6454788779233,
+                  "z": 3.9373885261225046,
+                  "y": 0.3,
+                  "yaw": -0.05724150811981929
+                },
+                "health": {
+                  "current": 100,
+                  "max": 100
+                },
+                "companion": {
+                  "state": "follow",
+                  "courage": 100,
+                  "until": 0,
+                  "barkAt": 0,
+                  "hurtAt": 0,
+                  "pickup": null,
+                  "path": [],
+                  "goal": -1,
+                  "pathIndex": 0
+                },
+                "id": 668,
+                "passengerOf": 667,
+                "hidden": true,
+                "motion": {
+                  "velocity": {
+                    "x": 0,
+                    "z": 0
+                  },
+                  "speed": 0,
+                  "moving": false,
+                  "distance": 1528.387426202513
+                }
+              },
+              "checkpoint": "cure-crash",
+              "anchor": {
+                "x": 547,
+                "y": 0.7200000286102295,
+                "z": 0,
+                "yaw": 0
+              },
+              "preCrashDurability": 1000,
+              "lostWeapons": [
+                "weapon.fists",
+                "weapon.kick",
+                "weapon.bat",
+                "weapon.molotov",
+                "weapon.handgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher",
+                "weapon.pipe-bomb",
+                "weapon.shotgun"
+              ],
+              "shelteredPassengers": []
+            },
+            "weapons": [
+              "weapon.fire-axe"
+            ],
+            "hp": 100,
+            "maxHp": 100,
+            "hidden": false,
+            "activeVehicle": null,
+            "companions": [
+              {
+                "id": 668,
+                "hp": 100,
+                "maxHp": 100,
+                "hidden": false
+              }
+            ]
+          },
+          "target": "onfoot;exactlyaxe;full ordinary health;corgi safe",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-08",
+          "clause": "actual crossing transaction into L10",
+          "value": {
+            "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+            "run": {
+              "level": "L9",
+              "policy": "complete",
+              "seed": 1,
+              "completed": true,
+              "time": 128.13333333333333,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {},
+              "objectiveTimeline": [
+                {
+                  "id": "approach",
+                  "t": 114.13333333333334
+                },
+                {
+                  "id": "reach-outskirts",
+                  "t": 128.13333333333333
+                }
+              ],
+              "furthestObjective": "reach-outskirts",
+              "activeObjectives": [],
+              "outcome": "complete",
+              "blocker": null,
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 636,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "handover": {
+              "applied": true,
+              "corgi": {
+                "kind": "companion",
+                "archetype": "char.corgi",
+                "faction": "survivor",
+                "transform": {
+                  "x": 467.6454788779233,
+                  "z": 3.9373885261225046,
+                  "y": 0.3,
+                  "yaw": -0.05724150811981929
+                },
+                "health": {
+                  "current": 100,
+                  "max": 100
+                },
+                "companion": {
+                  "state": "follow",
+                  "courage": 100,
+                  "until": 0,
+                  "barkAt": 0,
+                  "hurtAt": 0,
+                  "pickup": null,
+                  "path": [],
+                  "goal": -1,
+                  "pathIndex": 0
+                },
+                "id": 668,
+                "passengerOf": 667,
+                "hidden": true,
+                "motion": {
+                  "velocity": {
+                    "x": 0,
+                    "z": 0
+                  },
+                  "speed": 0,
+                  "moving": false,
+                  "distance": 1528.387426202513
+                }
+              },
+              "checkpoint": "cure-crash",
+              "anchor": {
+                "x": 547,
+                "y": 0.7200000286102295,
+                "z": 0,
+                "yaw": 0
+              },
+              "preCrashDurability": 1000,
+              "lostWeapons": [
+                "weapon.fists",
+                "weapon.kick",
+                "weapon.bat",
+                "weapon.molotov",
+                "weapon.handgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher",
+                "weapon.pipe-bomb",
+                "weapon.shotgun"
+              ],
+              "shelteredPassengers": []
+            },
+            "weapons": [
+              "weapon.fire-axe"
+            ],
+            "hp": 100,
+            "maxHp": 100,
+            "hidden": false,
+            "activeVehicle": null,
+            "companions": [
+              {
+                "id": 668,
+                "hp": 100,
+                "maxHp": 100,
+                "hidden": false
+              }
+            ]
+          },
+          "target": "onfoot;exactlyaxe;full ordinary health;corgi safe",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+          "level": "L9"
+        }
+      ],
+      "historical": {
+        "id": "L9-08",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Perform the real L9-to-L10 handover and record on-foot state, exactly axe, ordinary health and the corgi."
+      },
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "L9-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete detailed resident chunk peak: 9 (target 0 ≤ value ≤ 9; PASS); low/stationary detailed resident chunk peak: 9 (target 0 ≤ value ≤ 9; PASS); high/complete detailed resident chunk peak: 25 (target 0 ≤ value ≤ 25; PASS); high/stationary detailed resident chunk peak: 25 (target 0 ≤ value ≤ 25; PASS)",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+      ],
+      "expected": "Terrain seams ≤ 2 cm, ≤ 25 / 9 detailed chunks, no input freeze on streaming.",
+      "checks": [
+        {
+          "id": "L9-09",
+          "clause": "detailed resident chunk peak",
+          "level": "L9",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 9,
+          "target": "0 ≤ value ≤ 9",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+        },
+        {
+          "id": "L9-09",
+          "clause": "detailed resident chunk peak",
+          "level": "L9",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 9,
+          "target": "0 ≤ value ≤ 9",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+        },
+        {
+          "id": "L9-09",
+          "clause": "detailed resident chunk peak",
+          "level": "L9",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 25,
+          "target": "0 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+        },
+        {
+          "id": "L9-09",
+          "clause": "detailed resident chunk peak",
+          "level": "L9",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 25,
+          "target": "0 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+        }
+      ],
+      "historical": {
+        "id": "L9-09",
+        "level": "L9",
+        "status": "NOT CHECKED",
+        "value": "Not measured by this batch run.",
+        "evidence": [],
+        "method": "NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries."
+      },
+      "remaining": "NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries."
+    }
+  ]
+}

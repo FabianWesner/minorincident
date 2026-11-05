@@ -1,0 +1,78 @@
+{
+  "name": "survivors-ai-armed-fight-back",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L5",
+  "tier": 5,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 20,
+  "shots": [
+    1,
+    29,
+    45,
+    90,
+    180,
+    239
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "note": "PO #70: armed survivor on the L7 formation dispatcher turns and fires at the in-range attacker instead of letting the formation consume its tick. The body remains after defeat.",
+  "l7Group": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "armed",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.dale.aftermath"
+      },
+      "state": {
+        "survivor": {
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "attacker",
+      "kind": "infected",
+      "at": [
+        -3,
+        0
+      ],
+      "state": {
+        "chase": "armed"
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "armed",
+      "do": {
+        "ally": {
+          "role": "civilian",
+          "weapon": "pistol"
+        }
+      }
+    }
+  ]
+}

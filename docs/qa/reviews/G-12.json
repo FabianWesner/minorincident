@@ -1,0 +1,62 @@
+{
+  "row": "G-12",
+  "status": "PASS",
+  "reviewer": "fix51-r10g/Sol",
+  "date": "2026-11-03",
+  "commit": "2d17eb096ccbe9637a3eb65cdea80a83126f7b27",
+  "clauses": [
+    {
+      "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
+      "verdict": "PASS",
+      "note": "I inspected every saved full-size capture. All35 actual-roster survivors show separate teal pips, including named, bandaged, sitting/lying model variants and the L7 fallback bodies (11 models). Sizes6,5,1 show correct compact/full transitions. Every group size1\u201335 has exact rendered identity/count coverage on both qualities and native backends. Pixel checks pass for every captured bar. Render-only suppression removes all35 bars and is detected. This qualifies the shared follower-bar renderer with the roster in view; campaign route occluders remain in their own rows."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-r10g/G-12-review.json",
+      "sha256": "6c6dab18546924ffd592c3afb35fc1716ec5d5b723d847566965ad6c255dfab4",
+      "what": "All140 actual-roster group-size samples validated;16 production captures and one35-bar negative control inspected full-size. Individual observations and hashes retained."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgl2-low.json",
+      "sha256": "6f0aa715f70526c84c3eaa4dabd9bfaefe1bd92bdaedb0dec4f623c3df8e47e2",
+      "what": "webgl2/low:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgl2-low.jpg",
+      "sha256": "e572791713dc8b07c8f58fb09d6ee20f97fa8346ec4094ee848f0796372496c8",
+      "what": "webgl2/low:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgl2-high.json",
+      "sha256": "a6c26e1ffec7efaafc8bdc27dd73b8289482a9b136b0d5607d0fac729ee761d1",
+      "what": "webgl2/high:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgl2-high.jpg",
+      "sha256": "530c9ed76abb74ecf05c58a3d249db27c8506e24e1d0399fed305262d274e543",
+      "what": "webgl2/high:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgpu-low.json",
+      "sha256": "3455f9de9bf41df5ba298596b6c4c5e1a4544aad5552a989078d0e0fa8702254",
+      "what": "webgpu/low:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgpu-low.jpg",
+      "sha256": "fe9608e07e39d9bd56e7a9f46a55c289a36d7c44cb96921915a268fb6e3210f2",
+      "what": "webgpu/low:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgpu-high.json",
+      "sha256": "218d465699acbd0f7e6287fe677be6f5c902e18cbf3fc5558faaa0a477cb21d4",
+      "what": "webgpu/high:actual-roster identities for35 group sizes, full-size screenshot hashes and per-bar teal pixel checks."
+    },
+    {
+      "file": "docs/reports/fix51-r10g/G-12-webgpu-high.jpg",
+      "sha256": "a95bf4d0d058ea28e9ddc17de68fe0a152aeb819ee63d05cc7691acd641d9ee3",
+      "what": "webgpu/high:compact derived sheet of the four manually inspected full-size actual-roster captures at sizes35,6,5,1."
+    }
+  ],
+  "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected."
+}

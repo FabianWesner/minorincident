@@ -1,0 +1,27 @@
+{
+  "row": "L3-10",
+  "status": "PASS",
+  "reviewer": "Codex sweep-a2",
+  "date": "2026-11-05",
+  "commit": "2d54ba67edb575ebf5a305c633556385adeb905f",
+  "clauses": [
+    {
+      "clause": "Forward pressure: idle 20 s behind the progress line \u2192 25\u201375 infected per 10 s from 15\u201335 m behind, off-screen; stops when the player advances.",
+      "verdict": "PASS",
+      "note": "Fresh both-tier independent pressure trials at progress lines0/80. After20s idle behind furthest line, complete10s admission windows contain low50/30 and high40/25 distinct actual IDs, exactly matching independent pressureIds ledger. Every queued door15\u201335m behind and production-frustum offscreen; no early batch; advancing clears pressure clock/queue. Courier protection is count-only. No queued-only PASS or mortal survival claim."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-a2/L3-10-ledger.json.gz",
+      "sha256": "1165b5c67c0b41da742f4df78b3270f5a36b9f5501e8988a126dc8546891adde",
+      "what": "Fresh both-tier independent pressure trials at progress lines0/80. After20s idle behind furthest line, complete10s admission windows contain low50/30 and high40/25 distinct actual IDs, exactly matching independent pressureIds ledger. Every queued door15\u201335m behind and production-frustum offscreen; no early batch; advancing clears pressure clock/queue. Courier protection is count-only. No queued-only PASS or mortal survival claim."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L3-10-current-proof.json",
+      "sha256": "9badf234386da1d543f5415d9c797175a7daae4975eaf153dd75dcaca1a15b69",
+      "what": "Fresh both-tier independent pressure trials at progress lines0/80. After20s idle behind furthest line, complete10s admission windows contain low50/30 and high40/25 distinct actual IDs, exactly matching independent pressureIds ledger. Every queued door15\u201335m behind and production-frustum offscreen; no early batch; advancing clears pressure clock/queue. Courier protection is count-only. No queued-only PASS or mortal survival claim."
+    }
+  ],
+  "notes": "No game changes. Numeric trajectory/frustum review; no image or performance-timing claim."
+}

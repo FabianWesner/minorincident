@@ -1,0 +1,401 @@
+import { Quaternion, Vector3, type Object3D } from 'three';
+import type { CharacterRig } from './rig';
+import { LimbIK } from './LimbIK';
+import { updateWorldTranslation } from './updateWorldTranslation';
+
+/** World-locked feet with stepping release. A locked foot never translates or
+ * yaws; it leaves the ground only by a gait swing (distance-driven phase) or by a
+ * timed step when the body has twisted or drifted too far from it (turns in place,
+ * settling after a stop, aim snaps). One foot steps at a time while walking or
+ * standing. Swing feet lift on a real knee arc, roll heel-to-toe and land on the
+ * current heading, so turns become footwork rather than a rotating pivot. */
+interface Swing { from: Vector3; fromYaw: number; fromPitch: number; offset: Vector3; start: number; duration: number; gait: boolean; u: number; knee0: number; dip: number; land: Vector3 | undefined; releaseP: number; landYaw?: number; last?: Vector3; approach?: { from: Vector3; v: Vector3; to: Vector3; u0: number; T: number } }
+interface Foot {
+  ik: LimbIK; a: number; b: number; rest: Vector3; side: number;
+  target: Vector3; yaw: number; pitch: number;
+  locked: boolean; fresh: boolean; planted: Vector3; plantYaw: number; phase: number; swing: Swing | undefined; hold?: boolean;
+}
+const DEG = Math.PI / 180;
+const ease = (u: number): number => { const t = Math.max(0, Math.min(1, u)); return t * t * (3 - 2 * t); };
+const wrap = (a: number): number => Math.atan2(Math.sin(a), Math.cos(a));
+/** Resting toe-out per foot (radians); twist limits that trigger a step, and the pivot clamp beyond which a locked foot must yaw. */
+const toeOut = .09, twistStep = 24 * DEG, twistStepMoving = 32 * DEG, twistPivot = 70 * DEG;
+/** Optional per-figure gait style (crowds). Defaults reproduce the courier exactly. */
+export interface GaitStyle {
+  /** Stance fraction of the gait cycle (default .52 - .25 * run). */
+  stance?: number;
+  /** Swing knee peak multiplier (default 1). */
+  knee?: number;
+  /** Dragged foot (0 = left, 1 = right) and how much it drags (0..1): low knee, low clearance, toes scraping. */
+  dragFoot?: number;
+  drag?: number;
+  /** Longest gait swing (s): an early (out-of-reach) release lands in time instead of hanging for the rest of the cycle. */
+  maxSwing?: number;
+}
+export class CourierGroundContacts {
+  private readonly feet: Foot[];
+  private readonly origin = new Vector3();
+  private readonly forward = new Vector3();
+  private readonly frame = new Quaternion();
+  private readonly scale = new Vector3();
+  private readonly joint = new Vector3();
+  private readonly delta = new Vector3();
+  private readonly neutral = new Vector3();
+  private readonly landing = new Vector3();
+  private readonly pole = new Vector3();
+  private readonly footFrame = new Quaternion();
+  private readonly footPitch = new Quaternion();
+  private readonly up = new Vector3(0, 1, 0);
+  private readonly bodyForward = new Vector3();
+  private readonly lateralAxis = new Vector3(0, 0, 1);
+  private readonly sole: number;
+  private pelvisHeight: number | undefined;
+  private heading: number | undefined;
+  private moving = false;
+  private time = 0;
+  private lastLanding = -1;
+  private shift = 0;
+  /** Diagnostics for tests and evidence: pivot clamps on locked feet, steps taken. */
+  pivots = 0;
+  steps = 0;
+  /** Roundhouse pivot (set by the animator for the spin): the lead (left) foot stays planted and turns on its ball
+   * with the body; the right foot lifts and circles with the hips, landing as a short step when the spin ends. */
+  pivot = false;
+  private pivoting = false;
+  /** `scaleNode` carries the leg-length world scale (crowd skeletons keep the asset scale below the instance frame). */
+  constructor(private rig: CharacterRig, private scaleNode: Object3D = rig.root) {
+    rig.root.updateWorldMatrix(true, true);
+    rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame);
+    const scale = scaleNode.getWorldScale(this.scale).y;
+    this.sole = (rig.footL.getWorldPosition(this.joint).y - this.origin.y) / scale;
+    this.feet = (['L', 'R'] as const).map((side, index) => {
+      const upper = rig[`leg${side}`], middle = rig[`shin${side}`], end = rig[`foot${side}`];
+      const rest = upper.getWorldPosition(new Vector3()).sub(this.origin).applyQuaternion(this.frame.clone().invert()).divideScalar(scale);
+      return { ik: new LimbIK(upper, middle, end), a: middle.position.length(), b: end.position.length(), rest, side: index === 0 ? 1 : -1,
+        target: new Vector3(), yaw: 0, pitch: 0, locked: false, fresh: true, planted: new Vector3(), plantYaw: 0, phase: -1, swing: undefined };
+    });
+  }
+  /** Crowds share one off-scene skeleton per batch: a figure that changes batch (LOD) keeps its contacts on the new skeleton. */
+  rebind(rig: CharacterRig, scaleNode: Object3D): void {
+    if (rig === this.rig) return;
+    this.rig = rig; this.scaleNode = scaleNode;
+    (['L', 'R'] as const).forEach((side, i) => { this.feet[i].ik = new LimbIK(rig[`leg${side}`], rig[`shin${side}`], rig[`foot${side}`]); });
+  }
+  /** Contacts resume from the clip pose on the next grounded frame. */
+  reset(): void { this.pivoting = false; for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
+  /** Ankle target (world), yaw, pitch and lock state of foot `index`, for tests and evidence. */
+  contact(index: number): { target: Vector3; anchor: Vector3; yaw: number; locked: boolean; pitch: number } { const f = this.feet[index]; return { target: f.target, anchor: f.planted, yaw: f.yaw, locked: f.locked, pitch: f.pitch }; }
+  /** Enter detailed footwork from the far solver without blending a planted shoe toward the clip. */
+  inherit(phase: number, contacts: { target: Vector3; yaw: number }[]): void {
+    for (const [i, foot] of this.feet.entries()) {
+      foot.target.copy(contacts[i].target); foot.planted.copy(foot.target);
+      foot.yaw = foot.plantYaw = contacts[i].yaw; foot.pitch = 0;
+      foot.phase = (phase + i * .5) % 1; foot.fresh = false; foot.locked = true; foot.swing = undefined;
+    }
+  }
+  /** Full-body actions keep their authored leg pose, but neither shoe may pass through the floor. */
+  groundPose(): void {
+    const rig = this.rig;
+    rig.root.updateWorldMatrix(true, true);
+    const floor = this.origin.setFromMatrixPosition(rig.root.matrixWorld).y, s = this.scaleNode.getWorldScale(this.scale).y;
+    let deficit = 0;
+    for (const foot of this.feet) {
+      this.joint.setFromMatrixPosition(foot.ik.end.matrixWorld); foot.ik.end.getWorldQuaternion(this.footFrame);
+      for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
+    }
+    if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; updateWorldTranslation(rig.hip); }
+  }
+  update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle, worldReady = false, travel?: { x: number; z: number }): void {
+    const rig = this.rig;
+    this.time += dt;
+    if (!worldReady) rig.root.updateWorldMatrix(true, true);
+    rig.root.matrixWorld.decompose(this.origin, this.frame, this.scale);
+    if (this.scaleNode !== rig.root) this.scaleNode.matrixWorld.decompose(this.joint, this.footFrame, this.scale);
+    const s = this.scale.y, ground = this.origin.y + this.sole * s;
+    this.forward.set(1, 0, 0).applyQuaternion(this.frame); this.forward.y = 0; this.forward.normalize();
+    const heading = Math.atan2(-this.forward.z, this.forward.x);
+    this.bodyForward.copy(this.forward);
+    // Twin-stick movement: retain the toes/knees' body heading while steps land along actual travel.
+    // Backward travel becomes backpedaling; lateral travel becomes a side step. Locked soles stay in world space.
+    if (travel && Math.hypot(travel.x, travel.z) > .05) this.forward.set(travel.x, 0, travel.z).normalize();
+    const alignment = travel ? this.forward.dot(this.bodyForward) : 1;
+    const yawRate = this.heading === undefined ? 0 : wrap(heading - this.heading) / Math.max(dt, 1e-4); this.heading = heading;
+    const moving = speed > (this.moving ? .06 : .16), stopped = !moving && this.moving;
+    this.moving = moving;
+    const stance = style?.stance ?? .52 - .25 * run, reach = (this.feet[0].a + this.feet[0].b) * s;
+    const legLength = (foot: Foot, knee: number): number => Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(knee)) * s;
+    /** Knee flexion for a hip-to-ankle distance (world). */
+    const kneeOf = (foot: Foot, distance: number): number => { const d = Math.min(distance / s, foot.a + foot.b); return Math.PI - Math.acos(Math.max(-1, Math.min(1, (foot.a ** 2 + foot.b ** 2 - d * d) / (2 * foot.a * foot.b)))); };
+    const kneeNow = (foot: Foot): number => kneeOf(foot, this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld).distanceTo(foot.target));
+    // Swing knee peaks (chibi legs: a readable arc, not motion-capture clearance).
+    const drag = (foot: Foot): number => style?.drag && this.feet.indexOf(foot) === style.dragFoot ? style.drag : 0;
+    const peakKnee = (gait: boolean, foot: Foot): number => (gait ? (68 + 17 * run) * (style?.knee ?? 1) * (1 - .55 * drag(foot)) : 50) * DEG;
+    // Heel-off/strike angles shrink at run: its stance lasts ~0.1 s, so the rolls would otherwise snap.
+    const heelOff = (24 - 8 * run) * DEG * alignment, heelStrike = (10 - 4 * run) * DEG * alignment, strikeWindow = stance * (.18 + .22 * run);
+    const neutralOf = (foot: Foot, out: Vector3): Vector3 => {
+      out.set(foot.rest.x, 0, foot.rest.z).multiplyScalar(s).applyQuaternion(this.frame).add(this.origin); out.y = ground; return out;
+    };
+    /** Where the gait plants this foot at phase `p` (world). */
+    const gaitPlant = (foot: Foot, p: number, out: Vector3): Vector3 => neutralOf(foot, out).addScaledVector(this.forward, moving ? stride * (stance / 2 - Math.min(p, stance)) : 0);
+    const lock = (foot: Foot, yaw: number): void => { foot.locked = true; foot.swing = undefined; foot.planted.copy(foot.target); foot.planted.y = ground; foot.plantYaw = foot.yaw = yaw; };
+    for (const foot of this.feet) {
+      // Fresh contacts (first frame, after riding/kicks, teleports): lock where the foot is now.
+      if (foot.fresh) { foot.target.setFromMatrixPosition(foot.ik.end.matrixWorld); foot.pitch = 0; lock(foot, heading + toeOut * foot.side); foot.fresh = false; }
+      if (!foot.locked) continue;
+      this.delta.copy(foot.planted).sub(neutralOf(foot, this.neutral)); this.delta.y = 0;
+      if (this.delta.length() > reach * 1.1) {
+        // Crowds never teleport a planted foot: it catches up with a quick step instead.
+        if (style?.maxSwing) { foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: new Vector3(), start: this.time, duration: .12, gait: false, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: 0 }; foot.locked = false; this.steps++; }
+        else { foot.target.copy(this.neutral); foot.pitch = 0; lock(foot, heading + toeOut * foot.side); }
+      }
+    }
+    // A stop mid-swing finishes as a short timed step.
+    if (stopped) for (const foot of this.feet) {
+      if (!foot.swing?.gait) continue;
+      Object.assign(foot.swing, { gait: false, start: this.time, duration: .15, u: 0, knee0: kneeNow(foot), fromYaw: foot.yaw, fromPitch: foot.pitch, land: undefined, releaseP: 0 });
+      foot.swing.from.copy(foot.target);
+    }
+    // Gait release: a locked foot past its stance fraction swings (release offset keeps it continuous).
+    for (const [index, foot] of this.feet.entries()) {
+      const p = (phase + index * .5) % 1;
+      // Also release a foot the leg can no longer reach (first steps from standstill plant earlier than the cycle would).
+      const stretched = moving && foot.locked && Math.hypot(foot.planted.x - this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld).x, foot.planted.z - this.joint.z) > reach * .68;
+      // A foot that landed early (maxSwing) waits for its next stance window instead of releasing again at once.
+      if (foot.hold && (p <= stance || !moving)) foot.hold = false;
+      if (moving && foot.locked && (p > stance && !foot.hold || stretched)) {
+        gaitPlant(foot, stance, this.landing);
+        foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: foot.target.clone().sub(this.landing), start: this.time, duration: 0, gait: true, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: Math.min(p, .9) };
+        foot.locked = false;
+      }
+    }
+    // Twist or drift beyond comfort: one timed step at a time (both feet airborne only in running flight).
+    const anyAir = this.feet.some(f => !f.locked);
+    let candidate: Foot | undefined, score = 0;
+    for (const foot of this.feet) {
+      if (!foot.locked) continue;
+      const twist = Math.abs(wrap(heading + toeOut * foot.side - foot.plantYaw));
+      this.delta.copy(foot.planted).sub(neutralOf(foot, this.neutral)); this.delta.y = 0;
+      const drift = this.delta.length() / s, limit = moving ? twistStepMoving : twistStep;
+      if (!(twist > limit || !moving && drift > .055 && this.time - this.lastLanding > .08)) continue;
+      if (anyAir && twist < twistPivot && !(moving && run > .5)) continue;
+      // Crowds at a run: the next gait swing (a few tenths of a second away) re-aims the foot; a timed step there trips over the stride.
+      if (style?.maxSwing && moving && (run > .5 || anyAir) && twist < twistPivot) continue;
+      const value = twist / limit + drift + (Math.sign(yawRate) === foot.side ? .1 : 0);
+      if (value > score) { score = value; candidate = foot; }
+    }
+    const step = (foot: Foot, duration: number): void => {
+      foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: new Vector3(), start: this.time, duration, gait: false, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: 0 };
+      foot.locked = false; this.steps++;
+    };
+    if (candidate && this.pivot) candidate = undefined;
+    if (this.pivot) {
+      const trail = this.feet[1];
+      if (!trail.swing) step(trail, .2);
+    } else if (this.pivoting) {
+      // Spin over: the circling foot finishes as the second half of a short step onto its neutral plant.
+      const swing = this.feet[1].swing;
+      if (swing) Object.assign(swing, { gait: false, start: this.time - .1, duration: .2, from: this.feet[1].target.clone() });
+    }
+    this.pivoting = this.pivot;
+    if (candidate) step(candidate, moving ? .14 : .17);
+    // Crowds never pivot a planted foot: past the pivot limit it hops onto the new heading (a quick step, even mid-stride).
+    if (!this.pivot && style?.maxSwing) for (const foot of this.feet) if (foot.locked && Math.abs(wrap(heading + toeOut * foot.side - foot.plantYaw)) > twistPivot) step(foot, .12);
+    const toe = .085 * s, heel = .05 * s, soleDepth = this.sole * s;
+    /** Ankle offset (foot frame) when the foot rests on its heel, pitched `phi` toes-up. */
+    const strikeDelta = (phi: number, out: Vector3): Vector3 => out.set(heel * Math.cos(phi) - soleDepth * Math.sin(phi) - heel, heel * Math.sin(phi) + soleDepth * Math.cos(phi) - soleDepth, 0);
+    for (const [index, foot] of this.feet.entries()) {
+      const p = (phase + index * .5) % 1, previous = foot.phase;
+      foot.phase = moving ? p : -1;
+      const landYaw = heading + toeOut * foot.side;
+      if (this.pivot && foot.swing && foot === this.feet[1]) {
+        // Mid-air, following its neutral spot round the body (u held at the knee-peak half of a step).
+        const swing = foot.swing;
+        neutralOf(foot, foot.target); swing.land = (swing.land ?? new Vector3()).copy(foot.target);
+        foot.yaw = landYaw; foot.pitch = 0; swing.dip = 0; swing.u = .5;
+      } else if (foot.swing) {
+        const swing = foot.swing;
+        let u: number, landed: boolean;
+        // Standing steps lift first, then travel and yaw while the sole is clearly off the floor (a foot dragged or twisted
+        // within 1.2 cm of the floor is a slide); gait swings and crowd steps keep the full window.
+        const clear = !swing.gait && !moving && !style?.maxSwing, stepFrom = clear ? .3 : .12, stepSpan = clear ? .45 : .76;
+        if (swing.gait) {
+          landed = previous >= 0 && p < previous;
+          // Progress from the release phase: a stance fraction shifting under a walk/run blend must not stall the swing.
+          u = landed ? 1 : Math.max(0, (p - swing.releaseP) / (1 - swing.releaseP));
+          if (style?.maxSwing && !landed) { u = Math.max(u, (this.time - swing.start) / style.maxSwing); if (u >= 1) { u = 1; landed = true; foot.hold = true; } }
+          // Land where the swing arrived (no touchdown jump); the stance holds that plant.
+          if (!landed) {
+            // Actor-space swing matching the stance velocity at toe-off and, when walking, at heel strike
+            // (the release offset fades out). Short legs cannot reach the body-space overshoot a fully
+            // matched running touchdown needs, so a run lands with part of the body speed instead.
+            const match = 1 - .5 * run * ease((u - .5) / .5);
+            const x = stride * (stance * (ease(u) - .5) - (1 - stance) * (2 * u * u * u - 3 * u * u + u) * match);
+            neutralOf(foot, foot.target).addScaledVector(this.forward, x).addScaledVector(swing.offset, 1 - ease(u));
+            if (style?.maxSwing) {
+              // Crowds: the last part of the swing approaches a fixed world landing point (Hermite from the current
+              // foot velocity to rest), so a turning or running body cannot carry the arriving foot along the ground.
+              if (!swing.approach && u >= .6) {
+                // Landing point: where the stance will plant this foot when its phase wraps, along the body's current turn.
+                // The swing ends at the phase wrap or at the swing time cap, whichever comes first.
+                const rate = dt > 0 && u > swing.u ? (u - swing.u) / dt : 0, left = Math.max(0, Math.min((1 - p) * stride / Math.max(speed, .05), style.maxSwing - (this.time - swing.start)));
+                const remain = speed * left, turn = Math.max(-1.2, Math.min(1.2, yawRate * left));
+                const to = new Vector3(foot.rest.x, 0, foot.rest.z).multiplyScalar(s).applyQuaternion(this.footFrame.setFromAxisAngle(this.up, turn).multiply(this.frame)).add(this.origin);
+                to.addScaledVector(this.landing.copy(this.forward).applyAxisAngle(this.up, turn / 2), remain).addScaledVector(this.landing.copy(this.forward).applyAxisAngle(this.up, turn), stride * stance / 2); to.y = ground;
+                const v = swing.last && dt > 0 ? foot.target.clone().sub(swing.last).divideScalar(dt) : new Vector3(); v.y = 0; v.clampLength(0, 6);
+                swing.approach = { from: foot.target.clone(), v, to, u0: u, T: Math.min(.25, rate > 0 ? (1 - u) / rate : .1) };
+              }
+              const a = swing.approach;
+              if (a) {
+                const t = Math.min(1, (u - a.u0) / Math.max(1e-4, 1 - a.u0)), t2 = t * t, t3 = t2 * t, h00 = 2 * t3 - 3 * t2 + 1, h10 = t3 - 2 * t2 + t, h01 = 3 * t2 - 2 * t3;
+                foot.target.x = h00 * a.from.x + h10 * a.v.x * a.T + h01 * a.to.x; foot.target.z = h00 * a.from.z + h10 * a.v.z * a.T + h01 * a.to.z;
+              }
+              (swing.last ??= new Vector3()).copy(foot.target);
+            }
+          }
+        } else {
+          u = Math.min(1, (this.time - swing.start) / swing.duration); landed = u >= 1;
+          // Travel and yaw happen mid-step, once the foot is off the ground.
+          if (u < .5 || !swing.land) {
+            swing.land = gaitPlant(foot, p, swing.land ?? new Vector3());
+            // Crowds stepping while on the move aim where the body will be when the step lands.
+            if (style?.maxSwing && moving) swing.land.addScaledVector(this.forward, speed * (1 - u) * swing.duration);
+          }
+          foot.target.copy(swing.from).lerp(swing.land, ease((u - stepFrom) / stepSpan));
+        }
+        // Crowds latch the landing heading late in the swing, so a foot never yaws once it is down.
+        if (style?.maxSwing && u >= .7) swing.landYaw ??= landYaw;
+        foot.yaw = swing.fromYaw + wrap((swing.landYaw ?? landYaw) - swing.fromYaw) * ease((u - stepFrom) / stepSpan);
+        // Toes trail at toe-off, then the heel leads into contact.
+        const strikePitch = swing.gait || moving ? heelStrike : heelStrike * .5;
+        foot.pitch = u < .5 ? swing.fromPitch * (1 - ease(u / .5)) : strikePitch * ease((u - .5) / .35);
+        // A dragged foot keeps its toes down through the swing (the toe scrapes forward, no heel strike).
+        const dragged = swing.gait ? drag(foot) : 0;
+        if (dragged) foot.pitch += (-(18 * DEG) * Math.sin(Math.PI * u) - foot.pitch) * dragged;
+        // The lowest sole point rides the arc: a pitched foot needs its ankle raised.
+        // The lowest sole point must clear the ground: a pitched foot needs its ankle raised.
+        swing.dip = Math.max(0, foot.pitch < 0 ? toe * Math.sin(-foot.pitch) - soleDepth * (1 - Math.cos(foot.pitch)) : heel * Math.sin(foot.pitch) - soleDepth * (1 - Math.cos(foot.pitch)));
+        foot.target.y = ground + swing.dip; swing.u = u;
+        if (landed) {
+          // The heel contact stays where the swing put it: the plant is that heel's flat-foot ankle.
+          if (foot.pitch > 0) foot.target.sub(strikeDelta(foot.pitch, this.delta).applyQuaternion(this.footFrame.setFromAxisAngle(this.up, landYaw)));
+          // Plant on the yaw the foot arrived with (a fast turn keeps rotating during the last frames).
+          lock(foot, foot.yaw); if (!moving) foot.pitch = 0; this.lastLanding = this.time;
+        }
+      }
+      if (foot.locked) {
+        // Roundhouse: the planted lead foot turns with the body on the spot.
+        if (this.pivot) foot.plantYaw = landYaw;
+        // Hold the plant; only the pivot clamp lets a planted foot yaw (counted).
+        let twist = wrap(landYaw - foot.plantYaw);
+        if (Math.abs(twist) > twistPivot) { foot.plantYaw += twist - Math.sign(twist) * twistPivot; this.pivots++; twist = Math.sign(twist) * twistPivot; }
+        foot.yaw = foot.plantYaw; foot.target.copy(foot.planted); foot.pitch = 0;
+        if (moving && p <= stance) {
+          // Heel-to-toe roll: the heel strike settles flat, then the heel rises towards toe-off.
+          const roll = ease((p - stance * .55) / (stance * .45)), strike = 1 - ease(p / strikeWindow);
+          foot.pitch = heelStrike * strike - heelOff * roll;
+          this.footFrame.setFromAxisAngle(this.up, foot.yaw);
+          if (roll > 0) {
+            // The ankle sits above and behind the toe contact; rotate it about the toe.
+            const theta = heelOff * roll;
+            this.delta.set(-toe * Math.cos(theta) + soleDepth * Math.sin(theta) + toe, toe * Math.sin(theta) + soleDepth * Math.cos(theta) - soleDepth, 0).applyQuaternion(this.footFrame);
+            foot.target.add(this.delta);
+          } else if (strike > 0) foot.target.add(strikeDelta(heelStrike * strike, this.delta).applyQuaternion(this.footFrame));
+        }
+      }
+    }
+    // Pelvis: the highest height that keeps every supporting leg on a softly bent knee,
+    // lower through mid-stance so the body does not vault over the short legs, and
+    // already descending as a swing foot reaches for its heel strike.
+    const locked = this.feet.filter(f => f.locked);
+    let height = Infinity, minimumHeight = -Infinity, maximumHeight = Infinity;
+    for (const foot of this.feet) {
+      const reaching = !foot.locked && foot.swing ? ease((foot.swing.u - .4) / .45) : 0;
+      if (!foot.locked && reaching <= 0) continue;
+      this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
+      // A swing foot is judged at its landing point (the body-space swing path overshoots before heel strike).
+      const point = foot.locked ? foot.target : gaitPlant(foot, 0, this.landing);
+      const dx = point.x - this.joint.x, dz = point.z - this.joint.z, offset = this.joint.y - this.delta.setFromMatrixPosition(rig.hip.matrixWorld).y;
+      const compression = moving && foot.locked && foot.phase >= 0 && foot.phase <= stance ? Math.sin(Math.PI * foot.phase / stance) ** 2 : 0;
+      const supportKnee = (foot.locked ? 14 + 15 * run + (16 + 10 * run) * compression : 22) * DEG;
+      // A foot beyond the leg's horizontal reach (a plant left behind by a sprint) must not pull the pelvis to the floor: cap its pull at a deep crouch.
+      const reachable = legLength(foot, supportKnee), horizontalSq = Math.min(dx * dx + dz * dz, (reachable * .75) ** 2);
+      const desired = foot.target.y + Math.sqrt(Math.max(.001, reachable ** 2 - horizontalSq)) - offset;
+      if (foot.locked) {
+        height = Math.min(height, desired);
+        if (!moving) minimumHeight = Math.max(minimumHeight, foot.target.y + Math.sqrt(Math.max(.001, legLength(foot, 50 * DEG) ** 2 - dx * dx - dz * dz)) - offset);
+        maximumHeight = Math.min(maximumHeight, foot.target.y + Math.sqrt(Math.max(.001, legLength(foot, (14 + 10 * run) * DEG) ** 2 - dx * dx - dz * dz)) - offset);
+      } else height = Math.min(height, desired + (1 - reaching) * .12);
+    }
+    if (!locked.length && this.pelvisHeight !== undefined) {
+      // Flight (running): hold the pelvis on its arc with a slight rise; the reaching foot brings it down for heel strike.
+      // A pelvis dropped by an out-of-reach plant recovers fast; a healthy flight only rises slowly.
+      height = Math.min(height, this.origin.y + this.pelvisHeight + (this.pelvisHeight < .6 * s ? 4 : .2) * dt);
+    }
+    // No foot to stand on and no pelvis yet (a crowd figure whose footwork starts mid-run with both feet in swing):
+    // keep the clip's hip height. Infinity here made the filter Infinity - Infinity = NaN, and the NaN pelvis then
+    // stuck, so the figure drew no pixels while the sim kept it biting (PO "invisible zombie").
+    if (height === Infinity) height = this.pelvisHeight === undefined ? this.joint.setFromMatrixPosition(rig.hip.matrixWorld).y : this.origin.y + this.pelvisHeight;
+    // Settle down quickly (heel strike), rise smoothly.
+    const current = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight;
+    const filtered = current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)));
+    height = locked.length ? Math.min(maximumHeight, Math.max(minimumHeight, filtered)) : filtered;
+    this.pelvisHeight = height - this.origin.y;
+    this.joint.setFromMatrixPosition(rig.hip.matrixWorld);
+    const parentScale = rig.hip.parent!.getWorldScale(this.delta).y;
+    rig.hip.position.y += (height - this.joint.y) / parentScale * weight;
+    // Standing steps shift the weight over the supporting foot.
+    const shiftTarget = !moving && locked.length === 1 ? locked[0].side * .028 : 0;
+    this.shift += (shiftTarget - this.shift) * (1 - Math.exp(-dt / .09));
+    rig.hip.position.z -= this.shift * s / parentScale * weight;
+    updateWorldTranslation(rig.hip);
+    for (const foot of this.feet) {
+      if (!foot.locked && foot.swing) {
+        // Swing height follows a knee profile (release flex -> peak -> the landing flex the
+        // geometry needs), so the knee never races through the straight-leg singularity.
+        const swing = foot.swing, u = swing.u;
+        this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
+        const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z, floor = ground + swing.dip;
+        const landing = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor));
+        // Guaranteed clearance through the swing, on top of the readable knee arc.
+        // Slow steps (turning on the spot, first/last steps) lift fast and a little higher: the shoe must clear the floor band before it travels.
+        const slow = style?.maxSwing ? 0 : Math.max(0, Math.min(1, (.5 - speed) / .3));
+        const dragged = swing.gait ? drag(foot) : 0;
+        // A dragged foot scrapes just above the ground (toes down), lifting off and touching down quickly.
+        const clearance = dragged ? Math.max(.016, (.025 + .02 * run) * (1 - .8 * dragged) * s) * Math.min(1, u / .04, (1 - u) / .06)
+          : Math.max(style?.maxSwing ? (swing.gait ? .022 : .04) : 0, (swing.gait ? .025 + .02 * run + .012 * slow : .035) * s) * Math.min(1, u / (.1 - .06 * slow), (1 - u) / (style?.maxSwing && !swing.gait ? .05 : .12));
+        const needed = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor - clearance));
+        const peak = Math.max(peakKnee(swing.gait, foot), swing.knee0);
+        const profile = swing.knee0 + (peak - swing.knee0) * ease(u / .35);
+        // The leg must still span the horizontal distance with the foot no higher than ~14 cm: a trailing
+        // foot at a running toe-off folds less rather than kicking up to a hard height cap.
+        const horizontalNow = Math.hypot(dx, dz), ceiling = kneeOf(foot, Math.hypot(horizontalNow, Math.max(.1 * s, this.joint.y - floor - .14 * s)));
+        const knee = Math.max(needed, 14 * DEG, Math.min(Math.max(needed, ceiling), u < .5 ? profile : profile + (landing - profile) * ease((u - .5) / .5)));
+        const length = legLength(foot, knee);
+        foot.target.y = Math.max(floor + clearance, this.joint.y - Math.sqrt(Math.max(0, length * length - dx * dx - dz * dz)));
+        // Crowds: a foot the leg cannot reach trails low (the reach clamp below) instead of kicking up towards the hip.
+        if (style?.maxSwing) foot.target.y = Math.min(foot.target.y, floor + Math.max(clearance, .15 * s));
+        // Out of reach (fast toe-off at a run): the foot trails closer under the body at this height,
+        // folding the shin, instead of being pulled up the leg line (which snapped the knee when it let go).
+        const dy = foot.target.y - this.joint.y, limit = legLength(foot, 14 * DEG), horizontal = Math.hypot(dx, dz);
+        const allowed = Math.sqrt(Math.max(0, limit * limit - dy * dy));
+        if (horizontal > allowed) { foot.target.x = this.joint.x + dx * allowed / horizontal; foot.target.z = this.joint.z + dz * allowed / horizontal; }
+      }
+      this.footFrame.setFromAxisAngle(this.up, foot.yaw).multiply(this.footPitch.setFromAxisAngle(this.lateralAxis, foot.pitch));
+      // Knee between the body heading and the foot's own direction.
+      this.pole.set(1, 0, 0).applyQuaternion(this.footFrame); this.pole.y = 0; this.pole.add(this.bodyForward).normalize();
+      foot.ik.solve(foot.target, this.pole, this.footFrame, weight, true);
+    }
+    // Blending in or out (crowd footwork admission, ~0.12 s): the pelvis has moved `weight` of the way to the solved
+    // height but the partially slerped legs fold less than that, so the soles dipped 2-3 cm under the floor (QA: infected
+    // feet under the floor). Lift the pelvis by whatever a heel or toe is below the ground. Crowds (maxSwing) always:
+    // their instance frame can drop under feet locked in world space (a hit pop), dipping the soles up to 5 cm.
+    if (weight < 1 || style?.maxSwing) {
+      let deficit = 0;
+      for (const foot of this.feet) {
+        const end = foot.ik.end; this.joint.setFromMatrixPosition(end.matrixWorld); end.getWorldQuaternion(this.footFrame);
+        for (const x of [-heel, toe]) deficit = Math.max(deficit, ground - soleDepth - (this.joint.y + this.delta.set(x, -soleDepth, 0).applyQuaternion(this.footFrame).y));
+      }
+      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.delta).y; updateWorldTranslation(rig.hip); }
+    }
+  }
+}

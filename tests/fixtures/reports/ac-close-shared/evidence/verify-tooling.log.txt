@@ -1,0 +1,50 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 31s, 30381 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-77377-1792618710; queueing for a slot
+[runner] slot 0 acquired; load 0.28 0.19 0.19
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-77377-1792618710[39m
+
+[90mstdout[2m | tests/unit/tooling/verify-remote.test.ts[2m > [22m[2mE07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally
+[22m[39m
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-77377-1792618710 -- sh -c npm run typecheck && npm run lint
+
+Verifying E07: sh tools/e2e-lock.sh npm run build
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-77377-1792618710 --pull test-results/epics/E07/vitest-timing.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/sim/ai/director.test.ts tests/sim/performance/alpha.test.ts tests/sim/performance/alpha-physical.test.ts -t T-E07-11 --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest-timing.json
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-77377-1792618710 --pull test-results/epics/E07/vitest.json -- npx vitest run -t ^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest.json
+
+Verifying E07: sh tools/e2e-lock.sh npx playwright test --grep @(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --workers=1
+
+Verifying E07: sh tools/perf/quiet-run.sh npx playwright test --grep ^(?=.*(?:@(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)|T-E07-physical-budget))(?=.*@perf) --project=chromium --workers=1
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/verify-remote.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 41[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m   Start at [22m 21:40:06
+[2m   Duration [22m 231ms[2m (tests 40%, transform 39%, import 15%, worker 5%)[22m
+
+[remote] done exit=0 (runner 2.31.10.108, sync 31s, remote total 66s)

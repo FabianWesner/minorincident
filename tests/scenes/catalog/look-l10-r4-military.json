@@ -1,0 +1,63 @@
+{
+ "name": "look-l10-r4-military",
+ "note": "look-l10 game-camera dressing check. R4 military: jersey/sandbag lines, guard towers, armour wrecks, army checkpoints with white floods. Look for: a silhouette and a light point in every frame, nothing floating or sunk, no prop in the walkable lane, night still dark.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    2160,
+    -145
+   ],
+   [
+    2380,
+    -5
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    2250,
+    -75
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "frames": 240,
+ "sheet": 40,
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      2330,
+      -75
+     ]
+    ]
+   }
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "lodPlaceholderFramesMax": 0
+ }
+}

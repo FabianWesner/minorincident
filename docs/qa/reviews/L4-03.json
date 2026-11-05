@@ -1,0 +1,27 @@
+{
+  "row": "L4-03",
+  "status": "PASS",
+  "reviewer": "Codex/fix53-b",
+  "date": "2026-11-04",
+  "commit": "a826d1e9508ab6be80a6f4e945ba3762f9d11179",
+  "clauses": [
+    {
+      "clause": "Alarm (klaxon) and attack start **on the MG pickup tick**. PO: \"start the alam and attack at the moment when I picked up the MP\".",
+      "verdict": "PASS",
+      "note": "All four fresh physical-input cells pass: pickup/gun/turn/actual klaxon voices/living alarm admissions share the same tick. All28 delayed/missing-evidence controls reject PASS. Every original frame is inspected separately in the linked review manifest."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix53-b/L4-03.json",
+      "sha256": "3984528fc88d37b0303f844073be3c15c74e217c3e22a1f493f98b47a7d42612",
+      "what": "Four actual tick/voice/admission ledgers and28 negative controls."
+    },
+    {
+      "file": "docs/reports/fix53-b/L4-opening-review.json",
+      "sha256": "25e5832edf4183be2b9801cdd062907fa1fe5aea8de8d262a7caf8c2971d282e",
+      "what": "Every original capture inspected, with per-image SHA256/seen notes and retained contact-sheet/archive hashes."
+    }
+  ],
+  "notes": "Shared headless Metal WebGL2; physical WASD/mouse/E; courier protected. Bounded opening evidence only. Stills do not establish tick equality; the read-only event/actual-audio graph ledger does."
+}

@@ -1,0 +1,133 @@
+[
+ {"pack": 11, "file": "living-civilians-and-story-npcs.png", "title": "LIVING CIVILIANS & STORY NPCS",
+  "refs": ["zombies-civilian-characters.png", "survivors-corgi-and-equipment.png"],
+  "layout": "character turnarounds (front, three-quarter, back) per character, like the infected sheet",
+  "items": [
+   ["npc.civilian-man-a", "Civilian man A: polo shirt, khakis, sneakers (healthy version of the runner body)"],
+   ["npc.civilian-man-b", "Civilian man B: hoodie, jeans, cap"],
+   ["npc.civilian-woman-a", "Civilian woman A: sundress with cardigan, tote bag"],
+   ["npc.civilian-woman-b", "Civilian woman B: office blouse, slacks, lanyard"],
+   ["npc.civilian-kid", "Civilian kid, about 8: t-shirt, shorts, sneakers"],
+   ["npc.civilian-elderly", "Elderly man: sweater vest, flat cap, cane"],
+   ["npc.patient-zero-courier", "Patient Zero courier in three states side by side: healthy, sick (pale, sweating), infected; delivery uniform"],
+   ["prop.medical-cooler", "Medical courier cooler: white and orange, biohazard sticker, handle"],
+   ["npc.brother", "The survivor's brother, about 10: backpack, baseball cap, hoodie"],
+   ["npc.mrs-alvarez", "Mrs. Alvarez, elderly neighbor: cardigan, glasses, gardening apron"],
+   ["npc.helicopter-pilot", "Rescue helicopter pilot: flight suit, helmet with visor"]
+  ]},
+ {"pack": 12, "file": "emergency-responders-and-survivor-allies.png", "title": "EMERGENCY RESPONDERS & SURVIVOR ALLIES",
+  "refs": ["zombies-emergency-workers-and-mutants.png", "survivors-corgi-and-equipment.png"],
+  "layout": "character turnarounds (front, three-quarter, back) per character",
+  "items": [
+   ["npc.police-officer", "Police officer (alive): navy uniform, vest, cap, radio"],
+   ["npc.paramedic", "Paramedic (alive): EMS uniform with reflective stripes, med bag"],
+   ["npc.firefighter-alive", "Firefighter (alive): turnout gear, helmet, air tank"],
+   ["npc.national-guard", "National Guard soldier: camo, helmet, vest, rifle slung"],
+   ["npc.survivor-ally-mechanic", "Survivor ally 1: mechanic woman, overalls, wrench"],
+   ["npc.survivor-ally-hunter", "Survivor ally 2: older man, hunting cap, plaid jacket, walkie-talkie"],
+   ["npc.survivor-ally-teen", "Survivor ally 3: teen with skateboard and slingshot"]
+  ]},
+ {"pack": 13, "file": "survivor-gear-tiers-and-action-poses.png", "title": "SURVIVOR GEAR TIERS & ACTION POSES",
+  "refs": ["survivors-corgi-and-equipment.png", "sunset-grove-combat-gameplay-mockup.png"],
+  "layout": "top half: male and female survivor front views at gear tiers 1-4 in two rows; bottom half: action poses",
+  "items": [
+   ["char.survivor-male.gear-t1", "Male survivor tier 1: backpack with duct tape"],
+   ["char.survivor-male.gear-t2", "Male survivor tier 2: knee and elbow pads, thigh holster"],
+   ["char.survivor-male.gear-t3", "Male survivor tier 3: padded vest, cap"],
+   ["char.survivor-male.gear-t4", "Male survivor tier 4: heavy vest, ammo belts, gas mask"],
+   ["char.survivor-female.gear-t1", "Female survivor tier 1: backpack with duct tape"],
+   ["char.survivor-female.gear-t2", "Female survivor tier 2: knee and elbow pads, thigh holster"],
+   ["char.survivor-female.gear-t3", "Female survivor tier 3: padded vest, cap"],
+   ["char.survivor-female.gear-t4", "Female survivor tier 4: heavy vest, ammo belts, gas mask"],
+   ["char.survivor.pose-kick", "Pose: front kick"],
+   ["char.survivor.pose-throw", "Pose: grenade throw arc"],
+   ["char.survivor.pose-rifle", "Pose: two-hand rifle aim"],
+   ["char.survivor.pose-heavy", "Pose: carrying a heavy weapon (machine gun)"],
+   ["char.survivor.pose-driving", "Pose: seated driving"]
+  ]},
+ {"pack": 14, "file": "heavy-weapons-throwables-and-abilities.png", "title": "HEAVY WEAPONS, THROWABLES & ABILITIES",
+  "refs": ["weapons-consumables-and-survival-props.png", "sunset-grove-combat-gameplay-mockup.png"],
+  "layout": "weapons laid out horizontally like the weapons sheet, abilities in their own panel",
+  "items": [
+   ["wpn.knife", "Combat knife"], ["wpn.fire-axe", "Red fire axe"], ["wpn.katana", "Katana with wrapped grip"],
+   ["wpn.smg", "Compact SMG"], ["wpn.hunting-rifle", "Wooden hunting rifle with scope"], ["wpn.assault-rifle", "Assault rifle"],
+   ["wpn.machine-gun", "Light machine gun with box magazine"], ["wpn.rocket-launcher", "Shoulder rocket launcher"], ["proj.rocket", "Rocket projectile"],
+   ["thr.frag-grenade", "Frag grenade"], ["thr.flashbang", "Flashbang"],
+   ["abl.shield-bubble", "Ability: glowing protective shield dome"], ["abl.ground-slam", "Ability: ground slam shockwave ring with cracks"],
+   ["abl.turret", "Ability: deployable scrap-built tripod turret"]
+  ]},
+ {"pack": 15, "file": "heavy-and-special-vehicles.png", "title": "HEAVY & SPECIAL VEHICLES",
+  "refs": ["emergency-services-buildings-vehicles-and-props.png", "suburban-homes-backyards-and-street-props.png"],
+  "layout": "vehicles in three-quarter view, two rows, like the vehicles panel of the emergency sheet",
+  "items": [
+   ["veh.courier-van", "Medical courier van: white with teal stripe, roof rack"],
+   ["veh.military-truck", "Military cargo truck: olive drab, canvas cover"],
+   ["veh.box-truck", "Box truck: white box, moving-company stripe"],
+   ["veh.semi-trailer", "Semi truck with long trailer"],
+   ["veh.helicopter", "Rescue helicopter: red and white, skids, searchlight"],
+   ["veh.train-boxcar", "Freight train boxcar, rust red"],
+   ["veh.train-tanker", "Freight train tank wagon, black"],
+   ["veh.train-flatcar", "Freight train flatcar with containers"]
+  ]},
+ {"pack": 16, "file": "wrecked-and-burned-vehicles.png", "title": "WRECKED & BURNED VEHICLES",
+  "refs": ["suburban-homes-backyards-and-street-props.png", "emergency-services-buildings-vehicles-and-props.png"],
+  "layout": "two rows: WRECKED (dented, broken glass, flat tyre, door open) and BURNED (charred black, rust, no glass, no tyres)",
+  "items": [
+   ["veh.sedan-red.wrecked", "Red sedan, wrecked"], ["veh.sedan-blue.wrecked", "Blue sedan, wrecked"], ["veh.sedan-white.wrecked", "White sedan, wrecked"],
+   ["veh.suv-dark.wrecked", "Dark SUV, wrecked"], ["veh.pickup-red.wrecked", "Red pickup, wrecked"], ["veh.police-sedan.wrecked", "Police sedan, wrecked"],
+   ["veh.ambulance.wrecked", "Ambulance, wrecked"], ["veh.school-bus.wrecked", "School bus, wrecked"],
+   ["veh.sedan-red.burned", "Red sedan, burned"], ["veh.sedan-blue.burned", "Blue sedan, burned"], ["veh.sedan-white.burned", "White sedan, burned"],
+   ["veh.suv-dark.burned", "Dark SUV, burned"], ["veh.pickup-red.burned", "Red pickup, burned"], ["veh.police-sedan.burned", "Police sedan, burned"],
+   ["veh.ambulance.burned", "Ambulance, burned"], ["veh.school-bus.burned", "School bus, burned"]
+  ]},
+ {"pack": 17, "file": "town-edge-bridge-rail-and-power.png", "title": "TOWN EDGE: BRIDGE, RAIL & POWER",
+  "refs": ["emergency-services-buildings-vehicles-and-props.png", "parks-baseball-field-and-campsite.png"],
+  "layout": "modular kit pieces in panels: BRIDGE, RIVER, RAIL CROSSING, TUNNEL, SUBSTATION",
+  "items": [
+   ["bld.river-bridge.truss", "Steel truss bridge segment, modular"], ["bld.river-bridge.ramp", "Bridge approach ramp segment"],
+   ["bld.river-bridge.gate", "Bridge barrier / lift gate"], ["bld.river-bridge.charges", "Demolition charges strapped to a bridge pillar"],
+   ["kit.river-terrain.bank", "Riverbank slope piece with grass edge"], ["kit.river-terrain.rocks", "River rocks cluster"], ["kit.river-terrain.water", "River water surface tile"],
+   ["kit.rail-crossing.track", "Rail track segment"], ["kit.rail-crossing.gate", "Crossing gate arm with red-white stripes"],
+   ["kit.rail-crossing.signal", "Crossing signal post with flashing lights"], ["kit.rail-crossing.box", "Rail control box"],
+   ["bld.tunnel-portal", "Concrete tunnel portal"],
+   ["bld.power-substation.transformer", "Substation transformer"], ["bld.power-substation.breaker", "Breaker panel"],
+   ["bld.power-substation.fence", "Substation chain fence with warning signs"], ["bld.power-substation.lever", "Big switch lever box"]
+  ]},
+ {"pack": 18, "file": "highway-helipad-and-safe-zone.png", "title": "HIGHWAY, HELIPAD & SAFE ZONE",
+  "refs": ["emergency-services-buildings-vehicles-and-props.png", "school-playground-and-gym.png"],
+  "layout": "large civic center building diorama on the left, modular kit pieces on the right",
+  "items": [
+   ["kit.highway-onramp.ramp", "Highway on-ramp segment with guard rails"], ["kit.highway-onramp.sign", "Overhead green highway sign gantry"],
+   ["bld.helipad", "Helipad with H marking and landing lights"], ["bld.helipad.windsock", "Windsock on a pole"], ["bld.helipad.flare-stand", "Flare stand"],
+   ["bld.civic-center", "Civic center: safe-zone main building, gym-type hall, SAFE ZONE banners, sandbags at the entrance"]
+  ]},
+ {"pack": 19, "file": "decay-and-destruction.png", "title": "DECAY & DESTRUCTION",
+  "refs": ["suburban-homes-backyards-and-street-props.png", "emergency-services-buildings-vehicles-and-props.png"],
+  "layout": "panels by world-decay tier: W1 BELONGINGS, W2 BARRICADES, W3-W4 DAMAGE, W5 RUINS",
+  "items": [
+   ["decay.dropped-belongings", "Dropped belongings: suitcases, bag, phone, stroller"], ["decay.broken-glass", "Broken glass shards pile"],
+   ["decay.boarded-windows", "Boarded-up house window and shop window"], ["decay.furniture-barricade", "Furniture barricade: sofa, fridge, planks"],
+   ["decay.burned-facade.house", "Burned house facade module"], ["decay.burned-facade.brick", "Burned brick shop facade module"],
+   ["decay.burned-facade.diner", "Burned diner facade module"], ["decay.burned-facade.school", "Burned school facade module"],
+   ["decay.collapsed-facade", "Collapsed building facade"], ["decay.rubble-pile", "Rubble piles small, medium, large"],
+   ["decay.downed-power-line", "Downed power line with sparks"], ["decay.fallen-tree", "Fallen tree across a road"], ["decay.crater", "Explosion crater"],
+   ["decay.body-bag", "Body bags"], ["decay.abandoned-checkpoint", "Abandoned checkpoint: knocked-over tent, scattered barriers"],
+   ["decay.graffiti", "Graffiti panels: STAY OUT, ALIVE INSIDE, SG with a cross"]
+  ]},
+ {"pack": 20, "file": "gore-gibs-and-blood.png", "title": "GORE: GIBS & BLOOD",
+  "refs": ["zombies-civilian-characters.png", "zombies-emergency-workers-and-mutants.png"],
+  "layout": "chunky low-poly gib shapes in palette reds, limb gibs with stump caps, top-down blood decals",
+  "items": [
+   ["gib.chunk-set", "Gib chunk set: 8 chunky low-poly shapes in reds and dark reds"],
+   ["gib.limb-generic", "Generic limb gibs: arm, leg, head, each with a stump cap"],
+   ["decal.blood-pool", "Large blood pool decal, top-down"], ["decal.blood-trail", "Blood drag trail decal, top-down"],
+   ["decal.arterial-spray", "Arterial spray decal, top-down"]
+  ]},
+ {"pack": 21, "file": "action-and-minimap-icons.png", "title": "ACTION & MINIMAP ICONS",
+  "refs": ["sunset-grove-combat-gameplay-mockup.png", "weapons-consumables-and-survival-props.png"],
+  "layout": "a grid of square action icons in the mockup's rounded dark card style, then a row of small minimap icons",
+  "items": [
+   ["ui.icon.actions", "About 30 action icons: melee swing, heavy smash, kick, dodge roll, sprint, pistol, shotgun, SMG, rifle, machine gun, rocket, frag, molotov, pipe bomb, lure, flashbang, medkit, bandage, soda, energy drink, shield bubble, ground slam, turret, corgi fetch, corgi bark, flashlight, lockpick, radio, keys, enter vehicle"],
+   ["ui.icon.minimap", "Minimap icons: player, corgi, objective, escort, safe zone, vehicle, infected, elite, loot"]
+  ]}
+]

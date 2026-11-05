@@ -1,0 +1,515 @@
+"""Sunset Grove (L1 v2) authoring helpers: road grid, lots, fences, shells, plausibility checks.
+
+Conventions (see layouts/D-GROVE/layout.py): X east, Z south, metres. Every building/prop model faces +X at yaw 0, so a
+building that faces direction d has yaw FACE_YAW[d]. Fences/gates have their long axis on local Z, hedges on local X.
+"""
+import json
+import math
+import random
+import re
+from pathlib import Path
+
+from sslib import l1_dressing as D
+
+FACE_YAW = {'E': 0.0, 'N': math.pi / 2, 'W': math.pi, 'S': -math.pi / 2}
+FRONT = {'E': (1, 0), 'N': (0, -1), 'W': (-1, 0), 'S': (0, 1)}
+# Solid assets whose manifest entry is still a placeholder box but that must stay enterable (door gaps in a shell).
+HOLLOW = {'bld.clinic-annex', 'bld.cafe-corner', 'bld.courier-depot', 'bld.garage-detached'}
+OVERLAP_TOLERANCE = .12
+# Low or open-framed props whose baked collision boxes are all below 0.45 m or only small clumps: their visual rectangle is the footprint
+# (PO "clipping errors": planters through fences, kiddie pools inside houses).
+VISUAL_FOOTPRINT = ('prop.flower-bed', 'prop.kiddie-pool', 'prop.sprinkler', 'prop.hose-reel', 'prop.flamingo', 'prop.gnome', 'prop.lawn-chair', 'prop.wheelbarrow')
+
+
+def rot(yaw, lx, lz):
+    """Local (x, z) to world offset, same convention as placementColliders (three.js rotation.y)."""
+    return lx * math.cos(yaw) + lz * math.sin(yaw), -lx * math.sin(yaw) + lz * math.cos(yaw)
+
+
+def load_static(root):
+    text = (root / 'src/assets/staticCollision.ts').read_text()
+    return {m.group(1): json.loads(m.group(2))['boxes'] for m in re.finditer(r'^  "([^"]+)": (\{.*\}),?$', text, re.M)}
+
+
+class Grove:
+    def __init__(self, l):
+        self.l = l
+        self.root = l.root
+        self.static = load_static(self.root)
+        self.manifest = l.manifest
+        self.solids = []      # (label, x0, z0, x1, z1, ymax) of every non-walkable footprint, for the overlap check
+        self.problems = []
+        self.cars = {}
+        self.vis_h = []  # house footprints (trees only)
+        self.vis = []   # visual footprints of buildings and vehicles (x0, z0, x1, z1): trunks and small props keep out of them
+        self.rng = random.Random(1)
+        self.sidewalks = []
+        self.lawn_rects = []
+        l.data['lawns'] = []
+        original = l.place
+        def place(asset, pos, yaw=0, tier=0, allowed=False, scale=(1, 1, 1), tint=None):
+            # Tiny daisies are baked decorations, as in the other L1 districts (sslib/l1_dressing.py).
+            if asset == 'prop.flower': return D.flower(l, *pos, scale, yaw)
+            return original(asset, pos, yaw, tier, allowed, scale, tint)
+        l.place = place
+
+    # ---- manifest helpers -------------------------------------------------------------------------------------
+    def dims(self, asset):
+        d = self.manifest[asset]['dimensions']
+        return d['x'], d['y'], d['z']
+
+    def placeholder(self, asset):
+        return self.manifest[asset].get('status') == 'placeholder'
+
+    def pick(self, asset, fallback):
+        """Side-tier assets that are still placeholder boxes fall back to a delivered model."""
+        return fallback if self.placeholder(asset) else asset
+
+    # ---- footprints / overlap check ---------------------------------------------------------------------------
+    def boxes(self, asset, x, z, yaw, scale):
+        sc = (scale, scale, scale) if isinstance(scale, (int, float)) else scale
+        out = []
+        data = self.static.get(asset)
+        if data is None or (asset in HOLLOW and self.placeholder(asset)):
+            return out
+        for b in data:
+            if b['max'][1] <= .45:
+                continue
+            xs, zs = [], []
+            for bx in (b['min'][0], b['max'][0]):
+                for bz in (b['min'][2], b['max'][2]):
+                    ox, oz = rot(yaw, bx * sc[0], bz * sc[2])
+                    xs.append(x + ox); zs.append(z + oz)
+            out.append((min(xs), min(zs), max(xs), max(zs), b['max'][1] * sc[1]))
+        return out
+
+    def record(self, label, box, group=None):
+        x0, z0, x1, z1, y = box
+        group = group or label
+        for (other, a0, b0, a1, b1, oy, og) in self.solids:
+            if og == group:
+                continue
+            dx = min(x1, a1) - max(x0, a0); dz = min(z1, b1) - max(z0, b0)
+            if dx > OVERLAP_TOLERANCE and dz > OVERLAP_TOLERANCE:
+                self.problems.append(f'overlap {label} / {other} ({dx:.2f} x {dz:.2f}) at {x0:.1f},{z0:.1f}')
+        self.solids.append((label, x0, z0, x1, z1, y, group))
+
+    def blocked(self, x, z, r=0.0):
+        return any(a0 - r < x < a1 + r and b0 - r < z < b1 + r for (_, a0, b0, a1, b1, _, _) in self.solids)
+
+    def footprint(self, asset, x, z, yaw, sc):
+        """Non-walkable footprint boxes: baked GLB collision when present, else the visual footprint of a solid asset."""
+        info = self.manifest[asset]
+        hollow = asset in HOLLOW and self.placeholder(asset)
+        if hollow:
+            return []
+        boxes = self.boxes(asset, x, z, yaw, sc)
+        if asset.startswith(VISUAL_FOOTPRINT):
+            dx, dy, dz = self.dims(asset)
+            ex, ez = abs(math.cos(yaw)) * dx * sc[0] + abs(math.sin(yaw)) * dz * sc[2], abs(math.sin(yaw)) * dx * sc[0] + abs(math.cos(yaw)) * dz * sc[2]
+            return [(x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2, dy * sc[1])]
+        if not boxes and (info.get('world') or {}).get('solid'):
+            dx, dy, dz = self.dims(asset)
+            ex, ez = abs(math.cos(yaw)) * dx * sc[0] + abs(math.sin(yaw)) * dz * sc[2], abs(math.sin(yaw)) * dx * sc[0] + abs(math.cos(yaw)) * dz * sc[2]
+            boxes = [(x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2, dy * sc[1])]
+        return boxes
+
+    def fits(self, boxes, margin=0.0):
+        for (x0, z0, x1, z1, _) in boxes:
+            for (_, a0, b0, a1, b1, _, _) in self.solids:
+                if min(x1, a1) - max(x0, a0) > OVERLAP_TOLERANCE - margin and min(z1, b1) - max(z0, b0) > OVERLAP_TOLERANCE - margin:
+                    return False
+        return True
+
+    def place(self, asset, x, z, yaw=0.0, scale=1.0, check=True, y=0.0, soft=False, margin=0.0, tint=None):
+        sc = (scale, scale, scale) if isinstance(scale, (int, float)) else tuple(scale)
+        l = self.l
+        boxes = self.footprint(asset, x, z, yaw, sc)
+        dx_, dy_, dz_ = self.dims(asset)
+        ex, ez = abs(math.cos(yaw)) * dx_ * sc[0] + abs(math.sin(yaw)) * dz_ * sc[2], abs(math.sin(yaw)) * dx_ * sc[0] + abs(math.cos(yaw)) * dz_ * sc[2]
+        isveh, isbld = asset.startswith('veh.'), asset.startswith('bld.')
+        if soft:
+            if not self.fits(boxes, margin): return None
+            if asset.startswith('prop.street-tree'):   # trunk never in a building/vehicle footprint
+                if any(a0 - .4 < x < a1 + .4 and b0 - .4 < z < b1 + .4 for a0, b0, a1, b1 in self.vis + self.vis_h): return None
+            elif not isbld and (isveh or asset.startswith('prop.')) and not asset.startswith(('prop.hedge', 'prop.privacy', 'prop.picket', 'prop.street-lamp', 'prop.flower')):
+                # small props / cars: visual footprint clear of vehicles and non-house buildings
+                for a0, b0, a1, b1 in self.vis:
+                    if min(x + ex / 2, a1) - max(x - ex / 2, a0) > .1 and min(z + ez / 2, b1) - max(z - ez / 2, b0) > .1: return None
+        if isveh or (isbld and not asset.startswith('bld.house')):
+            self.vis.append((x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2))
+        elif isbld:
+            self.vis_h.append((x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2))
+        pid = l.place(asset, [x, y, z], yaw=yaw, scale=sc, tint=tint)
+        if asset in HOLLOW and self.placeholder(asset):
+            # Placeholder box: replace the footprint collider by walls with door gaps (see shell()).
+            l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
+        self.count = getattr(self, 'count', 0) + 1
+        for b in boxes:
+            label = f'{asset}@{x:.1f},{z:.1f}'
+            if check:
+                self.record(label, b, f'{asset}#{self.count}')
+            else:
+                self.solids.append((label, *b, f'{asset}#{self.count}'))
+        return pid
+
+    def solid(self, name, token, size, pos, collide=True):
+        l = self.l
+        o = l.box(name, token, size, pos)
+        if collide:
+            D.collider(l, name, size, pos)
+            self.record(f'{name}@{pos[0]:.1f},{pos[2]:.1f}', (pos[0] - size[0] / 2, pos[2] - size[2] / 2, pos[0] + size[0] / 2, pos[2] + size[2] / 2, pos[1] + size[1] / 2))
+        return o
+
+    def collide_only(self, name, size, pos):
+        D.collider(self.l, name, size, pos)
+        self.record(f'{name}@{pos[0]:.1f},{pos[2]:.1f}', (pos[0] - size[0] / 2, pos[2] - size[2] / 2, pos[0] + size[0] / 2, pos[2] + size[2] / 2, pos[1] + size[1] / 2))
+
+    # ---- hollow placeholder shell -----------------------------------------------------------------------------
+    def shell(self, name, cx, cz, facing, depth, width, doors, wall=.4, height=3.2):
+        """Wall boxes around a placeholder footprint. doors: list of (side, lateral_offset, gap) with side in front/back/left/right
+        (relative to the facing direction). Interior stays walkable; door gaps are accessible."""
+        yaw = FACE_YAW[facing]
+        hd, hw = depth / 2, width / 2
+        specs = {  # side: (local centre x, local centre z, size along local x, size along local z, axis of the gap)
+            'front': (hd - wall / 2, 0, wall, width, 'z'),
+            'back': (-hd + wall / 2, 0, wall, width, 'z'),
+            'left': (0, -hw + wall / 2, depth, wall, 'x'),
+            'right': (0, hw - wall / 2, depth, wall, 'x'),
+        }
+        for side, (lx, lz, sx, sz, axis) in specs.items():
+            gaps = sorted((off - gap / 2, off + gap / 2) for s, off, gap in doors if s == side)
+            span = sz if axis == 'z' else sx
+            cuts, start = [], -span / 2
+            for g0, g1 in gaps:
+                if g0 > start + .05: cuts.append((start, g0))
+                start = g1
+            if start < span / 2 - .05: cuts.append((start, span / 2))
+            for a, b in cuts:
+                mid = (a + b) / 2
+                px, pz = (lx, lz + mid) if axis == 'z' else (lx + mid, lz)
+                ox, oz = rot(yaw, px, pz)
+                size_l = (sx, b - a) if axis == 'z' else (b - a, sz)
+                if abs(math.sin(yaw)) > .5: size_l = (size_l[1], size_l[0])
+                D.collider(self.l, f'{name}', [size_l[0], height, size_l[1]], [cx + ox, height / 2, cz + oz])
+                self.record(f'{name}', (cx + ox - size_l[0] / 2, cz + oz - size_l[1] / 2, cx + ox + size_l[0] / 2, cz + oz + size_l[1] / 2, height), name)
+
+    # ---- roads --------------------------------------------------------------------------------------------------
+    def roads(self, roads, sidewalk=2.0, crossings=()):
+        """roads: list of dict(id, a, b, w, kind) with axis-aligned (x, z) endpoints. Builds graph, asphalt, kerbs, sidewalks, markings."""
+        l = self.l
+        for o in list(l.layers[0]):
+            if o.name.startswith('road-'):
+                l.layers[0].remove(o)
+                import bpy
+                bpy.data.objects.remove(o, do_unlink=True)
+        data = l.data
+        data['roads'] = dict(nodes=[], edges=[])
+        data['surfaces'] = [s for s in data['surfaces'] if s['surface'] == 'grass']
+        self.road_list = roads
+        pts = {}
+        def nid(p):
+            key = (round(p[0], 3), round(p[1], 3))
+            if key not in pts:
+                pts[key] = f'n{len(pts)}'
+                data['roads']['nodes'].append(dict(id=pts[key], point=[key[0], key[1]]))
+            return pts[key]
+        # intersection split points
+        for r in roads:
+            ax = 0 if r['a'][1] == r['b'][1] else 1
+            cuts = {r['a'][ax], r['b'][ax]}
+            for o in roads:
+                if o is r: continue
+                oax = 0 if o['a'][1] == o['b'][1] else 1
+                if oax == ax: continue
+                c = o['a'][ax]
+                lo, hi = sorted((r['a'][ax], r['b'][ax]))
+                olo, ohi = sorted((o['a'][1 - ax], o['b'][1 - ax]))
+                if lo - 1e-6 <= c <= hi + 1e-6 and olo - 1e-6 <= r['a'][1 - ax] <= ohi + 1e-6:
+                    cuts.add(c)
+            cuts = sorted(cuts)
+            r['ax'] = ax; r['cuts'] = cuts
+            for c0, c1 in zip(cuts, cuts[1:]):
+                if r['kind'] != 'road':
+                    continue   # alleys are surfaces only: they stay out of the street graph (no traffic, no lane keep-out)
+                # graph ends may stop short of the drawn road so that road-work barriers sit outside every lane keep-out
+                glo, ghi = sorted(((r.get('ga') or r['a'])[ax], (r.get('gb') or r['b'])[ax]))
+                c0, c1 = max(c0, glo), min(c1, ghi)
+                if c1 - c0 < 1e-6:
+                    continue
+                p0 = [c0, r['a'][1]] if ax == 0 else [r['a'][0], c0]
+                p1 = [c1, r['a'][1]] if ax == 0 else [r['a'][0], c1]
+                data['roads']['edges'].append(dict(id=f"{r['id']}-{len(data['roads']['edges'])}", start=nid(p0), end=nid(p1), points=[p0, p1], laneWidth=r['w']))
+        for r in roads:
+            ax = r['ax']; lo, hi = r['cuts'][0], r['cuts'][-1]
+            half = r['w'] / 2
+            token = 'asphalt' if r['kind'] == 'road' else 'uiDark'
+            line = r['a'][1 - ax]
+            # A road that ends at the centre line of a street that does not run through it (L / T corner such as Main Row meeting
+            # Larch St) needs its asphalt and sidewalks carried over the corner; otherwise the street ends in a notch of grass.
+            ext = {}   # end -> (asphalt extension, {side: sidewalk extension})
+            if r['kind'] == 'road':
+                for end, e in ((0, lo), (1, hi)):
+                    for o in roads:
+                        if o is r or o['ax'] == ax or o['kind'] != 'road' or abs(o['a'][ax] - e) > 1e-6: continue
+                        olo, ohi = sorted((o['a'][1 - ax], o['b'][1 - ax]))
+                        if not (olo - 1e-6 <= line <= ohi + 1e-6): continue
+                        if olo < line - half - 1e-6 and ohi > line + half + 1e-6: continue   # o runs through: its own box covers the end
+                        ext[end] = (o['w'] / 2, {-1: 0.0 if olo < line - 1e-6 else o['w'] / 2 + sidewalk, 1: 0.0 if ohi > line + 1e-6 else o['w'] / 2 + sidewalk})
+            segs = [(lo - ext.get(0, (0,))[0], hi + ext.get(1, (0,))[0])]
+            if r['kind'] != 'road':
+                # Alleys are drawn kerb to kerb between the streets they join, so no gravel lies under the asphalt.
+                segs = []
+                for c0, c1 in zip(r['cuts'], r['cuts'][1:]):
+                    m0 = max([o['w'] / 2 for o in roads if o is not r and o['ax'] != ax and abs(o['a'][ax] - c0) < 1e-6 and o['kind'] == 'road'] or [0])
+                    m1 = max([o['w'] / 2 for o in roads if o is not r and o['ax'] != ax and abs(o['a'][ax] - c1) < 1e-6 and o['kind'] == 'road'] or [0])
+                    segs.append((c0 + m0, c1 - m1))
+            for s0, s1 in segs:
+                length = s1 - s0; mid = (s0 + s1) / 2
+                size = [length, .08, r['w']] if ax == 0 else [r['w'], .08, length]
+                pos = [mid, .01, r['a'][1]] if ax == 0 else [r['a'][0], .01, mid]
+                l.box('road-' + r['id'], token, size, pos)
+                data['surfaces'].append(dict(surface='asphalt' if r['kind'] == 'road' else 'gravel', polygon=self.rect_poly(pos, size)))
+            if r['kind'] != 'road':
+                continue
+            # kerb lip, gutter, sidewalk strips with gaps where side streets join
+            for side in (-1, 1):
+                gaps = []
+                for o in roads:
+                    if o is r or o['ax'] == ax: continue
+                    c = o['a'][ax]; olo, ohi = sorted((o['a'][1 - ax], o['b'][1 - ax]))
+                    # does the side street leave this side of the road?
+                    if (side < 0 and olo < line - 1e-6 and c >= lo - 1e-6 and c <= hi + 1e-6) or (side > 0 and ohi > line + 1e-6 and c >= lo - 1e-6 and c <= hi + 1e-6):
+                        if olo - 1e-6 <= line <= ohi + 1e-6 or True:
+                            gaps.append((c - o['w'] / 2, c + o['w'] / 2))
+                gaps.sort()
+                slo = lo - ext.get(0, (0, {}))[1].get(side, 0.0) if 0 in ext else lo
+                shi = hi + ext.get(1, (0, {}))[1].get(side, 0.0) if 1 in ext else hi
+                segs, start = [], slo
+                for g0, g1 in gaps:
+                    if g0 > start: segs.append((start, g0))
+                    start = max(start, g1)
+                if start < shi: segs.append((start, shi))
+                for s0, s1 in segs:
+                    if s1 - s0 < .3: continue
+                    m = (s0 + s1) / 2; ln = s1 - s0
+                    off = side * (half + sidewalk / 2)
+                    sz = [ln, .18, sidewalk] if ax == 0 else [sidewalk, .18, ln]
+                    ps = [m, .04, line + off] if ax == 0 else [line + off, .04, m]
+                    l.box('walk', 'sidewalk', sz, ps)
+                    self.sidewalks.append((ps, sz))
+                    lip = [ln, .13, .13] if ax == 0 else [.13, .13, ln]
+                    pl = [m, .035, line + side * (half + .04)] if ax == 0 else [line + side * (half + .04), .035, m]
+                    l.box('curb-lip', 'picketWhite', lip, pl)
+                    gut = [ln, .015, .18] if ax == 0 else [.18, .015, ln]
+                    pg = [m, .057, line + side * (half - .15)] if ax == 0 else [line + side * (half - .15), .057, m]
+                    l.box('gutter', 'denim', gut, pg)
+            # dashed centre line
+            v = lo + 3
+            while v < hi - 2:
+                if not any(abs(v - o['a'][ax]) < o['w'] / 2 + 1.8 for o in roads if o is not r and o['ax'] != ax and o['kind'] == 'road'):
+                    sz = [1.4, .014, .12] if ax == 0 else [.12, .014, 1.4]
+                    p = [v, .065, line] if ax == 0 else [line, .065, v]
+                    l.box('lane-mark', 'picketWhite', sz, p)
+                v += 4
+        return data
+
+    @staticmethod
+    def rect_poly(pos, size):
+        x, z = pos[0], pos[2]; hx, hz = size[0] / 2, size[2] / 2
+        return [[x - hx, z - hz], [x + hx, z - hz], [x + hx, z + hz], [x - hx, z + hz], [x - hx, z - hz]]
+
+    def crosswalk(self, cx, cz, axis, w=5.0, sidewalk=2.0):
+        """Zebra stripes across the road arm leaving the intersection centre; axis = direction of travel across (0: crossing along x)."""
+        l = self.l
+        for k in range(-2, 3):
+            if axis == 1:   # stripes laid along z, spread along x
+                l.box('crosswalk', 'picketWhite', [.5, .014, 1.05], [cx + k * .85, .066, cz])
+            else:
+                l.box('crosswalk', 'picketWhite', [1.05, .014, .5], [cx, .066, cz + k * .85])
+
+    def lawn(self, x0, z0, x1, z1):
+        if x1 - x0 > .5 and z1 - z0 > .5:
+            self.l.data['lawns'].append(dict(min=[x0, z0], max=[x1, z1]))
+
+    def path(self, x0, z0, x1, z1, token='sidewalk'):
+        """Walkable paving strip between two points (axis-aligned)."""
+        cx, cz = (x0 + x1) / 2, (z0 + z1) / 2
+        self.l.box('yard-path', token, [abs(x1 - x0) or 1.2, .06, abs(z1 - z0) or 1.2], [cx, .02, cz])
+
+    # ---- fences / hedges -----------------------------------------------------------------------------------------
+    def fence(self, kind, x0, z0, x1, z1, gaps=(), scale_y=1.0, label=None):
+        """Axis-aligned fence run with optional gaps [(centre, width)] measured along the run. Returns list of placement ids."""
+        asset = {'picket': 'prop.picket-fence', 'privacy': 'prop.privacy-fence'}[kind]
+        length_model = self.dims(asset)[2]
+        ax = 0 if abs(z1 - z0) < 1e-6 else 1
+        a0, a1 = (x0, x1) if ax == 0 else (z0, z1)
+        if a1 < a0: a0, a1 = a1, a0
+        base = z0 if ax == 0 else x0
+        spans, start = [], a0
+        for c, w in sorted(gaps):
+            if c - w / 2 > start + .05: spans.append((start, c - w / 2))
+            start = max(start, c + w / 2)
+        if start < a1 - .05: spans.append((start, a1))
+        yaw = math.pi / 2 if ax == 0 else 0.0
+        for s0, s1 in spans:
+            n = max(1, round((s1 - s0) / length_model))
+            seg = (s1 - s0) / n
+            for i in range(n):
+                m = s0 + seg * (i + .5)
+                x, z = (m, base) if ax == 0 else (base, m)
+                self.place(asset, x, z, yaw, (1, scale_y, seg / length_model))
+
+    def hedge(self, x0, z0, x1, z1, scale=1.2, gaps=()):
+        """Hedge run (model long axis X). scale raises it above the 1.6 m sight line."""
+        length_model = self.dims('prop.hedge')[0] * scale
+        ax = 0 if abs(z1 - z0) < 1e-6 else 1
+        a0, a1 = sorted((x0, x1) if ax == 0 else (z0, z1))
+        base = z0 if ax == 0 else x0
+        spans, start = [], a0
+        for c, w in sorted(gaps):
+            if c - w / 2 > start + .05: spans.append((start, c - w / 2))
+            start = max(start, c + w / 2)
+        if start < a1 - .05: spans.append((start, a1))
+        yaw = 0.0 if ax == 0 else math.pi / 2
+        for s0, s1 in spans:
+            n = max(1, round((s1 - s0) / length_model))
+            seg = (s1 - s0) / n
+            for i in range(n):
+                m = s0 + seg * (i + .5)
+                x, z = (m, base) if ax == 0 else (base, m)
+                self.place('prop.hedge', x, z, yaw, (seg / self.dims('prop.hedge')[0], scale, scale))
+
+    # ---- small details ------------------------------------------------------------------------------------------
+    def flowers(self, x0, z0, x1, z1, n):
+        for _ in range(n):
+            x = x0 + self.rng.random() * (x1 - x0); z = z0 + self.rng.random() * (z1 - z0)
+            if self.blocked(x, z, .15): continue
+            D.flower(self.l, x, 0, z, (.5, .6, .8), self.rng.random() * math.pi)
+
+    def report(self):
+        return self.problems
+
+
+def security_fence(g, x0, z0, x1, z1, gaps=(), height=1.9):
+    """Chain-link style security fence (no chain-link model exists): silver posts, top/bottom rails, thin bars; one collider per run
+    between gaps [(centre, width)] measured along the run."""
+    l = g.l
+    ax = 0 if abs(z1 - z0) < 1e-6 else 1
+    a0, a1 = sorted((x0, x1) if ax == 0 else (z0, z1))
+    base = z0 if ax == 0 else x0
+    spans, start = [], a0
+    for c, w in sorted(gaps):
+        if c - w / 2 > start + .05: spans.append((start, c - w / 2))
+        start = max(start, c + w / 2)
+    if start < a1 - .05: spans.append((start, a1))
+    def pos(a, y): return [a, y, base] if ax == 0 else [base, y, a]
+    for s0, s1 in spans:
+        n = max(1, round((s1 - s0) / 2.0))
+        for i in range(n + 1):
+            l.box('sec-post', 'silver', [.1, height, .1], pos(s0 + (s1 - s0) * i / n, height / 2))
+        mid = (s0 + s1) / 2
+        for y in (.15, height - .06):
+            l.box('sec-rail', 'silver', [s1 - s0, .06, .05] if ax == 0 else [.05, .06, s1 - s0], pos(mid, y))
+        k = int((s1 - s0) / .28)
+        for i in range(1, k):
+            l.box('sec-bar', 'silver', [.025, height - .3, .025], pos(s0 + (s1 - s0) * i / k, height / 2))
+        size = [s1 - s0, height, .12] if ax == 0 else [.12, height, s1 - s0]
+        g.collide_only('sec-fence', size, pos(mid, height / 2))
+
+
+# ---- clearance pass (Scene Lab qa-grove-clipping-all, tests/unit/layouts/clipping.test.ts "small contacts") ------------------
+# The placement helpers tolerate OVERLAP_TOLERANCE of visual overlap. These props must not touch the hard props around them at all,
+# so after the district is dressed every one of them is nudged the shortest way out of whatever it overlaps. Rules, not coordinates.
+CLEAR_MARGIN = .03
+CLEAR_RADIUS = .6                     # never far enough to hop over a fence or into the next lot
+CLEAR_STEP = .02
+NUDGE = ('prop.flower-bed.large', 'prop.carpet', 'prop.crates', 'prop.hose-reel', 'prop.flamingo', 'prop.street-lamp')
+SHRINK = ('kit.edge-roadwork',)        # barrier runs: shortened at the end that touches a fence, never moved
+FLUSH_WALLS = ('bld.house-d',)        # houses whose visual box is the wall; the others have porch roofs/eaves overhanging it (baked walls count)
+SOFT = re.compile(r'^prop\.(street-tree|tree|garden-bush|hedge|flower$|flower-patch|carpet)|^veh\.')
+
+
+def _overlap(a, b, pad=0.0):
+    return min(a['max'][0], b['max'][0]) - max(a['min'][0], b['min'][0]) > pad and min(a['max'][2], b['max'][2]) - max(a['min'][2], b['min'][2]) > pad
+
+
+def clear_contacts(g):
+    """Nudge/shorten small props off the hard props they overlap (visual boxes), keeping placements, colliders and GLB empties in sync."""
+    l = g.l
+    placements = l.data['placements']
+    empties = {o.name: o for o in l.empties}
+    moved = []
+
+    def sync(index, p):
+        o = empties.get(f'inst:{p["assetId"]}:{index + 1}')
+        if o is not None:
+            o.location = (p['position'][0], -p['position'][2], p['position'][1])
+            o.scale = (p['scale'][0], p['scale'][2], p['scale'][1])
+
+    def shift(p, dx, dz):
+        p['position'][0] = round(p['position'][0] + dx, 4); p['position'][2] = round(p['position'][2] + dz, 4)
+        a = p['visualAabb']
+        for k, d in ((0, dx), (2, dz)):
+            a['min'][k] = round(a['min'][k] + d, 4); a['max'][k] = round(a['max'][k] + d, 4)
+
+    def hard(p):
+        return not SOFT.match(p['assetId']) and p['visualAabb']['max'][1] > .1
+
+    cache = {}
+    def solid(q):
+        """Boxes a prop must keep out of: the visual box, except for buildings whose porch roofs and eaves overhang (their baked walls)."""
+        if q['id'] not in cache:
+            if q['assetId'].startswith('bld.') and q['assetId'] not in FLUSH_WALLS:
+                bx = g.footprint(q['assetId'], q['position'][0], q['position'][2], q['yaw'], tuple(q['scale']))
+                cache[q['id']] = [{'min': [b[0], 0, b[1]], 'max': [b[2], b[4], b[3]]} for b in bx]
+            else:
+                cache[q['id']] = [q['visualAabb']]
+        return cache[q['id']]
+    def touches(box, q, pad=0.0):
+        return any(_overlap(box, b, pad) for b in solid(q))
+
+    for i, p in enumerate(placements):
+        asset = p['assetId']
+        a = p['visualAabb']
+        if asset in NUDGE:
+            wide = {'min': [a['min'][0] - CLEAR_RADIUS - 1, 0, a['min'][2] - CLEAR_RADIUS - 1], 'max': [a['max'][0] + CLEAR_RADIUS + 1, 0, a['max'][2] + CLEAR_RADIUS + 1]}
+            near = [q for q in placements if q is not p and hard(q) and touches(wide, q)]
+            def clear(dx, dz, scale=1.0, margin=CLEAR_MARGIN):
+                hx, hz = (a['max'][0] - a['min'][0]) / 2 * scale, (a['max'][2] - a['min'][2]) / 2 * scale
+                cx, cz = (a['min'][0] + a['max'][0]) / 2 + dx, (a['min'][2] + a['max'][2]) / 2 + dz
+                box = {'min': [cx - hx - margin, 0, cz - hz - margin], 'max': [cx + hx + margin, 0, cz + hz + margin]}
+                return not any(touches(box, q) for q in near)
+            if not any(touches(a, q, 0.002) for q in near):
+                continue
+            n = int(CLEAR_RADIUS / CLEAR_STEP)
+            offsets = sorted(((dx * CLEAR_STEP, dz * CLEAR_STEP) for dx in range(-n, n + 1) for dz in range(-n, n + 1)), key=lambda o: (math.hypot(*o), abs(o[0]) * abs(o[1])))
+            hit = None
+            for scale, margin in ((1.0, CLEAR_MARGIN), (.9, .015), (.8, .015)):   # a slimmer prop only when nothing fits at full size (hose reel between house and fence)
+                hit = next((o for o in offsets if clear(o[0], o[1], scale, margin)), None)
+                if hit: break
+            if not hit:
+                g.problems.append(f'no clearance for {p["id"]} at {p["position"][0]:.1f},{p["position"][2]:.1f}')
+                continue
+            if scale != 1.0:
+                for k in range(3): p['scale'][k] = round(p['scale'][k] * scale, 4)
+                for k in (0, 2):
+                    c, half = (a['min'][k] + a['max'][k]) / 2, (a['max'][k] - a['min'][k]) / 2 * scale
+                    a['min'][k] = round(c - half, 4); a['max'][k] = round(c + half, 4)
+                a['max'][1] = round(a['max'][1] * scale, 4)
+            shift(p, *hit); sync(i, p); moved.append((p['id'], hit, scale))
+        elif asset in SHRINK:
+            k = 0 if a['max'][0] - a['min'][0] > a['max'][2] - a['min'][2] else 2      # world axis of the run (local z)
+            lo, hi, length = a['min'][k], a['max'][k], a['max'][k] - a['min'][k]
+            for q in placements:
+                if q is p or not hard(q): continue
+                for c in (b for b in solid(q) if _overlap(a, b, 0.002)):
+                    if (c['min'][k] + c['max'][k]) / 2 > (lo + hi) / 2: hi = min(hi, c['min'][k] - CLEAR_MARGIN)
+                    else: lo = max(lo, c['max'][k] + CLEAR_MARGIN)
+            if hi - lo < length - 1e-6:
+                f = (hi - lo) / length
+                p['scale'][2] = round(p['scale'][2] * f, 4)
+                p['position'][k] = round(p['position'][k] + (lo + hi) / 2 - (a['min'][k] + a['max'][k]) / 2, 4)
+                a['min'][k], a['max'][k] = round(lo, 4), round(hi, 4)
+                sync(i, p); moved.append((p['id'], 'shrink', round(f, 4)))
+    return moved

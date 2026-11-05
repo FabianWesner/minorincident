@@ -1,0 +1,21 @@
+{
+  "row": "L4-09",
+  "status": "PASS",
+  "reviewer": "Codex",
+  "date": "2026-11-03",
+  "commit": "f5f4adbcfaf103947e2d716e6cc57e108f07b08a",
+  "clauses": [
+    {
+      "clause": "Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; \"Fall back!\" 8 s after the third; camera beats ≤ 2 s, skippable after 0.5 s.",
+      "verdict": "PASS",
+      "note": "Actual line breaks low62/124/182s, high50.1833/124/182s; fallback8s after armor. Production camera fixture naturally ends at1.6s, cannot skip before0.5s, skips at0.5s."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-r10b/L4-09-proof.json",
+      "sha256": "f1038f02133a6ac5c3a47ae7531397901aa58870025b66ca41aaee86d5c54729",
+      "what": "Actual event and final-state clocks, both quality tiers, unchanged production camera fixture and six negative timeline/threshold controls. No visual inference used."
+    }
+  ]
+}

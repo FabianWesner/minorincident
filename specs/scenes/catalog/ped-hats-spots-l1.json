@@ -1,0 +1,16 @@
+{
+ "name": "ped-hats-spots-l1",
+ "note": "PO P1-108 L1 spot (-63.05, 5.27): spectacled civilians in sun/bucket hats at game zoom 1; round brims, eyes and frames visible under the hat.",
+ "ground": "district",
+ "time": "L1",
+ "layout": { "district": "D-GROVE", "bbox": [[-78, -8], [-48, 18]] },
+ "actors": [
+  { "id": "a", "kind": "pedestrian", "at": [-63.05, 5.27], "yaw": 200, "look": { "model": "npc.civilian-woman-b", "accessories": ["acc.hat-sun-hat"] }, "state": "idle" },
+  { "id": "b", "kind": "pedestrian", "at": [-61.6, 6.1], "yaw": 160, "look": { "model": "npc.civilian-elderly", "accessories": ["acc.hat-bucket-hat"] }, "state": "idle" },
+  { "id": "c", "kind": "pedestrian", "at": [-64.4, 6.3], "yaw": 250, "look": { "model": "npc.civilian-man-b", "accessories": ["acc.hat-hard-hat"] }, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [-63.05, 5.27], "zoom": 1 },
+ "frames": 40,
+ "shots": [30],
+ "expect": { "consoleErrors": 0 }
+}

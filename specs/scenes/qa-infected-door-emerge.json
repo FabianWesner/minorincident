@@ -1,0 +1,82 @@
+{
+ "name": "qa-infected-door-emerge",
+ "note": "House-door emergence: a resident at the front door is turned in place (the L1 pipeline) and chases the courier across the yard.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    18,
+    24
+   ],
+   [
+    48,
+    48
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "res",
+   "kind": "pedestrian",
+   "at": [
+    33.5,
+    35.2
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.civilian-man-b"
+   },
+   "state": "idle"
+  },
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    33.5,
+    29.5
+   ],
+   "yaw": 90
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "res",
+   "do": {
+    "infect": {
+     "instant": true
+    }
+   }
+  },
+  {
+   "frame": 30,
+   "actor": "res",
+   "do": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   33.5,
+   0.9,
+   33
+  ],
+  "radius": 12,
+  "azimuth": 40
+ },
+ "frames": 240,
+ "shots": [
+  10,
+  40,
+  80,
+  140,
+  230
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

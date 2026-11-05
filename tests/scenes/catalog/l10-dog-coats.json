@@ -1,0 +1,104 @@
+{
+  "name": "l10-dog-coats",
+  "seed": 22,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 60,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2.8,
+        0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        2.8,
+        -0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "healthy-0",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        -1.8,
+        -0.7
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        -1.8,
+        0.7
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "healthy-1",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        0.0,
+        -0.7
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        0.0,
+        0.7
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "healthy-2",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        1.8,
+        -0.7
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        1.8,
+        0.7
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0.6,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "note": "Six actual seeded runtime spawns at the game camera: healthy dogs in the back row (brown/cream/black), infected dogs in front (black/brown/cream). Seed 22 produces all three coats in both rows through the production spawn path, without explicit model overrides. Compact spacing keeps the dogs in view at zoom 0.5. Courier and protected corgi provide scale."
+}

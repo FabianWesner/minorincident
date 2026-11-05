@@ -1,0 +1,37 @@
+{
+  "slug": "school-bus",
+  "iterations": 2,
+  "triangles": 4248,
+  "meshes": 16,
+  "materials": [
+    "pal_schoolBusYellow",
+    "pal_picketWhite",
+    "pal_survivorRed",
+    "emi_sirenRed",
+    "emi_windowGlow",
+    "pal_glassDark",
+    "pal_sidewalk",
+    "pal_uiDark"
+  ],
+  "glb_bytes": 295836,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "Rounded yellow bus body",
+    "Short chunky hood",
+    "Repeated dark windows",
+    "Two bold black stripes",
+    "Oversized wheels",
+    "Red octagonal stop paddle"
+  ],
+  "dropped_details": [
+    "Bolts and hinges",
+    "Wipers",
+    "Tire tread and lug nuts",
+    "Panel seams",
+    "Lettering",
+    "Fine trim"
+  ],
+  "notes": "Static geometry is joined by material, wheels and stop paddle retain joint pivots, and glassDark is the only added palette token; 16 renderer meshes correspond to 11 Blender objects."
+}

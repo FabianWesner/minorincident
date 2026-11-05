@@ -1,0 +1,76 @@
+{
+  "name": "qa-zoo-gorilla-prop-throw",
+  "note": "Real movable E26 medium bench: stays put through the throw telegraph, flies on the locked path, remains visible and settles at impact without sinking.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        8,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      4.0,
+      0
+    ],
+    "zoom": 1.4
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "gorilla.grab-throw",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    0,
+    47,
+    80,
+    180
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "props": [
+    {
+      "id": "bench",
+      "asset": "prop.bench",
+      "at": [
+        0,
+        2.9
+      ],
+      "yaw": 0
+    }
+  ]
+}

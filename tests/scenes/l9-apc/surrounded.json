@@ -1,0 +1,116 @@
+{
+  "name": "l9-apc-surrounded",
+  "note": "L9-S1 isolated stopped hull attack fixture, game camera; unarmed APC and aware attackers.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 70,
+  "dof": false,
+  "time": "L6",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1,
+        2.5
+      ]
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -1,
+        2.5
+      ]
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1,
+        -2.5
+      ]
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -1,
+        -2.5
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc"
+  },
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "infected-0",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "infected-1",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "infected-2",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "infected-3",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "frames": 300,
+  "shots": [
+    0,
+    100,
+    300
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

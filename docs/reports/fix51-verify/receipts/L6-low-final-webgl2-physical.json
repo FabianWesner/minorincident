@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "sourceHash": "35f4ebdb7ebce674e688c7fa4fe120aac2424dd2fb8461f174494eeb57fa87d6",
+  "observerHash": "56e4986bc1a4ec09c2ced438b1bfd5873b982fa68964b541b61958685d08f201",
+  "revision": "47946b5196b5e52dd926eb128705c540351d4988",
+  "buildHash": "c5c4a1466e1d1aaa6428c93b3a715a9786d9afddbbe4e7ab3db0e1b17a621a2d",
+  "browserHash": "6ad31d62fcb45c3a1dead3a63f5e2a8ef400ea5df9e6fea5dd6bb0fc77415a6e",
+  "orchestratorHash": "7b5eb002ffbba0a7f0a7868fcc74685d9d0aa326b89fcbf54213f95f9a584cdd",
+  "requestedBackend": "webgl2",
+  "renderer": "webgl",
+  "input": "physical WASD/mouse/E; no objective skips",
+  "headless": true,
+  "survivalProtected": true,
+  "frameTiming": false,
+  "sampleSeconds": 270,
+  "status": "PASS",
+  "processExitCode": 0,
+  "level": "L6",
+  "tier": "low",
+  "zoom": 1.5,
+  "runs": [
+    {
+      "level": "L6",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 218,
+      "simSeconds": 208,
+      "maxNoProgressSeconds": 32.79,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {
+        "weapon.army-mg": 1296,
+        "weapon.fire-axe": 11
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter \u00b7 rest while you can",
+          "tick": 11,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected \u00b7 Retreat in 0:36",
+          "tick": 2003,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 241\u00a0m",
+          "tick": 4165,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 242,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              242,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 25\u00a0m",
+          "tick": 11438,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L6",
+      "tick": 1228,
+      "x": 3,
+      "z": 0,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+      "captures": [
+        "captures/matrix-L6-1228-stuck-navigating.jpg"
+      ],
+      "step": "shelter",
+      "objective": "Look around the shelter \u00b7 rest while you can"
+    }
+  ],
+  "events": [],
+  "steps": {
+    "shelter": {
+      "ticks": 1991,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 0
+    },
+    "stop": {
+      "ticks": 2161,
+      "playerWindups": 0,
+      "groupWindups": 5,
+      "playerDamage": 0,
+      "peakAlive": 12
+    },
+    "retreat": {
+      "ticks": 7279,
+      "playerWindups": 46,
+      "groupWindups": 172,
+      "playerDamage": 0,
+      "peakAlive": 28
+    },
+    "exit": {
+      "ticks": 749,
+      "playerWindups": 4,
+      "groupWindups": 14,
+      "playerDamage": 0,
+      "peakAlive": 26
+    }
+  },
+  "audioGraphStartCount": 0,
+  "maximumRenderedBars": 32,
+  "derivedSheet": "full-L6-low-final-review.jpg",
+  "selectedRawCaptureIdentifiers": [
+    "test-results/fix51-r3b/full-l6-current/L6-low-z1.5-webgl2/captures/matrix-L6-first-threat-low-z1-5.jpg",
+    "test-results/fix51-r3b/full-l6-current/L6-low-z1.5-webgl2/captures/matrix-L6-first-threat-low-z0-5.jpg",
+    "test-results/fix51-r3b/full-l6-current/L6-low-z1.5-webgl2/captures/matrix-L6-null-t12186-low-z0-5.jpg",
+    "test-results/fix51-r3b/full-l6-current/L6-low-z1.5-webgl2/captures/matrix-L6-result.jpg"
+  ],
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-final-webgl2-physical.json"
+    }
+  ],
+  "notes": "Supplementary final-source physical receipt. It does not relabel ancestor main browser receipts or qualify mortal survival, all bars, all roster clauses, or the other tier/backend/zoom.",
+  "visualResultScreen": {
+    "source": "Visually reviewed full-L6-low-final-review.jpg result panel",
+    "groupAtStart": 29,
+    "survivorsOut": 1,
+    "lostOrTurned": 28,
+    "interpretation": "Console-completion subclause only; severe physical roster loss remains open."
+  }
+}

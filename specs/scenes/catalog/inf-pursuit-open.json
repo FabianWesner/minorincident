@@ -1,0 +1,17 @@
+{
+  "name": "inf-pursuit-open",
+  "note": "PO 10-09 \"Zombies loose track ... running very fast but past me. Then walking around, although in my direct near.\" One runner chases the courier who runs a zigzag across open asphalt (45 degree cuts every ~8 m). Look for: it closes in from behind, lunges at her and stays on her after every lunge (never ahead of her, never wandering off while she is near).",
+  "ground": "asphalt",
+  "size": 96,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-30, 0], "yaw": 0 },
+    { "id": "z", "kind": "infected", "at": [-37, 0], "yaw": 0, "look": { "tier": "average" } }
+  ],
+  "script": [
+    { "frame": 20, "actor": "courier", "do": { "run": [[-22, 0], [-16, 6], [-10, 0], [-4, 6], [2, 0], [8, 6], [14, 0], [20, 6], [26, 0], [32, 6], [38, 0]] } }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.2 },
+  "frames": 960,
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "lostTargetNearFramesMax": 0, "overshootMaxM": 2, "stuckActorFramesMax": 30, "courierSwingsMin": 1 }
+}

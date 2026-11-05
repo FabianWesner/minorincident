@@ -1,0 +1,20 @@
+{
+  "name": "perf-heap-streams",
+  "seed": 10,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-3, 2] },
+    { "id": "pedestrian", "kind": "pedestrian", "at": [-1, 0], "look": { "model": "npc.civilian-man-a", "tint": "#486e69" } },
+    { "id": "runner", "kind": "infected", "at": [1, 2], "archetype": "infected.runner", "state": "idle" },
+    { "id": "alpha", "kind": "infected", "at": [3, -1], "archetype": "infected.alpha", "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0], "zoom": 1 },
+  "frames": 120,
+  "sheet": 40,
+  "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 },
+  "note": "T-E18-instance-stream: actual pedestrian, runner and Alpha actors exercise both instance streams. Review silhouettes, clothing, eyes and posed limbs on both tiers, game-camera zooms and backends; attribute locations and float values remain unchanged."
+}

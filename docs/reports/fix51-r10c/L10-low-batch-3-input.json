@@ -1,0 +1,179 @@
+{
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "observerHash": "d670b5f6ea8dfd19759dbac228488c9fe988422b1866480ea8f6eef07dbd0c71",
+  "revision": "5697e135e561f6c492f1a388c0a7751256b09b0f",
+  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "seedSaveSha256": "d16c848f393de56897198cf3b01170c00c923502e0e42c79e2c7fd4e6281019d",
+  "toolSha256": "8f0c5b5bef65cf88742709d404666e1c4428e777e62cc821ddfbe57c76519a14",
+  "out": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-3-1793804217840",
+  "levels": [
+    "L10"
+  ],
+  "tier": "low",
+  "method": "Shared headless Metal WebGL2 physical WASD/mouse/mission UI; actual production Resume save from preceding physical slice. Protected courier, no objective skips or actor relocation. Read-only ledger; no frame timing. At bounded yield pause Settings saves live Resume snapshot. Each photo pauses and restores quality/zoom.",
+  "result": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 473,
+        "maxNoProgressSeconds": 8.179,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 123
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex · 58 m",
+            "tick": 3,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "install",
+            "text": "Install the cure in the dispersal device · 309 m",
+            "tick": 993,
+            "marker": {
+              "anchor": "cure-install",
+              "ring": {
+                "x": 4006.5,
+                "y": 0,
+                "z": -39
+              },
+              "drawn": [
+                4006.5,
+                0,
+                -39
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Activate the dispersal console · 12 m",
+            "tick": 6101,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "mega",
+            "text": "Kill the Mega Alpha · 767 m",
+            "tick": 10041,
+            "marker": {
+              "anchor": "cure-mega",
+              "ring": {
+                "x": 3242.128091442629,
+                "y": 0.7,
+                "z": 72.97885042429627
+              },
+              "drawn": [
+                3243.11,
+                0.7,
+                73.27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "release",
+            "text": "Release the cure at the console · 377 m",
+            "tick": 17136,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "epilogue",
+            "text": "Watch the cure spread · 1/150 s",
+            "tick": 23001,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L10",
+        "tick": 7848,
+        "x": 3987.5,
+        "z": -36.6,
+        "severity": "P2",
+        "kind": "enemy-unhittable",
+        "text": "Infected #235 (chase) 1.8 m away took no damage from 8 s of attacks (hp 60/60)",
+        "captures": [
+          "captures/late-input-L10-7848-enemy-unhittable.jpg"
+        ],
+        "step": "hold",
+        "objective": "Defend the dispersal console · Charge 23/60 s · 17 m"
+      }
+    ],
+    "yielded": true
+  },
+  "error": null
+}

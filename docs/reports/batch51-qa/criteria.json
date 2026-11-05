@@ -1,0 +1,1556 @@
+{
+  "source": "docs/qa/level-acceptance.md",
+  "sourceRevision": "99516473d",
+  "policy": "NO-GO until every S/L/O criterion passes; compound rows require all clauses.",
+  "counts": {
+    "PASS": 2,
+    "FAIL": 18,
+    "NOT CHECKED": 149
+  },
+  "rows": [
+    {
+      "id": "G-01",
+      "level": "global",
+      "status": "FAIL",
+      "value": "WebGPU L5 low cold 7.142 s; high cold/warm 6.642/6.723 s, over 6 s. WebGL2 not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/perf/summary.json"
+      ],
+      "method": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix."
+    },
+    {
+      "id": "G-02",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run tools/qa/release-ab-handover.mjs on all nine real campaign handovers; retain actual outgoing save, transition start and first playable frame, requiring <=6 s each."
+    },
+    {
+      "id": "G-03",
+      "level": "global",
+      "status": "FAIL",
+      "value": "L3 low real-input armory/first-handgun period: playable frame 566.7 ms at tick1031 (~17.18 sim s). Concurrent staged-fixture browser was active, so this is not a quiet A/B regression measurement and needs isolated attribution. Quiet L1/L8/L9 low/high openings recorded no playable frame >200 ms; other first weapon actions remain incomplete.",
+      "evidence": [
+        "docs/reports/batch51-qa/startup.json",
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/gates/visual-L3-low.log"
+      ],
+      "method": "installFrameProbe records RAF intervals clipped to playable, unpaused time. Retained L3 low interval is not loading or photo-paused time. NEXT: repeat L3 first pickup/shot in a sole quiet context with node-builder logging; then all other first weapon actions. Do not infer a new regression or material cause from the concurrent diagnostic."
+    },
+    {
+      "id": "G-04",
+      "level": "global",
+      "status": "FAIL",
+      "value": "Inherited >=66 ms spikes: L1 low 83.4 ms at fire-station shutter (PROD 133.3); L3 high 83.3 ms in station defense (same as PROD). New L10 high console charge: 100.0 ms at44.425 s and66.6 ms at53.925 s; no material build within +/-1 s.",
+      "evidence": [
+        "docs/reports/batch51-qa/perf/summary.json",
+        "docs/reports/batch51-qa/perf/attempts.json"
+      ],
+      "method": "Continuous 60 s RAF traces, nearest objective and material-build timestamps. PO clarification accepts 50.0/50.1 ms quantisation and permits +16.7 ms over PROD; inherited spikes are P2, not regressions. Other transitions remain unmeasured."
+    },
+    {
+      "id": "G-05",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run npm run test:perf in an exclusive quiet slot at each level peak, low/high; retain renderer calls/triangles, sim p95, heap and live population alongside frame p95."
+    },
+    {
+      "id": "G-06",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Review real-input captures for every level at low/high and zoom 0.5/1.5, including every used vehicle and critical occluders; inspect full-size crops of suspected defects."
+    },
+    {
+      "id": "G-07",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Fresh current-source L2 fire engine, L7 boundary and L8 canopy fixtures: 12/12 low/high x zoom0.5/1.5 cells, courier visibility share100%, zero console errors. Full moving fence/wall/horde/corpse coverage is not established.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-fixtures.json"
+      ],
+      "method": "tools/qa/visual-p1-captures.ts --phase after --backend webgpu --only bounds-l7,vehicle-l2,canopy-l8; full-size critical frame review plus final per-level sheets. NEXT: real-input near-camera fences, horde and corpse occlusion at every critical route pose."
+    },
+    {
+      "id": "G-08",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Add a read-only per-tick marker-position/HUD-distance observer to tools/playtest/session.ts for every step; compare world marker and arrow with the authored fixed action/destination anchor, including offscreen targets."
+    },
+    {
+      "id": "G-09",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+    },
+    {
+      "id": "G-10",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use tools/playtest/session.ts to walk through every ground/shelf pickup without E or stopping; record pickup event, distance and physical key trace at the <=1.5/2.2 m crossing."
+    },
+    {
+      "id": "G-11",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use tools/playtest/session.ts through survivor weapon collection; observe ring visibility and entity generations before/after collection and after revisiting each location."
+    },
+    {
+      "id": "G-12",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run tools/qa/l6-retreat-bars.ts and count eligible on-screen follower IDs against HealthBars.snapshot at group sizes 1,5,24,29,35, including healthy/injured and overlapping poses; require a visible bar for every eligible follower."
+    },
+    {
+      "id": "G-13",
+      "level": "global",
+      "status": "FAIL",
+      "value": "Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Inspect qualified civilian followerSpeeds records, excluding companion-only records and grabbed/bitten/knocked-down samples; compare each median with its phase group median. The94.8% result is a borderline strict-target miss, not proof of large visible babysitting."
+    },
+    {
+      "id": "G-14",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Add a read-only permanent-corpse ID/lifetime ledger to the full real-input runs; revisit corpses at level end and review pile height, floating bodies and stretched limbs."
+    },
+    {
+      "id": "G-15",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+    },
+    {
+      "id": "G-16",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Compare the weaponsStart and pickup ledgers from progressed-save real-input L1-L10 runs with the story loadout; explicitly check axe-only L10 after the real L9 crash."
+    },
+    {
+      "id": "G-17",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Fresh L10 low/high moving-runner observer: 232 pose samples; maximum drawn hip-to-head lean 38.00 degrees. Full per-variant low-quality sliding/splay and foot-placement review is not established.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/L10.jpg"
+      ],
+      "method": "Read-only moving-runner pose observer plus inspected final sheet. NEXT: moving low-quality frame strips for every body/variant in wander/chase, including all seven L10 runner variants; inspect feet/legs and require lean <=42 degrees."
+    },
+    {
+      "id": "G-18",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+    },
+    {
+      "id": "G-19",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Observe corgi health/targeting/collision and bar events throughout real-input L1-L10; capture actual door/shutter closures and vehicle entry, including the final corgi position."
+    },
+    {
+      "id": "G-20",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use tools/playtest/session.ts and a read-only final-objective/transition tick ledger on every level; verify five live invulnerable seconds when action continues."
+    },
+    {
+      "id": "G-21",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run mortal checkpoint death/retry exercises for every later checkpoint using tools/playtest/session.ts; compare follower/pickup/gate snapshots, inventory and restored location before/after death."
+    },
+    {
+      "id": "G-22",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run npm run qa:threat at low and high; retain each actual announced-cohort ledger, first player attack and reachable count, including a deliberately broken fixture proof."
+    },
+    {
+      "id": "G-23",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run."
+    },
+    {
+      "id": "G-24",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run Scene Lab current-source Alpha/zoo-species fixtures through healthy-near, healthy-far, hurt and dead states; inspect world bars and normal animals at low/high."
+    },
+    {
+      "id": "G-25",
+      "level": "global",
+      "status": "FAIL",
+      "value": "L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "evidence": [
+        "docs/reports/batch51-qa/quality-repro.json",
+        "docs/reports/batch51-qa/gates/visual-L4.log"
+      ],
+      "method": "Real WASD/mouse route with console/page-error listeners, followed by fresh-context native L4 turn checkpoint and physical Escape > Settings > quality select > Back > Resume. First low switch progressed tick 88->147; high switch and subsequent low remained at147. P1; next lane must fix renderer resource lifetime and repeat normal menu switching plus the complete mortal route."
+    },
+    {
+      "id": "G-26",
+      "level": "global",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run current-source character/accessory/held-prop and live-seat Scene Lab matrices for every adult body and routine, comparing actual heights with the heroine; review full-size images."
+    },
+    {
+      "id": "G-27",
+      "level": "global",
+      "status": "FAIL",
+      "value": "All ten levels have scoped glitches/stunning/boring-harmless-babysitting judgments in the README. L9 low road has a verified >60 s moving enemy-free interval; native L10 R1/R2 are crossable with zero attack windups. Those harmless/pressure findings block GO.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg",
+        "docs/reports/batch51-qa/README.md",
+        "docs/reports/batch51-qa/l9-road-low-gap.json",
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Manual frame review and actual attack/visibility ledgers; do not equate god-mode zero damage alone with harmlessness. Sol performs the requested visual review while Claude reviewers are paused."
+    },
+    {
+      "id": "L1-01",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Native graph completes in114.62 s. Corrected low real-input escape completes in146 wall seconds, starts with an empty rack, no skips/deaths. Earlier high god-mode attempt camped fighting a horde at its360 s cap. No-fail-timer clause and complete high counterpart remain unqualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json",
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/gates/visual-L1-high.log"
+      ],
+      "method": "Actual level.completed event plus initial rack and input receipt. The QA driver now keeps moving toward the visible escape objective while swinging. NEXT: explicit no-fail-timer assertion and a complete high-tier route."
+    },
+    {
+      "id": "L1-02",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: 50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`."
+    },
+    {
+      "id": "L1-03",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Parcel handover and subsequent delivery objective are visible; the complete clerk walk-back/door closure/no-vanish sequence was not retained as a timed strip.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record a real-input depot handover burst through clerk return and door closure with tools/playtest/session.ts; require continuous actor identity and visible handover."
+    },
+    {
+      "id": "L1-04",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "The real route reaches Delivered and the technician/Annex scene; complete walk-back and paired PROD animation comparison are not retained.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record a real-input laboratory handover burst through technician return, comparing the actual sequence with the PROD build using tools/qa/ab-tour.ts stops."
+    },
+    {
+      "id": "L1-05",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: After \"Delivered\" a 4–6 s window with no objective and no infected; flicker → blast → ringing → smoke → screams within 8 s; blast frame ≤ 50 ms."
+    },
+    {
+      "id": "L1-06",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart."
+    },
+    {
+      "id": "L1-07",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use the existing native L1 observer with a stationary remote courier for 240 seconds; log bite-derived births at +120/+240 s. The travelling complete/passive route does not test this condition."
+    },
+    {
+      "id": "L1-08",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: last reach 25/27 = 92.6%; first attack 13.38 s; 11.83 player attacks/min.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head native passive spread-phase route, actual infected.attack events and independent nav-path snapshot. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
+    },
+    {
+      "id": "L1-09",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Infected speeds 4.4 m/s … tier × 1.04; ≥ 85 % faster than the 4.5 m/s run (\"should be a bit faster than me\")."
+    },
+    {
+      "id": "L1-10",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters."
+    },
+    {
+      "id": "L1-11",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "The bicycle is visible outside the depot; this lane walks the route. Bike speed, relative controls and wall-side dismount remain untested.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts once with the bicycle and once walking, retaining real mount/dismount input, delivery time and collision/pose captures."
+    },
+    {
+      "id": "L1-12",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Camera-side building/fence cuts keep the courier visible in reviewed entry/alley poses. No adversarial trash/pallet/bench snag sweep or screenshot-only alley route was run.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L1 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Backyard alleys on the depot/Annex line: no snag on trash bags/pallets/bench corners; the camera-side fence never hides the player."
+    },
+    {
+      "id": "L1-13",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2."
+    },
+    {
+      "id": "L1-14",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: ≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back."
+    },
+    {
+      "id": "L1-15",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "Low real-input route reaches the fire-station completion; native shutter prefix is measured. A timed corgi-inside/shutter-close strip and the repeated firefighter line were not separately qualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L1 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside."
+    },
+    {
+      "id": "L1-16",
+      "level": "L1",
+      "status": "NOT CHECKED",
+      "value": "The scripted route reaches depot, Annex and garage. Navigation/map assistance and the initial combat-policy stall prevent treating this as unscripted Luna route-clarity evidence.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/live.ts in screenshot-only mode from a fresh L1 save with no hidden navigation assists; time every lost interval and review its route decisions."
+    },
+    {
+      "id": "L1-17",
+      "level": "L1",
+      "status": "PASS",
+      "value": "Morning suburb reads alive: occupied shops, civilians, courier depot and bicycle. Smoke/blast and the later dense pursuing crowd read as an outbreak and a need to flee.",
+      "evidence": [
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Manual low/high, close/wide review, including the high crowd frame from the retained failed driver attempt; this is visual tone, not a competent-time qualification."
+    },
+    {
+      "id": "L2-01",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: 0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches."
+    },
+    {
+      "id": "L2-02",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Axe pickup succeeds before the ride; start ring interaction is traversed. A no-axe completion was not run.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture the axe rack at both zooms, then run a real-input L2 without taking the axe through completion; the ordinary axe run cannot prove optionality."
+    },
+    {
+      "id": "L2-03",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Low/high cab and crew poses are reviewed and the high route completes. Exact seated roster,15–25 s ride,all-out<=4 s and control<=0.5 s ledger is incomplete.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L2 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier."
+    },
+    {
+      "id": "L2-04",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Order truckArrived → crewExit → atDoors → doorsOpen; no infected within 40 m before doors open; doors forced in 4 s."
+    },
+    {
+      "id": "L2-05",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Shop opening and civilian evacuation are visible.20/30 trapped-person counts, panic loops and first-out<=1 s are not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L2 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen."
+    },
+    {
+      "id": "L2-06",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Ambush 24 (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack."
+    },
+    {
+      "id": "L2-07",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Native passive doors window is only 9.55 s, zero attacks; last reach 100%. This cannot establish the <=15 s first-attack test.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current native window inspected; its SHORT WINDOW label is not a full acceptance pass. NEXT: hold a stationary passive courier at the open doors >=15 s and measure real windups/rate."
+    },
+    {
+      "id": "L2-08",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Hold a stationary native observer at the opened doors for 120 seconds; census at +60/+120 s and record firefighter turns/attacks with persistent IDs."
+    },
+    {
+      "id": "L2-09",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run a mortal real-input axe courier within 15 m of the doors for 120 seconds, logging live counts at +10/+90 s and a real death."
+    },
+    {
+      "id": "L2-10",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing axe fixture in tools/qa/release-ab-weapons.mjs: compare 1-2 versus >=3 in-range infected, native hit counts and resolved push distance."
+    },
+    {
+      "id": "L2-11",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus 6 scattered singles along the walk (high; low ≥ 4). "
+    },
+    {
+      "id": "L2-12",
+      "level": "L2",
+      "status": "FAIL",
+      "value": "Native competent escape: 1.62 attacks/min, below >=2/min. Route-contact density remains unmeasured.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
+    },
+    {
+      "id": "L2-13",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Crowds evacuate toward the checkpoint in the reviewed route. Causal pedestrian-to-pedestrian panic spread was not tracked.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L2 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Panic spreads: a calm ped seeing running peds panics; no ped stays unaffected next to the chaos."
+    },
+    {
+      "id": "L2-14",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run separate real-input cluster escapes via side path and car alarm, counting the authored 12-16 cluster members and player kills; each route must work with <=50% killed."
+    },
+    {
+      "id": "L2-15",
+      "level": "L2",
+      "status": "NOT CHECKED",
+      "value": "Police cars, officers and the closing checkpoint scene are visible. Full actor census,<=1.5 s closure and post-close infected exclusion need a timed ledger.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L2 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Checkpoint: ≥ 3 police vehicles with light bars, ≥ 4 officers firing visibly, ≥ 8 civilians; gate closes ≤ 1.5 s after the player crosses; no infected crosses after."
+    },
+    {
+      "id": "L2-16",
+      "level": "L2",
+      "status": "PASS",
+      "value": "Compared with L1, both-quality L2 frames read brighter/harder and more overhead; intact streets and fire-station activity give way to shop panic and the police checkpoint.",
+      "evidence": [
+        "docs/reports/batch51-qa/L2.jpg",
+        "docs/reports/batch51-qa/L1.jpg"
+      ],
+      "method": "Side-by-side full-size review of L1 and L2 sheets at both requested zooms/qualities."
+    },
+    {
+      "id": "L3-01",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record real armory pickup time and event location, fire 600 shots while observing UI, and check two native handgun hits against a 40 HP infected fixture."
+    },
+    {
+      "id": "L3-02",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Low cohorts 15/15, 30/30, 50/50; stream spans 14.93/16.57/17.08 s; opening camera 4/15. High counts, police share and all directional clauses not established here.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Native admitted cohort ledger and actual first alarm-frame projection. NEXT: rerun both tiers with source/species/direction census for every row clause."
+    },
+    {
+      "id": "L3-03",
+      "level": "L3",
+      "status": "FAIL",
+      "value": "Native low complete step/defend: 25.90 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive defend: first attack 6.10 s, 5.50/min, last reach 9/9 = 100%.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head passive native defend window, real attack events and independent path queries. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+    },
+    {
+      "id": "L3-04",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run idle native L3 through fallback; retain which first-of condition fired and a same-ID uniformed officer conversion."
+    },
+    {
+      "id": "L3-05",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Low attack framing visibly widens with the yard/east gate in view. The exact1.5 multiplier and high counterpart are not fully instrumented here.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame)."
+    },
+    {
+      "id": "L3-06",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Native squad 4 -> 0; all four losses are bites. Exact 3-6 m walking formation/no teleport still need real-input trajectory review.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current native squad-loss ledger. NEXT: inspect the mortal real-input L3 resolved-motion/squad trajectory and army-arrival counts."
+    },
+    {
+      "id": "L3-07",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Segment 1: officers make ≥ 60 % of kills; player damage < 100 HP (never a whole life)."
+    },
+    {
+      "id": "L3-08",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Add a native per-segment population census and local-live median to tools/qa/threat-audit.ts; verify 250/625/1000 +/-20% and both quality caps."
+    },
+    {
+      "id": "L3-09",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible)."
+    },
+    {
+      "id": "L3-10",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Hold the native courier 20 seconds behind each progress line, then advance; retain offscreen source distances, admission counts per ten seconds and shutdown behavior."
+    },
+    {
+      "id": "L3-11",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Native competent 7.55 attacks/min; 198 damage, zero deaths, 226.02 s. Per-street medkit counts and newbie below-20%-HP share are unmeasured.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Native competent attack/damage ledger meets the rate clause. NEXT: census medkits by street and run the separate newbie health trace."
+    },
+    {
+      "id": "L3-12",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Fresh low checkpoint HUD/ring points to the distant army destination (~364 m at fallback). A route without script/map steering was not performed.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run screenshot-only tools/playtest/live.ts to the army without route steering; log fixed ring, real distance and route decisions, supplementing the scripted marker observer."
+    },
+    {
+      "id": "L3-13",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls."
+    },
+    {
+      "id": "L3-14",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Army compound and the route ring are visible during the wide end framing. Complete vehicle/soldier/bus census,5 s rest and15 s wait were not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait 15 s."
+    },
+    {
+      "id": "L3-15",
+      "level": "L3",
+      "status": "NOT CHECKED",
+      "value": "Courier remains visible in reviewed street contacts. The dedicated80-infected occlusion fixture was not repeated.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Player visible inside the 80-infected horde (silhouette/outline)."
+    },
+    {
+      "id": "L3-16",
+      "level": "L3",
+      "status": "FAIL",
+      "value": "Late-afternoon light is present, but the reviewed checkpoint street frame at tick5257 / low / zoom1.5 contains zero identifiable smoke columns, below >=2 in every street frame. Street damage-type variety is not fully audited.",
+      "evidence": [
+        "docs/reports/batch51-qa/L3.jpg"
+      ],
+      "method": "Manual full-resolution review of campaign-L3-checkpoint-t5257-low-z1-5.jpg, retained as a labelled sheet cell. A single street counterexample fails the universal visible-column clause; this is a visual count, not an authored emitter census."
+    },
+    {
+      "id": "L4-01",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record actual real-input convoy start/stop/control ticks, five vehicle IDs and bus parking bounds at the plaza."
+    },
+    {
+      "id": "L4-02",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Safe plaza frames show clean paving, civilians and relaxed soldiers before pickup.>=40 live routines and every overlap/idle>3 s clause were not censused.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Until pickup: 0 infected, 0 combat, 0 damage decals; ≥ 40 civilians in routines; soldiers relaxed (chat/coffee/patrol). Civilians do not clump outside the camp or overlap."
+    },
+    {
+      "id": "L4-03",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event."
+    },
+    {
+      "id": "L4-04",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L4 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Scale: 18–22 soldiers, 60–70 civilians (40 + 24) high, ≥ 40 % armed; low 50 %; infected ≤ 120 / 60, characters ≤ 190 / 95."
+    },
+    {
+      "id": "L4-05",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected arrive from ≥ 3 street edges ≥ 60° apart and through wall breaches, staggered groups of 2–5 (not bulk); none from tents/inside buildings."
+    },
+    {
+      "id": "L4-06",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Tested tier meets the measured clauses; full requested-tier coverage is incomplete. High: first physical breach level 52.72 s, 61 alive; minimum plaza alive 50 from alarm +45 s through line break +190.02 s.",
+      "evidence": [
+        "docs/reports/batch51-qa/gates/threat.log",
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head high-tier native hold census, 8,731 post-45 s observations; level-clock criterion uses 45 +/-15 s. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
+    },
+    {
+      "id": "L4-07",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: first attack 9.43 s; 280.71/min; last reach 42/42 = 100%, no sustained disconnection flag.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head native passive hold, actual windups and independent path snapshot; complete hold observed through line break. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
+    },
+    {
+      "id": "L4-08",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Alphas are present in the war/escape receipts.8/6 admissions,>=6 directions,>=3 line arrivals and no-pop-in require their full ledger.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Alphas 8 high / 6 low, staggered from ≥ 6 directions, ≥ 3 reach a line; no Alpha \"appears out of nothing\"."
+    },
+    {
+      "id": "L4-09",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Retain native line/nest/armour/fallback event ticks in a full L4 hold; exercise real camera-skip input after 0.5 seconds."
+    },
+    {
+      "id": "L4-10",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "War frames show gunfire and military vehicles. Two simultaneous HMGs, exact tank22 s/8–12 s cadence, safe distance and helicopter withdrawal are not fully timed.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws."
+    },
+    {
+      "id": "L4-11",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run the existing frontal/flank riot fixtures in tools/qa/release-ab-weapons.mjs, including point blank, visible recoil/HP and an ordinary full-HP mortal courier firing continuously."
+    },
+    {
+      "id": "L4-12",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Mixed clothing and silhouettes are visible in the plaza battle. Every20-infected window was not enumerated for the>=4-look requirement.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits)."
+    },
+    {
+      "id": "L4-13",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Complete real-input cellar escape; census route contacts, forty-second gap and each three-per-nine-second pursuit group with a native event observer."
+    },
+    {
+      "id": "L4-14",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L4 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Live damage at cellar entry: ≥ 4 fires, ≥ 2 burning vehicles, ≥ 10 shattered windows, ≥ 6 scorch decals."
+    },
+    {
+      "id": "L4-15",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Low escape frames retain the isometric camera and readable camp geometry. Both mortal low attempts fail to finish hide, so complete escape/high camera and blocker coverage is open.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Camera never snaps to top-down; sandbag/pallet structures are textured, solid and readable (no void beyond)."
+    },
+    {
+      "id": "L4-16",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record actual cellar bar timing, entrant IDs/corgi position, battle-audio event duration and L5 same-basement handover."
+    },
+    {
+      "id": "L4-17",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "No stretched limb or courier-under-corpse defect is identified in the reviewed plaza poses. Pile height and persistence were not quantitatively tracked.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse."
+    },
+    {
+      "id": "L4-18",
+      "level": "L4",
+      "status": "NOT CHECKED",
+      "value": "Clean, occupied safe plaza transitions to mixed gunfire, bodies and breaches. The battle is readable; full cellar escape and late high collapse remain unreviewed.",
+      "evidence": [
+        "docs/reports/batch51-qa/L4.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: `l4-plaza-safe` clean and alive; war frames read \"huge mixed war\"; player readable in the battle."
+    },
+    {
+      "id": "L5-01",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use the ordinary initial shotgun approach, plus native regular/Alpha damage fixtures; record auto-pickup distance and shell-to-incapacitation timings."
+    },
+    {
+      "id": "L5-02",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L5 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Caption, then ~10 s without objective; no music until survivor 1; first 60 s no allies, vehicles or non-player gunfire."
+    },
+    {
+      "id": "L5-03",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Native low opening population 90; source config 135 high / 90 low. Full placed-group and all-street distribution census not collected.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current native opening census plus src/data/l5.ts. NEXT: native position/group census at both tiers, checking every street band and no group >3."
+    },
+    {
+      "id": "L5-04",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L5 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Alphas ≥ 2 present and reachable (authored 2). "
+    },
+    {
+      "id": "L5-05",
+      "level": "L5",
+      "status": "FAIL",
+      "value": "Native low competent look/search phase145.6 s:0 player and0 group attack windups/min, below >=3/min. Passive first7.55 s,182.57/min and90/90 reach demonstrate potential contact; they do not satisfy the competent-route clause. Per-40 m route density/high counterpart remain unmeasured.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Compare the complete-policy step/look ledger with its passive counterpart; actual windups, not damage or kills. The competent bot fires, so zero windups alone is not called proof that an unarmed walk is safe. NEXT: matched competent real-input and no-fire routes with distance/contact ledgers at both tiers."
+    },
+    {
+      "id": "L5-06",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Reviewed search frames have no yellow survivor-destination ring/pin. Caption/direction/audio/ping radius and timing correlations are not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L5.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L5 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Hiding places draw no ring, arrow or pin; found by sound + caption at the spot + edge direction; ♪ radar ping only while a call is heard; cue heard ≤ 25 m, never > 30 m."
+    },
+    {
+      "id": "L5-07",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Fresh muted high route uses the logged authored-map search assist and rescues2. Caption-only discovery of >=4/5 remains unqualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/gates/visual-L5-high.log"
+      ],
+      "method": "PLAYTEST_L5_TOUR=1 uses static authored destinations, so successful graph traversal is not a caption-only pass. NEXT: screenshot-only muted play without map/position assistance, recording every discovery and the cues actually read."
+    },
+    {
+      "id": "L5-08",
+      "level": "L5",
+      "status": "FAIL",
+      "value": "Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Use the same civilian-only pace evidence as G-13; a failed clause makes the compound row FAIL. NEXT: rerun every survivor with contemporaneous group speed, spacing/wait-time and health-bar ledgers at both tiers."
+    },
+    {
+      "id": "L5-09",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Fresh high god-mode real-input search completes with2 rescued and83 kills. This is not the matched native complete/evade-only experiment, and does not establish its >=4 versus <=2 rescue contrast or <=1.5 s bite latency.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-runs.json"
+      ],
+      "method": "Read actual level.completed result from the ordinary scripted input route; do not treat an invulnerable driver as the defined protection benchmark. NEXT: matched native evade-only/complete policies with first-contact bite timestamps, followed by a mortal human-like route."
+    },
+    {
+      "id": "L5-10",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Held weapons/props look attached in sampled follower frames. No corgi-fetch or weapon-respawn experiment was run.",
+      "evidence": [
+        "docs/reports/batch51-qa/L5.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L5 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Armed survivors hold the gun in the hand; the corgi never fetches street weapons; no weapon respawns under the player."
+    },
+    {
+      "id": "L5-11",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Courier colour stays solid and distinct in low/high opening and high fog/Metro frames. The bus hiding place at zoom1.5 is not specifically qualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/L5.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L5 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Heroine keeps her colour in fog (no pale/transparent hero); bus hiding place readable at zoom 1.5."
+    },
+    {
+      "id": "L5-12",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "The route reaches the Metro with two rescued followers. A complete24-occupant census, every body/corgi crossing, shutter overlap strip and end-camera continuity remain unqualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/L5.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts with PLAYTEST_METRO_AUDIT=1 through actual shutter closure; review 24 occupants, every follower/corgi crossing and end-camera continuity."
+    },
+    {
+      "id": "L5-13",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use the existing mission fixture with every survivor lost, then finish by real input and check the rescued-count result; do not add a test case."
+    },
+    {
+      "id": "L5-14",
+      "level": "L5",
+      "status": "NOT CHECKED",
+      "value": "Brick streets and the plaza read as the same fallen city as L4. Numeric>=30% sun-intensity decline was not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L5.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L5 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Same city as L4 (pair cameras read \"same place, fallen\"); sun intensity falls ≥ 30 % to the metro."
+    },
+    {
+      "id": "L6-01",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Progressed preset contains29 entrants (24+5), with seated/talking/resting groups visible. This does not prove IDs/HP carried from this lane’s different L5 run; every routine/idle/gun clause needs census.",
+      "evidence": [
+        "docs/reports/batch51-qa/L6.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people."
+    },
+    {
+      "id": "L6-02",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Headlamp marker/item and later lit retreat are visible. Exhaustive no-new-weapon census, pickup retention and opposite-walk/aim beam tracking were not exercised.",
+      "evidence": [
+        "docs/reports/batch51-qa/L6.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another)."
+    },
+    {
+      "id": "L6-03",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Fresh low native first breach33.20 s;8/8 cohort admissions; passive first attack2.72 s later. >=1.5 s prior bang timing, actual floor-arrival count and high counterpart remain incomplete.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Native release/admission ledger and actual attack events, separate from on-screen population. NEXT: pair bang/release timestamps with floor-crossing trajectories at both tiers."
+    },
+    {
+      "id": "L6-04",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Fresh low native second breach54.22 s:21.02 s after the first,10/10 admitted rather than the old8. Two-access floor arrival and one-frame power/light transition clauses are not fully measured; high counterpart not rerun here.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Native complete and passive release/admission ledgers agree on33.20/54.22 s and8/10 cohorts. NEXT: both-tier access/floor-crossing census plus light/power and abandon event ticks."
+    },
+    {
+      "id": "L6-05",
+      "level": "L6",
+      "status": "FAIL",
+      "value": "Native low complete step/stop: 25.55 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. ",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Native complete/passive phase ledgers. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+    },
+    {
+      "id": "L6-06",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable ≥ 95 %; none stand harmless behind the platform/gate line. "
+    },
+    {
+      "id": "L6-07",
+      "level": "L6",
+      "status": "FAIL",
+      "value": "Native competent run takes 0 damage, below the >=30 HP tuning target; survivor attack/cap clauses need separate full retreat analysis.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head ordinary mortal complete policy, 212.78 s, zero deaths, damageTaken=0; an immortal or forced-death diagnostic cannot qualify the competent damage target."
+    },
+    {
+      "id": "L6-08",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Group walks at 2.2 m/s; injured survivors at group speed (no single straggler that needs babysitting); every follower's bar visible."
+    },
+    {
+      "id": "L6-09",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Corrected low mortal retry physically closes/traverses gate checkpoints90/150/210 and reaches the exit. Gate hold duration8-12 s, five-infected resistance, sight blocking and survivor-distance refusal were not fully measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/gates/visual-L6-low-retry.log"
+      ],
+      "method": "Real-input checkpoint/gate route and read-only native snapshots; no objective advances. NEXT: time each closed gate against five infected and exercise the <=2 m survivor refusal and sight/movement blockers at both tiers."
+    },
+    {
+      "id": "L6-10",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Markers fixed at the gate / exit platform; never walking ahead of the group."
+    },
+    {
+      "id": "L6-11",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Compare separate evade-only and complete native/real-input L6 runs with balanced survivors-in/out/lost ledgers."
+    },
+    {
+      "id": "L6-12",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Fresh mortal forced-death retry completes:244 wall /233.3 sim seconds, one death,19 out +10 lost =29 in; no objective skips. All three checkpoint gates traversed. Closed-Northgate collision and the exact night-caption/end-shot clauses remain unmeasured in this receipt.",
+      "evidence": [
+        "docs/reports/batch51-qa/visual-runs.json",
+        "docs/reports/batch51-qa/L6.jpg",
+        "docs/reports/batch51-qa/gates/visual-L6-low-retry.log"
+      ],
+      "method": "Ordinary damage caused the death; physical WASD/mouse resumed from the restored checkpoint. An earlier failed attempt used stale extrapolated group memory and is retained; the follow-up resets that memory and obeys the visible Stay-with-group instruction. NEXT: native closed/open Northgate collision probe and timed uninterrupted night-caption/end-shot capture at both tiers."
+    },
+    {
+      "id": "L6-13",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run an ordinary mortal fists-only L6 through completion with tools/playtest/session.ts, no objective skips or weapon pickup substitutions."
+    },
+    {
+      "id": "L6-14",
+      "level": "L6",
+      "status": "NOT CHECKED",
+      "value": "Courier is readable within dark tunnel light pools at both zooms. No calibrated3:1 contrast or brightest-eye pixel measurement was made.",
+      "evidence": [
+        "docs/reports/batch51-qa/L6.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient."
+    },
+    {
+      "id": "L7-01",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record real launcher approach/auto-pickup and first physical mouse shot with frames.ts; measure pickup distance and actual frame intervals without prewarming via a photo."
+    },
+    {
+      "id": "L7-02",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
+    },
+    {
+      "id": "L7-03",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Visible rockets/blast effects, blood and opened movement space; no sampled white-out.2.4/s maximum cadence, clicked-impact and20/24 within3 m require the dedicated fixtures.",
+      "evidence": [
+        "docs/reports/batch51-qa/L7.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance."
+    },
+    {
+      "id": "L7-04",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Over the run ≥ 400 / 200 regulars and 4–6 Alphas arrive; concurrent ≤ 200 / 100."
+    },
+    {
+      "id": "L7-05",
+      "level": "L7",
+      "status": "FAIL",
+      "value": "Native low complete step/corridor: 75.62 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: first attack 6.90 s; 43.43 player attacks/min; last reach 99/99 = 100%.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head passive corridor route, actual attack windups and independent path snapshot. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+    },
+    {
+      "id": "L7-06",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "The actual route reaches the corridor; fresh boundary-wall poses are enclosed. The second connected path and unscripted wrong-turn clarity were not explored.",
+      "evidence": [
+        "docs/reports/batch51-qa/L7.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep."
+    },
+    {
+      "id": "L7-07",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct."
+    },
+    {
+      "id": "L7-08",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it."
+    },
+    {
+      "id": "L7-09",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Teal pips remain discrete around15 low-opening/24 high-start followers and the heroine is readable. Every follower’s pace/bar and all moving-crowd tilts need the full ledger.",
+      "evidence": [
+        "docs/reports/batch51-qa/L7.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Followers keep pace and show bars (G-12/13); pressing crowd never drawn tipped sideways."
+    },
+    {
+      "id": "L7-10",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record every passenger entry tick and living follower ID through actual departure; separately hold a boarding obstruction for 20 seconds and retain the recovery."
+    },
+    {
+      "id": "L7-11",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Boarding is reached and the run completes. The complete6–10 s/30 m bus/skyline/lighting/gore sequence was not retained as an uninterrupted strip.",
+      "evidence": [
+        "docs/reports/batch51-qa/L7.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge."
+    },
+    {
+      "id": "L7-12",
+      "level": "L7",
+      "status": "NOT CHECKED",
+      "value": "Charred streets, ash and destruction read beyond the earlier city levels; large infected retain human shapes in sampled frames. Numeric3:1 contrast is not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L7.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1."
+    },
+    {
+      "id": "L8-01",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups."
+    },
+    {
+      "id": "L8-02",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack."
+    },
+    {
+      "id": "L8-03",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Calm entry is occupied and marker-free in reviewed frames. Full civilian/soldier/staff/animal/species census,wall exclusion and idle>3 s checks were not performed.",
+      "evidence": [
+        "docs/reports/batch51-qa/L8.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+    },
+    {
+      "id": "L8-04",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Low 12/12 admitted, four outlets 3/3/3/3; full high-tier timing, spacing and no-pop-in visual strip are not checked in this lane.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses."
+    },
+    {
+      "id": "L8-05",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak."
+    },
+    {
+      "id": "L8-06",
+      "level": "L8",
+      "status": "FAIL",
+      "value": "Native low complete step/escape: 95.75 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low passive: first attack 17.67 s after breach; 254/min during breached phase; last reach 85/85 = 100%.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current-head native passive route: subtract the exact 60-second calm from first escape attack; actual windups, not proximity. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+    },
+    {
+      "id": "L8-07",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review."
+    },
+    {
+      "id": "L8-08",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Courier is100% visible in all four current canopy fixture cells. Interior infected-animal wounds/snarl and zebra-leg moving strips are not qualified.",
+      "evidence": [
+        "docs/reports/batch51-qa/L8.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents)."
+    },
+    {
+      "id": "L8-09",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Actual high route boards12 survivors and visibly reports6/13 during the wait; APC has no firing action in the run. Every missing-member guidance/physical boarding clause is not fully tracked.",
+      "evidence": [
+        "docs/reports/batch51-qa/L8.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure."
+    },
+    {
+      "id": "L8-10",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds."
+    },
+    {
+      "id": "L8-11",
+      "level": "L8",
+      "status": "NOT CHECKED",
+      "value": "Warm-lit quiet entry and the APC escape are reviewed; four rockets/four attack windups occur. Full sanctuary interior/animal mixed-battle review is missing, so no stunning pass is claimed.",
+      "evidence": [
+        "docs/reports/batch51-qa/L8.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass."
+    },
+    {
+      "id": "L9-01",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Low/high APC cab/driver poses are reviewed. This does not establish<=0.5 s availability,carry IDs/durability or every corgi/leg clipping pose.",
+      "evidence": [
+        "docs/reports/batch51-qa/L9.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+    },
+    {
+      "id": "L9-02",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas."
+    },
+    {
+      "id": "L9-03",
+      "level": "L9",
+      "status": "FAIL",
+      "value": "Explicit low road route:123.03 s without a drawn/on-camera infected sample,33.20–156.23 s. This includes64.23 s moving >=0.5 m/s and61.18 s >=1 m/s, so excluding stops still fails60 s. Countryside and shortcut pass their sampled low/high windows; explicit high road was not run.",
+      "evidence": [
+        "docs/reports/batch51-qa/L9.jpg",
+        "docs/reports/batch51-qa/l9-road-low-gap.json",
+        "docs/reports/batch51-qa/visual-runs.json"
+      ],
+      "method": "Compare actual on-camera/drawn body samples with actual player x/z intervals; exclude slow/stationary intervals conservatively. Trace follows the authored road at z≈-330; the earlier default high drive is a different direct path. NEXT: fix road presence, then repeat all three prescribed routes at both tiers with the same observer."
+    },
+    {
+      "id": "L9-04",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
+    },
+    {
+      "id": "L9-05",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash."
+    },
+    {
+      "id": "L9-06",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "No giant flat world arrow in reviewed drives; armor HUD changes with collisions. All six starts finish, but an adversarial off-road wedge test is not run.",
+      "evidence": [
+        "docs/reports/batch51-qa/L9.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+    },
+    {
+      "id": "L9-07",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Ordinary damaged-APC drives reach the scripted crash sequence. Full-HP and0-HP pair,whole falling hull and exact wreck-objective event order are not fully retained.",
+      "evidence": [
+        "docs/reports/batch51-qa/L9.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record one uninterrupted crash from full HP and one from zero HP, with vehicle-part visibility and wreck objective event order."
+    },
+    {
+      "id": "L9-08",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Perform the real L9-to-L10 handover and record on-foot state, exactly axe, ordinary health and the corgi."
+    },
+    {
+      "id": "L9-09",
+      "level": "L9",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries."
+    },
+    {
+      "id": "L10-01",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Census the entire first sixty active seconds of a real-input/native L10 at both tiers, retaining peak regular count, group sizes and absence of dogs/Alphas."
+    },
+    {
+      "id": "L10-02",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
+    },
+    {
+      "id": "L10-03",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Run the native census through all seven regions at low/high, recording concurrent local counts and dogs/Alphas rather than total level spawn calls."
+    },
+    {
+      "id": "L10-04",
+      "level": "L10",
+      "status": "FAIL",
+      "value": "Low native complete: residential-fringe58.3 s with0 attacks; industrial-area131.9 s with0; military-zone0.36/min; research-campus1.73/min. R1/R2 are crossable with zero windups, contrary to the explicit criterion. Passive-route R1 also records0 and R2 1.36/min; the gate checks finale hold rather than this entire regional row.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Inspect every step/* phase in the unchanged-source complete and passive native ledgers, using actual infected.attack windups rather than damage/kills or spawn counts. No inference from a skilled zero-damage run is used. NEXT: independent stationary passive and competent per-region probes at both tiers, after fixing regional contact."
+    },
+    {
+      "id": "L10-05",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route."
+    },
+    {
+      "id": "L10-06",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Dogs and corgi are visually distinct where encountered.1.1x speed,telegraph,reach,cooldown and10 HP need the native dog fixture.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi."
+    },
+    {
+      "id": "L10-07",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Track the pursuing Mega continuously with native position/event ledgers: speed ratio, no-LOS pursuit, reachable path, no teleport and 20-35-second audio cadence; review minimap presentation."
+    },
+    {
+      "id": "L10-08",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Wide road/field framing and dark suit crowds are sampled. Exact1.3 region scale,max2.0 and finale slam-ground-effect clauses are not fully instrumented.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect."
+    },
+    {
+      "id": "L10-09",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Research subtitles explain the airborne cure and the canister pickup is visible. No-slowdown/no-slot and death-restored cure require the explicit checkpoint experiment.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
+    },
+    {
+      "id": "L10-10",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Record the full native charge tick counter while inside/outside radius and alive/dead; run the existing minigun heat fixture for fire rate and lock/unlock thresholds."
+    },
+    {
+      "id": "L10-11",
+      "level": "L10",
+      "status": "FAIL",
+      "value": "Native low complete step/hold: 62.32 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Low passive hold: 111.32 attacks/min, last reach 93/94 = 98.9%; high peak and ~140 s Mega arrival not covered by the 60 s passive window. Complete low hold records0 windups over62.3 s; the acceptance document hard-rule wording is stricter than the gate diagnostic and requires explicit competent-policy qualification.",
+      "evidence": [
+        "docs/reports/batch51-qa/native-threat.json"
+      ],
+      "method": "Current native hold probe. NEXT: both-tier full assault census and actual Mega arena-arrival tick, beyond the current capped hold window. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+    },
+    {
+      "id": "L10-12",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Fresh high real-input route completes Mega Alpha objective and reaches credits; paired rocket/conventional HP thresholds,12 m behavior and complete fight/death frame qualification were not measured.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg",
+        "docs/reports/batch51-qa/visual-runs.json"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres."
+    },
+    {
+      "id": "L10-13",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Exercise each missing release prerequisite in the existing mission fixture, then release by physical input only when all three are satisfied at the console."
+    },
+    {
+      "id": "L10-14",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Fresh high checkpoint-continuation route completes release,150 s epilogue and credits: result1496.72 sim s,179 kills,0 deaths (god mode), no objective skips. Final epilogue/credits frames inspected; every mist/species/immunity/control/camera/timing clause and low-tier parity are not established.",
+      "evidence": [
+        "docs/reports/batch51-qa/L10.jpg",
+        "docs/reports/batch51-qa/visual-runs.json"
+      ],
+      "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits."
+    },
+    {
+      "id": "L10-15",
+      "level": "L10",
+      "status": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
+      "evidence": [],
+      "method": "NEXT: Force ordinary mortal deaths at every regional checkpoint and after cure/boss progress, comparing location, loadout, cure and boss snapshot with the saved checkpoint."
+    }
+  ]
+}

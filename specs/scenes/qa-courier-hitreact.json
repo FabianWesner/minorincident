@@ -1,0 +1,80 @@
+{
+ "name": "qa-courier-hitreact",
+ "note": "Three infected strike a standing courier (god off, so hit reactions play); then a scripted heavy hit.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "god": false
+  },
+  {
+   "id": "biter-1",
+   "kind": "infected",
+   "at": [
+    4.78,
+    1.48
+   ],
+   "yaw": 162.8,
+   "state": "chase"
+  },
+  {
+   "id": "biter-2",
+   "kind": "infected",
+   "at": [
+    -3.67,
+    3.4
+   ],
+   "yaw": 42.8,
+   "state": "chase"
+  },
+  {
+   "id": "biter-3",
+   "kind": "infected",
+   "at": [
+    -1.11,
+    -4.88
+   ],
+   "yaw": -77.2,
+   "state": "chase"
+  }
+ ],
+ "script": [
+  {
+   "frame": 250,
+   "actor": "courier",
+   "do": {
+    "hit": {
+     "from": "biter-1",
+     "heavy": true
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 7,
+  "azimuth": 40
+ },
+ "frames": 420,
+ "shots": [
+  60,
+  120,
+  180,
+  240,
+  270,
+  330,
+  400
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

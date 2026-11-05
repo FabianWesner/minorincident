@@ -1,0 +1,12 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 25s, 30375 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-72473-1792618289; queueing for a slot
+[runner] slot 0 acquired; load 0.26 0.28 0.21
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+src/render/characters/cloneCrowdGeometry.ts(21,74): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ position?: (InterleavedBufferAttribute | BufferAttribute<BufferAttributeEventMap>)[] | undefined; normal?: (InterleavedBufferAttribute | BufferAttribute<...>)[] | undefined; color?: (InterleavedBufferAttribute | BufferAttribute<...>)[] | undefined; }'.
+  No index signature with a parameter of type 'string' was found on type '{ position?: (InterleavedBufferAttribute | BufferAttribute<BufferAttributeEventMap>)[] | undefined; normal?: (InterleavedBufferAttribute | BufferAttribute<...>)[] | undefined; color?: (InterleavedBufferAttribute | BufferAttribute<...>)[] | undefined; }'.
+[remote] could not pull docs/reports/ac-close-shared/evidence/compact-bake-final.json (missing?)
+[remote] done exit=2 (runner 2.31.10.108, sync 25s, remote total 35s)

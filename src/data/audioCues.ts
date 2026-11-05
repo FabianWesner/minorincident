@@ -1,0 +1,344 @@
+import type { NoiseKind } from './noise';
+import { infectedDefinitions } from './infected';
+import { catalog, balanceActions, mountedActions, action } from './actions/catalog';
+import type { GameEvent } from '../sim/world/types';
+import type { Surface, PropMaterial } from './audioEvents';
+export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'ui'] as const;
+export type AudioBus = typeof audioBuses[number];
+export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed' | 'buzz' | 'chatter' | 'fanfare';
+/** Sprite offsets are seconds; recorded and original cues share identical Opus/AAC grids. */
+export interface AudioCue {
+    id: string;
+    category: string;
+    offset: number;
+    duration: number;
+    bus: AudioBus;
+    priority: number;
+    gain: number;
+    antiSpam: number;
+    rateSpread: number;
+    loop: boolean;
+    caption?: string;
+    frequency: number;
+    shape: SoundShape;
+    initial: boolean;
+}
+export const audioCues: Record<string, AudioCue> = {};
+/** Banks nothing needs at the first frame: loaded in the background shortly after the level starts (AudioService.load). */
+export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore', 'infected', 'pickups']);
+const offsets = new Map<string, number>();
+function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequency = 250, options: Partial<AudioCue> = {}): void {
+    const category = options.category ?? bus;
+    const offset = offsets.get(category) ?? 0;
+    const priority = { weapons: 100, telegraph: 90, impacts: 80, dialogue: 75, barks: 70, vehicles: 60, gore: 45, props: 40, music: 35, ui: 35, ambience: 10 }[bus];
+    audioCues[id] = { id, category, offset, duration, bus, shape, frequency, priority, gain: 0.35, antiSpam: 0.08, rateSpread: 0.06, loop: false, initial: (!category.startsWith('music-L') && !lazyCategories.has(category)) || category === 'music-L1', ...options };
+    offsets.set(category, offset + duration + 0.08);
+}
+cue('weather.rain', 'ambience', 'bed', 4, 1300, { category: 'weather', initial: false, gain: .25, loop: true, rateSpread: 0 });
+cue('weather.gust', 'ambience', 'noise', 1.5, 160, { category: 'weather', initial: false, gain: .35, antiSpam: 0, rateSpread: 0 });
+cue('weather.thunder', 'ambience', 'noise', 2, 65, { category: 'weather', initial: false, gain: .7, antiSpam: 0, rateSpread: 0 });
+cue('weather.footstep.snow', 'impacts', 'step', .3, 240, { category: 'weather', initial: false, gain: .25, antiSpam: .12 });
+cue('weather.footstep.wet', 'impacts', 'step', .3, 1000, { category: 'weather', initial: false, gain: .25, antiSpam: .12 });
+cue('weather.rain-metal', 'ambience', 'bed', 4, 2600, { category: 'weather', initial: false, gain: .1, loop: true, rateSpread: 0 });
+const captions: Record<string, string> = { screamer: 'Screamer inhaling', runner: 'Runner snarling', crawler: 'Crawler scraping', brute: 'Brute roaring', bloated: 'Bloated gurgling', dog: 'Dog growling', cat: 'Cat hissing', crow: 'Crows cawing', lion: 'Lion roaring', gorilla: 'Gorilla beating its chest' };
+export const telegraphCues: Record<string, string> = {};
+for (const [index, def] of infectedDefinitions.filter(def => def.id !== 'infected.alpha').entries()) {
+    const name = def.id.split('.')[1], id = `telegraph.${name}`;
+    telegraphCues[def.id] = id;
+    cue(id, 'telegraph', ['riot', 'armored', 'firefighter', 'gorilla'].includes(name) ? 'step' : 'vocal', name === 'screamer' ? 0.8 : name === 'bloated' ? 1 : 0.4, 100 + index * 27, { gain: 0.6, caption: captions[name] ?? `${name[0].toUpperCase() + name.slice(1)} preparing an attack`, rateSpread: 0, antiSpam: 0 });
+}
+telegraphCues['infected.alpha'] = 'telegraph.brute';
+for (const [move, caption] of [['alpha.grab-throw', 'Alpha winding up a throw'], ['alpha.roar', 'Alpha inhaling to roar']] as const) {
+  telegraphCues[move] = `telegraph.${move}`;
+  cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
+}
+for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce: clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest: infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound: leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla winding up a throw', .8], ['elephant.charge', 'Elephant stampede: clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe: leave the marked arc', .7], ['zebra.kick', 'Zebra rear kick: leave the marked rear arc', .6], ['zebra.stampede', 'Zebra herd stampede: clear the marked corridors', .8], ['flamingo.dive', 'Flamingo flock dive: leave the marked circle', .6]] as const) {
+  telegraphCues[move] = `telegraph.${move}`;
+  cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
+}
+cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
+telegraphCues.zebra = 'telegraph.zebra';
+for (const name of ['civilian', 'explosive']) {
+    telegraphCues[name] = `telegraph.${name}`;
+    telegraphCues[`infected.${name}`] = `telegraph.${name}`;
+    cue(`telegraph.${name}`, 'telegraph', 'vocal', 0.8, 160, { caption: name === 'explosive' ? 'Explosive infected approaching' : 'Infected approaching', gain: 0.6 });
+}
+/**
+ * Weapon audio pass (PO 10-15 "That shutgun sounds lsuper lightM not like an actual shotcun. For all weapons make sure we use proper sounds"):
+ * every catalogued action has a recorded cue with four takes. [duration s, antiSpam s]: a shot keeps its natural tail (shotgun, rifles, rocket long),
+ * rapid-fire guns keep it short so 10-20 rounds a second do not smear. Per-class loudness is baked into the sprites (tools/audio/weapons_recipes.py LEVEL).
+ */
+export const weaponSlices: Readonly<Record<string, readonly [duration: number, antiSpam: number]>> = {
+    'weapon.handgun': [0.6, 0.05], 'weapon.pistol': [0.6, 0.05], 'weapon.nail-gun': [0.3, 0.04], 'weapon.shotgun': [1.1, 0.1], 'weapon.smg': [0.35, 0.03],
+    'weapon.assault-rifle': [0.5, 0.04], 'weapon.machine-gun': [0.4, 0.03], 'weapon.army-mg': [0.45, 0.03], 'weapon.hunting-rifle': [0.9, 0.1], 'weapon.rotary-minigun': [0.28, 0.02],
+    'weapon.rocket-launcher': [1.2, 0.1], 'ability.turret': [0.35, 0.03],
+    'weapon.grenade': [0.4, 0.1], 'weapon.molotov': [0.4, 0.1], 'weapon.pipe-bomb': [0.4, 0.1], 'weapon.smoke-grenade': [0.4, 0.1], 'weapon.flashbang': [0.4, 0.1], 'weapon.firecracker-lure': [0.3, 0.05],
+    'weapon.knife': [0.24, 0.025], 'weapon.nail-bat': [0.24, 0.025], 'weapon.shovel': [0.3, 0.025], 'weapon.police-baton': [0.24, 0.025], 'weapon.fire-axe': [0.32, 0.025], 'weapon.katana': [0.24, 0.025],
+    'ability.ground-slam': [0.45, 0.1],
+};
+/** Runtime gain per class (offline loudness order, see docs/reports/weapon-audio): melee swings sit 3+ LU below the quietest firearm, the shotgun and rocket are the loudest. The E05 test fixture keeps 0.8 (E16 probes). */
+const weaponGain = (id: string, category: string, curated: boolean): number => category === 'melee' ? 0.5 : !curated || (category !== 'ranged' && id !== 'ability.turret') ? 0.8 : /shotgun|rocket/.test(id) ? 0.8 : 1;
+for (const def of [...Object.values(catalog), ...Object.values(mountedActions), ...balanceActions.filter(d => !(d.id in catalog))]) {
+    const slice = weaponSlices[def.id];
+    cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', slice?.[0] ?? (def.category === 'ranged' ? 0.16 : 0.24), 150, { gain: weaponGain(def.id, def.category, !!slice), antiSpam: slice?.[1] ?? 0.025, ...(def.category === 'ranged' ? { rateSpread: 0.04 } : {}) });
+}
+for (const env of ['street', 'interior', 'open'])
+    cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: env === 'interior' ? 0.5 : 0.35, rateSpread: 0.02 });
+cue('weapon.rocket-whoosh', 'weapons', 'noise', 1, 600, { gain: 0.16, loop: true, antiSpam: 0 });
+cue('weapon.reload', 'weapons', 'step', 1, 800, { gain: 0.5 });
+cue('weapon.reload-rifle', 'weapons', 'step', 1, 800, { gain: 0.5 });
+cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
+/** Shotgun pump/rack after each shell, 0.45 s behind the shot. */
+cue('weapon.pump', 'weapons', 'step', 0.47, 700, { gain: 0.6, antiSpam: 0.2 });
+/** Mounted heavy gun (HMG, door gun): deeper than the army MG. */
+cue('weapon.hmg', 'weapons', 'shot', 0.55, 90, { gain: 1, antiSpam: 0.03, rateSpread: 0.03 });
+/** Minigun barrel whir: looped, pitched and levelled by the AudioService from the live spin (0 -> 1), so spin-up and spin-down follow the gun. */
+cue('weapon.minigun-whir', 'weapons', 'noise', 0.48, 120, { gain: 0.5, loop: true, antiSpam: 0, rateSpread: 0 });
+export const surfaces: readonly Surface[] = ['asphalt', 'sidewalk', 'grass', 'wood', 'gravel', 'tile', 'metal', 'glass', 'water', 'blood'];
+for (const [index, surface] of surfaces.entries())
+    for (const actor of ['survivor', 'infected', 'corgi', 'tires'])
+        cue(`footstep.${actor}.${surface}`, 'impacts', 'step', 0.3, 120 + index * 120 + (actor === 'corgi' ? 900 : 0), { gain: actor === 'survivor' ? 0.3 : 0.1, antiSpam: 0.12 });
+export const propMaterials: readonly PropMaterial[] = ['wood', 'metal', 'plastic', 'glass', 'rubber', 'sandbag'];
+for (const [i, material] of propMaterials.entries())
+    cue(`prop.${material}`, 'props', 'step', 0.4, 160 + i * 310);
+for (const id of ['brace', 'creak', 'break', 'roll', 'scrape'])
+    cue(`prop.${id}`, 'props', id === 'creak' ? 'tone' : 'noise', id === 'roll' || id === 'scrape' ? 1 : 0.4, 300, { loop: id === 'roll' || id === 'scrape' });
+for (const id of ['pull', 'sputter', 'idle'])
+    cue(`generator.${id}`, 'props', id === 'pull' ? 'noise' : 'tone', id === 'idle' ? 1 : 0.4, 90, { loop: id === 'idle' });
+for (const id of ['hum', 'flicker', 'break', 'power-on', 'power-off'])
+    cue(`lamp.${id}`, 'props', id === 'hum' ? 'tone' : 'step', id === 'hum' ? 1 : 0.25, 120, { loop: id === 'hum' });
+export const explosionBeats = ['tell', 'crack', 'boom', 'sub', 'debris', 'roar', 'crackle'] as const;
+for (const beat of explosionBeats)
+    cue(`explosion.${beat}`, 'impacts', beat === 'tell' ? 'tone' : beat === 'crack' ? 'shot' : beat === 'sub' ? 'tone' : 'noise', beat === 'sub' ? 0.8 : beat === 'roar' ? 1.5 : beat === 'boom' ? 0.9 : beat === 'debris' ? 0.8 : 0.4, beat === 'sub' ? 55 : beat === 'tell' ? 1400 : 200, { gain: 0.65, antiSpam: 0.02, priority: beat === 'crack' || beat === 'boom' ? 95 : 80 });
+cue('tinnitus', 'impacts', 'tone', 1.5, 3800, { gain: 0.06, rateSpread: 0 });
+for (const id of ['engine-low', 'engine-high', 'sputter', 'fire', 'skid', 'horn', 'siren', 'crash', 'grab'])
+    cue(`vehicle.${id}`, 'vehicles', id === 'crash' ? 'shot' : ['horn', 'siren', 'engine-low', 'engine-high'].includes(id) ? 'tone' : 'noise', id === 'crash' ? 0.6 : 1, id === 'engine-high' ? 160 : id === 'horn' ? 380 : id === 'siren' ? 700 : 80, { loop: ['engine-low', 'engine-high', 'sputter', 'fire', 'siren'].includes(id), caption: id === 'horn' ? 'Car horn' : id === 'siren' ? 'Police siren' : undefined });
+for (const id of ['squelch', 'bone', 'splat'])
+    cue(`gore.${id}`, 'gore', 'noise', 0.2, 130, { gain: 0.18 });
+for (const variant of ['male', 'female'])
+    for (const kind of ['effort', 'hurt', 'quip'])
+        cue(`bark.${variant}.${kind}`, 'barks', 'vocal', kind === 'quip' ? 1.4 : 0.4, variant === 'female' ? 230 : 130, { antiSpam: kind === 'quip' ? 25 : 0.3, caption: kind === 'quip' ? 'Could really use a quieter neighborhood.' : undefined });
+for (const id of ['warning', 'happy', 'hurt', 'pant'])
+    cue(`corgi.${id}`, 'barks', 'vocal', 0.4, 450, { caption: id === 'warning' ? 'Corgi warning bark' : undefined });
+for (const [id, text] of [['radio', 'Emergency broadcast: proceed to the safe zone.'], ['emergency', 'This is an emergency broadcast.'], ['safe-zone', 'Safe zone ahead. Keep moving.']])
+    cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 0.7, antiSpam: 0, rateSpread: 0, caption: text });
+for (const id of ['click', 'switch', 'pickup', 'respawn', 'death', 'tick'])
+    cue(`ui.${id}`, 'ui', 'tone', 0.1, 700, { gain: id === 'tick' ? 0 : 0.1 });
+/**
+ * Weapon pickup stingers (PO 10-13: the L1 score excerpt that used to play on every pickup did not fit a machine gun). One short fanfare per weapon family, <= 2 s,
+ * synthesised in src/audio/fanfare.ts plus recorded foley layers (imports.json `fanfare`). Weapons bus, so the music duck that accompanies them never mutes them.
+ */
+export const pickupFanfareDurations = { bat: 1.6, 'fire-axe': 1.8, handgun: 1.3, 'army-mg': 1.95, shotgun: 1.8, rocket: 2, molotov: 1.1, 'corgi-lure': 1.1, throwable: 0.9, ability: 1.2, melee: 0.95, gun: 1.1 } as const;
+export type PickupFanfare = keyof typeof pickupFanfareDurations;
+for (const [name, duration] of Object.entries(pickupFanfareDurations))
+    cue(`pickup.fanfare.${name}`, 'weapons', 'fanfare', duration, 220, { category: 'pickups', gain: 0.55, antiSpam: 0.3, rateSpread: 0 });
+/** Action id -> fanfare. Weapons with their own mood are listed; every other weapon falls back to its category's light sting (pickupFanfare). */
+export const pickupFanfareByAction: Readonly<Record<string, PickupFanfare>> = {
+    'weapon.bat': 'bat', 'weapon.fire-axe': 'fire-axe', 'weapon.handgun': 'handgun', 'weapon.pistol': 'handgun',
+    'weapon.army-mg': 'army-mg', 'weapon.machine-gun': 'army-mg', 'weapon.shotgun': 'shotgun', 'weapon.rocket-launcher': 'rocket',
+    'weapon.molotov': 'molotov', 'ability.corgi-lure': 'corgi-lure',
+};
+export function pickupFanfare(actionId: string): PickupFanfare {
+    const own = pickupFanfareByAction[actionId];
+    if (own) return own;
+    let category: string | undefined;
+    try { category = action(actionId).category; } catch { /* unknown id: melee sting */ }
+    return category === 'ranged' ? 'gun' : category === 'throwable' ? 'throwable' : category === 'ability' ? 'ability' : 'melee';
+}
+cue('civilian.hey', 'barks', 'vocal', .75, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });
+cue('infected.vocal', 'barks', 'vocal', 1.5, 130, { gain: 0.12, antiSpam: 0.9, rateSpread: 0.12 });
+/** Recorded infected voices (lazy bank): alert snarl, hit pain, death, bite on a landed attack. Humanoid archetypes only. */
+for (const [id, duration, gain, antiSpam] of [['alert', 0.55, 0.3, 0.2], ['hurt', 0.5, 0.22, 0.3], ['death', 0.85, 0.3, 0.1], ['bite', 0.6, 0.45, 0.25]] as const)
+    cue(`infected.${id}`, 'barks', 'vocal', duration, 140, { category: 'infected', gain, antiSpam, rateSpread: 0.14 });
+cue('horde.loop', 'ambience', 'bed', 2, 150, { loop: true, gain: 0.3, antiSpam: 0 });
+for (const [i, surface] of surfaces.entries())
+    cue(`horde.loop.${surface}`, 'ambience', 'bed', 2, 110 + i * 90, { loop: true, gain: 0.3, antiSpam: 0 });
+export const ambienceTiers = [
+    { beds: ['birds', 'wind', 'traffic'], oneShots: ['sprinkler', 'dog', 'lawnmower', 'basketball'] },
+    { beds: ['birds', 'traffic', 'horns'], oneShots: ['siren', 'alarm', 'shout', 'news'] },
+    { beds: ['sirens', 'helicopter'], oneShots: ['megaphone', 'radio', 'gunshot'] },
+    { beds: ['wind', 'fire', 'hum'], oneShots: ['alarm', 'glass', 'explosion', 'power'] },
+    { beds: ['fire-roar', 'moans'], oneShots: ['scream', 'automatic', 'collapse'] },
+    // W5 (E23): a silent burnt city. No helicopter, no siren; only debris settling, a far collapse, a dog.
+    { beds: ['wind', 'fire'], oneShots: ['debris', 'collapse', 'dog'] },
+    // W6 reuses the existing overrun-city sound pool.
+    { beds: ['fire-roar', 'moans'], oneShots: ['scream', 'collapse', 'explosion'] },
+] as const;
+for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.beds]))].entries())
+    cue(`bed.${id}`, 'ambience', 'bed', ['birds', 'traffic', 'sirens', 'wind'].includes(id) ? 12 : 2, 100 + i * 210, { gain: 0.18, loop: true });
+for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.oneShots]))].entries())
+    cue(`ambient.${id}`, 'ambience', id === 'gunshot' || id === 'explosion' ? 'shot' : id === 'dog' || id === 'shout' || id === 'scream' ? 'vocal' : 'noise', 0.6, 160 + i * 70, { gain: id === 'dog' ? 0.2 : 0.35, caption: id === 'alarm' ? 'Car alarm' : id === 'scream' ? 'Distant scream' : undefined });
+export const musicLevels = { L1: 120, L2: 120, L3: 128, L4: 96, L5: 120, L6: 120 } as const;
+/** Levels whose layered stems (`music-<level>` bank) exist. L7-L9 play only their streamed score (no stems exist for them). */
+export const stemLevels: ReadonlySet<string> = new Set(Object.keys(musicLevels));
+/** Stem bank a level plays: L10 reuses the L6 stems. */
+export const stemBank = (level: string): string | null => stemLevels.has(level === 'L10' ? 'L6' : level) ? `music-${level === 'L10' ? 'L6' : level}` : null;
+export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
+for (const [level, bpm] of Object.entries(musicLevels))
+    for (const [i, layer] of musicLayers.entries())
+        cue(`music.${level}.${layer}`, 'music', 'music', 960 / bpm, 130 + i * 90, { category: `music-${level}`, loop: true, gain: 0.35, rateSpread: 0, antiSpam: 0 });
+for (const id of ['objective', 'weapon', 'elite', 'low-hp', 'twist', 'complete', 'dawn'])
+    cue(`stinger.${id}`, 'music', 'music', id === 'dawn' ? 4 : 1, 200, { gain: 0.5, rateSpread: 0, antiSpam: 0 });
+for (const kind of ['jukebox', 'ice-cream', 'car-radio', 'school-bell', 'pa', 'megaphone']) {
+    cue(`diegetic.${kind}`, 'vehicles', kind === 'pa' || kind === 'megaphone' ? 'vocal' : 'music', 2, kind === 'ice-cream' ? 660 : 260, { loop: true, gain: 0.4, caption: kind === 'pa' || kind === 'megaphone' ? 'Safe zone announcement' : undefined });
+    if (kind === 'jukebox' || kind === 'ice-cream')
+        cue(`diegetic.${kind}.warped`, 'vehicles', 'music', 2, 240, { loop: true, gain: 0.32, rateSpread: 0 });
+}
+for (const weapon of ['fists', 'kick', 'bat', 'crowbar', 'machete'])
+    cue(`flesh.${weapon}`, 'impacts', 'step', 0.35, 150, { gain: 0.65, antiSpam: 0.04, rateSpread: 0.06 });
+cue('civilian.transform', 'barks', 'vocal', 1.6, 130, { gain: 0.45, antiSpam: 0.4, caption: 'Infection taking hold' });
+cue('civilian.scream', 'barks', 'vocal', 1.2, 500, { gain: 0.4, antiSpam: 0.7, caption: 'Civilian screaming' });
+/** sfx2: layered melee hits (transient flesh.* + body + low thump), doors and the bike bell. Recorded CC0, see imports.json. */
+cue('impact.body.punch', 'impacts', 'step', 0.45, 150, { gain: 0.55, antiSpam: 0.04 });
+cue('impact.body.wood', 'impacts', 'step', 0.5, 150, { gain: 0.55, antiSpam: 0.04 });
+cue('impact.body.metal', 'impacts', 'step', 0.5, 150, { gain: 0.5, antiSpam: 0.04 });
+cue('impact.thump', 'impacts', 'step', 0.4, 80, { gain: 0.7, antiSpam: 0.04 });
+cue('door.gate', 'props', 'noise', 1.1, 300, { gain: 0.5, antiSpam: 0.15 });
+cue('door.wood', 'props', 'noise', 0.6, 300, { gain: 0.5, antiSpam: 0.15 });
+cue('bike.bell', 'props', 'tone', 0.9, 2000, { gain: 0.4, antiSpam: 0.3 });
+/** Frequent one-shots get +-7 % pitch variation; with the registry's +-1 dB gain jitter and no-repeat variant draw. */
+const variedFamilies = /^(footstep\.|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power)|bark\.|door\.|bike\.)/;
+for (const c of Object.values(audioCues)) if (variedFamilies.test(c.id) && !c.loop) c.rateSpread = 0.14;
+/** Weapon cues with recorded takes: every catalogued action with a slice, the pump and the HMG. */
+const weaponPooled = (id: string): boolean => id === 'weapon.pump' || id === 'weapon.hmg' || (id.startsWith('action.') && id.slice(7) in weaponSlices);
+/** Four independent sprite slices per repeated one-shot; selection never repeats its last slice. */
+export const audioVariationPools: Record<string, string[]> = {};
+for (const original of Object.values(audioCues)) {
+    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.(vocal|alert|hurt|death|bite)|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id) || weaponPooled(original.id))) continue;
+    const ids = [original.id];
+    for (let variant = 1; variant < 4; variant++) {
+        const id = `${original.id}.v${variant}`;
+        cue(id, original.bus, original.shape, original.duration, original.frequency, { ...original, id, offset: offsets.get(original.category)! });
+        ids.push(id);
+    }
+    audioVariationPools[original.id] = ids;
+}
+/** L1 v2 sound arc (lane H): calm layer, accident beats, chaos layer, fire-station interior. One sprite category. */
+const arc = { category: 'l1arc', rateSpread: 0.04 } as const;
+cue('l1.calm.chatter', 'ambience', 'chatter', 8, 260, { ...arc, loop: true, gain: 0.22, antiSpam: 0 });
+cue('l1.calm.talk', 'ambience', 'vocal', 0.9, 170, { ...arc, gain: 0.2, antiSpam: 2 });
+cue('l1.calm.traffic', 'ambience', 'noise', 1.2, 120, { ...arc, gain: 0.18, antiSpam: 3 });
+cue('l1.calm.bike-tick', 'ambience', 'step', 0.25, 2400, { ...arc, gain: 0.14, antiSpam: 1 });
+cue('l1.calm.birds', 'ambience', 'vocal', 0.5, 2600, { ...arc, gain: 0.1, antiSpam: 2 });
+cue('l1.flicker.buzz', 'impacts', 'buzz', 1.5, 100, { ...arc, gain: 0.45, antiSpam: 0.5 });
+cue('l1.blast', 'impacts', 'shot', 0.9, 70, { ...arc, gain: 0.8, antiSpam: 1, rateSpread: 0, caption: 'Muffled blast' });
+cue('l1.glass.rattle', 'props', 'noise', 1, 4000, { ...arc, gain: 0.4, antiSpam: 0.5, caption: 'Glass rattling' });
+cue('l1.ringing', 'impacts', 'tone', 1.2, 3800, { ...arc, gain: 0.08, antiSpam: 1, rateSpread: 0 });
+cue('l1.scream', 'barks', 'vocal', 1.1, 520, { ...arc, gain: 0.5, antiSpam: 0.2, caption: 'Screams' });
+cue('l1.crash', 'impacts', 'shot', 0.5, 200, { ...arc, gain: 0.55, antiSpam: 0.3 });
+cue('l1.bell', 'props', 'tone', 1.5, 880, { ...arc, gain: 0.3, antiSpam: 2, rateSpread: 0, caption: 'Facility alarm bell' });
+cue('l1.chaos.panic', 'ambience', 'chatter', 2, 330, { ...arc, loop: true, gain: 0.3, antiSpam: 0 });
+cue('l1.chaos.infected', 'barks', 'vocal', 0.7, 120, { ...arc, gain: 0.35, antiSpam: 0.3, caption: 'Infected snarling' });
+cue('l1.chaos.run', 'impacts', 'step', 0.3, 160, { ...arc, gain: 0.3, antiSpam: 0.15 });
+cue('l1.chaos.car-alarm', 'vehicles', 'tone', 0.8, 900, { ...arc, gain: 0.3, antiSpam: 1, caption: 'Car alarm' });
+cue('l1.chaos.fall', 'props', 'shot', 0.5, 150, { ...arc, gain: 0.4, antiSpam: 0.5 });
+cue('l1.chaos.distant', 'ambience', 'vocal', 1, 420, { ...arc, gain: 0.25, antiSpam: 1, caption: 'Distant panic' });
+cue('l1.interior.hush', 'ambience', 'bed', 2, 70, { ...arc, loop: true, gain: 0.25, antiSpam: 0 });
+cue('l1.outro.sting', 'music', 'music', 2.5, 196, { ...arc, gain: 0.5, antiSpam: 0, rateSpread: 0 });
+/** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
+export const eventCues = {
+    'mega.cue': 'telegraph.brute', // AudioService applies the processed recipe by cue kind.
+    'power.on': 'lamp.power-on', 'power.off': 'lamp.power-off', 'light.broken': 'lamp.break',
+    'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
+    'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
+    'civilian.bark': 'civilian.hey', 'story.say': 'ui.tick', 'story.thud': 'impact.thump', 'civilian.state': 'ui.tick', 'civilian.eyes': 'civilian.transform', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'civilian.transform', 'l7.follower-alarm': 'civilian.hey',
+    'corgi.bark': 'corgi.warning', 'corgi.warn': 'corgi.warning', 'corgi.fetched': 'ui.pickup', 'escort.order': 'ui.switch', 'escort.downed': 'ui.tick', 'escort.revived': 'stinger.objective',
+    'civilian.grabbed': 'telegraph.civilian', 'infected.prop-thrown': 'prop.wood', 'telegraph': 'telegraph.runner',
+    'infected.special': 'ui.tick', 'infected.roar-buff': 'ui.tick', 'infected.attack': 'infected.vocal', 'infected.revived': 'telegraph.nurse', 'infected.leg-lost': 'gore.bone',
+    // PO "Infected recover": a downed infected groans once on the ground and snarls as it gets up.
+    'infected.groan': 'infected.hurt', 'infected.recovered': 'infected.alert',
+    noise: 'action.weapon.pistol', 'ai.alerted': 'ui.tick', 'combat.effect': 'ui.tick', 'pickup.collected': 'ui.pickup',
+    'combat.attack': 'action.weapon.fists', 'combat.hit': 'gore.squelch', 'combat.kill': 'gore.bone', 'combat.hit-stop': 'ui.tick',
+    'loadout.switched': 'ui.switch', 'combat.empty': 'weapon.dry', 'combat.landed': 'gore.splat', 'combat.exploded': 'explosion.boom',
+    'player.died': 'ui.death', 'player.respawned': 'ui.respawn', 'player.damaged': 'bark.female.hurt',
+    footstep: 'footstep.survivor.asphalt', 'light.generator': 'generator.pull', 'light.lamp': 'lamp.hum', 'light.power': 'lamp.power-on',
+    'prop.impact': 'prop.wood', 'prop.motion': 'prop.roll', 'barricade.sound': 'prop.creak', 'barricade.damaged': 'prop.creak', 'barricade.built': 'ui.tick', 'barricade.broken': 'ui.tick', 'barricade.repaired': 'ui.tick', 'explosion.beat': 'explosion.boom',
+    'vehicle.sound': 'vehicle.engine-low', diegetic: 'diegetic.jukebox', dialogue: 'dialogue.radio',
+    'music.stinger': 'stinger.twist', 'music.intensity': 'ui.tick', 'corgi.sound': 'corgi.warning', 'survivor.bark': 'bark.female.effort', 'gore.sound': 'gore.squelch',
+    // Integrated mission, interaction, vehicle and VFX events reuse the shipped sprites.
+    'attack.resolved': 'ui.tick',
+    'checkpoint.restored': 'ui.tick',
+    'checkpoint.set': 'ui.tick',
+    'cinematic.completed': 'ui.tick',
+    'cinematic.started': 'ui.tick',
+    'dialogue.line': 'dialogue.radio',
+    'entity.spawned': 'ui.tick',
+    'escort.rescued': 'stinger.objective',
+    'gate.changed': 'door.gate',
+    'hazard.armed': 'explosion.tell',
+    'hazard.electrified': 'lamp.power-on',
+    'hazard.exploded': 'explosion.boom',
+    // E27: the blast speaks through explosion.beat (crack/debris/roar); these carry no extra one-shot.
+    explosion: 'ui.tick', 'explosion.slowmo': 'ui.tick', 'ai.lostTarget': 'ui.tick',
+    'hazard.leaked': 'generator.sputter',
+    'interact.completed': 'ui.switch',
+    'interact.interrupted': 'ui.tick',
+    'item.granted': 'ui.pickup',
+    'level.completed': 'stinger.complete',
+    'migration.started': 'ui.tick',
+    'mission.briefing': 'ui.tick',
+    'mission.failed': 'ui.death',
+    'mission.signal': 'ui.tick',
+    'mission.spawned': 'ui.tick',
+    'objective.completed': 'stinger.objective',
+    'objective.started': 'ui.tick',
+    'progression.requested': 'ui.tick',
+    'prop.broken': 'prop.break',
+    'prop.ignited': 'explosion.crackle',
+    'vehicle.durability-hit': 'vehicle.crash',
+    'vehicle.attack-windup': 'vehicle.grab',
+    'vehicle.damage-stage': 'vehicle.sputter',
+    'vehicle.burning': 'explosion.crackle',
+    'vehicle.entered': 'ui.click',
+    'vehicle.exited': 'ui.click',
+    'vehicle.exploded': 'explosion.boom',
+    'vehicle.feedback': 'ui.tick',
+    'vehicle.grabbed': 'vehicle.grab',
+    'vehicle.obstacle-broken': 'prop.break',
+    'vehicle.recovering': 'ui.tick',
+    'vehicle.shaken': 'prop.plastic',
+    'vehicle.smoking': 'vehicle.crash',
+    'vfx.effect': 'ui.tick',
+    'world.blocker.changed': 'ui.tick',
+    'world.tier-requested': 'ui.tick',
+    // L1 v2 outbreak/accident events (L0 scaffold): silent until lane H assigns cues.
+    'outbreak.bite': 'ui.tick', 'outbreak.distraction': 'ui.tick', 'outbreak.civilian-escaped': 'ui.tick', 'outbreak.infection': 'ui.tick',
+    // E20 set piece: station bell, departure siren, doors forced open, checkpoint gate; allied strikes.
+    'l2.alarm': 'l1.bell', 'l2.truckDeparted': 'vehicle.siren', 'l2.truckArrived': 'ui.tick', 'l2.crewExit': 'ui.tick', 'l2.firefightersAtDoors': 'ui.tick',
+    'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'l2.cue': 'ui.tick', 'ally.attack': 'action.weapon.fists', 'ally.callout': 'bark.male.effort',
+    'l3.handgun': 'ui.tick', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'stinger.objective', 'l3.surge': 'ui.tick',
+    'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.tick', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
+    'l4.firstTurn': 'ui.tick', 'l4.lineBreaks': 'ui.tick', 'l4.beat': 'civilian.scream', 'l4.wave': 'ui.tick', 'l4.tankFire': 'ui.tick', 'l4.heliPass': 'ui.tick', 'hmg.burst': 'ui.tick', 'mounted-gun.mounted': 'ui.tick', 'mounted-gun.dismounted': 'ui.tick',
+    // E23: the silent city. The sign-of-life cue is positional (AudioService picks the cue by survivor); beats are silent but the shutter.
+    'l5.emerged': 'ui.tick', 'l5.searching': 'ui.tick', 'l5.accounted': 'ui.tick', 'l5.shutter': 'door.gate', 'l5.sheltered': 'ui.tick', 'l5.cue': 'ui.tick', 'l5.found': 'ui.pickup', 'l5.lost': 'ui.tick', 'l5.wait': 'ui.tick',
+    'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
+  'l6.breach1': 'civilian.scream', 'l6.breach2': 'civilian.scream', 'l6.abandon': 'civilian.hey', 'l6.exit': 'ui.tick', 'l6.straggler': 'civilian.hey', 'l6.hatch-broken': 'door.gate', 'l6.collected': 'ui.tick', 'l6.rejoined': 'ui.tick', 'l6.gate-closed': 'door.wood', 'l6.bang': 'door.wood',
+} satisfies Record<GameEvent['type'], string>;
+export const audioCategories = [...offsets.keys()];
+export function audioFile(category: string, format: 'webm' | 'm4a'): string { return `/assets/audio/${category}.${format}`; }
+export function categoryDuration(category: string): number { return offsets.get(category)!; }
+/** Noise events from weapons and world systems share AI hearing metadata and these cue IDs. */
+export const noiseCues = {
+    scream: 'screamer.scream',
+    melee: 'action.weapon.fists', pistol: 'action.weapon.pistol', smg: 'action.weapon.smg', shotgun: 'action.weapon.shotgun', rifle: 'action.weapon.assault-rifle', machineGun: 'action.weapon.machine-gun',
+    explosionSmall: 'explosion.boom', explosionMedium: 'explosion.boom', explosionLarge: 'explosion.boom', explosionMega: 'explosion.boom',
+    horn: 'vehicle.horn', alarm: 'ambient.alarm', siren: 'vehicle.siren', firecracker: 'action.weapon.firecracker-lure', glass: 'lamp.break', barricade: 'prop.creak',
+} satisfies Record<NoiseKind, string>;
+
+export const megaCueRates: Record<string, number> = {};
+export const megaAudioCues: Record<string, AudioCue> = {};
+export const resolvedAudioCue = (id: string): AudioCue | undefined => megaAudioCues[id] ?? audioCues[id];
+/** Process the existing licensed stock in the live graph; share its exact sprite slices. No bank offsets change. */
+for (const [id, stock, caption, rate, priority] of [
+  ['mega.roar', 'telegraph.brute', 'Mega Alpha roaring', .48, 110],
+  ['mega.impact', 'telegraph.gorilla', 'Mega Alpha distant impact', .55, 100],
+  ['mega.step', 'telegraph.gorilla', 'Mega Alpha heavy footstep', .65, 100],
+  ['mega.charge', 'telegraph.brute', 'Mega Alpha charging: clear the marked path', .5, 150],
+  ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam: leave the marked circle', .55, 150],
+  ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing: get out of its reach', .5, 150],
+  ['cure.recording', 'music.L6.base', undefined, 1, 120],
+] as const) {
+  megaAudioCues[id] = { ...audioCues[stock], id, caption, priority, bus: id === 'cure.recording' ? 'dialogue' : audioCues[stock].bus, rateSpread: 0, loop: false, initial: false, gain: .6 };
+  // The per-cue playback rate belongs to the presentation recipe, not to sprite duration/offset.
+  megaCueRates[id] = rate;
+}

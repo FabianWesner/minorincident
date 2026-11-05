@@ -1,0 +1,143 @@
+{
+  "id": "bld.house-b.w2",
+  "canonicalOwner": "bld.house-b",
+  "decay": "w2",
+  "status": "integrated",
+  "caps": {
+    "lod0": 30000,
+    "lod1": 12000,
+    "lod2": 4000,
+    "drawCalls": 8
+  },
+  "tiers": [
+    {
+      "id": "bld.house-b.w2",
+      "lod": 0,
+      "triangles": 7098,
+      "draws": 8,
+      "materials": 2,
+      "bytes": 94064,
+      "sourceBytes": 533376,
+      "dimensions": [
+        7.431843209209181,
+        6.80405319451187,
+        11.035000324249268
+      ],
+      "anchorMatrixMaxDelta": 5.865097048030066e-07,
+      "frontDelta": 5.865097048030066e-07,
+      "anchors": [
+        "light:back_window",
+        "light:front_double",
+        "light:front_right",
+        "light:porch_window",
+        "light:right_window",
+        "body",
+        "col:garage",
+        "col:house",
+        "door_entry",
+        "door_garage",
+        "interior",
+        "light:garage",
+        "lamp_garage",
+        "light:porch",
+        "lamp_porch",
+        "dormer_roof",
+        "light:dormer_window",
+        "roof",
+        "root"
+      ],
+      "footprintIoU": 0.989864,
+      "lights": 8
+    },
+    {
+      "id": "bld.house-b.w2",
+      "lod": 1,
+      "triangles": 5588,
+      "draws": 8,
+      "materials": 2,
+      "bytes": 76232,
+      "sourceBytes": 411284,
+      "dimensions": [
+        7.431843209209181,
+        6.80405319451187,
+        11.035000324249268
+      ],
+      "anchorMatrixMaxDelta": 5.865097048030066e-07,
+      "frontDelta": 5.865097048030066e-07,
+      "anchors": [
+        "light:back_window",
+        "light:front_double",
+        "light:front_right",
+        "light:porch_window",
+        "light:right_window",
+        "body",
+        "col:garage",
+        "col:house",
+        "door_entry",
+        "door_garage",
+        "interior",
+        "light:garage",
+        "lamp_garage",
+        "light:porch",
+        "lamp_porch",
+        "dormer_roof",
+        "light:dormer_window",
+        "roof",
+        "root"
+      ],
+      "footprintIoU": 0.989864,
+      "lights": 8
+    },
+    {
+      "id": "bld.house-b.w2",
+      "lod": 2,
+      "triangles": 3900,
+      "draws": 8,
+      "materials": 2,
+      "bytes": 56388,
+      "sourceBytes": 289408,
+      "dimensions": [
+        7.38513708410037,
+        6.803935627084985,
+        11.035000324249268
+      ],
+      "anchorMatrixMaxDelta": 5.865097048030066e-07,
+      "frontDelta": 5.865097048030066e-07,
+      "anchors": [
+        "light:back_window",
+        "light:front_double",
+        "light:front_right",
+        "light:porch_window",
+        "light:right_window",
+        "body",
+        "col:garage",
+        "col:house",
+        "door_entry",
+        "door_garage",
+        "interior",
+        "light:garage",
+        "lamp_garage",
+        "light:porch",
+        "lamp_porch",
+        "dormer_roof",
+        "light:dormer_window",
+        "roof",
+        "root"
+      ],
+      "footprintIoU": 0.9711951951951951,
+      "lights": 8
+    }
+  ],
+  "qa": "test-results/l3-oak-houses-abc/bld.house-b.w2/",
+  "verification": {
+    "assetChecks": 739,
+    "assetFailures": 0,
+    "typecheck": "pass",
+    "lint": "pass",
+    "unitFiles": 97,
+    "unitTests": 340,
+    "unitFailures": 0,
+    "qaWidthMax": 1600,
+    "gamePixels": 128
+  }
+}

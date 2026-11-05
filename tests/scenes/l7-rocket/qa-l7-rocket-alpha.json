@@ -1,0 +1,63 @@
+{
+  "name": "qa-l7-rocket-alpha",
+  "note": "Actual rocket into a dense crowd; identical game camera before/after. Review launcher grip/clipping, feet, facing, no invisible active targets or jitter, readable launch/impact and a wide permanent opening.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "night",
+  "dof": false,
+  "infectedCap": 200,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.rocket-launcher",
+        "weapon.kick"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "front",
+      "kind": "infected",
+      "at": [
+        8,
+        0
+      ],
+      "state": "idle",
+      "archetype": "infected.alpha"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "attack": "front",
+        "seconds": 2
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    0,
+    40,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

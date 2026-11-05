@@ -1,0 +1,13 @@
+{
+  "extends": "../l7-departure/departure.json",
+  "name": "collision-l7-departure",
+  "note": "Production L7 group boarding and departure. Explicit passenger entry animations have no free-actor footprint; waiting survivors retain theirs. Inspect the queue, smooth entry and the departing hull on both tiers and game zooms.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 900,
+    "footSinkMaxCm": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  }
+}

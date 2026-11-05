@@ -1,0 +1,167 @@
+import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
+import { axeStandX, l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
+import { l2Dressing } from '../levels/L2/layout';
+import type { SimWorld } from '../sim/world/SimWorld';
+import type { Materials } from './Materials';
+import { L2RescueProps } from './L2RescueProps';
+import { markerSurfaceY } from './ObjectiveMarker';
+import { objectiveRingRadius } from '../sim/missions/markerAnchor';
+
+type Box = { x: number; y: number; z: number; sx: number; sy: number; sz: number; gate?: number };
+/**
+ * E20 code-art set dressing driven by the L2 sim state (placeholders until the art lane's assets land): the station's red
+ * rotating alarm beacons, police light bars on the lit emergency vehicles, the fire axe on its wall rack, and the striped
+ * checkpoint gates that slide shut behind the courier. Instanced by colour (a handful of draws); unlit colours read at midday.
+ */
+export class L2Props extends Group {
+  private readonly box = new BoxGeometry(1, 1, 1);
+  private readonly red = new MeshBasicNodeMaterial({ color: '#ff2a1a' });
+  private readonly blue = new MeshBasicNodeMaterial({ color: '#2f6bff' });
+  private readonly glass = new MeshBasicNodeMaterial({ color: '#cfe8f2' });
+  private readonly m4 = new Matrix4();
+  private readonly at = new Vector3();
+  private readonly scaleV = new Vector3();
+  private readonly turn = new Quaternion();
+  /** Alarm beacons on the station front (station-local x 1.7, see l2Beacons): housing, red dome with a bright lens, rotating flare fan. */
+  private readonly beacons: { root: Group; dome: Mesh; fan: Group }[] = [];
+  private readonly beaconGeo = { housing: new CylinderGeometry(.2, .24, .14, 14), dome: new SphereGeometry(.2, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), fan: new CircleGeometry(3.4, 14, 0, .5).rotateX(-Math.PI / 2), lens: new SphereGeometry(.09, 8, 6) };
+  private readonly beaconMat = {
+    housing: new MeshBasicNodeMaterial({ color: '#2a2a2e' }), lens: new MeshBasicNodeMaterial({ color: '#ffd2c4' }), dome: new MeshBasicNodeMaterial({ color: '#ff3a24' }),
+    glow: new MeshBasicNodeMaterial({ color: '#ff2a1a', transparent: true, opacity: .16, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }),
+  };
+  private readonly bars: { mesh: InstancedMesh; boxes: Box[] }[] = [];
+  private readonly stripes: { mesh: InstancedMesh; boxes: Box[] }[] = [];
+  /** Per gate: open and closed offsets of its panel. */
+  private readonly gates: { open: [number, number]; closed: [number, number] }[] = [];
+  private readonly axe = new Group();
+  private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
+  private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .08, depthWrite: false });
+  /** The optional rack keeps its item frame and ground ring while boarding owns the main objective marker. */
+  private readonly glint = new Group();
+  private readonly axeRing = new Mesh(new TorusGeometry(objectiveRingRadius - .05, .05, 6, 24), new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false }));
+  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b', transparent: true, opacity: .55, depthTest: false, depthWrite: false, toneMapped: false, fog: false });
+  private readonly board = new MeshBasicNodeMaterial({ color: '#aebbd0' });
+  private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
+  private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
+  private readonly rescue: L2RescueProps;
+  constructor(private readonly world: SimWorld, materials: Materials) {
+    super(); this.name = 'l2-props';
+    this.rescue = new L2RescueProps(world); this.add(this.rescue);
+    const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, count: number) => {
+      const mesh = new InstancedMesh(this.box, material, Math.max(1, count)); mesh.count = count; mesh.frustumCulled = false; this.add(mesh); return mesh;
+    };
+    // In the station frame (local +x out of the bays), so they follow the restored Fire Station 3 frame.
+    for (const [bx, bz] of l2Beacons) {
+      const root = new Group(); root.position.set(bx, 3.3, bz); root.rotation.y = l2Station.yaw; root.visible = false;
+      const housing = new Mesh(this.beaconGeo.housing, this.beaconMat.housing); housing.rotation.z = Math.PI / 2; housing.position.x = .08;
+      const bracket = new Mesh(this.box, this.beaconMat.housing); bracket.scale.set(.22, .1, .1); bracket.position.set(-.1, 0, 0);
+      const dome = new Mesh(this.beaconGeo.dome, this.beaconMat.dome); dome.rotation.z = -Math.PI / 2; dome.position.x = .15;
+      const fan = new Group(); fan.position.x = .15; for (const a of [0, Math.PI]) { const f = new Mesh(this.beaconGeo.fan, this.beaconMat.glow); f.rotation.y = a; fan.add(f); }
+      const lens = new Mesh(this.beaconGeo.lens, this.beaconMat.lens); lens.position.x = .2;
+      root.add(housing, bracket, dome, lens, fan); this.add(root); this.beacons.push({ root, dome, fan });
+    }
+    // Light bars on every lit police car / ambulance of the dressing and the checkpoint: red and blue halves.
+    const red: Box[] = [], blue: Box[] = [];
+    for (const d of l2Dressing) if (d.lit) {
+      const ax = Math.cos(d.yaw ?? 0), az = -Math.sin(d.yaw ?? 0), y = d.assetId === 'veh.police-suv' || d.assetId === 'veh.ambulance' ? 2.2 : 1.75;
+      for (const [side, list] of [[-1, red], [1, blue]] as const) list.push({ x: d.x - az * side * .35 + ax * .2, y, z: d.z + ax * side * .35 + az * .2, sx: .3, sy: .14, sz: .3 });
+    }
+    this.bars.push({ mesh: instanced(this.red, red.length), boxes: red }, { mesh: instanced(this.blue, blue.length), boxes: blue });
+    // The fire axe on its rack, mounted on the station front facing the street: a dark board with a pale frame, a wooden
+    // haft and a big red head so it reads at game-camera size. Unlit colours (the bay is dark). Head and haft hide once taken.
+    // Built in the station frame (local +x out of the bays) at the stand-to-interact anchor, so it follows the station.
+    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = -(axeStandX - 1.55);
+    for (const g of [this.axe, this.glint]) { g.position.set(rx, 0, rz); g.rotation.y = l2Station.yaw; }
+    this.axeRing.rotation.x = Math.PI / 2; this.axeRing.renderOrder = 94;
+    this.axeRing.position.set(rx, markerSurfaceY(world, world.missions!.def.anchors['l2-axe-rack']) + .08, rz);
+    this.add(this.axeRing);
+    const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
+    part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, 0]);
+    part(this.board, [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
+    part(this.haft, [.14, 1.3, .14], [wx + .16, 1.5, -.55]);
+    part(this.red, [.14, .55, .75], [wx + .17, 2.05, -.35]);
+    // Only the border draws through foreground props, keeping the axe itself legible inside it.
+    for (const [y, z, height, width] of [[.675, 0, .08, 1.95], [2.425, 0, .08, 1.95], [1.55, -.975, 1.75, .08], [1.55, .975, 1.75, .08]]) {
+      const glow = new Mesh(this.box, this.gold); glow.renderOrder = 94;
+      glow.scale.set(.05, height, width); glow.position.set(wx - .02, y, z); this.glint.add(glow);
+    }
+    this.add(this.glint);
+    this.add(this.axe);
+    // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
+    const wallPiece = (mat: MeshBasicNodeMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number) => {
+      const m = new Mesh(this.box, mat); m.scale.set(sx, sy, sz); m.position.set(x, y, z); this.add(m);
+    };
+    const storefront = (along: 'z' | 'x', fixed: number, from: number, to: number, doorAt: number) => {
+      const d = .2, w = 2.6, pos = (a: number, y: number, len: number, h: number, mat: MeshBasicNodeMaterial) =>
+        along === 'z' ? wallPiece(mat, fixed, y, a, d, h, len) : wallPiece(mat, a, y, fixed, len, h, d);
+      for (const [a0, a1] of [[from, doorAt - w / 2], [doorAt + w / 2, to]] as const) {
+        const len = a1 - a0, mid = (a0 + a1) / 2, n = Math.max(1, Math.round(len / 2.2));
+        pos(mid, .5, len, 1, this.brickMat); pos(mid, 2.05, len, 2.1, this.shopGlass);
+        for (let k = 0; k <= n; k++) pos(a0 + (len * k) / n, 1.6, .1, 3.2, this.frame);
+      }
+      pos((from + to) / 2, 3.3, to - from, .3, this.brickMat);
+      // The doorway itself is kit.market-doors (frame and two glazed leaves, a layout placement posed by DistrictView.marketDoors).
+    };
+    storefront('z', -51.35, -46.7, -37.7, -42.2); storefront('x', -37.65, -59.9, -51.35, -55.6);
+    // Checkpoint gates: striped panels (stripes relative to the panel centre), moved between open and closed.
+    const [z0, z1] = l2.checkpoint.gateZ, x = l2.checkpoint.gateX, white: Box[] = [], redStripes: Box[] = [];
+    const panel = (w: number, d: number, open: [number, number], closed: [number, number]) => {
+      const gate = this.gates.length; this.gates.push({ open, closed });
+      const count = Math.max(2, Math.round(Math.max(w, d) / .8));
+      for (let k = 0; k < count; k++) {
+        const t = (k + .5) / count - .5;
+        (k % 2 ? redStripes : white).push({ x: w > d ? t * w : 0, y: .85, z: d > w ? t * d : 0, sx: w > d ? w / count : w, sy: .9, sz: d > w ? d / count : d, gate });
+      }
+    };
+    panel(.16, z1 - z0 - 2.4, [x - .2, z1 + 4.6], [x, (z0 + z1) / 2]);
+    // Match the closed contact span through the eastern fence post; retain the
+    // open panel's right edge so the riverside approach remains clear.
+    panel(3.4, .16, [79.75, 37.4], [81.9, 35.05]);
+    this.stripes.push({ mesh: instanced(materials.get('picketWhite'), white.length), boxes: white }, { mesh: instanced(this.red, redStripes.length), boxes: redStripes });
+    // Broken windows: a dark pane on the facade and pale glass shards on the pavement in front of it.
+    const panes: Box[] = [], shards: Box[] = [];
+    for (const d of l2Dressing) if (d.kind === 'broken-window') {
+      const out = d.yaw ? -1 : 1;
+      panes.push({ x: d.x, y: 1.3, z: d.z - out * .8, sx: 1.3, sy: .9, sz: .06 });
+      for (let k = 0; k < 6; k++) shards.push({ x: d.x + Math.sin(k * 2.3) * .7, y: .03, z: d.z + out * (.3 + (k % 3) * .25), sx: .18 + (k % 2) * .1, sy: .02, sz: .12 });
+    }
+    const paneMesh = instanced(materials.get('uiDark'), panes.length);
+    paneMesh.name = 'l2-broken-window-panes';
+    this.place(paneMesh, panes, () => [0, 0]);
+    this.place(instanced(this.glass, shards.length), shards, () => [0, 0]);
+    for (const { mesh, boxes } of this.bars) this.place(mesh, boxes, () => [0, 0]);
+    this.update();
+  }
+  private place(mesh: InstancedMesh, boxes: Box[], offset: (b: Box) => [number, number]): void {
+    boxes.forEach((b, i) => {
+      const [ox, oz] = offset(b);
+      this.m4.compose(this.at.set(b.x + ox, b.y, b.z + oz), this.turn.identity(), this.scaleV.set(b.sx, b.sy, b.sz));
+      mesh.setMatrixAt(i, this.m4);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+  }
+  update(): void {
+    const s = this.world.missions?.state.l2, tick = this.world.tick;
+    if (!s) return;
+    this.rescue.update();
+    const alarm = s.alarmAt > 0 && tick >= s.alarmAt && s.phase !== 'calm' && s.phase !== 'done';
+    // Beacons only while the alarm sounds and until the truck leaves; the flare fan turns.
+    const lit = alarm && s.phase !== 'ride' && s.phase !== 'arrived';
+    this.beacons.forEach((b, i) => {
+      b.root.visible = lit; if (!lit) return;
+      b.fan.rotation.y = tick * .16 + i * 1.7;
+      b.dome.scale.setScalar(Math.floor(tick / 12) % 2 ? 1.12 : 1);
+    });
+    // Light bars alternate red and blue every quarter second.
+    const phase = Math.floor(tick / 15) % 2;
+    this.bars[0].mesh.visible = phase === 0; this.bars[1].mesh.visible = phase === 1;
+    this.axe.children[2].visible = this.axe.children[3].visible = !s.axe;
+    const hint = this.world.missions?.state.steps.axe?.status === 'active' && !s.axe;
+    this.glint.visible = hint;
+    this.axeRing.visible = hint && this.world.missions?.state.phase === 'playing' && this.world.missions.state.marker !== 'l2-axe-rack';
+    if (hint) this.gold.opacity = .55 + .15 * Math.sin(tick * .1);
+    const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
+    for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
+  }
+  dispose(): void { this.rescue.dispose(); this.axeRing.geometry.dispose(); this.axeRing.material.dispose(); for (const g of Object.values(this.beaconGeo)) g.dispose(); for (const m of Object.values(this.beaconMat)) m.dispose(); this.gold.dispose(); this.board.dispose(); this.frame.dispose(); this.brickMat.dispose(); this.shopGlass.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
+}

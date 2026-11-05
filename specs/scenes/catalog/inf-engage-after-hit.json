@@ -1,0 +1,81 @@
+{
+  "name": "inf-engage-after-hit",
+  "note": "PO 10-09 \"it even found me after some moments, attacked me, then walked away\". A runner reaches the courier and attacks; she punches it for 1 s (flinches, small knockback), then steps back 3 m twice. Look for: after every exchange it turns back onto her and attacks again; it never walks off or looks around while she stands in reach.",
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "loadout": [
+        "weapon.fists",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "z",
+      "kind": "infected",
+      "at": [
+        5,
+        0.5
+      ],
+      "yaw": 180
+    }
+  ],
+  "script": [
+    {
+      "frame": 120,
+      "actor": "courier",
+      "do": {
+        "attack": "z",
+        "seconds": 1
+      }
+    },
+    {
+      "frame": 300,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -3,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 480,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -3,
+            3
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1
+    ],
+    "zoom": 0.8
+  },
+  "frames": 720,
+  "sheet": 40,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lostTargetNearFramesMax": 20,
+    "stuckActorFramesMax": 30,
+    "courierAttacksMin": 3
+  }
+}

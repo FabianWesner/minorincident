@@ -1,0 +1,22 @@
+{
+  "row": "L10-07",
+  "status": "FAIL",
+  "reviewer": "Codex fix53-c",
+  "date": "2026-11-04",
+  "commit": "adae51da70ed15e89246910db89df37df4c58e06",
+  "clauses": [
+    {
+      "clause": "Mega: cruise 0.7\u00d7 run \u00b1 2 %, always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20\u201335 s, louder when closer.",
+      "verdict": "FAIL",
+      "note": "Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix53-c/L10-hold-before.json",
+      "sha256": "409bcb9d49b5d04139e4daa2de0edfecd3a9c4fe7c993a115d540819487bac03",
+      "what": "Actual scheduledRelocations ledger from wrapped production solids.relocate, one persistent Mega ID at both tiers, 240s trajectories, and final hashes matching independent controls."
+    }
+  ],
+  "notes": "Measured native FAIL is also in L10.json. No game or checker change. Full E32 arrival/pursuit relationship needs a dedicated game investigation."
+}

@@ -1,0 +1,9 @@
+# veh.pickup-red.burned — lane review
+
+Independent orchestrator acceptance remains pending.
+
+Reviewed the mandatory burned reference, all-side turntable comparison, the matched authored LOD contact sheet and reference/LOD0/LOD1/LOD2/intact-peer sheet at 135 and 190 px (FOV25, azimuth45, polar0.30π). Evidence: `test-results/l5-burned-service-vehicles/veh.pickup-red.burned/`.
+
+Red cab/bed proportions match the peer. Missing cab roof and glazing, folded bonnet and almost bare front rims read at both sizes. LOD2 keeps the damage silhouette but has coarser bonnet facets. Darker and less mottled than the rust-orange reference.
+
+The mesh is derived from native intact tiers. No new clean box substitute, baked flame, intact tyre set, active lamp records or emissive survivors. Geometry and palette damage persist in the distance recipes. LOD1 retains continuous panels; LOD2 omits small trim and seat/debris detail. Hard triangle/draw caps and preserved door/seat/axle/exit transforms are audited in `delivery.json`.

@@ -1,0 +1,15 @@
+{
+ "name": "veh-apc-floor-drive",
+ "note": "E31 L9-S5: the mission APC at zero durability (floor policy) driving a straight 90 m line on autopilot, game camera following. Look for: it keeps driving (no stop, smoke or fire swap), smoke puffs follow the hull, wheels turn and stay grounded, no jitter or LOD pop, no wrecked shell. Gate: the vehicle reaches the end of the line.",
+ "seed": 31,
+ "ground": "asphalt",
+ "size": 140,
+ "time": "L4",
+ "vehicles": [
+  { "id": "apc", "asset": "vehicle.military-apc", "at": [-45, 0], "yaw": 0, "floor": true, "health": 0, "path": [[45, 0]] }
+ ],
+ "camera": { "mode": "game", "target": "apc", "zoom": 1 },
+ "frames": 900,
+ "sheet": 60,
+ "expect": { "consoleErrors": 0, "vehicleBodyOverlapsMax": 0 }
+}

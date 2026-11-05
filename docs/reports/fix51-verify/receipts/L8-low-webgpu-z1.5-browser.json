@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "low",
+  "sourceHash": "59a2d216f038424dafe59e3db72946a228c8cbbb81a8dd37f39d9c73c00d6364",
+  "fixtureHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "browserHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgpu",
+      "status": "PASS",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-webgpu-z1.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L8",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 110,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 59.293,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 7
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "",
+          "tick": 12,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8399999737739563,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "depart",
+          "text": "The zoo is breached · Wait for everyone to board the armored vehicle · 4/13 aboard · 9 still to board",
+          "tick": 5459,
+          "marker": {
+            "anchor": "exit",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.9954344034194946,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L8",
+      "tick": 1243,
+      "x": 0,
+      "z": 70,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/accept-L8-1243-stuck-navigating.jpg"
+      ],
+      "step": "escape",
+      "objective": ""
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

@@ -1,0 +1,64 @@
+{
+  "name": "interior-cull-po-l5",
+  "note": "PO 27 interior culling: closed shops skip stock; cut/occupied shops reveal stock in the same frame. The exact PO position is between nav cells: assemble on the east sidewalk, place the courier at the reported point at frame 0.",
+  "seed": 1,
+  "ground": "district",
+  "tier": 5,
+  "time": "L5",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        33.75,
+        -11.159999999999997
+      ],
+      [
+        133.75,
+        88.84
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        86,
+        42
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      83.75,
+      38.84
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "script": [
+    {
+      "frame": 0,
+      "spawnActor": {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          83.75,
+          38.84
+        ],
+        "state": "idle"
+      }
+    }
+  ]
+}

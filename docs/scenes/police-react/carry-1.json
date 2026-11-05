@@ -1,0 +1,119 @@
+{
+  "name": "carry-1",
+  "time": "L3",
+  "ground": "asphalt",
+  "size": 50,
+  "seed": 1,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        16,
+        6
+      ]
+    },
+    {
+      "id": "parity",
+      "kind": "pedestrian",
+      "at": [
+        -20,
+        20
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "officer",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "handProp": "pistol",
+        "tint": "#31465d"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      3,
+      0.7,
+      0
+    ],
+    "radius": 13,
+    "azimuth": 140
+  },
+  "frames": 360,
+  "sheet": 15,
+  "shots": [
+    0,
+    60,
+    150,
+    211,
+    212,
+    240,
+    300,
+    360
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "script": [
+    {
+      "frame": 30,
+      "actor": "officer",
+      "do": {
+        "walk": [
+          [
+            2,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 120,
+      "actor": "officer",
+      "do": {
+        "run": [
+          [
+            6,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 210,
+      "actor": "officer",
+      "do": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "frame": 210,
+      "spawnActor": {
+        "id": "zombie",
+        "kind": "infected",
+        "at": [
+          13,
+          0
+        ],
+        "yaw": 180,
+        "state": {
+          "chase": "officer"
+        }
+      }
+    }
+  ]
+}

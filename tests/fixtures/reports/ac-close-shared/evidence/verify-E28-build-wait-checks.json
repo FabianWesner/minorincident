@@ -1,0 +1,37 @@
+{
+  "target": "E28",
+  "epics": [
+    "E28"
+  ],
+  "pattern": "@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
+        "--",
+        "sh",
+        "-c",
+        "npm run typecheck && npm run lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
+        "--pull",
+        "dist",
+        "--",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 143
+    }
+  ]
+}

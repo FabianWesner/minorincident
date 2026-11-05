@@ -1,0 +1,99 @@
+{
+  "name": "qa-zoo-flamingo-dive",
+  "note": "Z-S3 fixed game camera, production scheduler; boundary/wall/cooldown/checkpoint probes in zoo-s3 sim tests.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member0",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        1
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member1",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        -1
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member2",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        1,
+        2
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2,
+      0
+    ],
+    "zoom": 1.2
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "flamingo.dive",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    0,
+    35,
+    60,
+    84,
+    180
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

@@ -1,0 +1,71 @@
+{
+ "name": "qa-l5-hide-dale",
+ "note": "E23 beat 3: the cab of the second convoy truck on the plaza (a wreck; Dale bangs on the metal). The courier stands at the ring; the survivor steps out in the aftermath skin; the cue prop (flashlight, radio, chalk sign) is visible.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -39,
+    -29.5
+   ],
+   [
+    29,
+    38.5
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -4.6,
+    2.6
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "dale",
+   "kind": "pedestrian",
+   "at": [
+    -3.6,
+    2.4
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.dale.aftermath"
+   },
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -5,
+   4.5
+  ],
+  "zoom": 1.1
+ },
+ "frames": 90,
+ "shots": [
+  1,
+  60,
+  89
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

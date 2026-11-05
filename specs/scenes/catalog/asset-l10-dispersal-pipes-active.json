@@ -1,0 +1,56 @@
+{
+ "name": "asset-l10-dispersal-pipes-active",
+ "note": "Dispersal running: the tee valve hand wheel turns about the stem. Look for: wheel centred on the stem, spokes visible, no sinking into the stem.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p1",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -5,
+    -4
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -4,
+   1
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "dispersal": {
+  "active": true
+ }
+}

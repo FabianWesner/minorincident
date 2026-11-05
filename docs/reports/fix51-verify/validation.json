@@ -1,0 +1,33 @@
+{
+  "sourceHash": "710a965e75362a3a634730b032b1d68d1f840cb9dd52f4d6fd039fa9dfeb0a23",
+  "observerHash": "209caa18a78b287f5fdd08ab3775f874eb0407b459d7b418753bcb0e84c57cf3",
+  "revision": "83a4f4791d64ace2735821b412a94de53c5e1c20",
+  "fixtureHash": "b3189bca17f0768b817465ee2d3d07de98e4a102174d964eb966b3628ae40527",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "qaToolHash": "6d90783792973d588e545062c5d46019a4bdf72b97c372f340b4abd399d4e879",
+  "generatedAt": "2026-11-03T21:49:10.255Z",
+  "runs": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": null,
+      "log": "docs/reports/fix51-r10g/gates/typecheck-final.log"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": null,
+      "log": "docs/reports/fix51-r10g/gates/lint-final.log"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": null,
+      "log": "docs/reports/fix51-r10g/gates/test-final.log"
+    }
+  ],
+  "pass": true
+}

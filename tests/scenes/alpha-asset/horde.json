@@ -1,0 +1,60 @@
+{
+  "name": "qa-alpha-asset-horde",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 100,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "look": {
+        "model": "inf.alpha"
+      },
+      "count": 6,
+      "spread": 4,
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle",
+      "archetype": "infected.firefighter"
+    },
+    {
+      "id": "worker",
+      "kind": "infected",
+      "look": {
+        "model": "infected.runner"
+      },
+      "count": 54,
+      "spread": 14,
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle",
+      "archetype": "infected.firefighter"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 4
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "note": "Scene Lab uses L1 concurrency caps (60/30); full E18 200/100 mixed-asset load is checked separately in horde-arena by alpha-asset.spec.ts. Worker override uses the existing infected.runner crowd key, whose asset is inf.common-worker."
+}

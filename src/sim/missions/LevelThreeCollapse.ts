@@ -1,0 +1,883 @@
+import { ArmyCheckpointBoom } from './ArmyCheckpointBoom';
+import { Rng } from '../../core/Rng';
+import { l4 } from '../../data/l4';
+import { l3, l3ArmyOffset, l3Street, l3Segment, l3WeaponPickup } from '../../data/l3';
+import { l3Dressing, l3AlarmCoverId, l3AlarmCoverBox } from '../../levels/L3/layout';
+import { Outbreak } from '../outbreak/Outbreak';
+import { allyState } from '../outbreak/Allies';
+import type { Mission } from './Mission';
+import { emitBlocker, setWall, snapToClear } from './missionHelpers';
+import type { L3State } from './types';
+import type { EntitySnapshot } from '../world/types';
+import type { SimWorld } from '../world/SimWorld';
+import type { CivilianActivity, Point } from '../npc/types';
+import type { CoverWall } from '../combat/HitQuery';
+
+const TICKS = 60, ticks = (s: number) => Math.round(s * TICKS);
+const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+type Dir = 'river' | 'blvd' | 'oak' | 'commerce' | 'station';
+const DIRS: readonly Dir[] = ['commerce', 'river', 'blvd', 'oak'];
+/** Where each attack direction runs at: outside the river-path gate, the north-east and the south-east gate, the east gate, and
+ * (police zombies out of the station door) the line's back. */
+const RUSH: Record<Dir, Point> = { river: { x: -150, z: -4 }, blvd: { x: -136, z: -1 }, oak: { x: -136, z: 1 }, commerce: { x: -129, z: 0 }, station: { x: -133, z: 0 } };
+/** PO 2026-10-12: police guns at 50 % in L3 (never the courier's). */
+const weak = <G extends { damage: number }>(gun: G): G => ({ ...gun, damage: gun.damage * l3.allyDamageScale });
+/** The yard gates the remaining officers pull shut behind the squad (east = Commerce, the side gates and the river gate). */
+export const L3_GATES: Record<string, CoverWall> = {
+  'yard-east': { x: -126, y: .9, z: 0, halfX: .25, halfY: .9, halfZ: 5.2 },
+  'yard-ne': { x: -132, y: .9, z: -22, halfX: 2.2, halfY: .9, halfZ: .25 },
+  'yard-se': { x: -132, y: .9, z: 22, halfX: 2.2, halfY: .9, halfZ: .25 },
+  'yard-river': { x: -157, y: .9, z: -22, halfX: 2, halfY: .9, halfZ: .25 },
+};
+const fresh = (): L3State => ({
+  phase: 'yard', handgunAt: 0, attackAt: 0, fallbackAt: 0, fallbackCause: '', crossedAt: 0, doneAt: 0, gatesClosedAt: 0,
+  officerIds: [], squadIds: [], soldierIds: [], medkitIds: [], squad: [], lost: [], turnedOfficers: [],
+  waves: [], waveIds: [], wavesSpawned: 0, populated: [false, false, false], pending: [], segmentIds: [[], [], []],
+  furthest: -Infinity, furthestAt: 0, pressureAt: 0, pressureIds: [], segment: -1, segmentSquad: [], lastShot: {}, retired: 0, spills: {}, spillIds: [],
+});
+type Pending = L3State['pending'][number];
+
+/**
+ * L3 "The Police Collapse" controller (specs/epic-21 sections 4 and 5). Scripted only up to the fallback: the calm yard with
+ * the armory table, the handgun pickup, the station attack (waves from the river path and both avenues) and the first-of
+ * fallback rule (60 s / 3 officers turned / 8 inside the fence). From there everything is systemic: the squad follows the
+ * player (allied fighters v2), the corridor population emerges out of view ahead of the player, gunfire is a loud event
+ * for non-chasing infected within 20 m, bites turn officers like anyone else, and forward pressure lets infected emerge
+ * behind a lingering player. The rendezvous ring inside the army compound ends the level. All state lives in `mission.state.l3` (checkpoints).
+ */
+/**
+ * fix54 (L3-03, orchestrator 2026-11-04): an infected in melee with the courier, or chasing her, is her fight, not a breach of the
+ * police line; it does not count toward the fallback's "8 inside". Melee reach is the courier's 2.5 m strike band.
+ */
+export function l3CourierFight(world: SimWorld, e: EntitySnapshot): boolean {
+  const courier = world.entities.get(1); if (!courier || courier.health.current <= 0) return false;
+  if (dist(e.transform, courier.transform) <= 2.5) return true;
+  const b = e.infected; if (!b) return false;
+  return b.l1 ? (b.l1.mode === 'chase' || b.l1.mode === 'bite') && b.l1.targetId === 1 : b.targetId === 1 && (b.state === 'chase' || b.state === 'attack');
+}
+export class LevelThreeCollapse {
+  private readonly walls = new Map<string, number>();
+  private reservedWaves = 0;
+  private readonly alarmCoverWalls: CoverWall[] = [];
+  private readonly alarmCoverSources: Point[] = [];
+  constructor(private readonly mission: Mission) {}
+  /** Keep the announced cohorts' slots while systemic bites use the remaining headroom. */
+  private reserveWaves(): void {
+    const count = this.s.waves.filter(q => !q.id).length;
+    this.world.infected!.director.reserved += count - this.reservedWaves;
+    this.reservedWaves = count;
+  }
+  dispose(): void {
+    if (this.world.infected) this.world.infected.director.reserved -= this.reservedWaves;
+    this.reservedWaves = 0;
+  }
+  /** Static collider + navigation blocker; recreated from state on checkpoint restore. */
+  private wall(id: string, blocked: boolean): void { setWall(this.world, this.walls, id, 900_400 + Object.keys(L3_GATES).indexOf(id), L3_GATES[id], blocked); }
+  /**
+   * Section 5.5: the station cannot be held, but the officers who stay buy the squad its head start. Once the courier and
+   * the recruited squad are through the east gate, the yard gates shut behind them.
+   */
+  private sealYard(): void {
+    const { world } = this.mission, s = this.s, tick = world.tick;
+    if (s.gatesClosedAt || !s.fallbackAt) return;
+    const out = (p: Point) => p.x > l3.map.yard.x1 + 1.5, player = world.entities.get(1)!;
+    const squadOut = s.squad.every(m => { const e = world.entities.get(m.id); return !e || out(e.transform); });
+    if (!(out(player.transform) && squadOut)) return;
+    // Never shut a gate onto somebody standing in it.
+    for (const w of Object.values(L3_GATES)) for (const e of world.entities.iterate()) if (e.health.current > 0 && (e.infected || e.civilian || e.id === 1) && Math.abs(e.transform.x - w.x) < w.halfX + .5 && Math.abs(e.transform.z - w.z) < w.halfZ + .5) return;
+    s.gatesClosedAt = tick;
+    for (const id of Object.keys(L3_GATES)) { this.wall(id, true); world.events.emit({ type: 'gate.changed', tick, id: `l3-${id}`, open: false }); }
+  }
+  private get s(): L3State { return this.mission.state.l3!; }
+  private get world() { return this.mission.world; }
+  private anchor(name: string) { return this.mission.def.anchors[name]; }
+  private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
+  private snap(p: Point, r = .4): Point { return snapToClear(this.world, p, r); }
+  private doors(): { name: string; x: number; z: number }[] {
+    return Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-')).map(name => ({ name, ...this.anchor(name) })).filter(p => p.x < l3.map.zoneX);
+  }
+
+  prepare(): void {
+    const { world, state } = this.mission;
+    state.l3 = fresh();
+    if (!world.infected || !world.npcs) return;
+    const tier = world.infected.director.tier;
+    this.alarmCoverWalls.length = this.alarmCoverSources.length = 0;
+    for (const district of world.districts?.districts ?? []) {
+      const cover = district.layout.placements.find(p => p.id === l3AlarmCoverId);
+      if (!cover) continue;
+      const x = cover.position[0] + district.origin[0], z = cover.position[2] + district.origin[1];
+      // Conservative opaque cargo volume, inside the existing truck's canvas
+      // body. The cab/windows, mirrors and wheels never qualify as spawn cover.
+      this.alarmCoverWalls.push({ ...l3AlarmCoverBox, x: x + l3AlarmCoverBox.x, z: z + l3AlarmCoverBox.z });
+      for (const [dx, dz] of [[-3.5, -2], [-4.25, -.5], [-2.8, -2], [-1.8, -2], [-2.8, -3], [-1.8, -3]]) this.alarmCoverSources.push({ x: x + dx, z: z + dz });
+    }
+    // Fleeing stragglers run for the map edges (river path, the far ends of the avenues); houses stay locked.
+    const edges = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('edge-in-')).map(id => ({ id, ...this.anchor(id) }));
+    const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
+    world.npcs.civilians.outbreak = outbreak;
+    world.infected.director.levelCap = l3.density.caps.high; world.infected.director.strict = true;
+    world.npcs.setAmbient(0);
+    // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
+    if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);
+    world.combat?.withholdPickups(l3WeaponPickup);
+    this.spawnOfficers();
+    this.spawnSoldiers();
+    this.spawnWaitingSurvivors();
+    this.spawnCorpses();
+    this.spawnFires();
+    this.spawnMedkits();
+    this.mission.radio('L3.briefing');
+    // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
+    world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
+    world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
+    // E21-AC05 "ranged before contact" (brief l3-polish): a handgun hit checks the target like a police pistol hit (0.25 s stagger),
+    // so the courier can drop a runner before it closes in now that the weaker police (PO 10-12) let more of them through.
+    world.events.on('combat.hit', e => {
+      if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.actionId !== 'weapon.handgun') return;
+      const c = world.entities.get(e.targetId)?.combat; if (!c || !world.entities.get(e.targetId)?.infected) return;
+      c.staggerUntil = Math.max(c.staggerUntil, world.tick + ticks(l3.gunfire.handgunStaggerS)); c.attacking = false;
+    });
+    world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; this.spentSpills = structuredClone(this.mission.state.l3?.spills ?? {}); });
+    world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
+    world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });
+    world.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') this.turned(e.entityId); });
+  }
+
+  // ---------------------------------------------------------------------------------------------------------- setup
+  private schedule(at: Point, facing: Point, kind: CivilianActivity['activity'] = 'look'): CivilianActivity[] {
+    return [{ activity: kind, anchor: 'l3/yard', target: at, facing, ticks: 60 * 60 }];
+  }
+  private officer(at: Point, facing: Point, post: boolean): number {
+    const o = this.outbreak(), p = this.snap(at, .35);
+    const id = o.spawnPedestrian(p, { role: 'officer', model: 'npc.police-officer', tint: '#2f4858', tier: 'average', schedule: this.schedule(p, facing, post ? 'look' : 'chat') });
+    const e = this.world.entities.get(id)!;
+    e.civilian!.ally = { ...allyState('officer', p, true), gun: weak(l3.officers.gun), runSpeed: l3.officers.moveMs };
+    e.health = { current: l3.officers.hp, max: l3.officers.hp };
+    e.transform.yaw = -Math.atan2(facing.z - p.z, facing.x - p.x);
+    return id;
+  }
+  private spawnOfficers(): void {
+    const s = this.s;
+    // Six at the posts behind sandbags at the gates; the squad (with the sergeant) by the armory, briefing.
+    const posts: [string, Point][] = [['l3-post-1', { x: -128.6, z: -30 }], ['l3-post-2', { x: -118, z: -3 }], ['l3-post-3', { x: -118, z: 3 }], ['l3-post-4', { x: -128.6, z: 30 }], ['l3-post-5', { x: -157.6, z: -30 }], ['l3-post-6', { x: -144, z: 30 }]];
+    for (const [name, facing] of posts) s.officerIds.push(this.officer(this.anchor(name), facing, true));
+    const yard = this.anchor('l3-yard');
+    for (let i = 1; i <= l3.officers.squad.size; i++) {
+      const id = this.officer(this.anchor(i === 1 ? 'l3-sergeant' : `l3-squad-${i}`), i === 1 ? this.anchor('l3-armory') : yard, false);
+      s.officerIds.push(id); s.squadIds.push(id);
+    }
+  }
+  /** Section 5.10: the soldiers cover the last 20 m before the zone line (coverM) with the L4 HMG stats (PO e50f3a53, kept
+   * strong); outside that band the pursuing horde is the police squad's fight, so it can reach the line. */
+  private spawnSoldiers(): void {
+    const o = this.outbreak();
+    for (let i = 1; i <= l3.soldiers.count; i++) {
+      const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
+      const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
+      const e = this.world.entities.get(id)!;
+      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+      e.civilian!.floorY = l3.soldiers.deckY;
+      e.transform.y = l3.soldiers.deckY + .7;
+      e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
+      this.s.soldierIds.push(id);
+    }
+    // The mounted gun: an HMG nest behind the sandbags at the zone line (the L4 HMG post, ground level).
+    const p = this.snap(this.anchor('l3-hmg'), .35);
+    const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
+    const e = this.world.entities.get(id)!;
+    e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+    e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.transform.yaw = Math.PI;
+    this.s.soldierIds.push(id);
+  }
+  /** Evacuees already checked in at the bus: visible, idle and outside the outbreak target roster. */
+  private spawnWaitingSurvivors(): void {
+    for (let i = 0; i < 5; i++) {
+      const p = this.snap({ x: 149 + l3ArmyOffset + (i % 3) * 1.3, z: 3.1 + Math.floor(i / 3) * .9 }, .35);
+      const id = this.outbreak().spawnPedestrian(p, { schedule: this.schedule(p, this.anchor('l3-zone')) });
+      const e = this.world.entities.get(id)!;
+      (this.s.waitingIds ??= []).push(id);
+      e.transform.yaw = -Math.PI / 2;
+    }
+  }
+  /** W2/W3 dead bystanders (and a fallen officer on the Boulevard): pedestrians already finished, never targets. */
+  private spawnCorpses(): void {
+    const o = this.outbreak();
+    for (const d of l3Dressing) if (d.entity && d.kind === 'corpse') {
+      const p = this.snap({ x: d.x, z: d.z }, .35), id = o.spawnPedestrian(p, { model: d.assetId, yaw: d.yaw, ...(d.assetId === 'npc.police-officer' ? { role: 'officer', tint: '#2f4858' } : {}), schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
+      e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
+    }
+  }
+  /** Fires (E27 hazards: flame cards, light pool, smoke column) on the wrecks and deep inside the blocks. They burn all level. */
+  private spawnFires(): void {
+    for (const d of l3Dressing) if (d.entity && (d.kind === 'fire' || d.kind === 'smoke')) this.world.hazards?.spawn('fire', { x: d.x, z: d.z }, { radius: 1.1 * (d.scale ?? 1), duration: 3600 });
+  }
+  private spawnMedkits(): void {
+    for (const [x, z] of l3.medkits.positions) {
+      const snapped = this.snap({ x, z }, .3), p = this.world.trapRescue?.nearestReachable(snapped) ?? snapped, id = this.world.pickups!.spawn('medkit', p);
+      const e = this.world.entities.get(id)!; if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l3.medkits.heal;
+      this.s.medkitIds.push(id);
+    }
+  }
+
+  // ---------------------------------------------------------------------------------------------------------- beats
+  completed(id: string): void {
+    if (!this.mission.state.l3) return;
+    if (id === 'armory') this.takeHandgun();
+    // Cheat/test completion of the defense (E12-AC07 walk): the fallback is what ends it.
+    if (id === 'defend' && !this.s.fallbackAt) { if (!this.s.attackAt) this.startAttack(); this.fallback('time'); }
+  }
+  /** The handgun joins the carried weapons (RIGHT rack) and is selected: no magazine, no reload, the fire rate is the limit. */
+  private takeHandgun(): void {
+    const combat = this.world.combat, s = this.s; if (!combat || s.handgunAt) return;
+    s.handgunAt = Math.max(1, this.world.tick);
+    const left = combat.runner.loadout.state.LEFT.rack.map(r => r.id), right = combat.runner.loadout.state.RIGHT.rack.map(r => r.id).filter(id => id !== l3WeaponPickup);
+    combat.setLoadout(left, [l3WeaponPickup, ...right].slice(0, Math.max(2, combat.rackCapacity)));
+    combat.runner.loadout.state.selectedSide = 'RIGHT';
+    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: l3WeaponPickup, replaced: null });
+    this.world.events.emit({ type: 'l3.handgun', tick: this.world.tick });
+    this.mission.radio('L3.handgun');
+  }
+  private startAttack(): void {
+    const { world } = this.mission, s = this.s, tick = world.tick;
+    s.phase = 'attack'; s.attackAt = tick;
+    world.events.emit({ type: 'l3.attack', tick }); this.mission.radio('L3.attack');
+    if (!this.mission.state.states.attack) this.mission.setState('attack', true);
+    for (const id of s.officerIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; } }
+    const scale = world.infected!.director.tier === 'low' ? l3.attack.lowScale : 1;
+    // Spread streams (PO 10-12): every wave trickles in over streamS from all five directions; a rear station cohort complements the four street approaches.
+    const a = l3.attack;
+    for (const [w, wave] of a.waves.entries()) {
+      const n = Math.ceil(wave.count * scale), police = Math.max(a.stationMinimum[w], Math.round(n * a.stationShare));
+      for (let i = 0; i < n; i++) {
+        // Keep the opening alarm burst, then sustain the first wave across its
+        // authored stream. Later waves retain their existing cubic schedule.
+        const progress = i / n, opening = .25 ** a.streamFront;
+        const stream = w > 0 || progress <= .25 ? progress ** a.streamFront : opening + (1 - opening) * (progress - .25) / .75;
+        s.waves.push({ id: 0, dir: i < police ? 'station' : DIRS[(i - police) % DIRS.length], ...(w === 0 && i >= police && i < Math.ceil(n * .4) ? { source: 'yard-cover' as const } : {}), at: tick + ticks(wave.atS + stream * a.streamS + (i % 3) * .15), wave: w });
+      }
+    }
+    this.reserveWaves();
+    // The S1 wanderers are already out there (out of view, east of the yard).
+    this.populate(0);
+  }
+  /** Emergence points of one attack direction: the river-path end, or building doors on the avenue east of the yard. */
+  private sources(dir: Dir): Point[] {
+    if (dir === 'river') return [{ x: -157, z: -32 }, { x: -159, z: -33 }, { x: -155, z: -33 }];
+    // The station door behind the line (police zombies) and the street beyond the east gate.
+    if (dir === 'station') return [-144.2, -145.6].flatMap(x => [-8.7, -7.5, -6.3].map(z => ({ x, z })));
+    if (dir === 'commerce') return [-118, -116, -114, -112, -110, -108].flatMap(x => [-3, 0, 3].map(z => ({ x, z })));
+    const sign = dir === 'blvd' ? -1 : 1;
+    return [122, 124, 126].flatMap(x => [13, 15, 17].map(z => ({ x: -x, z: sign * z })));
+  }
+  private emergeWaves(): void {
+    const { world } = this.mission, s = this.s, tick = world.tick, ai = world.infected!;
+    if (ai.director.count >= ai.director.cap && s.waves.some(q => !q.id && tick >= q.at)) {
+      // Preserve the first recovery, then let repeated police downings finish
+      // a wave actor when its retained slot blocks an announced arrival.
+      // Its corpse remains in the world, as in L4's existing downed-slot rule.
+      const body = ai.active.find(e => e.health.current <= 0 && e.infected!.recoverAt >= 0 && e.infected!.downs > 1 && s.waveIds.includes(e.id));
+      if (body) body.infected!.recoverAt = -1;
+    }
+    if (ai.director.count >= this.emergenceCap(true) || !ai.pool.length) return;
+    for (const q of s.waves) if (!q.id && tick >= q.at) {
+      const player = world.entities.get(1)!.transform;
+      const cover = q.source === 'yard-cover';
+      const pts = (cover ? this.alarmCoverSources : this.sources(q.dir)).filter(p => (ai.director.offscreen(p) || ai.director.occluded(p, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, p) < .85))
+        .sort((a, b) => dist(a, player) - dist(b, player));
+      if (!pts.length) continue;
+      const id = this.emerge(pts[0], undefined, true, q.dir === 'station', true, false, cover);
+      if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
+      q.id = id; s.waveIds.push(id); s.wavesSpawned = Math.max(s.wavesSpawned, q.wave + 1);
+      this.reserveWaves();
+      // One finite arrival route clears the doorway. After fallback there is
+      // no courier preference or compulsory approach; senses may interrupt it.
+      ai.rush(id, cover ? { x: this.alarmCoverSources[0].x - 4, z: this.alarmCoverSources[1].z + 2.5 } : RUSH[q.dir], tick + ticks(60), cover && s.phase === 'attack');
+      if (s.phase === 'attack' && !cover && (q.dir === 'station' || q.dir === 'commerce')) {
+        ai.press(id, 1, tick + ticks(30), l3.density.playerBiasM);
+        world.entities.get(id)!.infected!.l1!.search.completeApproach = true;
+      }
+      if (s.waves.filter(w => w.wave === q.wave && w.id).length === 1) world.events.emit({ type: 'l3.wave', tick, wave: q.wave, count: s.waves.filter(w => w.wave === q.wave).length });
+    }
+  }
+  /** Returning bodies hold S1 arrival slots too; later streets retain the E18 cap. */
+  private emergenceCap(s1 = false, pressure = false): number {
+    const ai = this.world.infected!, s = this.s;
+    const x = this.world.entities.get(1)!.transform.x;
+    const opening = (s.phase === 'fallback' || s.phase === 'corridor') && x >= l3.map.corridor[0] && (s1 || x < l3.map.segments[0][1]);
+    return opening && !pressure ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
+  }
+  /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
+  private emerge(at: Point, home?: Point, running = false, police = false, s1 = false, pressure = false, cover = false): number {
+    const { world } = this.mission, ai = world.infected!, o = this.outbreak();
+    if (ai.director.count >= this.emergenceCap(s1, pressure) || !ai.pool.length) return 0;
+    let out = this.snap(at, .45);
+    const clear = (point: Point) => (ai.director.offscreen(point, world.districts?.groundHeight(point.x, point.z) ?? 0) || (police || cover) && ai.director.occluded(point, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, point) < .85);
+    if (pressure && !clear(out)) for (const offset of [-1.2, 1.2, -2.4, 2.4]) {
+      const candidate = this.snap({ x: at.x, z: at.z + offset }, .45), behind = this.s.furthest - candidate.x;
+      // A crowded mouth can use its neighbouring clear exit positions, still
+      // inside the authored rear source band and outside the actual camera.
+      if (behind < l3.density.pressure.behindM[0] || behind > l3.density.pressure.behindM[1] || dist(candidate, world.entities.get(1)!.transform) < 15 || !clear(candidate)) continue;
+      out = candidate; break;
+    }
+    if (!clear(out)) return 0;
+    // Police zombies: an officer turned in place keeps the police look (the ordinary turned-pedestrian infected variant).
+    const id = o.spawnPedestrian(out, police ? { role: 'officer', model: 'npc.police-officer', tint: '#2f4858' } : undefined), e = world.entities.get(id)!;
+    o.turnNow(e);
+    if (!e.infected) return 0;
+    // Admission may displace a crowded doorway. Validate the final pose before
+    // drawing it and retain the caller's quota if that exposes the actor.
+    const behind = this.s.furthest - e.transform.x;
+    if (!(ai.director.offscreen(e.transform, e.transform.y - .7) || (police || cover) && ai.director.occluded(e.transform, cover ? this.alarmCoverWalls : [])) || pressure && (behind < l3.density.pressure.behindM[0] || behind > l3.density.pressure.behindM[1])) { ai.release(e); return 0; }
+    if (e.combat) e.combat.staggerUntil = world.tick + (running ? 0 : 30);
+    const brain = e.infected.l1;
+    if (brain && home) { brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l3.density.leashM; }
+    return id;
+  }
+  private insideYard(p: Point): boolean { const y = l3.map.yard; return p.x > y.x0 && p.x < y.x1 && p.z > y.z0 && p.z < y.z1; }
+  private checkFallback(): void {
+    const { world } = this.mission, s = this.s, tick = world.tick;
+    // The line breached from outside; police zombies out of the station are already inside and do not call the fallback.
+    const station = new Set(s.waves.filter(q => q.dir === 'station' && q.id).map(q => q.id));
+    const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !station.has(e.id) && this.insideYard(e.transform) && !l3CourierFight(world, e)).length;
+    const cause = s.turnedOfficers.length >= l3.attack.fallback.turned ? 'turned' : inside >= l3.attack.fallback.inside ? 'inside' : tick - s.attackAt >= ticks(l3.attack.fallback.defenseS) ? 'time' : '';
+    if (cause) this.fallback(cause);
+  }
+  private fallback(cause: 'time' | 'turned' | 'inside'): void {
+    const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
+    s.phase = 'fallback'; s.fallbackAt = tick; s.fallbackCause = cause;
+    // The station alarm ends here. Keep legitimate sight/hearing chases, but
+    // release the director's courier preference and compulsory approach.
+    for (const q of s.waves) {
+      const brain = world.entities.get(q.id)?.infected?.l1;
+      if (!brain) continue;
+      delete brain.focusId; delete brain.focusUntil; delete brain.focusBiasM;
+      brain.search.completeApproach = false;
+      brain.search.until = Math.min(brain.search.until, tick);
+    }
+    // The designated squad escorts the courier; the six gate officers cover the retreat.
+    const human = (id: number) => { const e = world.entities.get(id); return !!e?.civilian?.ally && e.health.current > 0 && !e.infection && e.civilian.state !== 'finished'; };
+    const squad = s.squadIds.filter(human);
+    const others = s.officerIds.filter(id => !squad.includes(id) && human(id)).sort((a, b) => dist(world.entities.get(a)!.transform, player.transform) - dist(world.entities.get(b)!.transform, player.transform));
+    // Replacements fill casualties without turning the whole station into an escort.
+    squad.push(...others.slice(0, Math.max(0, l3.officers.squad.size - squad.length)));
+    const f = l3.officers.squad;
+    for (const [slot, id] of squad.entries()) {
+      const a = world.entities.get(id)!.civilian!.ally!;
+      a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = weak(f.gun);
+      // Shared allied follower/navigation keeps the assigned squad with the courier.
+      a.follow = { targetId: 1, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs, breakoutUntil: tick + ticks(f.breakoutS) };
+      world.entities.get(id)!.civilian!.story = null;
+    }
+    s.squad = squad.map(id => ({ id, farSince: 0 }));
+    world.events.emit({ type: 'l3.fallback', tick, cause, squad: [...squad] });
+    this.mission.radio('L3.fallback');
+    if (this.mission.state.steps.armory.status === 'active') this.mission.state.steps.armory.status = 'cancelled';
+    if (!this.mission.state.states.fallback) this.mission.setState('fallback', true);
+    s.furthest = player.transform.x; s.furthestAt = tick;
+    this.mission.requestCheckpoint('fallback');
+  }
+  /** Bites on squad members are losses (they turn or die); a turned station officer counts for the fallback rule. */
+  private bitten(id: number): void {
+    const s = this.mission.state.l3; if (!s) return;
+    if (s.squad.some(m => m.id === id)) this.lose(id, 'bite');
+  }
+  private turned(id: number): void {
+    const s = this.mission.state.l3; if (!s || !s.officerIds.includes(id) || s.turnedOfficers.includes(id)) return;
+    s.turnedOfficers.push(id);
+  }
+  private lose(id: number, cause: 'bite' | 'kill' | 'separated'): void {
+    const s = this.s; if (!s.squad.some(m => m.id === id)) return;
+    s.squad = s.squad.filter(m => m.id !== id); s.lost.push({ id, cause, tick: this.world.tick });
+    const a = this.world.entities.get(id)?.civilian?.ally;
+    // A bitten or killed officer is already a loss, even before the turn.
+    // Leaving follow attached kept him in the live escort and pace census.
+    if (a) delete a.follow;
+    // A separated officer holds where he is and keeps fighting (no scripted removal, no teleport).
+    if (a && cause === 'separated') { a.hold = true; a.post = { x: this.world.entities.get(id)!.transform.x, z: this.world.entities.get(id)!.transform.z }; }
+    this.world.events.emit({ type: 'l3.squad-lost', tick: this.world.tick, id, cause });
+    if (!s.squad.length) this.mission.radio('L3.alone');
+  }
+  private squadUpdate(): void {
+    const { world } = this.mission, s = this.s, player = world.entities.get(1)!;
+    for (const m of [...s.squad]) {
+      const e = world.entities.get(m.id);
+      if (!e || e.health.current <= 0 || !e.civilian || e.civilian.state === 'finished') { this.lose(m.id, 'kill'); continue; }
+      if (e.infection) continue;
+      const a = e.civilian.ally;
+      if (!a?.follow) continue;
+      if (a.gun) a.gun.hitNear = s.segment < 1 ? l3.officers.squad.s1HitNear : l3.officers.squad.gun.hitNear;
+      // The courier moving on is a regroup order. Do not strand a living officer at his last fight.
+      if (player.transform.x > l3.finale.passX && e.transform.x < l3.map.zoneX + 1) {
+        a.engaged = false;
+        // Closure waits for this officer to be inside. Keep regrouping into the compound afterwards too:
+        // sending him west of the closed arm reopens it on the next tick and cancels the rendezvous.
+        a.run = this.pullbackSlot(e, a.follow.slot);
+        continue;
+      }
+      const far = dist(e.transform, player.transform) > a.follow.maxM;
+      a.engaged = !far;
+      // The ally brain owns target/shot cancellation: nearby self-defence still runs while regrouping.
+      m.farSince = far && dist(e.transform, player.transform) > l3.officers.squad.separatedM ? m.farSince || world.tick : 0;
+      if (m.farSince && world.tick - m.farSince >= ticks(l3.officers.squad.separatedS)) this.lose(m.id, 'separated');
+    }
+  }
+  /** Section 5.3: a shot pulls every non-chasing infected within 20 m to the shot position (never to the shooter's live position). */
+  private gunshot(sourceId: number, at: Point): void {
+    const s = this.mission.state.l3, world = this.world; if (!s || !world.infected) return;
+    const last = s.lastShot[sourceId] ?? -Infinity; if (world.tick - last < ticks(l3.gunfire.minGapS)) return;
+    s.lastShot[sourceId] = world.tick;
+    world.events.emit({ type: 'outbreak.distraction', tick: world.tick, id: 300_000 + world.tick * 64 + (sourceId % 64), kind: 'gunfire', position: { x: at.x, z: at.z }, radius: l3.gunfire.radiusM, until: world.tick + ticks(l3.gunfire.holdS) });
+    world.events.emit({ type: 'l3.gunfire', tick: world.tick, sourceId, position: { x: at.x, z: at.z } });
+    this.spill(at);
+  }
+  /**
+   * Section 4 beat 6: "side streets spill infected". A shot near a cross-link mouth in segments 2-3 brings a group out of the
+   * buildings along that link (out of view, never closer than 18 m) that runs at the shot position (an event position).
+   */
+  private spill(at: Point): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!, seg = l3Segment(at.x), sp = l3.density.spill;
+    if (s.phase !== 'corridor' || seg < 1 || seg > 2) return;
+    const link = sp.links.find(x => Math.abs(x - at.x) <= sp.nearM); if (link === undefined) return;
+    const key = String(link), last = s.spills[key];
+    if (last && (last.n >= sp.maxPerLink || world.tick - last.at < ticks(sp.cooldownS))) return;
+    s.spills[key] = { n: (last?.n ?? 0) + 1, at: world.tick };
+    const player = world.entities.get(1)!.transform;
+    const doors = this.doors().filter(d => Math.abs(d.x - link) <= sp.doorM && ai.director.offscreen(d) && dist(d, player) >= 18)
+      .sort((a, b) => dist(a, at) - dist(b, at));
+    // Death-loop relief (l3.mercy) also eases spills planned after the respawn, not only what was pending at it.
+    const size = Math.round(sp.size[seg - 1] * (1 - this.mercyFraction()));
+    // Brief l3-polish (newbie deaths at the cross-street turn into the Boulevard): the spill runs at the police line, the nearest
+    // living squad officer near the shot, not at the courier; she only draws it herself once the squad is gone.
+    const officer = s.squad.map(q => world.entities.get(q.id)).filter(e => !!e && e.health.current > 0 && !e.infection && dist(e.transform, at) < sp.policeM)
+      .sort((a, b) => dist(a!.transform, at) - dist(b!.transform, at))[0];
+    const home = officer ? { x: officer.transform.x, z: officer.transform.z } : { ...at };
+    for (let i = 0; i < size && doors.length; i++) {
+      // A shot-triggered spill must not wait behind hundreds of background residents.
+      s.pending.unshift({ id: 0, door: doors[i % doors.length].name, home: { ...home }, segment: seg, at: world.tick, kind: 'spill', targetId: officer?.id ?? 1 });
+    }
+  }
+  /**
+   * Brief l3-polish (newbie and real-input deaths at the forced turn from the cross street into the Boulevard: two 15-strong
+   * clusters of different groups overlapped on the blind corner). A cluster never sits on a detour mouth: it moves `shiftM` along
+   * its avenue, away from the corner, so a fleeing courier rounds it with room to see the next group. Counts are unchanged.
+   */
+  private clearMouth(x: number, street: 'blvd' | 'commerce' | 'oak'): number {
+    const { mouths, clearM, shiftM } = l3.density.mouth;
+    for (const [mx, st] of mouths) if (st === street && Math.abs(x - mx) < clearM) return mx + (x >= mx ? shiftM : -shiftM);
+    return x;
+  }
+  /** Pre-populated wanderers of one segment, planned in groups and emerging at doors near their home once out of view. */
+  private populate(segment: number): void {
+    const s = this.s; if (s.populated[segment]) return;
+    s.populated[segment] = true;
+    const planned: Pending[] = [];
+    // L3-08 segment populations are absolute authored residents in both tiers. Low difficulty uses
+    // lower attack damage and a lower live cap, not half-sized neighbourhoods.
+    const doors = this.doors(), scale = 1;
+    for (const [x, street, size] of l3.density.groups[segment]) {
+      const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
+      const highway = x > 128;
+      const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
+      for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier / 5)); i++) {
+        // Five small clusters across the neighbourhood, with breathing room along the walking line (PO 10-09 lulls; the PO 10-12
+        // "don't cluster" applies to the station attack, which streams in spread from five directions).
+        const cluster = Math.floor(i / clusterSize) % offsets.length;
+        const spread = cluster === 0 ? home : this.snap({ x: this.clearMouth(home.x + offsets[cluster], street), z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
+        const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
+        planned.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
+      }
+    }
+    // A distant checkpoint may not have populated this segment yet. Its later arrivals
+    // need the same retry relief as the entries already queued when the courier respawned.
+    s.pending.push(...this.easePending(planned));
+    if (segment === 2) this.planHorde();
+  }
+  /**
+   * The segment-3 horde: two packs out of view on different avenues (seeded: never chosen by where the
+   * courier is), pursuing east into the army line once she passes the finale entrance. Two of the three avenues carry one, so a street choice is a gamble, not a safe line.
+   */
+  private planHorde(): void {
+    const s = this.s; if (s.hordeStreet) return;
+    const streets = ['blvd', 'commerce', 'oak'] as const, skip = Math.floor(new Rng(this.world.seed, 'l3-horde').next() * 3);
+    s.hordeStreet = streets[skip];
+    const h = l3.density.horde, scale = 1, doors = this.doors(), packs: Pending[] = [];
+    for (const street of streets.filter((_, i) => i !== skip)) {
+      const home = this.snap({ x: h.toX, z: l3.map.streets[street] }, .5), near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => Math.abs(a.x - h.fromX) - Math.abs(b.x - h.fromX)).slice(0, 3);
+      for (let i = 0; i < 5 * Math.ceil(h.packSize / 5 * scale); i++) packs.push({ id: 0, door: near[i % near.length].name, home, segment: 2, at: 0, horde: true });
+    }
+    // The authored horde must arrive during the chase, ahead of optional street residents.
+    s.pending.unshift(...this.easePending(packs));
+  }
+  /** Pursuers follow the authored on-ramp legs; a single distant goal starves budgeted crowd routing. */
+  private rushPursuer(id: number, home?: Point): void {
+    const w = this.world, e = w.entities.get(id), b = e?.infected?.l1;
+    if (!e || !b || e.health.current <= 0) return;
+    const x = e.transform.x;
+    // The finale column gathers just outside police and HMG reach and hits the line as one surge (a trickle dies one by one).
+    // The last leg counts as reached 8 m short of 199: rush goals are jittered (3 m) and arrive within 4 m, and a pursuer parked at
+    // its near edge used to be sent back to it forever (the finale horde stalled at x 195 outside the HMG line).
+    const surge = l3.finale.surge, s = this.s, staged = !!s.finaleAt && x >= 166 && x < surge.stageX + 6 && !s.surgedIds?.includes(id);
+    const goal = x < 128 && home ? home : x < 146 ? { x: 146, z: 0 } : x < 174 && !staged ? { x: 174, z: 0 }
+      : staged ? { x: surge.stageX, z: 0 } : x < 191 ? { x: 199, z: 0 } : { x: l3.finale.barrierX + 2, z: 0 };
+    if (b.mode === 'attracted' && Math.hypot(b.goalX - goal.x, b.goalZ - goal.z) < 6) { b.search.until = w.tick + ticks(l3.finale.chaseS); return; }
+    w.infected!.rush(id, goal, w.tick + ticks(l3.finale.chaseS));
+  }
+  private readonly closedDoors = new Set<string>();
+  private emergePending(all = false): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
+    // The announced station cohorts own the opening slots. S1's six low-tier
+    // background residents otherwise consume the last slots of the 50-member wave.
+    // They keep their authored queue and enter as soon as the courier leaves the yard.
+    if (this.insideYard(p) && s.waves.some(q => !q.id)) return;
+    // Stream street residents one at a time instead of creating three rigs/brains in one frame.
+    // The yard retains its original cadence; the street rate remains at least as high (20/s vs 18/s).
+    const yard = s.phase === 'attack' || p.x < l3.map.corridor[0];
+    if (!all && world.tick % (yard ? 10 : 3) !== 0) return;
+    // Idle pressure uses global headroom; the S1 resident budget must not swallow its promised arrivals.
+    const pressure = s.pending.some(q => q.kind === 'pressure' && !q.id);
+    if (pressure) this.retirePressureFillers();
+    if (ai.director.count >= this.emergenceCap(false, pressure) || !ai.pool.length) return;
+    // Preserve the original yard hold/cap headroom. The additional street residents emerge after the fallback.
+    const preload = l3.density.s1Preload / (ai.director.tier === 'low' ? 2 : 1);
+    if (yard && s.segmentIds[0].length >= preload) return;
+    const allowance = yard ? Math.min(3, preload - s.segmentIds[0].length) : all ? Infinity : 1;
+    let spawned = 0;
+    // E18: the 5x queues hold hundreds of entries on a few dozen doors; a door that is in view, too close or blocked stays
+    // so for the rest of this call (one frustum test per door, not per queued infected).
+    const closed = this.closedDoors; closed.clear();
+    for (const q of s.pending as Pending[]) {
+      // A blocked pressure doorway retains its freed slot. Letting an unrelated
+      // street/horde entry take it immediately can starve the announced batch.
+      if (pressure && q.kind !== 'pressure') continue;
+      if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10) || closed.has(q.door)) continue;
+      const a = this.anchor(q.door);
+      if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < (q.kind === 'pressure' ? 15 : 25)) { closed.add(q.door); continue; }
+      const id = this.emerge(a, q.home, !!q.horde, false, q.segment === 0 && !q.kind, q.kind === 'pressure');
+      if (!id) { if (ai.director.count >= ai.director.cap) break; closed.add(q.door); continue; }
+      const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
+      if (q.horde) this.rushPursuer(id, q.home);
+      else if (q.kind === 'spill') {
+        // The officer keeps moving between the shot and admission. Follow the
+        // authored victim, rather than searching the now-empty firing spot.
+        const victim = q.targetId && world.entities.get(q.targetId);
+        ai.press(id, victim && victim.health.current > 0 && !victim.infection && !victim.infected ? victim.id : 1, world.tick + ticks(90));
+      } else if (q.kind) ai.rush(id, q.home, world.tick + ticks(90));
+      if (q.kind === 'spill') s.spillIds.push(id);
+      else if (q.kind === 'pressure') s.pressureIds.push(id);
+      else s.segmentIds[q.segment].push(id);
+      this.delayRetryPursuit(e, q.home.x);
+      if (spawned >= allowance) break;
+    }
+  }
+  /** Announced rear pressure outranks distant idle street filler at the unchanged cap. */
+  private retirePressureFillers(): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!, player = world.entities.get(1)!.transform;
+    if (ai.director.count + ai.director.pendingTurns < ai.director.cap) return;
+    const authored = new Set([...s.waveIds, ...s.pressureIds, ...s.spillIds, ...(s.finaleIds ?? []), ...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id)]);
+    for (const e of [...ai.active]) {
+      const b = e.infected;
+      if (authored.has(e.id) || !b || e.health.current <= 0 || e.corpse || e.infectionRise || e.emerging || b.recoverAt >= 0 ||
+        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
+        dist(e.transform, player) <= 25 || !ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
+      ai.release(e); s.retired++;
+      if (ai.director.count + ai.director.pendingTurns < ai.director.cap) return;
+    }
+  }
+  /** Section 5.6 forward pressure: a player lingering 20 s behind the furthest progress line gets company from behind. */
+  private pressure(): void {
+    const { world } = this.mission, s = this.s, tick = world.tick, p = world.entities.get(1)!.transform, ai = world.infected!;
+    if (p.x > s.furthest + .5) s.furthest = p.x;
+    // Pressure is for idling behind the frontier. Waiting at the newly reached
+    // line (including the army rendezvous) must not restart rear emergence.
+    // The half-metre band matches the progress-line quantisation above.
+    if (p.x >= s.furthest - .5) {
+      s.furthestAt = tick; s.pressureAt = 0;
+      // Advancing stops the pressure: packs still queued behind the courier are dropped (they were only for an idle courier).
+      for (let i = s.pending.length - 1; i >= 0; i--) if (s.pending[i].kind === 'pressure' && s.pending[i].id === 0) s.pending.splice(i, 1);
+    }
+    if (tick - s.furthestAt < ticks(l3.density.pressure.idleS)) return;
+    if (s.pressureAt && tick - s.pressureAt < ticks(l3.density.pressure.everyS)) return;
+    s.pressureAt = tick;
+    const [b0, b1] = l3.density.pressure.behindM, rng = new Rng(world.seed, `l3-pressure:${tick}`);
+    const doors = this.doors().filter(d => d.x <= s.furthest - b0 && d.x >= s.furthest - b1 && ai.director.offscreen(d));
+    const [n0, n1] = l3.density.pressure.count, n = Math.round((n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1))) * (1 - this.mercyFraction()));
+    for (let i = 0; i < n && doors.length; i++) {
+      const door = doors[Math.floor(rng.next() * doors.length)];
+      // Front of the queue: with the 5x population hundreds of planned entries wait ahead, and the pressure must land while the courier idles.
+      s.pending.unshift({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
+    }
+  }
+  /** Infected far behind the furthest line and out of view leave the books when the cap is tight (never a visible removal). */
+  private retire(): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!;
+    // Only while the planned population ahead still waits for slots, or the cap is nearly reached.
+    if (world.tick % 30 !== 0 || (ai.director.count < ai.director.cap - 6 && !s.pending.some(q => q.id === 0) && !s.finaleAt)) return;
+    const finalIds = new Set(s.finaleIds ?? []);
+    const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
+    for (const e of [...ai.active]) {
+      if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
+      if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
+      const downBehind = e.health.current <= 0 && world.tick - e.infected!.deadAt > 120 && dist(e.transform, world.entities.get(1)!.transform) > 10;
+      if ((!downBehind && e.transform.x > s.furthest - l3.density.retireBehindM) || !ai.director.offscreen(e.transform, e.transform.y - .7) || e.infected?.l1?.mode === 'bite') continue;
+      if (downBehind) ai.settle(e); else ai.release(e); s.retired++;
+    }
+  }
+
+  // ---------------------------------------------------------------------------------------------------------- tick
+  update(): void {
+    const { world, state } = this.mission, s = state.l3; if (!s) return;
+    if (this.mercyDue) this.mercy();
+    const tick = world.tick, player = world.entities.get(1)!;
+    // The failed encounter can be a long detour from its checkpoint. Start its
+    // existing pursuit delay on approach, rather than consuming it on the return walk.
+    if ((s.phase === 'corridor' || s.phase === 'fallback') && player.transform.x < this.retryApproachX && tick % 30 === 0 && this.retryIgnoreUntil > 0) {
+      this.retryIgnoreUntil = tick + ticks(l3.mercy.respawnDelayS);
+      for (const e of world.infected!.active) this.delayRetryPursuit(e);
+    }
+    if (s.phase === 'yard') {
+      if (tick === ticks(l3.armory.briefingAtS)) this.mission.radio('L3.sergeant');
+      if ((s.handgunAt && tick - s.handgunAt >= ticks(l3.armory.attackAfterS)) || tick >= ticks(l3.armory.attackLatestS)) this.startAttack();
+    }
+    // Pressure routing during the station attack only: the waves press the police line (the corridor keeps E21-AC05 ranges).
+    world.infected!.hearing.playerBiasM = s.phase === 'attack' ? l3.density.playerBiasM : 0;
+    if (s.phase === 'attack') { this.emergeWaves(); this.checkFallback(); }
+    if (s.phase !== 'yard') this.emergePending();
+    if (tick % 120 === 0) {
+      for (const q of s.waves) if (q.id && s.phase === 'attack') {
+        const arriving = world.entities.get(q.id)?.infected?.l1;
+        if (q.source === 'yard-cover' && arriving?.mode === 'attracted' && arriving.search.completeApproach) continue;
+        if (q.dir === 'station' || q.dir === 'commerce') {
+          world.infected!.press(q.id, 1, tick + ticks(30), l3.density.playerBiasM);
+          const brain = world.entities.get(q.id)?.infected?.l1;
+          if (brain) brain.search.completeApproach = true;
+        } else world.infected!.rush(q.id, RUSH[q.dir], tick + ticks(60));
+      }
+      for (const q of s.pending) if (q.id && q.horde) this.rushPursuer(q.id, q.home);
+      for (const id of s.finaleIds ?? []) this.rushPursuer(id);
+    }
+    if (s.phase === 'fallback' || s.phase === 'corridor') {
+      const nav = world.infected!.nav, goal = nav.nearestCell(player.transform.x, player.transform.z);
+      if (goal >= 0) nav.flow(nav.x(goal), nav.z(goal), 1500);
+      this.emergeWaves(); this.squadUpdate(); this.pressure(); this.retire(); this.sealYard(); this.finale();
+      if (s.phase === 'fallback' && player.transform.x > l3.map.corridor[0]) s.phase = 'corridor';
+      // Populate a segment while the player is still well short of it (out of view, ahead of the squad).
+      for (let k = 1; k < 3; k++) if (!s.populated[k] && player.transform.x >= l3.map.segments[k][0] - l3.density.populateAheadM) this.populate(k);
+      const seg = l3Segment(player.transform.x);
+      if (seg > s.segment && seg >= 0) {
+        for (let k = Math.max(0, s.segment); k < seg; k++) s.segmentSquad[k] = s.squad.length;
+        // Old neighbourhood queues retain their members, but must not starve
+        // the final street's residents behind the same concurrent actor cap.
+        if (seg === 2) s.pending.sort((a, b) => Number(b.segment === seg) - Number(a.segment === seg));
+        s.segment = seg; world.events.emit({ type: 'l3.segment', tick, segment: seg, squad: s.squad.length });
+        if (seg === 1) this.mission.radio('L3.dispatch');
+      }
+      // Segment checkpoints (PO 10-09: plus one mid-way in segments 2 and 3, so a death costs a stretch, not the whole segment).
+      for (const [id, x] of Object.entries(l3.checkpointAt)) if (player.transform.x >= x && !s.cpSeen?.includes(id)) { (s.cpSeen ??= []).push(id); (s.cpWait ??= []).push(id); }
+      this.calmCheckpoint(player);
+      this.zone(tick, player);
+      // No corridor steer (PO 10-31: "let the user find the way by themselves. You just show the final checkpoint"):
+      // the marker and HUD arrow point at the army checkpoint itself.
+    }
+    // L3 infected (turned adults in the open) hit as hard as L2's (section 5.1 tuning).
+    if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l3.infectedDamage;
+  }
+  /**
+   * PO 10-09: a checkpoint taken with a crowd on the courier's heels or at low health respawns the courier into the same fight
+   * (death loops of 15+ on one spot). The segment checkpoints wait for a calm moment: nothing alive within 10 m and health >= 70 %.
+   */
+  private calmCheckpoint(player: EntitySnapshot): void {
+    const s = this.s, w = this.world; if (!s.cpWait?.length || w.tick % 10 !== 0) return;
+    const p = player.transform;
+    if (player.health.current < player.health.max * .7 || w.infected!.active.some(e => e.health.current > 0 && dist(e.transform, p) < 10)) return;
+    for (const id of s.cpWait) this.mission.requestCheckpoint(id);
+    s.cpWait = [];
+  }
+  private rescueReachable?: Uint8Array;
+  private boom?: ArmyCheckpointBoom;
+  private readonly pullbackSlots = new Map<number, Point>();
+  /** Distinct resting spots inside the arm, clear of the checkpoint's parked van. */
+  private pullbackSlot(e: EntitySnapshot, slot: number): Point {
+    const previous = this.pullbackSlots.get(e.id); if (previous) return previous;
+    const w = this.world, at = { x: l3.map.zoneX + 3 + Math.floor(slot / 4) * 1.8, z: (slot % 4 - 1.5) * 1.8 };
+    for (let ring = 0; ring <= 12; ring++) for (let ray = 0; ray < (ring ? 16 : 1); ray++) {
+      const angle = slot * 2.399963229728653 + ray * Math.PI / 8;
+      const p = { x: at.x + Math.cos(angle) * ring * .5, z: at.z + Math.sin(angle) * ring * .5 };
+      if (p.x < l3.map.zoneX + 1.3 || !w.infected!.nav.clear(p.x, p.z, .4) || !w.solids.clear({ ...p, y: e.transform.y }, .4, e.id, false)
+        || [...this.pullbackSlots.values()].some(other => dist(other, p) < 1.6)) continue;
+      this.pullbackSlots.set(e.id, p); return p;
+    }
+    return e.transform;
+  }
+  private barrier(closed: boolean): void {
+    this.boom ??= new ArmyCheckpointBoom(this.world, l3.finale.barrierX);
+    this.boom.set(closed);
+  }
+  private finale(): void {
+    const s = this.s, w = this.world, p = w.entities.get(1)!.transform, f = l3.finale;
+    if (p.x < f.rescueX) return;
+    s.finalePacks ??= []; s.finaleIds ??= [];
+    s.finaleAt ??= w.tick;
+    const nav = w.infected!.nav;
+    this.rescueReachable ??= nav.reachableFrom(nav.nearestCell(f.barrierX + 2, 0));
+
+    // Trigger on each avenue. Pursuers appear behind/alongside, leaving the army line as the escape.
+    for (const [index, [x, authored]] of f.packs.entries()) {
+      if (w.infected!.director.count >= w.infected!.director.cap || !w.infected!.pool.length) break;
+      const count = Math.ceil(authored * (1 - this.mercyFraction()));
+      if (p.x < x + l3ArmyOffset || w.tick < (s.finaleNextAt ?? 0) || (s.finalePacks[index] ?? 0) >= count) continue;
+      let n = 0;
+      const burst = Math.min([5, 10, 15][index], count - (s.finalePacks[index] ?? 0));
+      const sources = f.sources.some(([x,z]) => w.infected!.director.offscreen({x,z})) ? f.sources : f.farSources;
+      for (let i = 0; i < sources.length * burst && n < burst; i++) {
+        const [x, z] = sources[(s.finaleIds.length + i) % sources.length], at = { x, z };
+        if (!w.infected!.director.offscreen(at) || dist(at, p) <= 12) continue;
+        const snapped = this.snap(at, .45), cell = nav.nearestCell(snapped.x, snapped.z);
+        if (cell < 0 || !this.rescueReachable[cell] || (snapped.x > 155 && (w.districts?.groundHeight(snapped.x, snapped.z) ?? 0) < 3)) continue;
+        const id = this.emerge(snapped, undefined, true); if (!id) continue;
+        s.finaleIds.push(id); n++; this.rushPursuer(id);
+      }
+      s.finalePacks[index] = (s.finalePacks[index] ?? 0) + n;
+      if (n) { s.finaleNextAt = w.tick + ticks(f.streamS[index] * n); break; }
+    }
+    this.boom ??= new ArmyCheckpointBoom(w, f.barrierX);
+    // Close behind the entire rescued group; an outside survivor always reopens the boom.
+    // The group is the squad still following the courier (a separated officer holding a street far behind is no longer waited for).
+    const following = new Set(s.squad.map(m => m.id));
+    const group = [1, ...s.officerIds.filter(id => { const e = w.entities.get(id); return following.has(id) && !!e?.civilian?.ally && !e.infection && e.health.current > 0; }), ...[...w.entities.iterate()].filter(e => !!e.companion).map(e => e.id)];
+    const inside = group.every(id => { const e = w.entities.get(id); return !e || e.health.current <= 0 || e.transform.x >= l3.map.zoneX; });
+    // After minFightS with the group inside, the staged column holds outside reach so the line clears and the boom can close.
+    if (!(inside && w.tick - s.finaleAt! >= ticks(f.minFightS))) this.surge();
+    if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
+    // PO 10-15: acknowledge the ring and close behind the group immediately; hold the 15-second evacuation inside.
+    const arrived = !!s.crossedAt || this.inZone(p) || w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
+    if (!s.barrierClosedAt && inside && arrived && (this.boom.ready(group) || (this.boom.clearBystanders(group), this.boom.ready(group)))) {
+      s.barrierClosedAt = w.tick; this.barrier(true);
+      w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
+    }
+  }
+  /** Release the staged finale horde once enough have gathered (or the first has waited `maxWaitS`): all run at the line. */
+  private surge(): void {
+    const s = this.s, w = this.world, f = l3.finale.surge, released = s.surgedIds ??= [];
+    const need = f.count[w.infected!.director.tier === 'low' ? 1 : 0], staged: number[] = [];
+    for (const id of s.finaleIds ?? []) { const e = w.entities.get(id); if (e && e.health.current > 0 && !released.includes(id) && Math.abs(e.transform.x - f.stageX) < 6) staged.push(id); }
+    if (!staged.length) { s.stagedAt = 0; return; }
+    s.stagedAt ||= w.tick;
+    if (staged.length < need && w.tick - s.stagedAt < ticks(f.maxWaitS)) return;
+    s.surgeAt = w.tick; s.stagedAt = 0; released.push(...staged);
+    for (const id of staged) this.rushPursuer(id);
+    w.events.emit({ type: 'l3.surge', tick: w.tick, count: staged.length });
+  }
+  private inZone(p: Point): boolean { const ring = this.anchor('l3-zone'); return dist(p, ring) <= ring.radius; }
+  private zone(tick: number, player: EntitySnapshot): void {
+    const s = this.s;
+    if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) {
+      s.crossedAt = tick; s.segmentSquad[2] ??= s.squad.length;
+      this.world.events.emit({ type: 'l3.crossed', tick }); this.mission.radio('L3.army');
+    }
+    // The countdown begins at arrival, independently of the horde and group stragglers.
+    if (s.crossedAt && !s.doneAt && s.barrierClosedAt && tick - s.crossedAt >= ticks(l3.finale.evacuationS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
+    // Arrival is already achieved; closing the boom must not leave a waypoint under the courier.
+    if (s.crossedAt && (this.mission.state.marker === 'l3-zone' || this.mission.state.marker === 'l3-route')) this.mission.state.marker = null;
+  }
+
+  /** Cheat/test path (`completeObjective` in a gap without an active objective): start the attack, or call the fallback. */
+  advance(): boolean {
+    const s = this.mission.state.l3; if (!s) return false;
+    if (s.phase === 'yard') { this.startAttack(); return true; }
+    if (s.phase === 'attack') { this.fallback('time'); return true; }
+    return false;
+  }
+  /** Checkpoint restore: shift the timeline. Entities (officers, squad, infected, pickups) come back from the snapshot. */
+  /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
+  private mercyDue = false;
+  private lastDeathX = -Infinity;
+  private mercyFrom = Infinity;
+  private mercyTo = -Infinity;
+  /** Side-street spills used before the last death (kept through the checkpoint restore). */
+  private spentSpills: L3State['spills'] = {};
+  /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
+  private readonly respawns: Record<string, number> = {};
+  private mercyFraction(later = 0): number {
+    const m = l3.mercy;
+    return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths - later + 1)));
+  }
+  /** Apply relief once to a new queue, or to the restored queue. Running IDs and entries outside its window stay intact. */
+  private easePending(entries: Pending[]): Pending[] {
+    const f = this.mercyFraction();
+    if (f <= 0 || (this.s.phase !== 'corridor' && this.s.phase !== 'fallback')) return entries;
+    let i = 0;
+    return entries.filter(q => {
+      if (q.id !== 0 || q.home.x <= this.mercyFrom || q.home.x >= this.mercyTo) return true;
+      const before = Math.floor(i++ * f);
+      return Math.floor(i * f) === before;
+    });
+  }
+  private retryApproachX = Infinity;
+  private retryEndX = -Infinity;
+  private retryIgnoreUntil = 0;
+  /** Keep the existing retry delay on the distant failed encounter, including its later arrivals. */
+  private delayRetryPursuit(e: EntitySnapshot, x = e.transform.x): void {
+    const b = e.infected?.l1;
+    if (!b || e.corpse || e.health.current <= 0 && e.infected!.recoverAt < 0 || x < this.retryApproachX || x > this.retryEndX || this.world.tick >= this.retryIgnoreUntil) return;
+    b.ignoreId = 1; b.ignoreUntil = Math.max(b.ignoreUntil, this.retryIgnoreUntil);
+    if (b.targetId === 1 && b.mode === 'chase') { b.targetId = 0; b.mode = 'wander'; if (e.health.current > 0) e.infected!.state = 'wander'; }
+  }
+  private mercy(): void {
+    this.mercyDue = false;
+    const { world } = this.mission, s = this.s, ai = world.infected;
+    // Restore the first retry intact; repeated deaths ease the standing crowd. Downed bodies keep their timers/slots.
+    const frac = this.mercyFraction(), live = this.mercyFraction(1); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
+    // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
+    // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
+    const p = world.entities.get(1)!.transform, [, b] = l3.mercy.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
+    this.mercyFrom = p.x - l3.mercy.behindM; this.mercyTo = p.x + reach;
+    if (this.lastDeathX - p.x > 30) {
+      this.retryApproachX = this.lastDeathX - 30; this.retryEndX = this.lastDeathX + 30;
+      this.retryIgnoreUntil = world.tick + ticks(l3.mercy.respawnDelayS);
+      for (const e of ai.active) this.delayRetryPursuit(e);
+    }
+    const thinBy = <T>(f: number, items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * f) > Math.floor(i * f)) remove(item); });
+    if (live > 0) thinBy(live, [...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
+    s.pending = this.easePending(s.pending as Pending[]);
+  }
+  restore(delta: number): void {
+    this.pullbackSlots.clear();
+    const s = this.mission.state.l3; if (!s) return;
+    this.reserveWaves();
+    this.retryApproachX = Infinity; this.retryEndX = -Infinity; this.retryIgnoreUntil = 0;
+    this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
+    for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt', 'finaleAt', 'finaleNextAt', 'stagedAt', 'surgeAt'] as const) if (s[key]) s[key] += delta;
+    for (const w of s.waves) if (w.at) w.at += delta;
+    for (const q of s.pending) if (q.at) q.at += delta;
+    for (const m of s.squad) if (m.farSince) m.farSince += delta;
+    for (const k of Object.keys(s.lastShot)) s.lastShot[Number(k)] += delta;
+    for (const v of Object.values(s.spills)) v.at += delta;
+    // Brief l3-polish (real-input death loop on the Boulevard): a side street that already spilled stays spent after a respawn
+    // instead of refilling the street for every retry.
+    for (const [k, v] of Object.entries(this.spentSpills)) if (v.n > (s.spills[k]?.n ?? 0)) s.spills[k] = { n: v.n, at: this.world.tick };
+    this.spentSpills = {};
+    if (s.gatesClosedAt) s.gatesClosedAt += delta;
+    if (s.barrierClosedAt) s.barrierClosedAt += delta;
+    this.barrier(!!s.barrierClosedAt);
+    for (const id of Object.keys(L3_GATES)) {
+      const handle = this.walls.get(id); if (handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); }
+      if (s.gatesClosedAt) this.wall(id, true); else emitBlocker(this.world, 900_400 + Object.keys(L3_GATES).indexOf(id), false, L3_GATES[id]);
+    }
+  }
+}
+
+/** Persistent arrival feedback, shared by both objective HUDs. Time is simulation time. */
+export function l3EvacuationText(mission: Mission | null | undefined): string | null {
+  const s = mission?.state.l3;
+  if (!s?.crossedAt || s.doneAt) return null;
+  const seconds = Math.max(0, Math.ceil(l3.finale.evacuationS - (mission!.world.tick - s.crossedAt) / TICKS));
+  if (seconds > 0) return `Checkpoint reached · Evacuation in ${seconds} s`;
+  const world = mission!.world, player = world.entities.get(1)!;
+  for (const [index, member] of s.squad.entries()) {
+    const officer = world.entities.get(member.id);
+    if (officer && officer.health.current > 0 && !officer.infection && officer.transform.x < l3.map.zoneX)
+      return `Checkpoint reached · Waiting for your squad · Officer ${index + 1}: ${Math.ceil(dist(officer.transform, player.transform))} m away`;
+  }
+  return 'Checkpoint reached · Waiting for your squad';
+}

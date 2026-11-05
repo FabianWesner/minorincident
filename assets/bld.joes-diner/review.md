@@ -1,0 +1,11 @@
+# Visual review
+
+- Round 1 (960×540, 24 samples, reference and game views): complete diner silhouette, interior and curb planting read well. Found Joe's final letters extending beyond the upper scallop and roof cup hidden behind sign. Revised scallop width/text placement, raised the coffee cup, increased preview interior warmth, added runtime-visible cove lights.
+- Geometry check after round 1: 91,957 triangles, 36 merged mesh/material draws. Root, roof, interior, hinged door, light metadata and cuboid collider present. Detail geometry has at least 3 mm separation from its supporting face. No visible checker/frame flicker in rendered game view.
+- Round 2: wider scallop contains Joe’s lettering, raised cup reads clearly; exported AO and three LODs. Initial WebGPU/WebGL2 checks had no console errors. Identified rotated merged mesh bounds and corner overlaps.
+- Round 3: applied mesh transforms, separated wall corner planes, furnished front booth, rear service door/vent/utility pipe. Final Hero count stays within budget. Added finished rear view.
+- Round 4: moved roadside sign bed away from awning, aligned door origins exactly to hinge axes, measured complete-lot bounds to center X/Y. Slogan now fully unobstructed.
+- Round 5: corrected awning downward slope and reduced distant LOD by removing small disconnected details. Final hero rendered 1600×900 at 96 samples; paired game view 960×540 at 24 samples.
+- Final exported verification: LOD0 91,963 triangles / 39 primitives; LOD1 13,049 / 39; LOD2 1,288 / 35. All exports contain vertex AO, zero image textures, finite vertex coordinates and required control/anchor/collider nodes. Full bounds centered to <1 mm on X/Y, ground contact at z=0. Both door joints retain hinge pivots; static geometry joined within visibility assemblies by palette.
+- Final Three.js: study front/rear and game captures on WebGPU and WebGL2; no warnings/errors. Six successive identical game frames on each backend (see renders/temporal-check.json); no observable game-view flicker. Roof sign, awning, entrance, cafe windows and slogan remain readable.
+- Remaining visual gaps: fine stucco wear and handwritten neon contours simplified; small rear corner checker-trim aliasing in close study views. No game-camera instability detected. Verdict: usable Hero production asset with the noted close-view limitation.

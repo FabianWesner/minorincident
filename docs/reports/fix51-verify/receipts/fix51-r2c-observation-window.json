@@ -1,0 +1,107 @@
+{
+  "lane": "fix51-r2c",
+  "finding": "The requested 240-second passive hold observation never reaches its cap after the hold objective completes at 60 seconds.",
+  "code": "tools/sim-runner/l10.ts increments holdTicks only for active.id === hold, and compares holdTicks against passiveHoldWindowSeconds * 60. tools/qa/accept/probe.ts requests 240 seconds.",
+  "scope": "Observation-window harness defect, not a gameplay timer or acceptance-target change. Checker unchanged.",
+  "evidence": [
+    {
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+      "runTime": 1800,
+      "outcome": "tick-budget",
+      "activeObjectives": [
+        "mega"
+      ],
+      "holdStatus": "completed",
+      "chargeActiveTicks": 3600,
+      "requestedObservationTicks": 14400
+    },
+    {
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+      "runTime": 1800,
+      "outcome": "tick-budget",
+      "activeObjectives": [
+        "mega"
+      ],
+      "holdStatus": "completed",
+      "chargeActiveTicks": 3600,
+      "requestedObservationTicks": 14400
+    }
+  ],
+  "additionalFinding": {
+    "finding": "R7 regional rate census includes the peaceful cure epilogue, so it cannot alone qualify the combat-only attacks/min clause.",
+    "code": "tools/qa/accept/observer.ts increments observation.regions[r.id].ticks in L10 without excluding cure-released/epilogue; tools/qa/accept/evaluate.ts uses the whole region tick count as the attack-rate denominator.",
+    "evidence": [
+      {
+        "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+        "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+        "regionalCensus": {
+          "ticks": 18796,
+          "attacks": 1,
+          "groupAttacks": 0,
+          "peak": 86,
+          "regularPeak": 80,
+          "dogPeak": 4,
+          "alphaPeak": 2
+        },
+        "exclusiveRunTiming": {
+          "id": "dispersal-complex",
+          "seconds": 296.25000000005923,
+          "travelSeconds": 58.76666666666461,
+          "combatSeconds": 11.950000000000173,
+          "interactionSeconds": 0.03333333333333333,
+          "holdSeconds": 75.499999999997,
+          "epilogueSeconds": 150.0000000000115,
+          "otherSeconds": 0,
+          "metres": 1016.7463811526819
+        },
+        "releaseObjective": {
+          "id": "release",
+          "t": 1023.0166666666667
+        },
+        "scope": "Diagnosis of window scope only. It does not waive R1/R6 or prove the corrected R7 rate passes."
+      },
+      {
+        "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+        "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+        "regionalCensus": {
+          "ticks": 18828,
+          "attacks": 0,
+          "groupAttacks": 0,
+          "peak": 167,
+          "regularPeak": 160,
+          "dogPeak": 4,
+          "alphaPeak": 3
+        },
+        "exclusiveRunTiming": {
+          "id": "dispersal-complex",
+          "seconds": 296.7833333333921,
+          "travelSeconds": 58.81666666666461,
+          "combatSeconds": 11.650000000000158,
+          "interactionSeconds": 0.55,
+          "holdSeconds": 75.51666666666367,
+          "epilogueSeconds": 150.0000000000115,
+          "otherSeconds": 0.24999999999999997,
+          "metres": 1025.3676538997759
+        },
+        "releaseObjective": {
+          "id": "release",
+          "t": 1024.0166666666667
+        },
+        "scope": "Diagnosis of window scope only. It does not waive R1/R6 or prove the corrected R7 rate passes."
+      }
+    ]
+  },
+  "beforeFixCommit": "05f0e086b",
+  "beforeFixObserverHash": "5750a9fff13e772294cc8d9d34ad1e273683afb26d173a76fae9063e7471fad2",
+  "status": "Fixed in this lane; historical before-fix evidence is retained verbatim.",
+  "correctionProof": "docs/reports/fix51-r2c/gates/checker-proof.json",
+  "currentReceipts": [
+    "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+    "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+    "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+    "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+  ],
+  "qualification": "Historical proof of the old measurement defect. Current receipts use actual regional attack starts, exclude peaceful epilogue time, and terminate the passive assault window after 240 seconds. No acceptance target or gameplay timer changed."
+}

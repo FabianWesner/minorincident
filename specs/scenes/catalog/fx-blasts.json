@@ -1,0 +1,81 @@
+{
+ "name": "fx-blasts",
+ "note": "Every handheld/hazard blast in turn (barrel, propane, grenade, molotov, pipe bomb, rocket), 2.5 s apart, on asphalt. Look for: flash, debris, scorch and fire reading as distinct kinds, no leftovers after the burn.",
+ "ground": "asphalt",
+ "size": 40,
+ "script": [
+  {
+   "frame": 20,
+   "effect": {
+    "blast": "explosion.barrel",
+    "at": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 170,
+   "effect": {
+    "blast": "explosion.propane",
+    "at": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 320,
+   "effect": {
+    "blast": "explosion.grenade",
+    "at": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 470,
+   "effect": {
+    "blast": "explosion.molotov",
+    "at": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 620,
+   "effect": {
+    "blast": "explosion.pipe-bomb",
+    "at": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 770,
+   "effect": {
+    "blast": "explosion.rocket",
+    "at": [
+     0,
+     0
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 0.8
+ },
+ "frames": 980,
+ "sheet": 40,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "movement-l4-bus-wheels",
+  "extends": "l4-convoy-gate-stop.json",
+  "note": "Production L4 moving convoy: palette batched wheel pivots roll with distance; game camera follows player bus.",
+  "l4Convoy": true,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "frames": 240,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

@@ -1,0 +1,9 @@
+{
+ "extends": "../../../tests/scenes/l9-handover/l9-crash-handover.json",
+ "name": "qa-l9-handover-floor",
+ "note": "L9-Q1 L10 handover (floor half): the real crash and crawl with the APC at 0 HP, then the campaign axe reset. Look for: the same handover as the healthy run, axe only, safe corgi, free ground, surviving wreck.",
+ "crossingCrash": {
+  "health": 0,
+  "handover": true
+ }
+}

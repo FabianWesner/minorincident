@@ -1,0 +1,856 @@
+{
+  "provenance": {
+    "sourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+    "observerHash": "da9678897a99c0a9bcdbca1d7fd226edb779f6baa68537f8d3eeb16e646f913a",
+    "revision": "5b2984d1095f2a29f07d6422de92d879846055d4"
+  },
+  "scope": "24 played backend/tier/zoom combinations. Recorded measured source hashes are unchanged; prior equivalent branches are supported by exact build/source reconstruction. L2 high is repeated directly on final source. Full-route qualification only where run.finished=true with no skips.",
+  "cells": [
+    {
+      "level": "L1",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "eab8afb086ced457bc6f39590999ddd306eacbde6a1a7e9460de27f18116ce67",
+      "browserHash": "fe51704786d9198e0cb4988811680b97dfb65994b7a87e26b2896d5d5f225b89",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 78
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-initial.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/initial-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 71
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "PASS",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 300,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 150,
+          "simSeconds": 139
+        }
+      ],
+      "browserErrors": [],
+      "issues": [
+        {
+          "level": "L1",
+          "tick": 7759,
+          "x": -55.2,
+          "z": 36.6,
+          "severity": "P2",
+          "kind": "enemy-unhittable",
+          "text": "Infected #194 (chase) 1.2 m away took no damage from 8 s of attacks (hp 60/60)",
+          "captures": [
+            "captures/matrix-L1-7759-enemy-unhittable.jpg"
+          ],
+          "step": "firestation",
+          "objective": "Get inside the fire station \u00b7 22\u00a0m"
+        }
+      ],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L1-full-webgl2.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L1-full-webgl2-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "PASS",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 300,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 143,
+          "simSeconds": 133
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L1-full-webgpu.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L1-full-webgpu-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "eab8afb086ced457bc6f39590999ddd306eacbde6a1a7e9460de27f18116ce67",
+      "browserHash": "fe51704786d9198e0cb4988811680b97dfb65994b7a87e26b2896d5d5f225b89",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 87
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-initial.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/initial-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "9d365323eaf6989bcd01654011951c5c7c32d5c6221eb4c570a0e33a3789b57d",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 91,
+          "simSeconds": 83
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "PASS",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 300,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 142,
+          "simSeconds": 137
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L1-full-webgl2.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L1-full-webgl2-index.json"
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "PASS",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 300,
+      "runs": [
+        {
+          "level": "L1",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 139,
+          "simSeconds": 135
+        }
+      ],
+      "browserErrors": [],
+      "issues": [
+        {
+          "level": "L1",
+          "tick": 7252,
+          "x": -44,
+          "z": 31.5,
+          "severity": "P2",
+          "kind": "enemy-unhittable",
+          "text": "Infected #187 (attack) 1.3 m away took no damage from 8 s of attacks (hp 60/60)",
+          "captures": [
+            "captures/matrix-L1-7252-enemy-unhittable.jpg"
+          ],
+          "step": "firestation",
+          "objective": "Get inside the fire station \u00b7 34\u00a0m"
+        }
+      ],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L1-full-webgpu.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L1-full-webgpu-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 92,
+          "simSeconds": 53
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L2-high-webgl2-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L2-high-webgl2-final-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 91,
+          "simSeconds": 59
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 71
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-L2-high-webgl2-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/L2-high-webgl2-final-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 78
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "eab8afb086ced457bc6f39590999ddd306eacbde6a1a7e9460de27f18116ce67",
+      "browserHash": "be089686573e55450434394e8ee256362d671fe8d89d8a3923b24fbbfd0b2a2f",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 86
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-initial.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/initial-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 85
+        }
+      ],
+      "browserErrors": [],
+      "issues": [
+        {
+          "level": "L2",
+          "tick": 4803,
+          "x": -28.5,
+          "z": -49.7,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance 134.0 m, no marker: false); HUD: \"Reach the police checkpoint at the bridge \u00b7 134\u00a0m\"",
+          "captures": [
+            "captures/matrix-L2-4803-stuck-navigating.jpg"
+          ],
+          "step": "bridge",
+          "objective": "Reach the police checkpoint at the bridge \u00b7 134\u00a0m"
+        }
+      ],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "eab8afb086ced457bc6f39590999ddd306eacbde6a1a7e9460de27f18116ce67",
+      "browserHash": "be089686573e55450434394e8ee256362d671fe8d89d8a3923b24fbbfd0b2a2f",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 85
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-initial.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/initial-index.json"
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L2",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 85
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 91,
+          "simSeconds": 70
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-L3-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgl2-L3-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 80
+        }
+      ],
+      "browserErrors": [],
+      "issues": [
+        {
+          "level": "L3",
+          "tick": 1950,
+          "x": -136.9,
+          "z": -4.1,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance 5.0 m, no marker: false); HUD: \"Take a handgun from the armory \u00b7 5\u00a0m\"",
+          "captures": [
+            "captures/matrix-L3-1950-stuck-navigating.jpg"
+          ],
+          "step": "armory",
+          "objective": "Take a handgun from the armory \u00b7 5\u00a0m"
+        },
+        {
+          "level": "L3",
+          "tick": 1974,
+          "x": -136.9,
+          "z": -5.9,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "21 s without objective progress standing at the ring (3.0 m); HUD: \"Take a handgun from the armory \u00b7 3\u00a0m\"",
+          "captures": [
+            "captures/matrix-L3-1974-stuck-at-ring.jpg"
+          ],
+          "step": "armory",
+          "objective": "Take a handgun from the armory \u00b7 3\u00a0m"
+        }
+      ],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 73
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-L3-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgl2-L3-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "9b5158312758a7971e666be6c01d65d77e5272b538bf53ddcc351a5877be3b91",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": true,
+      "continuityProofs": [],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 79
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "9d365323eaf6989bcd01654011951c5c7c32d5c6221eb4c570a0e33a3789b57d",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 91,
+          "simSeconds": 79
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-L3-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgl2-L3-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "zoom": 0.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 85
+        }
+      ],
+      "browserErrors": [],
+      "issues": [
+        {
+          "level": "L3",
+          "tick": 1968,
+          "x": -137.2,
+          "z": -2.8,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "21 s without objective progress (distance 6.0 m, no marker: false); HUD: \"Take a handgun from the armory \u00b7 6\u00a0m\"",
+          "captures": [
+            "captures/matrix-L3-1968-stuck-navigating.jpg"
+          ],
+          "step": "armory",
+          "objective": "Take a handgun from the armory \u00b7 6\u00a0m"
+        },
+        {
+          "level": "L3",
+          "tick": 2015,
+          "x": -137.6,
+          "z": -5.3,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "22 s without objective progress standing at the ring (4.0 m); HUD: \"Take a handgun from the armory \u00b7 4\u00a0m\"",
+          "captures": [
+            "captures/matrix-L3-2015-stuck-at-ring.jpg"
+          ],
+          "step": "armory",
+          "objective": "Take a handgun from the armory \u00b7 4\u00a0m"
+        }
+      ],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgl2",
+      "actualRenderer": "webgl",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 91,
+          "simSeconds": 82
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgl2-L3-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgl2-L3-final-index.json"
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "actualRenderer": "webgpu",
+      "measuredSourceHash": "1bc54f7ea2b5ed4bbd582b701f49db9577e39eba82de51e2ca5e19e444c5f39e",
+      "browserHash": "557a69c03d98156f3b99c69fd2a0453bfc4b2762f13b49c38b971158aeef6a51",
+      "currentSourceDirect": false,
+      "continuityProofs": [
+        "build-continuity.json",
+        "build-continuity-L2-pressure.json"
+      ],
+      "status": "NOT CHECKED",
+      "headless": true,
+      "survivalProtected": true,
+      "frameTiming": false,
+      "sampleCapSeconds": 90,
+      "runs": [
+        {
+          "level": "L3",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 90,
+          "simSeconds": 84
+        }
+      ],
+      "browserErrors": [],
+      "issues": [],
+      "receiptMatrix": "docs/reports/fix51-r3a/physical-webgpu-final.json",
+      "reviewedFrameIndex": "docs/reports/fix51-r3a/reviewed/webgpu-final-index.json"
+    }
+  ],
+  "combinations": 24,
+  "fullRoutes": 4,
+  "partialRoutes": 20,
+  "consoleOrPageErrors": 0,
+  "navigationWarnings": 5
+}

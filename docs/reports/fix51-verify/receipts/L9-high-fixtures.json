@@ -1,0 +1,367 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checks": [
+    {
+      "id": "L9-08",
+      "clause": "actual crossing transaction into L10",
+      "value": {
+        "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+        "run": {
+          "level": "L9",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 128.13333333333333,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 0,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "approach",
+              "t": 114.13333333333334
+            },
+            {
+              "id": "reach-outskirts",
+              "t": 128.13333333333333
+            }
+          ],
+          "furthestObjective": "reach-outskirts",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 636,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "handover": {
+          "applied": true,
+          "corgi": {
+            "kind": "companion",
+            "archetype": "char.corgi",
+            "faction": "survivor",
+            "transform": {
+              "x": 467.6454788779233,
+              "z": 3.9373885261225046,
+              "y": 0.3,
+              "yaw": -0.05724150811981929
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "companion": {
+              "state": "follow",
+              "courage": 100,
+              "until": 0,
+              "barkAt": 0,
+              "hurtAt": 0,
+              "pickup": null,
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0
+            },
+            "id": 668,
+            "passengerOf": 667,
+            "hidden": true,
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 1528.387426202513
+            }
+          },
+          "checkpoint": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.7200000286102295,
+            "z": 0,
+            "yaw": 0
+          },
+          "preCrashDurability": 1000,
+          "lostWeapons": [
+            "weapon.fists",
+            "weapon.kick",
+            "weapon.bat",
+            "weapon.molotov",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher",
+            "weapon.pipe-bomb",
+            "weapon.shotgun"
+          ],
+          "shelteredPassengers": []
+        },
+        "weapons": [
+          "weapon.fire-axe"
+        ],
+        "hp": 100,
+        "maxHp": 100,
+        "hidden": false,
+        "activeVehicle": null,
+        "companions": [
+          {
+            "id": 668,
+            "hp": 100,
+            "maxHp": 100,
+            "hidden": false
+          }
+        ]
+      },
+      "target": "onfoot;exactlyaxe;full ordinary health;corgi safe",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "L9/crossing-handover": {
+      "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+      "run": {
+        "level": "L9",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 128.13333333333333,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "approach",
+            "t": 114.13333333333334
+          },
+          {
+            "id": "reach-outskirts",
+            "t": 128.13333333333333
+          }
+        ],
+        "furthestObjective": "reach-outskirts",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 636,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "handover": {
+        "applied": true,
+        "corgi": {
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "faction": "survivor",
+          "transform": {
+            "x": 467.6454788779233,
+            "z": 3.9373885261225046,
+            "y": 0.3,
+            "yaw": -0.05724150811981929
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "companion": {
+            "state": "follow",
+            "courage": 100,
+            "until": 0,
+            "barkAt": 0,
+            "hurtAt": 0,
+            "pickup": null,
+            "path": [],
+            "goal": -1,
+            "pathIndex": 0
+          },
+          "id": 668,
+          "passengerOf": 667,
+          "hidden": true,
+          "motion": {
+            "velocity": {
+              "x": 0,
+              "z": 0
+            },
+            "speed": 0,
+            "moving": false,
+            "distance": 1528.387426202513
+          }
+        },
+        "checkpoint": "cure-crash",
+        "anchor": {
+          "x": 547,
+          "y": 0.7200000286102295,
+          "z": 0,
+          "yaw": 0
+        },
+        "preCrashDurability": 1000,
+        "lostWeapons": [
+          "weapon.fists",
+          "weapon.kick",
+          "weapon.bat",
+          "weapon.molotov",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher",
+          "weapon.pipe-bomb",
+          "weapon.shotgun"
+        ],
+        "shelteredPassengers": []
+      },
+      "weapons": [
+        "weapon.fire-axe"
+      ],
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "activeVehicle": null,
+      "companions": [
+        {
+          "id": 668,
+          "hp": 100,
+          "maxHp": 100,
+          "hidden": false
+        }
+      ]
+    }
+  }
+}

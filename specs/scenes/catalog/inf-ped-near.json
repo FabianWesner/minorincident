@@ -1,0 +1,15 @@
+{
+  "name": "inf-ped-near",
+  "note": "PO 10-09 \"there was a ped close, which the Zombie just ignored\". An infected stands with its back to a pedestrian 2.2 m behind it (outside its view cone); the courier is out of range. Look for: it turns, grabs and bites the pedestrian within ~3 s; the pedestrian goes down and turns (no ignoring a body at arm's length).",
+  "ground": "asphalt",
+  "size": 40,
+  "actors": [
+    { "id": "z", "kind": "infected", "at": [0, 0], "yaw": 0 },
+    { "id": "p", "kind": "pedestrian", "at": [-2.2, 0.4], "yaw": 180, "look": { "model": "npc.civilian-woman-a", "tint": "#c46a8a" }, "state": "idle" },
+    { "id": "courier", "kind": "courier", "at": [15, 13], "yaw": 180 }
+  ],
+  "camera": { "mode": "close", "target": [-1, 0.9, 0], "radius": 9, "azimuth": 40 },
+  "frames": 420,
+  "sheet": 30,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "firstBiteFrameMax": 180 }
+}

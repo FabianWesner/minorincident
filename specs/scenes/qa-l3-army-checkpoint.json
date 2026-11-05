@@ -1,0 +1,234 @@
+{
+ "name": "qa-l3-army-checkpoint",
+ "note": "E21 finale: soldiers behind T-walls and sandbag nests cover the last 20 m; buses, truck and APC; the courier runs through the lane with infected behind",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    118,
+    -30
+   ],
+   [
+    170,
+    30
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    121.0,
+    1.0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.fire-axe"
+   ],
+   "state": {
+    "run": [
+     [
+      129,
+      0.5
+     ],
+     [
+      146,
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "id": "soldier-1",
+   "kind": "pedestrian",
+   "at": [
+    139.0,
+    -7.6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-2",
+   "kind": "pedestrian",
+   "at": [
+    139.0,
+    7.6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-3",
+   "kind": "pedestrian",
+   "at": [
+    139.0,
+    -13.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-4",
+   "kind": "pedestrian",
+   "at": [
+    139.0,
+    13.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-5",
+   "kind": "pedestrian",
+   "at": [
+    149.0,
+    -7.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-6",
+   "kind": "pedestrian",
+   "at": [
+    149.0,
+    7.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-7",
+   "kind": "pedestrian",
+   "at": [
+    152.0,
+    -2.4
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "soldier-8",
+   "kind": "pedestrian",
+   "at": [
+    139.0,
+    -20.0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier"
+    }
+   }
+  },
+  {
+   "id": "behind",
+   "kind": "infected",
+   "at": [
+    116.5,
+    2.6
+   ],
+   "count": 3,
+   "spread": 1.2,
+   "yaw": 0,
+   "state": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   140.0,
+   0.0
+  ],
+  "zoom": 1.25
+ },
+ "frames": 480,
+ "shots": [
+  0,
+  160,
+  320,
+  480
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0
+ }
+}

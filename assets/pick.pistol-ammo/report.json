@@ -1,0 +1,34 @@
+{
+  "id": "pick.pistol-ammo",
+  "tier": "Side",
+  "triangles": 1016,
+  "draw_calls": 6,
+  "materials": [
+    "pal_grass",
+    "pal_schoolBusYellow",
+    "pal_uiDark",
+    "pal_woodWarm"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "rounds": 4,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Detailed rounds replaced with three brass bundles and nine chunky tips; fine wear and rivets omitted."
+  ],
+  "lods": {
+    "lod1": {
+      "triangles": 508,
+      "draw_calls": 6
+    },
+    "lod2": {
+      "triangles": 250,
+      "draw_calls": 6
+    }
+  },
+  "budget": {
+    "triangles": 2500,
+    "draw_calls": 6
+  }
+}

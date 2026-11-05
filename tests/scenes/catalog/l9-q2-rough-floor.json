@@ -1,0 +1,29 @@
+{
+  "extends": "l9-dress-countryside.json",
+  "name": "l9-q2-rough-floor",
+  "note": "Q2 zero-durability countryside composition reuses D2 wheel/contact and E18 render gates. Actual 12 m/s rough and 60% floor physics are measured by T-E31-09-terrain-rough, not inferred from the sheet.",
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -8,
+        240
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          14,
+          240
+        ]
+      ],
+      "floor": true,
+      "health": 0
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "l3-blvd-returning.json",
+  "name": "l3-blvd-pose-recovery",
+  "note": "Retained Boulevard bodies stand up on their original timers, then notice the courier. God mode is disabled. Review the full get-up and windup transitions at both tiers and zooms: phone pose reuse must not hold an old death or attack clip. The 30 Hz world-pose regression checks the phone frame interval directly.",
+  "script": [
+    {"frame": 1, "actor": "courier", "do": {"god": false}},
+    {"frame": 1, "actor": "returning-1", "do": {"hit": {"amount": 500}}},
+    {"frame": 1, "actor": "returning-2", "do": {"hit": {"amount": 500}}}
+  ],
+  "expect": {"consoleErrors": 0, "undrawnFramesMax": 0, "actorHealth": {"courier": [1, 100], "returning-1": [60, 60], "returning-2": [60, 60]}},
+  "actors": [
+    {"id": "courier", "kind": "courier", "at": [-13.75, -22.75], "loadout": ["weapon.fire-axe", "weapon.handgun"], "god": false},
+    {"id": "returning-1", "kind": "infected", "at": [-8, -26], "yaw": 180},
+    {"id": "returning-2", "kind": "infected", "at": [-5, -27], "yaw": 180}
+  ]
+}

@@ -1,0 +1,1261 @@
+{
+  "sourceHash": "e8db7232e6d3962653d3dc118acafe93b0600823a0472595a2e767d0b12396ee",
+  "observerHash": "56e4986bc1a4ec09c2ced438b1bfd5873b982fa68964b541b61958685d08f201",
+  "revision": "5b2984d1095f2a29f07d6422de92d879846055d4",
+  "phase": "verified",
+  "method": "Headless production Scene Lab fixtures; no physical completion or performance claim.",
+  "reviews": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-low-z0.5.png",
+      "sha256": "5b2b9d4f907d941170c282a127a69b740e481d8b7de441a24ff8c496dfbc35f8",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-low-z1.5.png",
+      "sha256": "a5c1202c3d6374884794e420ed67d64012c2ceb476da6b661351f3371af52465",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-low-close.png",
+      "sha256": "2588dad5fb0de3958a7fb095061c4ad9c49ec7b44f29931fdc7438166612a9f1",
+      "kind": "apc-close",
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgl2-low-z0.5.png",
+      "sha256": "66127b9096ed8bcc2b78414b9fa18dc9ca39639b4e8cb653183611b3c0c85d82",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgl",
+        "quality": "low"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgl2-low-z1.5.png",
+      "sha256": "1bec6dfb58592d10c5a2564fcd9b165e4d454d80b8340fa33ac514fc2dcd58ee",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgl",
+        "quality": "low"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-high-z0.5.png",
+      "sha256": "54712f73d4d2aa08f81257045ea59e4a3a52c7b899ad6d8fdfa50b1b53ba1e61",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-high-z1.5.png",
+      "sha256": "cf1c3ef24bae72efde73a18564b4eacd53e467f982c6d05728c48ef49282e23c",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgl2-high-close.png",
+      "sha256": "8def81b5d435be4ce9d5610b63ddf9513f9b67f8578061da87cadc8237af50be",
+      "kind": "apc-close",
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgl2-high-z0.5.png",
+      "sha256": "27f9fd0ead15ea7b7b08e98f7d8b07f3334eee80f09c45a4a7dc8adb0d629ac5",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgl",
+        "quality": "high"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgl2-high-z1.5.png",
+      "sha256": "2070083e6e231ba0ae7eb864d4aa964f5159c0b15ad9a2cf8a8609e406ae7cf5",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgl",
+        "quality": "high"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-low-z0.5.png",
+      "sha256": "8dcf4cb8fb8d5461f942e590a2cc14c07deb0b2dbe96188d32181543aa1bea46",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-low-z1.5.png",
+      "sha256": "fcf9599951a7683f6fa3a0908653cc7fd9014ac89eed0f1904568ab576b272c9",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-low-close.png",
+      "sha256": "2b8b83fff7c4d98e4a4f6e30e81198756e4bbc1c5056cb253455ffeda355a325",
+      "kind": "apc-close",
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgpu-low-z0.5.png",
+      "sha256": "7fe70a6306ab1decbe74ee1d967ee9eeac70ee8bf96f1961bfc486b83669cadf",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgpu",
+        "quality": "low"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgpu-low-z1.5.png",
+      "sha256": "66a8eac3ff2ba87cd05303bd025e34291d557ce6d92812bc42f9a2186b4712de",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgpu",
+        "quality": "low"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-high-z0.5.png",
+      "sha256": "d9e9d3f171d8deebc8c3c7017c8f9b99a0863294cdb434d99faebc311b18d38f",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-high-z1.5.png",
+      "sha256": "34886e82b3bf480179d29b20b6dab31eb5f0d846456f22b62cf63ae4071f048d",
+      "kind": "apc",
+      "state": [
+        {
+          "id": 3,
+          "apcDamage": {
+            "stage": 2,
+            "dents": true,
+            "glass": true,
+            "lightsOn": true,
+            "smoke": "none",
+            "overlayTriangles": 48
+          },
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 4,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                3.188872858294072e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "file": "test-results/fix51-r3c/visual-verified/apc-webgpu-high-close.png",
+      "sha256": "e97a35375408332218c60964f0b8279cc1de335ff612ba81574ebc71a9da2d57",
+      "kind": "apc-close",
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgpu-high-z0.5.png",
+      "sha256": "e68a943ec974cd6611099248496a6fc1fa55e618f93ed729e50a52e2500dca73",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgpu",
+        "quality": "high"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "file": "test-results/fix51-r3c/visual-verified/research-webgpu-high-z1.5.png",
+      "sha256": "1d8337e7a50a24b91ae30c3e95d92dc4b535c97102bf13bb879628c8c715fcab",
+      "kind": "research",
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "render": {
+        "backend": "webgpu",
+        "quality": "high"
+      },
+      "reviewed": true,
+      "reviewedVia": "docs/reports/fix51-r3c/contact-sheet-review.json"
+    }
+  ],
+  "errors": [],
+  "reviewScope": "All60 before/after/verified fixture frames inspected through labelled640x360 contact-sheet tiles; selected originals also inspected at1280x720. These are static production rendering fixtures, not physical routes. Raw captures deleted after review; hashes retained.",
+  "findings": {
+    "research": "All four backend/tier rendered probes report actorHits=0, piercing=0, staticPairs=0 after authored collider retention was fixed. gunBodyHits=1 remains open. Close zoom does not frame the entire crowd.",
+    "apc": "Skinned lower-leg bounds are numerically inside the cab; cutaway visibility is not proof of protrusion. Reviewed earlier captures only; see geometry receipt.",
+    "subjectivePO": "Judge courier night readability, animal enemy readability and whether the tent/road framing is aesthetically acceptable at both zooms; these judgements do not close objective clipping/health/route clauses."
+  },
+  "earlierReviewed": [
+    {
+      "file": "test-results/fix51-r3c/visual-before/apc-webgl2-high-close.png",
+      "sha256": "8def81b5d435be4ce9d5610b63ddf9513f9b67f8578061da87cadc8237af50be"
+    },
+    {
+      "file": "test-results/fix51-r3c/visual-before/apc-webgl2-high-z0.5.png",
+      "sha256": "54712f73d4d2aa08f81257045ea59e4a3a52c7b899ad6d8fdfa50b1b53ba1e61"
+    },
+    {
+      "file": "test-results/fix51-r3c/visual-before/research-webgl2-high-z0.5.png",
+      "sha256": "8b1db560229fd10df44486f44ed9a3cb365fdda90e2fa705916eed1dffedb51d"
+    },
+    {
+      "file": "test-results/fix51-r3c/visual-before/apc-webgpu-low-close.png",
+      "sha256": "2b8b83fff7c4d98e4a4f6e30e81198756e4bbc1c5056cb253455ffeda355a325"
+    },
+    {
+      "file": "test-results/fix51-r3c/visual-before/research-webgpu-high-z1.5.png",
+      "sha256": "e0714a22e076a4b138b144f22b7d049fdc40b0af3cb06441b0bbfef4c4b586b4"
+    },
+    {
+      "file": "test-results/fix51-r3c/visual-before/research-webgl2-low-z1.5.png",
+      "sha256": "82b3421fb88f8b65453a4059c70e2c51eacecd10f411c00189e0083f5dd3b5ef"
+    }
+  ],
+  "comparisons": {
+    "before": {
+      "receipt": "docs/reports/fix51-r3c/visual-before-receipt.json",
+      "sourceHash": "3362ac68a0a77b211a3160f545de8a82c6011d42e348cc6ec534e7f99124c04a",
+      "research": [
+        {
+          "backend": "webgl2",
+          "tier": "low",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "low",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "high",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "high",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        }
+      ]
+    },
+    "after": {
+      "receipt": "docs/reports/fix51-r3c/visual-after-receipt.json",
+      "sourceHash": "f5e0eeb814f0390f8a48d77d9d580a410ce3578a18e1872e1b2c9ee0f8493d49",
+      "research": [
+        {
+          "backend": "webgl2",
+          "tier": "low",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "low",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "high",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgl2",
+          "tier": "high",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        },
+        {
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1.5,
+          "clipping": {
+            "gunBodyHits": 1,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 3,
+            "piercing": 2
+          }
+        }
+      ]
+    }
+  },
+  "contactSheetReview": "docs/reports/fix51-r3c/contact-sheet-review.json"
+}

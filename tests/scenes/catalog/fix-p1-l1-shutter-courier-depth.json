@@ -1,0 +1,67 @@
+{
+  "seed": 1,
+  "frames": 120,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "courierForegroundFramesMax": 0,
+    "courierVisibleShareMin": 0.2
+  },
+  "name": "fix-p1-l1-shutter-courier-depth",
+  "l1Placement": "shutter",
+  "ground": "district",
+  "time": "L1",
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -66.4,
+        9
+      ],
+      "look": {
+        "model": "male",
+        "gearTier": 4
+      }
+    },
+    {
+      "id": "dog",
+      "kind": "corgi",
+      "at": [
+        -65,
+        9
+      ]
+    },
+    {
+      "id": "horde",
+      "kind": "infected",
+      "at": [
+        -74.4,
+        40.9
+      ],
+      "count": 5,
+      "spread": 0.9,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -76.6,
+      0.53,
+      41.27
+    ],
+    "zoom": 1
+  },
+  "note": "PO #26 (L1 tick 6418-6722, -76.16,41.17): after the bay leaf closes, the courier stands inside on the raised bay floor (0.53 m), behind the leaf, with the horde on the street side. She must never draw in the near-camera foreground slice: the leaf and the infected nearer the camera stay in front of her, and she stays readable through the see-through disc in the leaf.",
+  "size": 220
+}

@@ -1,0 +1,437 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "observerHash": "24642cad5cca809c0587c1ce3921655c439fc4dc5d5bd920fafb656b22731cb4",
+  "revision": "524ea45a6eb129b64f196c59e4b418b6a039f3d1",
+  "method": "Process-local high-tier admission timing trial; counts, caps, positions and fallback thresholds unchanged.",
+  "rows": [
+    {
+      "streamFront": 3,
+      "report": {
+        "profile": "idle",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 110,
+        "deaths": 3,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 301.6666666666666,
+        "timeline": [
+          {
+            "type": "l3.attack",
+            "t": 40
+          },
+          {
+            "type": "l3.wave",
+            "t": 40
+          },
+          {
+            "type": "l3.fallback",
+            "t": 46.56666666666667
+          },
+          {
+            "type": "objective:defend",
+            "t": 46.56666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 61.483333333333334
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 63.06666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 68.8
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 69.1
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 69.16666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 78.6
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 78.85
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 83.5
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 84.96666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 89.6
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 96.7
+          },
+          {
+            "type": "l3.wave",
+            "t": 107.5
+          }
+        ],
+        "handgunS": null,
+        "handgunShots": 0,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 0,
+          "sameLook": true,
+          "fallbackCause": "inside",
+          "fallbackAfterS": 6.566666666666666
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            -1,
+            -1,
+            -1
+          ],
+          "atCheckpoint": -1,
+          "losses": [
+            {
+              "cause": "bite",
+              "t": 96.7
+            }
+          ],
+          "turnedInCorridor": 9,
+          "protected": 0,
+          "maxJumpM": 0.11226079864479384,
+          "near8Share": 1
+        },
+        "s1": {
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [],
+          "melee": []
+        },
+        "regressionM": 0.001434326171875,
+        "streets": [],
+        "density": {
+          "prepopulated": [
+            250,
+            0,
+            0
+          ],
+          "near30": [
+            0,
+            0,
+            0
+          ],
+          "maxConcurrent": 84,
+          "cap": 200
+        },
+        "medkits": 0,
+        "lowHpShare": 0.046153846153846156,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 20,
+          "emerged": 0,
+          "emergeSeen": 0
+        },
+        "deathsAt": [
+          "53s@-156,2/fallback",
+          "74s@-156,2/fallback",
+          "92s@-156,2/fallback"
+        ]
+      }
+    },
+    {
+      "streamFront": 2,
+      "report": {
+        "profile": "idle",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 110,
+        "deaths": 3,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 300.2,
+        "timeline": [
+          {
+            "type": "l3.attack",
+            "t": 40
+          },
+          {
+            "type": "l3.wave",
+            "t": 40
+          },
+          {
+            "type": "l3.fallback",
+            "t": 48.833333333333336
+          },
+          {
+            "type": "objective:defend",
+            "t": 48.833333333333336
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 62.266666666666666
+          },
+          {
+            "type": "l3.wave",
+            "t": 66.78333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 69.9
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 73.03333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 73.13333333333334
+          },
+          {
+            "type": "l3.wave",
+            "t": 88.33333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 92
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 102.46666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 103.76666666666667
+          }
+        ],
+        "handgunS": null,
+        "handgunShots": 0,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 0,
+          "sameLook": true,
+          "fallbackCause": "inside",
+          "fallbackAfterS": 8.833333333333334
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            -1,
+            -1,
+            -1
+          ],
+          "atCheckpoint": -1,
+          "losses": [],
+          "turnedInCorridor": 4,
+          "protected": 0,
+          "maxJumpM": 0.24444746953050273,
+          "near8Share": 1
+        },
+        "s1": {
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [],
+          "melee": []
+        },
+        "regressionM": 0,
+        "streets": [],
+        "density": {
+          "prepopulated": [
+            250,
+            0,
+            0
+          ],
+          "near30": [
+            0,
+            0,
+            0
+          ],
+          "maxConcurrent": 85,
+          "cap": 200
+        },
+        "medkits": 0,
+        "lowHpShare": 0.04358974358974359,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 26,
+          "emerged": 0,
+          "emergeSeen": 0
+        },
+        "deathsAt": [
+          "54s@-156,2/fallback",
+          "75s@-156,2/fallback",
+          "103s@-155,2/fallback"
+        ]
+      }
+    },
+    {
+      "streamFront": 1,
+      "report": {
+        "profile": "idle",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 110,
+        "deaths": 3,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 300,
+        "timeline": [
+          {
+            "type": "l3.attack",
+            "t": 40
+          },
+          {
+            "type": "l3.wave",
+            "t": 40
+          },
+          {
+            "type": "l3.fallback",
+            "t": 53.833333333333336
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 55.083333333333336
+          },
+          {
+            "type": "objective:defend",
+            "t": 55.416666666666664
+          },
+          {
+            "type": "l3.wave",
+            "t": 61.583333333333336
+          },
+          {
+            "type": "objective:defend",
+            "t": 77.43333333333334
+          },
+          {
+            "type": "l3.wave",
+            "t": 83.6
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 90.46666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 90.98333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 91.01666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 91.05
+          },
+          {
+            "type": "objective:defend",
+            "t": 98.75
+          },
+          {
+            "type": "l3.wave",
+            "t": 104.91666666666667
+          }
+        ],
+        "handgunS": null,
+        "handgunShots": 0,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 0,
+          "sameLook": true,
+          "fallbackCause": "inside",
+          "fallbackAfterS": 13.833333333333334
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            -1,
+            -1,
+            -1
+          ],
+          "atCheckpoint": -1,
+          "losses": [],
+          "turnedInCorridor": 4,
+          "protected": 0,
+          "maxJumpM": 0.11180069467022716,
+          "near8Share": 1
+        },
+        "s1": {
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [],
+          "melee": []
+        },
+        "regressionM": 0.0324554443359375,
+        "streets": [],
+        "density": {
+          "prepopulated": [
+            250,
+            0,
+            0
+          ],
+          "near30": [
+            0,
+            0,
+            0
+          ],
+          "maxConcurrent": 88,
+          "cap": 200
+        },
+        "medkits": 0,
+        "lowHpShare": 0.03798076923076923,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 25,
+          "emerged": 0,
+          "emergeSeen": 0
+        },
+        "deathsAt": [
+          "53s@-156,2/attack",
+          "75s@-156,2/fallback",
+          "97s@-155,2/fallback"
+        ]
+      }
+    }
+  ]
+}

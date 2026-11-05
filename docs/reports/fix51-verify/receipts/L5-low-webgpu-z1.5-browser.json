@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "level": "L5",
+  "tier": "low",
+  "sourceHash": "59a2d216f038424dafe59e3db72946a228c8cbbb81a8dd37f39d9c73c00d6364",
+  "fixtureHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "browserHash": "4e0ad209afdf44313da53affdf53b184066a4cef3760ab4c68a4446678f410ba",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgpu",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-webgpu-z1.5-browser.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L5",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 213,
+      "simSeconds": 209,
+      "maxNoProgressSeconds": 90.11666666666666,
+      "deaths": 0,
+      "assists": 3,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "emerge",
+          "text": "Unbar the cellar door · 4 m",
+          "tick": 12,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "look",
+          "text": "Look for anyone still alive",
+          "tick": 781,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L5",
+      "tick": 8358,
+      "x": 45.4,
+      "z": 0.8,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 1/5\"",
+      "captures": [
+        "captures/accept-L5-8358-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 12558,
+      "x": 45.9,
+      "z": -0.3,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L5-12558-cannot-finish.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

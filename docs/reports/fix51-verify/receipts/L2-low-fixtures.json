@@ -1,0 +1,2917 @@
+{
+  "version": 1,
+  "level": "L2",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checks": [
+    {
+      "id": "L2-02",
+      "clause": "native no-axe completion (rack pixels remain open)",
+      "value": {
+        "outcome": "complete",
+        "axe": false,
+        "protected": true
+      },
+      "target": "complete without collecting axe; rack pixels remain open",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "calm combat and alarm/crew clocks",
+      "value": {
+        "infectedMax": 0,
+        "combatEvents": 0,
+        "alarmS": 23.15,
+        "crewAtTruckS": 1.1333333333333333,
+        "axeActive": true
+      },
+      "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "initial bench civilian identity census (seat geometry unreviewed)",
+      "value": 4,
+      "target": "4 bench civilians",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native ride seating and timing",
+      "value": {
+        "passenger": true,
+        "seconds": 24.316666666666666,
+        "seatedEveryTick": true,
+        "crewExitS": 0.8,
+        "controlS": 0
+      },
+      "target": "15–25s; all seated; exits≤4s; control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native seven-person seated roster and complete exit/control clocks",
+      "value": {
+        "ids": [
+          1,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "rideTicks": 1459,
+        "unseatedTicks": 0,
+        "allOutAt": 2965,
+        "controlAt": 2917,
+        "arrivedAt": 2916,
+        "allOutS": 0.8166666666666667,
+        "controlS": 0.016666666666666666
+      },
+      "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door order and four-second forcing clock",
+      "value": {
+        "order": [
+          48.6,
+          49.4,
+          54.15,
+          58.15
+        ],
+        "nearBefore": 0
+      },
+      "target": "ordered arrival→exit→atDoors→open;4s force;0 infected within40m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first trapped civilian outside footprint",
+      "value": 0,
+      "target": "≤1s after doorsOpen; panic pixels remain open",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "native admitted ambush source counts and angular separation",
+      "value": {
+        "playerAtOpening": {
+          "x": -45.97011184692383,
+          "y": 0.7049999833106995,
+          "z": -36.76974105834961,
+          "yaw": 1.977493168738604
+        },
+        "sources": [
+          {
+            "door": "refuge-door-1",
+            "count": 8,
+            "x": -76.64875,
+            "z": -37.5,
+            "angle": -3.1177936485067197
+          },
+          {
+            "door": "refuge-door-17",
+            "count": 8,
+            "x": -19.615,
+            "z": -35,
+            "angle": 0.06704916537786619
+          },
+          {
+            "door": "refuge-door-9",
+            "count": 8,
+            "x": -47.3825,
+            "z": -27,
+            "angle": 1.7143692401256314
+          }
+        ],
+        "angles": [
+          177.52194835184412,
+          83.13746056162186,
+          94.38448779022224
+        ]
+      },
+      "target": "3 admitted doors×8; pairwise source directions≥60deg from courier at opening; first pixel visibility remains separate",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-11",
+      "clause": "native ordinary-route bridge-start population and route singles",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 27,
+          "groupsOf4": 4,
+          "chasingPlayer": 1,
+          "chasingFraction": 0.03333333333333333,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 262,
+            "tick": 4023,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 264,
+            "tick": 4030,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 266,
+            "tick": 4040,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 268,
+            "tick": 4050,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4060,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 272,
+            "tick": 4070,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate close and post-close infected crossings",
+      "value": {
+        "closeS": 0.6,
+        "infectedInsideAfter": 3,
+        "infectedInsideAtClosure": [
+          280,
+          282,
+          294
+        ],
+        "crossingsAfterClosure": []
+      },
+      "target": "close≤1.5s;0 infected cross the gate after closure",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle snowball live infected census",
+      "value": {
+        "at60": {
+          "all": 30,
+          "rescue": 17
+        },
+        "at120": {
+          "all": 30,
+          "rescue": 16
+        },
+        "protected": true
+      },
+      "target": "≥20 at+60s;≥30 at+120s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle firefighter combat and turns",
+      "value": {
+        "hits": 29,
+        "turnedBy90": 4,
+        "turns": [
+          {
+            "id": 126,
+            "seconds": 3.3833333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 125,
+            "seconds": 3.1333333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          },
+          {
+            "id": 124,
+            "seconds": 3.2,
+            "sameAsset": true
+          }
+        ]
+      },
+      "target": "≥1 firefighter hit;≥2 turn by90s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle every firefighter has no story immunity after doors open",
+      "value": [
+        {
+          "id": 121,
+          "samples": 493,
+          "protectedTicks": 0
+        },
+        {
+          "id": 122,
+          "samples": 735,
+          "protectedTicks": 0
+        },
+        {
+          "id": 123,
+          "samples": 658,
+          "protectedTicks": 0
+        },
+        {
+          "id": 124,
+          "samples": 483,
+          "protectedTicks": 0
+        },
+        {
+          "id": 125,
+          "samples": 460,
+          "protectedTicks": 0
+        },
+        {
+          "id": 126,
+          "samples": 408,
+          "protectedTicks": 0
+        }
+      ],
+      "target": "all6 crew observed alive after opening; zero protected ticks",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive axe lesson death",
+      "value": {
+        "axe": true,
+        "diedBy120": true,
+        "firstDeathS": 77.4,
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 19,
+            "rescue": 19
+          }
+        },
+        "deathsAt": [
+          "77s@-46,-34/collapse"
+        ]
+      },
+      "target": "player reaches0HP within120s after doors",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 19,
+          "rescue": 19
+        },
+        "stoppedAtFirstDeath": true
+      },
+      "target": "+90s live infected≥+10s; missing post-death observation stays open",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-09",
+      "clause": "uninterrupted protected aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 19,
+          "rescue": 19
+        },
+        "late": {
+          "all": 30,
+          "rescue": 0
+        },
+        "protected": true,
+        "countOnly": true,
+        "qualified": true,
+        "route": {
+          "samples": 5401,
+          "maxDoorDistanceM": 10.003386703483809,
+          "outside15mTicks": 0
+        },
+        "deaths": 0
+      },
+      "target": "+90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-11",
+      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 29,
+          "groupsOf4": 4,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 262,
+            "tick": 4023,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 264,
+            "tick": 4030,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 266,
+            "tick": 4040,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 268,
+            "tick": 4050,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4060,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 272,
+            "tick": 4070,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native side approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": true,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 0,
+        "ratio": 0,
+        "visitedSide": true,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native alarm approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": false,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 15,
+        "ratio": 1.1538461538461537,
+        "visitedSide": false,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-13",
+      "clause": "native visible runner-to-calm pedestrian propagation",
+      "value": {
+        "cases": [
+          {
+            "runner": 127,
+            "index": 0,
+            "neighbors": []
+          },
+          {
+            "runner": 128,
+            "index": 1,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 54,
+                "reacted": 59
+              },
+              {
+                "id": 129,
+                "firstSeen": 54,
+                "reacted": 57
+              },
+              {
+                "id": 130,
+                "firstSeen": 67,
+                "reacted": 68
+              }
+            ]
+          },
+          {
+            "runner": 129,
+            "index": 2,
+            "neighbors": []
+          },
+          {
+            "runner": 130,
+            "index": 3,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 56,
+                "reacted": 59
+              },
+              {
+                "id": 128,
+                "firstSeen": 56,
+                "reacted": 58
+              },
+              {
+                "id": 129,
+                "firstSeen": 62,
+                "reacted": 63
+              }
+            ]
+          }
+        ],
+        "observedNeighbors": 6
+      },
+      "target": "Existing calm neighbors with actual clear sight of a runner moving>=2m/s react by the next production perception poll (6 ticks); no injected actors or other panic stimulus",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom0.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom1.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-10",
+      "clause": "axe single/roundhouse target selection",
+      "value": [
+        {
+          "count": 1,
+          "style": "single",
+          "hitIds": [
+            2
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.3999999999999999
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 2,
+          "style": "single",
+          "hitIds": [
+            2,
+            3
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.4
+            },
+            {
+              "id": 3,
+              "metres": 0.4
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 3,
+          "style": "roundhouse",
+          "hitIds": [
+            3,
+            2,
+            4
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 2.5
+            },
+            {
+              "id": 3,
+              "metres": 2.5000000000000018
+            },
+            {
+              "id": 4,
+              "metres": 2.5
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        }
+      ],
+      "target": "single swing with1–2 nearby; roundhouse hits all3",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "L2-10",
+      "clause": "axe measured roundhouse displacement",
+      "value": [
+        {
+          "id": 2,
+          "metres": 2.5
+        },
+        {
+          "id": 3,
+          "metres": 2.5000000000000018
+        },
+        {
+          "id": 4,
+          "metres": 2.5
+        }
+      ],
+      "target": "each of3 targets pushed≥2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "L2/no-axe": {
+      "protected": true,
+      "benchIdentityCensus": 4,
+      "report": {
+        "profile": "no-axe",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 133.38333333333333,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 7,
+        "damage": 0,
+        "axe": false,
+        "timeline": [
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.266666666666666
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.283333333333335
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 48.6
+          },
+          {
+            "type": "objective:ride",
+            "t": 48.6
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.4
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 54.15
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 58.15
+          },
+          {
+            "type": "objective:doors",
+            "t": 58.15
+          },
+          {
+            "type": "l2.radio",
+            "t": 71.83333333333333
+          },
+          {
+            "type": "l2.gateClosed",
+            "t": 126.38333333333334
+          },
+          {
+            "type": "objective:bridge",
+            "t": 128.38333333333333
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 30,
+            "rescue": 8
+          },
+          "60": {
+            "all": 27,
+            "rescue": 2
+          }
+        },
+        "firefighterHits": 5,
+        "firefightersTurnedBy90": 3,
+        "firstDeathS": null,
+        "killsNearDoors": 0,
+        "clusterKilled": 0,
+        "clusterSize": 13,
+        "minHp": 100,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.1333333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio",
+            "l2.gateClosed"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 3.1333333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 125,
+            "seconds": 3.3833333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 124,
+            "seconds": 2.716666666666667,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 400,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 560,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 4515,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 371,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 321,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 324,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 27,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 33
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 27,
+          "groupsOf4": 4,
+          "chasingPlayer": 1,
+          "chasingFraction": 0.03333333333333333,
+          "scatteredSingles": 6
+        },
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "gate": {
+          "closeS": 0.6,
+          "infectedInsideAfter": 3,
+          "infectedInsideAtClosure": [
+            280,
+            282,
+            294
+          ],
+          "crossingsAfterClosure": []
+        },
+        "diedBy120": false,
+        "scatteredSingleAdmissions": [
+          {
+            "id": 262,
+            "tick": 4023,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 264,
+            "tick": 4030,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 266,
+            "tick": 4040,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 268,
+            "tick": 4050,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4060,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 272,
+            "tick": 4070,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      }
+    },
+    "L2/idle": {
+      "protected": true,
+      "benchIdentityCensus": 4,
+      "report": {
+        "profile": "idle",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 181.88333333333333,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 0,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.716666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.733333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 49.05
+          },
+          {
+            "type": "objective:ride",
+            "t": 49.05
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.85
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 57.86666666666667
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 61.86666666666667
+          },
+          {
+            "type": "objective:doors",
+            "t": 61.86666666666667
+          },
+          {
+            "type": "l2.radio",
+            "t": 106.86666666666666
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 24,
+            "rescue": 24
+          },
+          "60": {
+            "all": 30,
+            "rescue": 17
+          },
+          "90": {
+            "all": 30,
+            "rescue": 17
+          },
+          "120": {
+            "all": 30,
+            "rescue": 16
+          }
+        },
+        "firefighterHits": 29,
+        "firefightersTurnedBy90": 4,
+        "firstDeathS": null,
+        "killsNearDoors": 0,
+        "clusterKilled": 0,
+        "clusterSize": 0,
+        "minHp": 100,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.5833333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 3.3833333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 125,
+            "seconds": 3.1333333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          },
+          {
+            "id": 124,
+            "seconds": 3.2,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 493,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 735,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 658,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 483,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 460,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 408,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 45,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 14
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 9,
+          "groupsOf4": 2,
+          "chasingPlayer": 14,
+          "chasingFraction": 0.4666666666666667,
+          "scatteredSingles": 0
+        },
+        "cluster": null,
+        "gate": null,
+        "diedBy120": false,
+        "scatteredSingleAdmissions": []
+      }
+    },
+    "L2/aggressive": {
+      "protected": false,
+      "benchIdentityCensus": 4,
+      "report": {
+        "profile": "aggressive",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 77.4,
+        "deaths": 1,
+        "kills": 0,
+        "knockdowns": 8,
+        "damage": 106.83333333333294,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.716666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.733333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 49.05
+          },
+          {
+            "type": "objective:ride",
+            "t": 49.05
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.85
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 54.6
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 58.6
+          },
+          {
+            "type": "objective:doors",
+            "t": 58.6
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 19,
+            "rescue": 19
+          }
+        },
+        "firefighterHits": 17,
+        "firefightersTurnedBy90": 4,
+        "firstDeathS": 77.4,
+        "killsNearDoors": 8,
+        "clusterKilled": 0,
+        "clusterSize": 0,
+        "minHp": 16.833333333332945,
+        "deathsAt": [
+          "77s@-46,-34/collapse"
+        ],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.5833333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 3.2333333333333334,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 3.066666666666667,
+            "sameAsset": true
+          },
+          {
+            "id": 123,
+            "seconds": 3.216666666666667,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 656,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 635,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 650,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 1000,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 957,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 389,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 15,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 0
+        },
+        "radio": null,
+        "cluster": null,
+        "gate": null,
+        "diedBy120": true,
+        "scatteredSingleAdmissions": []
+      }
+    },
+    "L2/aggressive-uninterrupted-census": {
+      "protected": true,
+      "countOnly": true,
+      "qualified": true,
+      "route": {
+        "samples": 5401,
+        "maxDoorDistanceM": 10.003386703483809,
+        "outside15mTicks": 0
+      },
+      "report": {
+        "profile": "aggressive",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 148.61666666666667,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 27,
+        "damage": 0,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.716666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.733333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 49.05
+          },
+          {
+            "type": "objective:ride",
+            "t": 49.05
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.85
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 54.6
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 58.6
+          },
+          {
+            "type": "objective:doors",
+            "t": 58.6
+          },
+          {
+            "type": "l2.radio",
+            "t": 103.6
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 19,
+            "rescue": 19
+          },
+          "60": {
+            "all": 30,
+            "rescue": 0
+          },
+          "90": {
+            "all": 30,
+            "rescue": 0
+          }
+        },
+        "firefighterHits": 22,
+        "firefightersTurnedBy90": 4,
+        "firstDeathS": null,
+        "killsNearDoors": 27,
+        "clusterKilled": 0,
+        "clusterSize": 10,
+        "minHp": 100,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.5833333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 3.2333333333333334,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 3.066666666666667,
+            "sameAsset": true
+          },
+          {
+            "id": 123,
+            "seconds": 3.216666666666667,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 656,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 635,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 650,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 1000,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 957,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 389,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 17,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 30
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 29,
+          "groupsOf4": 4,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "cluster": null,
+        "gate": null,
+        "diedBy120": false,
+        "scatteredSingleAdmissions": [
+          {
+            "id": 275,
+            "tick": 5316,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 277,
+            "tick": 5316,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 279,
+            "tick": 5316,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 281,
+            "tick": 5316,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 283,
+            "tick": 5316,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 285,
+            "tick": 5316,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      }
+    },
+    "L2/side-approach": {
+      "protected": false,
+      "trace": [
+        {
+          "tick": 4320,
+          "x": -65.66681671142578,
+          "z": -20.251968383789062
+        },
+        {
+          "tick": 4380,
+          "x": -65.93699645996094,
+          "z": -15.760051727294922
+        },
+        {
+          "tick": 4440,
+          "x": -66.20730590820312,
+          "z": -11.2681884765625
+        },
+        {
+          "tick": 4500,
+          "x": -66.47761535644531,
+          "z": -6.776325225830078
+        },
+        {
+          "tick": 4560,
+          "x": -66.67950439453125,
+          "z": -3.422398328781128
+        },
+        {
+          "tick": 4620,
+          "x": -67.48030853271484,
+          "z": -1.2281447649002075
+        },
+        {
+          "tick": 4680,
+          "x": -68.18264770507812,
+          "z": 1.4283955097198486
+        },
+        {
+          "tick": 4740,
+          "x": -68.50582885742188,
+          "z": 5.916769504547119
+        },
+        {
+          "tick": 4800,
+          "x": -68.81051635742188,
+          "z": 10.396157264709473
+        },
+        {
+          "tick": 4860,
+          "x": -68.83540344238281,
+          "z": 12.888555526733398
+        },
+        {
+          "tick": 4920,
+          "x": -68.860107421875,
+          "z": 15.363454818725586
+        },
+        {
+          "tick": 4980,
+          "x": -68.88459777832031,
+          "z": 17.838354110717773
+        },
+        {
+          "tick": 5040,
+          "x": -68.90908813476562,
+          "z": 20.31325340270996
+        },
+        {
+          "tick": 5100,
+          "x": -68.93358612060547,
+          "z": 22.78815269470215
+        },
+        {
+          "tick": 5160,
+          "x": -68.95807647705078,
+          "z": 25.263051986694336
+        },
+        {
+          "tick": 5220,
+          "x": -68.59800720214844,
+          "z": 27.630733489990234
+        },
+        {
+          "tick": 5280,
+          "x": -66.260009765625,
+          "z": 27.956443786621094
+        },
+        {
+          "tick": 5340,
+          "x": -63.789024353027344,
+          "z": 28.099609375
+        },
+        {
+          "tick": 5400,
+          "x": -61.31824493408203,
+          "z": 28.242774963378906
+        },
+        {
+          "tick": 5460,
+          "x": -58.84746551513672,
+          "z": 28.385940551757812
+        },
+        {
+          "tick": 5520,
+          "x": -56.376686096191406,
+          "z": 28.52910614013672
+        },
+        {
+          "tick": 5580,
+          "x": -53.905906677246094,
+          "z": 28.672271728515625
+        },
+        {
+          "tick": 5640,
+          "x": -51.43512725830078,
+          "z": 28.815479278564453
+        },
+        {
+          "tick": 5700,
+          "x": -47.4555549621582,
+          "z": 29.04613494873047
+        },
+        {
+          "tick": 5760,
+          "x": -42.96306228637695,
+          "z": 29.306547164916992
+        },
+        {
+          "tick": 5820,
+          "x": -38.4705696105957,
+          "z": 29.566959381103516
+        },
+        {
+          "tick": 5880,
+          "x": -33.97807693481445,
+          "z": 29.82737159729004
+        },
+        {
+          "tick": 5940,
+          "x": -32.41620635986328,
+          "z": 33.220726013183594
+        },
+        {
+          "tick": 6000,
+          "x": -31.859947204589844,
+          "z": 37.68621063232422
+        },
+        {
+          "tick": 6060,
+          "x": -31.30364990234375,
+          "z": 42.151695251464844
+        },
+        {
+          "tick": 6120,
+          "x": -30.163908004760742,
+          "z": 46.05118179321289
+        },
+        {
+          "tick": 6180,
+          "x": -25.71295738220215,
+          "z": 46.71360778808594
+        },
+        {
+          "tick": 6240,
+          "x": -21.25798988342285,
+          "z": 47.347591400146484
+        },
+        {
+          "tick": 6300,
+          "x": -18.079696655273438,
+          "z": 47.57088088989258
+        },
+        {
+          "tick": 6360,
+          "x": -15.605131149291992,
+          "z": 47.61528396606445
+        },
+        {
+          "tick": 6420,
+          "x": -13.130517959594727,
+          "z": 47.65968704223633
+        },
+        {
+          "tick": 6480,
+          "x": -10.655904769897461,
+          "z": 47.7040901184082
+        },
+        {
+          "tick": 6540,
+          "x": -8.181291580200195,
+          "z": 47.74849319458008
+        },
+        {
+          "tick": 6600,
+          "x": -5.706578254699707,
+          "z": 47.784645080566406
+        },
+        {
+          "tick": 6660,
+          "x": -3.2316744327545166,
+          "z": 47.80547332763672
+        },
+        {
+          "tick": 6720,
+          "x": -0.756760835647583,
+          "z": 47.82627487182617
+        },
+        {
+          "tick": 6780,
+          "x": 1.718152642250061,
+          "z": 47.846988677978516
+        },
+        {
+          "tick": 6840,
+          "x": 4.193065166473389,
+          "z": 47.86770248413086
+        },
+        {
+          "tick": 6900,
+          "x": 6.667964458465576,
+          "z": 47.8884162902832
+        },
+        {
+          "tick": 6960,
+          "x": 10.485312461853027,
+          "z": 47.920387268066406
+        },
+        {
+          "tick": 7020,
+          "x": 14.985129356384277,
+          "z": 47.958038330078125
+        },
+        {
+          "tick": 7080,
+          "x": 19.484901428222656,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7140,
+          "x": 23.984947204589844,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7200,
+          "x": 28.48499298095703,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7260,
+          "x": 32.98503875732422,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7320,
+          "x": 37.485084533691406,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7380,
+          "x": 41.985130310058594,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7440,
+          "x": 46.48517608642578,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7500,
+          "x": 50.98522186279297,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7560,
+          "x": 55.485267639160156,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7620,
+          "x": 59.985313415527344,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7680,
+          "x": 64.48533630371094,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7740,
+          "x": 68.98515319824219,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7800,
+          "x": 73.48497009277344,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7860,
+          "x": 77.98478698730469,
+          "z": 47.999977111816406
+        },
+        {
+          "tick": 7920,
+          "x": 80.85486602783203,
+          "z": 45.453128814697266
+        },
+        {
+          "tick": 7980,
+          "x": 81.34867858886719,
+          "z": 41.006805419921875
+        },
+        {
+          "tick": 8040,
+          "x": 81.41339111328125,
+          "z": 36.50809860229492
+        },
+        {
+          "tick": 8100,
+          "x": 81.40178680419922,
+          "z": 32.94913101196289
+        },
+        {
+          "tick": 8160,
+          "x": 81.40178680419922,
+          "z": 32.94913101196289
+        },
+        {
+          "tick": 8220,
+          "x": 81.40178680419922,
+          "z": 32.94913101196289
+        },
+        {
+          "tick": 8280,
+          "x": 81.40178680419922,
+          "z": 32.94913101196289
+        },
+        {
+          "tick": 8340,
+          "x": 82.76580047607422,
+          "z": 32.374847412109375
+        },
+        {
+          "tick": 8400,
+          "x": 81.95330810546875,
+          "z": 32.294715881347656
+        },
+        {
+          "tick": 8460,
+          "x": 81.95330810546875,
+          "z": 32.294715881347656
+        }
+      ],
+      "alarms": [],
+      "visitedSide": true,
+      "report": {
+        "profile": "complete",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 141.86666666666667,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 12,
+        "damage": 36,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.716666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.733333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 49.05
+          },
+          {
+            "type": "objective:ride",
+            "t": 49.05
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.85
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 54.6
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 58.6
+          },
+          {
+            "type": "objective:doors",
+            "t": 58.6
+          },
+          {
+            "type": "l2.radio",
+            "t": 71.58333333333333
+          },
+          {
+            "type": "l2.gateClosed",
+            "t": 134.86666666666667
+          },
+          {
+            "type": "objective:bridge",
+            "t": 136.86666666666667
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 30,
+            "rescue": 11
+          },
+          "60": {
+            "all": 30,
+            "rescue": 1
+          }
+        },
+        "firefighterHits": 7,
+        "firefightersTurnedBy90": 1,
+        "firstDeathS": null,
+        "killsNearDoors": 2,
+        "clusterKilled": 0,
+        "clusterSize": 13,
+        "minHp": 71.66666666666623,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.5833333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio",
+            "l2.gateClosed"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 2.966666666666667,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 601,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 3435,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 527,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 608,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 391,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 292,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 17,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 33
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 24,
+          "groupsOf4": 4,
+          "chasingPlayer": 3,
+          "chasingFraction": 0.1,
+          "scatteredSingles": 6
+        },
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "gate": {
+          "closeS": 0.6,
+          "infectedInsideAfter": 0,
+          "infectedInsideAtClosure": [],
+          "crossingsAfterClosure": []
+        },
+        "diedBy120": false,
+        "scatteredSingleAdmissions": [
+          {
+            "id": 261,
+            "tick": 4079,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 263,
+            "tick": 4079,
+            "x": -34,
+            "z": 2.25
+          },
+          {
+            "id": 265,
+            "tick": 4079,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 267,
+            "tick": 4090,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 269,
+            "tick": 4110,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 271,
+            "tick": 4120,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      }
+    },
+    "L2/alarm-approach": {
+      "protected": false,
+      "trace": [
+        {
+          "tick": 4260,
+          "x": -27.852542877197266,
+          "z": -30.81600570678711
+        },
+        {
+          "tick": 4320,
+          "x": -23.35390853881836,
+          "z": -30.919349670410156
+        },
+        {
+          "tick": 4380,
+          "x": -18.85397720336914,
+          "z": -30.95128059387207
+        },
+        {
+          "tick": 4440,
+          "x": -14.354066848754883,
+          "z": -30.983266830444336
+        },
+        {
+          "tick": 4500,
+          "x": -9.854084014892578,
+          "z": -30.986713409423828
+        },
+        {
+          "tick": 4560,
+          "x": -5.354095458984375,
+          "z": -30.98871612548828
+        },
+        {
+          "tick": 4620,
+          "x": -0.8540970087051392,
+          "z": -30.990718841552734
+        },
+        {
+          "tick": 4680,
+          "x": 3.645904302597046,
+          "z": -30.992721557617188
+        },
+        {
+          "tick": 4740,
+          "x": 8.145894050598145,
+          "z": -30.99472427368164
+        },
+        {
+          "tick": 4800,
+          "x": 12.645882606506348,
+          "z": -30.996726989746094
+        },
+        {
+          "tick": 4860,
+          "x": 17.145885467529297,
+          "z": -30.998729705810547
+        },
+        {
+          "tick": 4920,
+          "x": 21.645444869995117,
+          "z": -30.93932342529297
+        },
+        {
+          "tick": 4980,
+          "x": 26.14491844177246,
+          "z": -30.86911392211914
+        },
+        {
+          "tick": 5040,
+          "x": 30.644392013549805,
+          "z": -30.798904418945312
+        },
+        {
+          "tick": 5100,
+          "x": 35.00640106201172,
+          "z": -30.728145599365234
+        },
+        {
+          "tick": 5160,
+          "x": 39.505760192871094,
+          "z": -30.658794403076172
+        },
+        {
+          "tick": 5220,
+          "x": 44.00511932373047,
+          "z": -30.589391708374023
+        },
+        {
+          "tick": 5280,
+          "x": 47.988304138183594,
+          "z": -29.972200393676758
+        },
+        {
+          "tick": 5340,
+          "x": 48.31102752685547,
+          "z": -25.483827590942383
+        },
+        {
+          "tick": 5400,
+          "x": 48.633750915527344,
+          "z": -20.995454788208008
+        },
+        {
+          "tick": 5460,
+          "x": 48.956546783447266,
+          "z": -16.507081985473633
+        },
+        {
+          "tick": 5520,
+          "x": 49.279388427734375,
+          "z": -12.018657684326172
+        },
+        {
+          "tick": 5580,
+          "x": 49.60222625732422,
+          "z": -7.53023099899292
+        },
+        {
+          "tick": 5640,
+          "x": 49.79262924194336,
+          "z": -3.0401201248168945
+        },
+        {
+          "tick": 5700,
+          "x": 49.58572006225586,
+          "z": 1.45512056350708
+        },
+        {
+          "tick": 5760,
+          "x": 49.37881088256836,
+          "z": 5.95035982131958
+        },
+        {
+          "tick": 5820,
+          "x": 47.17586135864258,
+          "z": 9.321453094482422
+        },
+        {
+          "tick": 5880,
+          "x": 46.447593688964844,
+          "z": 13.065669059753418
+        },
+        {
+          "tick": 5940,
+          "x": 43.901824951171875,
+          "z": 14.482166290283203
+        },
+        {
+          "tick": 6000,
+          "x": 43.76586151123047,
+          "z": 15.341133117675781
+        },
+        {
+          "tick": 6060,
+          "x": 47.787288665771484,
+          "z": 16.358854293823242
+        },
+        {
+          "tick": 6120,
+          "x": 47.58723068237305,
+          "z": 20.8409481048584
+        },
+        {
+          "tick": 6180,
+          "x": 47.36784744262695,
+          "z": 25.335615158081055
+        },
+        {
+          "tick": 6240,
+          "x": 45.260501861572266,
+          "z": 27.919254302978516
+        },
+        {
+          "tick": 6300,
+          "x": 40.93967056274414,
+          "z": 29.176448822021484
+        },
+        {
+          "tick": 6360,
+          "x": 36.533546447753906,
+          "z": 29.921791076660156
+        },
+        {
+          "tick": 6420,
+          "x": 32.05459213256836,
+          "z": 29.739585876464844
+        },
+        {
+          "tick": 6480,
+          "x": 27.721515655517578,
+          "z": 28.525253295898438
+        },
+        {
+          "tick": 6540,
+          "x": 23.388439178466797,
+          "z": 27.31092071533203
+        },
+        {
+          "tick": 6600,
+          "x": 19.055362701416016,
+          "z": 26.09662628173828
+        },
+        {
+          "tick": 6660,
+          "x": 16.714736938476562,
+          "z": 22.793752670288086
+        },
+        {
+          "tick": 6720,
+          "x": 15.30007553100586,
+          "z": 18.521902084350586
+        },
+        {
+          "tick": 6780,
+          "x": 14.60592269897461,
+          "z": 19.382061004638672
+        },
+        {
+          "tick": 6840,
+          "x": 14.42728042602539,
+          "z": 23.878559112548828
+        },
+        {
+          "tick": 6900,
+          "x": 14.821711540222168,
+          "z": 27.884626388549805
+        },
+        {
+          "tick": 6960,
+          "x": 19.29326057434082,
+          "z": 28.389997482299805
+        },
+        {
+          "tick": 7020,
+          "x": 23.76481056213379,
+          "z": 28.895368576049805
+        },
+        {
+          "tick": 7080,
+          "x": 28.236360549926758,
+          "z": 29.400739669799805
+        },
+        {
+          "tick": 7140,
+          "x": 32.70917510986328,
+          "z": 29.89413070678711
+        },
+        {
+          "tick": 7200,
+          "x": 37.208763122558594,
+          "z": 29.959476470947266
+        },
+        {
+          "tick": 7260,
+          "x": 41.707557678222656,
+          "z": 30.06161880493164
+        },
+        {
+          "tick": 7320,
+          "x": 46.20623016357422,
+          "z": 30.169422149658203
+        },
+        {
+          "tick": 7380,
+          "x": 50.70490264892578,
+          "z": 30.277225494384766
+        },
+        {
+          "tick": 7440,
+          "x": 55.203575134277344,
+          "z": 30.385028839111328
+        },
+        {
+          "tick": 7500,
+          "x": 59.70158004760742,
+          "z": 30.378969192504883
+        },
+        {
+          "tick": 7560,
+          "x": 64.19864654541016,
+          "z": 30.21348762512207
+        },
+        {
+          "tick": 7620,
+          "x": 68.6624526977539,
+          "z": 30.300914764404297
+        },
+        {
+          "tick": 7680,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 7740,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 7800,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 7860,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 7920,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 7980,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 8040,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 8100,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 8160,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 8220,
+          "x": 69.02422332763672,
+          "z": 30.39944076538086
+        },
+        {
+          "tick": 8280,
+          "x": 71.65193176269531,
+          "z": 30.798063278198242
+        },
+        {
+          "tick": 8340,
+          "x": 76.13847351074219,
+          "z": 30.455623626708984
+        },
+        {
+          "tick": 8400,
+          "x": 78.12773895263672,
+          "z": 30.298994064331055
+        },
+        {
+          "tick": 8460,
+          "x": 78.12773895263672,
+          "z": 30.298994064331055
+        },
+        {
+          "tick": 8520,
+          "x": 78.12773895263672,
+          "z": 30.298994064331055
+        },
+        {
+          "tick": 8580,
+          "x": 79.55464935302734,
+          "z": 29.712759017944336
+        },
+        {
+          "tick": 8640,
+          "x": 81.09912109375,
+          "z": 30.213520050048828
+        },
+        {
+          "tick": 8700,
+          "x": 80.69636535644531,
+          "z": 29.722139358520508
+        },
+        {
+          "tick": 8760,
+          "x": 79.17174530029297,
+          "z": 29.887155532836914
+        }
+      ],
+      "alarms": [],
+      "visitedSide": false,
+      "report": {
+        "profile": "complete",
+        "opening": "alarm",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 146.7,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 25,
+        "damage": 72,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "l2.alarm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.15
+          },
+          {
+            "type": "objective:board",
+            "t": 24.716666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 24.733333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 49.05
+          },
+          {
+            "type": "objective:ride",
+            "t": 49.05
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 49.85
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 54.6
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 58.6
+          },
+          {
+            "type": "objective:doors",
+            "t": 58.6
+          },
+          {
+            "type": "l2.radio",
+            "t": 70.86666666666666
+          },
+          {
+            "type": "l2.gateClosed",
+            "t": 139.7
+          },
+          {
+            "type": "objective:bridge",
+            "t": 141.7
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 30,
+            "rescue": 7
+          },
+          "60": {
+            "all": 24,
+            "rescue": 4
+          }
+        },
+        "firefighterHits": 5,
+        "firefightersTurnedBy90": 1,
+        "firstDeathS": null,
+        "killsNearDoors": 3,
+        "clusterKilled": 15,
+        "clusterSize": 13,
+        "minHp": 82,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.15,
+          "crewAtTruckS": 1.5833333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio",
+            "l2.gateClosed"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.15,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-9"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 126,
+            "seconds": 2.966666666666667,
+            "sameAsset": true
+          }
+        ],
+        "crewExposure": [
+          {
+            "id": 121,
+            "samples": 637,
+            "protectedTicks": 0
+          },
+          {
+            "id": 122,
+            "samples": 698,
+            "protectedTicks": 0
+          },
+          {
+            "id": 123,
+            "samples": 596,
+            "protectedTicks": 0
+          },
+          {
+            "id": 124,
+            "samples": 540,
+            "protectedTicks": 0
+          },
+          {
+            "id": 125,
+            "samples": 391,
+            "protectedTicks": 0
+          },
+          {
+            "id": 126,
+            "samples": 292,
+            "protectedTicks": 0
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 84,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 33
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 27,
+          "groupsOf4": 4,
+          "chasingPlayer": 1,
+          "chasingFraction": 0.03333333333333333,
+          "scatteredSingles": 6
+        },
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "gate": {
+          "closeS": 0.6,
+          "infectedInsideAfter": 0,
+          "infectedInsideAtClosure": [],
+          "crossingsAfterClosure": []
+        },
+        "diedBy120": false,
+        "scatteredSingleAdmissions": [
+          {
+            "id": 260,
+            "tick": 3991,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 262,
+            "tick": 3991,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 264,
+            "tick": 3991,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 266,
+            "tick": 4010,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 268,
+            "tick": 4010,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4020,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      }
+    }
+  }
+}

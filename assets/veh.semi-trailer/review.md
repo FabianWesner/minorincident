@@ -1,0 +1,11 @@
+# Hero asset review
+
+Four visual rounds completed. Reference proportions and key identity features are retained: red long-nose tractor, tall sleeper, two stacks, five axles / rear dual tyres, cream trailer, mountain/sun/river mark, orange and navy stripes, chrome tanks/grille/trim, amber clearance lights, reflectors and rear door hardware. The fictional company reads SUNSET GROVE FREIGHT CO.
+
+Round 1 established all major and detail parts. Round 2 reduced density and revealed reversed box face winding in the faster primitive helper. Round 3 corrected that winding and reduced micro-bevels instead of relying on excessive global collapse. Round 4 protects thin livery, glazing, doors and paint silhouettes, exports baked AO, and produces the final 1600×900 / 96-sample hero render plus 960×540 game render.
+
+The final model uses 68,060 triangles and 39 draw calls. Wheel and door assemblies retain separate joint empties; child mesh origins coincide with those joints. Ten wheel centers, four door hinges, all category-required nodes and sockets, four semantic light anchors, collision boxes and physics extras are present. All material names are palette/emissive tokens, with scalar Principled materials and no textures. Static geometry merges by material; joint geometry merges by joint/material. Source uses deterministic geometry, direct primitive meshes, a single modifier-evaluation pass, and a small set of helpers.
+
+WebGPU and WebGL2 study/front-side/rear-side and game captures loaded without console errors or warnings. Adjacent game camera angles (44.8°, 45°, 45.2°) were inspected on both backends: no disappearing raised stripes, lettering, badges or reflectors were observed. LOD1 and LOD2 were also inspected on both backends without errors. Exported LOD1 is 9,922 triangles (14.58%); LOD2 is 2,547 triangles (3.74%), with simple solid tyres and protected cab/door silhouettes. Repeated hero export before the collider adjustment was byte-for-byte identical.
+
+Integration gap outside this task's permitted directory: the asset manifest still contains generic sedan dimensions. The actual exported game-space bounds are X 17.181 m, Y 4.740 m, Z 3.050 m (Y up). Update the manifest when integrating this GLB.

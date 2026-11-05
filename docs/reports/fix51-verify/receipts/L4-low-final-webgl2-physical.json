@@ -1,0 +1,280 @@
+{
+  "version": 1,
+  "sourceHash": "35f4ebdb7ebce674e688c7fa4fe120aac2424dd2fb8461f174494eeb57fa87d6",
+  "observerHash": "56e4986bc1a4ec09c2ced438b1bfd5873b982fa68964b541b61958685d08f201",
+  "revision": "47946b5196b5e52dd926eb128705c540351d4988",
+  "buildHash": "c5c4a1466e1d1aaa6428c93b3a715a9786d9afddbbe4e7ab3db0e1b17a621a2d",
+  "browserHash": "6ad31d62fcb45c3a1dead3a63f5e2a8ef400ea5df9e6fea5dd6bb0fc77415a6e",
+  "orchestratorHash": "7b5eb002ffbba0a7f0a7868fcc74685d9d0aa326b89fcbf54213f95f9a584cdd",
+  "requestedBackend": "webgl2",
+  "renderer": "webgl",
+  "input": "physical WASD/mouse/E; no objective skips",
+  "headless": true,
+  "survivalProtected": true,
+  "frameTiming": false,
+  "sampleSeconds": 330,
+  "status": "PASS",
+  "processExitCode": 0,
+  "level": "L4",
+  "tier": "low",
+  "zoom": 1.5,
+  "runs": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 261,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.033333333333333,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 1653
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster \u00b7 10\u00a0m",
+          "tick": 1834,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+          "tick": 2174,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 311\u00a0m",
+          "tick": 12861,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7089999914169312,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door \u00b7 5\u00a0m",
+          "tick": 14500,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.7999999999999998
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.8
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down \u00b7 0:07 remaining",
+          "tick": 14637,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "events": [
+    {
+      "type": "physical-l4-breach",
+      "side": "north",
+      "tick": 9311,
+      "levelSeconds": 155.18333333333334,
+      "afterAlarmSeconds": 118.96666666666667,
+      "alive": 77
+    },
+    {
+      "type": "physical-l4-breach",
+      "side": "west",
+      "tick": 10087,
+      "levelSeconds": 168.11666666666667,
+      "afterAlarmSeconds": 131.9,
+      "alive": 77
+    },
+    {
+      "type": "physical-l4-breach",
+      "side": "south",
+      "tick": 10361,
+      "levelSeconds": 172.68333333333334,
+      "afterAlarmSeconds": 136.46666666666667,
+      "alive": 78
+    },
+    {
+      "type": "l4.doorBarred",
+      "tick": 14628
+    },
+    {
+      "type": "l4.battle",
+      "tick": 14703
+    },
+    {
+      "type": "l4.battle",
+      "tick": 14778
+    },
+    {
+      "type": "l4.battle",
+      "tick": 14853
+    },
+    {
+      "type": "l4.battle",
+      "tick": 14928
+    },
+    {
+      "type": "l4.battle",
+      "tick": 15003
+    }
+  ],
+  "steps": {
+    "ride": {
+      "ticks": 1828,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 0
+    },
+    "quartermaster": {
+      "ticks": 344,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 0
+    },
+    "hold": {
+      "ticks": 10677,
+      "playerWindups": 69,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 80
+    },
+    "hide": {
+      "ticks": 1641,
+      "playerWindups": 27,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 80
+    },
+    "bar": {
+      "ticks": 134,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 80
+    },
+    "wait": {
+      "ticks": 420,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 80
+    }
+  },
+  "audioGraphStartCount": 0,
+  "maximumRenderedBars": 16,
+  "derivedSheet": "full-L4-low-final-review.jpg",
+  "selectedRawCaptureIdentifiers": [
+    "test-results/fix51-r3b/full-l4-current/L4-low-z1.5-webgl2/captures/matrix-L4-first-threat-low-z1-5.jpg",
+    "test-results/fix51-r3b/full-l4-current/L4-low-z1.5-webgl2/captures/matrix-L4-first-threat-low-z0-5.jpg",
+    "test-results/fix51-r3b/full-l4-current/L4-low-z1.5-webgl2/captures/matrix-L4-wait-t14636-low-z0-5.jpg",
+    "test-results/fix51-r3b/full-l4-current/L4-low-z1.5-webgl2/captures/matrix-L4-result.jpg"
+  ],
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-final-webgl2-physical.json"
+    }
+  ],
+  "notes": "Supplementary final-source physical receipt. It does not relabel ancestor main browser receipts or qualify mortal survival, all bars, all roster clauses, or the other tier/backend/zoom."
+}

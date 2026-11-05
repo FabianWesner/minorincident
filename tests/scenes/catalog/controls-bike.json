@@ -1,0 +1,107 @@
+{
+  "note": "PO 10-19 local bicycle keys: accelerate, steer right, brake/reverse, steer left. Mouse navigation and touch retain their old paths.",
+  "ground": "district",
+  "vehicles": [
+    {
+      "id": "bike",
+      "asset": "vehicle.bicycle",
+      "at": [
+        -68.1,
+        7.2
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -69.3,
+        7.2
+      ],
+      "yaw": 0,
+      "god": true
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "mountBike": "bike"
+      }
+    },
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": 1,
+          "seconds": 0.6
+        }
+      }
+    },
+    {
+      "frame": 46,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": 1,
+          "steer": 1,
+          "seconds": 0.5
+        }
+      }
+    },
+    {
+      "frame": 76,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": -1,
+          "seconds": 1
+        }
+      }
+    },
+    {
+      "frame": 136,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": -1,
+          "steer": -1,
+          "seconds": 0.5
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier"
+  },
+  "frames": 166,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "controls-bike",
+  "layout": {
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -84,
+        -4
+      ],
+      [
+        -52,
+        20
+      ]
+    ]
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  }
+}

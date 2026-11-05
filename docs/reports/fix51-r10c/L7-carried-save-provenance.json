@@ -1,0 +1,281 @@
+{
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
+  "revision": "54bd31f1ade72e4552c8aa0180c0e348ca434251",
+  "toolSha256": "bb70a0e55a78b69c5d1a5f0e0b086b26731635b6381188802d118324c5020dc2",
+  "method": "Start at the authored L5-default boundary, complete mortal L5 and L6 with ordinary native policies, and call production completeCampaignLevel on each actual result. No invented roster or actor relocation. These are native-generated progressed saves, not a physical L1–L6 campaign claim.",
+  "rows": [
+    {
+      "tier": "low",
+      "runs": [
+        {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 212.25,
+          "deaths": 0,
+          "kills": 79,
+          "damageTaken": 75,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 168.95
+            },
+            {
+              "id": "metro",
+              "t": 212.25
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        {
+          "level": "L6",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 289.7,
+          "deaths": 0,
+          "kills": 13,
+          "damageTaken": 70,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "shelter",
+              "t": 33.2
+            },
+            {
+              "id": "stop",
+              "t": 69.21666666666667
+            },
+            {
+              "id": "retreat",
+              "t": 280.1333333333333
+            },
+            {
+              "id": "exit",
+              "t": 289.7
+            }
+          ],
+          "furthestObjective": "exit",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 100,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        }
+      ],
+      "path": "docs/reports/fix51-r10c/L7-low-carried-save.json.gz",
+      "saveSha256": "dac361575804d612f8d8ae0f4c3c6441f16b21037ea1b96b46ff49caefb9ebef",
+      "archiveSha256": "24a93dfb66ee83a416a92ef44657102e30c732a17885569468eb3fd61376ed2e",
+      "roster": [
+        {
+          "id": 289,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ]
+      },
+      "selectedAction": "weapon.army-mg"
+    },
+    {
+      "tier": "high",
+      "runs": [
+        {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 221.61666666666667,
+          "deaths": 0,
+          "kills": 108,
+          "damageTaken": 37.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 173.5
+            },
+            {
+              "id": "metro",
+              "t": 221.61666666666667
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        {
+          "level": "L6",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 255.3,
+          "deaths": 0,
+          "kills": 19,
+          "damageTaken": 110,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "shelter",
+              "t": 33.2
+            },
+            {
+              "id": "stop",
+              "t": 69.21666666666667
+            },
+            {
+              "id": "retreat",
+              "t": 250.18333333333334
+            },
+            {
+              "id": "exit",
+              "t": 255.3
+            }
+          ],
+          "furthestObjective": "exit",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 106,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        }
+      ],
+      "path": "docs/reports/fix51-r10c/L7-high-carried-save.json.gz",
+      "saveSha256": "d8b8357dbcfcf6dc4fee3ee5abe27fb255ff82b49b7499d5b6e39f54c41c4a2b",
+      "archiveSha256": "c83bab2d70c75b41bc2dabd092fc9f3971d65cf57687ed087ff790f31f0724ef",
+      "roster": [
+        {
+          "id": 389,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 390,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 391,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 393,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 394,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 395,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 396,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 397,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 398,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 400,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 401,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 402,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ]
+      },
+      "selectedAction": "weapon.army-mg"
+    }
+  ]
+}

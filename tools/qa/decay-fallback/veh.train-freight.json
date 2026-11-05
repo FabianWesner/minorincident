@@ -1,0 +1,64 @@
+{
+  "name": "veh.train-freight",
+  "ground": "asphalt",
+  "size": 70,
+  "props": [
+    {
+      "id": "normal",
+      "asset": "veh.train-freight",
+      "at": [
+        0,
+        -6.3797999999999995
+      ]
+    },
+    {
+      "id": "wrecked",
+      "asset": "veh.train-freight",
+      "at": [
+        0,
+        0.0
+      ],
+      "decay": "wrecked"
+    },
+    {
+      "id": "burned",
+      "asset": "veh.train-freight",
+      "at": [
+        0,
+        6.3797999999999995
+      ],
+      "decay": "burned"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 3.5354285714285716
+  },
+  "frames": 2,
+  "shots": [
+    0,
+    2
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "camera": {
+        "mode": "close",
+        "target": [
+          0,
+          0.8,
+          0
+        ],
+        "radius": 74.244,
+        "azimuth": 135
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

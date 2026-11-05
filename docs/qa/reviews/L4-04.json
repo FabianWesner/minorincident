@@ -1,0 +1,21 @@
+{
+  "row": "L4-04",
+  "status": "PASS",
+  "reviewer": "Codex",
+  "date": "2026-11-03",
+  "commit": "f5f4adbcfaf103947e2d716e6cc57e108f07b08a",
+  "clauses": [
+    {
+      "clause": "Scale: 18–22 soldiers, 60–70 civilians (40 + 24) high, ≥ 40 % armed; low 50 %; living infected plus reservations ≤ 120 / 80, living characters ≤ 190 / 120 (low budget amended 2026-11-02 to retain ≥60 living at first breach; downed/recoverable bodies excluded from low living cap).",
+      "verdict": "PASS",
+      "note": "Full numeric census at both qualities and complete/stationary policies; exact peak tuples, identity arrays and negative controls retained in proof."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-r10b/L4-04-proof.json",
+      "sha256": "f68642ce7ad895abdc19e73aa642c02037cdf5b094387f2ca61088f0b7a6fc6d",
+      "what": "Actual turn population/weapon identity sets and every-war-tick capacity/census coverage; six missing/bad measurement controls per policy and quality. No visual claim."
+    }
+  ]
+}

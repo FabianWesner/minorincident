@@ -1,0 +1,83 @@
+{
+  "name": "survivors-ai-follow-facing",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L5",
+  "tier": 5,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 30,
+  "shots": [
+    1,
+    60,
+    150,
+    240,
+    359
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "note": "PO #73: handgun survivor follows the production L7 formation through a right angle with no infected nearby. It faces the actual route, with the gun lowered, rather than retaining the shelter guard heading.",
+  "l7Group": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "walk": [
+          [
+            12,
+            0
+          ],
+          [
+            12,
+            8
+          ],
+          [
+            5,
+            8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "armed",
+      "kind": "pedestrian",
+      "at": [
+        -1,
+        0
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.dale.aftermath"
+      },
+      "state": {
+        "survivor": {
+          "slot": 0
+        }
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "armed",
+      "do": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier"
+        }
+      }
+    }
+  ]
+}

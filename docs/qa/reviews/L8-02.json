@@ -1,0 +1,77 @@
+{
+  "row": "L8-02",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "ca788289cedc027c74ef3c2ebc416442c31d4ffe",
+  "clauses": [
+    {
+      "clause": "Exactly 60 active sim seconds without objective/waypoint/scripted attack.",
+      "verdict": "PASS",
+      "note": "Current physical L7\u2192L8 entry in both tiers: reviewed marker-free calm arrival, no text/pin/world marker beforetick3600, sampled at<=33tick gaps fromtick0 through>=3583. Breach text/pin/worldmarker appear exactlytick3600. Native every-tick four-policy ledger proves zero scripted infected attacks and no objective during3600tick calm. All104 physical panels personally inspected and individual seen/hashes retained underL8-01, raws deleted. Before receipt falsely rejected complete60-second evidence solely for later low APC cannot-finish and roundoffzoom1.5000000000000002. Consumer now requires completed unskipped L7 and actual unskipped L8 entry, preserves allcalm coverage and console/page-error rejection, and leaves later departure to itsownrow. Eight original negative controls reject missingtick0, earlytext/pin/marker, breach3599/3601, samplinggap and missingtier. No timer/coverage/target changed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/low-L7-L8-carried-low-input.json.gz",
+      "sha256": "3f57c3e24e3d5320107c1ceca073699d31314847a8f0e357fde2fe8df2b999bc",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low-input.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/low-review.json.gz",
+      "sha256": "653867d83afda26a0ba837cfb08bff364814993233c6865a874f297c068345af",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/review.json; all capture cells personally inspected and individually described"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/high-L7-L8-carried-high-input.json.gz",
+      "sha256": "2f6b5103bab2d794c5a9b564e868fc3b745ca4246850afde5106165a99b5b5d2",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high-input.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/high-review.json.gz",
+      "sha256": "1018797745ba189710daa7f98b49eadcf87e8140a63ac024281d9b09aa5b6aa5",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/review.json; all capture cells personally inspected and individually described"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/arrival-proof.json.gz",
+      "sha256": "0650a267dea40e1d2f11a73949d2327dfdc8d7fa630a58a38a4b1ba3a8681562",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L8-arrival-proof.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-low-complete.json.gz",
+      "sha256": "dad9ed4018afebcf4165aede9b78c419ef5124fe87736d7b36dadd085981e3be",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-complete.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-low-stationary.json.gz",
+      "sha256": "52c4521bfc1317527e6045039cd53148c8cc94f945b8b3cd38e788f3811e8711",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-stationary.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-high-complete.json.gz",
+      "sha256": "e26c4ef749f93440ddc98577ce419a5f9a4057f73541d4ca069cbcaeb0f0d255",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-complete.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-high-stationary.json.gz",
+      "sha256": "8fe1017f485d6faab2c35f1918ce9056a360c745da4af3e26ac37cf99e37324c",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-stationary.json; exact actor, rack, HP, selection or native pickup data retained"
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-02/checker-before.json",
+      "sha256": "c36db17a9987270feebae87114dd7820c6ad23451ced6e8db5f6c735bba27c2f",
+      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-02/checker-before.ts",
+      "sha256": "b49dbb189ad799ccf8ccc48adc14e1d95248c6df1c5a4f71231a69274dc41cbb",
+      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-02/coverage-proof.json",
+      "sha256": "1652a71867f0c8df0596d76cf622e1580ef75f262a6b1eb5c2e2d23a59466919",
+      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+    }
+  ],
+  "notes": "Full unchanged60-second criterion; independent later low APC failure retained, no game changes."
+}

@@ -1,0 +1,730 @@
+{
+  "lane": "fix51-r2c",
+  "frameTiming": false,
+  "reviewer": "Codex, full-size shot-0060 views",
+  "scenes": [
+    {
+      "scene": "fix51-r2c-corridor-z0.5",
+      "tier": "low",
+      "backend": "webgl",
+      "sourceSpec": {
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "camera": {
+          "mode": "game",
+          "target": "corridor-line:infected.alpha:0",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "name": "fix51-r2c-corridor-z0.5",
+        "note": "Production mission inventory and late-region threats. Game camera follows the regular Alpha so its silhouette, health bar and adjacent dogs are visible at both tiers/zooms; backpack and terminal have separate catalog scenes.",
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              3015,
+              44
+            ],
+            [
+              3100,
+              124
+            ]
+          ]
+        },
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              3055,
+              84
+            ],
+            "yaw": 210
+          }
+        ],
+        "cureProgression": {
+          "checkpoint": "cure-corridor",
+          "authored": true
+        },
+        "cureEncounter": "corridor-line"
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "foreArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.5,
+            "at": [
+              3059.1,
+              0.803,
+              88.519
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 2
+          },
+          {
+            "bone": "upperArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.7,
+            "at": [
+              3059.201,
+              0.947,
+              88.716
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 1
+          },
+          {
+            "bone": "shinR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": false,
+            "clearanceCm": 2,
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 51,
+            "count": 1
+          }
+        ],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-low/fix51-r2c-corridor-z0.5-low/shot-0060.png",
+        "sha256": "38c90770c3a036a8fa6e0b382f98021d6ed3c28daf842ffcd7211456212eec1b"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-corridor-z1.5",
+      "tier": "low",
+      "backend": "webgl",
+      "sourceSpec": {
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "camera": {
+          "mode": "game",
+          "target": "corridor-line:infected.alpha:0",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "name": "fix51-r2c-corridor-z1.5",
+        "note": "Production mission inventory and late-region threats. Game camera follows the regular Alpha so its silhouette, health bar and adjacent dogs are visible at both tiers/zooms; backpack and terminal have separate catalog scenes.",
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              3015,
+              44
+            ],
+            [
+              3100,
+              124
+            ]
+          ]
+        },
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              3055,
+              84
+            ],
+            "yaw": 210
+          }
+        ],
+        "cureProgression": {
+          "checkpoint": "cure-corridor",
+          "authored": true
+        },
+        "cureEncounter": "corridor-line"
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "foreArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.5,
+            "at": [
+              3059.1,
+              0.803,
+              88.519
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 2
+          },
+          {
+            "bone": "upperArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.7,
+            "at": [
+              3059.201,
+              0.947,
+              88.716
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 1
+          },
+          {
+            "bone": "shinR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": false,
+            "clearanceCm": 2,
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 51,
+            "count": 1
+          }
+        ],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-low/fix51-r2c-corridor-z1.5-low/shot-0060.png",
+        "sha256": "c4a6162fdc848eee755fbbd858f08eeb25ba21e2f30e841dd7ef9744b21988e8"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-depot-z0.5",
+      "tier": "low",
+      "backend": "webgl",
+      "sourceSpec": {
+        "name": "fix51-r2c-depot-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1327,
+              60
+            ],
+            [
+              1412,
+              140
+            ]
+          ]
+        },
+        "cureEncounter": "depot-workers",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              1367,
+              100
+            ],
+            "loadout": [
+              "weapon.shotgun",
+              "weapon.shotgun"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 12.4,
+            "actor": "courier",
+            "frame": 3,
+            "count": 40
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-low/fix51-r2c-depot-z0.5-low/shot-0060.png",
+        "sha256": "28e41b14749a61150f381b09a0d67a3ce2272d082dd5891c78d0cebe72c8b77a"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-depot-z1.5",
+      "tier": "low",
+      "backend": "webgl",
+      "sourceSpec": {
+        "name": "fix51-r2c-depot-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1327,
+              60
+            ],
+            [
+              1412,
+              140
+            ]
+          ]
+        },
+        "cureEncounter": "depot-workers",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              1367,
+              100
+            ],
+            "loadout": [
+              "weapon.shotgun",
+              "weapon.shotgun"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 12.4,
+            "actor": "courier",
+            "frame": 3,
+            "count": 40
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-low/fix51-r2c-depot-z1.5-low/shot-0060.png",
+        "sha256": "00dcadbf4dc9f4ae6e50a8cfc5d038a3e23bc6732dc85df9465b377c091ff882"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-corridor-z0.5",
+      "tier": "high",
+      "backend": "webgl",
+      "sourceSpec": {
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "camera": {
+          "mode": "game",
+          "target": "corridor-line:infected.alpha:0",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "name": "fix51-r2c-corridor-z0.5",
+        "note": "Production mission inventory and late-region threats. Game camera follows the regular Alpha so its silhouette, health bar and adjacent dogs are visible at both tiers/zooms; backpack and terminal have separate catalog scenes.",
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              3015,
+              44
+            ],
+            [
+              3100,
+              124
+            ]
+          ]
+        },
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              3055,
+              84
+            ],
+            "yaw": 210
+          }
+        ],
+        "cureProgression": {
+          "checkpoint": "cure-corridor",
+          "authored": true
+        },
+        "cureEncounter": "corridor-line"
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-high/fix51-r2c-corridor-z0.5/shot-0060.png",
+        "sha256": "f802969124a00cca6ddee6160e7e7cfad0369013e3e30d07ebb497ac1135be46"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-corridor-z1.5",
+      "tier": "high",
+      "backend": "webgl",
+      "sourceSpec": {
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "camera": {
+          "mode": "game",
+          "target": "corridor-line:infected.alpha:0",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "name": "fix51-r2c-corridor-z1.5",
+        "note": "Production mission inventory and late-region threats. Game camera follows the regular Alpha so its silhouette, health bar and adjacent dogs are visible at both tiers/zooms; backpack and terminal have separate catalog scenes.",
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              3015,
+              44
+            ],
+            [
+              3100,
+              124
+            ]
+          ]
+        },
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              3055,
+              84
+            ],
+            "yaw": 210
+          }
+        ],
+        "cureProgression": {
+          "checkpoint": "cure-corridor",
+          "authored": true
+        },
+        "cureEncounter": "corridor-line"
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "foreArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.5,
+            "at": [
+              3059.1,
+              0.803,
+              88.519
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 2
+          },
+          {
+            "bone": "upperArmR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": true,
+            "clearanceCm": 0.7,
+            "at": [
+              3059.201,
+              0.947,
+              88.716
+            ],
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 45,
+            "count": 1
+          },
+          {
+            "bone": "shinR",
+            "prop": "prop.utility-pole:2118",
+            "asset": "prop.utility-pole",
+            "crossing": false,
+            "clearanceCm": 1.9,
+            "actor": "corridor-line:infected.runner:19",
+            "frame": 51,
+            "count": 1
+          }
+        ],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-high/fix51-r2c-corridor-z1.5/shot-0060.png",
+        "sha256": "e1d41c0da6c978570f8e0e45022a91d7eab6209bced8cb6536664e8cb4042195"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-depot-z0.5",
+      "tier": "high",
+      "backend": "webgl",
+      "sourceSpec": {
+        "name": "fix51-r2c-depot-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1327,
+              60
+            ],
+            [
+              1412,
+              140
+            ]
+          ]
+        },
+        "cureEncounter": "depot-workers",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              1367,
+              100
+            ],
+            "loadout": [
+              "weapon.shotgun",
+              "weapon.shotgun"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 12.4,
+            "actor": "courier",
+            "frame": 3,
+            "count": 40
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-high/fix51-r2c-depot-z0.5/shot-0060.png",
+        "sha256": "105f07e829dc786f141945e652399e7aca7f373aa8ca4ab85aeb51393cfee26d"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    },
+    {
+      "scene": "fix51-r2c-depot-z1.5",
+      "tier": "high",
+      "backend": "webgl",
+      "sourceSpec": {
+        "name": "fix51-r2c-depot-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1327,
+              60
+            ],
+            [
+              1412,
+              140
+            ]
+          ]
+        },
+        "cureEncounter": "depot-workers",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              1367,
+              100
+            ],
+            "loadout": [
+              "weapon.shotgun",
+              "weapon.shotgun"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30
+      },
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 12.4,
+            "actor": "courier",
+            "frame": 3,
+            "count": 40
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "reviewedShot": {
+        "file": "test-results/fix51-r2c/scenes-high/fix51-r2c-depot-z1.5/shot-0060.png",
+        "sha256": "796f01412bce6d6cfc57594b74f9db29e36ab5cdf56e9db48d1e32c7bcb397c2"
+      },
+      "review": "Depot bodies, dogs and courier are visible at far zoom; near zoom crops most of the crowd. Corridor Alpha/dogs/humans are visible, but the close camera and utility pole occlude/overlap the dense cohort. These fixed fixtures do not qualify physical route combat, reachability or full concurrent census.",
+      "qualification": "PARTIAL",
+      "open": "Inspector reports nonzero gun/body contact in depot and actor/piercing counts in corridor. No collision or visual full-row pass claimed."
+    }
+  ]
+}

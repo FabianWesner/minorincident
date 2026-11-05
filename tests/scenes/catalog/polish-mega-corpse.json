@@ -1,0 +1,52 @@
+{
+  "name": "polish-mega-corpse",
+  "note": "Isolated full-body game-camera review; no overlapping Alpha bodies hide the delivered silhouette.",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "dof": false,
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        1
+      ],
+      "god": true
+    },
+    {
+      "id": "mega-dead",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        1
+      ],
+      "state": {
+        "corpse": true
+      },
+      "look": {
+        "model": "inf.mega-alpha"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 0.5
+  },
+  "frames": 60,
+  "sheet": 20,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

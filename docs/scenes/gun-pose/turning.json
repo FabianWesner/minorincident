@@ -1,0 +1,67 @@
+{
+  "extends": "standing.json",
+  "name": "gun-pose-turning",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 90,
+      "loadout": [
+        "weapon.handgun",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "z1",
+      "kind": "infected",
+      "at": [
+        7,
+        1.2
+      ],
+      "yaw": 270,
+      "state": "idle"
+    },
+    {
+      "id": "z2",
+      "kind": "infected",
+      "at": [
+        -6,
+        6
+      ],
+      "yaw": 270,
+      "state": "idle"
+    },
+    {
+      "id": "z3",
+      "kind": "infected",
+      "at": [
+        15,
+        0.6
+      ],
+      "yaw": 270,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "attack": "z1",
+        "seconds": 1
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "attack": "z2",
+        "seconds": 0.8
+      }
+    }
+  ]
+}

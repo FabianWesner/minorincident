@@ -1,0 +1,120 @@
+{
+  "name": "qa-alpha-asset-fair-line",
+  "note": "A-D1 fixture at existing l4-plaza, photo-l4-war-line, l4-hmg-2 anchors. Asset approach/clipping only; no scripted deletion or claim of Alpha destruction behavior. Real E26 300 HP slot overlays the existing south-run sandbag at x=-27.36, z=17.8; systems lanes supply damage behavior. Worker override uses the existing infected.runner crowd key, whose asset is inf.common-worker. Both human rigs start on the 0.05 m plaza paving; the inherited Separation grounding later uses the sim ground (0), recorded in the review.",
+  "seed": 7,
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "district": "D-FAIR",
+    "level": "L4",
+    "bbox": [
+      [
+        -34,
+        12
+      ],
+      [
+        -10,
+        36
+      ]
+    ],
+    "anchors": [
+      "l4-plaza",
+      "photo-l4-war-line",
+      "l4-hmg-2"
+    ]
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -22,
+        20
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "look": {
+        "model": "inf.alpha"
+      },
+      "at": [
+        -26,
+        30
+      ],
+      "yaw": 90,
+      "state": {
+        "chase": "courier"
+      },
+      "archetype": "infected.firefighter",
+      "floorY": 0.05
+    },
+    {
+      "id": "worker",
+      "kind": "infected",
+      "look": {
+        "model": "infected.runner"
+      },
+      "at": [
+        -18,
+        30
+      ],
+      "yaw": 90,
+      "state": {
+        "chase": "courier"
+      },
+      "archetype": "infected.firefighter",
+      "floorY": 0.05
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -22,
+      24
+    ],
+    "zoom": 1.3
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    60,
+    120,
+    180
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "propPenetrationFramesMax": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "barricadeSlots": [
+    {
+      "id": "alpha-south-line",
+      "groupId": "l4-south-line",
+      "a": {
+        "x": -28.09,
+        "z": 17.8
+      },
+      "b": {
+        "x": -26.63,
+        "z": 17.8
+      },
+      "height": 0.85,
+      "depth": 0.7,
+      "initialHp": 300,
+      "sandbag": true,
+      "inward": {
+        "x": 0,
+        "z": -1
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "po-shotgun-eight-metres",
+  "note": "PO #37: a firefighter (210 current HP) at 8 m falls to one centred shell. Standard game-camera projection centres the victim so its shove and fall stay visible even at close zoom; the Alpha scene also frames the courier.",
+  "ground": "asphalt",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "firefighter",
+      "kind": "infected",
+      "archetype": "infected.firefighter",
+      "at": [
+        8,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      8,
+      1,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "attack": "firefighter",
+        "seconds": 0.2
+      }
+    }
+  ],
+  "frames": 90,
+  "sheet": 4,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHealth": {
+      "firefighter": [
+        0,
+        0
+      ]
+    }
+  }
+}

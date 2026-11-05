@@ -1,0 +1,7 @@
+# bld.police-station
+
+Canonical L3 station, 12 m deep × 16 m wide × 6.85 m tall. References inspected: assets/bld.police-station/reference-upscaled.png in the main checkout. Two-storey civic brick block, separate low armory wing, blue open entrance, badge, enclosed rail yard with open east access and three sandbag positions. Wall boxes are authored around real entrance and armory openings. Roof and interior remain independent cutaway owners; doorMain is a separate pivot with an open leaf. Palette batches total eight draws including that door.
+
+Interface anchors (Blender XYZ; export maps to game X,Z,-Y): entranceSocket (3.25,-3,.2), armorySocket (1.3,3,.2), yardEntrySocket (5.5,6.3,.2), coverLeftSocket (4.25,-5.6,.2), coverRightSocket (4.25,-.4,.2). DoorMain hinge (3,-4,.28), initial Blender rotation -90° Z, exported -90° Y, with ss_door initialState=open. Fixed ss_physics and col:* wall proxies; the apertures remain open. Level lane places prop.armory-table via the armory anchor and the existing police bridge checkpoint kit, officers, gate, mission/nav and lighting systems. No emitting fixture is modeled here.
+
+Explicit LOD recipes omit masonry accents and mullions and use un-beveled solids at distance. Complete roofs, walls, doors, windows, fence and sandbags remain. Source export is metres with no scale fitting. The yard uses chunky pickets rather than fine chain-link wire. Text is subpixel at 150px, but badge and blue entrance remain readable.

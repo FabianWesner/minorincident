@@ -1,0 +1,19 @@
+{
+  "name": "dog-pet-trot",
+  "ground": "sidewalk",
+  "size": 70,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-25, 8], "yaw": 0, "god": true },
+    { "id": "dog-run", "kind": "animal", "pet": "dog", "at": [-17, -1.6], "yaw": 0 },
+    { "id": "dog-flee", "kind": "animal", "pet": "dog", "at": [-18, 0.6], "yaw": 0 }
+  ],
+  "script": [
+    { "frame": 30, "actor": "dog-run", "do": { "run": [[14, -1.6], [-17, -1.6]] } },
+    { "frame": 40, "actor": "dog-flee", "do": { "flee": [-24, 0.6] } }
+  ],
+  "camera": { "mode": "follow", "actor": "dog-run", "zoom": 0.5 },
+  "frames": 150,
+  "shots": [60, 90, 120, 150],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "footSinkMaxCm": 1, "footSlideMaxCm": 3 },
+  "note": "PO 10-15 'Dog looks broken' (repeat of 10-14 'that dog looks strange'): the healthy pet dog (amb.dog, NpcView lod1 on every tier) trotting at the jog speed and fleeing at 4.8 m/s. The sim used to put a moving pet at the corgi's 0.3 m height while NpcView drew it at y - 0.7: the dog sank 40 cm (sinkMaxCm 40), only the paws showed as separate blobs and the buried legs' shadow smeared out from under the body. Gate: paws on the pavement (sink <= 1 cm), planted (slide <= 3 cm)."
+}

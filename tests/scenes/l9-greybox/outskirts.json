@@ -1,0 +1,70 @@
+{
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "footSinkMaxCm": 2,
+    "footJitterRunMax": 2,
+    "yawDriftMaxDeg": 15,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l9-greybox-outskirts",
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        510,
+        -140
+      ],
+      [
+        599,
+        45
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      550,
+      -65
+    ],
+    "zoom": 5
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        535,
+        0
+      ],
+      "state": {
+        "run": [
+          [
+            535,
+            0
+          ],
+          [
+            550,
+            0
+          ],
+          [
+            550,
+            12
+          ]
+        ]
+      }
+    }
+  ]
+}

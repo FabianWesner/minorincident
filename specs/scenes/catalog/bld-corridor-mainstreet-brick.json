@@ -1,0 +1,42 @@
+{
+ "name": "bld-corridor-mainstreet-brick",
+ "note": "D-CORRIDOR bld.mainstreet-brick (bld.mainstreet-brick:1) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -107.5,
+    -46.3
+   ],
+   [
+    -89.8,
+    -28.6
+   ]
+  ],
+  "ids": [
+   "bld.mainstreet-brick:1"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -98.6,
+   3.4,
+   -37.5
+  ],
+  "radius": 24.4,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

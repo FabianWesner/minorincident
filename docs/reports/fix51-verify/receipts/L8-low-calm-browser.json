@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "low",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "1f2fad545ae014c52bf010d08894aa294bff902b1b1aaebdc33529fe9a585c77",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-02",
+      "clause": "carried real-input 60-second objective-free DOM and marker audit",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "completed": true,
+        "consolePass": true,
+        "samples": 119,
+        "firstTick": 0,
+        "lastCalmTick": 3583,
+        "maxGapTicks": 31,
+        "breach": {
+          "elapsedMs": 60780.899999999994,
+          "tick": 3600,
+          "text": "Bring the survivors to the armored vehicle and board · 97 m",
+          "pin": true,
+          "marker": true,
+          "breached": true
+        },
+        "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
+        "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
+      },
+      "target": "physical L7→L8 campaign; sampled HUD text/pin/world-marker absent before tick3600 and appear at tick3600; native every-tick ledger separately requires zero scripted combat",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
+  }
+}

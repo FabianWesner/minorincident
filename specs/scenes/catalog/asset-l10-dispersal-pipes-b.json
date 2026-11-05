@@ -1,0 +1,53 @@
+{
+ "name": "asset-l10-dispersal-pipes-b",
+ "note": "L10 dispersal pipes on the port grid: tee +X port meets the elbow port; the elbow turns toward +Y. Look for: flanges touching without gap or overlap, supports reach the ground, the elbow arc closes cleanly. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p1",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    3,
+    -5
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   5,
+   2
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

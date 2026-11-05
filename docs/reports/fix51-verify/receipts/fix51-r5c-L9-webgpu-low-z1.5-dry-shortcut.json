@@ -1,0 +1,85 @@
+{
+  "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "960d87492dee52fbc3869aacea884cc437f5232bfe076c86cca1270c0334fd0e",
+  "driverSha256": "1b8686c0c55c9a954df3c875e2ecf3e9432a8b424f6845c11ddc09ff21afbbad",
+  "generatedAt": "2026-11-03T05:56:57.079Z",
+  "cell": "L9-webgpu-low-z1.5-dry-shortcut",
+  "level": "L9",
+  "backend": "webgpu",
+  "quality": "low",
+  "zoom": 1.5,
+  "variant": "dry-shortcut",
+  "method": "Headless ordinary WASD/mouse, mortal, no objective skips; camera set explicitly; named L9 route uses logged map assist; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 104,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 4.916666666666667,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive toward the city · 1020 m",
+            "tick": 7,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                470,
+                0,
+                0
+              ],
+              "playerY": 1.0187900066375732,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "Get clear of the wreck · 20 m",
+            "tick": 5401,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "yielded": false
+  },
+  "error": null
+}

@@ -1,0 +1,870 @@
+{
+  "version": 1,
+  "lane": "fix51-r2c",
+  "source": {
+    "sourceHash": "3838f4ef529b7abb8a7d72d827d7038fd1413ef41ea066fb6483d519d7193afd",
+    "observerHash": "25334397ecdcadb91f5acb29789e86b67392e8c1a3d0817543cdbc9dc4919f52",
+    "revision": "05f0e086b01dd5b31813a5ae06562e0841053376",
+    "browserHash": "32a594b6db6591c68e1255cc74b918f597501cf197f5d044925197c5ce7cbc54",
+    "fixtureHash": "9a47cbc6325d22ad0aa899bf3fc4f5c4584233f4b2e4a83d2b90130e17ac7b0b",
+    "checkpointHash": "67aeaa79f8c6ae03c37951a03cfdccf791020257062691580188701db19f0f48"
+  },
+  "headless": true,
+  "backend": "webgl2",
+  "metal": true,
+  "reviews": [
+    {
+      "tier": "low",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "low",
+      "spec": {
+        "name": "final-military-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1967,
+              -115
+            ],
+            [
+              2052,
+              -35
+            ]
+          ]
+        },
+        "cureEncounter": "military-breach",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2007,
+              -75
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "eec9f145535006fe7e794443154fa0beada805cb3d54e9e25c2029a660d70c5b",
+      "shot": "test-results/fix51-r2c/review-scenes-low/final-military-z0.5-low/shot-0000.png",
+      "imageSha256": "ddfef3001c3483424a2b5f3586e993867fa6711471cdd772bded2f305f8eec8f",
+      "viewedFullSize": true,
+      "finding": "Close view: courier and weapon silhouette are clear; most authored crowd is cropped beyond the image edges. No complete crowd count/readability verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "low",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "low",
+      "spec": {
+        "name": "final-military-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1967,
+              -115
+            ],
+            [
+              2052,
+              -35
+            ]
+          ]
+        },
+        "cureEncounter": "military-breach",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2007,
+              -75
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "d58ed2ab33e2571a9020d047625612f4499b7266e43f5153edaf7237e197eef2",
+      "shot": "test-results/fix51-r2c/review-scenes-low/final-military-z1.5-low/shot-0000.png",
+      "imageSha256": "303095880f7ae588bc0044503cde7012f5a4ad5a3ecefb463f6116dda828f2e8",
+      "viewedFullSize": true,
+      "finding": "Far view: separate humans and open road around the courier; military Alpha visible in high tier. Some figures enter or are cropped at image edges.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "low",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "low",
+      "spec": {
+        "name": "final-research-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              2627,
+              5
+            ],
+            [
+              2712,
+              85
+            ]
+          ]
+        },
+        "cureEncounter": "research-lab",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2667,
+              45
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "0052af828075bd90304c0384bcb2025541fbf8da49b0c26ba78b865ea71853cd",
+      "shot": "test-results/fix51-r2c/review-scenes-low/final-research-z0.5-low/shot-0000.png",
+      "imageSha256": "9e2c52506585532ba1aefc9c40ce3406049f07e1704149c1d1ecca784b7d4b4a",
+      "viewedFullSize": true,
+      "finding": "Close view: courier and weapon silhouette are clear; most authored crowd is cropped beyond the image edges. No complete crowd count/readability verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "shinL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.1,
+            "at": [
+              2665.697,
+              0.31,
+              48.916
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          },
+          {
+            "bone": "foreArmL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.3,
+            "at": [
+              2665.517,
+              0.848,
+              48.869
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 42,
+            "count": 2
+          },
+          {
+            "bone": "thighL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": false,
+            "clearanceCm": 1.6,
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          }
+        ],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "low",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "low",
+      "spec": {
+        "name": "final-research-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              2627,
+              5
+            ],
+            [
+              2712,
+              85
+            ]
+          ]
+        },
+        "cureEncounter": "research-lab",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2667,
+              45
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "1e5103ee8895375494cee1e1af9b1479a87b676e8bfb93c2a00df13bcb336826",
+      "shot": "test-results/fix51-r2c/review-scenes-low/final-research-z1.5-low/shot-0000.png",
+      "imageSha256": "62f0d4738e99d6407451161374b0263b06d6917e284c7f9c9381e47d9165b7fd",
+      "viewedFullSize": true,
+      "finding": "Far view: courier and separate humans visible beside research roof/truck; the foreground roof hides part of the lower-left area. No whole-region or physical combat verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "shinL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0,
+            "at": [
+              2665.697,
+              0.347,
+              48.916
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 6,
+            "count": 20
+          },
+          {
+            "bone": "foreArmL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0,
+            "at": [
+              2665.517,
+              0.938,
+              48.866
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 39,
+            "count": 2
+          },
+          {
+            "bone": "thighL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": false,
+            "clearanceCm": 0.3,
+            "actor": "research-lab:infected.runner:1",
+            "frame": 39,
+            "count": 20
+          }
+        ],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "high",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "high",
+      "spec": {
+        "name": "final-military-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1967,
+              -115
+            ],
+            [
+              2052,
+              -35
+            ]
+          ]
+        },
+        "cureEncounter": "military-breach",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2007,
+              -75
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "eec9f145535006fe7e794443154fa0beada805cb3d54e9e25c2029a660d70c5b",
+      "shot": "test-results/fix51-r2c/review-scenes-high/final-military-z0.5/shot-0000.png",
+      "imageSha256": "31a02155175bf9a649f3b201a4ee6bdc53fe5f2bd24da7f27ccc157816b356bf",
+      "viewedFullSize": true,
+      "finding": "Close view: courier and weapon silhouette are clear; most authored crowd is cropped beyond the image edges. No complete crowd count/readability verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "high",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "high",
+      "spec": {
+        "name": "final-military-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              1967,
+              -115
+            ],
+            [
+              2052,
+              -35
+            ]
+          ]
+        },
+        "cureEncounter": "military-breach",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2007,
+              -75
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "d58ed2ab33e2571a9020d047625612f4499b7266e43f5153edaf7237e197eef2",
+      "shot": "test-results/fix51-r2c/review-scenes-high/final-military-z1.5/shot-0000.png",
+      "imageSha256": "997a898830a668e26873aeb855468177ac4e9029dbcd8e855012665674d968c3",
+      "viewedFullSize": true,
+      "finding": "Far view: separate humans and open road around the courier; military Alpha visible in high tier. Some figures enter or are cropped at image edges.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "high",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "high",
+      "spec": {
+        "name": "final-research-z0.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              2627,
+              5
+            ],
+            [
+              2712,
+              85
+            ]
+          ]
+        },
+        "cureEncounter": "research-lab",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2667,
+              45
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 0.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "0052af828075bd90304c0384bcb2025541fbf8da49b0c26ba78b865ea71853cd",
+      "shot": "test-results/fix51-r2c/review-scenes-high/final-research-z0.5/shot-0000.png",
+      "imageSha256": "040fbb38e784871fa8c014a246b03c5c2746cfebdcac962bd8b988da809df6dd",
+      "viewedFullSize": true,
+      "finding": "Close view: courier and weapon silhouette are clear; most authored crowd is cropped beyond the image edges. No complete crowd count/readability verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "shinL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.2,
+            "at": [
+              2665.711,
+              0.278,
+              48.916
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          },
+          {
+            "bone": "foreArmL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.4,
+            "at": [
+              2665.517,
+              0.859,
+              48.87
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 39,
+            "count": 2
+          },
+          {
+            "bone": "thighL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": false,
+            "clearanceCm": 2.7,
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          }
+        ],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    },
+    {
+      "tier": "high",
+      "requestedBackend": "webgl2",
+      "reportedBackend": "webgl",
+      "actualTier": "high",
+      "spec": {
+        "name": "final-research-z1.5",
+        "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+        "seed": 32,
+        "ground": "district",
+        "time": "L10-night",
+        "dof": false,
+        "layout": {
+          "district": "D-CURE",
+          "bbox": [
+            [
+              2627,
+              5
+            ],
+            [
+              2712,
+              85
+            ]
+          ]
+        },
+        "cureEncounter": "research-lab",
+        "actors": [
+          {
+            "id": "courier",
+            "kind": "courier",
+            "at": [
+              2667,
+              45
+            ],
+            "loadout": [
+              "weapon.army-mg",
+              "weapon.army-mg"
+            ]
+          }
+        ],
+        "camera": {
+          "mode": "game",
+          "target": "courier",
+          "zoom": 1.5
+        },
+        "frames": 60,
+        "sheet": 30,
+        "expect": {
+          "consoleErrors": 0,
+          "undrawnFramesMax": 0,
+          "drawCallsMax": 300,
+          "trianglesMax": 500000
+        }
+      },
+      "specSha256": "1e5103ee8895375494cee1e1af9b1479a87b676e8bfb93c2a00df13bcb336826",
+      "shot": "test-results/fix51-r2c/review-scenes-high/final-research-z1.5/shot-0000.png",
+      "imageSha256": "7dc45577111490b6bae85d66be05954e38f87702b764f58e940633db5945811e",
+      "viewedFullSize": true,
+      "finding": "Far view: courier and separate humans visible beside research roof/truck; the foreground roof hides part of the lower-left area. No whole-region or physical combat verdict.",
+      "consoleErrors": [],
+      "clipping": {
+        "static": [],
+        "actors": [
+          {
+            "bone": "shinL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.2,
+            "at": [
+              2665.712,
+              0.277,
+              48.916
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          },
+          {
+            "bone": "foreArmL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": true,
+            "clearanceCm": 0.2,
+            "at": [
+              2665.517,
+              0.848,
+              48.868
+            ],
+            "actor": "research-lab:infected.runner:1",
+            "frame": 39,
+            "count": 2
+          },
+          {
+            "bone": "thighL",
+            "prop": "prop.cure-iso-tent:2044",
+            "asset": "prop.cure-iso-tent",
+            "crossing": false,
+            "clearanceCm": 2.7,
+            "actor": "research-lab:infected.runner:1",
+            "frame": 3,
+            "count": 1
+          }
+        ],
+        "gunBodies": [
+          {
+            "bone": "torso",
+            "prop": "courier/gun",
+            "asset": "gun",
+            "crossing": false,
+            "clearanceCm": 11.6,
+            "actor": "courier",
+            "frame": 3,
+            "count": 60
+          }
+        ],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 1,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 3,
+          "piercing": 2
+        }
+      },
+      "qualification": "Rendered production encounter slots. Manual visual inspection only; no performance, physical combat, full crowd census or clipping pass."
+    }
+  ],
+  "rawCapturePolicy": "Delete raw captures after storing reviewed image hashes; no frame timing analysis."
+}

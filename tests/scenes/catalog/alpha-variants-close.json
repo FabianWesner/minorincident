@@ -1,0 +1,27 @@
+{
+  "name": "alpha-variants-close",
+  "note": "PO #23: close-zoom (0.5, the closest player zoom) review of each Alpha look, one shot per variant (base, worker, hoodie, fire, suit): face and eyes readable under hats and hoods, trim attached to the body, growths not floating. Static rest pose; the camera settles on each variant before its shot.",
+  "seed": 10,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 60,
+  "dof": false,
+  "props": [
+    { "id": "alpha-base", "asset": "inf.alpha", "at": [-3, 3], "yaw": 30 },
+    { "id": "alpha-worker", "asset": "inf.alpha-worker", "at": [-1.5, 1.5], "yaw": 30 },
+    { "id": "alpha-hoodie", "asset": "inf.alpha-hoodie", "at": [0, 0], "yaw": 30 },
+    { "id": "alpha-fire", "asset": "inf.alpha-fire", "at": [1.5, -1.5], "yaw": 30 },
+    { "id": "alpha-suit", "asset": "inf.alpha-suit", "at": [3, -3], "yaw": 30 }
+  ],
+  "camera": { "mode": "game", "target": [-3, 1.4, 3], "zoom": 0.5 },
+  "script": [
+    { "frame": 40, "camera": { "mode": "game", "target": [-1.5, 1.4, 1.5], "zoom": 0.5 } },
+    { "frame": 80, "camera": { "mode": "game", "target": [0, 1.4, 0], "zoom": 0.5 } },
+    { "frame": 120, "camera": { "mode": "game", "target": [1.5, 1.4, -1.5], "zoom": 0.5 } },
+    { "frame": 160, "camera": { "mode": "game", "target": [3, 1.4, -3], "zoom": 0.5 } }
+  ],
+  "frames": 200,
+  "shots": [38, 78, 118, 158, 198],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 },
+  "sheet": 40
+}

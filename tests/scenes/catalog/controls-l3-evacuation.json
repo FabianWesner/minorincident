@@ -1,0 +1,17 @@
+{
+  "extends": "l3-base-rendezvous.json",
+  "note": "PO 10-19 arrival starts 15 s evacuation; safe boom closure and rescued group remain required.",
+  "frames": 60,
+  "sheet": 20,
+  "name": "controls-l3-evacuation",
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "camera": {
+    "mode": "follow",
+    "actor": "courier"
+  }
+}

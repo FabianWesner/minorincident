@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "high",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "2008cfc31e93c657ecae015b27b9b332152d3630b300431a0621903d0b403f79",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-01",
+      "clause": "actual carried L7 roster full health racks and selected weapon",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "completed": true,
+        "expected": [
+          32,
+          389,
+          391,
+          394,
+          395,
+          396,
+          398,
+          401,
+          402
+        ],
+        "actual": [
+          {
+            "id": 32,
+            "speed": 2.672600000000265,
+            "boarded": false,
+            "x": -1.4895763674384528,
+            "z": 67.55021626066161,
+            "distance": 2.867102740391056,
+            "hp": 60,
+            "route": {
+              "goal": -1,
+              "index": 17,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 225297,
+              "flowDistance": -1,
+              "flowNext": 225297
+            },
+            "calm": true
+          },
+          {
+            "id": 396,
+            "speed": 2.672599999999952,
+            "boarded": false,
+            "x": -0.31436522047797955,
+            "z": 67.53643910579784,
+            "distance": 2.4835373504918983,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 11,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 225299,
+              "flowDistance": -1,
+              "flowNext": 225299
+            },
+            "calm": true
+          },
+          {
+            "id": 389,
+            "speed": 2.6733333333332894,
+            "boarded": false,
+            "x": 0.8732100645069827,
+            "z": 67.5289763161038,
+            "distance": 2.6207735238154912,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 16,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 225301,
+              "flowDistance": -1,
+              "flowNext": 225301
+            },
+            "calm": true
+          },
+          {
+            "id": 391,
+            "speed": 2.673333333333035,
+            "boarded": false,
+            "x": -1.520031104793056,
+            "z": 66.33309257817307,
+            "distance": 3.9694715768963325,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 6,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 223496,
+              "flowDistance": -1,
+              "flowNext": 223496
+            },
+            "calm": true
+          },
+          {
+            "id": 394,
+            "speed": 2.6733333333334994,
+            "boarded": false,
+            "x": -0.33006503344016663,
+            "z": 66.32693897050645,
+            "distance": 3.6878612030124045,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 6,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 223499,
+              "flowDistance": -1,
+              "flowNext": 223499
+            },
+            "calm": true
+          },
+          {
+            "id": 395,
+            "speed": 2.6733333333331237,
+            "boarded": false,
+            "x": 0.8636336879632437,
+            "z": 66.32293910645988,
+            "distance": 3.777120591374735,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 9,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 223501,
+              "flowDistance": -1,
+              "flowNext": 223501
+            },
+            "calm": true
+          },
+          {
+            "id": 398,
+            "speed": 2.6733333333330207,
+            "boarded": false,
+            "x": -1.5328094428385537,
+            "z": 65.12520993868712,
+            "distance": 5.110096176191781,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 1,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 222296,
+              "flowDistance": -1,
+              "flowNext": 222296
+            },
+            "calm": true
+          },
+          {
+            "id": 401,
+            "speed": 2.673333333333041,
+            "boarded": false,
+            "x": -0.3382117845644614,
+            "z": 65.12174744246614,
+            "distance": 4.8899627019338165,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 17,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 222299,
+              "flowDistance": -1,
+              "flowNext": 222299
+            },
+            "calm": true
+          },
+          {
+            "id": 402,
+            "speed": 2.6733333333331704,
+            "boarded": false,
+            "x": 0.8579857443239934,
+            "z": 65.11926279844859,
+            "distance": 4.955576169132214,
+            "hp": 100,
+            "route": {
+              "goal": -1,
+              "index": 6,
+              "length": 0,
+              "next": [],
+              "target": null,
+              "flowCell": 222301,
+              "flowDistance": -1,
+              "flowNext": 222301
+            },
+            "calm": true
+          }
+        ],
+        "humansFull": true,
+        "arsenalMatch": true,
+        "racksMatch": true,
+        "expectedRacks": {
+          "LEFT": [
+            "weapon.fire-axe",
+            "weapon.bat"
+          ],
+          "RIGHT": [
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun",
+            "weapon.rocket-launcher"
+          ]
+        },
+        "nativeFull": true,
+        "before": "weapon.rocket-launcher",
+        "after": "weapon.rocket-launcher",
+        "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+        "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json"
+      },
+      "target": "same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-arrival-browser.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+    "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-high-input.json"
+  }
+}

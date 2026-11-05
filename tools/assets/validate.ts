@@ -1,0 +1,377 @@
+import { readFileSync, existsSync, statSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { PNG } from 'pngjs';
+import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
+import { getBounds } from '@gltf-transform/functions';
+import type { Document, Node, Scene, Mesh } from '@gltf-transform/core';
+import type { AssetDef } from '../../src/assets/types';
+import { atLeast, variantPath, drawComparisonPath } from '../../src/assets/types';
+import { validMaterial } from '../../src/assets/palette';
+import { assetIO } from './io';
+import { reviewErrors } from './review';
+import { requiredLods, semanticNodeNames, lodTriangleLimit } from './delivery';
+import { zfightErrors } from './zfight';
+
+export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; animatedDrawCalls?: number; fileKB: number; dimensions: number[]; hash: string }
+export function geometryHash(document: Document): string {
+  const hash = createHash('sha256');
+  for (const node of document.getRoot().listNodes().sort((a,b) => a.getName().localeCompare(b.getName()))) {
+    hash.update(JSON.stringify([node.getName(), node.getMatrix()]));
+    for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      // Exporters may renumber split vertices while keeping identical triangles.
+      // Hash geometry and winding, independent of vertex ordering and normals.
+      const pos = primitive.getAttribute('POSITION');
+      if (!pos) continue;
+      const indices = primitive.getIndices(), count = indices?.getCount() ?? pos.getCount();
+      const triangles: string[] = [], point = [0,0,0];
+      for (let i = 0; i < count; i += 3) {
+        const corners = [0,1,2].map((j) => { pos.getElement(indices?.getScalar(i+j) ?? i+j,point); return JSON.stringify(point); });
+        triangles.push([0,1,2].map((j) => [corners[j],corners[(j+1)%3],corners[(j+2)%3]].join('|')).sort()[0]);
+      }
+      hash.update(JSON.stringify(triangles.sort()));
+    }
+  }
+  return hash.digest('hex');
+}
+function descendants(node: Node): Node[] {
+  return [node, ...node.listChildren().flatMap(descendants)];
+}
+/** Include every animated owner/material primitive, including static attachments. */
+export function rigDrawErrors(document: Document, def: AssetDef, base: Document): string[] {
+  if (!def.rigDrawBase) return [];
+  const nodes = document.getRoot().listNodes();
+  const member = def.rigDrawBase.member;
+  const baseNodes = member ? base.getRoot().listNodes().find(n => n.getName() === member) : undefined;
+  if (member && !baseNodes) return [`rigDrawBase: missing member ${member}`];
+  const count = (list: Node[]) => list.reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
+  const calls = count(nodes), limit = count(baseNodes ? descendants(baseNodes) : base.getRoot().listNodes());
+  const errors = calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
+  // The crowd baker chooses animal clips by `body`, and skin/eye effects by material name.
+  if (nodes.some(n => n.getName() === 'body') && !base.getRoot().listNodes().some(n => n.getName() === 'body')) errors.push('living rig: added body node selects animal clips');
+  if (def.crowdSkin) {
+    // The UV-preserving skin route carries these semantics in vertex regions
+    // and an eye node; the former palette primitives are merged into one atlas.
+    const body = nodes.find(n => n.getName() === 'skin_body');
+    if (!body?.getSkin() || !body.getMesh()?.listPrimitives().some(p => {
+      const region = p.getAttribute('_CROWD_REGION');
+      return region && Array.from({ length: region.getCount() }, (_, i) => region.getScalar(i)).some(value => Math.abs(value - 1) < .01);
+    })) errors.push('living rig: lost skinned skin classification');
+    if (!nodes.some(n => n.getExtras().crowdEye && n.getMesh())) errors.push('living rig: lost skinned eye classification');
+  } else {
+    const names = document.getRoot().listMaterials().map(m => m.getName());
+    for (const pattern of [/^pal_skin/, /^pal_eyeBrown$/]) {
+      if (base.getRoot().listMaterials().some(m => pattern.test(m.getName())) && !names.some(n => pattern.test(n))) errors.push(`living rig: lost ${pattern.source} material classification`);
+    }
+  }
+  return errors;
+}
+/** Runtime hides gore/collider helpers; they do not contribute to the default silhouette. */
+function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
+  const hidden: [Node,Mesh][]=[];
+  scene.traverse(node=>{
+    let ancestor: Node|null=node, invisible=false;
+    while(ancestor) {if(ancestor.getExtras().hidden===true) invisible=true;ancestor=ancestor.getParentNode();}
+    const mesh=node.getMesh();
+    if(invisible && mesh) {hidden.push([node,mesh]);node.setMesh(null);}
+  });
+  try { return getBounds(scene); }
+  finally { for(const [node,mesh] of hidden) node.setMesh(mesh); }
+}
+
+/** No renderer needed: validate actual geometry, hierarchy and export contracts. */
+export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`): Validation {
+  const errors: string[] = [];
+  const root = document.getRoot(), nodes = root.listNodes();
+  const byName = new Map(nodes.map((n) => [n.getName(), n]));
+  const skinJoints = new Set(root.listSkins().flatMap(skin => skin.listJoints()));
+  const weighted = new Set<Node>();
+  for (const skin of root.listSkins()) {
+    const joints = skin.listJoints();
+    for (const node of nodes.filter(n => n.getSkin() === skin)) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      const ids = primitive.getAttribute('JOINTS_0'), weights = primitive.getAttribute('WEIGHTS_0');
+      if (!ids || !weights) { errors.push(`skin ${skin.getName()}: missing joint/weight attributes`); continue; }
+      for (let i = 0; i < ids.getCount(); i++) {
+        const js = ids.getElement(i, []), ws = weights.getElement(i, []);
+        if (Math.abs(ws.reduce((a, b) => a + b, 0) - 1) > .0001) errors.push(`skin ${skin.getName()}: weights must sum to one`);
+        for (let k = 0; k < 4; k++) if (ws[k] > 0) { if (!joints[js[k]]) errors.push(`skin ${skin.getName()}: joint out of range`); else for (let joint: Node | null = joints[js[k]]; joint; joint = joint.getParentNode()) weighted.add(joint); }
+      }
+    }
+  }
+  const bounds = root.listScenes()[0] ? visibleBounds(root.listScenes()[0]) : { min: [0, 0, 0], max: [0, 0, 0] };
+  const dimensions = bounds.max.map((v, i) => v - bounds.min[i]);
+  for (const [i, axis] of ['x', 'y', 'z'].entries()) {
+    const expected = def.dimensions[axis as 'x' | 'y' | 'z'];
+    if (!Number.isFinite(dimensions[i]) || Math.abs(dimensions[i] - expected) > expected * def.dimensions.tolerance) errors.push(`dimensions.${axis}: ${dimensions[i]} expected ${expected}`);
+  }
+  const required = new Set([...(source ? semanticNodeNames(source) : []), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
+  for (const name of required) {
+    const found = nodes.filter((n) => n.getName() === name);
+    if (found.length !== 1) errors.push(`node ${name}: expected exactly one, found ${found.length}`);
+  }
+  if (source) for (const name of semanticNodeNames(source)) {
+    const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !weighted.has(packed) && !skinJoints.has(packed) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
+    if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
+  }
+  for (const name of def.animatedNodes) {
+    const node = byName.get(name);
+    const original = source?.getRoot().listNodes().find(node => node.getName() === name);
+    // Amputees retain empty animation pivots; packing must preserve the source geometry contract.
+    const originallyEmpty = original && !descendants(original).some(node => node.getMesh());
+    if (node && !originallyEmpty && !weighted.has(node) && !skinJoints.has(node) && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
+  }
+  if (source) for (const animation of source.getRoot().listAnimations()) {
+    const packed = root.listAnimations().find(candidate => candidate.getName() === animation.getName());
+    for (const channel of animation.listChannels()) {
+      const name = channel.getTargetNode()?.getName(), path = channel.getTargetPath();
+      if (!packed?.listChannels().some(candidate => candidate.getTargetPath() === path && [name, path === 'weights' ? `${name}__geometry` : name].includes(candidate.getTargetNode()?.getName()))) errors.push(`animation ${animation.getName()}: missing ${name}.${path}`);
+    }
+  }
+  if (source) for (const skin of source.getRoot().listSkins()) {
+    const names = skin.listJoints().map(node => node.getName()).sort().join('|');
+    if (!root.listSkins().some(candidate => candidate.listJoints().map(node => node.getName()).sort().join('|') === names)) errors.push(`skin ${skin.getName()}: missing joints`);
+  }
+  for (const name of def.sockets) if (byName.get(name)?.getMesh()) errors.push(`socket ${name}: must be an empty`);
+  if (def.forward !== '+X') errors.push('forward must be +X');
+  if (!def.frontNodes.length) errors.push('forward: no front marker');
+  for (const name of def.frontNodes) {
+    const node = byName.get(name);
+    if (!node || node.getWorldTranslation()[0] <= (bounds.min[0] + bounds.max[0]) / 2) errors.push(`forward ${name}: not on +X`);
+  }
+  let triangles = 0, drawCalls = 0;
+  for (const node of nodes) {
+    if (node.getExtras().collider && node.getMesh()) errors.push(`collider ${node.getName()}: must be an empty`);
+    for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      drawCalls++;
+      const position = primitive.getAttribute('POSITION');
+      const indices = primitive.getIndices();
+      if (!position || primitive.getMode() !== 4) { errors.push('geometry: expected triangle positions'); continue; }
+      const count = indices?.getCount() ?? position.getCount();
+      if (count % 3) errors.push('geometry: incomplete triangle');
+      triangles += count / 3;
+      for (const semantic of primitive.listSemantics()) {
+        const array = primitive.getAttribute(semantic)?.getArray();
+        if (array && Array.from(array).some((v) => !Number.isFinite(v))) errors.push(`geometry: non-finite ${semantic}`);
+      }
+      const a = [0, 0, 0], b = [0, 0, 0], c = [0, 0, 0];
+      let degenerate = false;
+      for (let i = 0; i < count; i += 3) {
+        const ids = [0, 1, 2].map((j) => indices ? indices.getScalar(i + j) : i + j);
+        if (ids.some((id) => id < 0 || id >= position.getCount())) { errors.push('geometry: index out of range'); break; }
+        position.getElement(ids[0], a); position.getElement(ids[1], b); position.getElement(ids[2], c);
+        const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
+        const vx = c[0] - a[0], vy = c[1] - a[1], vz = c[2] - a[2];
+        if (Math.hypot(uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx) < 1e-12) degenerate = true;
+      }
+      if (degenerate) errors.push(`geometry ${node.getName()}: degenerate triangle`);
+    }
+  }
+  for (const material of root.listMaterials()) if (!validMaterial(material.getName())) errors.push(`material: unknown ${material.getName()}`);
+  for (const texture of root.listTextures()) if (texture.getMimeType() === 'image/ktx2' && texture.getSize()?.some(size => size % 4)) errors.push(`texture ${texture.getName()}: compressed extent must align to the 4x4 WebGPU block`);
+  const materials = root.listMaterials().length, fileKB = bytes / 1024;
+  // Cheap side props can retain their authored silhouette at every distance.
+  const cheapProp = def.category === 'prop' && def.budget.triangles <= 12000;
+  const budget = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 && !cheapProp ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
+  // Absolute distance caps apply even to pending registrations and cannot
+  // be relaxed by authored ratios or a larger manifest budget.
+  const distanceBudget = lod > 0 ? def.category === 'vehicle' ? (lod === 1 ? 6000 : 2000) : /^(bld\.house-|bld\.safe-house$|house\.)/.test(def.id) ? (lod === 1 ? 12000 : 4000) : undefined : undefined;
+  if (distanceBudget !== undefined && triangles > distanceBudget) errors.push(`delivery: LOD${lod} triangles ${triangles} > ${distanceBudget}`);
+  if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
+  if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
+  // Use KiB like fileKB above and the production tools' 1500/300 KiB delivery budgets.
+  if (def.sourceGlb && fileKB > (def.tier === 'hero' ? 1500 : 300)) errors.push('delivery: file size exceeds tier budget');
+  if (def.sourceGlb) for (const texture of root.listTextures()) {
+    if (!['image/ktx2', 'image/webp'].includes(texture.getMimeType())) errors.push('delivery: texture must be KTX2/WebP');
+    const size = texture.getSize(), limit = def.tier === 'side' ? 512 : 1024;
+    if (!size || size.some(value => value > limit)) errors.push(`delivery: texture exceeds ${limit}px`);
+  }
+  const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
+  if (def.animatedDrawBase && drawCalls > def.budget.drawCalls) errors.push(`animated-owner drawCalls: ${drawCalls} > ${def.budget.drawCalls}`);
+  if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
+  const animatedDrawCalls = drawCalls - staticCalls;
+  if (def.rigidDrawBase) {
+    if (def.category !== 'character' || !def.animatedNodes.length) errors.push('rigidDrawBase: requires a living animated character');
+    if (drawCalls > def.budget.drawCalls) errors.push(`drawCalls including animated owners: ${drawCalls} > ${def.budget.drawCalls}`);
+    const batches = new Set<string>();
+    for (const node of nodes) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      let owner: Node | null = node;
+      while (owner && !def.animatedNodes.includes(owner.getName())) owner = owner.getParentNode();
+      if (!owner) { errors.push(`rigid draw ${node.getName()}: no animated owner`); continue; }
+      const key = `${owner.getName()}|${primitive.getMaterial()?.getName()}`;
+      if (batches.has(key)) errors.push(`rigid draw ${key}: static attachments must share their owner material batch`);
+      batches.add(key);
+    }
+  }
+  if (def.rigDrawBase && drawCalls > def.budget.drawCalls) errors.push(`animated-owner drawCalls: ${drawCalls} > ${def.budget.drawCalls}`);
+  if (def.category === 'infected') for (const name of new Set([
+    ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
+    ...def.requiredNodes.filter(name => name.includes('stump_')),
+  ])) {
+    const cap = byName.get(name);
+    if (!cap || !descendants(cap).some((n) => n.getMesh())) errors.push(`${name}: missing geometry`);
+    if (cap && cap.getExtras().hidden !== true) errors.push(`${name}: not hidden by default`);
+  }
+  // PO 10-13: coplanar overlapping faces with different materials flicker (z-fighting) at the game camera.
+  errors.push(...zfightErrors(document, def, label));
+  return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, animatedDrawCalls, fileKB, dimensions, hash: geometryHash(document) };
+}
+export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
+  const io = await assetIO(), results: Validation[] = [];
+  const variants = manifest.flatMap(def => def.decayVariants.map(decay => ({
+    ...def, ...def.decayNodes?.[decay], id: `${def.id}.${decay}`, decayVariants: [],
+    glb: variantPath(def.glb, decay),
+    sourceGlb: variantPath(def.sourceGlb ?? `assets/${def.id}/model.glb`, decay),
+    lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },
+    budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget, ...def.decayBudgets?.[decay] },
+    dimensions: { ...def.dimensions, ...def.decayDimensions },
+    authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles,
+  })));
+  for (const def of [...manifest, ...variants]) {
+    const sourcePath = def.sourceGlb ?? (existsSync(`assets/${def.id}/model.glb`) ? `assets/${def.id}/model.glb` : undefined);
+    if (!atLeast(def.status, 'modeled') && !(production && sourcePath)) continue;
+    if (def.decalTexture) {
+      const errors: string[] = [];
+      let bytes = Buffer.alloc(0);
+      try {
+        bytes = readFileSync(def.decalTexture);
+        const png = PNG.sync.read(bytes);
+        if (png.width > 256 || png.height > 256) errors.push('decal: exceeds 256px');
+        let transparent = false, painted = false;
+        for (let i = 3; i < png.data.length; i += 4) { transparent ||= png.data[i] === 0; painted ||= png.data[i] > 0; }
+        if (!transparent || !painted) errors.push('decal: expected painted and transparent pixels');
+      } catch (error) { errors.push(`decal: ${String(error)}`); }
+      results.push({ id: def.id, errors, triangles: 2, materials: 1, drawCalls: 1, fileKB: bytes.length / 1024, dimensions: [def.dimensions.x, def.dimensions.y, def.dimensions.z], hash: createHash('sha256').update(bytes).digest('hex') });
+      continue;
+    }
+    // HUD icons and rendered portraits ship as images, with no model contract.
+    if (def.category === 'ui' && def.icon && !def.glb) {
+      if (!existsSync(def.icon)) results.push({ id: def.id, errors: [`missing image ${def.icon}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+      continue;
+    }
+    // Procedural actions and DOM HUD have no model/LOD contract. Their integrated
+    // manifest state still requires a concrete, shipped implementation.
+    if (def.nonModel && !def.glb) {
+      const errors = !def.presentationSource || !existsSync(def.presentationSource)
+        ? ['nonModel: missing presentationSource implementation'] : [];
+      const bytes = errors.length ? Buffer.alloc(0) : readFileSync(def.presentationSource!);
+      results.push({ id: def.id, errors, triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: createHash('sha256').update(bytes).digest('hex') });
+      continue;
+    }
+    const source = sourcePath && existsSync(sourcePath) ? await io.read(sourcePath) : undefined;
+    const paths = [def.glb, def.lods?.lod1, def.lods?.lod2];
+    let base: Validation | undefined;
+    for (const [lod, path] of paths.entries()) {
+      if (!path) {
+        if (lod === 0 || (base && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2'))) results.push({ id: `${def.id}:lod${lod}`, errors: ['missing LOD'], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+        continue;
+      }
+      if (!existsSync(path)) { results.push({ id: def.id, errors: [`missing GLB ${path}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); continue; }
+      try {
+        const document = await io.read(path);
+        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        if (def.rigidDrawBase) {
+          // Read the shipped baseline, including for --ids selections. Compare
+          // the same distance tier; a declared budget cannot widen this limit.
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const rig = definitions.find(candidate => candidate.id === def.rigidDrawBase);
+          const rigPath = rig && drawComparisonPath(rig, lod);
+          if (!rigPath || !existsSync(rigPath)) validation.errors.push(`rigidDrawBase: missing shipped LOD${lod}`);
+          else {
+            const baseline = await io.read(rigPath);
+            const limit = baseline.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().length ?? 0), 0);
+            if (validation.drawCalls > limit) validation.errors.push(`drawCalls including animated owners: ${validation.drawCalls} exceeds ${rig!.id} LOD${lod} (${limit})`);
+          }
+        }
+        if (def.rigDrawBase) {
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const rigBase = definitions.find(a => a.id === def.rigDrawBase!.id);
+          const basePath = rigBase && drawComparisonPath(rigBase, lod);
+          if (def.category !== 'character' || !rigBase || rigBase.id === def.id || rigBase.category !== 'character' || !atLeast(rigBase.status, 'integrated') || !basePath || !existsSync(basePath)) validation.errors.push('rigDrawBase: expected a shipped living character tier');
+          else validation.errors.push(...rigDrawErrors(document, def, await io.read(basePath)));
+        }
+        if (def.animatedDrawBase) {
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const peer = definitions.find(candidate => candidate.id === def.animatedDrawBase);
+          const peerPath = peer && drawComparisonPath(peer, lod);
+          if (def.category !== 'character' || !peer || peer.category !== 'character' || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
+            validation.errors.push('animated-owner draws: missing integrated character base');
+          } else {
+            const peerDocument = await io.read(peerPath);
+            const peerDraws = peerDocument.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().length ?? 0), 0);
+            if (validation.drawCalls > peerDraws) validation.errors.push(`animated-owner draws: ${validation.drawCalls} > ${def.animatedDrawBase} LOD${lod} (${peerDraws})`);
+            // Owners are counted once at their nearest animated ancestor. Static
+            // attachments cannot escape the total cap by nesting below a joint.
+            const owners = new Set(def.animatedNodes), pairs = new Set<string>();
+            for (const node of document.getRoot().listNodes()) {
+              // Dismemberment caps are dormant alternatives, never simultaneous
+              // draws to batch with each other under their retained joint.
+              let hidden = false;
+              for (let ancestor: Node | null = node; ancestor; ancestor = ancestor.getParentNode()) if (ancestor.getExtras().hidden === true) hidden = true;
+              if (hidden) continue;
+              let owner: Node | null = node;
+              while (owner && !owners.has(owner.getName())) owner = owner.getParentNode();
+              for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+                const pair = `${owner?.getName() ?? 'static'}:${primitive.getMaterial()?.getName()}`;
+                if (pairs.has(pair)) validation.errors.push(`animated-owner draws: unbatched ${pair}`);
+                pairs.add(pair);
+              }
+            }
+          }
+        }
+        // Pending registration belongs to art-integration. Still enforce shipping and
+        // node preservation for its real exports, without treating placeholder sizes as authored contracts.
+        if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
+          validation.errors = validation.errors.filter(error => !/^(dimensions\.|triangles:|materials:|fileKB:|static drawCalls:)/.test(error));
+          const limit = (def.tier === 'hero' ? 1500 : 300) * 1024;
+          if (statSync(path).size > limit) validation.errors.push('delivery: file size exceeds tier budget');
+        }
+        if (lod === 0) base = validation;
+        if (sourcePath) {
+          const extensions = document.getRoot().listExtensionsUsed().map(extension => extension.extensionName);
+          if (!extensions.includes('EXT_meshopt_compression') || !extensions.includes('KHR_mesh_quantization')) validation.errors.push('delivery: missing meshopt/quantization');
+          if (base && lod > 0 && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2')) {
+            const ratio = validation.triangles / base.triangles;
+            const authoredLimit = def.authoredLodRatios?.[lod === 1 ? 'lod1' : 'lod2'];
+            // Below 3k triangles, preserving the whole mesh is cheaper than losing readable parts.
+            const limit = authoredLimit === undefined ? lodTriangleLimit(base.triangles, lod, def) : Math.ceil(base.triangles * (authoredLimit + .005));
+            if (!def.authoredLodTriangles && validation.triangles > limit) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget (${limit} triangles)`);
+          }
+        }
+        // Native road/house tiers promise monotone bytes; other assemblies retain
+        // independent normals/material streams, so their per-file budget is authoritative.
+        if (lod > 0 && def.authoredLodTriangles && (def.category === 'vehicle' || /^(bld\.house-|bld\.safe-house$|house\.)/.test(def.id))) {
+          const better = paths[lod - 1];
+          if (better && existsSync(better) && statSync(path).size > statSync(better).size) validation.errors.push('delivery: file exceeds next-better LOD');
+        }
+        results.push(validation);
+      }
+      catch (error) { results.push({ id: def.id, errors: [String(error)], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); }
+    }
+    if (def.status === 'final') {
+      const review = `assets/${def.id}/review.md`;
+      const errors = existsSync(review) ? reviewErrors(readFileSync(review,'utf8')) : ['final review missing'];
+      if (errors.length) results.push({ id: def.id, errors, triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+    }
+  }
+  return results;
+}
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+  const idsIndex = process.argv.indexOf('--ids');
+  const ids = idsIndex >= 0 ? new Set(process.argv[idsIndex + 1]?.split(',')) : undefined;
+  if (ids && (!process.argv[idsIndex + 1] || [...ids].some(id => !definitions.some(def => def.id === id)))) throw new Error('Unknown or missing --ids selection');
+  const results = await validateAssets(ids ? definitions.filter(def => ids.has(def.id)) : definitions);
+  mkdirSync('test-results/epics/E17', { recursive: true });
+  if (!ids) for (const directory of ['public/assets/models', 'public/assets/layouts']) for (const file of readdirSync(directory).filter(file => file.endsWith('.glb'))) {
+    const path = `${directory}/${file}`, bytes = readFileSync(path);
+    const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString()) as { extensionsRequired?: string[]; skins?: unknown[] };
+    // The opt-in skinned pilot uses lossless meshopt: quantize() rescales its mesh
+    // outside the skin transforms (tools/skinpilot/compress.ts). Rigid assets still require both.
+    const extensions = json.skins?.length ? ['EXT_meshopt_compression'] : ['EXT_meshopt_compression', 'KHR_mesh_quantization'];
+    if (!extensions.every(extension => json.extensionsRequired?.includes(extension))) results.push({ id: path, errors: ['delivery: missing meshopt/quantization'], triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: '' });
+  }
+  writeFileSync(`test-results/epics/E17/validate${ids ? '-selected' : process.argv.includes('--production') ? '-production' : ''}.json`, JSON.stringify(results, null, 2));
+  console.log(JSON.stringify(results.map(({ id, errors, triangles }) => ({ id, errors, triangles })), null, 2));
+  if (results.some((r) => r.errors.length)) process.exitCode = 1;
+}

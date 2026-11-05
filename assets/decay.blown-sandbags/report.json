@@ -1,0 +1,51 @@
+{
+  "id": "decay.blown-sandbags",
+  "status": "integrated",
+  "tiers": [
+    {
+      "tier": 0,
+      "triangles": 1296,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 27064,
+      "dimensions": [
+        4.0585010051727295,
+        0.8900536583505123,
+        1.8263068734175205
+      ],
+      "hash": "e2cfd34b9f551ffe572ef962ff74e07cbf3b6b0ce0345b4bd732f02b14e43ba9",
+      "path": "public/assets/models/decay.blown-sandbags.glb"
+    },
+    {
+      "tier": 1,
+      "triangles": 548,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 13716,
+      "dimensions": [
+        3.898800015449524,
+        0.8900120278195269,
+        1.7314779450307158
+      ],
+      "hash": "428b8a801f7eaffdf008506cb6ced57071999518f7b48227b0ff08601e2f8610",
+      "path": "public/assets/models/decay.blown-sandbags.lod1.glb"
+    },
+    {
+      "tier": 2,
+      "triangles": 192,
+      "materials": 3,
+      "draws": 3,
+      "bytes": 7536,
+      "dimensions": [
+        3.8892109394073486,
+        0.8899595209715963,
+        1.7273380779807472
+      ],
+      "hash": "99b7e35708a9421b0c6353a681015a9c8251edd8579d8a35fc9366ef9ece8274",
+      "path": "public/assets/models/decay.blown-sandbags.lod2.glb"
+    }
+  ],
+  "authored": true,
+  "deterministicSourceBytes": true,
+  "notes": "See notes.md and review.md; concave crater collision requires terrain/runtime consumption."
+}

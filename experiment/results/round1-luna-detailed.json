@@ -1,0 +1,1951 @@
+[
+ {
+  "slug": "xp-3d-ambulance",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "stopped",
+  "started_at": "2026-10-05T07:50:59Z",
+  "finished_at": "2026-10-05T08:08:24Z",
+  "tokens_total": 3226300,
+  "tokens_input": 3197062,
+  "tokens_cached": 3095936,
+  "tokens_output": 29238,
+  "error": "stopped by Claude: user decision: Sol 6.1 low is clearly better; Luna builds stopped",
+  "report": null,
+  "blender_calls": [
+   {
+    "start": 1791186840.73582,
+    "waited_s": 0.0,
+    "ran_s": 8.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186903.283309,
+    "waited_s": 7.6,
+    "ran_s": 10.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186981.161864,
+    "waited_s": 3.0,
+    "ran_s": 8.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/renders/round3.png",
+     "--view",
+     "side",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187047.8022442,
+    "waited_s": 31.8,
+    "ran_s": 16.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187370.898633,
+    "waited_s": 0.0,
+    "ran_s": 2.8,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/ambulance/model.glb",
+     "--blend",
+     "experiment/ambulance/model.blend"
+    ]
+   },
+   {
+    "start": 1791187497.7743418,
+    "waited_s": 0.0,
+    "ran_s": 5.2,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/ambulance/model.glb",
+     "--blend",
+     "experiment/ambulance/model.blend"
+    ]
+   },
+   {
+    "start": 1791187589.287225,
+    "waited_s": 0.0,
+    "ran_s": 3.5,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/ambulance/model.glb",
+     "--blend",
+     "experiment/ambulance/model.blend"
+    ]
+   },
+   {
+    "start": 1791187616.654461,
+    "waited_s": 0.0,
+    "ran_s": 10.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/renders/round5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187680.908917,
+    "waited_s": 0.0,
+    "ran_s": 2.1,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/ambulance/model.glb",
+     "--blend",
+     "experiment/ambulance/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-bus-stop",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:17Z",
+  "finished_at": "2026-10-05T08:01:33Z",
+  "tokens_total": 2120415,
+  "tokens_input": 2104951,
+  "tokens_cached": 1978752,
+  "tokens_output": 15464,
+  "error": null,
+  "report": {
+   "slug": "bus-stop",
+   "iterations": 4,
+   "triangles": 53262,
+   "meshes": 148,
+   "glb_bytes": 1757648,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.84,
+   "matches": [
+    "arched aubergine canopy with copper ribs and end fascia",
+    "open shelter frame with a central timber bench",
+    "left information sign and right route poster",
+    "aged plum metal, warm wood, and brass-toned accents"
+   ],
+   "gaps": [
+    "surface wear and chipped paint are less detailed than the reference",
+    "route poster artwork is simplified compared with the reference map collage",
+    "bench supports and slat arrangement differ in small details"
+   ],
+   "notes": "Exported GLB renders cleanly in both WebGPU and WebGL2 with no console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186843.668892,
+    "waited_s": 0.0,
+    "ran_s": 3.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/review-1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186860.570015,
+    "waited_s": 0.0,
+    "ran_s": 9.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/review-1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186921.943027,
+    "waited_s": 47.0,
+    "ran_s": 12.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/review-2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187023.266706,
+    "waited_s": 4.5,
+    "ran_s": 6.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/review-3.png",
+     "--view",
+     "side",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187079.893774,
+    "waited_s": 3.5,
+    "ran_s": 10.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/review-4.png",
+     "--view",
+     "far",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187139.034178,
+    "waited_s": 7.1,
+    "ran_s": 24.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/bus-stop/model.glb",
+     "--blend",
+     "experiment/bus-stop/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-gas-pump",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:50:45Z",
+  "finished_at": "2026-10-05T08:04:09Z",
+  "tokens_total": 5271722,
+  "tokens_input": 5246300,
+  "tokens_cached": 5129344,
+  "tokens_output": 25422,
+  "error": null,
+  "report": {
+   "slug": "gas-pump",
+   "iterations": 6,
+   "triangles": 52026,
+   "meshes": 68,
+   "glb_bytes": 1773004,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.79,
+   "matches": [
+    "red rounded cabinet with cream front service panel",
+    "raised circular red globe with centered five-point star",
+    "mechanical multi-row counter, chrome belt, stepped base, and side hose/nozzle",
+    "near and far side details represented as separate named assemblies"
+   ],
+   "gaps": [
+    "surface wear is cleaner and more uniform than the weathered reference",
+    "hose/nozzle silhouette and small fittings remain simplified",
+    "rear face has less detail than the visible front"
+   ],
+   "notes": "Exported a 68-mesh, 52,026-triangle GLB; WebGPU and WebGL2 loaded it without console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186765.872734,
+    "waited_s": 0.0,
+    "ran_s": 1.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186776.882356,
+    "waited_s": 0.0,
+    "ran_s": 2.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186787.385396,
+    "waited_s": 0.0,
+    "ran_s": 5.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186816.965916,
+    "waited_s": 0.0,
+    "ran_s": 5.4,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186850.570613,
+    "waited_s": 0.0,
+    "ran_s": 5.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186879.114955,
+    "waited_s": 0.0,
+    "ran_s": 8.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186924.6999638,
+    "waited_s": 18.7,
+    "ran_s": 9.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791186963.9430778,
+    "waited_s": 2.5,
+    "ran_s": 27.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791187084.4406059,
+    "waited_s": 119.2,
+    "ran_s": 1.4,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round6.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791187214.838752,
+    "waited_s": 0.0,
+    "ran_s": 5.4,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791187277.1795359,
+    "waited_s": 38.4,
+    "ran_s": 15.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/round6.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   },
+   {
+    "start": 1791187355.74353,
+    "waited_s": 31.8,
+    "ran_s": 40.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/gas-pump/model.glb",
+     "--blend",
+     "experiment/gas-pump/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-jukebox",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:48Z",
+  "finished_at": "2026-10-05T08:06:04Z",
+  "tokens_total": 2633761,
+  "tokens_input": 2612599,
+  "tokens_cached": 2521600,
+  "tokens_output": 21162,
+  "error": null,
+  "report": {
+   "slug": "jukebox",
+   "iterations": 4,
+   "triangles": 62484,
+   "meshes": 176,
+   "glb_bytes": 1307844,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.72,
+   "matches": [
+    "Arched retro cabinet silhouette with deep walnut casing",
+    "Layered ivory, amber, and ruby neon channels",
+    "Smoked record dome with visible vinyl and center label",
+    "Central title selector, ruby buttons, and diamond speaker grille",
+    "Chrome corner ribs and modeled side/rear cabinet details"
+   ],
+   "gaps": [
+    "Reference has richer sculpted Art Deco ornament and aged surface detail",
+    "Record window lacks the reference illustration and reflections",
+    "The cabinet reads narrower in the landscape hero framing"
+   ],
+   "notes": "Four comparison rounds refined the silhouette and feature layout; WebGPU and WebGL2 loaded the GLB without console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186942.065821,
+    "waited_s": 5.0,
+    "ran_s": 2.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186967.380692,
+    "waited_s": 7.6,
+    "ran_s": 9.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187036.612635,
+    "waited_s": 18.2,
+    "ran_s": 6.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187157.113256,
+    "waited_s": 48.0,
+    "ran_s": 8.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/round3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187287.062094,
+    "waited_s": 29.3,
+    "ran_s": 10.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187347.9880052,
+    "waited_s": 0.0,
+    "ran_s": 1.5,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/jukebox/model.glb",
+     "--blend",
+     "experiment/jukebox/model.blend"
+    ]
+   },
+   {
+    "start": 1791187442.4413419,
+    "waited_s": 17.2,
+    "ran_s": 24.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-light-tower",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:50:49Z",
+  "finished_at": "2026-10-05T08:04:59Z",
+  "tokens_total": 5150179,
+  "tokens_input": 5129238,
+  "tokens_cached": 5007744,
+  "tokens_output": 20941,
+  "error": null,
+  "report": {
+   "slug": "light-tower",
+   "iterations": 6,
+   "triangles": 88644,
+   "meshes": 343,
+   "glb_bytes": 2566152,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.76,
+   "matches": [
+    "compact yellow generator enclosure and dark undercarriage",
+    "telescoping central mast and two differently sized floodlight heads",
+    "four rugged wheels, raised service door, vents, top filler and grab rail"
+   ],
+   "gaps": [
+    "lamp heads are less angled and less luminous than the reference",
+    "body panel and tow hardware are simplified",
+    "hero view shows only two wheels clearly"
+   ],
+   "notes": "Built as a 343-mesh, 88,644-triangle GLB; WebGPU and WebGL2 captures completed without console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186799.929219,
+    "waited_s": 0.0,
+    "ran_s": 10.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186833.5533388,
+    "waited_s": 0.0,
+    "ran_s": 11.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186895.8452039,
+    "waited_s": 0.0,
+    "ran_s": 14.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186945.160083,
+    "waited_s": 58.6,
+    "ran_s": 5.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187026.331008,
+    "waited_s": 14.6,
+    "ran_s": 12.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187097.090205,
+    "waited_s": 20.3,
+    "ran_s": 17.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187156.338903,
+    "waited_s": 45.5,
+    "ran_s": 15.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/r6.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187375.8349938,
+    "waited_s": 0.0,
+    "ran_s": 10.8,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/light-tower/model.glb",
+     "--blend",
+     "experiment/light-tower/model.blend"
+    ]
+   },
+   {
+    "start": 1791187423.8758678,
+    "waited_s": 4.0,
+    "ran_s": 41.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-pickup-truck",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "stopped",
+  "started_at": "2026-10-05T07:51:07Z",
+  "finished_at": "2026-10-05T08:08:24Z",
+  "tokens_total": 3659340,
+  "tokens_input": 3631435,
+  "tokens_cached": 3526912,
+  "tokens_output": 27905,
+  "error": "stopped by Claude: user decision: Sol 6.1 low is clearly better; Luna builds stopped",
+  "report": null,
+  "blender_calls": [
+   {
+    "start": 1791186862.6625128,
+    "waited_s": 4.0,
+    "ran_s": 6.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186901.927047,
+    "waited_s": 8.6,
+    "ran_s": 11.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186975.319873,
+    "waited_s": 17.7,
+    "ran_s": 10.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round3.png",
+     "--view",
+     "side",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187046.269427,
+    "waited_s": 48.0,
+    "ran_s": 10.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187129.377485,
+    "waited_s": 41.7,
+    "ran_s": 10.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/front-review.png",
+     "--view",
+     "front",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187262.968885,
+    "waited_s": 23.7,
+    "ran_s": 9.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187361.8449228,
+    "waited_s": 108.1,
+    "ran_s": 14.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/side-final-review.png",
+     "--view",
+     "side",
+     "--samples",
+     "16",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187537.2391171,
+    "waited_s": 0.0,
+    "ran_s": 4.0,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--blend",
+     "experiment/pickup-truck/debug.blend"
+    ]
+   },
+   {
+    "start": 1791187560.314535,
+    "waited_s": 0.0,
+    "ran_s": 14.9,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--blend",
+     "experiment/pickup-truck/debug.blend"
+    ]
+   },
+   {
+    "start": 1791187609.123588,
+    "waited_s": 0.0,
+    "ran_s": 7.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round6.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187667.0909388,
+    "waited_s": 0.0,
+    "ran_s": 11.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/renders/round7.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-police-car",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:40Z",
+  "finished_at": "2026-10-05T08:02:28Z",
+  "tokens_total": 2613039,
+  "tokens_input": 2591580,
+  "tokens_cached": 2506368,
+  "tokens_output": 21459,
+  "error": null,
+  "report": {
+   "slug": "police-car",
+   "iterations": 5,
+   "triangles": 73160,
+   "meshes": 329,
+   "glb_bytes": 1552384,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.55,
+   "matches": [
+    "black and white patrol-car livery with contrasting center doors",
+    "red and blue segmented roof light bar",
+    "dark glazing, black steel wheels, and front push bumper",
+    "POLICE markings on the doors and hood",
+    "mirrored near and far side detailing"
+   ],
+   "gaps": [
+    "the body and cabin transitions remain boxier than the reference sedan",
+    "side glazing and windshield read as layered panels rather than integrated windows",
+    "badge detail and rear fascia are simpler than the reference"
+   ],
+   "notes": "Exported GLB loads in both WebGPU and WebGL2 with zero console errors; the model stays below the 150k triangle budget."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186873.988391,
+    "waited_s": 0.0,
+    "ran_s": 1.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-01.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186884.495181,
+    "waited_s": 1.5,
+    "ran_s": 6.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-01.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186943.167884,
+    "waited_s": 23.2,
+    "ran_s": 8.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-02.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186996.886789,
+    "waited_s": 12.1,
+    "ran_s": 10.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-03.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187071.0703309,
+    "waited_s": 42.6,
+    "ran_s": 8.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-04.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187181.0404758,
+    "waited_s": 10.1,
+    "ran_s": 10.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/review-05.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187222.011552,
+    "waited_s": 13.6,
+    "ran_s": 34.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/police-car/model.glb",
+     "--blend",
+     "experiment/police-car/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-portable-toilet",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:50:57Z",
+  "finished_at": "2026-10-05T08:02:19Z",
+  "tokens_total": 2240207,
+  "tokens_input": 2225218,
+  "tokens_cached": 2112640,
+  "tokens_output": 14989,
+  "error": null,
+  "report": {
+   "slug": "portable-toilet",
+   "iterations": 4,
+   "triangles": 23026,
+   "meshes": 72,
+   "glb_bytes": 648340,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.76,
+   "matches": [
+    "tall royal-blue cabin with rounded arched door",
+    "barrel-arched coral roof with overhanging fascia",
+    "large inset side panel and raised horizontal ribs",
+    "coral restroom sign, bronze hinges, and dark latch",
+    "raised coral perimeter base with four support feet"
+   ],
+   "gaps": [
+    "roof has fewer visible ribs than the reference",
+    "restroom pictograms are simplified geometric silhouettes",
+    "surface finish is cleaner and less weathered than the reference"
+   ],
+   "notes": "Four compare/fix rounds produced a 23,026-triangle GLB that renders without console errors in WebGPU or WebGL2."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186773.350084,
+    "waited_s": 0.0,
+    "ran_s": 7.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186832.16712,
+    "waited_s": 0.0,
+    "ran_s": 4.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186877.9685109,
+    "waited_s": 0.0,
+    "ran_s": 8.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/renders/round3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187082.8350022,
+    "waited_s": 0.0,
+    "ran_s": 6.7,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--blend",
+     "experiment/portable-toilet/model.blend",
+     "--glb",
+     "experiment/portable-toilet/model.glb"
+    ]
+   },
+   {
+    "start": 1791186912.436578,
+    "waited_s": 194.6,
+    "ran_s": 8.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187141.920795,
+    "waited_s": 71.3,
+    "ran_s": 69.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-school-bus",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:01Z",
+  "finished_at": "2026-10-05T08:00:51Z",
+  "tokens_total": 2363581,
+  "tokens_input": 2347036,
+  "tokens_cached": 2258176,
+  "tokens_output": 16545,
+  "error": null,
+  "report": {
+   "slug": "school-bus",
+   "iterations": 5,
+   "triangles": 75240,
+   "meshes": 190,
+   "glb_bytes": 2422092,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.76,
+   "matches": [
+    "long yellow high-roof bus silhouette",
+    "five passenger windows and paired entry doors",
+    "dark safety rails and SCHOOL BUS lettering",
+    "deployed red STOP paddle",
+    "front hood, grille, lamps, mirrors, and two detailed wheel assemblies",
+    "mirrored far side, roof seams, and rear lamps"
+   ],
+   "gaps": [
+    "rear-end paneling and tail lamps are simplified",
+    "side windows use flat dark glass without reflected scenery",
+    "wheel arches are overlay trim rather than cut into the body shell",
+    "reference surface wear and fine panel fasteners are omitted"
+   ],
+   "notes": "Built as 190 meshes at 75,240 triangles; WebGPU and WebGL2 both loaded the GLB with no console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186800.503551,
+    "waited_s": 0.0,
+    "ran_s": 0.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186810.8435829,
+    "waited_s": 0.0,
+    "ran_s": 0.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186818.1983202,
+    "waited_s": 0.0,
+    "ran_s": 7.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186858.550338,
+    "waited_s": 0.0,
+    "ran_s": 8.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186912.3422348,
+    "waited_s": 40.4,
+    "ran_s": 11.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round3.png",
+     "--view",
+     "side",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187016.137341,
+    "waited_s": 3.0,
+    "ran_s": 8.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round4.png",
+     "--view",
+     "side",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187069.467893,
+    "waited_s": 7.6,
+    "ran_s": 13.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/renders/round5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187114.797368,
+    "waited_s": 1.0,
+    "ran_s": 30.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/school-bus/model.glb",
+     "--blend",
+     "experiment/school-bus/model.blend",
+     "--render",
+     "experiment/school-bus/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-3d-vending-machine",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "status": "done",
+  "started_at": "2026-10-05T07:50:49Z",
+  "finished_at": "2026-10-05T08:01:09Z",
+  "tokens_total": 3116126,
+  "tokens_input": 3095705,
+  "tokens_cached": 3001728,
+  "tokens_output": 20421,
+  "error": null,
+  "report": {
+   "slug": "vending-machine",
+   "iterations": 4,
+   "triangles": 88892,
+   "meshes": 207,
+   "glb_bytes": 3205620,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.83,
+   "matches": [
+    "Cobalt blue cabinet with framed red fascia",
+    "Large cream Fizz script branding",
+    "Two rows of four colorful soda cans and selection buttons",
+    "Recessed lower pickup slot, rounded feet, and modeled side hardware"
+   ],
+   "gaps": [
+    "Reference shows the visible side on the opposite side of the front in the hero composition",
+    "Paint wear is represented by sparse geometry and lacks fine surface scratches",
+    "Fixed Three.js review framing crops the cabinet vertically"
+   ],
+   "notes": "Four comparison rounds refined proportions and details; both Three.js backends report no errors and the model remains below the 150k triangle budget."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186793.4826581,
+    "waited_s": 0.0,
+    "ran_s": 0.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186801.158795,
+    "waited_s": 0.0,
+    "ran_s": 7.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/round1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186852.168633,
+    "waited_s": 0.0,
+    "ran_s": 5.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/round2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186901.277795,
+    "waited_s": 13.2,
+    "ran_s": 8.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/round3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186956.8776782,
+    "waited_s": 111.1,
+    "ran_s": 8.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/round4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187111.377413,
+    "waited_s": 39.2,
+    "ran_s": 21.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/vending-machine/model.glb",
+     "--blend",
+     "experiment/vending-machine/model.blend"
+    ]
+   }
+  ]
+ }
+]

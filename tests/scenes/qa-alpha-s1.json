@@ -1,0 +1,10 @@
+{
+  "name": "qa-alpha-s1", "seed": 7, "ground": "asphalt", "size": 30, "time": "L4",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "loadout": ["weapon.handgun", "weapon.kick"] },
+    { "id": "alpha", "kind": "infected", "archetype": "infected.alpha", "at": [5, 0], "yaw": 180, "state": "chase" }
+  ],
+  "camera": { "mode": "game", "target": "courier" },
+  "frames": 180, "shots": [0, 90, 180],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

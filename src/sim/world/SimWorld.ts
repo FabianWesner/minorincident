@@ -1,0 +1,474 @@
+import { SolidRegistry } from './SolidRegistry';
+import { cloneData } from '../../core/clone';
+import { finaleGunPlacement } from '../../data/minigun';
+import { curePursuitRoute } from '../../levels/L10/district';
+import { installMegaPursuit } from '../ai/MegaPursuit';
+import { ChunkResidency } from './ChunkResidency';
+import { layoutTerrainChunks } from './TerrainChunks';
+import { TrapRescue } from './TrapRescue';
+import { LevelTenEncounters } from '../missions/LevelTenEncounters';
+import { LevelSevenEncounters } from '../missions/LevelSevenEncounters';
+import { LevelSevenDeparture } from '../missions/LevelSevenDeparture';
+import { isWorldTier, type Tier } from '../../levels/districts/types';
+import { WeatherSystem } from '../weather/WeatherSystem';
+import { LightPower } from '../lighting/LightPower';
+import { levelFourLayouts } from '../../levels/L4/layout';
+import { installL7Dressing } from '../../levels/L7/dressing';
+import { levelSevenLayouts } from '../../levels/L7/layout';
+import { levelFiveLayouts } from '../../levels/L5/layout';
+import { levelThreeLayouts } from '../../levels/L3/layout';
+import type { L1Aftermath } from '../../levels/continuity';
+import { levelTwoLayouts } from '../../levels/L2/layout';
+import { ControlIntent } from '../entities/ControlIntent';
+import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
+import { Npcs } from '../npc/Npcs';
+import { populateHorde } from '../../../tests/fixtures/scenarios/performance';
+import { InfectedSystem } from '../ai/InfectedSystem';
+import { Mission } from '../missions/Mission';
+import type { ActorDef, MissionDef } from '../missions/types';
+import { Vehicles } from '../vehicles/Vehicles';
+import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
+import { installBlastScenario } from '../../../tests/fixtures/scenarios/blasts';
+import { survivor } from '../../data/survivor';
+import { Combat } from '../combat/Combat';
+import { MountedGun } from '../combat/MountedGun';
+import type { GunPlacement } from '../../data/minigun';
+import { Interactables } from '../interact/Interactables';
+import { Toys } from '../interact/Toys';
+import { Hazards } from '../interact/Hazards';
+import { Explosions } from '../combat/Explosions';
+import { Pickups } from '../interact/Pickups';
+import { Barricades } from '../interact/Barricades';
+import { campaignBarricadeSlots } from '../../levels/barricadeSlots';
+import { PropSystem } from '../interact/PropSystem';
+import { Status } from '../combat/Status';
+import { Player } from '../entities/Player';
+import { EventBus, SimPhase } from '../../core/EventBus';
+import { Rng } from '../../core/Rng';
+import type { Lifecycle } from '../../core/Lifecycle';
+import { DistrictWorld } from './DistrictWorld';
+import type { DistrictLayout, LevelComposition } from '../../levels/districts/types';
+import { loadScenarioDefinition, type InteractionPlacements } from '../../levels/loader';
+import { Physics } from '../../physics/Physics';
+import { SpatialHash } from '../spatial/SpatialHash';
+import { EntityStore } from './EntityStore';
+import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, type GameStateSnapshot, type InputFrame, type Transform } from './types';
+
+/** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
+/** An open building door (see SimWorld.openDoors). */
+export interface OpenDoor { x: number; z: number; nx: number; nz: number; at: number }
+export class SimWorld implements Lifecycle {
+  /** Explicit inspection courier option; false for every normal game and bot run. */
+  inspectionGhost = false;
+  readonly physics = new Physics();
+  readonly solids = new SolidRegistry(this);
+  // The fixed-tick record contains only type/tick. Keep every logged record,
+  // while avoiding structured serialization for this 60 Hz scalar variant.
+  readonly events = new EventBus<GameEvent>(event => event.type === 'sim.tick' ? { ...event } : cloneData(event));
+  readonly entities = new EntityStore();
+  readonly spatial = new SpatialHash();
+  districts: DistrictWorld | null = null;
+  chunks: ChunkResidency | null = null;
+  /** L1 decay is baked during loading, before its first objective can fire. */
+  readonly preparedDistricts = new Map<number, DistrictWorld>();
+  readonly preparedNpcNavigation = new Map<number, Uint8Array>();
+  prepareTier(tier: Tier): void {
+    if (!isWorldTier(tier)) throw new RangeError("Tier must be W0…W6");
+    const current = this.districts;
+    if (!current) return;
+    if (!this.preparedDistricts.has(tier)) this.preparedDistricts.set(tier, new DistrictWorld({ ...current.composition, tier }, current.districts.map(d => d.layout), this.seed));
+    if (!this.preparedNpcNavigation.has(tier)) {
+      const blocked = prepareNpcNavigation(this, this.preparedDistricts.get(tier)!);
+      if (blocked) this.preparedNpcNavigation.set(tier, blocked);
+    }
+  }
+  player: Player | null = null;
+  combat: Combat | null = null;
+  infected: InfectedSystem | null = null;
+  /** Per-level melee hits to down a normal infected (L2 only, see l2.infectedMeleeHits); null = ordinary damage. */
+  infectedMeleeHits: Readonly<Record<string, number>> | null = null;
+  npcs: Npcs | null = null;
+  interactables: Interactables | null = null;
+  /** L1 v2 toys (gates, dumpsters, car alarms, car wash) and the LOS blocker registry; null outside D-GROVE. */
+  toys: Toys | null = null;
+  hazards: Hazards | null = null;
+  /** E27 blasts: curve damage, delayed radial impulses, chains, car parts, aftermath fires, slow-mo events. */
+  explosions: Explosions | null = null;
+  /** PO #15 pushable small props (dynamic Rapier bodies); null outside district compositions. */
+  props: PropSystem | null = null;
+  /** L1 player-caused carryover applied to this level (L2 in L1's town); null = scripted canon only (src/levels/continuity.ts). */
+  aftermath: L1Aftermath | null = null;
+  barricades: Barricades | null = null;
+  pickups: Pickups | null = null;
+  missions: Mission | null = null;
+  carriedSurvivors: readonly EntitySnapshot[] | undefined;
+  l7Encounters: LevelSevenEncounters | null = null;
+  l10Encounters: LevelTenEncounters | null = null;
+  l7Departure: LevelSevenDeparture | null = null;
+  /** E32 L10 Mega Alpha global pursuit (one persistent boss); null outside L10 and its fixtures. */
+  megaPursuit: import('../ai/MegaPursuit').MegaPursuit | null = null;
+  /** E32 L10-S6 the manned rotary minigun of the finale deck; null elsewhere. See `installMountedGun`. */
+  mountedGun: MountedGun | null = null;
+  /** Scenario setup boundary for systems that are required by a fixture. */
+  requireCombat(): Combat {
+    if (!this.combat) throw new Error('This scenario needs combat');
+    return this.combat;
+  }
+  /** Scenario setup boundary for fixtures that tune the infected director. */
+  requireInfected(): InfectedSystem {
+    if (!this.infected) throw new Error('This scenario needs infected');
+    return this.infected;
+  }
+  /** Places the mounted rotary minigun (needs combat); a second call replaces the first and keeps nothing of its heat. */
+  installMountedGun(placement: GunPlacement): MountedGun {
+    if (!this.combat) throw new Error('The mounted gun needs combat');
+    return this.mountedGun = new MountedGun(this, placement);
+  }
+  /** Borrowed input before controls resolve it; shared browser/headless bot policies use this. */
+  get deviceInput(): InputFrame { return this.input; }
+  get inputFrame(): InputFrame { return this.effectiveInput; }
+  /** Attach a validated mission after scenario/composition assembly. */
+  /** Trap-pocket safety net of the loaded mission (null without districts). */
+  trapRescue: TrapRescue | null = null;
+  private stopTrapRescue: (() => void) | null = null;
+  loadMission(def: MissionDef): Mission {
+    const next=new Mission(this,def);this.missions?.dispose();this.missions=next;
+    this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
+    // Any objective anchor counts as a goal: a level whose last objective is unreachable on foot early (L4: the cellar) must not strand-rescue the player.
+    const goals = [...new Set(def.steps.map(s => s.anchor))].map(a => def.anchors[a]).filter(Boolean);
+    if (this.districts && goals.length) { const rescue = this.trapRescue = new TrapRescue(this, goals); this.stopTrapRescue = this.events.on('sim.tick', () => rescue.update(), SimPhase.missions); }
+    return next;
+  }
+  /** Mission actors use the same component/physics owners as authored gameplay placements. */
+  spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
+    let id: number;
+    if (def.kind === 'vehicle') id = this.vehicles!.spawn(def.archetype, at);
+    else if (def.kind === 'device') id = this.interactables!.spawn(def.archetype.slice(7) as import('../interact/Interactables').DeviceKind, at, def.device);
+    else if (def.kind === 'pickup') id = this.pickups!.spawn('item', at, def.item);
+    else if (def.kind === 'barricade') id = this.barricades!.spawn({ id: def.archetype, groupId: def.archetype, a: { x: at.x - 1, z: at.z }, b: { x: at.x + 1, z: at.z }, height: 1.4, initialHp: def.hp });
+    else if (def.kind === 'prop') id = this.hazards!.spawn(def.archetype.slice(5) as import('../interact/Hazards').DestructibleKind, at, { hp: def.hp });
+    else {
+      const entity = this.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { ...at, y: .7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: .4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+      if (entity.kind === 'escort') this.npcs?.escorts.attach(entity);
+      this.spatial.set(entity.id, at.x, at.z); return entity;
+    }
+    return this.entities.get(id)!;
+  }
+  vehicles: Vehicles | null = null;
+  /** Level-owned records survive player death; scenario unload clears them. */
+  mission: GameStateSnapshot['mission'] = null;
+  progression: GameStateSnapshot['progression'] = null;
+  weather: WeatherSystem | null = null;
+  /** Authored practical-light circuits and breakage; independent of graphics settings. */
+  lightPower: LightPower | null = null;
+  tick = 0;
+  seed = 1;
+  scenario: string | null = null;
+  previousPlayer: Transform | null = null;
+  readonly controls = new ControlIntent(this);
+  private effectiveInput = emptyInput();
+  private input = emptyInput();
+  /** Story beats (E19 PO UAT): while set, player input is replaced by `scripted` (or nothing); any press
+   * (click, key, tap, move) marks `skip` for the beat owner to fast-forward. */
+  storyLock: { scripted: InputFrame | null; skip: boolean } | null = null;
+  /**
+   * Building doors standing open (shared door-open helper): `x, z` the threshold point, `nx, nz` the outward normal, `at`
+   * the tick it opened. Gameplay owns the state (deterministic, checkpoint-safe through its owner); the district view
+   * swings the authored door leaf open (DistrictView.syncDoors). Open with `openDoor`, never by writing the map.
+   */
+  readonly openDoors = new Map<string, OpenDoor>();
+  /** Open a building door once (idempotent): the leaf swings out and `gate.changed` fires for audio and tests. */
+  openDoor(id: string, door: Omit<OpenDoor, 'at'>, tick = this.tick): void {
+    if (this.openDoors.has(id)) return;
+    this.openDoors.set(id, { ...door, at: tick });
+    this.events.emit({ type: 'gate.changed', tick, id, open: true });
+  }
+  /** Release a story's held door; the view still waits for bodies to clear its sweep. */
+  closeDoor(id: string): void {
+    if (this.openDoors.delete(id)) this.events.emit({ type: 'gate.changed', tick: this.tick, id, open: false });
+  }
+  private storyHeld = false;
+  private readonly drivingCombatInput = emptyInput();
+  private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
+  private rng: Rng | null = null;
+  async init(): Promise<void> { await this.physics.init(); }
+  loadScenario(name: string, seed = 1): void {
+    const definition = loadScenarioDefinition(name);
+    if (!Number.isSafeInteger(seed)) throw new RangeError('Seed must be a safe integer');
+    this.reset(); this.seed = seed; this.scenario = name;
+    this.rng = new Rng(seed, 'fixture');
+    this.weather = new WeatherSystem(this, seed);
+    this.events.on('sim.tick', () => this.weather?.update(), SimPhase.input - 1);
+    this.physics.load(definition);
+    this.entities.create({ kind: 'player', archetype: definition.survivor ? 'player.survivor' : 'player.stub', transform: { ...this.physics.playerBody!.translation(), yaw: this.rng.next() * Math.PI * 2 }, health: { current: 100, max: 100 }, faction: 'survivor' });
+    if (definition.survivor) this.player = new Player(this.entities.get(1)!, this.physics, this.events);
+    this.previousPlayer = { ...this.entities.get(1)!.transform };
+    this.spatial.set(1, definition.player.x, definition.player.z);
+    if (this.player) this.interactables = new Interactables(this);
+    if (definition.combat) this.combat = new Combat(this, definition);
+    if (this.player) this.hazards = new Hazards(this);
+    if (this.player) this.explosions = new Explosions(this);
+    if (this.player) this.pickups = new Pickups(this);
+    if (this.player) this.barricades = new Barricades(this);
+    if (definition.survivor) this.vehicles = new Vehicles(this);
+    if (this.player) {
+      this.lightPower = new LightPower(this);
+      this.events.on('sim.tick', () => this.lightPower?.update(), SimPhase.input);
+    }
+    if (name === 'drive-course') {
+      this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
+      for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
+    }
+    this.events.on('sim.tick', () => {
+      let raw = this.input;
+      // A press is an edge: a key or stick already held when the beat starts (walking into it) does not skip it.
+      const pressed = raw.left.down || raw.right.down || raw.interact || raw.pause || !!raw.moveTarget || !!raw.attackTarget || Math.hypot(raw.move.x, raw.move.z) > .5;
+      const press = pressed && !this.storyHeld; this.storyHeld = pressed;
+      if (this.storyLock) {
+        if (press) this.storyLock.skip = true;
+        raw = this.storyLock.scripted ?? emptyInput();
+      }
+      if (this.entities.get(1)!.pendingAdmission) raw = emptyInput();
+      const resolved = this.controls.resolve(raw), frame = this.mountedGun?.intent(raw, resolved) ?? resolved; this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
+    }, SimPhase.input);
+    this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null && !this.mountedGun?.mounted) this.combat.intent(this.effectiveInput); }, SimPhase.input);
+    this.events.on('sim.tick', () => {
+      const body = this.physics.playerBody!;
+      const player = this.entities.get(1)!;
+      if (player.pendingAdmission) { body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setTranslation(player.transform, true); return; }
+      if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      this.previousPlayer = { ...player.transform };
+      // Deliberately only a cube input fixture, no survivor controller (E04).
+      body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
+    }, SimPhase.intent);
+    this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
+    if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
+    if (definition.infected) { this.npcs = new Npcs(this); this.events.on('sim.tick', () => this.npcs?.update(), SimPhase.ai); if (definition.npcs) { this.npcs.configure(definition.npcs.level ?? 1, definition.npcs.tier, definition.npcs.ambient); if (definition.npcs.companion) this.npcs.companion.spawn(); } }
+    this.placeInteractions(definition);
+    if (definition.physicsProps) {
+      this.props = new PropSystem(this);
+      for (const [i, p] of definition.physicsProps.entries()) this.props.spawn({ id: `fixture-${i}`, assetId: p.assetId, position: [p.x, 0, p.z], yaw: p.yaw ?? 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [0, 0, 0], max: [1, 1, 1] } });
+      this.props.settle();
+      this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
+      this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
+    }
+    for (const slot of definition.barricadeSlots ?? []) this.barricades!.spawn(slot);
+    if (name === 'barricade-stress') {
+      this.props!.awakeBudget = 60;
+      for (let i = 0; i < 30; i++) this.infected!.spawn('infected.runner', { x: (i - 15) * .65, z: -1.2 }, { state: 'chase' });
+      this.events.on('sim.tick', () => { for (const p of this.props!.items) { const v = p.body.linvel(); p.body.setLinvel({ x: .1, y: v.y, z: 0 }, true); } }, SimPhase.ai);
+    }
+    this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
+    this.events.on('sim.tick', () => {
+      for (const entity of this.entities.iterate()) if (entity.knockbackSlide) this.slideKnockback(entity);
+    }, SimPhase.combat - .1);
+    this.events.on('sim.tick', () => {
+      this.vehicles?.postPhysics();
+      if (this.combat) {
+        if (!this.entities.get(1)!.pendingAdmission) { const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z); }
+        this.infected?.props.update();
+        this.combat.update(this.vehicles?.active != null || this.mountedGun?.mounted ? this.drivingCombatInput : this.effectiveInput);
+        this.mountedGun?.update();
+      }
+    }, SimPhase.combat);
+    this.events.on('sim.tick', () => {
+      if (this.player && !this.player.entity.pendingAdmission) Object.assign(this.player.entity.transform, this.physics.playerBody!.translation());
+      this.hazards?.update(); this.pickups?.update(); this.barricades?.update(); this.interactables?.update(this.effectiveInput);
+    }, SimPhase.missions);
+    this.events.on('sim.tick', () => {
+      if (this.entities.get(1)!.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted) return;
+      if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
+      const p = this.physics.playerBody!.translation();
+      Object.assign(this.entities.get(1)!.transform, p);
+      this.spatial.set(1, p.x, p.z);
+    }, SimPhase.cleanup);
+    this.events.on('sim.tick', () => this.solids.commit(), SimPhase.cleanup + .75);
+    installVfxScenario(this); installBlastScenario(this);
+    if (name === 'perf-horde-200' || name === 'perf-horde-100') {
+      this.infected!.director.tier = name === 'perf-horde-100' ? 'low' : 'high'; populateHorde(this, name === 'perf-horde-100' ? 100 : 200);
+    }
+    this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
+  }
+  /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot, reservedIds?: readonly number[], prepared?: DistrictWorld):void {
+    const districts=prepared??new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
+    this.loadScenario('survivor',seed);
+    if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
+    if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);
+    // L9: the L8 transport (APC + occupants) is restored after the dressed crossing has spawned its props; keep its IDs free.
+    if (reservedIds?.length) this.entities.reserveIds(reservedIds);
+    this.carriedSurvivors = carriedSurvivors;
+    this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
+    this.lightPower?.install(districts);
+    // Relative to the feet: a courier under a raised deck (L10 finale platform) must not be lifted through it.
+    this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundBelow(x, z, (this.entities.get(1)?.transform.y ?? .7) - .7) ?? 0;
+    this.interactables!.nav = districts.nav;
+    const {min,max}=districts.nav;
+    // Respect the authored floor at load; relative grounding can then keep bodies below overhead decks.
+    const spawnY = districts.playerStartHeight + survivor.height/2 + .005;
+    this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:spawnY,z:districts.playerStart[1]}});
+    Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:spawnY,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
+    const streamed = districts.districts.find(d => d.layout.terrainChunks?.length);
+    if (streamed) {
+      this.chunks = new ChunkResidency(this, layoutTerrainChunks(streamed.layout, streamed.origin), streamed.layout.terrainChunks![0].size); this.chunks.update();
+      this.events.on('sim.tick', () => this.chunks?.update(), SimPhase.input - .5);
+    } else {
+      for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    }
+    // The authored perimeter is a level invariant, including empty outer
+    // verges beyond the streamed art tiles. It must not unload with a chunk.
+    for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
+    this.entities.beginActorSequence(composition.scene?.actorKey ?? composition.id);
+    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))), !!this.aftermath);
+    this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
+    this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
+    this.physics.world!.step();
+    for (const d of districts.districts) {
+      this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
+    }
+    for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
+    for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
+    installCampaignNpcs(this, carriedCompanion);
+    if (composition.id === 'L10') {
+      installMegaPursuit(this, { route: curePursuitRoute });
+      const d = districts.districts.find(d => d.id === 'D-CURE');
+      const at = d?.layout.anchors['dispersal-origin'];
+      if (d && at) this.installMountedGun(finaleGunPlacement({ x: at.position[0] + d.origin[0], z: at.position[2] + d.origin[1] }));
+      this.l10Encounters = new LevelTenEncounters(this);
+      this.events.on('sim.tick', () => this.l10Encounters?.update(), SimPhase.missions - .1);
+    }
+    if (composition.id === 'L7') {
+      installL7Dressing(this);
+      this.l7Encounters = new LevelSevenEncounters(this, carriedSurvivors);
+      this.events.on('sim.tick', () => this.l7Encounters?.reserveSlots(), SimPhase.ai - .1);
+      this.events.on('sim.tick', () => this.l7Encounters?.update(), SimPhase.missions);
+      this.l7Departure = new LevelSevenDeparture(this); this.l7Departure.install();
+      this.events.on('sim.tick', () => this.l7Departure?.update(), SimPhase.missions);
+    }
+    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
+    if (this.aftermath && this.toys) this.toys.carryOver(this.aftermath);
+    this.events.on('sim.tick',()=>{
+      if(this.tick%60!==0 || this.inspectionGhost || this.missions?.state.states['cure-released'])return;
+      const player=this.entities.get(1)!;
+      for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
+    },SimPhase.combat);
+  }
+  /** Scripted encounters use the loaded town colliders, never the fixture arena grid. */
+  enableInfected(): void {
+    if (this.infected || !this.districts) return;
+    const { min, max } = this.districts.nav;
+    const walls = this.chunks?.walls ?? this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
+      ...(a.navBlocker ? {navBlocker:true} : {}), ...(a.navOnly ? {navOnly:true} : {}),
+      y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
+    })));
+    if (this.combat) { (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls.filter(w => !(w as { navOnly?: boolean }).navOnly)); this.combat.query.invalidate(); }
+    this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:this.chunks?.bounds() ?? {width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls:this.chunks?.walls ?? walls }, this.chunks ? (x, z) => this.chunks!.resident(x, z) : null);
+    this.infected.director.levelCap = 15;
+    this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);
+  }
+  /** Mission script integration: rebuild decay collision/nav once on a tier change. */
+  setTier(tier: Tier): void {
+    if (!isWorldTier(tier)) throw new RangeError("Tier must be W0…W6");
+    const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
+    const next = this.preparedDistricts.get(tier) ?? new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
+    this.districts = next;
+    this.lightPower?.install(next);
+    const {min,max}=next.nav, player=this.entities.get(1)!, props=this.props?.snapshot();
+    this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
+    for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    for (const boundary of next.boundaries) this.physics.addStatic(boundary, [0, 0]);
+    this.props?.install(next, props, true);
+    this.vehicles?.rebuild(true);
+    this.hazards?.debris.reset(true); this.explosions?.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
+    this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
+  }
+  setInput(patch: Partial<InputFrame>): void {
+    const next = { ...this.input, ...structuredClone(patch) };
+    for (const vector of [next.move, next.aim, next.aimPoint, next.moveTarget]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
+    this.input = next;
+  }
+  /** World-space E11 gameplay placements. Static Blender geometry remains owned by E10. */
+  private placeInteractions(data: InteractionPlacements, origin: [number, number] = [0, 0]): void {
+    const pos = (p: { x: number; z: number }) => ({ x: p.x + origin[0], z: p.z + origin[1] });
+    for (const d of data.devices ?? []) this.interactables!.spawn(d.kind, pos(d.position), d.options);
+    for (const h of data.hazards ?? []) this.hazards!.spawn(h.kind, pos(h.position), h.options);
+    for (const p of data.pickups ?? []) this.pickups!.spawn(p.kind, pos(p.position), p.item);
+  }
+  /** Device frames are borrowed for this tick; snapshots are independently copied. */
+  applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
+  clearInput(): void { this.controls.reset(); this.effectiveInput = emptyInput(); this.input = emptyInput(); this.scheme = 'mouse-only'; }
+  update(): void {
+    if (!this.scenario) return;
+    if (this.missions?.state.phase === 'cinematic') { this.missions.advanceCinematic(this.input); return; }
+    if (this.missions && this.missions.state.phase !== 'playing') return;
+    this.events.emit({ type: 'sim.tick', tick: ++this.tick });
+  }
+  getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
+  query(filter: EntityFilter): EntitySnapshot[] {
+    const nearby = filter.within ? new Set(this.spatial.query(filter.within)) : null;
+    return structuredClone(this.entities.values().filter((e) => (!filter.detectable || !e.infected?.hidden) && (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
+  }
+  getState(): GameStateSnapshot {
+    const entities = this.query({});
+    const controls = this.controls.snapshot();
+    return { collision: this.solids.snapshot(), ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+  }
+  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
+    if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
+    const hp = opts.hp ?? 100, armor = opts.armor ?? 0, yaw = opts.yaw ?? 0, radius = opts.radius ?? 0.4;
+    if (![pos.x, pos.z, hp, armor, yaw, radius].every(Number.isFinite) || hp <= 0 || armor < 0 || armor > 1 || radius <= 0) throw new RangeError('Invalid dummy');
+    const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    if (opts.ramDamage !== undefined) entity.ramDamage = opts.ramDamage;
+    if (opts.reactive && entity.faction === 'infected') entity.hearing = { mode: 'idle', target: { x: pos.x, z: pos.z }, lureUntil: 0 };
+    this.spatial.set(entity.id, pos.x, pos.z); this.events.emit({ type: 'entity.spawned', tick: this.tick, id: entity.id }); return entity.id;
+  }
+  /** E05 impulse is the authored displacement in metres, swept against full cover. */
+  knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number, ticks = 1): void {
+    if (ticks > 1) {
+      entity.knockbackSlide = { x: direction.x * impulse, z: direction.z * impulse, ticks };
+      this.slideKnockback(entity);
+      return;
+    }
+    this.solids.wrote(entity, 'combat.knockback');
+    const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
+    const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
+    const nav = entity.infected ? this.infected?.infectedNav : this.infected?.nav;
+    // Thin static colliders (picket fences, hedges) are on the walk grid, not in the combat wall query: knocked bodies
+    // slide along them instead of passing through (PO #14).
+    if (entity.id === 1) {
+      // Walkable stairs/decks are Rapier solids without combat-cover walls.
+      // Sweep the real capsule so an impulse cannot strand it inside a riser.
+      const physics = this.physics, displacement = { x: direction.x * move, y: 0, z: direction.z * move };
+      // Synchronize this capsule's current pose after any earlier impulse.
+      physics.playerCollider!.setTranslation(physics.playerBody!.translation());
+      physics.characterController!.computeColliderMovement(physics.playerCollider!, displacement, undefined, physics.playerCollider!.collisionGroups());
+      physics.characterController!.computedMovement(displacement);
+      entity.transform.x += displacement.x; entity.transform.y += displacement.y; entity.transform.z += displacement.z;
+    } else if (nav) nav.move(entity.transform, direction.x * move, direction.z * move, entity.combat?.radius ?? .3);
+    else { entity.transform.x += direction.x * move; entity.transform.z += direction.z * move; }
+    this.spatial.set(entity.id, entity.transform.x, entity.transform.z);
+    if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
+  }
+  private slideKnockback(entity: EntitySnapshot): void {
+    const slide = entity.knockbackSlide!;
+    const x = slide.x / slide.ticks, z = slide.z / slide.ticks, distance = Math.hypot(x, z);
+    // Reuse the real wall sweep and navigation slide on every step; interpolating only a final endpoint can cut corners.
+    if (distance > 0) this.knockback(entity, { x: x / distance, z: z / distance }, distance);
+    slide.x -= x; slide.z -= z;
+    if (--slide.ticks <= 0) delete entity.knockbackSlide;
+  }
+  reset(): void {
+    this.solids.reset();
+    // Reachability belongs to the departing mission's grid, including during the next level's pickup assembly.
+    this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
+    this.chunks?.dispose(); this.chunks = null;
+    this.inspectionGhost = false; this.weather = null; this.lightPower = null;
+    this.vehicles?.dispose(); this.vehicles = null;
+    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l10Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
+    this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
+  }
+  dispose(): void { this.reset(); }
+}

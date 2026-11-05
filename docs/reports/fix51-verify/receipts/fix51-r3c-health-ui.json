@@ -1,0 +1,1666 @@
+{
+  "sourceHash": "cfa203bf81452bb46a73acc9ec884c5e3e326b3462b89bef9f28b7673eaa5e27",
+  "observerHash": "56e4986bc1a4ec09c2ced438b1bfd5873b982fa68964b541b61958685d08f201",
+  "revision": "5b2984d1095f2a29f07d6422de92d879846055d4",
+  "method": "Controlled production HealthBars renderer: five zoo species and twelve human followers, healthy/injured, desktop 1280x720. Actual backend/tier/zoom, health fraction and bar pixels. Does not prove phone sizing, every occlusion case, one-frame latency, or physical route behavior.",
+  "rows": [
+    {
+      "name": "lion",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.lion",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 1079.026365732058,
+          "y": 300.7690890898859,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.430776966407168,
+            1.349741644789657,
+            -0.4691205493666457
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 300,
+          "max": 600
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 248
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-high-z0.5.png",
+      "sha256": "3b4bf38f5dba0cdbbd9779e7edbbc2cd8f50c302c7ffa5c89753e62042d6b4bb",
+      "reviewed": true
+    },
+    {
+      "name": "lion",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.lion",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 765.3031523174576,
+          "y": 336.35497487804605,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.3822577615826894,
+            1.4355811798841849,
+            -0.5194736400991324
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 300,
+          "max": 600
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 217
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-high-z1.5.png",
+      "sha256": "f7e890c9a682f93d3b138343ce98e93d23002d786c3a5af29c2b47e45ec8f828",
+      "reviewed": true
+    },
+    {
+      "name": "gorilla",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.gorilla",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 1146.2394911493288,
+          "y": 274.3980196751837,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.7678149345378804,
+            1.6920166537330759,
+            -0.3798177239437299
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 900,
+          "max": 1800
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 217
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-high-z0.5.png",
+      "sha256": "9d38c25522c21075e3d6e307c46e735a4f4ee9ed92dec4b63cbd611f951bd314",
+      "reviewed": true
+    },
+    {
+      "name": "gorilla",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.gorilla",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 778.573135386958,
+          "y": 331.25661035032306,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.7360769451994216,
+            1.7625984567773276,
+            -0.41835100041446793
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 900,
+          "max": 1800
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 224
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-high-z1.5.png",
+      "sha256": "37e5da2fdda887e6872d6e13ed76524f98fdfab39fc3375062dd0ecc9f8fec77",
+      "reviewed": true
+    },
+    {
+      "name": "elephant",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.elephant",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 1155.3656600933618,
+          "y": 6,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.443383007381046,
+            2.775899489945319,
+            -0.6200227448009716
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 600,
+          "max": 1200
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 248
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-high-z0.5.png",
+      "sha256": "4e8dcef0f55c76f58898991b04c310a3b43527e62e0145b613aa4990c14156d8",
+      "reviewed": true
+    },
+    {
+      "name": "elephant",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.elephant",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 776.2045225847221,
+          "y": 242.3373267348944,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.2840487330513675,
+            3.0860433329004806,
+            -0.7793570191308454
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 600,
+          "max": 1200
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 217
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-high-z1.5.png",
+      "sha256": "7dd28a383dd764b78bad352d54baf87c45d99df23a0d5818f8570d6db58a3bc4",
+      "reviewed": true
+    },
+    {
+      "name": "zebra",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.zebra",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 1131.8503574656816,
+          "y": 173.7456360694886,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.601628760751699,
+            2.126275161720242,
+            -0.39055334502796857
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 90,
+          "max": 180
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 256
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-high-z0.5.png",
+      "sha256": "b8e2e9541a842bb22087856fb8f8c101a8b8de828ee50ad9d80e688040d1c133",
+      "reviewed": true
+    },
+    {
+      "name": "zebra",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.zebra",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 772.4354695717283,
+          "y": 304.0435759082285,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.566311514772231,
+            2.2039678009956596,
+            -0.43048017581579145
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 90,
+          "max": 180
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 217
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-high-z1.5.png",
+      "sha256": "7b929905af583ccf7a5c700bf4033bb21038bd0ad7c148f1600f8e362b926f3e",
+      "reviewed": true
+    },
+    {
+      "name": "flamingo",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.flamingo",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 1107.1981855065258,
+          "y": 391.1826888612848,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.8060892783434532,
+            1.186695676740439,
+            -0.15944680940793976
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 7.5,
+          "max": 15
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 217
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-high-z0.5.png",
+      "sha256": "6c9577ad85f10c6ddb86a733d9c50d848b633b524500f8c762d29b535658e62a",
+      "reviewed": true
+    },
+    {
+      "name": "flamingo",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        4
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [
+        {
+          "id": 3,
+          "archetype": "animal.flamingo",
+          "health": 100,
+          "hasBar": false
+        }
+      ],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 768.8112654867069,
+          "y": 363.5447031133832,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            2.765004780454735,
+            1.2551755991739597,
+            -0.1837547455597175
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 4,
+          "health": 7.5,
+          "max": 15
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 256
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-high-z1.5.png",
+      "sha256": "f55ea70b885819f659a51896750f2293e90d84f68fce7559de167e5fba0237bf",
+      "reviewed": true
+    },
+    {
+      "name": "followers",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 0.5,
+      "fixtureIds": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          5.434583326768001,
+          5.583959896778495,
+          5.434583326768002
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [],
+      "bars": [
+        {
+          "id": 4,
+          "fraction": 1,
+          "x": 63.8382832105043,
+          "y": 257.0503044382692,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -1.2578112311205647,
+            1.3564401201402827,
+            2.6961477570691814
+          ]
+        },
+        {
+          "id": 5,
+          "fraction": 1,
+          "x": 299.9486933442037,
+          "y": 468.7136702358144,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            0.7312243869365895,
+            1.2227590057337672,
+            2.7431825389923308
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 3,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 4,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 5,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 6,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 7,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 8,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 9,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 10,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 11,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 12,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 13,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 14,
+          "health": 100,
+          "max": 100
+        }
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "fillPixels": 54
+        },
+        {
+          "id": 5,
+          "fillPixels": 36
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": false,
+      "allHaveFillPixels": false,
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-high-z0.5.png",
+      "sha256": "674f7dc4f54aa652670ae10626d132e22c8b5ecb47dcf9b797668fae11ca28d6",
+      "reviewed": true
+    },
+    {
+      "name": "followers",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "fixtureIds": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "actual": "webgpu",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "healthyControls": [],
+      "bars": [
+        {
+          "id": 3,
+          "fraction": 0.5,
+          "x": 394.1333562500837,
+          "y": 283.05543288729854,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -3.310161918175286,
+            1.3302928545775679,
+            2.6997421088099056
+          ]
+        },
+        {
+          "id": 4,
+          "fraction": 1,
+          "x": 471.09715068945934,
+          "y": 328.1048064299462,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -1.2696123994655188,
+            1.3794110704716864,
+            2.6843465887242886
+          ]
+        },
+        {
+          "id": 5,
+          "fraction": 1,
+          "x": 550.318259457431,
+          "y": 382.76341120769166,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            0.6954855517953931,
+            1.3024809758221814,
+            2.709511508187692
+          ]
+        },
+        {
+          "id": 6,
+          "fraction": 0.5,
+          "x": 641.5101532254216,
+          "y": 436.6263678666577,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            2.7307582977701976,
+            1.354453533333233,
+            2.6984071615626153
+          ]
+        },
+        {
+          "id": 7,
+          "fraction": 1,
+          "x": 299.0336995548738,
+          "y": 331.7262036320582,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -3.2959011951114725,
+            1.3015659816329332,
+            4.70119605868833
+          ]
+        },
+        {
+          "id": 8,
+          "fraction": 1,
+          "x": 373.59405924266684,
+          "y": 379.8163742286379,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -1.274761431038911,
+            1.369738177292236,
+            4.696633048235906
+          ]
+        },
+        {
+          "id": 9,
+          "fraction": 0.5,
+          "x": 454.6428115749933,
+          "y": 440.27915603580567,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            0.7219569098195127,
+            1.2796777726229234,
+            4.700473428889335
+          ]
+        },
+        {
+          "id": 10,
+          "fraction": 1,
+          "x": 542.2836216802903,
+          "y": 499.0307141060005,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            2.727652712581598,
+            1.346389034773134,
+            4.722966833827968
+          ]
+        },
+        {
+          "id": 11,
+          "fraction": 1,
+          "x": 194.16522475579342,
+          "y": 382.2042065654131,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -3.300080487574384,
+            1.3153933765710004,
+            6.7085313107124165
+          ]
+        },
+        {
+          "id": 12,
+          "fraction": 0.5,
+          "x": 268.83900944122513,
+          "y": 436.64174395912653,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            -1.2555315487045213,
+            1.3589744819370093,
+            6.693203092370759
+          ]
+        },
+        {
+          "id": 13,
+          "fraction": 1,
+          "x": 346.34559245746823,
+          "y": 501.4459398829443,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            0.7076106866657526,
+            1.2843940667704423,
+            6.7169954379857035
+          ]
+        },
+        {
+          "id": 14,
+          "fraction": 1,
+          "x": 435.4811400633281,
+          "y": 567.3946779417536,
+          "width": 18,
+          "height": 3,
+          "gap": 0,
+          "anchor": [
+            2.7417251606237336,
+            1.3369049074355495,
+            6.714520527864796
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": 3,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 4,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 5,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 6,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 7,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 8,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 9,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 10,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 11,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 12,
+          "health": 50,
+          "max": 100
+        },
+        {
+          "id": 13,
+          "health": 100,
+          "max": 100
+        },
+        {
+          "id": 14,
+          "health": 100,
+          "max": 100
+        }
+      ],
+      "pixels": [
+        {
+          "id": 3,
+          "fillPixels": 24
+        },
+        {
+          "id": 4,
+          "fillPixels": 51
+        },
+        {
+          "id": 5,
+          "fillPixels": 34
+        },
+        {
+          "id": 6,
+          "fillPixels": 18
+        },
+        {
+          "id": 7,
+          "fillPixels": 34
+        },
+        {
+          "id": 8,
+          "fillPixels": 36
+        },
+        {
+          "id": 9,
+          "fillPixels": 27
+        },
+        {
+          "id": 10,
+          "fillPixels": 51
+        },
+        {
+          "id": 11,
+          "fillPixels": 51
+        },
+        {
+          "id": 12,
+          "fillPixels": 18
+        },
+        {
+          "id": 13,
+          "fillPixels": 51
+        },
+        {
+          "id": 14,
+          "fillPixels": 51
+        }
+      ],
+      "fractionCorrect": true,
+      "allShown": true,
+      "allHaveFillPixels": true,
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-high-z1.5.png",
+      "sha256": "f1900c6a39c5e9355ad88cfd04f2b3101ad2fb05e77ed687081f6c732e680d58",
+      "reviewed": true
+    }
+  ],
+  "errors": [],
+  "limitation": "A later optional instance-matrix instrumentation attempt failed with __name is not defined and replaced 36 earlier numeric rows. The 12 retained rows are actual successful measurements; no lost measurements are reconstructed. All 48 original successful captures were retained, reviewed as four labelled contact sheets, then deleted. The original four successful command exits remain in health-ui-first-corrected-command.json. No additional experiment was run after the stop instruction.",
+  "reviewedCaptures": [
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgl2-high-z0.5.png",
+      "sha256": "6dddd39d2de1b7cc6188983f202865c0ebf6ce9234aeeebd6f55f1d92a379651",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgl2-high-z1.5.png",
+      "sha256": "caae7a938281271327a094f32d726cecd2ccdff509d3f25e953287ce2f7a3edb",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgl2-low-z0.5.png",
+      "sha256": "e6240771d79a89e55b792890d2b3be4a75ba6b691353a3f4c786a4b6bda6c173",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgl2-low-z1.5.png",
+      "sha256": "a17eb656b72582edc089383decf06e563b7f96bc66aeda9c0c9735df7696dffb",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-high-z0.5.png",
+      "sha256": "4e8dcef0f55c76f58898991b04c310a3b43527e62e0145b613aa4990c14156d8",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-high-z1.5.png",
+      "sha256": "7dd28a383dd764b78bad352d54baf87c45d99df23a0d5818f8570d6db58a3bc4",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-low-z0.5.png",
+      "sha256": "88d83c261e973720e87372d15117f5aac169ba3a9a88adc5c64c1b22dad6f11c",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/elephant-webgpu-low-z1.5.png",
+      "sha256": "db00b4bd3d3b60e3fa999563940a73cb911de353025ef803690d2b5e129ed147",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgl2-high-z0.5.png",
+      "sha256": "cf5109deb438e5b60ed6a7f3fbc4815d71d85c18ef3d3ec45284226097bc115d",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgl2-high-z1.5.png",
+      "sha256": "1bbc795a58367c3c06759ee87574cd5fc567d2420c0e01b1086aeeb1d173b423",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgl2-low-z0.5.png",
+      "sha256": "09f448406941d556afe4ec3ee06d2634f7822d9cafe10a668f9fe31b2a1a184a",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgl2-low-z1.5.png",
+      "sha256": "5b42853beded22b03c1cbf2b2eb2a7a690236087c679859cb486e4749d34a613",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-high-z0.5.png",
+      "sha256": "6c9577ad85f10c6ddb86a733d9c50d848b633b524500f8c762d29b535658e62a",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-high-z1.5.png",
+      "sha256": "f55ea70b885819f659a51896750f2293e90d84f68fce7559de167e5fba0237bf",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-low-z0.5.png",
+      "sha256": "a360aa44d0491eeb09f55a0fc4137aec9e9835c369e2df8c2d9397a556180f18",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/flamingo-webgpu-low-z1.5.png",
+      "sha256": "fce558ed36e078bf477e0079dea586320971d20a120d34c0a74eb8789ae90bb7",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgl2-high-z0.5.png",
+      "sha256": "b37e2f02910d570f08c591f768232e915651f1b5a7c2b6ab22379c65c7e6e354",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgl2-high-z1.5.png",
+      "sha256": "4b82cff6b9b5dc5b5743dc32adbbddb9f21154697b6c4869f28523aca7a7e7cd",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgl2-low-z0.5.png",
+      "sha256": "be8406903063fb5e67f756f77a210621af31e8c678e956915e7d339d9c21c7f2",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgl2-low-z1.5.png",
+      "sha256": "10f7f97cda03d432137936380e94b0818795b3a00dbe588d55f216ae334dd1ee",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-high-z0.5.png",
+      "sha256": "674f7dc4f54aa652670ae10626d132e22c8b5ecb47dcf9b797668fae11ca28d6",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-high-z1.5.png",
+      "sha256": "f1900c6a39c5e9355ad88cfd04f2b3101ad2fb05e77ed687081f6c732e680d58",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-low-z0.5.png",
+      "sha256": "51c42f210111d4425d406a78f665dfaf6affc71895fbaf3a52ddc1b0f743f048",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/followers-webgpu-low-z1.5.png",
+      "sha256": "61498b71704d8193d94745eea1b1c28b1119325eab5bb1c75432de3790a623e4",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgl2-high-z0.5.png",
+      "sha256": "57d495227183c739143f9dc06e8333d36c7dced3d5ce90106940a4d2c1dbffe9",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgl2-high-z1.5.png",
+      "sha256": "eeed595a10df115ab6d600089d914463fbc41ecd6cd93f0fa93d37440a224200",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgl2-low-z0.5.png",
+      "sha256": "e693e10bf08c1c7e4a1fc9799ae0456514adddd0d9b18c98a122efef96cf5178",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgl2-low-z1.5.png",
+      "sha256": "08e1de7d52f7e33468bfaeb0ec1acb4b327dc198082031930a45aec8c626c3bd",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-high-z0.5.png",
+      "sha256": "9d38c25522c21075e3d6e307c46e735a4f4ee9ed92dec4b63cbd611f951bd314",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-high-z1.5.png",
+      "sha256": "37e5da2fdda887e6872d6e13ed76524f98fdfab39fc3375062dd0ecc9f8fec77",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-low-z0.5.png",
+      "sha256": "b1c66c6e1048a75179df6dc6c9c4154fdbdc5996f510234397fbc7f356bc83a0",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/gorilla-webgpu-low-z1.5.png",
+      "sha256": "bde73e2a1a6cdc7914288e481d50273dc9bde5012b1ec4a35089f62cbb449564",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgl2-high-z0.5.png",
+      "sha256": "62f557322fbb1c5d1fcce7e84d78182894b592a043bfab3fe50cb4b154f976e0",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgl2-high-z1.5.png",
+      "sha256": "6e63d62f5bb4e1d22b41a27ad03c79ae3e6ebe440b6373f486fe5d3ba46963df",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgl2-low-z0.5.png",
+      "sha256": "214097259a060528e3f4f03a62722b618517db10f631c71e7c903bf523a520f0",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgl2-low-z1.5.png",
+      "sha256": "611956613153f8bab86e16dfabe257dc88ee809f2c6751c61aeec8f20c3913f6",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-high-z0.5.png",
+      "sha256": "3b4bf38f5dba0cdbbd9779e7edbbc2cd8f50c302c7ffa5c89753e62042d6b4bb",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-high-z1.5.png",
+      "sha256": "f7e890c9a682f93d3b138343ce98e93d23002d786c3a5af29c2b47e45ec8f828",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-low-z0.5.png",
+      "sha256": "f47bad567672d29aeeacb4c2504a11082f0383028b08deb9dd677440d74a77cd",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/lion-webgpu-low-z1.5.png",
+      "sha256": "fb7c7a82c6151998ccf97203c85b50b13c75e09d9cc29696ce1d790029c19c89",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgl2-high-z0.5.png",
+      "sha256": "69ede3fcc74031351c50b89189dd0645f85f3043fad0b2b7b356a517eec1cfcb",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgl2-high-z1.5.png",
+      "sha256": "95b2f3522112eb8903f731d778836ad7f49f44ab0f5b2dad2a2a9db0ae7f6f28",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgl2-low-z0.5.png",
+      "sha256": "8fca2c7bb336a2a77aafd91bc1dde27732b2f0f7320d85f805103ac6eb961d54",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgl2-low-z1.5.png",
+      "sha256": "a25222e4e88089f05d61e3652f58f4120632d8a5c3b4462fa3b9789c56bb64e5",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-high-z0.5.png",
+      "sha256": "b8e2e9541a842bb22087856fb8f8c101a8b8de828ee50ad9d80e688040d1c133",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-high-z1.5.png",
+      "sha256": "7b929905af583ccf7a5c700bf4033bb21038bd0ad7c148f1600f8e362b926f3e",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-low-z0.5.png",
+      "sha256": "9eb9cd547840d59b6edd3c05d31139e8d1d9d4a95f1bb204718319d4232c2a34",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    },
+    {
+      "file": "test-results/fix51-r3c/health-ui/zebra-webgpu-low-z1.5.png",
+      "sha256": "ddafccfacc911306aae7c63f926144880056bfb4bc96b3a9d915a1dfd0e03ef3",
+      "reviewed": true,
+      "method": "labelled 640x180 contact-sheet tile; selected elephant/follower images additionally reviewed full size",
+      "finding": "Injured animal red bar visible; healthy control unbarred. Followers have green pips at far zoom; close view crops most bodies."
+    }
+  ]
+}

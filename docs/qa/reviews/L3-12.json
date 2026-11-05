@@ -1,0 +1,62 @@
+{
+  "row": "L3-12",
+  "status": "FAIL",
+  "reviewer": "Codex fix62-a",
+  "date": "2026-11-05",
+  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "clauses": [
+    {
+      "clause": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
+      "verdict": "FAIL",
+      "note": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix62-a/L3-12-screen.json.gz",
+      "sha256": "64d1bbf381f6e6c86b4e5ed8d3d0b8da867de232453d09d6dccb7be848ee1c91",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-12-image-review.json",
+      "sha256": "ccd5a89a23f7c41dd7b5b2d814c22646c449d84acdee4ac89adebe0f6a1fcc14",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-12-marker-proof.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-12-cue-browser.json.gz",
+      "sha256": "e98c5b439810df7a071733eef3e63bcfe744f50cdd4acb9d73cd08e1a3ba5f12",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/L3-12-cue-image-review.json",
+      "sha256": "5bd675d3dd7df9a7f600225b757a3cc0318702c37966afbe4ee8a50b862cfc30",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/L3-route-0.jpg",
+      "sha256": "8cda33dc42bda7c74c4c25581ad654719a789b4afb929f2ea0c31881e7d74e1a",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/L3-route-1.jpg",
+      "sha256": "e44751e35632459b973f8394213acdac6df960be96466f14055639f6ebbc492a",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/cue-L3-0.jpg",
+      "sha256": "4e3ecae1312ac55a30b1b87d8cd6343f4e81caeda38b2d9d23b70ba1c06cee4c",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/cue-L3-1.jpg",
+      "sha256": "0f52007e68b5ceb37ff1483ee4dfb30fb60c992d2126db477c86c2d8f1b3b760",
+      "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+    }
+  ],
+  "notes": "Damage protection after ordinary mortal yard prefix; static matrix uses disclosed teleports and cannot qualify route discovery. No nav/actor coordinates during screen decisions. Ended when browser connection closed. Input notes preserve mistakes; image-review file corrects them."
+}

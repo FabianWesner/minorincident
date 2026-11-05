@@ -1,0 +1,73 @@
+{
+  "name": "qa-l2-truck-drive-full",
+  "note": "Actual L2 ride from the restored south-west station through Elm Street and Juniper to Grove Market; contact and driving checks retained.",
+  "seed": 1,
+  "ground": "district",
+  "time": "L2",
+  "layout": {
+    "district": "D-GROVE",
+    "level": "L2",
+    "bbox": [
+      [
+        -84,
+        -47
+      ],
+      [
+        -20,
+        50
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "engine",
+      "asset": "vehicle.fire-engine",
+      "at": [
+        -68.8,
+        36.7
+      ],
+      "l2Ride": {
+        "distanceM": 0,
+        "speedMs": 0
+      }
+    }
+  ],
+  "actors": [
+    {
+      "id": "elder",
+      "kind": "pedestrian",
+      "at": [
+        -47,
+        35
+      ],
+      "look": {
+        "model": "npc.civilian-elderly"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "engine",
+    "zoom": 1.15
+  },
+  "frames": 1800,
+  "shots": [
+    0,
+    300,
+    600,
+    900,
+    1200,
+    1500,
+    1800
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "bodyOverlapMaxCm": 0,
+    "vehicleBodyOverlapsMax": 0,
+    "wheelSinkMaxCm": 0.5,
+    "vehicleYawRateMaxDegS": 25,
+    "vehicleRideRemainingMaxM": 0.02
+  },
+  "trace": true
+}

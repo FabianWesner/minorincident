@@ -1,0 +1,7 @@
+{
+  "extends": "../l9-handover/l9-crash-axe-start.json",
+  "name": "qa-l9-q3-mobile-home",
+  "hud": true,
+  "megaHud": true,
+  "note": "Q3 narrow HUD fixture: reuse the axe/corgi composition at the authored crawl end and the existing Scene Lab HUD switch. Run --matrix --size 390x844 --query ui=1; inspect Home clear of minimap/vitals and readable axe HUD. Real L10 transition and touch layout are checked by l9-browser-input.spec.ts."
+}

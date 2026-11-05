@@ -1,0 +1,10 @@
+{
+  "name": "l4-sandbag-breach-north",
+  "extends": "l4-sandbag-breach-west.json",
+  "note": "Q-283 north breach: the objective ring clears both pallet stacks and the east floodlight; the full ring is visible and reachable on the plaza side of the defense line.",
+  "camera": { "mode": "game", "target": [-19, -12.2], "zoom": 1 },
+  "script": [
+    { "frame": 0, "spawnActor": { "id": "courier", "kind": "courier", "at": [-18.84, -12.2], "loadout": ["weapon.army-mg", "weapon.fire-axe"] } },
+    { "frame": 1, "effect": { "barricadeHit": "l4-wall-7", "amount": 10000 } }
+  ]
+}

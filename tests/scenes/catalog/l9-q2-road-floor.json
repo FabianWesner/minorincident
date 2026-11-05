@@ -1,0 +1,29 @@
+{
+  "extends": "l9-dress-road.json",
+  "name": "l9-q2-road-floor",
+  "note": "Q2 zero-durability road composition reuses D2 wheel/contact and E18 render gates. Actual 18 m/s road and 60% floor physics are measured by T-E31-09-terrain-road, not inferred from the sheet.",
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -8,
+        -330
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          14,
+          -330
+        ]
+      ],
+      "floor": true,
+      "health": 0
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  }
+}

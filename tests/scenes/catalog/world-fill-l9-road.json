@@ -1,0 +1,60 @@
+{
+ "name": "world-fill-l9-road",
+ "note": "world-fill (PO #34): L9 asphalt loop mid-drive: avenue trees, hedges, fences, poles, wrecks close to the 12 m lane. Look for roadside mass in every frame within ~4-12 m of the road edge (no flat dark plane), nothing on the lane, no floating or sunk props, no clipping, no flicker.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    70,
+    -400
+   ],
+   [
+    270,
+    -260
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1.0
+ },
+ "frames": 150,
+ "shots": [
+  149
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    150,
+    -330
+   ],
+   "yaw": -0.0,
+   "path": [
+    [
+     190,
+     -330
+    ]
+   ],
+   "health": 1000,
+   "floor": true,
+   "driven": true
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "name": "look-l10-fields-r1-camp",
+ "note": "look-l10-l8-2 (QA batch 20: \"The night fields are mostly empty dark green apart from the courier's lamp\"): R1 crash outskirts: the abandoned field camp (tent, campfire, chairs) and burning wrecks that left the road, furrowed field strips from 6.6 m. Look for: ground that reads as a place, warm pools off the route verge, nothing floating or sunk, no clipping, no flicker.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    570,
+    -45
+   ],
+   [
+    770,
+    95
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    650,
+    25
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      690,
+      25
+     ]
+    ]
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

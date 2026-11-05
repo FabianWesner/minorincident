@@ -1,0 +1,28 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 28s, 30352 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-60099-1792617005; queueing for a slot
+[runner] slot 0 acquired; load 0.22 0.13 0.18
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+{"criterion":"E07-AC19","seed":7,"nominalCorridorWidthM":1.5,"contactDecisionCommentCommit":"2e4df83867","nominalOutsideExpectedHp":100,"nominalOutsideActualHp":50,"literalCorridorControlPass":false,"results":[{"name":"inside","id":4,"initial":{"x":5,"z":0.75,"y":0.7,"yaw":0},"hpBefore":100,"hpAfter":50,"hits":[{"tick":76,"attackId":1,"actionId":"infected.zebra.stampede","sourceId":2,"targetId":4,"position":{"x":5,"z":0.75,"y":0.7,"yaw":0},"direction":{"x":0.4061384660534483,"z":0.9138115486202569},"knockback":0,"amount":25,"damageType":"melee","type":"combat.hit"},{"tick":88,"attackId":2,"actionId":"infected.zebra.stampede","sourceId":3,"targetId":4,"position":{"x":5,"z":0.801,"y":0.7,"yaw":0},"direction":{"x":0.38420613318855823,"z":0.9232473380521039},"knockback":0,"amount":25,"damageType":"melee","type":"combat.hit"}]},{"name":"nominal-outside","id":5,"initial":{"x":5,"z":-0.76,"y":0.7,"yaw":0},"hpBefore":100,"hpAfter":50,"hits":[{"tick":76,"attackId":1,"actionId":"infected.zebra.stampede","sourceId":2,"targetId":5,"position":{"x":5,"z":-0.76,"y":0.7,"yaw":0},"direction":{"x":0.40166149508506604,"z":-0.915788208793949},"knockback":0,"amount":25,"damageType":"melee","type":"combat.hit"},{"tick":88,"attackId":2,"actionId":"infected.zebra.stampede","sourceId":3,"targetId":5,"position":{"x":5,"z":-0.801,"y":0.7,"yaw":0},"direction":{"x":0.38420613318855823,"z":-0.9232473380521039},"knockback":0,"amount":25,"damageType":"melee","type":"combat.hit"}]},{"name":"physical-outside","id":6,"initial":{"x":8,"z":-0.88,"y":0.7,"yaw":0},"hpBefore":100,"hpAfter":100,"hits":[]}]}
+[remote] pulled test-results/ac-close-shared/zebra-corridor.json
+[remote] done exit=0 (runner 2.31.10.108, sync 28s, remote total 68s)

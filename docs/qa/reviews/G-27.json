@@ -1,0 +1,47 @@
+{
+  "row": "G-27",
+  "status": "FAIL",
+  "reviewer": "vqa-1/Opus",
+  "date": "2026-11-04",
+  "commit": "e5f6ae5a2256b28c1f8d180cba824edad0f48744",
+  "clauses": [
+    {
+      "clause": "For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately.",
+      "verdict": "FAIL",
+      "note": "Scope L1, L2, L3, L7, L8, L9, L10 (L4-L6 not reviewed). Harmless: L10 last 30 s of the console charge with 0 infected on screen; L9 6 % of observations with infected on screen and a 136 s empty approach drive; L7 no threat for 6 min while the group stood at the pharmacy corner. Boring: L10 Mega does not come to the arena; the objective sends the player 300 m back and then 335 m back again on an empty road. Not stunning: L10 research/military/corridor flat empty slabs, L3 zoom-1 smoke curtain, L8 dark monotone night. Glitches are listed separately in the README (P1: L2 fire engine cut in half on foot; L10 courier hidden at the console)."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/vqa-1/README.md",
+      "sha256": "452c6c5db2c83959c6024893ee720d97bd67dfe09e69b9ed8c7f1dc435d5f71d",
+      "what": "Per-level glitches / stunning / boring-harmless-babysitting judgments for L1, L2, L3, L7, L8, L9, L10 with ticks, positions and coverage limits."
+    },
+    {
+      "file": "docs/reports/vqa-1/L2-hull-and-door-camera.jpg",
+      "sha256": "176d4d0d471865314968eebf54636319486bfedd4a944b69484274e073fcf431",
+      "what": "L2: ride hull reveal (high z0.5), fire engine cut in half on foot (low z0.5), rescue-door camera at zoom 0.5 before/at/after the 57 m over-pull."
+    },
+    {
+      "file": "docs/reports/vqa-1/L3-smoke-z1-high.jpg",
+      "sha256": "8b6ae109ac16a8c4bb83c1df211c9914f3ba7f2780abac84e053e21f7481be81",
+      "what": "L3 zoom 1 high: smoke columns covering infected (health bars without bodies) and porthole cut-outs."
+    },
+    {
+      "file": "docs/reports/vqa-1/L10-R2-roofs-maxzoom.jpg",
+      "sha256": "a5d081994580ad242ad74440ab3bb230643808b6e87a853e47bb45037ca90c22",
+      "what": "L10 R2 at max zoom (1.5 x region 1.3): near-side roofs filling the frame, faint infected under the dithered roof."
+    },
+    {
+      "file": "docs/reports/vqa-1/L10-hold-and-mega.jpg",
+      "sha256": "de7379bf5715cc31a994e4c3cc2f929e7ee99f11c22dbd98941a431e08e2f974",
+      "what": "L10: courier hidden at the console charge, arena, Mega fight, death flash, empty walk back to release."
+    },
+    {
+      "file": "docs/reports/vqa-1/misc-L1-L3-L7-L8-L9.jpg",
+      "sha256": "11efad0f8519d6bd9943472dd27277f23c2f1ed8a288bffd04998a578c43d6b2",
+      "what": "L1 station black void, L3 yard police, L7 group at the pharmacy fence, L8 black burning APC and mission-failed card, L9 arrow decals."
+    }
+  ],
+  "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained."
+}

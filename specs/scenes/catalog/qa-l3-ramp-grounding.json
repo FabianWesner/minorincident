@@ -1,0 +1,300 @@
+{
+  "name": "qa-l3-ramp-grounding",
+  "note": "PO 10-13 'Dead Zombies fliying' and 'There med packs BELOW the highway' (L3 highway ramp + deck, player on the ramp). Eight infected die on the ramp and deck; five medkits lie on the ramp and deck. Look for: every body lying on the ramp/deck surface (none hovering over the street, none sunk), every medkit on the surface the route walks over (none on the street under the highway).",
+  "seed": 1,
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        126,
+        -16
+      ],
+      [
+        216,
+        16
+      ]
+    ]
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        152,
+        3.5
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "z3",
+      "kind": "infected",
+      "at": [
+        152,
+        3
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z4",
+      "kind": "infected",
+      "at": [
+        155,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z5",
+      "kind": "infected",
+      "at": [
+        158,
+        -3
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z6",
+      "kind": "infected",
+      "at": [
+        161,
+        -5
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z7",
+      "kind": "infected",
+      "at": [
+        164,
+        -3
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z8",
+      "kind": "infected",
+      "at": [
+        167,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z9",
+      "kind": "infected",
+      "at": [
+        176,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z10",
+      "kind": "infected",
+      "at": [
+        155,
+        1.5
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "z11",
+      "kind": "infected",
+      "at": [
+        158,
+        -1
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "z3",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z4",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z5",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z6",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z7",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z8",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z9",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z10",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "z11",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          147,
+          3.3
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          152,
+          4.5
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          156,
+          0.8
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          162,
+          -4
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          178,
+          -1.2
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      160,
+      4.5,
+      -1
+    ],
+    "zoom": 1
+  },
+  "frames": 420,
+  "shots": [
+    10,
+    60,
+    200,
+    419
+  ],
+  "sheet": 70,
+  "expect": {
+    "consoleErrors": 0,
+    "groundingMaxCm": 5,
+    "groundingCorpsesMin": 4,
+    "groundingPickupsMin": 5
+  }
+}

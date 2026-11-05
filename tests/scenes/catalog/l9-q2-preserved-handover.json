@@ -1,0 +1,9 @@
+{
+  "extends": "../l9-handover/l9-crash-handover.json",
+  "name": "l9-q2-preserved-handover",
+  "note": "Q2 regression: 1000-HP APC enters mandatory crash, survives crawl and commits axe-only inventory; game-camera matrix.",
+  "crossingCrash": {
+    "health": 1000,
+    "handover": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+ "name": "qa-courier-handgun-tracer",
+ "note": "PO 10-09: the courier's own handgun tracer and muzzle flash must read at the game camera like the allies' tracers. Three infected in a line, shots at game zoom.",
+ "ground": "asphalt",
+ "size": 40,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 90, "loadout": ["weapon.handgun", "weapon.fists"] },
+  { "id": "z1", "kind": "infected", "at": [7, 1.2], "yaw": 270, "state": "idle" },
+  { "id": "z2", "kind": "infected", "at": [11, -1.5], "yaw": 270, "state": "idle" },
+  { "id": "z3", "kind": "infected", "at": [15, 0.6], "yaw": 270, "state": "idle" }
+ ],
+ "script": [
+  { "frame": 20, "actor": "courier", "do": { "attack": "z1", "seconds": 1.5 } },
+  { "frame": 130, "actor": "courier", "do": { "attack": "z2", "seconds": 1.5 } },
+  { "frame": 240, "actor": "courier", "do": { "attack": "z3", "seconds": 1.5 } }
+ ],
+ "camera": { "mode": "game", "target": [7, 0], "zoom": 0.8 },
+ "frames": 360,
+ "shots": [26, 32, 40, 136, 142, 246, 252],
+ "expect": { "consoleErrors": 0 }
+}

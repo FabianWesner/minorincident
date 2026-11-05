@@ -1,0 +1,47 @@
+{
+  "method": "Images actually inspected. Raw captures deleted after review; hashes retained. Visual observations are limited to the named frame, not whole compound criteria.",
+  "rows": [
+    {
+      "file": "test-results/playtest/fix51-r3c-L8-boarding-fix/captures/campaign-L8-depart-t7925-high-z1-5.jpg",
+      "sha256": "bb41f5bdcf5705276e87cab20a8ba764b7a660b7341fcf6eef358918b3327dd2",
+      "reviewed": true,
+      "sourceHash": "ba00ab37da831e279ed066536fcad35c13c837de5be208324fbe363994a230cb",
+      "finding": "Boarding 1/13, armor 588/1000, living crowd pips and infected bars visible; queue/framing not fully qualified."
+    },
+    {
+      "file": "test-results/playtest/fix51-r3c-L8-boarding-fix/captures/campaign-L8-escape-t7880-high-z0-5.jpg",
+      "sha256": "26c6777f341b09daa4b9c0841febd8b747d21eb3adb06ce528fc4d93e571a62b",
+      "reviewed": true,
+      "sourceHash": "ba00ab37da831e279ed066536fcad35c13c837de5be208324fbe363994a230cb",
+      "finding": "Courier readable at driver door; close camera omits most of the group."
+    },
+    {
+      "file": "test-results/playtest/fix51-r3c-L8-boarding-fix/captures/campaign-L8-result.jpg",
+      "sha256": "1a803f0a6839ac1929a4521e4d9e6a91038964a98b08fda26e9aa38852dd372d",
+      "reviewed": true,
+      "sourceHash": "ba00ab37da831e279ed066536fcad35c13c837de5be208324fbe363994a230cb",
+      "finding": "Actual next-level L9 loading card; not a measured <=6s handover interval."
+    },
+    {
+      "file": "test-results/playtest/fix51-r3c-L8-occupied-fix/captures/campaign-L8-8145-stuck-navigating.jpg",
+      "sha256": "deed1b1cd12c2e7697c8b52bdb9068503ed4a9510bfb1441a3fcc3bf7a92dce3",
+      "reviewed": true,
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "finding": "APC destroyed retry UI clearly names the breach checkpoint; it remains a failed physical route."
+    },
+    {
+      "file": "test-results/playtest/fix51-r3c-L9-webgpu-high-z0.5/captures/campaign-L9-approach-t4263-high-z0-5.jpg",
+      "sha256": "cc596a8b9960ef0098d84e991149fc0e425ac6104de19469dc564c3a6ea8a8c5",
+      "reviewed": true,
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "finding": "Driver seen inside cab; no visible lower-leg protrusion in this pose. Armor reads980/1000. Vehicle fills/crops most of the close camera; distant threats not framed in this still."
+    },
+    {
+      "file": "test-results/playtest/fix51-r3c-L8-webgl2-low-z1.5/captures/campaign-L8-depart-t7681-low-z1-5.jpg",
+      "sha256": "a2fd88bcbc70c570e777f3e3f538d37fa5e56a99e2ebd25f46cbf05d73a479ba",
+      "reviewed": true,
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "finding": "Boarding2/13, armor980/1000, visible green follower pips and red infected bars. This still does not prove every follower or missing-person marker."
+    }
+  ]
+}

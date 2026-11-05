@@ -1,0 +1,49 @@
+# PO checklist (grows with every PO finding)
+Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B against PROD.
+- L1 load time from the level click to Begin is no slower than PROD (P1-107).
+- Pedestrian hats/glasses sit on the head, normal size; no hexagon discs (P1-108, P1-115).
+- L1 depot clerk walks back into the shop and closes the door; nobody vanishes (P1-109).
+- L1 lab handover animation looks like PROD or better (P1-110).
+- L1 bike: after you get off, it stands on your side of any fence or wall (P1-111).
+- Seated NPCs have a bench or seat (P1-112).
+- L3 raised corridor: no gaps or voids in the deck at the ramps (P1-113, 113b).
+- L3 army checkpoint: the ring and route marker are visible during the camera pull-back (P1-114).
+- L4 tank: it never drives or parks through the barrier wall (P1-116).
+- L4 hold: the alarm wave arrives at its full count; civilians don't clump at the wall (P1-118, P1-119).
+- Corpses (Alpha, infected, dogs) look like bodies up close (P1-117, #85).
+- L6 fists: finishable without a soft-lock (the rescue rate is free, PO 10-22).
+- Alpha and Mega Alpha corpses: no boot slabs sticking up; the Mega corpse reads as the creature, not a lump (Q-124).
+- A dead Alpha shows no HP bar above its corpse (Q-125).
+- No gameplay frame over 200 ms on real input at the L1 deliver leg and the L2 ride start (Q-126).
+- L7 end shot: no map edge or void visible at the top of the frame (Q-127).
+- L3 west ramp: no dark seam line across the deck (Q-129).
+- L5 bus hiding place: the search ring is visible at zoom 1.5, not hidden behind the wreck (Q-140).
+- L5 Metro finale: survivors do not merge into each other at the shutter (Q-145).
+- L6 shelter: an uncollected headlamp stays where it lies; its prompt never follows the courier (Q-138).
+- L6 end shot frames the scene, not a blank roof; the result card counts match the objective (Q-144).
+- L7 exit truck is lit, not a black silhouette; gore reads as blood, not red squares (Q-142, Q-143).
+- L7 point-blank rocket does not white out the whole frame (Q-148).
+- L8 boarding wait: missing survivors are visible or marked (Q-141).
+- L9 drive start: the corgi never stands inside the APC hull (Q-137).
+- L9 drive: the APC cannot wedge off-road before the bridge (Q-139).
+- L9 bridge collapse: the APC falls whole; no floating wheels, no vanishing hull (Q-136).
+- L9 approach: no giant flat white arrow over the APC (Q-146).
+- L10 Alpha slam telegraph reads as a ground effect, not debug lines (Q-147).
+- Male courier (both survivors are player figures, P1): walk, run, attacks, gear tiers 0-4, L6 headlamp and L10 canister match the heroine's quality; A/B with `npm run qa:ab -- --survivor male` (batch16).
+- Suit zombie crowds read as separate bodies at low quality and zoom 1 (no dark shard mass), and stay visible at night in L10 (Q-179).
+- No gameplay frame over 200 ms at the L10 Mega fight and death (Q-180).
+- v2 crowd hats: live and turned peds show their eyes at zoom 1.5; no hat wider than ~1.2× the head, none tipped into a disc in front of the face; A/B against PROD at the same seed (Q-187, Q-188).
+- Turned v2 faces read as tinted skin with eyes, not a triangle mosaic (Q-189).
+- Firefighters seen from behind read as a helmet over a head, not a jack-o'-lantern (Q-190).
+- [ ] Q-249 (PO 10-30): every human figure shares the heroine's proportions (head size, legs); hand props (mugs) hand-sized and held; caps sit on heads; bench sitters sit on the bench.
+- [ ] Q-250 (PO 10-30): starting/replaying level N (level select, continue, fresh, after a later level) offers only the weapons the story has given before or in level N.
+- [ ] Q-299 (PO 10-31): armed survivors (every L5-L10 body, slim and reverted) hold the gun in the hand, standing and walking.
+- [ ] Q-300 (PO 10-31): the corgi never fetches the L5 survivors' street weapons; no weapon appears under the courier's feet.
+- [ ] Q-302 (PO 10-31): L5 hiding places draw no ring, arrow or minimap pin (found by sound); survivor-only weapons have no yellow ring.
+- [ ] Q-303 (PO 10-31): the L6 headlamp beam points where the head looks, also while moving one way and aiming another (WASD + mouse).
+- [ ] Q-304 (PO 10-31): seated, lying and downed survivors show no gun; no twisted torso around a rifle.
+- [ ] Q-305 (PO 10-31): L6 retreat: when everyone is through a gate, its prompt and ring stay at the gate until it is closed (E or click); the ring never walks ahead of the group.
+- [ ] Q-325/327/329 (PO 11-01): every phase with infected is a real fight: every spawned infected can reach the player (no crowds standing harmlessly behind barriers, walls or platform edges), and a wave arrives when a phase announces one ("Stop the infected" starts with several infected, not one).
+- [ ] F-322 (PO 11-01): street levels have many scattered single infected ("like in L3"), not a near-empty map.
+- [ ] Q-328 (PO 11-01): no single survivor is slower than the group; escorting never means babysitting one straggler.
+- [ ] Q-323 (PO 11-01): every following survivor shows its health bar.

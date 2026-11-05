@@ -1,0 +1,136 @@
+import { finale } from '../../src/data/l10Finale';
+import { writePhysicsMetadata } from '../assets/physics-metadata';
+import { createHash } from "node:crypto";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
+
+export const districts = [
+  "D-RES",
+  "D-MAIN",
+  "D-SCHOOL",
+  "D-SHOP",
+  "D-CIVIC",
+  "D-PARK",
+  "D-ZOO",
+  "D-EDGE",
+  "D-GROVE",
+  "D-CORRIDOR",
+  "D-FAIR",
+  "D-CROSSING",
+  "D-CURE",
+];
+const files = (path: string): string[] =>
+  readdirSync(path, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory()
+      ? files(`${path}/${e.name}`)
+      : e.name.endsWith(".py")
+        ? [`${path}/${e.name}`]
+        : [],
+  );
+/** Only authoring inputs and referenced asset bytes enter this key. TS gameplay never does. */
+export function layoutSourceHash(id: string): string {
+  if (!districts.includes(id)) throw new Error(`Unknown district: ${id}`);
+  const hash = createHash("sha256");
+  for (const path of [
+    `layouts/${id}/layout.py`,
+    "tools/blender/build_layout.py",
+    ...files("tools/blender/sslib").sort(),
+  ])
+    hash.update(path).update(readFileSync(path));
+  if (id === "D-CROSSING") {
+    hash.update(readFileSync("layouts/D-CROSSING/routes.json"));
+    hash.update(readFileSync("layouts/D-CROSSING/dress.py"));
+    hash.update(readFileSync("assets/kit.river-terrain/model.glb"));
+    hash.update(readFileSync("assets/kit.crossing-crash/model.glb"));
+    hash.update(readFileSync("tools/layouts/compress.ts"));
+  }
+  if (id === "D-CURE") hash.update(readFileSync("layouts/D-CURE/routes.json")).update(readFileSync("tools/l9/build-terrain.ts")).update(JSON.stringify(finale));
+  // Literal placement references in this district and the shared authoring library.
+  const source =
+    readFileSync(`layouts/${id}/layout.py`, "utf8") +
+    readFileSync("tools/blender/sslib/layout.py", "utf8") +
+    (["D-RES", "D-MAIN", "D-SHOP"].includes(id) ? readFileSync("tools/blender/sslib/l1_dressing.py", "utf8") : "");
+  const ids = [
+    ...new Set(
+      [...source.matchAll(/['"]((?:bld|prop|veh)\.[\w-]+)['"]/g)].map(
+        (m) => m[1],
+      ).concat(id === "D-CURE" ? finale.props.map(p => p.asset) : []),
+    ),
+  ].sort();
+  const manifest = Object.fromEntries(JSON.parse(readFileSync("src/assets/manifest.json", "utf8")).map((asset: { id: string }) => [asset.id, asset]));
+  for (const asset of ids) {
+    const path = `assets/${asset}/model.glb`;
+    hash
+      .update(asset)
+      .update(JSON.stringify(manifest[asset]))
+      .update(existsSync(path) ? readFileSync(path) : "placeholder");
+  }
+  return hash.digest("hex");
+}
+export function buildLayout(
+  id: string,
+  force = false,
+): { rebuilt: boolean; sourceHash: string } {
+  const sourceHash = layoutSourceHash(id),
+    cache = `.cache/layouts/${id}.json`;
+  const outputs = [
+    "layout.json",
+    "base.glb",
+    "w1.glb",
+    "w2.glb",
+    "w3.glb",
+    "w4.glb",
+    "w5.glb",
+  ].map((suffix) => `public/assets/layouts/${id}.${suffix}`);
+  if (id === 'D-CURE') outputs.push(`public/assets/layouts/${id}.horizon.glb`, `public/assets/layouts/${id}.chunks/manifest.json`);
+  if (
+    !force &&
+    existsSync(cache) &&
+    JSON.parse(readFileSync(cache, "utf8")).sourceHash === sourceHash &&
+    outputs.every(existsSync)
+  )
+    return { rebuilt: false, sourceHash };
+  if (id === 'D-CURE') {
+    mkdirSync('.cache/layouts', { recursive: true });
+    writeFileSync('.cache/layouts/D-CURE-finale.json', JSON.stringify(finale));
+  }
+  const result = spawnSync(
+    "python3",
+    ["tools/blender/run.py", "tools/blender/build_layout.py", id],
+    { encoding: "utf8", env: { ...process.env, PYTHONHASHSEED: "0" } },
+  );
+  if (result.status !== 0 || !outputs.filter(path => !path.endsWith("horizon.glb") && !path.endsWith("manifest.json")).every(existsSync))
+    throw new Error(
+      `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`,
+    );
+  // Blender exports float32 attributes; meshopt + quantization cuts L1 district GLBs ~4x (load lane).
+  const compressed = spawnSync(process.execPath, ["--import", "tsx", "tools/layouts/compress.ts", ...outputs.filter((path) => path.endsWith(".glb") && !path.endsWith("horizon.glb"))], { encoding: "utf8" });
+  if (compressed.status !== 0) throw new Error(`layout GLB compression failed\n${compressed.stdout}\n${compressed.stderr}`);
+  if (id === 'D-CURE') {
+    const streamed = spawnSync(process.execPath, ['--import', 'tsx', 'tools/l9/build-terrain.ts', id], { encoding: 'utf8' });
+    if (streamed.status !== 0) throw new Error(`terrain split failed\n${streamed.stdout}\n${streamed.stderr}`);
+  }
+  mkdirSync(".cache/layouts", { recursive: true });
+  writeFileSync(cache, JSON.stringify({ sourceHash }) + "\n");
+  return { rebuilt: true, sourceHash };
+}
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  writePhysicsMetadata();
+  const id = process.argv.slice(2).find((arg) => !arg.startsWith("--"));
+  for (const district of id && id !== "--changed" ? [id] : districts)
+    console.log(
+      district,
+      buildLayout(district, process.argv.includes("--force")),
+    );
+}

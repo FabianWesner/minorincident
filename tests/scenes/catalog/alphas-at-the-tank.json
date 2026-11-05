@@ -1,0 +1,104 @@
+{
+  "name": "alphas-at-the-tank",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "dof": false,
+  "size": 48,
+  "note": "PO 10-14 tank stall regression: five production Alphas round the parked hull, close on humans, telegraph and attack across frames. Compare both tiers and game-camera zooms 0.5/1/1.5; no mesh/material overrides.",
+  "props": [
+    {
+      "id": "tank",
+      "asset": "veh.tank",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        6,
+        0
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha-0",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5,
+        -3.2
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "alpha-1",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5,
+        -1.6
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "alpha-2",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5,
+        0.0
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "alpha-3",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5,
+        1.6
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "alpha-4",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5,
+        3.2
+      ],
+      "yaw": 0,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 480,
+  "sheet": 40,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "courierAttacksMin": 1
+  }
+}

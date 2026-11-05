@@ -1,0 +1,133 @@
+{
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
+  "revision": "a7265a9d83148185361cb37f3201a6f804d309ac",
+  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "toolSha256": "a523fbbc28a7db491d3294d85c724ca6b58dfd5c6627fa3c1a8f625dab3c91bb",
+  "cell": "L9-low-webgl2-z1.5-countryside",
+  "tier": "low",
+  "zoom": 1.5,
+  "route": "countryside",
+  "artifacts": {
+    "directory": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c3/test-results/fix51-r10c/L9-low-webgl2-z1.5-countryside-1793860670709",
+    "logSha256": "80b4737298eca217a8327a6e3f9e04c141396f5e2f05f50bf35cc4d73018aee4"
+  },
+  "method": "Full physical WASD route using the authored map assist; protected courier, no objective skips, no actor writes or frame timing. eyes.ts counts living submitted bodies with LOS and on-screen chest, not minimap dots. Photos pause simulation and restore camera/quality.",
+  "result": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 124,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 4.858,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive toward the city · 1020 m",
+            "tick": 0,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                470,
+                0,
+                0
+              ],
+              "playerY": 0.705,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "Get clear of the wreck · 20 m",
+            "tick": 6690,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "yielded": false
+  },
+  "error": null,
+  "runtimeMatches": true,
+  "fullRouteConsolePass": true,
+  "visibility": {
+    "observations": 108,
+    "positiveTicks": [
+      396,
+      459,
+      1138,
+      1192,
+      1255,
+      1872,
+      2056,
+      2119,
+      2182,
+      2244,
+      2306,
+      2614,
+      3351,
+      3415,
+      3477,
+      3540,
+      4036,
+      4098,
+      4343,
+      4405,
+      4467,
+      4712,
+      4773,
+      4834,
+      4896,
+      5452,
+      5514,
+      6195,
+      6257
+    ],
+    "firstInactiveTick": 6690,
+    "maximumSamplingSeconds": 1.4,
+    "largestGapSeconds": 12.283333333333333,
+    "conservativeGapSeconds": 13.683333333333334,
+    "targetSeconds": 60,
+    "pass": true
+  },
+  "runtime": {
+    "backend": "webgl",
+    "quality": "low",
+    "zoom": 1.5
+  }
+}

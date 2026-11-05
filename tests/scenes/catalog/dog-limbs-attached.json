@@ -1,0 +1,91 @@
+{
+  "name": "dog-limbs-attached",
+  "note": "PO 10-19 \"detached leg of dog\" (L1 pet dog): amb.dog stands, walks, runs, stops and walks again; every jointed leg stays on its shoulder/hip joint (PawContacts used to translate the whole limb up to 78 cm off the body). The matrix runs it at zoom 1.5/1/0.5, high and low.",
+  "ground": "sidewalk",
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -12,
+        8
+      ],
+      "yaw": 0,
+      "god": true
+    },
+    {
+      "id": "dog",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "script": [
+    {
+      "frame": 200,
+      "actor": "dog",
+      "do": {
+        "walk": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 520,
+      "actor": "dog",
+      "do": {
+        "run": [
+          [
+            8,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 700,
+      "actor": "dog",
+      "do": {
+        "walk": [
+          [
+            6,
+            1
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "dog",
+    "zoom": 1
+  },
+  "frames": 900,
+  "shots": [
+    60,
+    330,
+    420,
+    600,
+    690,
+    880
+  ],
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "animalLimbGapMaxCm": 0.5,
+    "footSinkMaxCm": 5
+  }
+}

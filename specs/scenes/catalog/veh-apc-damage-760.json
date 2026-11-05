@@ -1,0 +1,31 @@
+{
+  "name": "veh-apc-damage-760",
+  "note": "E31-AC22 / L9-A1: 760/1000 HP, cumulative stage 0. Inspect dents, cracked glass, intermittent/dead lights, rear pooled smoke, intact driveable hull; game camera in the dry night. Boundaries use the real Vehicles damage path.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "night",
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "floor": true,
+      "health": 760
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 90,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

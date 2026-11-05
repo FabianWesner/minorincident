@@ -1,0 +1,91 @@
+{
+  "name": "l10-dog-pack",
+  "note": "Runtime seeded dog coats and flat amber pounce arrow on the supporting ground throughout the 0.65 s windup, before damage. Review game-camera high/low and zoom 1/0.5: low quadrupeds distinct from courier, runners and corgi; telegraph visible and oriented toward victim.",
+  "seed": 10,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 44,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle",
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -1.6,
+        1.2
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "dog-a",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        11,
+        1
+      ],
+      "yaw": 180,
+      "state": "chase"
+    },
+    {
+      "id": "dog-b",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        -8,
+        -9
+      ],
+      "yaw": 50,
+      "state": "chase"
+    },
+    {
+      "id": "dog-c",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        -3,
+        11
+      ],
+      "yaw": 285,
+      "state": "chase"
+    },
+    {
+      "id": "run",
+      "kind": "infected",
+      "at": [
+        7,
+        -5
+      ],
+      "count": 4,
+      "spread": 3,
+      "yaw": 150,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 18,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

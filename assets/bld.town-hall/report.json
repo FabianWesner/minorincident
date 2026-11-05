@@ -1,0 +1,53 @@
+{
+  "id": "bld.town-hall",
+  "status": "integrated",
+  "dimensions": {
+    "x": 12.08,
+    "y": 12.4001,
+    "z": 16,
+    "tolerance": 0.015
+  },
+  "budget": {
+    "triangles": 30000,
+    "materials": 8,
+    "fileKB": 1500,
+    "drawCalls": 8
+  },
+  "authoredLodTriangles": {
+    "lod1": 12000,
+    "lod2": 4000
+  },
+  "tiers": [
+    {
+      "lod": 0,
+      "triangles": 6664,
+      "drawCalls": 8,
+      "materials": 7,
+      "productionBytes": 109760,
+      "sourceTriangles": 6664,
+      "sourceBytes": 498348,
+      "sourceSha256": "2de90e4b7c19fb98aa58bef2a94e4e913d9b88e0c852c5ce8a7131a523803745"
+    },
+    {
+      "lod": 1,
+      "triangles": 3288,
+      "drawCalls": 8,
+      "materials": 7,
+      "productionBytes": 53148,
+      "sourceTriangles": 3288,
+      "sourceBytes": 238664,
+      "sourceSha256": "d11aac3180a53bc84a676d1ddb8ae74951ec53037a569fb32b5e88ffc803138a"
+    },
+    {
+      "lod": 2,
+      "triangles": 1632,
+      "drawCalls": 8,
+      "materials": 7,
+      "productionBytes": 30172,
+      "sourceTriangles": 1632,
+      "sourceBytes": 112672,
+      "sourceSha256": "ffb5b049e2aedef056849aea30e5970e277024c32fee777cc93ee498c542695e"
+    }
+  ],
+  "independentAcceptance": "pending"
+}

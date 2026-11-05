@@ -1,0 +1,54 @@
+{
+ "name": "l6-tunnel-dark-walls",
+ "l6Subway": "gate",
+ "time": "L6-subway",
+ "dof": false,
+ "hud": true,
+ "ground": "district",
+ "layout": {
+  "level": "L6",
+  "district": "D-SUBWAY",
+  "bbox": [
+   [
+    -32,
+    -30
+   ],
+   [
+    288,
+    32
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    60,
+    15
+   ],
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   60,
+   15
+  ],
+  "zoom": 1
+ },
+ "frames": 30,
+ "shots": [
+  1,
+  29
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ },
+ "note": "PO 10-20 #63: retreat state (main power off, emergency on), headlamp worn, courier in the tunnel at x60. Look for: tunnel walls, floor, track bed, rails and side edges readable outside the headlamp cone at every zoom; no pure-black walkable floor; the headlamp cone still clearly brighter."
+}

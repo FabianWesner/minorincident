@@ -1,0 +1,15 @@
+{
+ "name": "corgi-firestation-apron",
+ "note": "PO 10-13 'Corgi sunken': the L1 fire station apron (0.75 x 1.5 m slabs at 0.40 m with 3-4 cm seams). The courier walks over the slabs and back; the corgi follows. Look for: paws on the slab top in every frame, never sunk into a seam or the apron (tests/sim/world/support-seams.test.ts guards the support query).",
+ "seed": 1,
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-90, 30], [-60, 56]] },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-71.97, 43.68], "yaw": 180 },
+  { "id": "corgi", "kind": "corgi", "at": [-72.6, 42.9] }
+ ],
+ "script": [{ "frame": 30, "actor": "courier", "do": { "walk": [[-74.4, 43.2], [-72.1, 41.6], [-74.4, 45.2], [-71.97, 43.68]] } }],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 0.5 },
+ "frames": 480,
+ "expect": { "consoleErrors": 0, "footSinkMaxCm": 1, "undrawnFramesMax": 0 }
+}

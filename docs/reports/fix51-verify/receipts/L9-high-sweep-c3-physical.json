@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "ececa6253370654d50b736c7b297bd2c34bc4fd9f360ea54c1ebe8620fb0ff48",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L9-05",
+      "clause": "physical zero-HP speed smoke and continued driving",
+      "tier": "high",
+      "policy": "controlled-physical",
+      "status": "PASS",
+      "value": {
+        "validPair": true,
+        "healthyPeak": 17.655035059560635,
+        "emptyPeak": 10.710992914190859,
+        "ratio": 0.6066820529133186,
+        "metres": 1610.41753951467,
+        "drivingSamples": 1034,
+        "smoke": {
+          "smokeObserved": true,
+          "wholeHullAndAttachedWheels": true,
+          "what": "All original-size panels personally inspected. Zero APC trails an opaque grey exhaust cloud in wide road frames, healthy control does not; close front camera crops the rear plume. Full/zero hulls stay whole with attached wheels through falling frames; post-impact wreck visible. Cinematic controls its own camera and overrides requested zoom."
+        }
+      },
+      "target": "actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume",
+      "receipt": "docs/reports/sweep-c3/L9-05/qualification.json"
+    },
+    {
+      "id": "L9-07",
+      "clause": "physical full and zero whole-body crash and objective ordering",
+      "tier": "high",
+      "policy": "controlled-physical",
+      "status": "PASS",
+      "value": {
+        "validPair": true,
+        "crashes": [
+          {
+            "mode": "full",
+            "impacts": [
+              {
+                "type": "mission.signal",
+                "tick": 6858,
+                "name": "l9.crash-impact",
+                "actorId": 667
+              }
+            ],
+            "objectives": [
+              {
+                "type": "objective.started",
+                "id": "reach-outskirts",
+                "tick": 6858
+              }
+            ],
+            "fallSamples": 10,
+            "intact": true,
+            "hudOrdered": true
+          },
+          {
+            "mode": "zero",
+            "impacts": [
+              {
+                "type": "mission.signal",
+                "tick": 12762,
+                "name": "l9.crash-impact",
+                "actorId": 667
+              }
+            ],
+            "objectives": [
+              {
+                "type": "objective.started",
+                "id": "reach-outskirts",
+                "tick": 12762
+              }
+            ],
+            "fallSamples": 10,
+            "intact": true,
+            "hudOrdered": true
+          }
+        ],
+        "visual": true
+      },
+      "target": "full and0HP actual drives reach crawl; one impact; whole hull/wheels throughout falling samples and reviewed frames; objective/HUD at or after impact",
+      "receipt": "docs/reports/sweep-c3/L9-05/qualification.json"
+    }
+  ],
+  "observations": {
+    "manifestPath": "docs/reports/sweep-c3/L9-05/qualification.json",
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27"
+  }
+}

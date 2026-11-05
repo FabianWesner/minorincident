@@ -1,0 +1,154 @@
+import { l3RouteDirection } from '../../levels/L3/navigation';
+import { Rng } from '../../core/Rng';
+import { l3, l3Street } from '../../data/l3';
+import { emptyInput, type InputFrame } from '../../input/InputFrame';
+import type { SimWorld } from '../../sim/world/SimWorld';
+import type { EntitySnapshot } from '../../sim/world/types';
+import { chasingCourier, dist, heldKit, jammed, nearestKit, newStuck, strikeAt, visibleThreats, walkTo, type P } from './helpers';
+import { Walker } from './Walker';
+
+/** E21 section 8 bot profiles. `evade-only` never attacks; `idle` stays where it starts in the station yard. */
+export type L3Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
+/** Street preference for combat detours and medkits; the connected army route overrides it at sealed wreck lines. */
+export type L3StreetChoice = 'auto' | 'blvd' | 'commerce' | 'oak';
+const STREETS = ['blvd', 'commerce', 'oak'] as const;
+/** Cross-links the bot may switch streets at (full cross streets and the mid-block alleys). */
+const LINKS = [-120, -90, -55, -15, 40, 85, 128];
+
+/**
+ * L3 policy shared by the Node battery and the browser (ordinary controls only: movement, attack, interact; no cheats).
+ * Complete: takes the handgun, holds the yard with the police until the fallback, then moves up the avenues with the squad
+ * (waiting for it in the first two segments), shoots what comes at it before contact and axes what gets close, switches
+ * streets around the densest groups and picks up medkits when hurt. Newbie: 250 ms reaction, 15 % skipped attacks, shorter
+ * shooting range, never waits for the squad, occasional wrong turns. Evade-only: never attacks; runs, sidesteps, switches.
+ */
+export class LevelThreeBot {
+  finished = false;
+  private readonly route = {path: [] as number[], goal: -1, pathIndex: 0};
+  private readonly routePoint = {x: 0, z: 0};
+  private readonly walker = new Walker();
+  private readonly rng: Rng;
+  private frame: InputFrame = emptyInput();
+  private street: 'blvd' | 'commerce' | 'oak';
+  private detour: (P & { until: number }) | null = null;
+  private stuck = newStuck();
+  private last: P | null = null;
+  private medkit = 0;
+  private decidedAt: number | null = null;
+  private waiting = false;
+  private waitedSince = 0;
+  private readonly waitedTotal = [0, 0];
+  constructor(private readonly world: SimWorld, readonly profile: L3Profile = 'complete', readonly forced: L3StreetChoice = 'auto') {
+    this.rng = new Rng(world.seed, `l3-bot-${profile}-${forced}`);
+    this.street = forced === 'auto' ? 'commerce' : forced;
+  }
+  /** Infected the player can see (line of sight on the walk grid), nearest first. */
+  /** Internal state for traces (tools/l3). */
+  /** A forced-street run never leaves its avenue: a detour point on another avenue is dropped. */
+  private keep<T extends P>(at: T | null | undefined): T | null { return at && (this.forced === 'auto' || l3Street(at.z) === this.street) ? at : null; }
+  debug() { return { street: this.street, detour: this.detour, waiting: this.waiting, medkit: this.medkit, decidedAt: this.decidedAt, stuck: this.stuck.n }; }
+  private threats(p: P, radius: number): EntitySnapshot[] { return visibleThreats(this.world, p, radius); }
+  sample(): InputFrame {
+    const w = this.world, m = w.missions!, s = m.state.l3;
+    this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
+    if (this.finished || !s) return emptyInput();
+    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; this.route.goal = -1; }
+    if (m.state.phase === 'briefing') m.begin();
+    if (m.state.phase === 'cinematic') return { ...emptyInput(), interact: true };
+    const newbie = this.profile === 'newbie';
+    if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
+    const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
+    if (player.health.current <= 0 || this.profile === 'idle') return frame;
+    const go = walkTo(this.walker, w, frame);
+    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => strikeAt(frame, target, side, p);
+    const fights = this.profile !== 'evade-only', skip = newbie && this.rng.next() < .15;
+    const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === 'weapon.handgun') ?? false;
+    const near = this.threats(p, 2.4);
+    // Fight: the axe for what is at arm's length, the handgun for what comes at the courier from range (before contact).
+    const fight = (range: number): boolean => {
+      if (!fights || skip) return false;
+      // In the escape segment, defend against pursuers rather than stopping for every nearby body on a
+      // raised/blocked route. Walk-grid sight alone is insufficient to choose a reachable melee target.
+      const contact = near.find(e => (p.x < l3.map.segments[2][0] || chasingCourier(e)) && w.combat!.query.visible(p, e.transform, e.id));
+      if (contact) { strike(contact, 'LEFT'); return true; }
+      if (!gun) return false;
+      // In the last segment the courier escapes; the officers handle their own opponents.
+      const shot = this.threats(p, range).find(e => (chasingCourier(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9) && w.combat!.query.shotVisible(p, e.transform, e.id));
+      if (shot) { strike(shot, 'RIGHT'); return true; }
+      return false;
+    };
+    // ---------------------------------------------------------------- the yard: handgun, then hold with the police
+    if (s.phase === 'yard' || s.phase === 'attack') {
+      if (m.state.steps.armory.status === 'active') { if (go(a['l3-armory'], .5, 'armory')) frame.interact = !newbie || this.rng.next() < .6; if (!frame.interact) fight(14); return frame; }
+      if (fight(newbie ? 12 : 16)) return frame;
+      go({ x: -134.5, z: 1.5 }, 1.2, 'hold');
+      return frame;
+    }
+    // ---------------------------------------------------------------- the avenues
+    if (this.last && dist(this.last, p) > 6) { this.walker.reset(); this.detour = null; }
+    this.last = { x: p.x, z: p.z };
+    const routed = l3RouteDirection(w, this.route, this.routePoint), routeAhead = routed ? this.routePoint : a['l3-zone'];
+    const hp = player.health.current / player.health.max;
+    // Medkits when hurt: the nearest one ahead or close by that is still there.
+    // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
+    if (!this.medkit && hp <= (newbie ? .9 : .65)) {
+      const kit = nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10 && (this.forced === 'auto' || l3Street(e.transform.z) === this.street));
+      if (kit) this.medkit = kit.id;
+    }
+    if (this.medkit) {
+      const kit = heldKit(w, this.medkit, hp, newbie);
+      if (!kit) this.medkit = 0;
+      else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
+    }
+    // Street choice at the cross-links: keep away from the densest group the courier can see ahead.
+    if (this.forced === 'auto' && p.x < 122) {
+      const link = LINKS.find(x => Math.abs(p.x - x) < 3.2);
+      // One decision per cross-link (no dithering between two streets at the same corner).
+      if (link !== undefined && link !== this.decidedAt) {
+        this.decidedAt = link;
+        const ahead = (st: typeof STREETS[number]) => this.threats(p, 32).filter(e => l3Street(e.transform.z) === st && e.transform.x > p.x - 2).length + (st === this.street ? -1.5 : 0) + Math.abs(STREETS.indexOf(st) - STREETS.indexOf(this.street)) * .8;
+        const best = [...STREETS].sort((x, y) => ahead(x) - ahead(y))[0];
+        if (best !== this.street) { this.street = best; this.walker.reset(); }
+      }
+    }
+    // A jammed walker (crowd, wreck or corner) steps aside along a connected route.
+    if (jammed(this.stuck, w.tick, p, near.length > 0 || frame.left.held || frame.right.held || this.waiting)) { const at = this.keep(this.walker.detour(w, routeAhead)); this.detour = at ? { ...at, until: w.tick + 150 } : null; }
+    if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
+    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => chasingCourier(e)).length;
+    // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, routeAhead, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
+    if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
+    // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
+    // After the opening squad segment, fight close threats and keep moving through the overwhelming street population.
+    // Brief l3-polish: with the PO 10-12 police at half strength the careful courier no longer waits for runners to reach arm's
+    // length in segment 1 (5 m); she shoots the ones closing in from 8 m and leaves the rest to the squad.
+    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 8 : p.x >= l3.map.segments[1][0] ? 9 : 15;
+    if (fight(range)) {
+      // Segment 3 is an escape through a replenishing horde. Defend while advancing: waiting for
+      // the nearest pursuer to stay down can otherwise pin the courier here indefinitely.
+      if (p.x >= l3.map.segments[2][0] && routed) {
+        go(routeAhead, .2, 'army-route');
+      }
+      return frame;
+    }
+    // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
+    // A newbie sticks to the police too, but only in the first segment and not for as long.
+    // Evade-only never shoots, so it keeps the armed squad close as long as there is one (the police fight for it).
+    if ((this.profile === 'complete' || this.profile === 'evade-only' || (newbie && p.x < l3.map.segments[0][1])) && s.squad.length && (p.x < 50 || this.profile === 'evade-only') && p.x > -120) {
+      const lag = Math.max(...s.squad.map(q => { const e = w.entities.get(q.id); return e ? dist(e.transform, p) : 0; }));
+      // A careful courier waits a few seconds for a straggler, not forever (an officer stuck on a wreck is left behind).
+      // At most 5 s at a time and 40 s (segment 1) / 20 s (segment 2): the courier does not wait for an officer who cannot get through.
+      const seg = p.x < l3.map.segments[0][1] ? 0 : 1;
+      if (lag <= 6.5) { if (this.waiting) this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
+      else if (!this.threats(p, 20).some(e => chasingCourier(e)) && this.waitedTotal[seg] < (newbie ? 900 : seg ? 1200 : 2400)) {
+        if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
+        if (w.tick - this.waitedSince < 300) return frame;
+        this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;
+      } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
+    }
+    // Read the connected route through the wreck detours and the highway; every step still uses ordinary inputs.
+    if (routed) go(routeAhead, .2, 'army-route');
+    return frame;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "qa-corgi-sit",
+  "note": "Corgi stands, then sits after 4 s beside an idle courier (close camera): every paw and the rump stay on the floor.",
+  "ground": "asphalt",
+  "size": 20,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 0 },
+    { "id": "corgi", "kind": "corgi", "at": [1.2, 1.5] }
+  ],
+  "camera": { "mode": "orbit", "target": [1.2, 0.25, 1.5], "radius": 3, "azimuth": 0, "polar": 82, "spin": 0 },
+  "frames": 420,
+  "shots": [60, 420],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "footSinkMaxCm": 1 }
+}

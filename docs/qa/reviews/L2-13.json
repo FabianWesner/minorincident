@@ -1,0 +1,87 @@
+{
+  "row": "L2-13",
+  "status": "PASS",
+  "reviewer": "Codex fix62-a",
+  "date": "2026-11-05",
+  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "clauses": [
+    {
+      "clause": "Panic spreads: a calm ped seeing running peds panics; no ped stays unaffected next to the chaos.",
+      "verdict": "PASS",
+      "note": "L2-only production perception now recognizes a fleeing pedestrian moving>=2m/s through the actual140degree/16m sight cone and clear LOS. In the exact formerly failing runner-index1 case, neighbors127/129 alarm by tick60; all four bench people flee by tick120,1.5s after stimulus, in both tiers. The independent eight-trial native ledger replaces the old322tick unaffected interval with bounded perception delay. Personally inspected all16 new browser frames at low/high and zoom0.5/1.5: red-vest runner stands/departs, neighbors rise/turn, cleared seats by600; tight views crop the bench row and do not establish a pixel census. Controlled stimulus, no actor relocation/injection or infected/gunfire; this qualifies propagation, not mortal difficulty."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix62-a/L2-13-propagation-ledger.json.gz",
+      "sha256": "e86e40489b0c10064d9220bb187a4f360ce0e76a4f848abbd8ea9768bb86eb0b",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/L2-13-browser.json.gz",
+      "sha256": "5f29c2d5745f704f7d631b7e90d3593c27a711071954e9a13b24e38bd4257e57",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/L2-13-image-review.json",
+      "sha256": "1892a92006a258241f6827394ce3a7c6b65a1e699a29c09870fd15d9f42af685",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-01.jpg",
+      "sha256": "b2f6a24b066768846a2d8372318a5174b172ea79d2bdc1779c837d86671e659c",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-02.jpg",
+      "sha256": "9e1c38eb50d3bcc5fac0a8e3f4eba5eb38cf21d26cd7c20bdc3883a38b927b42",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-03.jpg",
+      "sha256": "cd60ea042272101f8d1db06d1e454f219b21888f0d29a2f11e64290c31d7d654",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-04.jpg",
+      "sha256": "e6bfd814c2207efcc69c99502f0457d5f78d96ab19aa2efb5f5e1e3a90881a65",
+      "what": "Native causal propagation at low/high plus all16 personally inspected current-source production-camera frames at zoom0.5/1.5. Bench neighbors react by tick120 (1.5s after stimulus); no actor injection/relocation. Tight images crop the bench row; wide frames and the independent ledger establish neighbor reactions."
+    },
+    {
+      "file": "docs/reports/fix62-a/L2-13-final-browser.json.gz",
+      "sha256": "97f0b17d19dc7bed346c0edffdc78cd00689e796a3b388b41962b68f20df474c",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/L2-13-final-image-review.json",
+      "sha256": "40d90dea7c5f362a060bacb4918acfa392f412f98c3bc63a62ec58892890286a",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-final-0.jpg",
+      "sha256": "6af94be818a27ae30c6b16dabf09346cd48eb1b9f71cdc6b46c852d642ba836b",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-final-1.jpg",
+      "sha256": "6e1102c3db82a9cb6656d9779f60180453378fd436928679e2a94852e5271a74",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-final-2.jpg",
+      "sha256": "b944ecb65e454111ccc99a6b3b26734ef5b4cb48247c5cf8f9a6af83ad590459",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/reviewed/panic-final-3.jpg",
+      "sha256": "183294dcf88830f706f1e3a91aedce6dbefea5d538ae8b4924ad11807a891f83",
+      "what": "Wide view shows runner leaving bench and neighbours turning/rising then fleeing by120ticks; close view crops bench and is not a census proof."
+    },
+    {
+      "file": "docs/reports/fix62-a/L2-13-native-proof.json",
+      "sha256": "91203a4bffb0911750f9b2acbd6f2f1898a869252eb4d7838752cd010a6815a7",
+      "what": "Fresh registered native fixtures: both tiers PASS; six observed neighbour exposures per tier, reaction latency1\u20135ticks within unchanged production perception cycle. Positions0/2 have no visible calm neighbour; positions1/3 exercise propagation."
+    }
+  ],
+  "notes": "Closes the current runner-propagation defect with native state/vision evidence and fresh browser review. Source restriction to L2 protects other levels from new panic cascades. Full L1-L3 acceptance and final gates are recorded in the lane report. Final-source refresh on ba261cb1a: both tiers and actualzoom0.5/1.5 personally re-reviewed. Native propagation fixture and required-clause registration now supply automated coverage; report acceptance gate unchanged."
+}

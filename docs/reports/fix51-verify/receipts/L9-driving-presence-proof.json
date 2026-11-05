@@ -1,0 +1,248 @@
+{
+  "scope": "Six observed road/countryside/shortcut windows, seed1, paired tiers, stated backend/zoom; not every backend\u00d7tier\u00d7zoom\u00d7route combination. Minimap dots excluded. Historical row unchanged.",
+  "targetSeconds": 60,
+  "allObservedWindowsPass": true,
+  "runs": [
+    {
+      "cell": "L9-webgl2-high-z0.5-countryside",
+      "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-high-z0.5-countryside.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 109,
+        "positiveDrawnOnScreenAliveInfected": 1,
+        "tickSpan": [
+          9,
+          6663
+        ],
+        "firstInactiveTick": 6702,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 56.766666666666666,
+        "largestSamplingIntervalSeconds": 1.3666666666666667,
+        "conservativeGapUpperBoundSeconds": 58.13333333333333,
+        "positiveTicks": [
+          3406
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    },
+    {
+      "cell": "L9-webgl2-high-z1.5-road",
+      "sourceHash": "1e1ab1878645b43721cd178875f6334d5298835a563e333e3277d4d9503adf88",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-high-z1.5-road.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 89,
+        "positiveDrawnOnScreenAliveInfected": 14,
+        "tickSpan": [
+          9,
+          5507
+        ],
+        "firstInactiveTick": 5569,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 16.366666666666667,
+        "largestSamplingIntervalSeconds": 1.3833333333333333,
+        "conservativeGapUpperBoundSeconds": 17.75,
+        "positiveTicks": [
+          901,
+          965,
+          1029,
+          1349,
+          1795,
+          1859,
+          1922,
+          2305,
+          2861,
+          2924,
+          3606,
+          3669,
+          3732,
+          4714
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    },
+    {
+      "cell": "L9-webgl2-low-z0.5-countryside",
+      "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-low-z0.5-countryside.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 110,
+        "positiveDrawnOnScreenAliveInfected": 3,
+        "tickSpan": [
+          9,
+          6672
+        ],
+        "firstInactiveTick": 6746,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 39.983333333333334,
+        "largestSamplingIntervalSeconds": 1.3166666666666667,
+        "conservativeGapUpperBoundSeconds": 41.300000000000004,
+        "positiveTicks": [
+          2140,
+          3373,
+          4347
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    },
+    {
+      "cell": "L9-webgl2-low-z1.5-road",
+      "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-low-z1.5-road.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 99,
+        "positiveDrawnOnScreenAliveInfected": 17,
+        "tickSpan": [
+          8,
+          5978
+        ],
+        "firstInactiveTick": 6023,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 16.183333333333334,
+        "largestSamplingIntervalSeconds": 1.35,
+        "conservativeGapUpperBoundSeconds": 17.533333333333335,
+        "positiveTicks": [
+          866,
+          927,
+          1110,
+          1170,
+          1354,
+          1784,
+          1846,
+          1908,
+          2274,
+          3245,
+          3306,
+          4044,
+          4105,
+          4167,
+          4220,
+          5191,
+          5251
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    },
+    {
+      "cell": "L9-webgpu-high-z1.5-dry-shortcut",
+      "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgpu-high-z1.5-dry-shortcut.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 86,
+        "positiveDrawnOnScreenAliveInfected": 28,
+        "tickSpan": [
+          5,
+          5333
+        ],
+        "firstInactiveTick": 5386,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 20.016666666666666,
+        "largestSamplingIntervalSeconds": 1.35,
+        "conservativeGapUpperBoundSeconds": 21.366666666666667,
+        "positiveTicks": [
+          1136,
+          1200,
+          1264,
+          1328,
+          1894,
+          1958,
+          2022,
+          2087,
+          2150,
+          2342,
+          2406,
+          2470,
+          2534,
+          2976,
+          3040,
+          3103,
+          3166,
+          3422,
+          3486,
+          3550,
+          3613,
+          3677,
+          3868,
+          3932,
+          3995,
+          4059,
+          4122,
+          4185
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    },
+    {
+      "cell": "L9-webgpu-low-z1.5-dry-shortcut",
+      "sourceHash": "5b5ddd786f312fc993d5e4299e24245ca1041c15e439eef9846f62611665ba44",
+      "receipt": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgpu-low-z1.5-dry-shortcut.json",
+      "finished": true,
+      "deaths": 0,
+      "consoleErrors": [],
+      "drivingVisibility": {
+        "observations": 89,
+        "positiveDrawnOnScreenAliveInfected": 28,
+        "tickSpan": [
+          7,
+          5354
+        ],
+        "firstInactiveTick": 5401,
+        "completedDrivingWindowBracketed": true,
+        "largestPositiveOrEndpointGapSeconds": 22.683333333333334,
+        "largestSamplingIntervalSeconds": 1.3166666666666667,
+        "conservativeGapUpperBoundSeconds": 24.0,
+        "positiveTicks": [
+          1172,
+          1233,
+          1294,
+          1355,
+          1904,
+          1965,
+          2026,
+          2087,
+          2148,
+          2330,
+          2390,
+          2452,
+          2513,
+          2574,
+          2938,
+          2999,
+          3062,
+          3123,
+          3184,
+          3245,
+          3428,
+          3489,
+          3551,
+          3612,
+          3855,
+          3916,
+          3978,
+          4040
+        ],
+        "targetSeconds": 60,
+        "method": "Production eyes.ts filters actual submitted figures, living infected, LOS and on-screen chest, within32m. Include tick0 and first observed inactive tick as conservative driving endpoints, then one additional maximum sample interval; conservative positive evidence only, no complete-population census."
+      }
+    }
+  ]
+}

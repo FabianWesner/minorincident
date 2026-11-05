@@ -1,0 +1,25 @@
+{
+  "extends": "l5-po-metro-ingress.json",
+  "name": "collision-placement-l5-metro",
+  "note": "Production five-survivor Metro queue at the recorded courier/corgi poses. Full capsule contact and the idle courier's yielding leave room for every living follower before shutter closure. Inspect separate bodies, feet, and the companion inside the closed leaf in both tiers and game zooms.",
+  "frames": 600,
+  "sheet": 60,
+  "shots": [
+    0,
+    60,
+    120,
+    180,
+    360,
+    600
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

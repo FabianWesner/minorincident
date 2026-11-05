@@ -1,0 +1,52 @@
+{
+  "name": "collision-placement-l3-joints-west",
+  "seed": 1,
+  "frames": 36,
+  "sheet": 12,
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        140,
+        -12
+      ],
+      [
+        178,
+        12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        167.5,
+        0
+      ],
+      "floorY": 5.7
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      167.5,
+      5.7,
+      0
+    ],
+    "zoom": 1
+  },
+  "note": "Both sides of the ramp/span have continuous visible concrete caps; inspect the two corner joins and wooden fence seams at both quality tiers and zooms.",
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

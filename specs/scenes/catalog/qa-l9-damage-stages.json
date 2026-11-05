@@ -1,0 +1,79 @@
+{
+ "name": "qa-l9-damage-stages",
+ "note": "L9-Q1 damage stages: five APCs side by side at 1000/750/500/250/0 HP (floor policy), L6 daylight, game camera. Look for: growing dents, cracked glass, dead lamps and smoke; every hull intact and grounded; the 0 HP hull is not a wreck.",
+ "seed": 31,
+ "ground": "asphalt",
+ "size": 50,
+ "time": "L6",
+ "dof": false,
+ "vehicles": [
+  {
+   "id": "apc-1000",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    -9.0
+   ],
+   "yaw": 0,
+   "floor": true,
+   "health": 1000
+  },
+  {
+   "id": "apc-750",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    -4.5
+   ],
+   "yaw": 0,
+   "floor": true,
+   "health": 750
+  },
+  {
+   "id": "apc-500",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    0.0
+   ],
+   "yaw": 0,
+   "floor": true,
+   "health": 500
+  },
+  {
+   "id": "apc-250",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    4.5
+   ],
+   "yaw": 0,
+   "floor": true,
+   "health": 250
+  },
+  {
+   "id": "apc-0",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    9.0
+   ],
+   "yaw": 0,
+   "floor": true,
+   "health": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1
+ },
+ "frames": 90,
+ "sheet": 30,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

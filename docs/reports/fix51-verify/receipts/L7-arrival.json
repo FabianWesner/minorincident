@@ -1,0 +1,308 @@
+{
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
+  "revision": "54bd31f1ade72e4552c8aa0180c0e348ca434251",
+  "toolSha256": "c32beb1146ed60c7adfc435e68263608ec5e9ece71a74b8b75bb7097c988756a",
+  "producer": "docs/reports/fix51-r10c/L7-carried-save-provenance.json",
+  "method": "Actual mortal native L5/L6 completion saves enter L7. Check exact carried identities, full HP, all six story weapons after launcher collection, and every required first-ten-seconds tick. Both observed and independent control are scoped to ten seconds; later campaign completion is not claimed. Relative motion segments must clear the actual courier/follower capsule radii. Independent native controls end with identical state hashes.",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772476852,\"z\":16.199999999998944,\"y\":4.6,\"yaw\":3.1415926535902803}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 3.141592653589794
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 138,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "controlRun": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772476852,\"z\":16.199999999998944,\"y\":4.6,\"yaw\":3.1415926535902803}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 3.141592653589794
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 138,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "expectedIds": [
+        289
+      ],
+      "initial": [
+        {
+          "id": 289,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 16.2
+        }
+      ],
+      "idsMatch": true,
+      "allFullHealth": true,
+      "formationTicks": 600,
+      "samples": 600,
+      "minimumClearance": 0.2371463012954672,
+      "storyWeapons": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.rocket-launcher"
+      ],
+      "nativeStateHash": "71382da6",
+      "controlHash": "71382da6",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460941,\"z\":16.199999999999996,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":390,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460944,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":391,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460944,\"z\":13.8,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":393,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":16.199999999999978,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":394,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":15.000000000000002,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":395,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":13.800000000000004,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":396,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":16.19999999999999,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":397,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":14.999999999999996,\"y\":4.6,\"yaw\":3.141592653589794}},{\"id\":398,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":13.800000000000004,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":400,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816772460944,\"z\":16.2,\"y\":4.6,\"yaw\":3.141592653589794}},{\"id\":401,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.9281677246094,\"z\":14.999999999999996,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":402,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816772460944,\"z\":13.800000000000006,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12816772460621,\"z\":16.200000000000156,\"y\":4.6,\"yaw\":-3.1415926535908625}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": -3.141592653589793
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 285,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "controlRun": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460941,\"z\":16.199999999999996,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":390,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460944,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":391,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32816772460944,\"z\":13.8,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":393,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":16.199999999999978,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":394,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":15.000000000000002,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":395,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772460943,\"z\":13.800000000000004,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":396,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":16.19999999999999,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":397,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":14.999999999999996,\"y\":4.6,\"yaw\":3.141592653589794}},{\"id\":398,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.72816772460942,\"z\":13.800000000000004,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":400,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816772460944,\"z\":16.2,\"y\":4.6,\"yaw\":3.141592653589794}},{\"id\":401,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.9281677246094,\"z\":14.999999999999996,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":402,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816772460944,\"z\":13.800000000000006,\"y\":4.6,\"yaw\":3.1415926535897922}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12816772460621,\"z\":16.200000000000156,\"y\":4.6,\"yaw\":-3.1415926535908625}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": -3.141592653589793
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 285,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "expectedIds": [
+        32,
+        389,
+        390,
+        391,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        400,
+        401,
+        402
+      ],
+      "initial": [
+        {
+          "id": 389,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 16.2
+        },
+        {
+          "id": 390,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 15
+        },
+        {
+          "id": 391,
+          "hp": 100,
+          "max": 100,
+          "x": 275.76193976625564,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 393,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 16.2
+        },
+        {
+          "id": 394,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 15
+        },
+        {
+          "id": 395,
+          "hp": 100,
+          "max": 100,
+          "x": 276.9619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 396,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 16.2
+        },
+        {
+          "id": 397,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 15
+        },
+        {
+          "id": 398,
+          "hp": 100,
+          "max": 100,
+          "x": 278.1619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 400,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 16.2
+        },
+        {
+          "id": 401,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 15
+        },
+        {
+          "id": 402,
+          "hp": 100,
+          "max": 100,
+          "x": 279.3619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60,
+          "x": 280.1,
+          "z": 16.2
+        }
+      ],
+      "idsMatch": true,
+      "allFullHealth": true,
+      "formationTicks": 600,
+      "samples": 7800,
+      "minimumClearance": 0.06402488576065984,
+      "storyWeapons": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.rocket-launcher"
+      ],
+      "nativeStateHash": "7ea73b53",
+      "controlHash": "7ea73b53",
+      "controlIdentical": true
+    }
+  ]
+}

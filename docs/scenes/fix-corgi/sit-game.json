@@ -1,0 +1,24 @@
+{
+  "extends": "../../../specs/scenes/qa-corgi-sit.json",
+  "name": "fix-corgi-sit-game",
+  "camera": {
+    "mode": "game",
+    "target": [
+      1.2,
+      0.25,
+      1.5
+    ],
+    "zoom": 0.6
+  },
+  "sheet": 30,
+  "shots": [
+    15,
+    60,
+    240,
+    270,
+    300,
+    360,
+    420
+  ],
+  "note": "PKG-15: visible sole and rump contact; seated support, then resume and turn without sinking or knee flips."
+}

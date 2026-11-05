@@ -1,0 +1,83 @@
+{
+  "name": "l4-finale-egress",
+  "note": "PO #17: the original escape lane stays clear; one small side-street pair can notice the departing courier from beyond its edge. There is room to continue south or retreat toward the fallen line.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -12,
+        17
+      ],
+      [
+        20,
+        43
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        30
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "moveTo": [
+          -2,
+          41
+        ],
+        "pace": "run"
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -5,
+        28
+      ]
+    },
+    {
+      "id": "side-0",
+      "kind": "infected",
+      "at": [
+        10.2,
+        34
+      ],
+      "state": "chase",
+      "yaw": 180
+    },
+    {
+      "id": "side-1",
+      "kind": "infected",
+      "at": [
+        11.2,
+        35
+      ],
+      "state": "chase",
+      "yaw": 180
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

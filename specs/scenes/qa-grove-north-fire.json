@@ -1,0 +1,27 @@
+{
+ "name": "qa-grove-north-fire",
+ "note": "Fire Station 3 on Main Row (PO L1 route 2026-10-08): open bays facing the game camera, apron to the kerb, the house west of it, the Larch corner",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [[14, -51], [52, -25]]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [39.9, -36.0],
+  "zoom": 1.1
+ },
+ "script": [
+  { "frame": 8, "camera": { "mode": "orbit", "target": [36.0, 0.5, -38.0], "radius": 46, "azimuth": 215, "polar": 42 } },
+  { "frame": 16, "camera": { "mode": "orbit", "target": [36.0, 0.5, -38.0], "radius": 40, "azimuth": 320, "polar": 60 } }
+ ],
+ "frames": 26,
+ "shots": [0, 12, 24],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

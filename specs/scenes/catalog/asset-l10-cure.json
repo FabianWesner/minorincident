@@ -1,0 +1,53 @@
+{
+ "name": "asset-l10-cure",
+ "note": "L10 cure canister: the backpack canister on the ground next to the lab pedestal version, courier for scale. Look for: glowing teal window readable, straps and valve visible, pedestal not sunk, no flicker on the window frame.",
+ "ground": "sidewalk",
+ "size": 20,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "prop.cure-canister-pedestal",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p1",
+   "asset": "prop.cure-canister",
+   "at": [
+    2.2,
+    0.8
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -2.2,
+    0.2
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   1,
+   0.3
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

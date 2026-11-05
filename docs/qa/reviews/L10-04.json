@@ -1,0 +1,32 @@
+{
+  "row": "L10-04",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "1abbb0e54627a41f5a8c984d2dd494f56725fdad",
+  "clauses": [
+    {
+      "clause": "combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks.",
+      "verdict": "PASS",
+      "note": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1\u2013R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L10-04/l10-region-reach-proof.json.gz",
+      "sha256": "db904986e7d7fe86516f828e0cda7e7d538c818e8598a769eaf6e6363868016f",
+      "what": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1\u2013R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
+      "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
+      "what": "Immutable current original native complete route; exact source/observer hashes."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+      "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
+      "what": "Immutable current original native complete route; exact source/observer hashes."
+    }
+  ],
+  "notes": "Original current-source producer, measured unchanged criterion."
+}

@@ -1,0 +1,21 @@
+{
+ "name": "qa-bike-wheels",
+ "note": "PO 10-08 'wheels are still sunken': low side camera on the bike's tyres on the real D-GROVE road, parked on the sidewalk, riding straight, turning, stopped and over the kerb. Gates the drawn tyre bottom against the drawn ground (metrics.wheels).",
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-84, -4], [-52, 20]] },
+ "clipping": { "ignoreFoliage": true },
+ "vehicles": [{ "id": "bike", "asset": "vehicle.bicycle", "at": [-68.1, 7.2], "yaw": 0 }],
+ "actors": [{ "id": "courier", "kind": "courier", "at": [-69.3, 7.2], "yaw": 0, "god": true }],
+ "script": [
+  { "frame": 20, "actor": "courier", "do": { "mountBike": "bike" } },
+  { "frame": 80, "actor": "courier", "do": { "run": [[-64, 7.2], [-64, 0.3], [-76, 0.3]] } },
+  { "frame": 420, "actor": "courier", "do": { "run": [[-70, 0.6], [-65.5, 1.5], [-64, 5], [-67.4, 9]] } },
+  { "frame": 250, "camera": { "mode": "follow", "actor": "courier", "zoom": 0.35 } },
+  { "frame": 262, "camera": { "mode": "orbit", "target": "courier", "radius": 6, "polar": 93, "azimuth": 0, "spin": 0 } }
+ ],
+ "camera": { "mode": "orbit", "target": "courier", "radius": 6, "polar": 93, "azimuth": 0, "spin": 0 },
+ "frames": 640,
+ "shots": [10, 120, 200, 260, 300, 400, 480, 560, 630],
+ "trace": true,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "wheelSinkMaxCm": 0.5, "wheelFloatMaxCm": 1, "wheelSpikeMaxCm": 1 }
+}

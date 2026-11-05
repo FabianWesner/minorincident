@@ -1,0 +1,47 @@
+# Regression gate (10-22)
+
+The PO found 14 issues in L1–L4 on PROD 13h that every bot and the Opus QA had passed. Each PO finding becomes a permanent check, automated where possible.
+
+1. **Invariant sweep (`npm run qa:invariants`, every merge, remote).** All levels:
+   - **load-time budget (PO P1-107):** for each of L1/L4/L7/L8/L10 × WebGPU/WebGL2 × low/high, measure at least 20 cold loads, each in a fresh browser profile, from the real level-selection click until the loading card closes. Report median, p90 and maximum separately for every configuration, before and after. The **worst of N must be ≤ 6,000 ms**, and the candidate median must not exceed the baseline median under the same delivery and hardware conditions. Use `tools/perf/quiet-run.sh` with one headless browser (`E2E_UNITS=1`); retain the quiet-run conditions, build IDs, raw samples and summaries. `tools/perf/cold-load-time.ts <snapshot-origin> <webgpu|webgl2> <low|high> 20 <level>` records the samples; `LOAD_OUT` chooses the evidence directory. Profiled (`LOAD_TRACE=1`) samples diagnose stalls and are excluded from the distributions. Keep all shader/driver prewarm coverage: no gameplay frame may exceed 200 ms after the card closes, including the first ten seconds of movement (`LOAD_GAMEPLAY_MS=10000`) and the L10 lamp-boundary replay guarding PO #100. Session caches alone do not satisfy this budget;
+   - accessory anchors (hats and glasses on the head) for every crowd variant × LOD × tier;
+   - every seated NPC has a seat;
+   - scripted actors stay visible through their scene;
+   - vehicles don't overlap solids (scripted routes, parked, after dismount);
+   - wave spawn counts = authored counts;
+   - **threat reachability (`npm run qa:threat`, remote stage in the full invariant gate).** Native complete policy, L1–L10, seed 1, low population configured before mission preparation. Report every active step/controller phase: successful spawns (including reused pool IDs), living/path-reachable infected, cumulative 2.5 m contacts, player attacks/minute and time to first attack, follower speed min/median, and unreachable positions. An explicit per-level threat inventory includes custom hold/escort steps. Fail threat phases with zero player attacks or >30% of living infected unreachable for >20 s (pending arrivals count); fail any follower below 0.8× median; fail an actual announced wave whose cohort first reaches 2.5 m after 10 s (or never arrives). Native wave clocks/ledgers guard admission delays too. Incomplete policy runs, missing observations/inventory drift and short wave observations fail coverage. Receipts are in `test-results/qa-threat/`; the [main baseline report](../reports/threat-audit/README.md) includes known L5/L6 findings. No PROD-parity waiver for a red result.
+   - the objective marker is visible within 2 s of every step start;
+   - walkable height follows the drawn surface.
+   - Run the sim/asset checks on the remote runner and one headless, one-browser load-time comparison on the Mac. Set `QA_INVARIANTS_BASELINE` to override the default PROD URL. A load fails when it exceeds either the 10% or 1 s budget. The renderer check requires WebGPU low; it records and fails on a backend/tier fallback.
+
+   For the separate absolute 6 s cold-load acceptance budget, collect baseline evidence for each load configuration first, then use `LOAD_ASSERT=1 LOAD_BASELINE=<baseline-evidence-directory> LOAD_GAMEPLAY_MS=10000 LOAD_GAMEPLAY_LAST=1` on the candidate probe. This measures 20 cold loads and at least one ten-second real-movement segment per configuration, plus the first post-card frames of every load. Omit `LOAD_GAMEPLAY_LAST` to record ten seconds on every sample. The probe exits nonzero for missing samples, backend fallback, browser errors, a load over 6 s, a post-card frame over 200 ms, or a slower median. Keep the separate L10 lamp replay green too.
+2. **Visual A/B against PROD (`npm run qa:ab`).** Per level, a seeded camera tour at the PO's settings (low, zoom 1.5 and 1, WebGPU) through the scripted moments. It is rendered on the PROD build and on the candidate and diffed per frame. Opus judges only the changed frames: improvement, intended or regression.
+3. **PO-style QA.** The Opus QA plays L1–L4 at least, at close zoom, low quality and with a progressed save. It works through the PO checklist (docs/qa/po-checklist.md), which gets every PO finding added.
+4. **Process:**
+   - cross-cutting render/crowd/corpse/prewarm changes need the all-level A/B before they merge;
+   - no PROD deploy without green 1 + 2 and a GO from 3;
+   - a PO finding becomes a checklist line, a Scene Lab spec or an invariant here, not a new unit test, unless it exposed broken engine logic or shared code ([test strategy](test-strategy.md), budget-enforced).
+
+Run `npm run qa:invariants`. The headless sim suite is also available as `npm run qa:invariants:sim` for local diagnosis; it is not a substitute for the remote gate. Browser admission is serialized through `tools/perf/quiet-run.sh` at port 4191, with Scene Lab reserved at 4192.
+
+## Running the invariant sweep
+
+```sh
+npm run qa:invariants                 # remote sim, build dist, then Mac rendering / PROD timing
+npm run qa:invariants:sim:remote      # remote sim only (840 s execution ceiling)
+npm run qa:invariants:render          # Mac only; requires an existing npm run build
+npm run qa:invariants:proof           # eight intentionally broken fixtures; each must exit red
+npm run qa:threat                     # all-level, seed-1 native-sim threat audit (no browser)
+npm run qa:threat:remote              # same audit through tools/remote/run.sh, receipts pulled back
+npm run qa:threat -- --proof          # deliberately broken threshold/path fixtures; no new unit cases
+```
+
+The full command collects both sim and browser results even when a sim invariant is red. Sim checks load L1–L10 with seed 1 and the campaign preset required by the level. Seat and initial scripted-cast sweeps cover both quality tiers. Accessories exercise every registered single-person crowd model, all three LODs, all appearance tiers, both instance and inline head geometry, source GLB dimensions and manifest fits. Native glasses are part of the civilian head GLB. The asset tolerance is the fitted extent / 1024 with a 2 mm numerical floor; the manifest's own dimension tolerance guards source scale changes.
+
+Wave fixtures isolate finite authored batches from later story-phase cancellation, retain real queue/cap/admission/navigation behavior, and suppress damage where a kill would obscure the route measurement. Counts come from authoring data and actual entity/arrival ledgers. The ground sweep samples exposed walkable supports, paving routes, both L3 ramp cross-sections and their outside-rail / joint cases with the 20 cm limit. Objective probes run actual activation actions and the marker presentation rule, including the L3 checkpoint pull-back.
+
+The **single Scene Lab spec** contains rendered cast/seat submission checks and ten level timing cases. It uses built output on 4191/4192, headless Chromium with native Metal/WebGPU, one worker/browser, `E2E_UNITS=1`, and `E2E_ADMISSION_TIMEOUT_SECONDS=3600`; quiet-run owns the exclusive capacity reservation and calls the reentrant e2e-lock wrapper. Each timing observation has a fresh browser context and a level-appropriate progressed save; candidate/baseline order alternates by level. The timer starts immediately before the real level-menu click, activates Begin as soon as ready, and ends after two drawn gameplay RAFs with mission phase `playing`. It rejects a renderer or quality fallback. The default baseline is `https://minor-incident.com`; override it with `QA_INVARIANTS_BASELINE=https://…`.
+
+Results are under `test-results/qa-invariants/`: sim/browser JSON, per-level load receipts, fixture-red receipts and full-command stage logs. A missing/non-finite measurement fails. Known-red baseline evidence and coverage details live in [the invariant report](../reports/qa-invariants/README.md). A broken-fixture proof is successful only when the selected check actually exits 1 at its invariant assertion; the proof command itself exits 0 after all eight receipts are verified.
+
+The [probe inventory](../reports/qa-invariants/coverage.md) records each scene, route and wave family. For a cheap historical tank check, run `npx tsx tools/qa/probe-baseline.ts lane/batch13g`; it reads that ref's layout, verifies imported authoring/physics source is byte-identical, and exits 1 when the historical tank intersects solids. It does not check out another tree or build another baseline.

@@ -1,0 +1,94 @@
+{
+  "name": "l4-district-south-line",
+  "note": "L4-D1: existing south sandbag run at its breakable-line anchors. Check Alpha feet, facing during chase, health bar and ground-slam telegraph beside the pallet; this fixture does not test the encounter lane's HP damage or gap-opening lifecycle. The plaza tiles are 5 cm above ground; floorY uses the documented raised-floor spawn support.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 0,
+  "layout": {
+    "district": "D-FAIR",
+    "level": "L4",
+    "bbox": [
+      [
+        -34,
+        10
+      ],
+      [
+        -14,
+        29
+      ]
+    ],
+    "assets": [
+      "prop.sandbag-pallet"
+    ],
+    "anchors": [
+      "l4-line-south-center",
+      "l4-line-south-a",
+      "l4-line-south-b",
+      "l4-line-south-inside",
+      "l4-line-south-outside"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -25.90909090909091,
+        15.4
+      ],
+      "yaw": -90
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -25.90909090909091,
+        20.2
+      ],
+      "yaw": 90,
+      "state": "idle",
+      "floorY": 0.05
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "alpha",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -25.9,
+      17.8
+    ],
+    "zoom": 1.1
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    40,
+    90,
+    179
+  ],
+  "sheet": 20,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "clippingMax": 0,
+    "footSinkMaxCm": 1.2
+  }
+}

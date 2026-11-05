@@ -1,0 +1,17 @@
+{
+  "name": "qa-health-bar-occlusion",
+  "note": "A-S4: intact house blocks the bar; orbiting to the rear reveals the same idle infected. No bar is drawn through the wall.",
+  "seed": 7,
+  "size": 60,
+  "ground": "asphalt",
+  "barArchetypes": ["infected.runner"],
+  "props": [{ "id": "solid-house", "asset": "bld.house-a", "at": [0, 0] }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-8, 0], "state": "idle" },
+    { "id": "near", "kind": "infected", "at": [-5, -5], "yaw": 180, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [-5, -5] },
+  "frames": 1,
+  "shots": [0, 1],
+  "expect": { "consoleErrors": 0, "clippingMax": 0, "drawCallsMax": 600, "trianglesMax": 1500000 }
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "fix51-perf2 lane only; preserve historical whole-row status",
+  "rows": [
+    {
+      "id": "G-01",
+      "scopedVerdict": "PASS",
+      "wholeRowVerdict": "NOT CHECKED",
+      "value": "28 requested backend/level/tier cells; both cold and warm meet 6 s and PROD+0.5 s.",
+      "remaining": "WebGL2 L1\u2013L3/L7\u2013L9 and worst-of-N repetition remain unmeasured.",
+      "sourceRevision": "a3dd415ad982aaafb2a8732631214ceb7f82bca6 plus the source-hashed fixes in builds.json",
+      "receipt": "docs/reports/fix51-perf2/README.md"
+    },
+    {
+      "id": "G-02",
+      "scopedVerdict": "NOT CHECKED",
+      "wholeRowVerdict": "NOT CHECKED",
+      "value": "This lane measures menu loads and gameplay windows.",
+      "remaining": "All nine real campaign handovers require separate measurements.",
+      "sourceRevision": "a3dd415ad982aaafb2a8732631214ceb7f82bca6 plus the source-hashed fixes in builds.json",
+      "receipt": "docs/reports/fix51-perf2/README.md"
+    },
+    {
+      "id": "G-03",
+      "scopedVerdict": "PASS",
+      "wholeRowVerdict": "NOT CHECKED",
+      "value": "20 full native minutes plus fresh L3 pickup/shot and L1 shutter intervals have no candidate frame >200 ms.",
+      "remaining": "Fresh first actions for every other weapon/backend are not fully enumerated.",
+      "sourceRevision": "a3dd415ad982aaafb2a8732631214ceb7f82bca6 plus the source-hashed fixes in builds.json",
+      "receipt": "docs/reports/fix51-perf2/README.md"
+    },
+    {
+      "id": "G-04",
+      "scopedVerdict": "PASS",
+      "wholeRowVerdict": "NOT CHECKED",
+      "value": "Requested named moments and 20 native windows meet the clarified A/B/quantization rules; no new >=66 ms candidate spike.",
+      "remaining": "The full scripted-transition inventory remains unmeasured.",
+      "sourceRevision": "a3dd415ad982aaafb2a8732631214ceb7f82bca6 plus the source-hashed fixes in builds.json",
+      "receipt": "docs/reports/fix51-perf2/README.md"
+    },
+    {
+      "id": "G-05",
+      "scopedVerdict": "PASS",
+      "wholeRowVerdict": "NOT CHECKED",
+      "value": "All 20 requested native windows meet p95 <=PROD+1 ms and relative max +1 frame.",
+      "remaining": "Fixed peak cameras, absolute desktop/phone budgets, draw calls, triangles, sim p95 and heap are not qualified by this matrix.",
+      "sourceRevision": "a3dd415ad982aaafb2a8732631214ceb7f82bca6 plus the source-hashed fixes in builds.json",
+      "receipt": "docs/reports/fix51-perf2/README.md"
+    }
+  ]
+}

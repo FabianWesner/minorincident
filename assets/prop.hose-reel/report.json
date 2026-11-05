@@ -1,0 +1,65 @@
+{
+  "id": "prop.hose-reel",
+  "triangles": {
+    "lod0": 7836,
+    "lod1": 926,
+    "lod2": 198
+  },
+  "dimensions_blender": [
+    0.9166340231895447,
+    0.8445594310760498,
+    0.878000020980835
+  ],
+  "draw_calls": 8,
+  "materials": [
+    "pal_silver",
+    "pal_uiDark",
+    "pal_brass",
+    "pal_backpackTeal"
+  ],
+  "nodes": [
+    "root",
+    "reel",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 128900,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 27584,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 15040,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.1181725370086779,
+    "lod2": 0.02526799387442573
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.hose-reel",
+    "geometry_hash": "cb55234f65a3e0fbc80eb7532f7b9d48a85e008d6ee240c096d9573d70e9b952",
+    "second_geometry_hash": "cb55234f65a3e0fbc80eb7532f7b9d48a85e008d6ee240c096d9573d70e9b952",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

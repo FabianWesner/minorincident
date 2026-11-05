@@ -1,0 +1,22 @@
+{
+ "name": "qa-l10-mega-arrival",
+ "note": "E32-AC10 (L10-S3): 'It is always coming.' The courier stands still behind a container stack in the frame; the Mega Alpha starts 70 m away in a non-resident area (the L9-S4 seam: coarse 2 Hz route advance, no mesh needed), enters the resident box at x = -35, steers in on the nav grid with no line of sight and arrives after ~18 s; inside 12 m the shared Alpha brain takes over (contact and the E07 Alpha specials; Mega move tuning is L10-S4). Look for: it walks into frame (no pop-in on screen), rounds the stack, feet planted, ~2x Alpha scale next to the courier. metrics.megaAlpha.modes shows coarse, detailed and close.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 140,
+ "dof": false,
+ "props": [
+  { "id": "stack", "asset": "prop.cure-container-stack", "at": [10, 0], "yaw": 90 },
+  { "id": "wall", "asset": "prop.cure-garden-wall", "at": [6, -6], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [18, 0], "yaw": 180, "state": "idle" }
+ ],
+ "megaAlpha": { "id": "mega", "at": [-46, 2], "resident": [[-35, -70], [70, 70]] },
+ "camera": { "mode": "game", "target": [12, 0], "zoom": 1 },
+ "frames": 1500,
+ "shots": [300, 1020, 1200, 1440],
+ "sheet": 75,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "megaCruiseErrorMax": 0.02, "megaStepMaxM": 0.25 }
+}

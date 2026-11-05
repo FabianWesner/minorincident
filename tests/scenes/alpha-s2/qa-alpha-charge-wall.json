@@ -1,0 +1,8 @@
+{
+  "extends": "qa-alpha-charge.json",
+  "name": "qa-alpha-charge-wall",
+  "note": "Solid E26 jersey barrier control: locked charge stops on its near face, courier behind it stays at 100 HP. Inspect the Alpha at rest for arm/body clipping, feet and facing; exact occlusion is asserted by alpha-physical.test.ts.",
+  "barricadeSlots": [],
+  "props": [{ "id": "wall", "asset": "prop.jersey-barrier", "at": [0, 0], "yaw": 90 }],
+  "shots": [47, 90, 150]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "qa-l9-q3-pair-zoo-departure",
+  "note": "Q3 E30 half of armored-departure visual pair: existing shared unarmed APC at the authored zoo exit. Compare with the real L9 seated start capture; transport identity/occupants are covered by T-E31-02.",
+  "seed": 31,
+  "ground": "district",
+  "time": "L8-zoo",
+  "dof": false,
+  "layout": {
+    "district": "D-ZOO",
+    "bbox": [
+      [
+        70,
+        45
+      ],
+      [
+        115,
+        100
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        96,
+        74
+      ],
+      "yaw": 0,
+      "health": 1000,
+      "floor": true,
+      "driven": true
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "shots": [
+    0,
+    60
+  ]
+}

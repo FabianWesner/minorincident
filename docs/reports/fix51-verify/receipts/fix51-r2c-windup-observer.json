@@ -1,0 +1,210 @@
+{
+  "lane": "fix51-r2c",
+  "finding": "The L10 regional field labelled player windups/min counts resolved infected.attack events rather than all attack starts. Interrupted telegraphs are absent.",
+  "requestedContract": "docs/qa/level-acceptance.md L10-04; lane brief regional windups/min",
+  "codeEvidence": [
+    {
+      "file": "tools/qa/accept/observer.ts",
+      "detail": "Region.attacks++ is inside event.type === infected.attack."
+    },
+    {
+      "file": "tools/qa/threat/attackStarts.ts",
+      "detail": "observeAttackStarts records telegraph/civilian.grabbed plus escort-hit; a resolved hit is explicitly a different measurement."
+    },
+    {
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "detail": "infected.attack events are emitted in attack resolution paths; interrupted windups can therefore be absent."
+    }
+  ],
+  "receipts": [
+    {
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+      "regionalResolvedFields": {
+        "crash-outskirts": {
+          "ticks": 3962,
+          "attacks": 2,
+          "groupAttacks": 0,
+          "peak": 7,
+          "regularPeak": 7,
+          "dogPeak": 0,
+          "alphaPeak": 0
+        },
+        "residential-fringe": {
+          "ticks": 7281,
+          "attacks": 8,
+          "groupAttacks": 0,
+          "peak": 10,
+          "regularPeak": 8,
+          "dogPeak": 2,
+          "alphaPeak": 0
+        },
+        "industrial-area": {
+          "ticks": 9926,
+          "attacks": 18,
+          "groupAttacks": 0,
+          "peak": 18,
+          "regularPeak": 16,
+          "dogPeak": 3,
+          "alphaPeak": 1
+        },
+        "military-zone": {
+          "ticks": 10928,
+          "attacks": 15,
+          "groupAttacks": 0,
+          "peak": 25,
+          "regularPeak": 22,
+          "dogPeak": 2,
+          "alphaPeak": 2
+        },
+        "research-campus": {
+          "ticks": 7654,
+          "attacks": 22,
+          "groupAttacks": 0,
+          "peak": 26,
+          "regularPeak": 24,
+          "dogPeak": 2,
+          "alphaPeak": 2
+        },
+        "destroyed-corridor": {
+          "ticks": 12854,
+          "attacks": 0,
+          "groupAttacks": 0,
+          "peak": 68,
+          "regularPeak": 60,
+          "dogPeak": 5,
+          "alphaPeak": 3
+        },
+        "dispersal-complex": {
+          "ticks": 18796,
+          "attacks": 1,
+          "groupAttacks": 0,
+          "peak": 86,
+          "regularPeak": 80,
+          "dogPeak": 4,
+          "alphaPeak": 2
+        }
+      },
+      "actualAttackStartPhases": [
+        {
+          "key": "step/destroyed-corridor",
+          "seconds": 39.333333333333336,
+          "windups": 17,
+          "windupsPerMinute": 25.93220338983051
+        },
+        {
+          "key": "step/dispersal-complex",
+          "seconds": 216.45,
+          "windups": 18,
+          "windupsPerMinute": 4.98960498960499
+        },
+        {
+          "key": "step/hold",
+          "seconds": 62.31666666666667,
+          "windups": 12,
+          "windupsPerMinute": 11.553891414816796
+        }
+      ]
+    },
+    {
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sourceHash": "1ffd9401f844e4b054bad5360ca8f8196ab52531e6679d5396368f71d5a831b9",
+      "regionalResolvedFields": {
+        "crash-outskirts": {
+          "ticks": 3962,
+          "attacks": 2,
+          "groupAttacks": 0,
+          "peak": 7,
+          "regularPeak": 7,
+          "dogPeak": 0,
+          "alphaPeak": 0
+        },
+        "residential-fringe": {
+          "ticks": 7288,
+          "attacks": 11,
+          "groupAttacks": 0,
+          "peak": 20,
+          "regularPeak": 18,
+          "dogPeak": 2,
+          "alphaPeak": 0
+        },
+        "industrial-area": {
+          "ticks": 10007,
+          "attacks": 24,
+          "groupAttacks": 0,
+          "peak": 27,
+          "regularPeak": 25,
+          "dogPeak": 3,
+          "alphaPeak": 1
+        },
+        "military-zone": {
+          "ticks": 10854,
+          "attacks": 29,
+          "groupAttacks": 0,
+          "peak": 47,
+          "regularPeak": 44,
+          "dogPeak": 3,
+          "alphaPeak": 2
+        },
+        "research-campus": {
+          "ticks": 7655,
+          "attacks": 39,
+          "groupAttacks": 0,
+          "peak": 66,
+          "regularPeak": 60,
+          "dogPeak": 4,
+          "alphaPeak": 2
+        },
+        "destroyed-corridor": {
+          "ticks": 12867,
+          "attacks": 2,
+          "groupAttacks": 0,
+          "peak": 103,
+          "regularPeak": 96,
+          "dogPeak": 3,
+          "alphaPeak": 4
+        },
+        "dispersal-complex": {
+          "ticks": 18828,
+          "attacks": 0,
+          "groupAttacks": 0,
+          "peak": 167,
+          "regularPeak": 160,
+          "dogPeak": 4,
+          "alphaPeak": 3
+        }
+      },
+      "actualAttackStartPhases": [
+        {
+          "key": "step/destroyed-corridor",
+          "seconds": 39.333333333333336,
+          "windups": 33,
+          "windupsPerMinute": 50.33898305084746
+        },
+        {
+          "key": "step/dispersal-complex",
+          "seconds": 216.66666666666666,
+          "windups": 30,
+          "windupsPerMinute": 8.307692307692308
+        },
+        {
+          "key": "step/hold",
+          "seconds": 62.31666666666667,
+          "windups": 22,
+          "windupsPerMinute": 21.18213426049746
+        }
+      ]
+    }
+  ],
+  "qualification": "Historical proof of the old measurement defect. Current receipts use actual regional attack starts, exclude peaceful epilogue time, and terminate the passive assault window after 240 seconds. No acceptance target or gameplay timer changed.",
+  "beforeFixCommit": "05f0e086b",
+  "beforeFixObserverHash": "5750a9fff13e772294cc8d9d34ad1e273683afb26d173a76fae9063e7471fad2",
+  "status": "Fixed in this lane; historical before-fix evidence is retained verbatim.",
+  "correctionProof": "docs/reports/fix51-r2c/gates/checker-proof.json",
+  "currentReceipts": [
+    "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+    "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+    "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+    "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "inf-pursuit-cars",
+  "note": "Chase around corners: the courier runs a loop around two parked cars and back past them; two runners follow her round the corners. Look for: they round the cars (no pressing into a bumper), keep after her when she reappears, never stand still or wander off while she is near and in sight.",
+  "ground": "asphalt",
+  "size": 48,
+  "props": [
+    { "id": "car-a", "asset": "veh.sedan-red", "at": [0, 0], "yaw": 0 },
+    { "id": "car-b", "asset": "veh.suv-dark", "at": [0, 5], "yaw": 0 }
+  ],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-8, -4], "yaw": 0 },
+    { "id": "z1", "kind": "infected", "at": [-15, -4], "yaw": 0, "look": { "tier": "average" } },
+    { "id": "z2", "kind": "infected", "at": [-15, -6], "yaw": 0, "look": { "tier": "athletic" } }
+  ],
+  "script": [
+    { "frame": 20, "actor": "courier", "do": { "run": [[5, -4], [6, 9], [-6, 9], [-6, -3], [6, -3], [7, 10], [-7, 10], [-8, -5], [8, -5]] } }
+  ],
+  "camera": { "mode": "game", "target": [0, 2], "zoom": 1.25 },
+  "frames": 900,
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "lostTargetNearFramesMax": 0, "stuckActorFramesMax": 30, "courierSwingsMin": 1 }
+}

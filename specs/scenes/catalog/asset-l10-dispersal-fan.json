@@ -1,0 +1,44 @@
+{
+ "name": "asset-l10-dispersal-fan",
+ "note": "L10 giant ventilation fan housing with the rotor, courier for scale. Look for: rotor blades inside the duct without cutting the ring, guard grille, plinth grounded, ring not floating. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    6,
+    6
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   3,
+   4
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}

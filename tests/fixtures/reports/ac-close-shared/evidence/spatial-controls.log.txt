@@ -1,0 +1,63 @@
+GPU guard: WindowServer 3.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.0% / 10 s; 2 headless browsers + 1 requested; waiting
+[scene] starting vite dev on http://127.0.0.1:4052
+alpha.charge-boundary: pass
+alpha.charge-wall: pass
+alpha.ground-slam-boundary: pass
+alpha.ground-slam-wall: pass
+alpha.grab-throw-boundary: pass
+alpha.grab-throw-wall: pass
+alpha.roar-boundary: pass
+alpha.roar-wall: pass
+lion.pounce-boundary: pass
+lion.pounce-outside: pass
+lion.pounce-wall: pass
+lion.flank-boundary: pass
+lion.flank-wall: pass
+gorilla.roar-boundary: pass
+gorilla.roar-wall: pass
+gorilla.pound-boundary: pass
+gorilla.pound-wall: pass
+gorilla.grab-throw-boundary: pass
+gorilla.grab-throw-wall: pass
+elephant.charge-boundary: pass
+elephant.charge-wall: pass
+elephant.swipe-boundary: pass
+elephant.swipe-wall: pass
+zebra.kick-boundary: pass
+zebra.kick-wall: pass
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: zebra.stampede: outside target untouched
+
+50 !== 100
+
+    at run (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/infected-spatial-controls.ts:134:12)
+    at async <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/infected-spatial-controls.ts:149:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 50,
+  expected: 100,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.0.0

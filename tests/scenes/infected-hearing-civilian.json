@@ -1,0 +1,17 @@
+{
+  "name": "infected-hearing-civilian",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 24,
+  "props": [{ "id": "bench", "asset": "prop.bench", "at": [0, 2] }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-9, -8], "yaw": 0 },
+    { "id": "civilian", "kind": "pedestrian", "at": [-1.8, 0], "yaw": 180, "state": "idle" },
+    { "id": "zombie", "kind": "infected", "archetype": "infected.gorilla", "at": [0, 0], "yaw": 0 }
+  ],
+  "camera": { "mode": "close", "target": [-2, 0.8, 0], "radius": 9, "azimuth": 155 },
+  "frames": 180,
+  "shots": [0, 12, 24, 90, 180],
+  "trace": true,
+  "expect": { "consoleErrors": 0 }
+}

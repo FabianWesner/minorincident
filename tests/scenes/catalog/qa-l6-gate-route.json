@@ -1,0 +1,51 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "qa-l6-gate-route",
+  "note": "Production first service-gate approach. The courier must use the authored tunnel opening, remain above the floor and reach the far side; the former navigation shortcut at z=10.8 was outside this room.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        84,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": {
+        "walk": [
+          [
+            96,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 420,
+  "shots": [
+    1,
+    140,
+    280,
+    420
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorMaxX": {
+      "courier": [
+        95,
+        97
+      ]
+    },
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  }
+}

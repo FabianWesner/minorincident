@@ -1,0 +1,19 @@
+{
+  "name": "police-visible-approach",
+  "note": "L3 police-range: officer must keep the handgun lowered while the infected approaches from offscreen, then engage only after it enters the courier's immediate view. Run at 960x540, 390x844 and 844x390; Scene Lab uses the real aspect-adapted game framing. Inspect the contact sheet and ally.attack events.",
+  "seed": 1,
+  "time": "L3",
+  "ground": "asphalt",
+  "size": 40,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0] },
+    { "id": "officer", "kind": "pedestrian", "at": [0, -1], "look": { "model": "npc.police-officer", "role": "officer" }, "state": { "ally": { "role": "officer" } } },
+    { "id": "approaching", "kind": "infected", "at": [12, 0], "yaw": 180, "state": { "chase": "courier" } }
+  ],
+  "camera": { "mode": "game", "target": "courier" },
+  "trace": true,
+  "frames": 480,
+  "sheet": 30,
+  "shots": [0, 120, 240, 360, 480],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

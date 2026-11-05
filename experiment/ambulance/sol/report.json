@@ -1,0 +1,23 @@
+{
+  "slug": "ambulance",
+  "iterations": 5,
+  "triangles": 103924,
+  "meshes": 682,
+  "glb_bytes": 2614528,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "self_fidelity_0_1": 0.79,
+  "matches": [
+    "White box ambulance proportions and continuous red side stripe",
+    "Blue star-of-life emblems and real-font AMBULANCE lettering",
+    "Wheel arch cut-outs, shaped tyres, steel rims, chrome grille and bumpers",
+    "Red/blue lightbar, cabinet frames, mirrored sides and rear double doors",
+    "Tinted cab glazing with seats and steering wheel; named wheel and door pivots"
+  ],
+  "gaps": [
+    "Cab and hood contours are more angular than the reference",
+    "Lamp optics, medical serpent and small hardware are simplified",
+    "Studio paint and metal response differs from the reference lighting"
+  ],
+  "notes": "Completed four Cycles compare/fix rounds plus browser correction; final GLB passed WebGPU and WebGL2 with no console errors."
+}

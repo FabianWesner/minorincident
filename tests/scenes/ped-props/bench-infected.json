@@ -1,0 +1,36 @@
+{
+  "extends": "bench-sidewalk.json",
+  "name": "ped-props-bench-infected",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ]
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        -4,
+        0
+      ],
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    600
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "propPenetrationFramesMax": 0
+  }
+}

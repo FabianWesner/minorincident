@@ -1,0 +1,49 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 94.130.181.173:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 36s, 30378 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-73298-1792618363; queueing for a slot
+[runner] slot 0 acquired; load 0.37 0.59 1.01
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-73298-1792618363[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/compact-crowd-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-instance-attributes.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 519[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 21:34:31
+[2m   Duration [22m 1.04s[2m (transform 40%, tests 33%, import 26%, worker 1%)[22m
+
+{"id":"inf.common-worker","low":false,"bytesSaved":26736}
+{"id":"inf.common-worker","low":true,"bytesSaved":61584}
+{"id":"inf.jogger","low":false,"bytesSaved":77856}
+{"id":"inf.jogger","low":true,"bytesSaved":113184}
+{"id":"inf.cashier","low":false,"bytesSaved":55728}
+{"id":"inf.cashier","low":true,"bytesSaved":76560}
+{"id":"inf.delivery-driver","low":false,"bytesSaved":109344}
+{"id":"inf.delivery-driver","low":true,"bytesSaved":148368}
+{"id":"inf.suburban-mom","low":false,"bytesSaved":88272}
+{"id":"inf.suburban-mom","low":true,"bytesSaved":126576}
+{"id":"inf.bbq-dad","low":false,"bytesSaved":60240}
+{"id":"inf.bbq-dad","low":true,"bytesSaved":94128}
+{"id":"inf.bathrobe-neighbor","low":false,"bytesSaved":56112}
+{"id":"inf.bathrobe-neighbor","low":true,"bytesSaved":91536}
+{"id":"inf.alpha","low":false,"bytesSaved":144}
+{"id":"inf.alpha","low":true,"bytesSaved":864}
+{"id":"inf.dog","low":false,"bytesSaved":8400}
+{"id":"inf.dog","low":true,"bytesSaved":13824}
+{"id":"inf.crawler","low":false,"bytesSaved":19536}
+{"id":"inf.crawler","low":true,"bytesSaved":66816}
+[remote] pulled docs/reports/ac-close-shared/evidence/compact-bake-final.json
+[remote] done exit=0 (runner 94.130.181.173, sync 36s, remote total 78s)

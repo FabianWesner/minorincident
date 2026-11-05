@@ -1,0 +1,183 @@
+{
+ "name": "qa-ped-walk-all",
+ "note": "All five civilian models, accessories and hand props: walk, run (woman-a), 180 degree reversals.",
+ "ground": "sidewalk",
+ "size": 40,
+ "actors": [
+  {
+   "id": "ped1",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tint": "#6aa0d8",
+    "accessories": [
+     "backpack"
+    ],
+    "tier": "average",
+    "handProp": "coffee"
+   },
+   "state": {
+    "walk": [
+     [
+      8,
+      -6
+     ],
+     [
+      -8,
+      -6
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "ped2",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    -3
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tint": "#d8b04a",
+    "accessories": [
+     "cap"
+    ],
+    "tier": "frail",
+    "handProp": "phone"
+   },
+   "state": {
+    "walk": [
+     [
+      8,
+      -3
+     ],
+     [
+      -8,
+      -3
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "ped3",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "tint": "#c46a8a",
+    "accessories": [
+     "glasses"
+    ],
+    "tier": "athletic",
+    "handProp": "bag"
+   },
+   "state": {
+    "run": [
+     [
+      8,
+      0
+     ],
+     [
+      -8,
+      0
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "ped4",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    3
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "tint": "#7ab88a",
+    "accessories": [
+     "scarf"
+    ],
+    "tier": "average"
+   },
+   "state": {
+    "walk": [
+     [
+      8,
+      3
+     ],
+     [
+      -8,
+      3
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "ped5",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    6
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "tint": "#9a8a7a",
+    "accessories": [],
+    "tier": "frail",
+    "handProp": "cane"
+   },
+   "state": {
+    "walk": [
+     [
+      8,
+      6
+     ],
+     [
+      -8,
+      6
+     ]
+    ],
+    "loop": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0,
+   0.9,
+   0
+  ],
+  "radius": 22,
+  "azimuth": 40
+ },
+ "frames": 600,
+ "shots": [
+  60,
+  240,
+  420,
+  580
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "footSlideMaxCm": 6,
+  "footSinkMaxCm": 2,
+  "undrawnFramesMax": 0
+ }
+}

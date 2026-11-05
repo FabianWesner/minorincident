@@ -1,0 +1,85 @@
+{
+  "sourceHash": "1e1ab1878645b43721cd178875f6334d5298835a563e333e3277d4d9503adf88",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "f0c43427fa9d218e8d9bd101bc3a05cec829df15bb5d3c262e5825f62d70e7f8",
+  "driverSha256": "1b8686c0c55c9a954df3c875e2ecf3e9432a8b424f6845c11ddc09ff21afbbad",
+  "generatedAt": "2026-11-03T04:42:37.781Z",
+  "cell": "L9-webgl2-high-z1.5-road",
+  "level": "L9",
+  "backend": "webgl2",
+  "quality": "high",
+  "zoom": 1.5,
+  "variant": "road",
+  "method": "Headless ordinary WASD/mouse, mortal, no objective skips; camera set explicitly; named L9 route uses logged map assist; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 107,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 4.9,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive toward the city · 1020 m",
+            "tick": 9,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                470,
+                0,
+                0
+              ],
+              "playerY": 1.0100750923156738,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "Get clear of the wreck · 20 m",
+            "tick": 5569,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "yielded": false
+  },
+  "error": null
+}

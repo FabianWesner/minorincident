@@ -1,0 +1,42 @@
+{
+ "name": "bld-corridor-river-bridge",
+ "note": "D-CORRIDOR bld.river-bridge (bld.river-bridge:893) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -177.1,
+    -10.1
+   ],
+   [
+    -156.9,
+    10.1
+   ]
+  ],
+  "ids": [
+   "bld.river-bridge:893"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -167,
+   2.5,
+   0
+  ],
+  "radius": 33.3,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

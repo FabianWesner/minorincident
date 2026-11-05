@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
+  "fixtureHash": "f24892338c5e3112f179a234c6a03599aff625d7541ff7c9fae3ccc8e88f5de5",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-14",
+      "clause": "reviewed actual ending title and returned start menu",
+      "value": {
+        "finished": true,
+        "steps": [
+          {
+            "id": "crash",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "residential-fringe",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "industrial-area",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "military-zone",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "research-campus",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "research",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "cure",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "research-exit",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "destroyed-corridor",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "dispersal-complex",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "install",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "hold",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "mega",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "release",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "epilogue",
+            "optional": false,
+            "status": "completed"
+          },
+          {
+            "id": "credits",
+            "optional": false,
+            "status": "completed"
+          }
+        ],
+        "captures": [
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-credits-t3514-low-z0-5.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-credits-t3514-low-z1-5.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-epilogue-t608-low-z0-5.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-epilogue-t608-low-z1-5.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-result.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-t2714.jpg",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix55-c/test-results/fix51-r10c/L10-low-batch-4-1793804895221/captures/late-input-L10-t4.jpg"
+        ]
+      },
+      "target": "actual epilogue/credits complete; reviewed title and returned menu captures at both zooms; no species/control timing claim",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/fix51-r10c/L10-low-batch-4/review.json"
+    },
+    {
+      "id": "L10-14",
+      "clause": "physical saved epilogue counter at completion",
+      "value": 9000,
+      "target": "7200–10800ticks; low crosses Resume at91s, high whole run; movement input remains untested",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/fix51-r10c/L10-low-batch-4/review.json"
+    }
+  ],
+  "observations": {
+    "inputPath": "docs/reports/fix51-r10c/L10-low-batch-4-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L10-low-batch-4/review.json",
+    "completionPath": "docs/reports/fix51-r10c/L10-low-batch-4/late-input-completion.json.gz",
+    "limits": "Protected courier, inherited production Resume; no timing/performance, immunity, direct rocket count or full motion qualification."
+  }
+}

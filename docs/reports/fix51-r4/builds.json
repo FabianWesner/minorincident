@@ -1,0 +1,40 @@
+{
+  "host": {
+    "system": "darwin",
+    "version": "25.5.0",
+    "architecture": "arm64",
+    "memory": 17179869184,
+    "cpus": 10
+  },
+  "rows": [
+    {
+      "side": "candidate",
+      "origin": "http://127.0.0.1:4901",
+      "builtRevision": "dd7aabe6c",
+      "currentRevision": "524ea45a6eb129b64f196c59e4b418b6a039f3d1",
+      "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+      "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+      "indexSha256": "4a79fcdb022306196d4ae185570df3cef909db15cc69ad2327eb004344dacfba",
+      "gameDiffFromBuiltRevision": false,
+      "builtWith": "npm run build:qa",
+      "qaHooks": true
+    },
+    {
+      "side": "prod",
+      "origin": "http://127.0.0.1:4902",
+      "revision": "0c410e1111f5380e91cb8ca7f2a65b7f4295c003",
+      "indexSha256": "157851373e03123c2bef6a01143a10a308259c5daa6742f07ed02572be457610",
+      "dependencySha256": "fcc71eadb92a311d9d8d736c592e80fa473404c37a46f73f1b6edd8463305038",
+      "sourceFiles": 504,
+      "publicOverlays": {
+        "public/assets/layouts/D-CURE.layout.json": "6033fb0828f16092c1afc477251715dff44b36f2f83d88a5add3f31d4b0cb2b1",
+        "public/assets/layouts/D-GROVE.base.glb": "3575ef9bb4611f21753fa9239d6809cb5e880be182da9861503f1099fca0c542",
+        "public/assets/layouts/D-GROVE.layout.json": "e9adeb0aff2511499332ba445026290ec606c2b812e8d9006d41af5d321668c6",
+        "public/assets/layouts/D-ZOO.base.glb": "9aea167e889c02a0dae102345b0ca826e7094b6a02bad413d60ee8a4221a5c28",
+        "public/assets/layouts/D-ZOO.layout.json": "a91786367efba53e84647a1bb84993d5dcda5f2434c9123df374302bd65f50aa"
+      },
+      "builtWith": "BRANCH=qa NODE_ENV=production VITE_QA_HOOKS=1 node tools/perf/build-revision.mjs 0c410e111 test-results/fix51-r4/prod",
+      "qaHooks": true
+    }
+  ]
+}

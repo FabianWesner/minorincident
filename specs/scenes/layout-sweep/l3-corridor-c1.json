@@ -1,0 +1,111 @@
+{
+ "name": "l3-corridor-c1",
+ "note": "L3 layout sweep cell 1 on D-CORRIDOR: shipped L3 dressing and placement rules, static mesh clipping gate.",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "level": "L3",
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -119.7,
+    -46
+   ],
+   [
+    -52.3,
+    46
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true,
+  "ignore": [
+   [
+    "decal.blood-trail",
+    "prop.street-lamp"
+   ],
+   [
+    "decal.blood-trail",
+    "prop.trash-bin"
+   ],
+   [
+    "decal.blood-trail",
+    "prop.wheelbarrow"
+   ],
+   [
+    "decal.blood-trail",
+    "prop.picket-fence"
+   ],
+   [
+    "decal.blood-trail",
+    "decay.looted-store"
+   ],
+   [
+    "decal.blood-pool",
+    "prop.street-lamp"
+   ],
+   [
+    "decal.blood-pool",
+    "prop.trash-bin"
+   ],
+   [
+    "decal.blood-pool",
+    "prop.wheelbarrow"
+   ],
+   [
+    "decal.blood-pool",
+    "prop.picket-fence"
+   ],
+   [
+    "decal.blood-pool",
+    "decay.looted-store"
+   ],
+   [
+    "decay.broken-glass",
+    "prop.street-lamp"
+   ],
+   [
+    "decay.broken-glass",
+    "prop.trash-bin"
+   ],
+   [
+    "decay.broken-glass",
+    "prop.wheelbarrow"
+   ],
+   [
+    "decay.broken-glass",
+    "prop.picket-fence"
+   ],
+   [
+    "decay.broken-glass",
+    "decay.looted-store"
+   ],
+   [
+    "prop.sandbag-pallet",
+    "wpn.police-baton"
+   ],
+   [
+    "bld.cafe-corner",
+    "prop.privacy-fence"
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -86.0,
+   0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 4,
+ "shots": [
+  4
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "staticOverlapMax": 0
+ }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "bus-stop",
+  "iterations": 3,
+  "triangles": 2046,
+  "meshes": 7,
+  "materials": [
+    "pal_asphalt",
+    "pal_backpackTeal",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_survivorRed",
+    "pal_uiDark",
+    "pal_woodWarm"
+  ],
+  "glb_bytes": 150068,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "Arched canopy with bold roof bands",
+    "Chunky four-post frame",
+    "Warm slatted wooden bench",
+    "Framed house poster",
+    "Framed route-map poster",
+    "Open waiting area"
+  ],
+  "dropped_details": [
+    "Weathering and scratches",
+    "Bolts and hinges",
+    "Poster lettering",
+    "Fine map labels",
+    "Thin structural trim"
+  ],
+  "notes": "Chunky palette-only shelter with static geometry joined by material, no new palette tokens, and clean WebGPU and WebGL2 checks."
+}

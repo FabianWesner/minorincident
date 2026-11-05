@@ -1,0 +1,75 @@
+{
+  "name": "l8-district-walk",
+  "note": "Game camera sheet of five enclosures, clean public paths, staff/service yard and strong masonry perimeter. Review clipping, grounded props and moving courier facing/visibility; no specials in this district-only fixture.",
+  "seed": 30,
+  "ground": "district",
+  "time": "L8-zoo",
+  "dof": false,
+  "layout": {
+    "district": "D-ZOO",
+    "bbox": [
+      [
+        -120,
+        -90
+      ],
+      [
+        120,
+        90
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        60,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            48,
+            0
+          ],
+          [
+            30,
+            0
+          ],
+          [
+            24,
+            0
+          ],
+          [
+            24,
+            12
+          ]
+        ]
+      },
+      "yaw": 180
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier"
+  },
+  "frames": 420,
+  "shots": [
+    0,
+    120,
+    240,
+    420
+  ],
+  "sheet": 60,
+  "script": [],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "footSinkMaxCm": 0,
+    "yawDriftMaxDeg": 5,
+    "clippingMax": 0
+  }
+}

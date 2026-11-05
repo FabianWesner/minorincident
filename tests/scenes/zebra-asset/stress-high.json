@@ -1,0 +1,49 @@
+{
+  "name": "qa-zebra-asset-stress-high",
+  "note": "Z-D2 E18 instanced model budget at the tier cap, existing firefighter brain; Z-S3 owns gameplay.",
+  "seed": 7,
+  "ground": "grass",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "infectedCap": 200,
+  "barArchetypes": [
+    "infected.firefighter"
+  ],
+  "actors": [
+    {
+      "id": "zebra",
+      "kind": "infected",
+      "archetype": "infected.firefighter",
+      "look": {
+        "model": "inf.zebra"
+      },
+      "count": 200,
+      "spread": 12,
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 2.5
+  },
+  "frames": 120,
+  "shots": [
+    120
+  ],
+  "trace": false,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

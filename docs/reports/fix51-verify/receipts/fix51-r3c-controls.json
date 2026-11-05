@@ -1,0 +1,667 @@
+{
+  "method": "Scoped proof index; individual assertions and measurements only. No whole compound acceptance row is promoted. Source identities remain on each receipt, including earlier rendering/audio probes.",
+  "references": [
+    {
+      "path": "docs/reports/fix51-r3c/l8-vehicle-retry-proof.json",
+      "sha256": "f13ce649d4f85fdaa81ab64267c7f11c706e53ed2d221d23ea34a66e637df59a"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/apc-occupant-attack-proof.json",
+      "sha256": "ea05e93bccb56a60ac253dccdcbdcb60fd8e9907e654bb94fd3860db34171bff"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/apc-rider-geometry.json",
+      "sha256": "881aa53c588e548dfa4109fbdadbf6daff232a791ffd1b17b7f64c6e23a5d940"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/tent-footprint.json",
+      "sha256": "bcc9a0438a16b56224dec0e2b7e05d92a7c8133882d430fa8b647024cc0f5025"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/scene-collider-proof-before.json",
+      "sha256": "b78ab3a2fb383ebd39eeb2a411771884dcadf6a826e3052953204e54312769d8"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/scene-collider-proof-after.json",
+      "sha256": "9c147a4414c1c423f2bf4621c8fbc9c68fcca5e1ca4c9b9b3b9ee6e64a7171cf"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/layout-metadata-receipt.json",
+      "sha256": "51d0bc69e22e80f311c07733ea693b754a57216c824d0a20582ee77fc07d1a87"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/audio-event-ledger.json",
+      "sha256": "59febcf1f5d98cbaa71d654a60c6dd08a44f1057c6db239e4db3620c19542d73"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/physical-build.json",
+      "sha256": "fa4d58fd96d709ed92822c11491545b6c80e395cf6ce53503e16a07548849e02"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/no-frame-timing-proof.json",
+      "sha256": "d0c94373d304a7baa02bf396621572d07532c8f93d6d2df94aa3f33b087b40b4"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/health-ui-fix-proof.json",
+      "sha256": "7d7e277daaea16f0a75bc71a074f45bb884fc243855d86480e197b0a171d27ec"
+    },
+    {
+      "path": "docs/reports/fix51-r3c/native-trials.json",
+      "sha256": "dfd0c3276532f73b1c0ff6e1bbd28200b73570145a584b3453a3f1afa6d0a81a"
+    }
+  ],
+  "currentNativeMeasurements": [
+    {
+      "level": "L8",
+      "tier": "low",
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 103.1,
+        "deaths": 0,
+        "kills": 43,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "escape",
+            "t": 97.1
+          },
+          {
+            "id": "depart",
+            "t": 98.1
+          }
+        ],
+        "furthestObjective": "depart",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 428,
+          "deferred": 91,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "combat": {
+        "seconds": 37.1,
+        "attacks": 0,
+        "groupAttacks": 2,
+        "attacksPerMinute": 0,
+        "groupAttacksPerMinute": 3.234501347708895,
+        "boundedPaths": {
+          "samples": 16,
+          "minimumPercent": 100,
+          "worstTick": 5826,
+          "nearby": 8,
+          "reachable": 8,
+          "blockedIds": []
+        }
+      }
+    },
+    {
+      "level": "L8",
+      "tier": "high",
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 103.95,
+        "deaths": 0,
+        "kills": 49,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "escape",
+            "t": 97.95
+          },
+          {
+            "id": "depart",
+            "t": 98.95
+          }
+        ],
+        "furthestObjective": "depart",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 563,
+          "deferred": 128,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "combat": {
+        "seconds": 37.95,
+        "attacks": 0,
+        "groupAttacks": 0,
+        "attacksPerMinute": 0,
+        "groupAttacksPerMinute": 0,
+        "boundedPaths": {
+          "samples": 16,
+          "minimumPercent": 100,
+          "worstTick": 5877,
+          "nearby": 8,
+          "reachable": 8,
+          "blockedIds": []
+        }
+      }
+    },
+    {
+      "level": "L10",
+      "tier": "low",
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1173.0166666666667,
+        "deaths": 0,
+        "kills": 231,
+        "damageTaken": 330,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 357.01666666666665
+          },
+          {
+            "id": "research-campus",
+            "t": 529.5666666666667
+          },
+          {
+            "id": "research",
+            "t": 593.3666666666667
+          },
+          {
+            "id": "cure",
+            "t": 594.7
+          },
+          {
+            "id": "research-exit",
+            "t": 615.6
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 655.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 871.3833333333333
+          },
+          {
+            "id": "install",
+            "t": 946.75
+          },
+          {
+            "id": "hold",
+            "t": 1009.0666666666667
+          },
+          {
+            "id": "mega",
+            "t": 1022.25
+          },
+          {
+            "id": "release",
+            "t": 1023.0166666666667
+          },
+          {
+            "id": "epilogue",
+            "t": 1173.0166666666667
+          },
+          {
+            "id": "credits",
+            "t": 1190.0166666666667
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 63.316666666664354,
+            "combatSeconds": 2.6999999999999953,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.36666666666106,
+            "travelSeconds": 99.43333333332897,
+            "combatSeconds": 21.93333333333337,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0703822284006
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 165.50000000002385,
+            "travelSeconds": 149.5000000000111,
+            "combatSeconds": 15.983333333333707,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1163711451077
+          },
+          {
+            "id": "military-zone",
+            "seconds": 181.53333333336994,
+            "travelSeconds": 155.05000000001553,
+            "combatSeconds": 26.466666666666445,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.0636897000898
+          },
+          {
+            "id": "research-campus",
+            "seconds": 127.58333333332737,
+            "travelSeconds": 88.39999999999627,
+            "combatSeconds": 39.133333333332395,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.3170859337823
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 214.23333333339596,
+            "travelSeconds": 197.28333333338247,
+            "combatSeconds": 16.95000000000032,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.0005715222693
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 296.7500000000588,
+            "travelSeconds": 58.799999999997944,
+            "combatSeconds": 11.666666666666826,
+            "interactionSeconds": 0.5333333333333333,
+            "holdSeconds": 75.499999999997,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0.24999999999999997,
+            "metres": 1017.4388322852944
+          }
+        ],
+        "maxConcurrentInfected": 87,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 366,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "regions": {
+        "crash-outskirts": {
+          "ticks": 3962,
+          "attacks": 8,
+          "groupAttacks": 0,
+          "peak": 6,
+          "normalPeak": 6,
+          "regularPeak": 6,
+          "dogPeak": 0,
+          "alphaPeak": 0
+        },
+        "residential-fringe": {
+          "ticks": 7282,
+          "attacks": 17,
+          "groupAttacks": 0,
+          "peak": 10,
+          "normalPeak": 10,
+          "regularPeak": 8,
+          "dogPeak": 2,
+          "alphaPeak": 0
+        },
+        "industrial-area": {
+          "ticks": 9930,
+          "attacks": 29,
+          "groupAttacks": 0,
+          "peak": 18,
+          "normalPeak": 18,
+          "regularPeak": 16,
+          "dogPeak": 3,
+          "alphaPeak": 1
+        },
+        "military-zone": {
+          "ticks": 10892,
+          "attacks": 34,
+          "groupAttacks": 0,
+          "peak": 33,
+          "normalPeak": 33,
+          "regularPeak": 29,
+          "dogPeak": 3,
+          "alphaPeak": 2
+        },
+        "research-campus": {
+          "ticks": 7655,
+          "attacks": 56,
+          "groupAttacks": 0,
+          "peak": 42,
+          "normalPeak": 42,
+          "regularPeak": 40,
+          "dogPeak": 4,
+          "alphaPeak": 1
+        },
+        "destroyed-corridor": {
+          "ticks": 12854,
+          "attacks": 18,
+          "groupAttacks": 0,
+          "peak": 68,
+          "normalPeak": 68,
+          "regularPeak": 60,
+          "dogPeak": 5,
+          "alphaPeak": 3
+        },
+        "dispersal-complex": {
+          "ticks": 8805,
+          "attacks": 22,
+          "groupAttacks": 0,
+          "peak": 86,
+          "normalPeak": 86,
+          "regularPeak": 80,
+          "dogPeak": 4,
+          "alphaPeak": 2
+        }
+      }
+    },
+    {
+      "level": "L10",
+      "tier": "high",
+      "sourceHash": "cb2dda28c09f53c18a870eb4ade7c9389317ed404ff41252910efa8dd8b2f4d7",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1175.0166666666667,
+        "deaths": 0,
+        "kills": 363,
+        "damageTaken": 460,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 358.35
+          },
+          {
+            "id": "research-campus",
+            "t": 530.3333333333334
+          },
+          {
+            "id": "research",
+            "t": 594.1333333333333
+          },
+          {
+            "id": "cure",
+            "t": 595.4666666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 616.3666666666667
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 655.7
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 873.6166666666667
+          },
+          {
+            "id": "install",
+            "t": 949.0166666666667
+          },
+          {
+            "id": "hold",
+            "t": 1011.35
+          },
+          {
+            "id": "mega",
+            "t": 1024.25
+          },
+          {
+            "id": "release",
+            "t": 1025.0166666666667
+          },
+          {
+            "id": "epilogue",
+            "t": 1175.0166666666667
+          },
+          {
+            "id": "credits",
+            "t": 1192.0166666666667
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 63.933333333330985,
+            "combatSeconds": 2.083333333333331,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.46666666666106,
+            "travelSeconds": 73.71666666666377,
+            "combatSeconds": 47.74999999999857,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0727553025105
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 166.80000000002488,
+            "travelSeconds": 129.73333333332872,
+            "combatSeconds": 37.04999999999918,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.2175700594574
+          },
+          {
+            "id": "military-zone",
+            "seconds": 180.9000000000361,
+            "travelSeconds": 138.050000000002,
+            "combatSeconds": 42.833333333332185,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.0809862593363
+          },
+          {
+            "id": "research-campus",
+            "seconds": 127.58333333332737,
+            "travelSeconds": 92.68333333332936,
+            "combatSeconds": 34.849999999999305,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.2975790243908
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 215.7000000000638,
+            "travelSeconds": 197.31666666671583,
+            "combatSeconds": 18.38333333333357,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 964.7804257918049
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 296.51666666672565,
+            "travelSeconds": 58.833333333331275,
+            "combatSeconds": 11.666666666666826,
+            "interactionSeconds": 0.5333333333333333,
+            "holdSeconds": 75.23333333333035,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0.24999999999999997,
+            "metres": 1031.0994418386983
+          }
+        ],
+        "maxConcurrentInfected": 168,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 533,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "regions": {
+        "crash-outskirts": {
+          "ticks": 3962,
+          "attacks": 8,
+          "groupAttacks": 0,
+          "peak": 7,
+          "normalPeak": 7,
+          "regularPeak": 7,
+          "dogPeak": 0,
+          "alphaPeak": 0
+        },
+        "residential-fringe": {
+          "ticks": 7288,
+          "attacks": 26,
+          "groupAttacks": 0,
+          "peak": 21,
+          "normalPeak": 21,
+          "regularPeak": 19,
+          "dogPeak": 2,
+          "alphaPeak": 0
+        },
+        "industrial-area": {
+          "ticks": 10008,
+          "attacks": 55,
+          "groupAttacks": 0,
+          "peak": 27,
+          "normalPeak": 27,
+          "regularPeak": 25,
+          "dogPeak": 3,
+          "alphaPeak": 1
+        },
+        "military-zone": {
+          "ticks": 10854,
+          "attacks": 51,
+          "groupAttacks": 0,
+          "peak": 51,
+          "normalPeak": 51,
+          "regularPeak": 47,
+          "dogPeak": 3,
+          "alphaPeak": 2
+        },
+        "research-campus": {
+          "ticks": 7655,
+          "attacks": 78,
+          "groupAttacks": 0,
+          "peak": 66,
+          "normalPeak": 66,
+          "regularPeak": 61,
+          "dogPeak": 3,
+          "alphaPeak": 2
+        },
+        "destroyed-corridor": {
+          "ticks": 12942,
+          "attacks": 29,
+          "groupAttacks": 0,
+          "peak": 102,
+          "normalPeak": 102,
+          "regularPeak": 96,
+          "dogPeak": 3,
+          "alphaPeak": 3
+        },
+        "dispersal-complex": {
+          "ticks": 8791,
+          "attacks": 32,
+          "groupAttacks": 0,
+          "peak": 167,
+          "normalPeak": 167,
+          "regularPeak": 160,
+          "dogPeak": 4,
+          "alphaPeak": 3
+        }
+      }
+    }
+  ],
+  "limits": [
+    "L8 competent player windups remain zero in both native tiers: FAIL.",
+    "L8 high WebGPU close physical run failed its cap; completed cells do not waive it.",
+    "L9 static leg bounds and sampled visibility prove only their stated subset.",
+    "Research actor clipping zero does not waive remaining gunBodyHits=1.",
+    "Audio dispatch does not establish audible mix or every zoo telegraph."
+  ],
+  "currentNativeMeasurementsLabel": "Historical scoped measurements; sourceHash on each entry is authoritative. Fresh official L8/L9 commands are indexed in gates/native-acceptance.json; L10 retains its earlier full report."
+}

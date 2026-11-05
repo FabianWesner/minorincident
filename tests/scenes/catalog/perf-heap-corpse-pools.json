@@ -1,0 +1,75 @@
+{
+  "name": "perf-heap-corpse-pools",
+  "extends": "appearance-stable-civilian.json",
+  "note": "Shared frozen-material regression across three civilian model pools: retain their distinct clothes, heads and headwear through infection and permanent death. Game camera and appearance continuity gates on both tiers, zooms and backends.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -9
+      ]
+    },
+    {
+      "id": "cap",
+      "kind": "pedestrian",
+      "at": [
+        -1.2,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b",
+        "tint": "#46734d",
+        "accessories": [
+          "acc.hat-baseball-cap"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    },
+    {
+      "id": "beanie",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-elderly",
+        "tint": "#c78b54",
+        "accessories": [
+          "acc.hat-beanie"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    },
+    {
+      "id": "hat",
+      "kind": "pedestrian",
+      "at": [
+        1.2,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b",
+        "tint": "#705fa6",
+        "accessories": [
+          "acc.hat-bucket-hat"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    }
+  ]
+}

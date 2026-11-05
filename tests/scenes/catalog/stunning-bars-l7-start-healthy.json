@@ -1,0 +1,55 @@
+{
+ "name": "stunning-bars-l7-start-healthy",
+ "seed": 29,
+ "frames": 60,
+ "sheet": 30,
+ "ground": "district",
+ "time": "L6",
+ "tier": 6,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    220,
+    -30
+   ],
+   [
+    289,
+    55
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    273,
+    15
+   ],
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   270,
+   3.9,
+   15
+  ],
+  "zoom": 1
+ },
+ "note": "Production L7 start roster (~24 followers, all healthy): every follower has a compact teal health pip, with heroine-overlapping pips skipped. L5's group of five keeps full bars; see stunning-bars-l5-five.",
+ "expect": {
+  "consoleErrors": 0,
+  "collisionFailuresMax": 0,
+  "bodyOverlapMaxCm": 2,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000,
+  "healthBarsMin": 1
+ },
+ "size": 400,
+ "l7Group": "start"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "perf-heap-bars-visible",
+  "extends": "../health-bars/shared.json",
+  "note": "Health-bar occlusion performance regression: same drawn geometry and game camera, both tiers, zooms and backends. Numerical placement-ray equivalence is covered by instanced-occlusion.test.ts; health-bars.spec.ts asserts wall-hidden and visible counts.",
+  "frames": 60,
+  "sheet": 30,
+  "script": []
+}

@@ -1,0 +1,101 @@
+{
+  "name": "qa-l2-perf-crowd",
+  "seed": 2,
+  "ground": "asphalt",
+  "size": 22,
+  "time": "L2",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -1,
+        1
+      ]
+    },
+    {
+      "id": "walker",
+      "kind": "pedestrian",
+      "at": [
+        3,
+        2
+      ],
+      "look": {
+        "model": "npc.civilian-man-a",
+        "handProp": "coffee"
+      },
+      "state": {
+        "walk": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "woman",
+      "kind": "pedestrian",
+      "at": [
+        -3,
+        -2
+      ],
+      "look": {
+        "model": "npc.civilian-woman-a"
+      }
+    },
+    {
+      "id": "firefighter",
+      "kind": "pedestrian",
+      "at": [
+        -3,
+        2
+      ],
+      "look": {
+        "model": "npc.firefighter-alive"
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        5,
+        -3
+      ],
+      "yaw": 180,
+      "count": 5,
+      "spread": 2
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.1
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    60,
+    120
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "lane": "vqa-2",
+  "main": "dbfa8ec85",
+  "build": "npm run build:qa (cached production dist, QA hooks)",
+  "date": "2026-11-05",
+  "scope": ["L4", "L5", "L6"],
+  "runs": [
+    { "label": "v2-L4-pre", "level": "L4", "save": "preset L4-default", "survivor": "female", "backend": "webgpu", "tier": "high", "zoom": 1.5, "result": "finished", "frames": 89 },
+    { "label": "v2-L4-fresh", "level": "L4", "save": "fresh (debug level select)", "survivor": "male", "backend": "webgl2", "tier": "low", "zoom": 0.5, "result": "finished", "frames": 92 },
+    { "label": "v2-L4-spear", "level": "L4", "save": "preset L4-default", "survivor": "female", "backend": "webgpu", "tier": "high", "zoom": 1, "shotSeconds": 0.5, "result": "contact phase only (85 s)", "frames": 124 },
+    { "label": "v2-L5-pre", "level": "L5", "save": "preset L5-default", "survivor": "male", "backend": "webgpu", "tier": "low", "zoom": 1.5, "result": "finished with 0 survivors", "frames": 59 },
+    { "label": "v2-L5-fresh", "level": "L5", "save": "fresh", "survivor": "female", "backend": "webgl2", "tier": "high", "zoom": 0.5, "result": "not finished (275 s, 1/5 found, driver stuck without a marker)", "frames": 54 },
+    { "label": "v2-L6-pre", "level": "L6", "save": "preset L6-default", "survivor": "female", "backend": "webgl2", "tier": "high", "zoom": 1.5, "result": "finished with 0/1 out", "frames": 52 },
+    { "label": "v2-L6-fresh", "level": "L6", "save": "fresh", "survivor": "male", "backend": "webgpu", "tier": "low", "zoom": 0.5, "result": "driver P0 cannot-finish at (-1.1,-28) after 100 s pinned by a riot cop", "frames": 54 },
+    { "label": "alley", "level": "L4", "tool": "Scene Lab, courier at (-20.25,-37/-29/-22)", "backend": ["webgpu", "webgl2"], "tier": ["low", "high"], "zoom": [0.5, 1.5], "frames": 24 }
+  ],
+  "verdicts": {
+    "L4": { "glitches": "P2 x2, P3 x4", "stunning": "partly", "boring": "no" },
+    "L5": { "glitches": "P2 x3, P3 x2", "stunning": "partly", "boring": "no; frustrating (escort lost)" },
+    "L6": { "glitches": "P2 x2, P3 x1", "stunning": "partly", "boring": "no; one stall" }
+  },
+  "blockingP1": false,
+  "findings": [
+    { "id": 1, "sev": "P2", "level": "L4", "tick": "4407, 7178, 9397 (z1.5)", "where": "plaza breaches (-24.6,-4.4), (-18.0,8.9)", "setup": "preset, WebGPU high, zoom 1.5", "what": "Courier is very hard to find inside dense breach hordes at zoom 1.5: only her head and gun show between infected and a wall of 15-25 stacked red health bars; the new gold contour is not visible at this size. At zoom 0.5 the depth slice draws her cleanly on top of the horde.", "evidence": "L4-horde-courier.jpg" },
+    { "id": 2, "sev": "P2", "level": "L4", "tick": "11145, 11447, 12918", "where": "south breach sandbags", "setup": "fresh, WebGL2 low, zoom 0.5 (high identical at 12918)", "what": "Infected corpses at close zoom read as faceted camo mosaics (red/yellow/black triangles), one with a black dithered wedge; living infected next to them read fine (PO checklist P1-117 'corpses look like bodies up close').", "evidence": "L4-corpses-labels.jpg frames 1-2" },
+    { "id": 3, "sev": "P2", "level": "L5", "tick": "2528->2834 (fresh), 1851->2468 (preset), all five by 15727", "where": "Mia's hiding place and the search route", "setup": "both runs", "what": "Rescued survivors die within 5-15 s of the rescue; the only signal is the name card vanishing. Mia died 5-10 s after rescue in 3/3 runs (0.5 s strip t1646->t1960: about six infected reach her). In the strip Rosa met an Alpha-sized brute at her spot (60->35 HP by t5753, gone by t6198). Preset run reached the metro with 'Survivors in 0/1' and closed the shutter with nobody. Real-input driver with god mode does not guard the group (native bot rescues 5), so this is partly the driver, but there is no on-screen alarm.", "evidence": "L5-followers-metro.jpg frames 1-3" },
+    { "id": 4, "sev": "P2", "level": "L5", "tick": "14754", "where": "metro start (-5.3, 1.8), occluder veh.military-truck@-4.2,5.7", "setup": "preset, high and low, zoom 0.5", "what": "A camera-side military truck wreck fills about 65% of the frame and the courier is pushed to the top edge, half on the truck; no see-through cut on the vehicle.", "evidence": "L5-followers-metro.jpg frame 4" },
+    { "id": 5, "sev": "P2", "level": "L5", "tick": "4320 -> 15727", "where": "search route", "setup": "preset, WebGPU low, zoom 1.5 (also absent in the paused z0.5 photos at 4388 and 7992, both tiers)", "what": "The corgi is not near the courier for about 3.5 min while the HUD says 'Corgi - following'; it is back at the metro. The fresh run kept it at heel. No position trace taken, so separation vs. render is not proven.", "evidence": "L5-followers-metro.jpg frame 3" },
+    { "id": 6, "sev": "P2", "level": "L6", "tick": "4575 -> 10339", "where": "(-1.1,-28) platform edge by a hatch", "setup": "fresh, WebGPU low, zoom 0.5, male", "what": "A riot-cop hatch member pins the courier on the glowing platform ledge for about 100 s; every shot shows 'BLOCKED - FLANK'; the driver ends with P0 cannot-finish while the HUD says 'Stay with the group - 247 m'. A human can probably flank, but the spot needs a human check.", "evidence": "L6-alley.jpg frame 1" },
+    { "id": 7, "sev": "P2", "level": "L6", "tick": "6776, 10162, 11387", "where": "retreat gates and exit", "setup": "preset, WebGL2 high, zoom 1.5", "what": "The group shrinks to 'Let everyone pass - 0/1 through' and 'Bring the survivors into the night - 0/1 out' without a visible alarm (same pattern as vqa-1b #7; driver runs ahead).", "evidence": "L6-alley.jpg frame 2" },
+    { "id": 8, "sev": "P3", "level": "L4", "tick": "2669-3122 (spear), 7756, 9424", "where": "HUD top-left", "setup": "all", "what": "The 'SHIELD STRAIN - CHIP' / 'SHIELD BROKEN' world label sits on top of the courier and corgi HUD cards.", "evidence": "L4-corpses-labels.jpg frame 3" },
+    { "id": 9, "sev": "P3", "level": "L4", "tick": "13010, 13324, 13638", "where": "fall-back to the cellar", "setup": "fresh", "what": "Route distance jumps 312 -> 329 -> 80 m within 10 s (preset run showed 80 m at once).", "evidence": "frames deleted; ticks logged" },
+    { "id": 10, "sev": "P3", "level": "L4", "tick": "14032", "where": "Lakeshore apartments (-47.8,-22.1)", "setup": "preset, zoom 1.5", "what": "Courier shown through a porthole cut in an apartment facade; she reads as standing on a balcony.", "evidence": "L4-corpses-labels.jpg frame 4" },
+    { "id": 11, "sev": "P3", "level": "L4", "tick": "Scene Lab", "where": "Harbor Street alley (-20.25,-22 .. -29)", "setup": "all 8 backend x tier x zoom cells", "what": "Alley itself is clean (continuous paving, no void, no floating props, storefront end wall and roof intact). Two nits: a thin bright seam line across the paving where the alley meets the plaza (z about -22, zoom 0.5); at zoom 1.5 mid-alley the courier is only visible through a porthole in the Bakery/Harbor Books facade, so the passage is not readable from the game camera.", "evidence": "L6-alley.jpg frames 3-4" },
+    { "id": 12, "sev": "P3", "level": "L6", "tick": "3925-11082", "where": "retreat tunnel", "setup": "both runs", "what": "'BLOCKED - FLANK' label rides above the chasing horde for minutes; with 20+ red/teal bars it forms a ladder over the group.", "evidence": "L6-alley.jpg frame 2" },
+    { "id": 13, "sev": "P3", "level": "L4", "tick": "11447", "where": "south breach tent", "setup": "fresh, low, zoom 0.5", "what": "Medkit pickup hovers at chest height, larger than the courier's torso.", "evidence": "L4-corpses-labels.jpg frame 1" },
+    { "id": 14, "sev": "P3", "level": "L5", "tick": "6802, 7107", "where": "street", "setup": "preset", "what": "Rosa walks with both arms raised right behind the courier, overlapping her.", "evidence": "L5-followers-metro.jpg frame 3" }
+  ],
+  "checked_ok": [
+    "L4 waves: west, north and south breaches each arrived with a large horde and Alpha callouts in both runs; plaza never empty; both runs finished.",
+    "L4 spearhead soldiers holding fire: 0.5 s strip over the contact phase (t2601-t4658, zoom 1, high WebGPU): plaza full of armed civilians and soldiers firing; no soldier seen idly watching a runner beside him. Not conspicuous.",
+    "L4 courier at zoom 0.5 in hordes (both survivors, both tiers): drawn on top, readable.",
+    "L5 tall-prop see-through: trees dither around the courier (t3703); readable.",
+    "L6 riot-cop hatch members read as armoured riot police (POLICE shields, red visors) at zoom 0.5 high.",
+    "L6 corgi and courier readable in the tunnel at both zooms."
+  ],
+  "not_covered": [
+    "L5 follower start twitch and corgi parking beside the escort: 0.5 s strip run v2-L5-strip (preset, WebGPU high, zoom 1, 200 frames) lost Mia and Rosa 5-15 s after rescue, before any calm group start; not judged. Corgi stayed at heel in that strip.",
+    "L6 shelter recovery corpses after the retreat (camera never returned to the shelter).",
+    "L4 tank vs barrier, L4 alarm wave count (P1-116/118) not measured.",
+    "A/B against PROD; perf."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "l7-shell-kessler-hardware",
+  "note": "W5 left / W6 right at identical scale/yaw/night/game camera. Review foundation, openings, identifiable roofline, lost upper facade and floating remnants.",
+  "seed": 29,
+  "tier": 6,
+  "time": "L6",
+  "ground": "asphalt",
+  "size": 80,
+  "dof": false,
+  "props": [
+    {
+      "asset": "bld.kessler-hardware",
+      "decay": "w5",
+      "at": [
+        -10,
+        10
+      ]
+    },
+    {
+      "asset": "bld.kessler-hardware",
+      "decay": "w6",
+      "at": [
+        10,
+        -10
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      4,
+      0
+    ],
+    "zoom": 3.5
+  },
+  "frames": 6,
+  "shots": [
+    6
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "clippingMax": 0
+  }
+}

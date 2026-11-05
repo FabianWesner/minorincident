@@ -1,0 +1,53 @@
+{
+  "sourceHash": "40435d16a4403fbf1e9d4c798472a680c914af6ef13c1742aa8d62533cd02d60",
+  "observerHash": "a00fd21863c18c74b3bdf315c32c809a061bc72231834db13dac7d724531b7e9",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "criterionSha256": "6b757b294f9dee1eea7142a61922855a307c7470e257a1f932876169dbab7d35",
+  "method": "Process-local copies of a real current native receipt. Unchanged minimum one visible encounter per40m; no game writes. Missing, discontinuous and incomplete routes cannot qualify.",
+  "results": {
+    "boundary": {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 1,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "process-local-fixture"
+    },
+    "belowFloor": {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": 0.9997500624843789,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "process-local-fixture"
+    },
+    "missing": {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "process-local-fixture"
+    },
+    "discontinuous": {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "process-local-fixture"
+    }
+  }
+}

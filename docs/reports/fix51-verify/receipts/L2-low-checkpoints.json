@@ -1,0 +1,288 @@
+{
+  "version": 1,
+  "level": "L2",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "checks": [
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L2/axe",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "axe",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "a339a20d4926de1450d0c2bfec331191211a748b41d1e0dfdcdcdd979837e4d5",
+        "damage": 100,
+        "expected": {
+          "id": "axe",
+          "anchor": {
+            "x": -73.97700500488281,
+            "y": 1.1200000047683716,
+            "z": 47.08124923706055,
+            "yaw": -1.9625597386959133
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105,
+            106
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "axe",
+          "position": {
+            "x": -73.97700500488281,
+            "z": 47.08124923706055
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L2/doors",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "doors",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "a21f0b7b8d2730261bd23c6b8414c406b370208bd9a03c4e15cde7fb1330476e",
+        "damage": 100,
+        "expected": {
+          "id": "doors",
+          "anchor": {
+            "x": -45.97011184692383,
+            "y": 0.7049999833106995,
+            "z": -36.76974105834961,
+            "yaw": 1.977493168738604
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105,
+            106
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "doors",
+          "position": {
+            "x": -45.97011184692383,
+            "z": -36.76974105834961
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L2/escape",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "escape",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "f0aadc3d2e8deed9a7a7993ad15053b92122c43ddc39114773fbd01fa63adea7",
+        "damage": 100,
+        "expected": {
+          "id": "escape",
+          "anchor": {
+            "x": -66.63066101074219,
+            "y": 0.7099999785423279,
+            "z": 27.934968948364258,
+            "yaw": -2.8858082823882993
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105,
+            106
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "escape",
+          "position": {
+            "x": -67.38066101074219,
+            "z": 27.934968948364258
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0.75,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L2/cluster",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cluster",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "05a0c2120d52db6fe18bdae5ab3b95c3e0195e039571108717bfb286d649f339",
+        "damage": 100,
+        "expected": {
+          "id": "cluster",
+          "anchor": {
+            "x": 24.059947967529297,
+            "y": 0.7099999785423279,
+            "z": 47.999977111816406,
+            "yaw": -6.355171467821323e-7
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105,
+            106
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "cluster",
+          "position": {
+            "x": 24.059947967529297,
+            "z": 47.999977111816406
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json"
+    }
+  ],
+  "errors": [],
+  "control": {
+    "observed": "c7c5c0ed",
+    "control": "c7c5c0ed",
+    "identical": true
+  }
+}

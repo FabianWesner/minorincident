@@ -1,0 +1,27 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.28.24.66:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 52s, 30503 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-40664-1792633692; queueing for a slot
+[runner] slot 1 acquired; load 1.85 0.66 0.34
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-40664-1792633692[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 928[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/infected-corpse-prewarm.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 881[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-14c @E27 @E18 blast-stress high prepares the actual LOD2 infected corpse before play[33m 594[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/dog-coat-batching.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1964[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a palette while incompatible LOD2 is rejected[33m 1961[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 01:50:43
+[2m   Duration [22m 7.20s[2m (transform 60%, tests 25%, import 15%)[22m
+
+[remote] done exit=0 (runner 2.28.24.66, sync 52s, remote total 109s)

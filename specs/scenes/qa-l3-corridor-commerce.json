@@ -1,0 +1,56 @@
+{
+ "name": "qa-l3-corridor-commerce",
+ "note": "E21 corridor chunk: commerce (segment 2), W2/W3 frontages and the street's dressing; static clipping gate",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -10,
+    -14
+   ],
+   [
+    50,
+    14
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   20.0,
+   0
+  ],
+  "zoom": 1.3
+ },
+ "script": [
+  {
+   "frame": 8,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     20.0,
+     0.5,
+     0
+    ],
+    "radius": 46,
+    "azimuth": 225,
+    "polar": 48
+   }
+  }
+ ],
+ "frames": 16,
+ "shots": [
+  0,
+  12
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

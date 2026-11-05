@@ -1,0 +1,188 @@
+{
+ "name": "qa-l5-metro-arrival",
+ "note": "E23 beat 4-5 (photo spot l5-metro-shelter): the courier and the five survivors arrive at the foot of the Metro entrance, seen from the west down Harbor Street; the lookout waves from the half-open shutter; fires and smoke over the ruined block.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    1.7999999999999972,
+    -78
+   ],
+   [
+    73.8,
+    -6
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    24,
+    -39.8
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": {
+    "walk": [
+     [
+      37.8,
+      -42.6
+     ]
+    ]
+   }
+  },
+  {
+   "id": "dale",
+   "kind": "pedestrian",
+   "at": [
+    20,
+    -39
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.dale.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 0
+    }
+   }
+  },
+  {
+   "id": "rosa",
+   "kind": "pedestrian",
+   "at": [
+    19.1,
+    -40.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.rosa.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 1
+    }
+   }
+  },
+  {
+   "id": "okafor",
+   "kind": "pedestrian",
+   "at": [
+    18.2,
+    -39
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mr-okafor.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 2
+    }
+   }
+  },
+  {
+   "id": "mia",
+   "kind": "pedestrian",
+   "at": [
+    17.3,
+    -40.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mia.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 3
+    }
+   }
+  },
+  {
+   "id": "sam",
+   "kind": "pedestrian",
+   "at": [
+    16.4,
+    -39
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.sam.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 4
+    }
+   }
+  },
+  {
+   "id": "lookout",
+   "kind": "pedestrian",
+   "at": [
+    37.8,
+    -44.9
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.marcus.aftermath"
+   },
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     30,
+     -43.4
+    ]
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "smoke": [
+     44,
+     -47
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "pose",
+  "position": [
+   14,
+   9,
+   -37.5
+  ],
+  "target": [
+   34,
+   0,
+   -42.5
+  ]
+ },
+ "frames": 360,
+ "shots": [
+  20,
+  180,
+  359
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

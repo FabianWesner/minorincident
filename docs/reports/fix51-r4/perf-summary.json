@@ -1,0 +1,525 @@
+{
+  "generatedAt": "2026-11-03T02:59:56.818Z",
+  "rules": {
+    "coldAndWarmSeconds": 6,
+    "maxLoadRegressionSeconds": 0.5,
+    "maxP95RegressionMs": 1,
+    "maxRelative60HzFrames": 1,
+    "newSpikeFailureMs": 66,
+    "accepted50msQuantization": true
+  },
+  "method": "Exclusive quiet-run, 1280x720 DPR1, headless native Metal, seed1, ordinary native hold InputFrames, survival protection; one cold/warm load and one unprofiled 60s sample per side/cell. No counts changed. Single samples, not device certification.",
+  "rows": [
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "prodLoadSeconds": [
+        4.0425,
+        3.9257000007629395
+      ],
+      "prodP95": 16.700000000004366,
+      "prodMax": 16.80000000000291,
+      "candidateLoadSeconds": [
+        3.5083000001907347,
+        3.3739000005722044
+      ],
+      "candidateP95": 16.799999999995634,
+      "candidateMax": 16.80000000000291,
+      "checks": {
+        "cold": true,
+        "warm": true,
+        "p95": true,
+        "max": true,
+        "noNew66msSpike": true
+      },
+      "status": "PASS"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "prodLoadSeconds": [
+        5.3245,
+        5.207199999809265
+      ],
+      "prodP95": 16.70000000001164,
+      "prodMax": 33.29999999999927,
+      "candidateLoadSeconds": [
+        4.70689999961853,
+        4.622799999237061
+      ],
+      "candidateP95": 16.70000000001164,
+      "candidateMax": 33.39999999999782,
+      "checks": {
+        "cold": true,
+        "warm": true,
+        "p95": true,
+        "max": true,
+        "noNew66msSpike": true
+      },
+      "status": "PASS"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "prodLoadSeconds": [
+        6.9595999994277955,
+        4.342099999427796
+      ],
+      "prodP95": 16.700000000004366,
+      "prodMax": 16.80000000000291,
+      "candidateLoadSeconds": [
+        3.891199999809265,
+        3.7728000001907347
+      ],
+      "candidateP95": 16.70000000001164,
+      "candidateMax": 33.19999999999709,
+      "checks": {
+        "cold": true,
+        "warm": true,
+        "p95": true,
+        "max": true,
+        "noNew66msSpike": true
+      },
+      "status": "PASS"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "prodLoadSeconds": [
+        5.757199999809266,
+        5.64360000038147
+      ],
+      "prodP95": 16.70000000001164,
+      "prodMax": 33.29999999999927,
+      "candidateLoadSeconds": [
+        5.126199999809265,
+        5.04189999961853
+      ],
+      "candidateP95": 16.70000000001164,
+      "candidateMax": 33.29999999999927,
+      "checks": {
+        "cold": true,
+        "warm": true,
+        "p95": true,
+        "max": true,
+        "noNew66msSpike": true
+      },
+      "status": "PASS"
+    }
+  ],
+  "samples": [
+    {
+      "side": "prod",
+      "backend": "webgpu",
+      "tier": "low",
+      "measuredAt": "2026-11-03T02:43:12.389Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60201.300000190735,
+      "frameCount": 3612,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.700000000004366,
+      "maxMs": 16.80000000000291,
+      "histogram": {
+        "7.9": 1,
+        "16.6": 1344,
+        "16.7": 2085,
+        "16.8": 160,
+        "16.5": 22
+      },
+      "spikes": [],
+      "lateBuilds": [
+        {
+          "at": 38016.39999961853,
+          "tick": 4291,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 44831.800000190735,
+          "tick": 4700,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 46250.5,
+          "tick": 4785,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "aliveRange": [
+        0,
+        19
+      ],
+      "drawnRange": [
+        0,
+        6
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "candidate",
+      "backend": "webgpu",
+      "tier": "low",
+      "measuredAt": "2026-11-03T02:44:20.366Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60200.400000572205,
+      "frameCount": 3612,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.799999999995634,
+      "maxMs": 16.80000000000291,
+      "histogram": {
+        "8.4": 1,
+        "16.7": 2019,
+        "16.6": 1380,
+        "16.8": 192,
+        "16.5": 20
+      },
+      "spikes": [],
+      "lateBuilds": [],
+      "aliveRange": [
+        29,
+        37
+      ],
+      "drawnRange": [
+        0,
+        22
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "prod",
+      "backend": "webgpu",
+      "tier": "high",
+      "measuredAt": "2026-11-03T02:47:04.130Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60119.199999809265,
+      "frameCount": 3606,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 33.29999999999927,
+      "histogram": {
+        "7.3": 1,
+        "16.7": 2085,
+        "16.6": 1330,
+        "16.8": 161,
+        "16.5": 28,
+        "33.3": 1
+      },
+      "spikes": [],
+      "lateBuilds": [
+        {
+          "at": 43247.89999961853,
+          "tick": 4605,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "aliveRange": [
+        40,
+        87
+      ],
+      "drawnRange": [
+        0,
+        16
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "candidate",
+      "backend": "webgpu",
+      "tier": "high",
+      "measuredAt": "2026-11-03T02:48:12.196Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60152.400000572205,
+      "frameCount": 3606,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 33.39999999999782,
+      "histogram": {
+        "8.0": 1,
+        "16.6": 1348,
+        "16.7": 2071,
+        "16.8": 163,
+        "16.5": 20,
+        "33.4": 1,
+        "33.3": 2
+      },
+      "spikes": [],
+      "lateBuilds": [],
+      "aliveRange": [
+        41,
+        78
+      ],
+      "drawnRange": [
+        0,
+        31
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "prod",
+      "backend": "webgl2",
+      "tier": "low",
+      "measuredAt": "2026-11-03T02:50:55.490Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60164.599999427795,
+      "frameCount": 3610,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.700000000004366,
+      "maxMs": 16.80000000000291,
+      "histogram": {
+        "4.7": 1,
+        "16.6": 1366,
+        "16.7": 2075,
+        "16.8": 158,
+        "16.5": 10
+      },
+      "spikes": [],
+      "lateBuilds": [
+        {
+          "at": 38012.89999961853,
+          "tick": 4291,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 44829,
+          "tick": 4700,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 46247.599999427795,
+          "tick": 4785,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "aliveRange": [
+        0,
+        19
+      ],
+      "drawnRange": [
+        0,
+        7
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "candidate",
+      "backend": "webgl2",
+      "tier": "low",
+      "measuredAt": "2026-11-03T02:52:04.504Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60111.20000076294,
+      "frameCount": 3606,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 33.19999999999709,
+      "histogram": {
+        "1.5": 1,
+        "16.8": 165,
+        "16.6": 1331,
+        "16.7": 2079,
+        "16.5": 29,
+        "33.2": 1
+      },
+      "spikes": [],
+      "lateBuilds": [],
+      "aliveRange": [
+        29,
+        37
+      ],
+      "drawnRange": [
+        0,
+        22
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "prod",
+      "backend": "webgl2",
+      "tier": "high",
+      "measuredAt": "2026-11-03T02:54:50.770Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60113.699999809265,
+      "frameCount": 3606,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 33.29999999999927,
+      "histogram": {
+        "3.7": 1,
+        "16.7": 2067,
+        "16.6": 1333,
+        "16.5": 32,
+        "16.8": 172,
+        "33.3": 1
+      },
+      "spikes": [],
+      "lateBuilds": [
+        {
+          "at": 43247.699999809265,
+          "tick": 4605,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "aliveRange": [
+        40,
+        87
+      ],
+      "drawnRange": [
+        0,
+        16
+      ],
+      "consoleErrors": [],
+      "images": []
+    },
+    {
+      "side": "candidate",
+      "backend": "webgl2",
+      "tier": "high",
+      "measuredAt": "2026-11-03T02:55:59.645Z",
+      "hardware": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "nativeBeatTick": 2041,
+      "nativePhase": "war",
+      "durationMs": 60104,
+      "frameCount": 3604,
+      "nonGameplayFrames": 0,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 33.29999999999927,
+      "histogram": {
+        "5.0": 1,
+        "16.6": 1344,
+        "16.7": 2061,
+        "16.5": 25,
+        "16.8": 171,
+        "33.2": 1,
+        "33.3": 1
+      },
+      "spikes": [],
+      "lateBuilds": [],
+      "aliveRange": [
+        41,
+        78
+      ],
+      "drawnRange": [
+        0,
+        31
+      ],
+      "consoleErrors": [],
+      "images": []
+    }
+  ],
+  "raw": [
+    {
+      "source": "test-results/fix51-r4/perf/webgpu-low/loads/L4.json",
+      "receipt": "perf/webgpu-low-loads.json.gz",
+      "sha256": "66c0feb8052548cb312f2f5974fcfd872057fb01f1377d309ee5002f01e6ffeb"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgpu-low/strips/webgpu/L4.json",
+      "receipt": "perf/webgpu-low-frames.json.gz",
+      "sha256": "dd529f4fa3f820a3f5791eaddb1a918f0b7e5858507ec009dbf78e2272ef4f0d"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgpu-high/loads/L4.json",
+      "receipt": "perf/webgpu-high-loads.json.gz",
+      "sha256": "e28c0484bc073b94a687a1f7bae60d653fbd6efdfac49538a5ef313c8d2cba27"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgpu-high/strips/webgpu/L4.json",
+      "receipt": "perf/webgpu-high-frames.json.gz",
+      "sha256": "87c2761a2f979d02b810cb789cecf7cf3f97b36dc2a0f84ca914dd8d4347c1d0"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgl2-low/loads/L4.json",
+      "receipt": "perf/webgl2-low-loads.json.gz",
+      "sha256": "43bf8dcde4265aa3204bbe2e3a6eead2070e17c81f8e9fb5049c4502d7a2fd47"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgl2-low/strips/webgl2/L4.json",
+      "receipt": "perf/webgl2-low-frames.json.gz",
+      "sha256": "07b60bcc55e14f38b6621f1707b0715d026a40f2f332e5d2604cdb3aa4f5dd60"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgl2-high/loads/L4.json",
+      "receipt": "perf/webgl2-high-loads.json.gz",
+      "sha256": "2563ace93f811fb1bbdc523b699c76c840f8328571fccc127bea3193bad01059"
+    },
+    {
+      "source": "test-results/fix51-r4/perf/webgl2-high/strips/webgl2/L4.json",
+      "receipt": "perf/webgl2-high-frames.json.gz",
+      "sha256": "49b7dc24e35019e968fcf6901b1437f93336a9c87dbc56c84310635fc0f97d79"
+    }
+  ]
+}

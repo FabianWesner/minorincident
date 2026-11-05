@@ -1,0 +1,8 @@
+{
+  "extends": "l10-dog-pounce.json",
+  "name": "collision-dog-contact",
+  "note": "Ordinary infected-dog pounces use registry sweeps. Inspect the amber windup, contact stop and planted recovery feet under the game camera on both tiers and zooms; keep the shipped pin and damage behavior.",
+  "frames": 420,
+  "sheet": 24,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "footSinkMaxCm": 1, "collisionFailuresMax": 0, "collisionPendingMax": 0, "bodyOverlapMaxCm": 2 }
+}

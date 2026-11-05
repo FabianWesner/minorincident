@@ -1,0 +1,81 @@
+{
+  "name": "grab-alone",
+  "time": "L3",
+  "ground": "asphalt",
+  "size": 50,
+  "seed": 1,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        16,
+        6
+      ]
+    },
+    {
+      "id": "officer",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "zombie",
+      "kind": "infected",
+      "at": [
+        -1,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      0,
+      0.7,
+      0
+    ],
+    "radius": 10,
+    "azimuth": 140
+  },
+  "frames": 180,
+  "sheet": 10,
+  "shots": [
+    0,
+    1,
+    15,
+    30,
+    60,
+    120,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "zombie",
+      "do": {
+        "grab": "officer"
+      }
+    }
+  ]
+}

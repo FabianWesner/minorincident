@@ -1,0 +1,36 @@
+{
+  "name": "l5-lakeshore-arrival-asset",
+  "ground": "asphalt",
+  "size": 80,
+  "time": "L4",
+  "dof": false,
+  "props": [
+    {
+      "id": "lakeshore",
+      "asset": "int.metro-station",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      0,
+      1.6,
+      3
+    ],
+    "radius": 55,
+    "azimuth": 45
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    30
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

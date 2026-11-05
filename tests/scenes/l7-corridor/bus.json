@@ -1,0 +1,84 @@
+{
+ "name": "l7-corridor-bus",
+ "note": "Bus point close up: working evac bus at the west dead end with light tower, crates and a bag beside the boarding anchor.",
+ "seed": 29,
+ "tier": 6,
+ "time": "L6",
+ "ground": "district",
+ "dof": false,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -90,
+    38
+   ],
+   [
+    -26,
+    62
+   ]
+  ],
+  "anchors": [
+   "l7-bus-boarding",
+   "l7-bus"
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -60,
+    49
+   ],
+   "state": {
+    "walk": [
+     [
+      -70.5,
+      47.5
+     ]
+    ]
+   },
+   "yaw": 180
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -75,
+   0,
+   48
+  ],
+  "zoom": 1.5
+ },
+ "frames": 300,
+ "shots": [
+  0,
+  150,
+  300
+ ],
+ "sheet": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "actorHitsMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "footSinkMaxCm": 0,
+  "yawDriftMaxDeg": 5
+ },
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -80.5,
+     54
+    ],
+    "radius": 1.8,
+    "duration": 300
+   }
+  }
+ ]
+}

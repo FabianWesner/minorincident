@@ -1,0 +1,153 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "receipt": "../fix51-verify/receipts/L5-high-browser.json",
+  "run": [
+    {
+      "level": "L5",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 315,
+      "simSeconds": 310,
+      "maxNoProgressSeconds": 90.13,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "emerge",
+          "text": "Unbar the cellar door · 4 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "look",
+          "text": "Look for anyone still alive",
+          "tick": 785,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L5",
+      "tick": 9155,
+      "x": 23.7,
+      "z": -41,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 1/5\"",
+      "captures": [
+        "captures/accept-L5-9155-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 18572,
+      "x": 23.7,
+      "z": -41,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L5-18572-cannot-finish.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    }
+  ],
+  "phase": "search",
+  "found": 1,
+  "survivors": [
+    {
+      "key": "dale",
+      "id": 28,
+      "status": "hidden",
+      "foundAt": 0,
+      "cueAt": 0,
+      "lostAt": 0,
+      "hold": 0
+    },
+    {
+      "key": "rosa",
+      "id": 29,
+      "status": "hidden",
+      "foundAt": 0,
+      "cueAt": 0,
+      "lostAt": 0,
+      "hold": 0
+    },
+    {
+      "key": "okafor",
+      "id": 30,
+      "status": "hidden",
+      "foundAt": 0,
+      "cueAt": 0,
+      "lostAt": 0,
+      "hold": 0
+    },
+    {
+      "key": "mia",
+      "id": 31,
+      "status": "dead",
+      "foundAt": 3459,
+      "cueAt": 3820,
+      "lostAt": 4644,
+      "hold": 0
+    },
+    {
+      "key": "sam",
+      "id": 32,
+      "status": "hidden",
+      "foundAt": 0,
+      "cueAt": 0,
+      "lostAt": 0,
+      "hold": 0
+    }
+  ],
+  "cue": null,
+  "lastShot": {
+    "1": 18551
+  },
+  "conclusion": "NOT RESOLVED. Mia was found and died; four remain hidden. The driver kept firing until near its final tick with no active cue. Separate the search/input policy and shot-masking behavior from an actual hidden-survivor or cue defect; do not infer an unfinishable game from this single search policy.",
+  "next": "Repeat high-tier ordinary exploration with deliberate quiet intervals and logged cue eligibility; preserve all survivor identities and the original failed attempt."
+}

@@ -1,0 +1,105 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "driverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+  "generatedAt": "2026-11-03T04:01:50.906Z",
+  "cell": "L8-webgpu-high-z0.5-default",
+  "level": "L8",
+  "backend": "webgpu",
+  "quality": "high",
+  "zoom": 0.5,
+  "variant": "default",
+  "method": "Headless ordinary WASD/mouse, mortal, no objective skips; camera set explicitly; named L9 route uses logged map assist; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L8",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 129,
+        "simSeconds": 123,
+        "maxNoProgressSeconds": 59.593,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 7
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "escape",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8399999737739563,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "depart",
+            "text": "The zoo is breached · Wait for everyone to board the armored vehicle · 1/13 aboard · 12 still to board",
+            "tick": 5549,
+            "marker": {
+              "anchor": "exit",
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.1518950462341309,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L8",
+        "tick": 1230,
+        "x": 0,
+        "z": 70,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+        "captures": [
+          "captures/physical-L8-1230-stuck-navigating.jpg"
+        ],
+        "step": "escape",
+        "objective": ""
+      },
+      {
+        "level": "L8",
+        "tick": 7372,
+        "x": 97.4,
+        "z": 70.5,
+        "severity": "P1",
+        "kind": "page-error",
+        "text": "Transport is not ready to depart",
+        "captures": [],
+        "step": null,
+        "objective": ""
+      }
+    ]
+  },
+  "error": null
+}

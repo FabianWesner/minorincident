@@ -1,0 +1,265 @@
+{
+  "sourceHash": "d5558f28e278b771963e1f46f6a4d4f0631460bd6ecc4f13868c49d5943b23c1",
+  "observerHash": "26e350e03caa6e17bbe1ffd5fef96ee0d28d54295316ded1163862d8b6fd03ed",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "recipeHash": "a4b258d765f0d185ed48157ac37e5d5f439bd67ac01a7be027bca90d0b612d7b",
+  "method": "Exact prior counterexample pose (45.765708923339844,-26.73487091064453), current L3 campaign renderer, 2s real presentation warmup, paused photos; no physical-route or universal-smoke-count claim; no frame timing.",
+  "backend": "webgl2",
+  "tier": "low",
+  "rows": [
+    {
+      "zoom": 1.5,
+      "file": "test-results/fix51-r5a-smoke/counterexample-webgl2-low-z1.5.png",
+      "state": {
+        "tick": 119,
+        "player": {
+          "x": 45.765708923339844,
+          "y": 0.7049999833106995,
+          "z": -26.73487091064453,
+          "yaw": 0.3205919885488634
+        },
+        "backend": "webgl",
+        "tier": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            45.765708923339844,
+            0,
+            -26.73487091064453
+          ],
+          "target": [
+            45.765708923339844,
+            0,
+            -26.73487091064453
+          ],
+          "position": [
+            62.06945890364385,
+            16.751879690335485,
+            -10.431120930340526
+          ],
+          "spot": null
+        },
+        "vfx": {
+          "obstruction": {
+            "remainingTicks": 0,
+            "opacity": 0
+          },
+          "shots": [],
+          "enabled": true,
+          "colorblind": false,
+          "gore": "Full",
+          "quality": "low",
+          "flashReduction": false,
+          "time": 1.9998999999999976,
+          "lastSpray": {
+            "actionId": "",
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "droplets": 0,
+            "chunks": 0,
+            "gravity": 9.81
+          },
+          "surfaceSplats": 0,
+          "pendingSplats": 0,
+          "particles": 0,
+          "particleCap": 512,
+          "decals": 0,
+          "decalCap": 600,
+          "gibs": 0,
+          "gibCap": 30,
+          "telegraphs": [],
+          "hitStop": {
+            "active": false,
+            "until": 0,
+            "started": 0,
+            "suppressed": 0
+          },
+          "flash": 0,
+          "blasts": {
+            "wind": {
+              "x": 1,
+              "z": 0.25
+            },
+            "blasts": 0,
+            "puffs": 91,
+            "puffCap": 120,
+            "fireballs": 0,
+            "fireballCap": 96,
+            "chunks": 0,
+            "chunkCap": 256,
+            "poolOverwrites": {
+              "fireballs": 0,
+              "chunks": 0
+            },
+            "flames": 4,
+            "glows": 1,
+            "vehicleSmokeColumns": 0,
+            "columns": 11,
+            "transientColumns": 0,
+            "fireColumns": 11,
+            "columnShadows": 6,
+            "clouds": 12,
+            "scorch": 0,
+            "parts": 0,
+            "flash": 0,
+            "bulletTime": {
+              "scale": 1,
+              "remaining": 0,
+              "progress": 0
+            },
+            "slowMotion": true
+          },
+          "coverage": 0,
+          "detached": 0,
+          "dismemberedKills": 0,
+          "kills": 0,
+          "explosionRadius": 0
+        }
+      },
+      "sha256": "5859823f30b02b76f3f361e8ca12885e6a71acba9db98fcc3fb289537901d310",
+      "reviewed": true,
+      "visibleSmokeColumnsAtLeast": 4,
+      "review": "Inspected full-size image. Distinct gray stacked billow columns are visible at the exact prior counterexample street pose; courier remains identifiable. Only this controlled pose is qualified, not every street frame or a physical route."
+    },
+    {
+      "zoom": 0.5,
+      "file": "test-results/fix51-r5a-smoke/counterexample-webgl2-low-z0.5.png",
+      "state": {
+        "tick": 238,
+        "player": {
+          "x": 45.765708923339844,
+          "y": 0.7049999833106995,
+          "z": -26.73487091064453,
+          "yaw": 0.3205919885488634
+        },
+        "backend": "webgl",
+        "tier": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            45.765708923339844,
+            0,
+            -26.73487091064453
+          ],
+          "target": [
+            45.765708923339844,
+            0,
+            -26.73487091064453
+          ],
+          "position": [
+            51.20029225010784,
+            5.583959896778495,
+            -21.30028758387653
+          ],
+          "spot": null
+        },
+        "vfx": {
+          "obstruction": {
+            "remainingTicks": 0,
+            "opacity": 0
+          },
+          "shots": [],
+          "enabled": true,
+          "colorblind": false,
+          "gore": "Full",
+          "quality": "low",
+          "flashReduction": false,
+          "time": 3.9997999999999916,
+          "lastSpray": {
+            "actionId": "",
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "droplets": 0,
+            "chunks": 0,
+            "gravity": 9.81
+          },
+          "surfaceSplats": 0,
+          "pendingSplats": 0,
+          "particles": 0,
+          "particleCap": 512,
+          "decals": 0,
+          "decalCap": 600,
+          "gibs": 0,
+          "gibCap": 30,
+          "telegraphs": [],
+          "hitStop": {
+            "active": false,
+            "until": 0,
+            "started": 0,
+            "suppressed": 0
+          },
+          "flash": 0,
+          "blasts": {
+            "wind": {
+              "x": 0.9926457935177753,
+              "z": 0.1210550643776054
+            },
+            "blasts": 0,
+            "puffs": 92,
+            "puffCap": 120,
+            "fireballs": 0,
+            "fireballCap": 96,
+            "chunks": 0,
+            "chunkCap": 256,
+            "poolOverwrites": {
+              "fireballs": 0,
+              "chunks": 0
+            },
+            "flames": 0,
+            "glows": 0,
+            "vehicleSmokeColumns": 0,
+            "columns": 11,
+            "transientColumns": 0,
+            "fireColumns": 11,
+            "columnShadows": 5,
+            "clouds": 12,
+            "scorch": 0,
+            "parts": 0,
+            "flash": 0,
+            "bulletTime": {
+              "scale": 1,
+              "remaining": 0,
+              "progress": 0
+            },
+            "slowMotion": true
+          },
+          "coverage": 0,
+          "detached": 0,
+          "dismemberedKills": 0,
+          "kills": 0,
+          "explosionRadius": 0
+        }
+      },
+      "sha256": "77b5e3d265620c251439d94bc727960b6cf2d526115ec27db10be95019a8951d",
+      "reviewed": true,
+      "visibleSmokeColumnsAtLeast": 2,
+      "review": "Inspected full-size image. Distinct gray stacked billow columns are visible at the exact prior counterexample street pose; courier remains identifiable. Only this controlled pose is qualified, not every street frame or a physical route."
+    }
+  ],
+  "errors": [],
+  "reviewAnnotation": "Coordinate/camera renderer fixture only: recipe begins in initial armory mission state, not the original checkpoint tick/state. Does not close the phase-specific historical counterexample or every-street-frame criterion."
+}

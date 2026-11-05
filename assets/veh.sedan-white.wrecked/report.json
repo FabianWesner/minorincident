@@ -1,0 +1,111 @@
+{
+  "id": "veh.sedan-white.wrecked",
+  "baseId": "veh.sedan-white",
+  "decay": "wrecked",
+  "delivery": "delivered-awaiting-independent-QA",
+  "source": {
+    "lod0": {
+      "triangles": 3892,
+      "draws": 7,
+      "bytes": 272220
+    },
+    "lod1": {
+      "triangles": 3572,
+      "draws": 7,
+      "bytes": 247036
+    },
+    "lod2": {
+      "triangles": 1458,
+      "draws": 7,
+      "bytes": 110096
+    }
+  },
+  "production": [
+    {
+      "id": "veh.sedan-white.wrecked",
+      "lod": 0,
+      "path": "public/assets/models/veh.sedan-white.wrecked.glb",
+      "bytes": 71244,
+      "triangles": 3876,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        4.711040019989014,
+        1.774861601709178,
+        2.368531549708518
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.sedan-white.wrecked",
+      "lod": 1,
+      "path": "public/assets/models/veh.sedan-white.wrecked.lod1.glb",
+      "bytes": 64864,
+      "triangles": 3560,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        4.714009046554565,
+        1.7748766508758247,
+        2.368441753392981
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.sedan-white.wrecked",
+      "lod": 2,
+      "path": "public/assets/models/veh.sedan-white.wrecked.lod2.glb",
+      "bytes": 33936,
+      "triangles": 1458,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        4.714009046554565,
+        1.7748987049922367,
+        2.3359283696678514
+      ],
+      "errors": []
+    }
+  ],
+  "pixelSizes": [
+    {
+      "lod": 0,
+      "pixelBounds": [
+        168,
+        134,
+        312,
+        242
+      ],
+      "maxPixels": 144
+    },
+    {
+      "lod": 1,
+      "pixelBounds": [
+        168,
+        134,
+        312,
+        242
+      ],
+      "maxPixels": 144
+    },
+    {
+      "lod": 2,
+      "pixelBounds": [
+        168,
+        135,
+        312,
+        243
+      ],
+      "maxPixels": 144
+    }
+  ],
+  "contactSheets": [
+    "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/comparison.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/lod-contact.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/game-camera.png"
+  ],
+  "interfaces": [
+    "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+  ],
+  "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: White identity, folded bonnet, open driver side, missing front-left tire, broken windshield backing.\n\nLimitations: Rear trunk is intentionally largely intact; small debris disappears at 160px.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+}

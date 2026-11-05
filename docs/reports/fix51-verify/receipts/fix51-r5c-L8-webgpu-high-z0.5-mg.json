@@ -1,0 +1,82 @@
+{
+  "sourceHash": "1e1ab1878645b43721cd178875f6334d5298835a563e333e3277d4d9503adf88",
+  "observerHash": "840603f4bac65502f7ec2689c2f527b2de788de0c495850c4f770548e6e03e5e",
+  "revision": "7989a8d5eaae46a9c1a1612c1a602023fb43e429",
+  "browserHash": "f0c43427fa9d218e8d9bd101bc3a05cec829df15bb5d3c262e5825f62d70e7f8",
+  "driverSha256": "1b8686c0c55c9a954df3c875e2ecf3e9432a8b424f6845c11ddc09ff21afbbad",
+  "generatedAt": "2026-11-03T04:58:12.107Z",
+  "cell": "L8-webgpu-high-z0.5-mg",
+  "level": "L8",
+  "backend": "webgpu",
+  "quality": "high",
+  "zoom": 0.5,
+  "variant": "mg",
+  "method": "Headless ordinary WASD/mouse, mortal, no objective skips; camera set explicitly; named L9 route uses logged map assist; no frame timings.",
+  "result": {
+    "runs": [
+      {
+        "level": "L8",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 420,
+        "simSeconds": 413,
+        "maxNoProgressSeconds": 59.199,
+        "deaths": 22,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1899
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "escape",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8399999737739563,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L8",
+        "tick": 1250,
+        "x": 0,
+        "z": 70,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+        "captures": [
+          "captures/physical-L8-1250-stuck-navigating.jpg"
+        ],
+        "step": "escape",
+        "objective": ""
+      }
+    ],
+    "yielded": true
+  },
+  "error": null
+}

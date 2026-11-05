@@ -1,0 +1,227 @@
+[
+ {
+  "slug": "w3p27-crop",
+  "prompt_file": "briefs/w3p27-crop.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 2400
+ },
+ {
+  "slug": "w3p27-up-prop_dumpster",
+  "prompt_file": "briefs/w3p27-up-prop.dumpster.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_dumpster",
+  "prompt_file": "briefs/w3p27-build-prop.dumpster.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_dumpster"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_fire-extinguisher",
+  "prompt_file": "briefs/w3p27-up-prop.fire-extinguisher.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_fire-extinguisher",
+  "prompt_file": "briefs/w3p27-build-prop.fire-extinguisher.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_fire-extinguisher"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_folding-chair",
+  "prompt_file": "briefs/w3p27-up-prop.folding-chair.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_folding-chair",
+  "prompt_file": "briefs/w3p27-build-prop.folding-chair.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_folding-chair"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_pallet",
+  "prompt_file": "briefs/w3p27-up-prop.pallet.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_pallet",
+  "prompt_file": "briefs/w3p27-build-prop.pallet.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_pallet"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_plank-stack",
+  "prompt_file": "briefs/w3p27-up-prop.plank-stack.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_plank-stack",
+  "prompt_file": "briefs/w3p27-build-prop.plank-stack.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_plank-stack"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_sandbag-pallet",
+  "prompt_file": "briefs/w3p27-up-prop.sandbag-pallet.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_sandbag-pallet",
+  "prompt_file": "briefs/w3p27-build-prop.sandbag-pallet.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_sandbag-pallet"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_shopping-cart",
+  "prompt_file": "briefs/w3p27-up-prop.shopping-cart.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_shopping-cart",
+  "prompt_file": "briefs/w3p27-build-prop.shopping-cart.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_shopping-cart"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_sofa",
+  "prompt_file": "briefs/w3p27-up-prop.sofa.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_sofa",
+  "prompt_file": "briefs/w3p27-build-prop.sofa.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_sofa"
+  ]
+ },
+ {
+  "slug": "w3p27-up-prop_vending-cart",
+  "prompt_file": "briefs/w3p27-up-prop.vending-cart.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p27-crop"
+  ]
+ },
+ {
+  "slug": "w3p27-build-prop_vending-cart",
+  "prompt_file": "briefs/w3p27-build-prop.vending-cart.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p27-up-prop_vending-cart"
+  ]
+ }
+]

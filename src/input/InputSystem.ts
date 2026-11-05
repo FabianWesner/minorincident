@@ -1,0 +1,343 @@
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Inputs.js, commit 41046b5.
+import type { EntitySnapshot } from '../sim/world/types';
+import { Vector3, type Camera } from 'three';
+import type { Lifecycle } from '../core/Lifecycle';
+import { defaultBindings, type Action } from '../data/bindings';
+import { Bindings } from './Bindings';
+import { Buttons } from './Buttons';
+import { emptyInput, type InputFrame, type Scheme, type Vec2 } from './InputFrame';
+import { Recorder } from './Recorder';
+import { ClickPick } from './ClickPick';
+import { Keyboard } from './devices/Keyboard';
+import { Pointer } from './devices/Pointer';
+import { RayCursor } from './devices/RayCursor';
+import { Touch } from './devices/Touch';
+import { Wheel } from './devices/Wheel';
+
+export const walkHintKey = 'minor-incident.walk-hint.v1';
+const arrowMovement: Record<string, Action> = { ArrowUp: 'moveUp', ArrowDown: 'moveDown', ArrowLeft: 'moveLeft', ArrowRight: 'moveRight' };
+/** Device ownership ends here. sample() runs immediately before every fixed sim tick. */
+export class InputSystem implements Lifecycle {
+  readonly bindings: Bindings;
+  readonly recorder = new Recorder();
+  /** Telemetry: sees every frame the sim consumes (call sites: sample()). Must not allocate. */
+  tap: ((frame: InputFrame, scheme: Scheme) => void) | null = null;
+  /** Telemetry replay: a decoded log supplies each sample's frame and device scheme. */
+  feed: { next(): InputFrame | null; scheme: Scheme } | null = null;
+  readonly keyboard: Keyboard;
+  readonly pointer: Pointer;
+  readonly wheel: Wheel;
+  readonly cursor: RayCursor;
+  readonly picker: ClickPick;
+  readonly touch: Touch;
+  private touchFire: 'touch' | 'assist' | null = null;
+  readonly frame = emptyInput();
+  scheme: Scheme = 'mouse-only';
+  private drivingContext = false;
+  private mountedGunContext = false;
+  /** Mounted fire holds the touch trigger; carried weapons keep release-to-fire. */
+  setMountedGun(on: boolean): void { this.mountedGunContext = on; }
+  setDriving(on: boolean): void { if (on !== this.drivingContext) { this.drivingContext = on; this.touch.setDriving(on); this.hint.textContent = ''; this.setScheme(this.scheme); } }
+  private readonly left = new Buttons();
+  private readonly right = new Buttons();
+  private readonly space = new Buttons();
+  private readonly active = new Set<Action>();
+  private readonly heldTokens = new Map<string, Action>();
+  private readonly selectors: { direction: -1 | 1; side?: 'LEFT' | 'RIGHT'; active?: boolean }[] = [];
+  private interact = false;
+  private cancelMove = false;
+  private readonly clicks: { x: number; y: number }[] = [];
+  private selectedWeaponKey: number | undefined;
+  private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
+  cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
+  private pause = false;
+  private injected: InputFrame | null = null;
+  private readonly direction = new Vector3();
+  private readonly screen: Vec2 = { x: 0, z: 0 };
+  private readonly aim: Vec2 = { x: 1, z: 0 };
+  private aimAngle = 0;
+  /** WASD + mouse aim (PO 10-31): seconds the heroine keeps facing the last click before she faces her walk again. */
+  private mouseAimHold = 0;
+  private manualAim = false;
+  private arrowStart = 0;
+  private arrowTarget = 0;
+  private releasing = false;
+  private readonly hint = document.createElement('output');
+  private readonly controls = document.createElement('details');
+  private readonly message = document.createElement('output');
+  /** One-time "hold to walk" hint (E19 §5.5): after ~2 s of running, shown for 5 s, once per profile. */
+  private readonly walkHint = document.createElement('output');
+  private walkHintTicks = 0;
+  private walkHintDone = false;
+  /** `controlAzimuth`: the gameplay camera's fixed azimuth. Movement keys and sticks stay on it while a story preset or cinematic
+   * frames the scene from another side (P0 10-20: the L5 station view looked south, so a held W walked the courier back out). */
+  constructor(canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}, private readonly controlAzimuth?: () => number) {
+    let storage: Storage | undefined;
+    try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
+    this.bindings = new Bindings(storage);
+    this.cursor = new RayCursor(camera, canvas); this.picker = new ClickPick(camera, canvas);
+    this.keyboard = new Keyboard(window, this.key);
+    this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
+    this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .14); });
+    this.touch = new Touch(canvas, () => { this.pointer.valid = false; this.cancelMove = true; this.setScheme('touch'); }, (action, direction, side) => {
+      if (action === 'selector') { this.selectors.push({ direction: 1, side }); }
+      else if (action === 'interact') this.interact = true;
+      else if (action === 'pause') this.pause = true;
+      else {
+        if (direction) { this.aimAngle = this.screenAngle(direction.x, direction.z); }
+        this.touchFire = direction ? 'touch' : 'assist';
+        (action === 'left' ? this.left : this.right).pulse();
+      }
+    }, this.zoom);
+  }
+  init(): void {
+    this.keyboard.init(); this.pointer.init(); this.wheel.init(); this.touch.init();
+    window.addEventListener('blur', this.release); window.addEventListener('pagehide', this.release);
+    document.addEventListener('visibilitychange', this.visibility);
+    this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none;z-index:21';
+    if (__QA_HOOKS__) {
+      this.controls.dataset.inputControls = '';
+      this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
+      document.body.classList.toggle('debug-tools', new URLSearchParams(location.search).has('debug'));
+      this.controls.dataset.inputControls = '';
+      this.controls.hidden = !new URLSearchParams(location.search).has('debug');
+      this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
+      const select = this.controls.querySelector('select')!;
+      for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
+      this.message.setAttribute('role', 'status'); this.controls.append(this.message);
+      this.controls.querySelector('form')!.addEventListener('submit', this.submit);
+      document.body.append(this.controls);
+    }
+    this.walkHint.dataset.testid = 'walk-hint'; this.walkHint.setAttribute('role', 'note'); this.walkHint.hidden = true;
+    this.walkHint.style.cssText = 'position:fixed;left:50%;bottom:120px;transform:translateX(-50%);color:white;background:#182333e6;padding:8px 14px;border-radius:10px;font:600 15px system-ui,sans-serif;pointer-events:none;z-index:5';
+    // Automated browsers keep their reference screenshots clean unless a test opts in ('force').
+    try { const state = localStorage.getItem(walkHintKey); this.walkHintDone = state === '1' || (navigator.webdriver && state !== 'force'); } catch { /* Shown once per session without storage. */ }
+    document.body.append(this.hint, this.walkHint); this.setScheme(this.scheme);
+  }
+  private readonly submit = (event: Event): void => {
+    event.preventDefault(); const form = this.controls.querySelector('form')!;
+    const data = new FormData(form); this.rebind(data.get('action') as Action, String(data.get('code')));
+  };
+  rebind(action: Action, code: string): { ok: boolean; message: string } {
+    const result = this.bindings.rebind(action, code);
+    if (result.ok) this.release(); this.message.textContent = result.message; return result;
+  }
+  private setScheme(scheme: Scheme): void {
+    if (scheme === this.scheme && this.hint.textContent) return;
+    this.touch.pauseElement.hidden = scheme !== 'touch';
+    this.touch.element.hidden = scheme !== 'touch'; this.touch.element.style.display = scheme === 'touch' ? 'grid' : 'none';
+    this.scheme = scheme; this.hint.dataset.scheme = scheme;
+    this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
+      ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
+      : 'WASD drive · LEFT to horn / boost · E / F exit' : {
+      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
+      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
+      keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
+      touch: 'Stick to move · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
+    }[scheme];
+  }
+  private readonly mouseActivity = (): void => {
+    this.setScheme(this.moving() || !this.drivingContext ? 'mouse-keyboard' : 'mouse-only');
+  };
+  /** Explicit HUD/device action, shared by pointer buttons and the keyboard/touch frame. */
+  interactOnce(): void { this.interact = true; }
+  private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
+  private keyboardAttackHeld(): boolean {
+    for (const [code, action] of this.heldTokens) if (!code.startsWith('Mouse') && (action === 'left' || action === 'right')) return true;
+    return false;
+  }
+  private boundAction(code: string): Action | null {
+    return !this.drivingContext && !this.mountedGunContext && arrowMovement[code] || this.bindings.action(code);
+  }
+  private readonly key = (code: string, held: boolean): void => {
+    if (code === 'ShiftLeft' || code === 'ShiftRight') return;
+    if (held && /^Digit[1-9]$/.test(code)) {
+      const key = Number(code.slice(-1));
+      if (this.shift()) { if (key <= 3) this.selectedSlot = { side: 'RIGHT', index: key - 1 }; }
+      else if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
+      this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
+    }
+    const action = held ? this.boundAction(code) : this.heldTokens.get(code);
+    if (held && action) {
+      // Q-196: a keyboard attack key (J/K/Space) fires along the keyboard facing, never toward a resting cursor. The pointer
+      // stayed valid after any menu click, so keyboard shots flew at wherever the idle cursor sat; moving the mouse restores it.
+      const keyboardFire = action === 'left' || action === 'right';
+      if (action.startsWith('aim') || keyboardFire) this.pointer.valid = false;
+      if (action.startsWith('aim')) this.manualAim = true;
+      if (action.startsWith('move')) this.manualAim = false;
+      this.setScheme(action.startsWith('aim') || keyboardFire || this.scheme === 'touch' ? 'keyboard' : this.pointer.valid ? 'mouse-keyboard' : 'keyboard');
+      if (action.startsWith('aim') && !this.aiming()) this.arrowStart = performance.now();
+    }
+    // Short arrow taps snap before releasing the key, preserving combined diagonals.
+    if (!held && action?.startsWith('aim') && !this.releasing && performance.now() - this.arrowStart < 150) this.aimAngle = this.arrowTarget;
+    this.token(code, held);
+    if (held && this.aiming()) this.arrowTarget = this.screenAngle(this.axis('aimRight', 'aimLeft'), this.axis('aimDown', 'aimUp'));
+  };
+  private readonly token = (code: string, held: boolean): void => {
+    const action = held ? this.boundAction(code) : this.heldTokens.get(code);
+    if (!action) return;
+    if (held && code === 'Mouse0') this.clicks.push({ x: this.pointer.x, y: this.pointer.y });
+    else if (held && code === 'Mouse2') { this.selectors.push({ direction: 1, active: true }); this.heldTokens.set(code, action); return; }
+    else if (held && (action.startsWith('move') || action === 'left' || action === 'right' || action === 'interact')) this.cancelMove = true;
+    if (held) this.heldTokens.set(code, action); else this.heldTokens.delete(code);
+    if (code === 'Space' && action === 'left') this.space.set(code, held);
+    if (action === 'left') this.left.set(code, held);
+    else if (action === 'right') this.right.set(code, held);
+    else if (held && action === 'selector') { this.selectors.push({ direction: 1, active: this.scheme !== 'touch' }); }
+    else if (held && action === 'interact') this.interact = true;
+    else if (held && action === 'pause') this.pause = true;
+    if (held) this.active.add(action);
+    else if (![...this.heldTokens.values()].includes(action)) this.active.delete(action);
+  };
+  private shift(): boolean { return this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight'); }
+  private axis(positive: Action, negative: Action): number { return Number(this.active.has(positive)) - Number(this.active.has(negative)); }
+  private aiming(): boolean { return this.active.has('aimUp') || this.active.has('aimDown') || this.active.has('aimLeft') || this.active.has('aimRight'); }
+  /** Camera azimuth projected onto ground; pitch does not distort movement. */
+  private screenVector(x: number, y: number, out: Vec2): void {
+    let forwardX: number, forwardZ: number;
+    if (this.controlAzimuth) { const azimuth = this.controlAzimuth(); forwardX = -Math.sin(azimuth); forwardZ = -Math.cos(azimuth); }
+    else { this.camera.getWorldDirection(this.direction); const length = Math.hypot(this.direction.x, this.direction.z) || 1; forwardX = this.direction.x / length; forwardZ = this.direction.z / length; }
+    out.x = -forwardZ * x - forwardX * y; out.z = forwardX * x - forwardZ * y;
+  }
+  private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
+  /** Frame and math scratch objects are reused; no device polling or scene-mesh raycasts. */
+  private readonly cursorPoint = { x: 0, z: 0 };
+  private readonly driving = { throttle: 0, steer: 0 };
+  sample(player: Vec2, dt = 1 / 60, targets: Iterable<EntitySnapshot> = []): InputFrame {
+    if (this.feed) return this.feed.next() ?? this.frameNeutral();
+    if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
+    if (this.injected) { this.recorder.capture(this.injected); this.tap?.(this.injected, this.scheme); return this.injected; }
+    const frame = this.frame;
+    const mouseAim = !this.drivingContext && this.scheme !== 'touch';
+    if (mouseAim) frame.strafe = true; else delete frame.strafe;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.cancelMove = this.cancelMove; this.cancelMove = false;
+    const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
+    const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
+    const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
+    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') frame.drive = this.driving; else delete frame.drive; frame.brake = false;
+    if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
+      this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
+      if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
+    }
+    const keyboardFireOwnsAim = mouseAim && this.keyboardAttackHeld() && !this.pointer.isHeld(0);
+    if (keyboardFireOwnsAim) { frame.aim = null; frame.aimSource = 'assist'; }
+    if ((this.scheme === 'mouse-only' || this.scheme === 'mouse-keyboard') && this.pointer.valid && !keyboardFireOwnsAim) {
+      const point = this.cursor.project(this.pointer.x, this.pointer.y);
+      if (point) {
+        frame.aimPoint = this.cursorPoint; this.cursorPoint.x = point.x; this.cursorPoint.z = point.z;
+        const dx = point.x - player.x, dz = point.z - player.z, distance = Math.hypot(dx, dz);
+        if (distance > 1e-6) {
+          this.aim.x = dx / distance; this.aim.z = dz / distance;
+          this.aimAngle = Math.atan2(dz, dx); frame.aim = this.aim; frame.aimSource = 'pointer';
+        }
+      }
+    } else if (this.scheme === 'keyboard' && !keyboardFireOwnsAim) {
+      if (this.aiming()) {
+        const ax = this.axis('aimRight', 'aimLeft'), ay = this.axis('aimDown', 'aimUp');
+        if (ax || ay) this.arrowTarget = this.screenAngle(ax, ay);
+        const delta = Math.atan2(Math.sin(this.arrowTarget - this.aimAngle), Math.cos(this.arrowTarget - this.aimAngle));
+        this.aimAngle += Math.sign(delta) * Math.min(Math.abs(delta), Math.PI * 2 * dt);
+      }
+      if (this.manualAim) { this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle); frame.aim = this.aim; frame.aimSource = 'keyboard'; }
+      else frame.aimSource = 'assist';
+    }
+    if (this.scheme === 'touch') {
+      // Light push walks, beyond half deflection runs (E19 §5.5): the stick picks a gait, not a speed.
+      const deflection = Math.hypot(this.touch.stick.move.x, this.touch.stick.move.z);
+      this.screenVector(this.touch.stick.move.x, this.touch.stick.move.z, frame.move);
+      const length = Math.hypot(frame.move.x, frame.move.z);
+      if (deflection > .08 && length > 0) { frame.move.x /= length; frame.move.z /= length; if (deflection < .5) frame.walk = true; }
+      else { frame.move.x = 0; frame.move.z = 0; }
+      if (this.touch.aiming) this.aimAngle = this.screenAngle(this.touch.aim.x, this.touch.aim.z);
+      this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle);
+      frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
+    }
+    frame.left = this.left.sample(); frame.right = this.right.sample();
+    const space = this.space.sample();
+    if (space.down || space.held || space.up) frame.activeAttack = true;
+    const candidates = this.clicks.length ? Array.from(targets) : null;
+    for (const click of this.clicks) {
+      const point = this.cursor.project(click.x, click.y);
+      if (!point) continue;
+      frame.cancelMove = true;
+      frame.mouseAttack = true;
+      if (mouseAim) {
+        const picked = this.picker.pick(click.x, click.y, candidates!);
+        this.pointAim(picked?.transform ?? point, player);
+        continue;
+      }
+      if (this.drivingContext) continue;
+    }
+    this.clicks.length = 0;
+    if (this.pointer.isHeld(0)) {
+      frame.mouseAttack = true;
+      if (mouseAim && frame.aimPoint && !candidates) {
+        const hovered = this.picker.pick(this.pointer.x, this.pointer.y, candidates ?? targets);
+        if (hovered) this.pointAim(hovered.transform, player);
+      }
+    }
+    // WASD + mouse aim (PO 10-31: "She should walk normal, only when I click somewhere then the weapon is used into
+    // this direction"): the cursor aims only while a click or held LMB attacks, plus a short hold for the follow-through.
+    if (mouseAim && !keyboardFireOwnsAim) {
+      if (frame.mouseAttack) this.mouseAimHold = .45; else this.mouseAimHold = Math.max(0, this.mouseAimHold - dt);
+      if (this.mouseAimHold <= 0) { delete frame.strafe; if (frame.aimSource === 'pointer') { frame.aim = null; frame.aimSource = 'assist'; } }
+    }
+    if ((this.drivingContext || this.mountedGunContext) && this.scheme === 'touch') {
+      if (this.touch.holdingLeft) frame.left.held = true;
+      frame.right.held = this.touch.holdingRight;
+    }
+    if (this.selectedWeaponKey !== undefined) { frame.selectedWeaponKey = this.selectedWeaponKey; this.selectedWeaponKey = undefined; }
+    if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; frame.orderedSelection = true; this.selectedSlot = undefined; }
+    const selection = this.selectors.shift();
+    frame.selector = selection?.direction ?? 0;
+    if (selection?.side) frame.selectorSide = selection.side;
+    if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
+    this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); this.tap?.(frame, this.scheme); return frame;
+  }
+  private pointAim(point: Vec2, player: Vec2): void {
+    this.cursorPoint.x = point.x; this.cursorPoint.z = point.z; this.frame.aimPoint = this.cursorPoint;
+    const dx = point.x - player.x, dz = point.z - player.z, distance = Math.hypot(dx, dz);
+    if (distance > 1e-6) {
+      this.aim.x = dx / distance; this.aim.z = dz / distance; this.aimAngle = Math.atan2(dz, dx);
+      this.frame.aim = this.aim; this.frame.aimSource = 'pointer';
+    }
+  }
+  private updateWalkHint(frame: InputFrame): void {
+    if (this.walkHintDone) return;
+    const moving = Math.hypot(frame.move.x, frame.move.z) > .1;
+    if (this.walkHint.hidden) {
+      this.walkHintTicks = moving ? this.walkHintTicks + 1 : this.walkHintTicks;
+      if (this.walkHintTicks < 120) return;
+      const key = this.bindings.keyLabel('walk') || 'C';
+      this.walkHint.textContent = this.scheme === 'touch' ? 'Push the stick lightly to walk' : `Hold ${key} or Alt while moving to walk`;
+      this.walkHint.hidden = false; this.walkHintTicks = 0;
+      try { localStorage.setItem(walkHintKey, '1'); } catch { /* Storage disabled. */ }
+    } else if (++this.walkHintTicks >= 300 || frame.walk) { this.walkHint.hidden = true; this.walkHintDone = true; }
+  }
+  private frameNeutral(): InputFrame {
+    delete this.frame.strafe;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
+    frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
+  }
+  /** Logical injection persists until clear(), preserving the E01 harness contract. */
+  inject(patch: Partial<InputFrame>): void { this.injected = { ...(this.injected ?? emptyInput()), ...structuredClone(patch) }; }
+  clear(): void { this.injected = null; this.reset(true); }
+  private readonly visibility = (): void => { if (document.hidden) this.release(); };
+  readonly release = (): void => {
+    this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
+    this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.space.release(); this.active.clear(); this.heldTokens.clear();
+    this.clicks.length = 0; this.cancelMove = true; this.selectedSlot = undefined; this.selectedWeaponKey = undefined;
+    this.selectors.length = 0; this.interact = false; this.pause = false;
+  };
+  update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
+  reset(preserveRelease = false): void { this.setDriving(false); this.setMountedGun(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.space.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  dispose(): void {
+    this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
+    window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
+    document.body.classList.remove('debug-tools');
+    this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove(); this.walkHint.remove();
+  }
+}

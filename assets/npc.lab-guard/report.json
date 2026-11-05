@@ -1,0 +1,207 @@
+{
+  "id": "npc.lab-guard",
+  "triangles": {
+    "lod0": 55301,
+    "lod1": 6314,
+    "lod2": 1592
+  },
+  "materials": {
+    "lod0": 17,
+    "lod1": 17,
+    "lod2": 14
+  },
+  "fileKB": {
+    "lod0": 452.375,
+    "lod1": 68.484375,
+    "lod2": 35.7109375
+  },
+  "dimensions": [
+    0.5321881324052811,
+    1.3863473443574954,
+    0.975519984960556
+  ],
+  "geometry_hash": "024e5a24e511b7df5b4b7019e2b22f653add2901c3f53ead0482d1666bf4bc08",
+  "deterministic": true,
+  "raw_geometry_hash": "4fb344b27fc308d1744b18ea518bd7ddc0040f858ece1ac3768f5c1aa71fbcb1",
+  "nodes_ok": true,
+  "missing_nodes": [],
+  "validation": [
+    {
+      "lod": 0,
+      "id": "npc.lab-guard",
+      "errors": [],
+      "triangles": 55301,
+      "materials": 17,
+      "drawCalls": 55,
+      "fileKB": 452.375,
+      "dimensions": [
+        0.5321881324052811,
+        1.3863473443574954,
+        0.975519984960556
+      ],
+      "hash": "024e5a24e511b7df5b4b7019e2b22f653add2901c3f53ead0482d1666bf4bc08"
+    },
+    {
+      "lod": 1,
+      "id": "npc.lab-guard",
+      "errors": [],
+      "triangles": 6314,
+      "materials": 17,
+      "drawCalls": 55,
+      "fileKB": 68.484375,
+      "dimensions": [
+        0.5321880131959915,
+        1.3863477276695961,
+        0.975519984960556
+      ],
+      "hash": "818c393c02ace0013c0eeabde141a8eb7ed6a3ac052d223b2926317f69d02429",
+      "ratio": 0.11417515053977324
+    },
+    {
+      "lod": 2,
+      "id": "npc.lab-guard",
+      "errors": [],
+      "triangles": 1592,
+      "materials": 14,
+      "drawCalls": 45,
+      "fileKB": 35.7109375,
+      "dimensions": [
+        0.5238060057163239,
+        1.3889413553608942,
+        0.975519984960556
+      ],
+      "hash": "2d32ee2e1e00534bb436fcbc9a6019b0735523f39da3cf7866d244338d9c3356",
+      "ratio": 0.028787906186144917
+    }
+  ],
+  "runtime_contract": [
+    {
+      "lod": 0,
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742234,
+      "skinVertices": 30144,
+      "pupilVertices": 4104
+    },
+    {
+      "lod": 1,
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742234,
+      "skinVertices": 3438,
+      "pupilVertices": 408
+    },
+    {
+      "lod": 2,
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742234,
+      "skinVertices": 1092,
+      "pupilVertices": 144
+    }
+  ],
+  "pivot_review": [
+    {
+      "lod": 0,
+      "maxPivotDelta": 0
+    },
+    {
+      "lod": 1,
+      "maxPivotDelta": 0
+    },
+    {
+      "lod": 2,
+      "maxPivotDelta": 0
+    }
+  ],
+  "rounds": 4,
+  "renderer": "Eevee",
+  "backface_culling": true,
+  "webgl2_ok": true,
+  "webgpu_ok": false,
+  "browser_review": [
+    {
+      "lod": 0,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 55,
+        "triangles": 55301,
+        "size": [
+          0.532,
+          1.386,
+          0.976
+        ]
+      },
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742234,
+      "skinVertices": 30144,
+      "pupilVertices": 4104,
+      "hiddenCaps": [],
+      "errors": []
+    },
+    {
+      "lod": 1,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 55,
+        "triangles": 6314,
+        "size": [
+          0.532,
+          1.386,
+          0.976
+        ]
+      },
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742234,
+      "skinVertices": 3438,
+      "pupilVertices": 408,
+      "hiddenCaps": [],
+      "errors": []
+    },
+    {
+      "lod": 2,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 45,
+        "triangles": 1592,
+        "size": [
+          0.524,
+          1.389,
+          0.976
+        ]
+      },
+      "handMotion": 0.23183426852451136,
+      "footMotion": 0.14180395518742236,
+      "skinVertices": 1092,
+      "pupilVertices": 144,
+      "hiddenCaps": [],
+      "errors": []
+    }
+  ],
+  "matches_reference": true,
+  "done": true,
+  "gaps": [
+    "WebGPU manual check pending.",
+    "Manifest registration/status and runtime integration are owned by the integrator."
+  ],
+  "verification": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "test_unit": {
+      "status": "PASS",
+      "passed": 200,
+      "todo": 2
+    },
+    "verify_E17": {
+      "status": "FAIL",
+      "typecheck": "PASS",
+      "lint": "PASS",
+      "build": "PASS",
+      "tagged_tests": "PASS",
+      "browser_passed": 35,
+      "browser_failed": 1,
+      "failure": "tests/e2e/art-integration.spec.ts:20: Infected spawn inside collider or outside grid",
+      "outside_asset_scope": true
+    },
+    "asset_validation": "PASS",
+    "webgl2_all_lods": "PASS",
+    "webgpu": "manual check pending"
+  }
+}

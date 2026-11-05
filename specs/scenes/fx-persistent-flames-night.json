@@ -1,0 +1,102 @@
+{
+  "name": "fx-persistent-flames-night",
+  "note": "Persistent fire from barrel, propane, wrecked car and lightning at f60-240, night. Look for: varied soft flame edges, moving silhouette, readable core, no identical white cones.",
+  "ground": "asphalt",
+  "size": 50,
+  "time": "night",
+  "vehicles": [
+    {
+      "id": "sedan",
+      "asset": "vehicle.sedan",
+      "at": [
+        6,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "script": [
+    {
+      "frame": 5,
+      "effect": {
+        "blast": "explosion.barrel",
+        "at": [
+          -12,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 5,
+      "effect": {
+        "blast": "explosion.propane",
+        "at": [
+          -5,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 5,
+      "effect": {
+        "wreck": "sedan"
+      }
+    },
+    {
+      "frame": 5,
+      "effect": {
+        "lightning": [
+          14,
+          0
+        ],
+        "consequence": "fire"
+      }
+    },
+    {
+      "frame": 130,
+      "camera": {
+        "mode": "close",
+        "target": [
+          -12,
+          0.8,
+          0
+        ],
+        "radius": 8,
+        "azimuth": 135
+      }
+    },
+    {
+      "frame": 290,
+      "camera": {
+        "mode": "close",
+        "target": [
+          6,
+          0.8,
+          0
+        ],
+        "radius": 9,
+        "azimuth": 135
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "frames": 420,
+  "shots": [
+    60,
+    120,
+    180,
+    300,
+    400
+  ],
+  "sheet": 20,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

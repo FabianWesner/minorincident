@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "low",
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "fixtureHash": "2008cfc31e93c657ecae015b27b9b332152d3630b300431a0621903d0b403f79",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-01",
+      "clause": "actual carried L7 roster full health racks and selected weapon",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "completed": true,
+        "expected": [],
+        "actual": [],
+        "humansFull": true,
+        "arsenalMatch": true,
+        "racksMatch": true,
+        "expectedRacks": {
+          "LEFT": [
+            "weapon.fire-axe",
+            "weapon.bat"
+          ],
+          "RIGHT": [
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun",
+            "weapon.rocket-launcher"
+          ]
+        },
+        "nativeFull": true,
+        "before": "weapon.rocket-launcher",
+        "after": "weapon.rocket-launcher",
+        "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+        "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
+      },
+      "target": "same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-arrival-browser.json"
+    }
+  ],
+  "observations": {
+    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+    "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json"
+  }
+}

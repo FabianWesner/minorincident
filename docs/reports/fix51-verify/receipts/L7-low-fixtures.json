@@ -1,0 +1,1445 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checks": [
+    {
+      "id": "L7-11",
+      "clause": "actual uninterrupted departure duration and bus displacement",
+      "value": {
+        "setup": "ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick",
+        "run": {
+          "level": "L7",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 103.06666666666666,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 0,
+          "failures": {},
+          "objectiveTimeline": [],
+          "furthestObjective": "bus-departure",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 264,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "first": {
+          "tick": 5644,
+          "x": -78.5,
+          "z": 47,
+          "aliveElsewhere": 10
+        },
+        "last": {
+          "tick": 6184,
+          "x": 40,
+          "z": 47,
+          "alive": 10
+        },
+        "elsewhere": [
+          280,
+          281,
+          282,
+          283,
+          284,
+          285,
+          286,
+          287,
+          288,
+          289
+        ],
+        "seconds": 9,
+        "metres": 118.5,
+        "entries": [
+          {
+            "id": 58,
+            "tick": 5203
+          },
+          {
+            "id": 57,
+            "tick": 5218
+          },
+          {
+            "id": 53,
+            "tick": 5233
+          },
+          {
+            "id": 59,
+            "tick": 5248
+          },
+          {
+            "id": 54,
+            "tick": 5263
+          },
+          {
+            "id": 52,
+            "tick": 5278
+          },
+          {
+            "id": 55,
+            "tick": 5293
+          },
+          {
+            "id": 56,
+            "tick": 5308
+          },
+          {
+            "id": 60,
+            "tick": 5323
+          },
+          {
+            "id": 51,
+            "tick": 5338
+          },
+          {
+            "id": 61,
+            "tick": 5353
+          },
+          {
+            "id": 62,
+            "tick": 5368
+          },
+          {
+            "id": 63,
+            "tick": 5383
+          },
+          {
+            "id": 64,
+            "tick": 5398
+          },
+          {
+            "id": 65,
+            "tick": 5413
+          },
+          {
+            "id": 66,
+            "tick": 5428
+          },
+          {
+            "id": 67,
+            "tick": 5443
+          },
+          {
+            "id": 68,
+            "tick": 5458
+          },
+          {
+            "id": 69,
+            "tick": 5473
+          },
+          {
+            "id": 70,
+            "tick": 5488
+          },
+          {
+            "id": 71,
+            "tick": 5503
+          },
+          {
+            "id": 72,
+            "tick": 5518
+          },
+          {
+            "id": 73,
+            "tick": 5533
+          },
+          {
+            "id": 74,
+            "tick": 5548
+          }
+        ],
+        "boarded": [
+          {
+            "id": 58,
+            "tick": 5239
+          },
+          {
+            "id": 57,
+            "tick": 5254
+          },
+          {
+            "id": 53,
+            "tick": 5269
+          },
+          {
+            "id": 59,
+            "tick": 5284
+          },
+          {
+            "id": 54,
+            "tick": 5299
+          },
+          {
+            "id": 52,
+            "tick": 5314
+          },
+          {
+            "id": 55,
+            "tick": 5329
+          },
+          {
+            "id": 56,
+            "tick": 5344
+          },
+          {
+            "id": 60,
+            "tick": 5359
+          },
+          {
+            "id": 51,
+            "tick": 5374
+          },
+          {
+            "id": 61,
+            "tick": 5389
+          },
+          {
+            "id": 62,
+            "tick": 5404
+          },
+          {
+            "id": 63,
+            "tick": 5419
+          },
+          {
+            "id": 64,
+            "tick": 5434
+          },
+          {
+            "id": 65,
+            "tick": 5449
+          },
+          {
+            "id": 66,
+            "tick": 5464
+          },
+          {
+            "id": 67,
+            "tick": 5479
+          },
+          {
+            "id": 68,
+            "tick": 5494
+          },
+          {
+            "id": 69,
+            "tick": 5509
+          },
+          {
+            "id": 70,
+            "tick": 5524
+          },
+          {
+            "id": 71,
+            "tick": 5539
+          },
+          {
+            "id": 72,
+            "tick": 5554
+          },
+          {
+            "id": 73,
+            "tick": 5569
+          },
+          {
+            "id": 74,
+            "tick": 5584
+          }
+        ],
+        "spacing": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "trace": [
+          {
+            "tick": 5655,
+            "phase": "departing",
+            "x": -78.3544878638927,
+            "z": 47
+          },
+          {
+            "tick": 5670,
+            "phase": "departing",
+            "x": -77.70231793933851,
+            "z": 47
+          },
+          {
+            "tick": 5685,
+            "phase": "departing",
+            "x": -76.55436612178022,
+            "z": 47
+          },
+          {
+            "tick": 5700,
+            "phase": "departing",
+            "x": -74.94111080627953,
+            "z": 47
+          },
+          {
+            "tick": 5715,
+            "phase": "departing",
+            "x": -72.8930303878982,
+            "z": 47
+          },
+          {
+            "tick": 5730,
+            "phase": "departing",
+            "x": -70.44060326169792,
+            "z": 47
+          },
+          {
+            "tick": 5745,
+            "phase": "departing",
+            "x": -67.61430782274044,
+            "z": 47
+          },
+          {
+            "tick": 5760,
+            "phase": "departing",
+            "x": -64.44462246608748,
+            "z": 47
+          },
+          {
+            "tick": 5775,
+            "phase": "departing",
+            "x": -60.96202558680079,
+            "z": 47
+          },
+          {
+            "tick": 5790,
+            "phase": "departing",
+            "x": -57.19699557994208,
+            "z": 47
+          },
+          {
+            "tick": 5805,
+            "phase": "departing",
+            "x": -53.18001084057309,
+            "z": 47
+          },
+          {
+            "tick": 5820,
+            "phase": "departing",
+            "x": -48.94154976375552,
+            "z": 47
+          },
+          {
+            "tick": 5835,
+            "phase": "departing",
+            "x": -44.51209074455113,
+            "z": 47
+          },
+          {
+            "tick": 5850,
+            "phase": "departing",
+            "x": -39.92211217802165,
+            "z": 47
+          },
+          {
+            "tick": 5865,
+            "phase": "departing",
+            "x": -35.202092459228766,
+            "z": 47
+          },
+          {
+            "tick": 5880,
+            "phase": "departing",
+            "x": -30.382509983234257,
+            "z": 47
+          },
+          {
+            "tick": 5895,
+            "phase": "departing",
+            "x": -25.493843145099838,
+            "z": 47
+          },
+          {
+            "tick": 5910,
+            "phase": "departing",
+            "x": -20.566570339887214,
+            "z": 47
+          },
+          {
+            "tick": 5925,
+            "phase": "departing",
+            "x": -15.631169962658127,
+            "z": 47
+          },
+          {
+            "tick": 5940,
+            "phase": "departing",
+            "x": -10.71812040847432,
+            "z": 47
+          },
+          {
+            "tick": 5955,
+            "phase": "departing",
+            "x": -5.857900072397513,
+            "z": 47
+          },
+          {
+            "tick": 5970,
+            "phase": "departing",
+            "x": -1.0809873494893907,
+            "z": 47
+          },
+          {
+            "tick": 5985,
+            "phase": "departing",
+            "x": 3.5821393651882403,
+            "z": 47
+          },
+          {
+            "tick": 6000,
+            "phase": "departing",
+            "x": 8.101001676573688,
+            "z": 47
+          },
+          {
+            "tick": 6015,
+            "phase": "departing",
+            "x": 12.445121189605231,
+            "z": 47
+          },
+          {
+            "tick": 6030,
+            "phase": "departing",
+            "x": 16.58401950922115,
+            "z": 47
+          },
+          {
+            "tick": 6045,
+            "phase": "departing",
+            "x": 20.48721824035971,
+            "z": 47
+          },
+          {
+            "tick": 6060,
+            "phase": "departing",
+            "x": 24.12423898795916,
+            "z": 47
+          },
+          {
+            "tick": 6075,
+            "phase": "departing",
+            "x": 27.46460335695778,
+            "z": 47
+          },
+          {
+            "tick": 6090,
+            "phase": "departing",
+            "x": 30.477832952293866,
+            "z": 47
+          },
+          {
+            "tick": 6105,
+            "phase": "departing",
+            "x": 33.13344937890565,
+            "z": 47
+          },
+          {
+            "tick": 6120,
+            "phase": "departing",
+            "x": 35.40097424173145,
+            "z": 47
+          },
+          {
+            "tick": 6135,
+            "phase": "departing",
+            "x": 37.2499291457095,
+            "z": 47
+          },
+          {
+            "tick": 6150,
+            "phase": "departing",
+            "x": 38.649835695778066,
+            "z": 47
+          },
+          {
+            "tick": 6165,
+            "phase": "departing",
+            "x": 39.57021549687548,
+            "z": 47
+          },
+          {
+            "tick": 6180,
+            "phase": "departing",
+            "x": 39.98059015393994,
+            "z": 47
+          },
+          {
+            "tick": 6184,
+            "phase": "done",
+            "x": 40,
+            "z": 47
+          }
+        ]
+      },
+      "target": "6–10 seconds; bus moves at least30m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "L7-10",
+      "clause": "actual passenger door-entry spacing",
+      "value": {
+        "entries": [
+          {
+            "id": 58,
+            "tick": 5203
+          },
+          {
+            "id": 57,
+            "tick": 5218
+          },
+          {
+            "id": 53,
+            "tick": 5233
+          },
+          {
+            "id": 59,
+            "tick": 5248
+          },
+          {
+            "id": 54,
+            "tick": 5263
+          },
+          {
+            "id": 52,
+            "tick": 5278
+          },
+          {
+            "id": 55,
+            "tick": 5293
+          },
+          {
+            "id": 56,
+            "tick": 5308
+          },
+          {
+            "id": 60,
+            "tick": 5323
+          },
+          {
+            "id": 51,
+            "tick": 5338
+          },
+          {
+            "id": 61,
+            "tick": 5353
+          },
+          {
+            "id": 62,
+            "tick": 5368
+          },
+          {
+            "id": 63,
+            "tick": 5383
+          },
+          {
+            "id": 64,
+            "tick": 5398
+          },
+          {
+            "id": 65,
+            "tick": 5413
+          },
+          {
+            "id": 66,
+            "tick": 5428
+          },
+          {
+            "id": 67,
+            "tick": 5443
+          },
+          {
+            "id": 68,
+            "tick": 5458
+          },
+          {
+            "id": 69,
+            "tick": 5473
+          },
+          {
+            "id": 70,
+            "tick": 5488
+          },
+          {
+            "id": 71,
+            "tick": 5503
+          },
+          {
+            "id": 72,
+            "tick": 5518
+          },
+          {
+            "id": 73,
+            "tick": 5533
+          },
+          {
+            "id": 74,
+            "tick": 5548
+          }
+        ],
+        "boarded": [
+          {
+            "id": 58,
+            "tick": 5239
+          },
+          {
+            "id": 57,
+            "tick": 5254
+          },
+          {
+            "id": 53,
+            "tick": 5269
+          },
+          {
+            "id": 59,
+            "tick": 5284
+          },
+          {
+            "id": 54,
+            "tick": 5299
+          },
+          {
+            "id": 52,
+            "tick": 5314
+          },
+          {
+            "id": 55,
+            "tick": 5329
+          },
+          {
+            "id": 56,
+            "tick": 5344
+          },
+          {
+            "id": 60,
+            "tick": 5359
+          },
+          {
+            "id": 51,
+            "tick": 5374
+          },
+          {
+            "id": 61,
+            "tick": 5389
+          },
+          {
+            "id": 62,
+            "tick": 5404
+          },
+          {
+            "id": 63,
+            "tick": 5419
+          },
+          {
+            "id": 64,
+            "tick": 5434
+          },
+          {
+            "id": 65,
+            "tick": 5449
+          },
+          {
+            "id": 66,
+            "tick": 5464
+          },
+          {
+            "id": 67,
+            "tick": 5479
+          },
+          {
+            "id": 68,
+            "tick": 5494
+          },
+          {
+            "id": 69,
+            "tick": 5509
+          },
+          {
+            "id": 70,
+            "tick": 5524
+          },
+          {
+            "id": 71,
+            "tick": 5539
+          },
+          {
+            "id": 72,
+            "tick": 5554
+          },
+          {
+            "id": 73,
+            "tick": 5569
+          },
+          {
+            "id": 74,
+            "tick": 5584
+          }
+        ],
+        "spacing": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ]
+      },
+      "target": "one new passenger at most every15ticks; every entry finishes",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "L7-10",
+      "clause": "living infected remaining when boarding has finished",
+      "value": {
+        "tick": 5644,
+        "alive": 10,
+        "ids": [
+          280,
+          281,
+          282,
+          283,
+          284,
+          285,
+          286,
+          287,
+          288,
+          289
+        ]
+      },
+      "target": "at least10 admitted living infected may remain elsewhere at departure start",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "L7-10",
+      "clause": "offscreen stalled boarding recovery after20s",
+      "value": {
+        "setup": "isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation",
+        "firstSampleTick": 2,
+        "id": 51,
+        "events": [
+          {
+            "name": "l7.survivor-recovered",
+            "tick": 1202,
+            "actorId": 51
+          },
+          {
+            "name": "l7.survivor-boarded",
+            "tick": 1238,
+            "actorId": 51
+          }
+        ],
+        "recoveryTicks": 1200,
+        "alive": true,
+        "aboard": true
+      },
+      "target": "no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "L7/departure": {
+      "setup": "ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick",
+      "run": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 103.06666666666666,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 264,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "first": {
+        "tick": 5644,
+        "x": -78.5,
+        "z": 47,
+        "aliveElsewhere": 10
+      },
+      "last": {
+        "tick": 6184,
+        "x": 40,
+        "z": 47,
+        "alive": 10
+      },
+      "elsewhere": [
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289
+      ],
+      "seconds": 9,
+      "metres": 118.5,
+      "entries": [
+        {
+          "id": 58,
+          "tick": 5203
+        },
+        {
+          "id": 57,
+          "tick": 5218
+        },
+        {
+          "id": 53,
+          "tick": 5233
+        },
+        {
+          "id": 59,
+          "tick": 5248
+        },
+        {
+          "id": 54,
+          "tick": 5263
+        },
+        {
+          "id": 52,
+          "tick": 5278
+        },
+        {
+          "id": 55,
+          "tick": 5293
+        },
+        {
+          "id": 56,
+          "tick": 5308
+        },
+        {
+          "id": 60,
+          "tick": 5323
+        },
+        {
+          "id": 51,
+          "tick": 5338
+        },
+        {
+          "id": 61,
+          "tick": 5353
+        },
+        {
+          "id": 62,
+          "tick": 5368
+        },
+        {
+          "id": 63,
+          "tick": 5383
+        },
+        {
+          "id": 64,
+          "tick": 5398
+        },
+        {
+          "id": 65,
+          "tick": 5413
+        },
+        {
+          "id": 66,
+          "tick": 5428
+        },
+        {
+          "id": 67,
+          "tick": 5443
+        },
+        {
+          "id": 68,
+          "tick": 5458
+        },
+        {
+          "id": 69,
+          "tick": 5473
+        },
+        {
+          "id": 70,
+          "tick": 5488
+        },
+        {
+          "id": 71,
+          "tick": 5503
+        },
+        {
+          "id": 72,
+          "tick": 5518
+        },
+        {
+          "id": 73,
+          "tick": 5533
+        },
+        {
+          "id": 74,
+          "tick": 5548
+        }
+      ],
+      "boarded": [
+        {
+          "id": 58,
+          "tick": 5239
+        },
+        {
+          "id": 57,
+          "tick": 5254
+        },
+        {
+          "id": 53,
+          "tick": 5269
+        },
+        {
+          "id": 59,
+          "tick": 5284
+        },
+        {
+          "id": 54,
+          "tick": 5299
+        },
+        {
+          "id": 52,
+          "tick": 5314
+        },
+        {
+          "id": 55,
+          "tick": 5329
+        },
+        {
+          "id": 56,
+          "tick": 5344
+        },
+        {
+          "id": 60,
+          "tick": 5359
+        },
+        {
+          "id": 51,
+          "tick": 5374
+        },
+        {
+          "id": 61,
+          "tick": 5389
+        },
+        {
+          "id": 62,
+          "tick": 5404
+        },
+        {
+          "id": 63,
+          "tick": 5419
+        },
+        {
+          "id": 64,
+          "tick": 5434
+        },
+        {
+          "id": 65,
+          "tick": 5449
+        },
+        {
+          "id": 66,
+          "tick": 5464
+        },
+        {
+          "id": 67,
+          "tick": 5479
+        },
+        {
+          "id": 68,
+          "tick": 5494
+        },
+        {
+          "id": 69,
+          "tick": 5509
+        },
+        {
+          "id": 70,
+          "tick": 5524
+        },
+        {
+          "id": 71,
+          "tick": 5539
+        },
+        {
+          "id": 72,
+          "tick": 5554
+        },
+        {
+          "id": 73,
+          "tick": 5569
+        },
+        {
+          "id": 74,
+          "tick": 5584
+        }
+      ],
+      "spacing": [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "trace": [
+        {
+          "tick": 5655,
+          "phase": "departing",
+          "x": -78.3544878638927,
+          "z": 47
+        },
+        {
+          "tick": 5670,
+          "phase": "departing",
+          "x": -77.70231793933851,
+          "z": 47
+        },
+        {
+          "tick": 5685,
+          "phase": "departing",
+          "x": -76.55436612178022,
+          "z": 47
+        },
+        {
+          "tick": 5700,
+          "phase": "departing",
+          "x": -74.94111080627953,
+          "z": 47
+        },
+        {
+          "tick": 5715,
+          "phase": "departing",
+          "x": -72.8930303878982,
+          "z": 47
+        },
+        {
+          "tick": 5730,
+          "phase": "departing",
+          "x": -70.44060326169792,
+          "z": 47
+        },
+        {
+          "tick": 5745,
+          "phase": "departing",
+          "x": -67.61430782274044,
+          "z": 47
+        },
+        {
+          "tick": 5760,
+          "phase": "departing",
+          "x": -64.44462246608748,
+          "z": 47
+        },
+        {
+          "tick": 5775,
+          "phase": "departing",
+          "x": -60.96202558680079,
+          "z": 47
+        },
+        {
+          "tick": 5790,
+          "phase": "departing",
+          "x": -57.19699557994208,
+          "z": 47
+        },
+        {
+          "tick": 5805,
+          "phase": "departing",
+          "x": -53.18001084057309,
+          "z": 47
+        },
+        {
+          "tick": 5820,
+          "phase": "departing",
+          "x": -48.94154976375552,
+          "z": 47
+        },
+        {
+          "tick": 5835,
+          "phase": "departing",
+          "x": -44.51209074455113,
+          "z": 47
+        },
+        {
+          "tick": 5850,
+          "phase": "departing",
+          "x": -39.92211217802165,
+          "z": 47
+        },
+        {
+          "tick": 5865,
+          "phase": "departing",
+          "x": -35.202092459228766,
+          "z": 47
+        },
+        {
+          "tick": 5880,
+          "phase": "departing",
+          "x": -30.382509983234257,
+          "z": 47
+        },
+        {
+          "tick": 5895,
+          "phase": "departing",
+          "x": -25.493843145099838,
+          "z": 47
+        },
+        {
+          "tick": 5910,
+          "phase": "departing",
+          "x": -20.566570339887214,
+          "z": 47
+        },
+        {
+          "tick": 5925,
+          "phase": "departing",
+          "x": -15.631169962658127,
+          "z": 47
+        },
+        {
+          "tick": 5940,
+          "phase": "departing",
+          "x": -10.71812040847432,
+          "z": 47
+        },
+        {
+          "tick": 5955,
+          "phase": "departing",
+          "x": -5.857900072397513,
+          "z": 47
+        },
+        {
+          "tick": 5970,
+          "phase": "departing",
+          "x": -1.0809873494893907,
+          "z": 47
+        },
+        {
+          "tick": 5985,
+          "phase": "departing",
+          "x": 3.5821393651882403,
+          "z": 47
+        },
+        {
+          "tick": 6000,
+          "phase": "departing",
+          "x": 8.101001676573688,
+          "z": 47
+        },
+        {
+          "tick": 6015,
+          "phase": "departing",
+          "x": 12.445121189605231,
+          "z": 47
+        },
+        {
+          "tick": 6030,
+          "phase": "departing",
+          "x": 16.58401950922115,
+          "z": 47
+        },
+        {
+          "tick": 6045,
+          "phase": "departing",
+          "x": 20.48721824035971,
+          "z": 47
+        },
+        {
+          "tick": 6060,
+          "phase": "departing",
+          "x": 24.12423898795916,
+          "z": 47
+        },
+        {
+          "tick": 6075,
+          "phase": "departing",
+          "x": 27.46460335695778,
+          "z": 47
+        },
+        {
+          "tick": 6090,
+          "phase": "departing",
+          "x": 30.477832952293866,
+          "z": 47
+        },
+        {
+          "tick": 6105,
+          "phase": "departing",
+          "x": 33.13344937890565,
+          "z": 47
+        },
+        {
+          "tick": 6120,
+          "phase": "departing",
+          "x": 35.40097424173145,
+          "z": 47
+        },
+        {
+          "tick": 6135,
+          "phase": "departing",
+          "x": 37.2499291457095,
+          "z": 47
+        },
+        {
+          "tick": 6150,
+          "phase": "departing",
+          "x": 38.649835695778066,
+          "z": 47
+        },
+        {
+          "tick": 6165,
+          "phase": "departing",
+          "x": 39.57021549687548,
+          "z": 47
+        },
+        {
+          "tick": 6180,
+          "phase": "departing",
+          "x": 39.98059015393994,
+          "z": 47
+        },
+        {
+          "tick": 6184,
+          "phase": "done",
+          "x": 40,
+          "z": 47
+        }
+      ]
+    },
+    "L7/stalled-boarding": {
+      "setup": "isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation",
+      "firstSampleTick": 2,
+      "id": 51,
+      "events": [
+        {
+          "name": "l7.survivor-recovered",
+          "tick": 1202,
+          "actorId": 51
+        },
+        {
+          "name": "l7.survivor-boarded",
+          "tick": 1238,
+          "actorId": 51
+        }
+      ],
+      "recoveryTicks": 1200,
+      "alive": true,
+      "aboard": true
+    }
+  }
+}

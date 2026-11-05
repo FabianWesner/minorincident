@@ -1,0 +1,534 @@
+import { Box3, BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
+import { atLeast, type AssetDef } from '../../assets/types';
+import { palette, type PaletteToken } from '../../data/palette';
+import { characterNodes } from '../../data/survivor';
+import { batchRigidParts } from './batchRigidParts';
+import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
+import type { Materials } from '../Materials';
+import type { PaletteMaterial } from '../PaletteMaterial';
+import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
+import { disposeCharacter, loadCharacter } from './rig';
+import { alignSkeleton } from './skin';
+import { skinClips } from './clips';
+import { GunAim, type LongGunHold } from './GunAim';
+import { LimbIK } from './LimbIK';
+import { RiderContacts } from './RiderContacts';
+import { CourierLiving } from './CourierRig';
+import { courierForegroundOn, useCourierDepth } from './courierDepth';
+import { adultMaleStandingHeight, heroineStandingHeight } from '../npc/figureHeight';
+
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+/** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
+export class CharacterView extends Group {
+  constructor() { super(); this.userData.nodeBuildScope = 'character'; }
+  /** The same presentation silhouette used through faded buildings: keep the
+   * courier readable at boss contact without dissolving the boss's body. Called every frame: the near-camera depth
+   * slice is a uniform switch (courierDepth, Q-208: no shader rebuild); later attachments get the shared depth node. */
+  setForeground(active: boolean): void {
+    courierForegroundOn.value = active ? 1 : 0;
+    const order = active ? 20 : 0;
+    this.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) useCourierDepth(material);
+      node.renderOrder = order;
+    });
+  }
+  private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
+  private variant: SurvivorVariant = 'female';
+  private tier: GearTier = 0;
+  private readonly facingAxis = new Vector3(0, 1, 0);
+  private facingTime = -1;
+  private turn = 0;
+  private readonly bloodMaterials: PaletteMaterial[] = [];
+  /** `outfit` picks the hero model set: campaign levels keep the courier (E19). Same rig and clips. */
+  /** Both couriers share the fitted skinned rig and clips; skin=0 keeps the release fallback. */
+  skinned = false;
+  private readonly riders = new Map<SurvivorVariant, { arms: [LimbIK, LimbIK]; legs: [LimbIK, LimbIK]; soleHeight: number }>();
+  private readonly lastContacts = new RiderContacts();
+  private readonly contactTarget = new Vector3();
+  private readonly pole = new Vector3();
+  private readonly contactRotation = new Quaternion();
+  private readonly gripRotation = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), Math.PI / 2);
+  private readonly riderLean = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), -.7);
+  private readonly riderGaze = this.riderLean.clone().invert();
+  private readonly mountOffset = new Vector3();
+  private readonly transitionOffset = new Vector3();
+  private readonly lastPresented = new Vector3();
+  private readonly lastPresentedRotation = new Quaternion();
+  private readonly transitionRotation = new Quaternion();
+  private contactHistory = false;
+  private rideAttached = false;
+  private contactEvaluation = -1;
+  private readonly appliedOffset = new Vector3();
+  private readonly appliedRotation = new Quaternion();
+  cpuMs = 0;
+  get skinActive(): boolean { return this.riders.has(this.variant); }
+  /** Rest-pose ankle height above the sole (rig units) of the drawn skinned courier: the ground contacts' own sole. */
+  get restSole(): number | undefined { return this.riders.get(this.variant)?.soleHeight; }
+  /** Held gear remains stowed until the hands have released the bicycle. */
+  get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
+  private prepareVariant?: (variant: SurvivorVariant) => Promise<void>;
+  private readonly variantLoads = new Map<SurvivorVariant, Promise<void>>();
+  /** A menu selection can change while L1 is loading behind it. Join preparation
+   * before revealing that choice, without downloading both cosmetics at boot. */
+  async readyVariant(variant: SurvivorVariant): Promise<boolean> {
+    if (this.characters.has(variant)) return false;
+    if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
+    await this.variantLoads.get(variant); return true;
+  }
+  /** Variants whose skinned body is a textured 3D-pipeline body (the female courier since 10-24). */
+  readonly textured = new Set<SurvivorVariant>();
+  private readonly textureReleases: (() => void)[] = [];
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null, lamp = false): Promise<void> {
+    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant, lamp);
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    // null arms later preparation while a speculative L1 awaits the menu choice.
+    for (const variant of selected === null ? [] : selected ? [selected] : ['female', 'male'] as const) {
+      if (this.characters.has(variant)) continue;
+      const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
+      let isSkin = false;
+      const character = await loadCharacter(variant, async () => {
+        if (!def || !atLeast(def.status, 'integrated')) {
+          const reason = def ? `status ${def.status}` : 'missing manifest entry';
+          throw new Error(reason);
+        }
+        const skinned = skin && outfit === 'courier';
+        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, low ? '.skin.low.glb' : '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        if (skinned && alignSkeleton(scene).length) isSkin = true;
+        return scene;
+      }, def?.dimensions.y);
+      isSkin &&= character.source === 'glb';
+      this.skinned ||= isSkin;
+      if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
+      if (character.source === 'glb') {
+        const bounds = new Box3().setFromObject(character.model), height = bounds.max.y - bounds.min.y;
+        const target = variant === 'female' ? heroineStandingHeight : adultMaleStandingHeight;
+        if (height > 0) { character.model.scale.multiplyScalar(target / height); character.model.updateMatrixWorld(true); }
+      }
+      const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
+      vertexMaterial.movingFigure.value = 1; vertexMaterial.heroFigure.value = 1;
+      vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
+      if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
+      const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
+      batchRigidParts(character.model, boundaries, vertexMaterial, source => {
+        const token = source.name.replace(/^pal_/, '') as PaletteToken;
+        return ['survivorRed', 'backpackTeal', 'picketWhite'].includes(token) ? new Color(palette[token]) : (source as import('three').MeshStandardMaterial).color;
+      });
+      const oldMaterials = new Set<Material>(), replacements = new Map<Material, Material>();
+      character.model.traverse((object) => {
+        if (!(object instanceof Mesh)) return;
+        const remap = (source: Material): Material => {
+          if (source === vertexMaterial) return source;
+          if (source.name === 'pal_vertexColor' || source.name === 'tex_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
+          const map = (source as import('three').MeshStandardMaterial).map as import('three/webgpu').Texture | null;
+          if (source.name === 'tex_baseColor' && map) {
+            let textured = replacements.get(source);
+            if (textured) return textured;
+            textured = materials.fromTexture(`character:${variant}:tex`, map);
+            textured.userData.sharedPalette = true;
+            // Night lift (Q-178) for the heroine's dark map only: on the male's lighter map it washed him out (L8 start figure luminance
+            // 0.51 vs PROD 0.377 with it, 0.415 without; docs/reports/male-courier/night-l8.json).
+            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1; const lift = (textured as PaletteMaterial).heroNightLift; if (lift) lift.value = variant === 'female' ? 1 : 0;
+            if (bloodFeedback) this.bloodMaterials.push(textured as PaletteMaterial);
+            this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
+            this.textured.add(variant);
+            oldMaterials.add(source); replacements.set(source, textured); return textured;
+          }
+          let replacement = replacements.get(source);
+          if (replacement) return replacement;
+          const token = source.name.replace(/^pal_/, '') as PaletteToken;
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
+          else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
+          replacement.userData.sharedPalette = true;
+          (replacement as PaletteMaterial).movingFigure.value = 1; (replacement as PaletteMaterial).heroFigure.value = 1;
+          if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
+          oldMaterials.add(source); replacements.set(source, replacement); return replacement;
+        };
+        object.material = Array.isArray(object.material) ? object.material.map(remap) : remap(object.material);
+        object.castShadow = object.receiveShadow = true;
+      });
+      for (const material of oldMaterials) material.dispose();
+      // PO 10-19 (P1, "The girl now has a bug on front???"): the old tier 1-4 boxes and the rigid tier-2 GLB floated off the skinned body.
+      // Tier gear is now one skinned mesh (assets/acc.courier-gear) bound to the body's own skeleton with the body's skin weights,
+      // so it deforms with the figure; the tier only moves its draw range (1 extra draw call, the body's vertex-colour material).
+      const gear: Group[] = [];
+      // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
+      const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
+      let tierGear: LoadedCharacter['tierGear'];
+      // Tier gear is ray-fitted to each body's own surface (assets/acc.courier-gear/build.py), the textured female included.
+      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial, map => {
+        const textured = materials.fromTexture(`character:${variant}:gear`, map);
+        textured.userData.sharedPalette = true; textured.movingFigure.value = 1; textured.heroFigure.value = 1;
+        const lift = textured.heroNightLift; if (lift) lift.value = variant === 'female' ? 1 : 0;   // same night read as her body (Q-178)
+        if (bloodFeedback) this.bloodMaterials.push(textured);
+        this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
+        return textured;
+      });
+      const pilot = isSkin;
+      if (pilot) {
+        const r = character.rig;
+        this.riders.set(variant, { arms: [new LimbIK(r.armL, r.foreArmL, r.handL), new LimbIK(r.armR, r.foreArmR, r.handR)],
+          legs: [new LimbIK(r.legL, r.shinL, r.footL), new LimbIK(r.legR, r.shinR, r.footR)],
+          soleHeight: r.footL.getWorldPosition(this.scratchA).y - r.root.getWorldPosition(this.scratchB).y });
+      }
+      let canister: Group | undefined;
+      if (cure) {
+        const def = (manifest as AssetDef[]).find(asset => asset.id === 'prop.cure-canister')!;
+        canister = (await loader.loadAsync('/' + (low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        canister.traverse(node => {
+          if (!(node instanceof Mesh)) return;
+          const remap = (source: Material): Material => {
+            const material = node.geometry.hasAttribute('color') && !source.name.startsWith('emi_')
+              ? materials.fromVertexColors('cure:carried')
+              : materials.fromColor(`cure:${source.name}`, (source as import('three').MeshStandardMaterial).color, source.name.startsWith('emi_') ? .6 : 0);
+            material.movingFigure.value = 1; material.heroFigure.value = 1; material.userData.sharedPalette = true;
+            source.dispose(); return material;
+          };
+          node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
+        });
+        canister.name = 'backpack-cure'; canister.visible = false;
+        // Cancel the asset's presentation turn: its frame faces the bag, window faces backward.
+        canister.updateMatrixWorld(true);
+        const back = canister.getObjectByName('backSocket')!.getWorldPosition(new Vector3()).applyAxisAngle(this.facingAxis, Math.PI);
+        canister.rotation.y = Math.PI; canister.scale.setScalar(.8);
+        canister.position.set(-.14, 0, 0).addScaledVector(back, -.8);
+        character.rig.backpackSocket.add(canister);
+        canister.traverse(node => { if (node instanceof Mesh) node.castShadow = true; });
+      }
+      let headlamp: Group | undefined;
+      if (lamp) {
+        headlamp = (await loader.loadAsync(`/assets/models/acc.headlamp${low ? '.lod1' : ''}.glb`)).scene;
+        headlamp.name = 'courier-headlamp'; headlamp.visible = false;
+        // The couriers' authored caps sit above the head pivot (different heights).
+        // The textured heroine has no cap and a smaller head: the lamp sits on her hair, sized to her skull. The textured male
+        // (10-25) keeps his cap at the old cap height (head pivot 1.00 vs 1.02, cap top 1.398 on both), so he keeps the cap fit.
+        if (this.textured.has(variant) && variant === 'female') { headlamp.position.set(.04, .14, 0); headlamp.scale.set(.95, .85, .9); }
+        else {
+          headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
+          headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1);
+        }
+        headlamp.userData.worn = headlamp.scale.clone();
+        headlamp.traverse(node => { if (node instanceof Mesh) {
+          const source = node.material as import('three').MeshStandardMaterial;
+          node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
+          node.material.movingFigure.value = 1; node.material.heroFigure.value = 1;
+          node.material.userData.sharedPalette = true; source.dispose(); node.castShadow = true;
+        } });
+        character.rig.head.add(headlamp);
+      }
+      const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
+      const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      // Before the first compile (warm-up), so the foreground slice never rebuilds her programs during play (Q-208).
+      character.model.traverse(node => { if (node instanceof Mesh) for (const m of Array.isArray(node.material) ? node.material : [node.material]) useCourierDepth(m); });
+    }
+    if (!this.parcel) this.makeParcel(materials);
+  }
+  update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose, strafe = false): void {
+    const started = performance.now();
+    const before = this.characters.get(pose.variant)?.animator.evaluations;
+    if (this.variant !== pose.variant) { this.contactEvaluation = -1; this.contactHistory = false; this.rideAttached = false; }
+    this.variant = pose.variant; this.tier = pose.gearTier;
+    // Look-at is presentation only: off while striking (the body snaps onto the aim), hurt, dead, riding or in scripted actions.
+    this.lookWeight = !['idle', 'walk', 'run'].includes(pose.animation) || pose.attack && tick < pose.attack.endsAt + 6 || ride ? 0 : 1;
+    if (pose.animation === 'hurt') this.hurtTick = pose.animationTick;
+    for (const [variant, character] of this.characters) {
+      character.model.visible = variant === pose.variant;
+      for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
+      if (character.tierGear) {
+        const { mesh, tierTris } = character.tierGear, count = pose.gearTier > 0 ? tierTris[Math.min(pose.gearTier, tierTris.length) - 1] ?? 0 : 0;
+        mesh.visible = count > 0; mesh.geometry.setDrawRange(0, count * 3);
+      }
+      if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn, ride, strafe);
+    }
+    // E19 story: the courier parcel sits between her hands while she carries it.
+    const character = this.characters.get(this.variant);
+    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character && !ride; // riding: the parcel rides in the cargo box (BicycleView)
+    if (this.parcel?.visible && character) {
+      this.updateMatrixWorld(true);
+      const l = character.rig.handL.getWorldPosition(this.scratchA), r = character.rig.handR.getWorldPosition(this.scratchB);
+      this.parcel.position.copy(this.worldToLocal(l.add(r).multiplyScalar(.5))); this.parcel.position.y += .04;
+    }
+    if (this.characters.get(pose.variant)?.animator.evaluations !== before) this.cpuMs = performance.now() - started;
+  }
+  /** Mission inventory is authoritative through death, save/load and installation. */
+  /** PO 10-20 #62: in L6 (`ready`) the lamp stays drawn, collapsed to a point, until carried, so its materials link while loading, never at the pickup. */
+  showHeadlamp(carried: boolean, ready = false): void {
+    for (const character of this.characters.values()) {
+      const lamp = character.headlamp; if (!lamp) continue;
+      lamp.visible = carried || ready;
+      if (lamp.userData.worn) { if (carried) lamp.scale.copy(lamp.userData.worn); else lamp.scale.setScalar(1e-3); }
+    }
+  }
+  /** Q-303 (PO 10-31 "The headlamp Always goes with the head"): world yaw of the drawn head's forward (+X, the axis the lamp
+   * is mounted on), after strafe/pointer facing, the aim layer and the glance. Null before the figure has loaded. */
+  headYaw(): number | null {
+    const character = this.characters.get(this.variant); if (!character) return null;
+    const head = character.rig.head; head.updateWorldMatrix(true, false);
+    const forward = this.scratchA.set(head.matrixWorld.elements[0], head.matrixWorld.elements[1], head.matrixWorld.elements[2]);
+    return Math.hypot(forward.x, forward.z) < 1e-4 ? this.facing : Math.atan2(-forward.z, forward.x);
+  }
+  showCure(carried: boolean): void {
+    for (const character of this.characters.values()) if (character.cure) character.cure.visible = carried;
+  }
+  private carEvaluation = -1;
+  private readonly carRest = new Map<import('three').Object3D, Quaternion>();
+  /** Repeated renders of a paused tick must not accumulate the step/landing bend. */
+  carStep(bend: number): void {
+    const character = this.characters.get(this.variant); if (!character) return;
+    const nodes = [character.rig.torso, character.rig.legL, character.rig.legR, character.rig.shinL, character.rig.shinR];
+    if (this.carEvaluation !== character.animator.evaluations || !this.carRest.has(character.rig.torso)) {
+      this.carEvaluation = character.animator.evaluations; this.carRest.clear();
+      for (const node of nodes) this.carRest.set(node, node.quaternion.clone());
+    }
+    for (const [i, node] of nodes.entries()) { node.quaternion.copy(this.carRest.get(node)!); node.rotateZ(bend * (i >= 3 ? 2 : -1)); }
+  }
+  /** Seat and limb contacts are applied after the mixer. Mount/dismount fades
+   * use the presentation clock; the bike and survivor simulation never change. */
+  applyRideContacts(contacts?: RiderContacts): void {
+    const character = this.characters.get(this.variant), rider = this.riders.get(this.variant);
+    if (!rider || !character) return;
+    const started = performance.now(), weight = character.animator.rideWeight;
+    if (this.contactEvaluation === character.animator.evaluations) {
+      this.position.add(this.appliedOffset);
+      this.quaternion.copy(contacts && weight >= 1 ? contacts.orientation : this.appliedRotation);
+      if (contacts && weight >= 1) this.seatPelvis(contacts.seat, -.04);
+      this.presentLiving(character, weight);
+      return;
+    }
+    this.contactEvaluation = character.animator.evaluations;
+    this.appliedOffset.copy(this.position).multiplyScalar(-1);
+    if (!!contacts !== this.rideAttached) {
+      // The sim seats/exits instantly. Start the visual transfer at the last
+      // presented position, including the parked-bike capsule clearance.
+      this.transitionOffset.copy(this.contactHistory ? this.lastPresented : this.position).sub(this.position);
+      this.transitionRotation.copy(this.contactHistory ? this.lastPresentedRotation : this.quaternion);
+      this.rideAttached = !!contacts;
+    }
+    this.position.addScaledVector(this.transitionOffset, contacts ? 1 - weight : weight);
+    if (contacts) this.quaternion.copy(this.transitionRotation).slerp(contacts.orientation, weight);
+    else if (weight > 0) this.quaternion.slerp(this.transitionRotation, weight);
+    if (contacts) {
+      for (const name of ['seat', 'handL', 'handR', 'footL', 'footR'] as const) this.lastContacts[name].copy(contacts[name]);
+      this.lastContacts.orientation.copy(contacts.orientation);
+    }
+    if (contacts && weight > 0) {
+      this.updateMatrixWorld(true); character.rig.hip.getWorldPosition(this.scratchA);
+      this.mountOffset.copy(contacts.seat).sub(this.scratchA); this.mountOffset.y -= .04;
+      this.position.addScaledVector(this.mountOffset, weight);
+    }
+    if (weight > 0) {
+      character.rig.torso.quaternion.slerp(this.riderLean, weight);
+      character.rig.head.quaternion.premultiply(this.contactRotation.identity().slerp(this.riderGaze, weight));
+      this.updateMatrixWorld(true);
+      const c = this.lastContacts, scale = this.scale.y;
+      this.contactRotation.copy(c.orientation).multiply(this.gripRotation);
+      for (const [i, side] of (['L', 'R'] as const).entries()) {
+        // The clamped weapon socket lies inside the mitten's curled fingers.
+        this.contactTarget.copy(character.rig[`weaponSocket${side}`].position).multiplyScalar(character.rig.handL.getWorldScale(this.scratchA).y).applyQuaternion(this.contactRotation);
+        this.contactTarget.multiplyScalar(-1).add(c[`hand${side}`]);
+        this.pole.set(-.3, -.5, side === 'L' ? -1 : 1).applyQuaternion(c.orientation);
+        rider.arms[i].solve(this.contactTarget, this.pole, this.contactRotation, weight);
+        this.contactTarget.set(0, rider.soleHeight * scale, 0).applyQuaternion(c.orientation).add(c[`foot${side}`]);
+        this.pole.set(1, 0, side === 'L' ? -.15 : .15).applyQuaternion(c.orientation);
+        rider.legs[i].solve(this.contactTarget, this.pole, c.orientation, weight);
+      }
+      this.updateMatrixWorld(true);
+    }
+    this.appliedOffset.add(this.position); this.appliedRotation.copy(this.quaternion);
+    this.lastPresented.copy(this.position); this.lastPresentedRotation.copy(this.quaternion); this.contactHistory = true;
+    this.presentLiving(character, weight);
+    this.cpuMs += performance.now() - started;
+  }
+  /** World point the courier glances at (nearest threat or target), or null. Presentation only. */
+  glanceAt(target: Vector3 | null): void { if (target) this.lookTarget.copy(target); this.looking = !!target; }
+  private readonly lookTarget = new Vector3();
+  private looking = false;
+  private lookWeight = 0;
+  private hurtTick = -1;
+  /** Skeleton v2 living layer (look-at, blink, ponytail, bag, helpers): the last pose layer of the frame. */
+  private presentLiving(character: LoadedCharacter, rideWeight: number): void {
+    if (!character.living) return;
+    character.model.updateWorldMatrix(true, true);
+    character.living.present({ time: character.animator.time, evaluation: character.animator.evaluations, look: this.looking ? this.lookTarget : null,
+      lookWeight: rideWeight > 0 ? 0 : this.lookWeight, hurtTick: this.hurtTick, ground: rideWeight > 0 ? undefined : character.rig.root.getWorldPosition(this.scratchA).y });
+  }
+  /** Riding: moves the whole figure so its pelvis lands on `target` (world, the saddle) after this frame's pose update. */
+  seatPelvis(target: Vector3, lift = 0): void {
+    const character = this.characters.get(this.variant); if (!character) return;
+    this.updateMatrixWorld(true); character.rig.hip.getWorldPosition(this.scratchA);
+    this.position.x += target.x - this.scratchA.x; this.position.z += target.z - this.scratchA.z; this.position.y += target.y + lift - this.scratchA.y;
+    this.updateMatrixWorld(true);
+  }
+  /** Solve the arms after seating: keep the authored limb lengths and place each palm on its grip. */
+  holdHandlebar(left: Vector3, right: Vector3): void {
+    const character = this.characters.get(this.variant); if (!character) return;
+    for (const [side, grip] of [['L', left], ['R', right]] as const) {
+      const arm = character.rig[`arm${side}`], forearm = character.rig[`foreArm${side}`], hand = character.rig[`hand${side}`];
+      this.updateMatrixWorld(true);
+      const target = arm.parent!.worldToLocal(grip.clone()).sub(arm.position);
+      const a = forearm.position.length(), b = hand.position.length(), d = Math.max(.0001, Math.min(a + b - .0001, target.length()));
+      const axis = target.clone().normalize(), along = (a * a + d * d - b * b) / (2 * d);
+      const bend = new Vector3(0, -1, 0).addScaledVector(axis, axis.y).normalize();
+      const elbow = axis.clone().multiplyScalar(along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
+      arm.quaternion.setFromUnitVectors(forearm.position.clone().normalize(), elbow.clone().normalize());
+      const lower = axis.multiplyScalar(d).sub(elbow).applyQuaternion(arm.quaternion.clone().invert());
+      forearm.quaternion.setFromUnitVectors(hand.position.clone().normalize(), lower.normalize());
+    }
+    this.updateMatrixWorld(true);
+  }
+  private parcel: Group | null = null;
+  private readonly scratchA = new Vector3();
+  private readonly scratchB = new Vector3();
+  /** Cardboard parcel with the teal depot tape (matches the clerk's hand prop). */
+  /** Skinned tier gear: re-binds the gear GLB's vertices to the body's skeleton by bone name. Missing file = no gear, not a failed load. */
+  private async loadTierGear(loader: GLTFLoader, variant: SurvivorVariant, low: boolean, body: Set<Mesh>, material: Material, texture?: (map: import('three/webgpu').Texture) => Material): Promise<LoadedCharacter['tierGear']> {
+    let bodyMesh: SkinnedMesh | undefined;
+    for (const mesh of body) if ((mesh as SkinnedMesh).isSkinnedMesh && (!bodyMesh || mesh.geometry.getAttribute('position').count > bodyMesh.geometry.getAttribute('position').count)) bodyMesh = mesh as SkinnedMesh;
+    if (!bodyMesh) return undefined;
+    try {
+      const scene = (await loader.loadAsync(`/assets/models/acc.courier-gear.${variant}.tiers${low ? '.low' : ''}.glb`)).scene;
+      let source: SkinnedMesh | undefined; scene.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) source = node as SkinnedMesh; });
+      if (!source) return undefined;
+      const tierTris = JSON.parse(String(source.userData.tierTris)) as number[];
+      const index = new Map(bodyMesh.skeleton.bones.map((bone, i) => [bone.name, i]));
+      const map = source.skeleton.bones.map(bone => index.get(bone.name) ?? 0);
+      const joints = source.geometry.getAttribute('skinIndex'), remapped = new Uint16Array(joints.count * 4);
+      for (let i = 0; i < remapped.length; i++) remapped[i] = map[joints.array[i]];
+      const geometry = source.geometry; geometry.setAttribute('skinIndex', new Uint16BufferAttribute(remapped, 4));
+      // Q-183: the gear is painted (one map per survivor, textured toy style like the body) and drawn on the shared textured route.
+      const gearMap = (source.material as import('three').MeshStandardMaterial).map as import('three/webgpu').Texture | null;
+      if (gearMap && texture) material = texture(gearMap);
+      const mesh = new SkinnedMesh(geometry, material);
+      mesh.name = 'courier-tier-gear'; mesh.position.copy(bodyMesh.position); mesh.quaternion.copy(bodyMesh.quaternion); mesh.scale.copy(bodyMesh.scale);
+      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false; mesh.userData.tierTris = tierTris;
+      bodyMesh.parent!.add(mesh); mesh.updateMatrixWorld(true); mesh.bind(bodyMesh.skeleton, bodyMesh.bindMatrix);
+      return { mesh, tierTris };
+    } catch { return undefined; }
+  }
+  private makeParcel(materials: Materials): void {
+    const group = new Group(); group.name = 'carried-parcel'; group.visible = false;
+    const box = new Mesh(new BoxGeometry(.3, .24, .26), materials.fromColor('parcel:card', new Color('#b98a55')));
+    const tape = new Mesh(new BoxGeometry(.31, .045, .08), materials.fromColor('parcel:tape', new Color('#2aa198'))); tape.position.y = .12;
+    for (const mesh of [box, tape]) { mesh.castShadow = true; group.add(mesh); }
+    this.parcel = group; this.add(group);
+  }
+  /** Scene Lab guard (PO 10-19 floating gear): for every visible mesh on the rig that the survivor GLB does not draw itself
+   * (gear, accessories), the largest distance in cm from one of its vertices to the nearest posed body vertex. Held weapons
+   * (hand sockets) and the separately gated headlamp/cure props are skipped. Debug-only: walks posed vertices on the CPU. */
+  looseAttachments(): { name: string; gapCm: number; at: number[] }[] {
+    const character = this.characters.get(this.variant); if (!character || !this.visible) return [];
+    this.updateMatrixWorld(true);
+    const skip = new Set<import('three').Object3D>([character.rig.weaponSocketL, character.rig.weaponSocketR, ...(character.headlamp ? [character.headlamp] : []), ...(character.cure ? [character.cure] : [])]);
+    const shown = (node: import('three').Object3D): boolean => { for (let n: import('three').Object3D | null = node; n; n = n.parent) { if (!n.visible || skip.has(n)) return false; if (n === this) return true; } return false; };
+    const points = (mesh: Mesh, limit: number): Vector3[] => {
+      const position = mesh.geometry.getAttribute('position'), step = Math.max(1, Math.floor(position.count / limit)), out: Vector3[] = [];
+      for (let i = 0; i < position.count; i += step) {
+        const v = new Vector3();
+        if ((mesh as import('three').SkinnedMesh).isSkinnedMesh) (mesh as import('three').SkinnedMesh).getVertexPosition(i, v); else v.fromBufferAttribute(position, i);
+        out.push(v.applyMatrix4(mesh.matrixWorld));
+      }
+      return out;
+    };
+    /** Body surface samples: every posed vertex plus a 1.5 cm grid inside long triangles (decimated flat areas such as the cap have 6 cm
+     * triangles, so nearest-vertex distance overstated the gap there; the guard stays at its limit, only the reference got denser). */
+    const surface = (mesh: Mesh): Vector3[] => {
+      const position = mesh.geometry.getAttribute('position'), index = mesh.geometry.getIndex(), skinned = (mesh as import('three').SkinnedMesh).isSkinnedMesh;
+      const posed: Vector3[] = [];
+      for (let i = 0; i < position.count; i++) {
+        const v = new Vector3();
+        if (skinned) (mesh as import('three').SkinnedMesh).getVertexPosition(i, v); else v.fromBufferAttribute(position, i);
+        posed.push(v.applyMatrix4(mesh.matrixWorld));
+      }
+      const out = posed.slice();
+      if (!index) return out;
+      for (let t = 0; t < index.count; t += 3) {
+        const a = posed[index.getX(t)], b = posed[index.getX(t + 1)], c = posed[index.getX(t + 2)];
+        const edge = Math.max(a.distanceTo(b), b.distanceTo(c), c.distanceTo(a));
+        if (edge < .02) continue;
+        const n = Math.min(8, Math.ceil(edge / .015));
+        for (let i = 1; i < n; i++) for (let j = 1; i + j < n; j++) out.push(new Vector3().addScaledVector(a, 1 - (i + j) / n).addScaledVector(b, i / n).addScaledVector(c, j / n));
+      }
+      return out;
+    };
+    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => surface(mesh));
+    const report: { name: string; gapCm: number; at: number[] }[] = [];
+    character.model.traverse(node => {
+      if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
+      let gap = 0, at = [0, 0, 0], vertex = 0;
+      // Gear shells are closed: their skin-side (inner) vertices lie on the skin by construction and carry `_inner` = 1 (written by the gear
+      // build, assets/acc.courier-gear). The guard measures those, i.e. the gap between the gear and the skin, never a plate's outer face.
+      // Meshes without `_inner` (other accessories) measure every vertex.
+      const inner = node.geometry.getAttribute('_inner'), position = node.geometry.getAttribute('position');
+      // Only drawn geometry counts (Q-171): the tier gear is one mesh whose draw range grows per tier, so at tier 1-3 the
+      // tier-4 goggle vertices exist in the buffer but are not drawn. Vertices are taken from the indexed triangles inside the
+      // draw range; each one is labelled with the tier whose triangles first use it (tierTris, cumulative triangle ends).
+      const index = node.geometry.getIndex(), range = node.geometry.drawRange, tierTris = node.userData.tierTris as number[] | undefined;
+      const drawn = new Map<number, number>();
+      if (index) {
+        const from = Math.max(0, range.start), to = Math.min(index.count, range.start + (Number.isFinite(range.count) ? range.count : index.count));
+        for (let k = from; k < to; k++) { const v = index.getX(k); if (!drawn.has(v)) drawn.set(v, tierTris ? tierTris.findIndex(end => k < end * 3) + 1 : 0); }
+      } else for (let i = 0; i < position.count; i++) drawn.set(i, 0);
+      const all = points(node, position.count), picks: number[] = [];
+      for (const i of drawn.keys()) if (!inner || inner.getX(i) > .5) picks.push(i);
+      picks.sort((a, b) => a - b);
+      const stride = Math.max(1, Math.floor(picks.length / 300));
+      for (let k = 0; k < picks.length; k += stride) {
+        const p = all[picks[k]]; let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
+        if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = picks[k]; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
+      }
+      if (!picks.length) return;
+      const tier = drawn.get(vertex) ?? 0;
+      report.push({ name: `${node.parent?.name || node.name || 'mesh'}${tier ? `.t${tier}` : ''}`, gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
+    });
+    return report;
+  }
+  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
+  /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */
+  /** `striking` snaps the body onto the attack direction (QA1-06: strikes read side-on when the
+   * 6 rad/s locomotion turn lags a 0.27 s jab); locomotion keeps the bounded turn. */
+  /** `spin` (radians) is a presentation-only turn on top of the tracked heading (bat roundhouse, 00 §6.2). */
+  face(yaw: number, time: number, striking = false, frame?: Quaternion, spin = 0): void {
+    if (frame) { this.quaternion.copy(frame); this.facing = yaw; this.facingTime = time; this.turn = 0; return; }
+    // Facing is tracked as a scalar heading. Reading it back from `rotation.y` (an XYZ Euler decomposed from the
+    // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
+    // diagonally (PO: walk micro-vibration).
+    if (this.facingTime < 0 || time < this.facingTime) this.facing = yaw;
+    const dt = Math.max(0, time - this.facingTime);
+    let delta = Math.atan2(Math.sin(yaw - this.facing), Math.cos(yaw - this.facing));
+    if (!striking && Math.abs(delta) < .006) delta = 0;
+    this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
+    const amount = Math.abs(delta) > 0 ? Math.min(1 - Math.exp(-(striking ? 60 : 24) * dt), (striking ? 40 : 6) * dt / Math.abs(delta)) : 1;
+    this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing + spin); this.facingTime = time;
+  }
+  /** Applied after living/ride layers, preserving the animated legs. */
+  aimGun(direction: { x: number; z: number }, elevation = 0, reach = .995, turnTorso = true, lateral = 0, hold?: LongGunHold): void {
+    this.lookWeight = 0;
+    this.characters.get(this.variant)?.aim.apply(direction, undefined, elevation, reach, turnTorso, lateral, hold);
+    this.updateMatrixWorld(true);
+  }
+  private facing = 0;
+  /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
+  /** Rig node of the visible variant (kick trails follow the foot). */
+  node(name: keyof LoadedCharacter['rig']) { return this.characters.get(this.variant)?.rig[name]; }
+  /** Conservative posed-body bounds for world UI, including the head and extended arms. */
+  healthBarBounds(out: Box3): boolean {
+    const character = this.characters.get(this.variant);
+    if (!this.visible || !character?.model.visible) return false;
+    out.makeEmpty();
+    for (const name of ['head', 'hip', 'armL', 'armR', 'handL', 'handR', 'footL', 'footR'] as const) out.expandByPoint(character.rig[name].getWorldPosition(this.scratchA));
+    out.expandByScalar(.3);
+    return true;
+  }
+  /** Sockets of the visible variant; undefined while the figure is (re)loading, e.g. during a level hand-over. */
+  socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)?.sockets[side]; }
+  getState() {
+    const character = this.characters.get(this.variant);
+    return { visible: this.visible, cureVisible: character?.cure?.visible ?? false, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, gearMeshes: character?.gear.filter(g => g.visible).map(g => g.name) ?? [], position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
+      footContacts: character?.animator.footContacts() ?? [], evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
+  }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); for (const release of this.textureReleases.splice(0)) release(); this.textured.clear(); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
+}

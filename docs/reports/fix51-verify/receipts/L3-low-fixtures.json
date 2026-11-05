@@ -1,0 +1,3671 @@
+{
+  "version": 1,
+  "level": "L3",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "checks": [
+    {
+      "id": "L3-02",
+      "clause": "actual wave source, species, direction and police-look census",
+      "value": [
+        {
+          "wave": 0,
+          "expected": 15,
+          "admitted": 15,
+          "byDirection": {
+            "river": 3,
+            "blvd": 3,
+            "oak": 3,
+            "commerce": 3,
+            "station": 3
+          },
+          "bySource": {
+            "blvd": 2,
+            "commerce": 2,
+            "oak": 3,
+            "river": 2,
+            "station": 3,
+            "yard-cover": 3
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 4,
+            "npc.delivery-driver": 2,
+            "npc.jogger": 2,
+            "npc.officer": 3,
+            "npc.suburban-mom": 1
+          },
+          "stationPoliceLook": 3,
+          "station": 3,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 1,
+          "expected": 30,
+          "admitted": 30,
+          "byDirection": {
+            "river": 6,
+            "blvd": 6,
+            "oak": 6,
+            "commerce": 6,
+            "station": 6
+          },
+          "bySource": {
+            "blvd": 6,
+            "commerce": 6,
+            "oak": 6,
+            "river": 6,
+            "station": 6
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 3,
+            "npc.cashier": 5,
+            "npc.delivery-driver": 6,
+            "npc.jogger": 2,
+            "npc.officer": 6,
+            "npc.suburban-mom": 5
+          },
+          "stationPoliceLook": 6,
+          "station": 6,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 2,
+          "expected": 50,
+          "admitted": 50,
+          "byDirection": {
+            "river": 10,
+            "blvd": 10,
+            "oak": 10,
+            "commerce": 10,
+            "station": 10
+          },
+          "bySource": {
+            "blvd": 10,
+            "commerce": 10,
+            "oak": 10,
+            "river": 10,
+            "station": 10
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 5,
+            "npc.bbq-dad": 11,
+            "npc.cashier": 4,
+            "npc.delivery-driver": 5,
+            "npc.jogger": 9,
+            "npc.officer": 10,
+            "npc.suburban-mom": 6
+          },
+          "stationPoliceLook": 10,
+          "station": 10,
+          "missingAppearance": 0
+        }
+      ],
+      "target": "each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-09",
+      "clause": "native L3 human speed and admitted sprinter fraction",
+      "value": {
+        "count": 1696,
+        "sprinters": 84,
+        "fraction": 0.049528301886792456,
+        "regularMax": 4,
+        "outcome": "complete",
+        "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
+      },
+      "target": "regular≤4m/s; sprinters≤5% of actual admissions",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-07",
+      "clause": "mortal segment1 officers land kills and player damage",
+      "value": {
+        "officerKills": 9,
+        "playerKills": 6,
+        "damage": 0,
+        "share": 0.6,
+        "deaths": 1,
+        "outcome": "complete"
+      },
+      "target": "officers land at least one kill; player damage<100HP",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-08",
+      "clause": "authored segment populations before admission/death relief",
+      "value": [
+        250,
+        600,
+        1030
+      ],
+      "target": "250/625/1000 each±20%; these are pending population slots, not simultaneous live entities",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-08",
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "value": {
+        "prepopulated": [
+          250,
+          600,
+          1030
+        ],
+        "near30": [
+          3,
+          23,
+          29
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      },
+      "target": "medianS1<S2<S3;max≤200high/100low",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "native squad cardinality and loss causes (formation/teleport review open)",
+      "value": {
+        "atFallback": 4,
+        "segmentEnds": [
+          4,
+          1,
+          1
+        ],
+        "atCheckpoint": 1,
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 126.85
+          },
+          {
+            "cause": "bite",
+            "t": 208.35
+          },
+          {
+            "cause": "bite",
+            "t": 214.48333333333332
+          }
+        ],
+        "turnedInCorridor": 0,
+        "protected": 0,
+        "maxJumpM": 0.13136264052676874,
+        "near8Share": 1,
+        "followRange": [
+          {
+            "id": 30,
+            "samples": 55,
+            "within3to6": 52,
+            "minM": 4.739992556384009,
+            "medianM": 5.754150922803517,
+            "maxM": 7.4635789679913
+          },
+          {
+            "id": 31,
+            "samples": 55,
+            "within3to6": 52,
+            "minM": 4.322399762479623,
+            "medianM": 5.619907839891667,
+            "maxM": 6.671842107884287
+          },
+          {
+            "id": 32,
+            "samples": 55,
+            "within3to6": 7,
+            "minM": 5.393776776224756,
+            "medianM": 6.475450421449417,
+            "maxM": 7.8137652095043215
+          },
+          {
+            "id": 33,
+            "samples": 55,
+            "within3to6": 11,
+            "minM": 4.872193837961474,
+            "medianM": 6.363784446482939,
+            "maxM": 7.39683146497342
+          }
+        ]
+      },
+      "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "calm squad following distance by member",
+      "value": [
+        {
+          "id": 30,
+          "samples": 55,
+          "within3to6": 52,
+          "minM": 4.739992556384009,
+          "medianM": 5.754150922803517,
+          "maxM": 7.4635789679913
+        },
+        {
+          "id": 31,
+          "samples": 55,
+          "within3to6": 52,
+          "minM": 4.322399762479623,
+          "medianM": 5.619907839891667,
+          "maxM": 6.671842107884287
+        },
+        {
+          "id": 32,
+          "samples": 55,
+          "within3to6": 7,
+          "minM": 5.393776776224756,
+          "medianM": 6.475450421449417,
+          "maxM": 7.8137652095043215
+        },
+        {
+          "id": 33,
+          "samples": 55,
+          "within3to6": 11,
+          "minM": 4.872193837961474,
+          "medianM": 6.363784446482939,
+          "maxM": 7.39683146497342
+        }
+      ],
+      "target": "every sampled living officer follows 3–6 m from the courier outside combat",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-11",
+      "clause": "initial authored medkit entities by street",
+      "value": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "target": "≥2 perstreet;≥7total",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual first handgun acquisition clock",
+      "value": 4.45,
+      "target": "≤40s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-11",
+      "clause": "mortal newbie time below20percent HP",
+      "value": {
+        "share": 0,
+        "outcome": "complete",
+        "deaths": 0,
+        "simulatedSeconds": 219.58333333333334
+      },
+      "target": "≤10% of alive samples; fullroute completed",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "exact first-of fallback boundary and cause",
+      "value": {
+        "fallbackBoundary": [
+          {
+            "tick": 3013,
+            "firstEligibleTick": 3013,
+            "expectedCause": "turned",
+            "actualCause": "turned",
+            "inside": 6,
+            "turned": 3,
+            "elapsed": 613
+          }
+        ],
+        "delayedFallback": false
+      },
+      "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "idle fallback deadline and officer identity/uniform",
+      "value": {
+        "officers": 10,
+        "directions": [
+          "station",
+          "commerce",
+          "river",
+          "blvd",
+          "oak"
+        ],
+        "turnedDuring": 3,
+        "sameLook": true,
+        "fallbackCause": "turned",
+        "fallbackAfterS": 10.216666666666667
+      },
+      "target": "fallback≤60s afterattack;≥1 officer turns;uniform retained",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "controlled first-of fallback boundaries",
+      "value": [
+        {
+          "name": "seven inside",
+          "inside": 7,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "eight inside",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": "inside",
+          "actual": "inside",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "two turned",
+          "inside": 0,
+          "turned": 2,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "three turned",
+          "inside": 0,
+          "turned": 3,
+          "elapsed": 1,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "one tick before60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3599,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "exactly60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "time",
+          "actual": "time",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "simultaneous thresholds",
+          "inside": 8,
+          "turned": 3,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "station cohort excluded",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": true,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        }
+      ],
+      "target": "3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure schedule and offscreen source band",
+      "value": [
+        {
+          "tick": 5743,
+          "afterLastAdvanceS": 20,
+          "furthest": -79.93704986572266,
+          "queued": [
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            }
+          ]
+        },
+        {
+          "tick": 6343,
+          "afterLastAdvanceS": 30,
+          "furthest": -79.93704986572266,
+          "queued": [
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            }
+          ]
+        }
+      ],
+      "target": "idle≥20s;25–75 queued;source15–35m behind and offscreen",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure actual admissions per full ten-second window",
+      "value": [
+        {
+          "tick": 5743,
+          "seconds": 10,
+          "actualAdmissions": 30
+        }
+      ],
+      "target": "25–75 actual admissions per10s, distinct from pending demand",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native pressure queued admissions stop on advance",
+      "value": {
+        "tick": 6816,
+        "player": {
+          "x": -79.3884506225586,
+          "y": 0.7099999785423279,
+          "z": 27.73455047607422,
+          "yaw": -0.0037332447678338986
+        },
+        "pressureAt": 0,
+        "queued": 0
+      },
+      "target": "pressure clock cleared and zero unadmitted pressure entries after advancing",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "handgun hits versus40 HP specimen",
+      "value": {
+        "weapon": "weapon.handgun",
+        "flank": false,
+        "initialHp": 40,
+        "endHp": 0,
+        "hitCount": 2,
+        "seconds": 0.45,
+        "hpAmounts": [
+          20,
+          20
+        ],
+        "isolatedAI": true
+      },
+      "target": "2 hits",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "L3/complete": {
+      "protected": false,
+      "medkits": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "report": {
+        "profile": "complete",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 274.1,
+        "deaths": 1,
+        "kills": 0,
+        "knockdowns": 103,
+        "damage": 189.66666666666595,
+        "timeline": [
+          {
+            "type": "l3.handgun",
+            "t": 4.45
+          },
+          {
+            "type": "objective:armory",
+            "t": 4.45
+          },
+          {
+            "type": "l3.attack",
+            "t": 9.45
+          },
+          {
+            "type": "l3.wave",
+            "t": 9.45
+          },
+          {
+            "type": "l3.wave",
+            "t": 29.45
+          },
+          {
+            "type": "l3.fallback",
+            "t": 36.11666666666667
+          },
+          {
+            "type": "objective:defend",
+            "t": 36.11666666666667
+          },
+          {
+            "type": "l3.segment",
+            "t": 40.56666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 58.516666666666666
+          },
+          {
+            "type": "l3.segment",
+            "t": 109.05
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 126.85
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 172.41666666666666
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 172.43333333333334
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 174.15
+          },
+          {
+            "type": "l3.segment",
+            "t": 175.45
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 208.35
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 214.48333333333332
+          },
+          {
+            "type": "l3.segment",
+            "t": 216.25
+          },
+          {
+            "type": "l3.segment",
+            "t": 234.98333333333332
+          },
+          {
+            "type": "l3.crossed",
+            "t": 259.1
+          },
+          {
+            "type": "objective:checkpoint",
+            "t": 274.1
+          }
+        ],
+        "handgunS": 4.45,
+        "handgunShots": 245,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 1,
+          "sameLook": true,
+          "fallbackCause": "inside",
+          "fallbackAfterS": 26.666666666666668
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            4,
+            1,
+            1
+          ],
+          "atCheckpoint": 1,
+          "losses": [
+            {
+              "cause": "bite",
+              "t": 126.85
+            },
+            {
+              "cause": "bite",
+              "t": 208.35
+            },
+            {
+              "cause": "bite",
+              "t": 214.48333333333332
+            }
+          ],
+          "turnedInCorridor": 0,
+          "protected": 0,
+          "maxJumpM": 0.13136264052676874,
+          "near8Share": 1,
+          "followRange": [
+            {
+              "id": 30,
+              "samples": 55,
+              "within3to6": 52,
+              "minM": 4.739992556384009,
+              "medianM": 5.754150922803517,
+              "maxM": 7.4635789679913
+            },
+            {
+              "id": 31,
+              "samples": 55,
+              "within3to6": 52,
+              "minM": 4.322399762479623,
+              "medianM": 5.619907839891667,
+              "maxM": 6.671842107884287
+            },
+            {
+              "id": 32,
+              "samples": 55,
+              "within3to6": 7,
+              "minM": 5.393776776224756,
+              "medianM": 6.475450421449417,
+              "maxM": 7.8137652095043215
+            },
+            {
+              "id": 33,
+              "samples": 55,
+              "within3to6": 11,
+              "minM": 4.872193837961474,
+              "medianM": 6.363784446482939,
+              "maxM": 7.39683146497342
+            }
+          ]
+        },
+        "s1": {
+          "officerKills": 9,
+          "playerKills": 6,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [
+            7.616703731954371,
+            8.096290583684036,
+            6.617556377485632,
+            6.318387407780425,
+            5.813835947030548,
+            15.557206760831752,
+            15.556194039877644,
+            7.616703731954371,
+            6.617556377485632,
+            4.570633325149166,
+            4.057613599072441,
+            3.3126615142421314,
+            6.676128963119231,
+            8.1173762912349,
+            7.263319596037586,
+            7.34607976802098,
+            7.265126135016109,
+            6.2205781336395,
+            7.8864831572704395,
+            4.700243112480704,
+            4.622088301903829,
+            7.218057572216375,
+            7.342774404656423,
+            3.6181388646959465,
+            3.599202977144969,
+            6.812069435505689,
+            7.40394074373421,
+            7.603422872666451,
+            7.2413340671221835,
+            7.576875590252601,
+            4.68617473017696,
+            8.28778612217739,
+            8.371275760207745,
+            7.239827067794434,
+            4.219764201111356,
+            8.374316082318163,
+            6.775553845014951,
+            3.2790250911618513,
+            4.309575662893228,
+            8.731973498370339,
+            6.02553784887747,
+            2.877030964911584,
+            2.847869175716283,
+            3.3203776962548655,
+            3.5722222222222046,
+            2.9927960598506322,
+            2.449750036318763,
+            8.893993057788045,
+            7.510453178753526,
+            7.992498441403978,
+            6.872111693280077,
+            4.833111693718796,
+            4.583202196294596,
+            3.685313320312902,
+            4.424283002928663,
+            7.735119588733306,
+            6.791971914934761,
+            7.611525851472144,
+            4.526674126392764,
+            4.9931766753501705,
+            7.707720522978082,
+            5.818205039672471,
+            4.64532599853171,
+            5.567542319374888,
+            5.409765687816119,
+            2.042047268152934,
+            5.939927599160258,
+            6.212565378871859,
+            3.695637259644196
+          ],
+          "melee": [
+            1.0799999999999976,
+            2.4288268519402085,
+            1.4151993365521003,
+            2.0731864756896625,
+            1.0695871184062733,
+            1.0799999999999965,
+            1.165876319513924,
+            1.156801418945746,
+            2.0969136072061882,
+            1.369814444966761,
+            1.079561995234321,
+            1.7269983440277887,
+            1.0800000000000027,
+            2.1977154711595315,
+            2.2822489034706193,
+            1.5028638619521824,
+            1.0800000000000003,
+            1.1281352071044632,
+            2.0080644652206967,
+            1.0900853644083897,
+            1.0783615629441843,
+            1.1643787023982612,
+            1.1614093234944478,
+            1.3922733812401518,
+            1.0101075317027155,
+            1.0091834624608265,
+            1.053759290461318,
+            1.00605763560002,
+            1.7794047078106088,
+            1.8355906098360857,
+            1.143693739065251,
+            0.6888800732537533,
+            0.6529392401288323,
+            1.7725240861407607
+          ]
+        },
+        "regressionM": 5.3251953125,
+        "streets": [
+          "commerce",
+          "oak",
+          "blvd"
+        ],
+        "density": {
+          "prepopulated": [
+            250,
+            600,
+            1030
+          ],
+          "near30": [
+            3,
+            23,
+            29
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        },
+        "medkits": 3,
+        "lowHpShare": 0.00734978869357506,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 66,
+          "emerged": 1349,
+          "emergeSeen": 0
+        },
+        "deathsAt": [
+          "191s@75,-23/corridor"
+        ]
+      }
+    },
+    "L3/wave-source-species-direction-census": [
+      {
+        "wave": 0,
+        "expected": 15,
+        "admitted": 15,
+        "byDirection": {
+          "river": 3,
+          "blvd": 3,
+          "oak": 3,
+          "commerce": 3,
+          "station": 3
+        },
+        "bySource": {
+          "blvd": 2,
+          "commerce": 2,
+          "oak": 3,
+          "river": 2,
+          "station": 3,
+          "yard-cover": 3
+        },
+        "bySpecies": {
+          "npc.bathrobe-neighbor": 3,
+          "npc.bbq-dad": 4,
+          "npc.delivery-driver": 2,
+          "npc.jogger": 2,
+          "npc.officer": 3,
+          "npc.suburban-mom": 1
+        },
+        "stationPoliceLook": 3,
+        "station": 3,
+        "missingAppearance": 0
+      },
+      {
+        "wave": 1,
+        "expected": 30,
+        "admitted": 30,
+        "byDirection": {
+          "river": 6,
+          "blvd": 6,
+          "oak": 6,
+          "commerce": 6,
+          "station": 6
+        },
+        "bySource": {
+          "blvd": 6,
+          "commerce": 6,
+          "oak": 6,
+          "river": 6,
+          "station": 6
+        },
+        "bySpecies": {
+          "npc.bathrobe-neighbor": 3,
+          "npc.bbq-dad": 3,
+          "npc.cashier": 5,
+          "npc.delivery-driver": 6,
+          "npc.jogger": 2,
+          "npc.officer": 6,
+          "npc.suburban-mom": 5
+        },
+        "stationPoliceLook": 6,
+        "station": 6,
+        "missingAppearance": 0
+      },
+      {
+        "wave": 2,
+        "expected": 50,
+        "admitted": 50,
+        "byDirection": {
+          "river": 10,
+          "blvd": 10,
+          "oak": 10,
+          "commerce": 10,
+          "station": 10
+        },
+        "bySource": {
+          "blvd": 10,
+          "commerce": 10,
+          "oak": 10,
+          "river": 10,
+          "station": 10
+        },
+        "bySpecies": {
+          "npc.bathrobe-neighbor": 5,
+          "npc.bbq-dad": 11,
+          "npc.cashier": 4,
+          "npc.delivery-driver": 5,
+          "npc.jogger": 9,
+          "npc.officer": 10,
+          "npc.suburban-mom": 6
+        },
+        "stationPoliceLook": 10,
+        "station": 10,
+        "missingAppearance": 0
+      }
+    ],
+    "L3/newbie": {
+      "protected": false,
+      "medkits": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "report": {
+        "profile": "newbie",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 219.58333333333334,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 53,
+        "damage": 66,
+        "timeline": [
+          {
+            "type": "l3.handgun",
+            "t": 4.516666666666667
+          },
+          {
+            "type": "objective:armory",
+            "t": 4.516666666666667
+          },
+          {
+            "type": "l3.attack",
+            "t": 9.516666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 9.516666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 29.516666666666666
+          },
+          {
+            "type": "l3.fallback",
+            "t": 35.95
+          },
+          {
+            "type": "objective:defend",
+            "t": 35.95
+          },
+          {
+            "type": "l3.wave",
+            "t": 49.516666666666666
+          },
+          {
+            "type": "l3.segment",
+            "t": 50.21666666666667
+          },
+          {
+            "type": "l3.segment",
+            "t": 100.33333333333333
+          },
+          {
+            "type": "l3.segment",
+            "t": 152.41666666666666
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 156.55
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 162.13333333333333
+          },
+          {
+            "type": "l3.segment",
+            "t": 173.68333333333334
+          },
+          {
+            "type": "l3.crossed",
+            "t": 204.58333333333334
+          },
+          {
+            "type": "objective:checkpoint",
+            "t": 219.58333333333334
+          }
+        ],
+        "handgunS": 4.516666666666667,
+        "handgunShots": 183,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 1,
+          "sameLook": true,
+          "fallbackCause": "inside",
+          "fallbackAfterS": 26.433333333333334
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            4,
+            4,
+            2
+          ],
+          "atCheckpoint": 2,
+          "losses": [
+            {
+              "cause": "bite",
+              "t": 156.55
+            },
+            {
+              "cause": "bite",
+              "t": 162.13333333333333
+            }
+          ],
+          "turnedInCorridor": 1,
+          "protected": 0,
+          "maxJumpM": 0.10357709600529717,
+          "near8Share": 0.9455409356725146,
+          "followRange": [
+            {
+              "id": 30,
+              "samples": 30,
+              "within3to6": 18,
+              "minM": 4.109015395908237,
+              "medianM": 5.774016339513592,
+              "maxM": 8.001710276382035
+            },
+            {
+              "id": 31,
+              "samples": 30,
+              "within3to6": 20,
+              "minM": 4.895959254361117,
+              "medianM": 5.646298480698224,
+              "maxM": 9.969902175790603
+            },
+            {
+              "id": 32,
+              "samples": 30,
+              "within3to6": 6,
+              "minM": 4.27357547550588,
+              "medianM": 6.400260218815028,
+              "maxM": 10.311528417604729
+            },
+            {
+              "id": 33,
+              "samples": 30,
+              "within3to6": 6,
+              "minM": 4.890881717048349,
+              "medianM": 6.395672645208194,
+              "maxM": 12.030282034901257
+            }
+          ]
+        },
+        "s1": {
+          "officerKills": 3,
+          "playerKills": 9,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [
+            7.691646789666909,
+            5.534180189666911,
+            7.885802570682246,
+            11.497242782531579,
+            11.316242084888357,
+            2.2521710471802505,
+            2.657257923206016,
+            7.417519385436369,
+            4.970045282892332,
+            4.400118316365861,
+            10.113554874015637,
+            9.058115208962503,
+            8.029669803375793,
+            6.0234593156928975,
+            4.456073016298861,
+            3.116225096190064,
+            3.8375235647552324,
+            6.96893288142017,
+            6.0076947146261155,
+            5.019941790971954,
+            3.7694604930930553,
+            3.0863233660842364,
+            2.507517615208092,
+            4.788677758500428,
+            6.307859671721567,
+            9.658680959233866,
+            8.740286378332257,
+            10.299835012472382,
+            8.986014621954324,
+            5.280390465817888,
+            5.537540134493654,
+            9.821047956128718,
+            10.113835538554023,
+            9.174347869398385,
+            6.972704403486716,
+            8.630609680399255,
+            5.483645206141235,
+            2.4494994692221126,
+            2.4623150527574795,
+            4.2217576204151674,
+            2.484900838968559
+          ],
+          "melee": [
+            2.207634127660895,
+            1.6443693987749046,
+            1.6297984173562878,
+            2.0464736576000844,
+            1.2932225905093093,
+            1.492569341125164,
+            2.3307790792386176,
+            1.0799999999999994,
+            1.1271099258776072,
+            1.0362557781087023,
+            1.0114431908012254,
+            0.9058042770256682
+          ]
+        },
+        "regressionM": 9.816567122936249,
+        "streets": [
+          "commerce",
+          "oak",
+          "blvd"
+        ],
+        "density": {
+          "prepopulated": [
+            250,
+            600,
+            1030
+          ],
+          "near30": [
+            5,
+            24,
+            29
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        },
+        "medkits": 4,
+        "lowHpShare": 0,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 9,
+          "emerged": 1638,
+          "emergeSeen": 0
+        },
+        "deathsAt": []
+      }
+    },
+    "L3/idle": {
+      "protected": false,
+      "medkits": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "report": {
+        "profile": "idle",
+        "street": "auto",
+        "seed": 1,
+        "outcome": "timeout",
+        "simSeconds": 110,
+        "deaths": 2,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 266,
+        "timeline": [
+          {
+            "type": "l3.attack",
+            "t": 40
+          },
+          {
+            "type": "l3.wave",
+            "t": 40
+          },
+          {
+            "type": "l3.fallback",
+            "t": 50.21666666666667
+          },
+          {
+            "type": "objective:defend",
+            "t": 50.21666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 51.15
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 54.46666666666667
+          },
+          {
+            "type": "l3.wave",
+            "t": 63.31666666666667
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 70.1
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 83.83333333333333
+          },
+          {
+            "type": "l3.wave",
+            "t": 92.68333333333334
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 106.5
+          }
+        ],
+        "handgunS": null,
+        "handgunShots": 0,
+        "attack": {
+          "officers": 10,
+          "directions": [
+            "station",
+            "commerce",
+            "river",
+            "blvd",
+            "oak"
+          ],
+          "turnedDuring": 3,
+          "sameLook": true,
+          "fallbackCause": "turned",
+          "fallbackAfterS": 10.216666666666667
+        },
+        "squad": {
+          "atFallback": 4,
+          "segmentEnds": [
+            -1,
+            -1,
+            -1
+          ],
+          "atCheckpoint": -1,
+          "losses": [
+            {
+              "cause": "bite",
+              "t": 83.83333333333333
+            },
+            {
+              "cause": "bite",
+              "t": 106.5
+            }
+          ],
+          "turnedInCorridor": 3,
+          "protected": 0,
+          "maxJumpM": 0.10303988361393764,
+          "near8Share": 1,
+          "followRange": []
+        },
+        "s1": {
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "killDistances": {
+          "gun": [],
+          "melee": []
+        },
+        "regressionM": 0,
+        "streets": [],
+        "density": {
+          "prepopulated": [
+            250,
+            0,
+            0
+          ],
+          "near30": [
+            0,
+            0,
+            0
+          ],
+          "maxConcurrent": 50,
+          "cap": 100
+        },
+        "medkits": 0,
+        "lowHpShare": 0.028459119496855347,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 11,
+          "emerged": 0,
+          "emergeSeen": 0
+        },
+        "deathsAt": [
+          "52s@-156,2/fallback",
+          "81s@-156,2/fallback"
+        ]
+      }
+    },
+    "L3/fallback-boundary": {
+      "fallbackBoundary": [
+        {
+          "tick": 3013,
+          "firstEligibleTick": 3013,
+          "expectedCause": "turned",
+          "actualCause": "turned",
+          "inside": 6,
+          "turned": 3,
+          "elapsed": 613
+        }
+      ],
+      "delayedFallback": false
+    },
+    "forwardPressure": {
+      "tier": "low",
+      "protected": true,
+      "countOnly": true,
+      "start": {
+        "tick": 4530,
+        "player": {
+          "x": -79.97222900390625,
+          "y": 0.7089999914169312,
+          "z": 27.652788162231445,
+          "yaw": -0.3818787006089846
+        },
+        "furthest": -80.44550323486328,
+        "furthestAt": 4530
+      },
+      "holdStart": {
+        "tick": 4590,
+        "player": {
+          "x": -83.94327545166016,
+          "y": 0.7099999785423279,
+          "z": 27.716960906982422,
+          "yaw": -3.141592653589793
+        }
+      },
+      "afterHold": {
+        "tick": 6750,
+        "player": {
+          "x": -84.09326934814453,
+          "y": 0.7049999833106995,
+          "z": 27.716960906982422,
+          "yaw": -3.141592653589793
+        },
+        "pending": 0
+      },
+      "batches": [
+        {
+          "tick": 5743,
+          "afterLastAdvanceS": 20,
+          "furthest": -79.93704986572266,
+          "queued": [
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            }
+          ]
+        },
+        {
+          "tick": 6343,
+          "afterLastAdvanceS": 30,
+          "furthest": -79.93704986572266,
+          "queued": [
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.362950325012207,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.0763312881235,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.711700515747083,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.103700134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.887950134277347,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.019003595815818,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.437950134277344,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.853050134277353,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.98795013427734,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.319450134277346,
+              "offscreen": true
+            }
+          ]
+        }
+      ],
+      "admissions": [
+        {
+          "tick": 5745,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 320,
+          "x": -98.64875038146974,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 29,
+          "live": 21
+        },
+        {
+          "tick": 5748,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 322,
+          "x": -107.79010000000001,
+          "z": 24,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 28,
+          "live": 22
+        },
+        {
+          "tick": 5751,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 324,
+          "x": -98.925,
+          "z": -22.4,
+          "seen": false,
+          "behindLineM": 18.98795013427734,
+          "pending": 27,
+          "live": 23
+        },
+        {
+          "tick": 5754,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 326,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 26,
+          "live": 24
+        },
+        {
+          "tick": 5757,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 328,
+          "x": -109.30000019073486,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 25,
+          "live": 25
+        },
+        {
+          "tick": 5760,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 330,
+          "x": -109.30000019073486,
+          "z": -4.8,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 24,
+          "live": 26
+        },
+        {
+          "tick": 5763,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 332,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 23,
+          "live": 27
+        },
+        {
+          "tick": 5766,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 334,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 22,
+          "live": 28
+        },
+        {
+          "tick": 5769,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 336,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 21,
+          "live": 29
+        },
+        {
+          "tick": 5772,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 338,
+          "x": -107.79010000000001,
+          "z": 25.2,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 20,
+          "live": 30
+        },
+        {
+          "tick": 5775,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 340,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.0763312881235,
+          "pending": 19,
+          "live": 31
+        },
+        {
+          "tick": 5778,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 342,
+          "x": -102.30960685213175,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 22.372556986409094,
+          "pending": 18,
+          "live": 32
+        },
+        {
+          "tick": 5781,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 344,
+          "x": -97.94164360028319,
+          "z": -4.092893218813453,
+          "seen": false,
+          "behindLineM": 18.00459373456053,
+          "pending": 17,
+          "live": 33
+        },
+        {
+          "tick": 5784,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 346,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
+          "seen": false,
+          "behindLineM": 19.44988990053298,
+          "pending": 16,
+          "live": 34
+        },
+        {
+          "tick": 5787,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 348,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.00459373456053,
+          "pending": 15,
+          "live": 35
+        },
+        {
+          "tick": 5790,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 350,
+          "x": -98.925,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 18.98795013427734,
+          "pending": 14,
+          "live": 36
+        },
+        {
+          "tick": 5793,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 352,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.0763312881235,
+          "pending": 13,
+          "live": 37
+        },
+        {
+          "tick": 5796,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 354,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 12,
+          "live": 38
+        },
+        {
+          "tick": 5799,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 356,
+          "x": -109.30000019073486,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 11,
+          "live": 39
+        },
+        {
+          "tick": 5802,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 358,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 10,
+          "live": 40
+        },
+        {
+          "tick": 5805,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 360,
+          "x": -111.825,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 9,
+          "live": 41
+        },
+        {
+          "tick": 5808,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 362,
+          "x": -111.825,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 8,
+          "live": 42
+        },
+        {
+          "tick": 5811,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 364,
+          "x": -98.57144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 18.634396743684064,
+          "pending": 7,
+          "live": 43
+        },
+        {
+          "tick": 5814,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 366,
+          "x": -109.30000019073486,
+          "z": -1.2000000000000002,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 6,
+          "live": 44
+        },
+        {
+          "tick": 5817,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 368,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 5,
+          "live": 45
+        },
+        {
+          "tick": 5820,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 370,
+          "x": -112.36693454443943,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 32.429884678716775,
+          "pending": 4,
+          "live": 46
+        },
+        {
+          "tick": 5823,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 372,
+          "x": -107.40741656763493,
+          "z": 22.523879532511287,
+          "seen": false,
+          "behindLineM": 27.47036670191227,
+          "pending": 3,
+          "live": 47
+        },
+        {
+          "tick": 5826,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 374,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 2,
+          "live": 48
+        },
+        {
+          "tick": 5829,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 376,
+          "x": -101.95605346153847,
+          "z": 29.6,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 1,
+          "live": 49
+        },
+        {
+          "tick": 5832,
+          "phase": "hold",
+          "batchTick": 5743,
+          "id": 378,
+          "x": -112.01338115384615,
+          "z": 29.6,
+          "seen": false,
+          "behindLineM": 32.0763312881235,
+          "pending": 0,
+          "live": 50
+        },
+        {
+          "tick": 6345,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 380,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 49,
+          "live": 50
+        },
+        {
+          "tick": 6348,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 382,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 48,
+          "live": 51
+        },
+        {
+          "tick": 6351,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 384,
+          "x": -98.925,
+          "z": -22.4,
+          "seen": false,
+          "behindLineM": 18.98795013427734,
+          "pending": 47,
+          "live": 52
+        },
+        {
+          "tick": 6354,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 386,
+          "x": -109.30000019073486,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 46,
+          "live": 53
+        },
+        {
+          "tick": 6357,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 388,
+          "x": -105.375,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 25.437950134277344,
+          "pending": 45,
+          "live": 54
+        },
+        {
+          "tick": 6360,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 390,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
+          "seen": false,
+          "behindLineM": 19.44988990053298,
+          "pending": 44,
+          "live": 55
+        },
+        {
+          "tick": 6363,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 392,
+          "x": -107.79010000000001,
+          "z": 24,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 43,
+          "live": 56
+        },
+        {
+          "tick": 6366,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 394,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 42,
+          "live": 57
+        },
+        {
+          "tick": 6369,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 396,
+          "x": -98.64875038146974,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 41,
+          "live": 58
+        },
+        {
+          "tick": 6372,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 398,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.00459373456053,
+          "pending": 40,
+          "live": 59
+        },
+        {
+          "tick": 6375,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 400,
+          "x": -109.30000019073486,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 39,
+          "live": 60
+        },
+        {
+          "tick": 6378,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 402,
+          "x": -111.825,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 38,
+          "live": 61
+        },
+        {
+          "tick": 6381,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 404,
+          "x": -104.66789321881345,
+          "z": -23.89289321881345,
+          "seen": false,
+          "behindLineM": 24.73084335309079,
+          "pending": 37,
+          "live": 62
+        },
+        {
+          "tick": 6384,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 406,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.0763312881235,
+          "pending": 36,
+          "live": 63
+        },
+        {
+          "tick": 6387,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 408,
+          "x": -111.825,
+          "z": -24.599999999999998,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 35,
+          "live": 64
+        },
+        {
+          "tick": 6390,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 410,
+          "x": -98.64875038146974,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 34,
+          "live": 65
+        },
+        {
+          "tick": 6393,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 412,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 33,
+          "live": 66
+        },
+        {
+          "tick": 6396,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 414,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.0763312881235,
+          "pending": 32,
+          "live": 67
+        },
+        {
+          "tick": 6399,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 416,
+          "x": -98.64875038146974,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 31,
+          "live": 68
+        },
+        {
+          "tick": 6402,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 418,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 30,
+          "live": 69
+        },
+        {
+          "tick": 6405,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 420,
+          "x": -98.64875038146974,
+          "z": -30.200000000000003,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 29,
+          "live": 70
+        },
+        {
+          "tick": 6408,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 422,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 28,
+          "live": 71
+        },
+        {
+          "tick": 6411,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 424,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 27,
+          "live": 72
+        },
+        {
+          "tick": 6414,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 426,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 26,
+          "live": 73
+        },
+        {
+          "tick": 6417,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 428,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 25,
+          "live": 74
+        },
+        {
+          "tick": 6420,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 430,
+          "x": -109.30000019073486,
+          "z": -33.800000000000004,
+          "seen": false,
+          "behindLineM": 29.362950325012207,
+          "pending": 24,
+          "live": 75
+        },
+        {
+          "tick": 6423,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 432,
+          "x": -111.825,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 23,
+          "live": 76
+        },
+        {
+          "tick": 6426,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 434,
+          "x": -102.30960685213175,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 22.372556986409094,
+          "pending": 22,
+          "live": 77
+        },
+        {
+          "tick": 6429,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 436,
+          "x": -112.36693454443943,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 32.429884678716775,
+          "pending": 21,
+          "live": 78
+        },
+        {
+          "tick": 6432,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 438,
+          "x": -107.79010000000001,
+          "z": 25.2,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 20,
+          "live": 79
+        },
+        {
+          "tick": 6435,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 440,
+          "x": -105.375,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 25.437950134277344,
+          "pending": 19,
+          "live": 80
+        },
+        {
+          "tick": 6438,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 442,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 18,
+          "live": 81
+        },
+        {
+          "tick": 6441,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 444,
+          "x": -98.925,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 18.98795013427734,
+          "pending": 17,
+          "live": 82
+        },
+        {
+          "tick": 6444,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 446,
+          "x": -104.04075,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 24.103700134277346,
+          "pending": 16,
+          "live": 83
+        },
+        {
+          "tick": 6447,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 448,
+          "x": -105.02144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 25.084396743684067,
+          "pending": 15,
+          "live": 84
+        },
+        {
+          "tick": 6450,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 450,
+          "x": -111.825,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 14,
+          "live": 85
+        },
+        {
+          "tick": 6453,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 452,
+          "x": -111.47144660940673,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 31.53439674368407,
+          "pending": 13,
+          "live": 86
+        },
+        {
+          "tick": 6456,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 454,
+          "x": -98.57144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 18.634396743684064,
+          "pending": 12,
+          "live": 87
+        },
+        {
+          "tick": 6459,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 456,
+          "x": -111.825,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 11,
+          "live": 88
+        },
+        {
+          "tick": 6462,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 458,
+          "x": -111.825,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 31.887950134277347,
+          "pending": 10,
+          "live": 89
+        },
+        {
+          "tick": 6465,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 460,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.019003595815818,
+          "pending": 9,
+          "live": 90
+        },
+        {
+          "tick": 6468,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 462,
+          "x": -96.2565,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 8,
+          "live": 91
+        },
+        {
+          "tick": 6471,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 464,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 27.853050134277353,
+          "pending": 7,
+          "live": 92
+        },
+        {
+          "tick": 6474,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 466,
+          "x": -96.2565,
+          "z": 1.2000000000000002,
+          "seen": false,
+          "behindLineM": 16.319450134277346,
+          "pending": 6,
+          "live": 93
+        },
+        {
+          "tick": 6591,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 468,
+          "x": -98.925,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 18.98795013427734,
+          "pending": 5,
+          "live": 93
+        },
+        {
+          "tick": 6651,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 470,
+          "x": -98.64875038146974,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 18.711700515747083,
+          "pending": 4,
+          "live": 94
+        },
+        {
+          "tick": 6660,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 472,
+          "x": -104.66789321881345,
+          "z": -23.89289321881345,
+          "seen": false,
+          "behindLineM": 24.73084335309079,
+          "pending": 3,
+          "live": 95
+        },
+        {
+          "tick": 6684,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 474,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
+          "seen": false,
+          "behindLineM": 19.44988990053298,
+          "pending": 2,
+          "live": 96
+        },
+        {
+          "tick": 6693,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 476,
+          "x": -105.02144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 25.084396743684067,
+          "pending": 1,
+          "live": 97
+        },
+        {
+          "tick": 6723,
+          "phase": "hold",
+          "batchTick": 6343,
+          "id": 478,
+          "x": -105.375,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 25.437950134277344,
+          "pending": 0,
+          "live": 98
+        }
+      ],
+      "resumed": {
+        "tick": 6816,
+        "player": {
+          "x": -79.3884506225586,
+          "y": 0.7099999785423279,
+          "z": 27.73455047607422,
+          "yaw": -0.0037332447678338986
+        },
+        "pressureAt": 0,
+        "queued": 0
+      },
+      "windows": [
+        {
+          "tick": 5743,
+          "seconds": 10,
+          "actualAdmissions": 30
+        }
+      ],
+      "queuedPass": true,
+      "stoppedOnAdvance": true
+    }
+  }
+}

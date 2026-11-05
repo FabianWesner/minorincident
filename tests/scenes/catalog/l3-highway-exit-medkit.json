@@ -1,0 +1,92 @@
+{
+  "name": "l3-highway-exit-medkit",
+  "note": "The existing exit ramp medkit lies on the walking line. Inspect its height on the ramp, collection and grounded walking at both tiers and zooms. The production L3-follow regression verifies the +40 HP pickup; this isolated view uses the existing pickup mesh and collection system.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        189.75,
+        -12
+      ],
+      [
+        213.25,
+        12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        197.75,
+        -2.75
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "hit": {
+          "amount": 80
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          201,
+          -1.8
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          205.25,
+          -0.75
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 30,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        60,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        6,
+        12
+      ]
+    }
+  }
+}

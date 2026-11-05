@@ -1,0 +1,62 @@
+{
+  "row": "L7-02",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "54bd31f1ade72e4552c8aa0180c0e348ca434251",
+  "clauses": [
+    {
+      "clause": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
+      "verdict": "PASS",
+      "note": "Current source8765679a: mortal native L5/L6 carries1/13 living humans into L7 at low/high. Exact IDs/full actor-specific HP; every first600tick relative-motion segment clears actual body radii (600/7800 samples; min0.2371463/0.0640249m). Independent native controls match. All six story weapons after approach pickup; both physical Continue runs acknowledge six Digit-key selections. All41 captures inspected:12 matching weapon labels/held states; teal living formations and Group1/1 or13/13 visible. Bounded120s yields, high20s stall at118m explicitly not full L7 completion."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L7-02/arrival.json.gz",
+      "sha256": "0b2ac787c47c4585c26b3a6ef80b98f99c06700b0b96c611062db3c8bc15dc41",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/canonical-producer.json",
+      "sha256": "127d3f371b98f2bc3525806847be895e65eaed7cadc656878468e60c983ff603",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-low-carried-save.json.gz",
+      "sha256": "24a93dfb66ee83a416a92ef44657102e30c732a17885569468eb3fd61376ed2e",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-high-carried-save.json.gz",
+      "sha256": "c83bab2d70c75b41bc2dabd092fc9f3971d65cf57687ed087ff790f31f0724ef",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/input-worker.ts",
+      "sha256": "07a92873a6793b4dc4dfb4b4e860877cb0731090cfb2042f9bd8d026e688c763",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-low-arrival-input.json",
+      "sha256": "513df560514318f0997cab31b87936b381eff707fb0bd21437e13e531c59fb34",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/low-review/review.json",
+      "sha256": "eba9032e178e4c520deeb96a623682aab890ae721857286610066de896ffe223",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-high-arrival-input.json",
+      "sha256": "9b6209d8d4f0958a9dc79bd0ef2fd9ac5057be10cf477955a7f5cdc66675a056",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/high-review/review.json",
+      "sha256": "6c68577ee64f1636c6a18cd1f570dcf23b31518dc3581bca1e06e3b62589e322",
+      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+    }
+  ],
+  "notes": "Shared headless Metal WebGL2; both tiers, sampled low/high zoom0.5/1.5 photos. Protected courier; ordinary follower damage. No game/criterion/checker change."
+}

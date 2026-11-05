@@ -1,0 +1,1926 @@
+{
+  "version": 2,
+  "level": "L9",
+  "tier": "low",
+  "policy": "complete",
+  "seed": 1,
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
+  "revision": "dbfa8ec855d8e04ad2562df42a00a64008f89918",
+  "generatedAt": "2026-11-05T19:42:36.424Z",
+  "run": {
+    "level": "L9",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 128.13333333333333,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "approach",
+        "t": 114.13333333333334
+      },
+      {
+        "id": "reach-outskirts",
+        "t": 128.13333333333333
+      }
+    ],
+    "furthestObjective": "reach-outskirts",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 514,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "initial": {
+      "tick": 0,
+      "mission": {
+        "id": "L9",
+        "phase": "playing",
+        "completedObjectives": [],
+        "volumes": [
+          false
+        ],
+        "killedBosses": [],
+        "deadlineTicks": null,
+        "steps": {
+          "approach": {
+            "status": "active",
+            "started": 0,
+            "kills": [],
+            "events": {},
+            "interaction": 0
+          },
+          "reach-outskirts": {
+            "status": "pending",
+            "started": 0,
+            "kills": [],
+            "events": {},
+            "interaction": 0
+          }
+        },
+        "actors": {},
+        "items": [],
+        "states": {
+          "crash-started": false,
+          "crash-impacted": false,
+          "crash-finished": false
+        },
+        "counters": {},
+        "gates": {},
+        "marker": "crash-approach",
+        "checkpoint": "crossing-start",
+        "tier": 0,
+        "timeOfDay": null,
+        "subtitle": null,
+        "cinematic": null,
+        "failure": null,
+        "stats": {
+          "time": 0,
+          "kills": 0,
+          "knockdowns": 0,
+          "damage": 0,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        },
+        "result": null
+      },
+      "deadline": null,
+      "arsenal": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.molotov",
+        "ability.corgi-lure",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.fire-axe",
+        "weapon.shotgun"
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.bat",
+          "weapon.fire-axe"
+        ],
+        "RIGHT": [
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ]
+      },
+      "player": {
+        "kind": "player",
+        "archetype": "player.survivor",
+        "transform": {
+          "x": -550,
+          "y": 0.705,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "faction": "survivor",
+        "id": 1,
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "survivor": {
+          "variant": "female",
+          "gearTier": 4,
+          "animation": "idle",
+          "animationTick": 0,
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "grounded": false,
+          "invulnerableUntil": 0,
+          "checkpoint": {
+            "x": -550,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "diedAt": null
+        },
+        "weapons": {
+          "selectedSide": "RIGHT",
+          "LEFT": {
+            "rack": [
+              {
+                "id": "weapon.bat",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.fire-axe",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          },
+          "RIGHT": {
+            "rack": [
+              {
+                "id": "weapon.rocket-launcher",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.army-mg",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.shotgun",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.handgun",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          }
+        },
+        "combat": {
+          "radius": 0.3,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "hidden": true
+      },
+      "census": [
+        {
+          "id": 667,
+          "archetype": "vehicle.military-apc",
+          "x": -550,
+          "z": 0,
+          "hp": 1000,
+          "maxHp": 1000,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 668,
+          "archetype": "char.corgi",
+          "x": -553.35,
+          "z": 0,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": true,
+          "infected": false,
+          "pickup": null
+        }
+      ],
+      "l7": null,
+      "departure": null,
+      "l8": null,
+      "l9": {
+        "phase": "driving",
+        "carId": 667,
+        "startedAt": 0,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "yaw": 0
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": false,
+        "ended": false,
+        "encounters": {
+          "spawned": [],
+          "ids": {}
+        }
+      },
+      "mega": null,
+      "checkpoints": [
+        {
+          "id": "crossing-start",
+          "position": [
+            -550,
+            0.705,
+            0
+          ]
+        },
+        {
+          "id": "start",
+          "position": [
+            -550,
+            0.705,
+            0
+          ]
+        }
+      ]
+    },
+    "final": {
+      "tick": 7688,
+      "mission": {
+        "id": "L9",
+        "phase": "progression",
+        "completedObjectives": [
+          "approach",
+          "reach-outskirts"
+        ],
+        "volumes": [
+          true
+        ],
+        "killedBosses": [],
+        "deadlineTicks": null,
+        "steps": {
+          "approach": {
+            "status": "completed",
+            "started": 0,
+            "kills": [],
+            "events": {
+              "l9.crash-approach:*": 1
+            },
+            "interaction": 0
+          },
+          "reach-outskirts": {
+            "status": "completed",
+            "started": 7148,
+            "kills": [],
+            "events": {
+              "l9.crawl-finished:*": 1
+            },
+            "interaction": 37
+          }
+        },
+        "actors": {},
+        "items": [],
+        "states": {
+          "crash-started": true,
+          "crash-impacted": true,
+          "crash-finished": true
+        },
+        "counters": {},
+        "gates": {},
+        "marker": null,
+        "checkpoint": "outskirts-approach",
+        "tier": 0,
+        "timeOfDay": null,
+        "subtitle": null,
+        "cinematic": null,
+        "failure": null,
+        "stats": {
+          "time": 128.13333333333333,
+          "kills": 0,
+          "knockdowns": 0,
+          "damage": 0,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        },
+        "result": {
+          "time": 128.13333333333333,
+          "kills": 0,
+          "knockdowns": 0,
+          "damage": 0,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        }
+      },
+      "deadline": null,
+      "arsenal": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.molotov",
+        "ability.corgi-lure",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.fire-axe",
+        "weapon.shotgun"
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.bat",
+          "weapon.fire-axe"
+        ],
+        "RIGHT": [
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ]
+      },
+      "player": {
+        "kind": "player",
+        "archetype": "player.survivor",
+        "transform": {
+          "x": 547,
+          "y": 0.7200000286102295,
+          "z": 0,
+          "yaw": 0
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "faction": "survivor",
+        "id": 1,
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "survivor": {
+          "variant": "female",
+          "gearTier": 4,
+          "animation": "idle",
+          "animationTick": 0,
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "grounded": true,
+          "invulnerableUntil": 7808,
+          "checkpoint": {
+            "x": 468.2260437011719,
+            "y": 0.9954323768615723,
+            "z": 3.419754981994629,
+            "yaw": -0.05724150811981929
+          },
+          "diedAt": null
+        },
+        "weapons": {
+          "selectedSide": "RIGHT",
+          "LEFT": {
+            "rack": [
+              {
+                "id": "weapon.bat",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.fire-axe",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          },
+          "RIGHT": {
+            "rack": [
+              {
+                "id": "weapon.rocket-launcher",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.army-mg",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.shotgun",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.handgun",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          }
+        },
+        "combat": {
+          "radius": 0.3,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "hidden": false
+      },
+      "census": [
+        {
+          "id": 667,
+          "archetype": "vehicle.military-apc",
+          "x": 517.7,
+          "z": 0,
+          "hp": 0,
+          "maxHp": 1000,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 668,
+          "archetype": "char.corgi",
+          "x": 467.6454788779233,
+          "z": 3.9373885261225046,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": true,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1120,
+          "archetype": "infected.runner",
+          "x": 400.3500167915154,
+          "z": 100.04184050433344,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 1139,
+          "archetype": "npc.suburban-mom",
+          "x": 401.971401480936,
+          "z": -93.8498870632246,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1140,
+          "archetype": "npc.delivery-driver",
+          "x": 407.7376494800629,
+          "z": -97.04307674576773,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1141,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 416.85801129463437,
+          "z": -94.07903913423414,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1142,
+          "archetype": "npc.jogger",
+          "x": 426.25692510079125,
+          "z": -96.1949723594194,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1143,
+          "archetype": "npc.cashier",
+          "x": 438.1222971978808,
+          "z": -96.99405535932488,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1144,
+          "archetype": "npc.bbq-dad",
+          "x": 441.00861825902314,
+          "z": -97.1244067644957,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1145,
+          "archetype": "npc.dog",
+          "x": 441.00700051366783,
+          "z": -96.15339596349918,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1146,
+          "archetype": "npc.suburban-mom",
+          "x": 446.8586764307902,
+          "z": -93.99498770943897,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1147,
+          "archetype": "npc.delivery-driver",
+          "x": 456.1425542644579,
+          "z": -96.98623898690506,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1148,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 458.8545099887774,
+          "z": -94.00701102917378,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1149,
+          "archetype": "npc.jogger",
+          "x": 467.96272408549305,
+          "z": -93.6870650705506,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1150,
+          "archetype": "npc.cashier",
+          "x": 472.12635799554903,
+          "z": -97.08992642125752,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1151,
+          "archetype": "npc.bbq-dad",
+          "x": 476.9231754579209,
+          "z": -95.92929135250338,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1152,
+          "archetype": "npc.dog",
+          "x": 477.3223392003961,
+          "z": -94.51659107072041,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1153,
+          "archetype": "npc.suburban-mom",
+          "x": 482.92641554470606,
+          "z": -95.47953613484995,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1154,
+          "archetype": "npc.delivery-driver",
+          "x": 492.0995764654115,
+          "z": -96.99329955777256,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1155,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 494.9333266553284,
+          "z": -95.62841040719525,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1156,
+          "archetype": "npc.jogger",
+          "x": 503.9717793936076,
+          "z": -93.75890463482739,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1157,
+          "archetype": "npc.cashier",
+          "x": 507.44764761496344,
+          "z": -97.12406792890074,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1158,
+          "archetype": "npc.bbq-dad",
+          "x": 512.801398663604,
+          "z": -94.2316882399925,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1159,
+          "archetype": "npc.dog",
+          "x": 513.6510711488439,
+          "z": -93.99451331249114,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1160,
+          "archetype": "npc.suburban-mom",
+          "x": 518.8547060623001,
+          "z": -94.01104461116971,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1161,
+          "archetype": "npc.delivery-driver",
+          "x": 527.1271280738816,
+          "z": -97.0445507820278,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1162,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 530.8973714480459,
+          "z": -94.88874767752593,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1163,
+          "archetype": "infected.runner",
+          "x": 488.4861658682722,
+          "z": 12.88555282953274,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 1164,
+          "archetype": "npc.jogger",
+          "x": 406.2856048493387,
+          "z": -96.93062296086188,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1165,
+          "archetype": "npc.cashier",
+          "x": 415.2645366600304,
+          "z": -97.13296615116968,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1166,
+          "archetype": "npc.bbq-dad",
+          "x": 420.8894718463415,
+          "z": -94.00757114953265,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1167,
+          "archetype": "npc.dog",
+          "x": 421.9420937877338,
+          "z": -94.01216093465766,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1168,
+          "archetype": "npc.suburban-mom",
+          "x": 432.8545099887774,
+          "z": -94.00701102917378,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1169,
+          "archetype": "npc.delivery-driver",
+          "x": 439.0070720158644,
+          "z": -97.14548397725866,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1170,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 444.85425953941365,
+          "z": -94.01882929073525,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1171,
+          "archetype": "npc.jogger",
+          "x": 454.28816457558344,
+          "z": -96.80379466688763,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1172,
+          "archetype": "npc.cashier",
+          "x": 457.9619338110721,
+          "z": -97.09909930980848,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1173,
+          "archetype": "npc.bbq-dad",
+          "x": 463.00224899106604,
+          "z": -93.99983945785561,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1174,
+          "archetype": "npc.dog",
+          "x": 464.3520435418815,
+          "z": -94.04111015223903,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1175,
+          "archetype": "npc.suburban-mom",
+          "x": 468.8754009697199,
+          "z": -94.42818731043896,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1176,
+          "archetype": "npc.delivery-driver",
+          "x": 475.0070743446137,
+          "z": -97.14553391036594,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1177,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": 480.8791415398142,
+          "z": -94.51372595735408,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1178,
+          "archetype": "npc.jogger",
+          "x": 490.3008152564546,
+          "z": -96.84753711519481,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1179,
+          "archetype": "npc.cashier",
+          "x": 493.20992286199095,
+          "z": -97.13562355026504,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1180,
+          "archetype": "npc.bbq-dad",
+          "x": 498.8927326855688,
+          "z": -94.00738148106245,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 1181,
+          "archetype": "npc.dog",
+          "x": 499.96110771460405,
+          "z": -94.01292608327334,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        }
+      ],
+      "l7": null,
+      "departure": null,
+      "l8": null,
+      "l9": {
+        "phase": "done",
+        "carId": 667,
+        "startedAt": 6848,
+        "preCrashDurability": 1000,
+        "from": {
+          "x": 468.2260437011719,
+          "y": 0.9954323768615723,
+          "z": 3.419754981994629,
+          "yaw": -0.05724150811981929
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true,
+        "encounters": {
+          "spawned": [
+            "shortcut-wanderer-0",
+            "road-wanderer-0",
+            "road-wanderer-5",
+            "road-wanderer-6",
+            "dry-shortcut-1",
+            "road-1",
+            "road-wanderer-1",
+            "road-wanderer-2",
+            "road-wanderer-3",
+            "road-2",
+            "road-wanderer-4",
+            "dry-shortcut-6",
+            "shortcut-wanderer-4",
+            "countryside-wanderer-0",
+            "countryside-wanderer-1"
+          ],
+          "ids": {
+            "shortcut-wanderer-0": [
+              711
+            ],
+            "crossing-patrol-0": [
+              712
+            ],
+            "road-wanderer-0": [
+              713
+            ],
+            "road-wanderer-5": [
+              714
+            ],
+            "road-wanderer-6": [
+              715
+            ],
+            "dry-shortcut-1": [
+              716,
+              717,
+              718,
+              719,
+              720,
+              721,
+              722,
+              723
+            ],
+            "crossing-patrol-1": [
+              750
+            ],
+            "road-1": [
+              751,
+              752,
+              753,
+              754,
+              755,
+              756
+            ],
+            "crossing-patrol-2": [
+              772
+            ],
+            "road-wanderer-1": [
+              806
+            ],
+            "crossing-patrol-3": [
+              807
+            ],
+            "road-wanderer-2": [
+              836
+            ],
+            "crossing-patrol-4": [
+              871
+            ],
+            "road-wanderer-3": [
+              872
+            ],
+            "crossing-patrol-5": [
+              898
+            ],
+            "road-2": [
+              899,
+              900,
+              901,
+              902,
+              903,
+              904
+            ],
+            "crossing-patrol-6": [
+              965
+            ],
+            "crossing-patrol-7": [
+              1003
+            ],
+            "road-wanderer-4": [
+              1004
+            ],
+            "dry-shortcut-6": [
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013
+            ],
+            "shortcut-wanderer-4": [
+              1014
+            ],
+            "crossing-patrol-8": [
+              1057
+            ],
+            "countryside-wanderer-0": [
+              1119
+            ],
+            "countryside-wanderer-1": [
+              1120
+            ],
+            "crossing-patrol-9": [
+              1163
+            ]
+          },
+          "patrol": {
+            "nextAt": 7510,
+            "serial": 10
+          }
+        }
+      },
+      "mega": null,
+      "checkpoints": [
+        {
+          "id": "crossing-start",
+          "position": [
+            -550,
+            0.705,
+            0
+          ]
+        },
+        {
+          "id": "start",
+          "position": [
+            -550,
+            0.705,
+            0
+          ]
+        },
+        {
+          "id": "outskirts-approach",
+          "position": [
+            468.2260437011719,
+            0.9954323768615723,
+            3.419754981994629
+          ]
+        }
+      ]
+    },
+    "eventCounts": {
+      "objective.started": 2,
+      "checkpoint.set": 2,
+      "level.started": 1,
+      "sim.tick": 7688,
+      "vehicle.sound": 1143,
+      "weather.gust": 25,
+      "world.blocker.changed": 850,
+      "ai.alerted": 1,
+      "telegraph": 2,
+      "infected.attack": 1,
+      "civilian.state": 19,
+      "mission.signal": 4,
+      "objective.completed": 2,
+      "vehicle.exited": 1,
+      "vehicle.exploded": 1,
+      "explosion": 1,
+      "explosion.beat": 3,
+      "dialogue.line": 1,
+      "level.completed": 1,
+      "progression.requested": 1
+    },
+    "ledger": [
+      {
+        "type": "objective.started",
+        "id": "approach",
+        "tick": 0
+      },
+      {
+        "type": "checkpoint.set",
+        "id": "crossing-start",
+        "tick": 0
+      },
+      {
+        "type": "checkpoint.set",
+        "id": "outskirts-approach",
+        "tick": 6848
+      },
+      {
+        "type": "mission.signal",
+        "tick": 6848,
+        "name": "l9.crash-approach",
+        "actorId": 667
+      },
+      {
+        "type": "objective.completed",
+        "id": "approach",
+        "tick": 6848
+      },
+      {
+        "type": "mission.signal",
+        "tick": 7028,
+        "name": "l9.bridge-collapse"
+      },
+      {
+        "type": "dialogue.line",
+        "tick": 7148,
+        "id": "l9.crash",
+        "text": "The bridge gave way. Crawl clear of the wreck."
+      },
+      {
+        "type": "mission.signal",
+        "tick": 7148,
+        "name": "l9.crash-impact",
+        "actorId": 667
+      },
+      {
+        "type": "objective.started",
+        "id": "reach-outskirts",
+        "tick": 7148
+      },
+      {
+        "type": "mission.signal",
+        "tick": 7688,
+        "name": "l9.crawl-finished"
+      },
+      {
+        "type": "objective.completed",
+        "id": "reach-outskirts",
+        "tick": 7688
+      },
+      {
+        "type": "level.completed",
+        "id": "L9",
+        "result": {
+          "time": 128.13333333333333,
+          "kills": 0,
+          "knockdowns": 0,
+          "damage": 0,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        },
+        "tick": 7688
+      }
+    ],
+    "pickups": [],
+    "duplicatePickups": [],
+    "peakAlive": 14,
+    "peakCharacters": 65,
+    "firstMinute": {
+      "ticks": 0,
+      "regularPeak": 0,
+      "dogPeak": 0,
+      "alphaPeak": 0
+    },
+    "markers": [
+      {
+        "id": "crash-approach",
+        "x": 470,
+        "z": 0,
+        "samples": 6847,
+        "maxDisplacement": 0
+      },
+      {
+        "id": "crawl-end",
+        "x": 547,
+        "z": 0,
+        "samples": 540,
+        "maxDisplacement": 0
+      }
+    ],
+    "markerChanges": [
+      {
+        "tick": 1,
+        "step": "approach",
+        "marker": "crash-approach",
+        "x": 470,
+        "z": 0
+      },
+      {
+        "tick": 6848,
+        "step": "",
+        "marker": null
+      },
+      {
+        "tick": 7148,
+        "step": "reach-outskirts",
+        "marker": "crawl-end",
+        "x": 547,
+        "z": 0
+      },
+      {
+        "tick": 7688,
+        "step": "",
+        "marker": null
+      }
+    ],
+    "l5Formation": [],
+    "l4Scale": {
+      "turn": null,
+      "ticks": 0,
+      "firstTick": null,
+      "lastTick": null,
+      "peakSlots": null,
+      "peakCharacters": null
+    },
+    "corgi": {
+      "ids": [
+        668
+      ],
+      "targeted": 0,
+      "hit": 0,
+      "minimumHealthFraction": 1,
+      "samples": 7688
+    },
+    "phaseStarts": [
+      {
+        "phase": "playing",
+        "tick": 1,
+        "live": 0,
+        "civilians": 0
+      },
+      {
+        "phase": "progression",
+        "tick": 7688,
+        "live": 2,
+        "civilians": 42
+      }
+    ],
+    "phasePeaks": {
+      "playing": {
+        "alive": 14,
+        "characters": 65
+      },
+      "progression": {
+        "alive": 2,
+        "characters": 45
+      }
+    },
+    "births": {
+      "infected.runner": 49,
+      "infected.alpha": 1
+    },
+    "speed": {
+      "regularMax": 4.2,
+      "fasterThanPlayer": 0,
+      "regularSamples": 1638,
+      "sprinters": 1638
+    },
+    "runOut": null,
+    "regions": {},
+    "charge": {
+      "eligibleTicks": 0,
+      "incrementTicks": 0,
+      "invalidIncrements": 0,
+      "outsideTicks": 0,
+      "deadTicks": 0,
+      "maximum": 0,
+      "activeTicks": 0
+    },
+    "megaIntroduction": null,
+    "maxMegaStep": 0,
+    "release": null,
+    "calm": {
+      "ticks": 0,
+      "maxAlive": 0,
+      "combatEvents": 0,
+      "markerTicks": 0
+    },
+    "l6RetreatDamage": 0,
+    "l2BeforeDoors": {
+      "samples": 0,
+      "nearest": null
+    },
+    "l2Contact": {
+      "ticks": 0,
+      "playerAttacks": 0,
+      "groupAttacks": 0,
+      "firstAttackSeconds": null
+    },
+    "l2Maximum": {
+      "ambush": 0,
+      "cluster": 0
+    },
+    "l2Route": {
+      "metres": 0,
+      "ticks": 0,
+      "discontinuities": 0,
+      "maxEncounterGapM": 0,
+      "encounterIds": []
+    },
+    "releaseFirstTick": null,
+    "maxDetailedChunks": 9,
+    "l5SearchRoute": {
+      "ticks": 0,
+      "metres": 0,
+      "discontinuities": 0,
+      "encounters": []
+    }
+  },
+  "threat": {
+    "ticks": 7688,
+    "followerWait": {
+      "escortTicks": 0,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": null,
+      "followers": []
+    },
+    "phases": [
+      {
+        "key": "step/approach",
+        "label": "approach: Drive toward the city",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 114.13333333333334,
+        "spawned": 50,
+        "initial": 0,
+        "observed": 50,
+        "reachableEver": 50,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 30,
+          "minimumPercent": 100,
+          "worstTick": 6841,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6841,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 466.3415832519531,
+          "playerZ": 3.2905797958374023,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/driving",
+        "label": "controller: driving",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 114.13333333333334,
+        "spawned": 50,
+        "initial": 0,
+        "observed": 50,
+        "reachableEver": 50,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 30,
+          "minimumPercent": 100,
+          "worstTick": 6841,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6841,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 466.3415832519531,
+          "playerZ": 3.2905797958374023,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/approach",
+        "label": "controller: approach",
+        "threat": false,
+        "startSeconds": 114.13333333333334,
+        "seconds": 3,
+        "spawned": 2,
+        "initial": 2,
+        "observed": 4,
+        "reachableEver": 4,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 2,
+          "minimumPercent": 100,
+          "worstTick": 6968,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6968,
+          "alive": 4,
+          "reachable": 4,
+          "playerX": 494.7420145670573,
+          "playerZ": 1.139918327331543,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/fall",
+        "label": "controller: fall",
+        "threat": false,
+        "startSeconds": 117.13333333333334,
+        "seconds": 2,
+        "spawned": 0,
+        "initial": 2,
+        "observed": 2,
+        "reachableEver": 2,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 7028,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 7028,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 508,
+          "playerZ": 0,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/reach-outskirts",
+        "label": "reach-outskirts: Get clear of the wreck",
+        "threat": false,
+        "startSeconds": 119.13333333333334,
+        "seconds": 9,
+        "spawned": 0,
+        "initial": 2,
+        "observed": 2,
+        "reachableEver": 2,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 7568,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 540.5,
+          "playerZ": 0.8666666746139526,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/impact",
+        "label": "controller: impact",
+        "threat": false,
+        "startSeconds": 119.13333333333334,
+        "seconds": 3,
+        "spawned": 0,
+        "initial": 2,
+        "observed": 2,
+        "reachableEver": 2,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 7268,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 527.5,
+          "playerZ": 2.5999999046325684,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/crawl",
+        "label": "controller: crawl",
+        "threat": false,
+        "startSeconds": 122.13333333333334,
+        "seconds": 6,
+        "spawned": 0,
+        "initial": 2,
+        "observed": 2,
+        "reachableEver": 2,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 7568,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 540.5,
+          "playerZ": 0.8666666746139526,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/done",
+        "label": "controller: done",
+        "threat": false,
+        "startSeconds": 128.13333333333333,
+        "seconds": 0,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 2,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 7688,
+          "alive": 2,
+          "reachable": 2,
+          "playerX": 547,
+          "playerZ": 0,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "nativeStateHash": "3a335ef4",
+  "error": null
+}

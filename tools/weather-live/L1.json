@@ -1,0 +1,37 @@
+{
+  "extends": "../../specs/scenes/weather-lab-rain.json",
+  "name": "weather-live-L1",
+  "weather": null,
+  "time": "L1",
+  "weatherWarmup": 45,
+  "weatherTimeline": [
+    {
+      "tick": 0,
+      "kind": "clear"
+    },
+    {
+      "tick": 2700,
+      "kind": "clouds",
+      "blend": 40,
+      "preset": {}
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        2
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 2400,
+  "shots": [
+    0,
+    1200,
+    2400
+  ],
+  "sheet": 1200
+}

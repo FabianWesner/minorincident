@@ -1,0 +1,70 @@
+{
+  "name": "qa-vehicle-travel-sam-mia",
+  "seed": 1,
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "size": 220,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "l5Aftermath": {
+    "found": [
+      "rosa",
+      "sam"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -52.5342865,
+        41.1289482
+      ],
+      "state": "idle",
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "hud": true,
+  "frames": 2400,
+  "sheet": 400,
+  "shots": [
+    0,
+    600,
+    1200,
+    1800,
+    2399
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          -30.3699,
+          -44.4
+        ]
+      }
+    }
+  ],
+  "note": "Production L5 survivor-2 setup at the audited Sam-to-Mia stop. One ordinary click intent through Fairhaven, with the two followers; encounter protection is independently gated by T-E23-17.",
+  "expect": {
+    "consoleErrors": 0,
+    "actorTravel": {
+      "courier": [
+        85,
+        220
+      ]
+    }
+  }
+}

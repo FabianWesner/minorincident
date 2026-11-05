@@ -1,0 +1,69 @@
+{
+  "note": "PO 10-19 walking screen north with infected north and south. Automatic fire must face the north target.",
+  "ground": "grass",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": -45,
+      "god": true,
+      "loadout": [
+        "weapon.handgun",
+        "weapon.handgun"
+      ]
+    },
+    {
+      "id": "north",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -2.1,
+        -2.1
+      ]
+    },
+    {
+      "id": "south",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1.4,
+        1.4
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "autoAim": {
+          "move": [
+            -0.70710678,
+            -0.70710678
+          ],
+          "seconds": 0.2
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ]
+  },
+  "frames": 24,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "controls-aim-north"
+}

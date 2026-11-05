@@ -1,0 +1,48 @@
+{
+  "name": "seethrough-lamp-head-foreground-z05",
+  "note": "PO #42 (L3 tick 4486): a street-lamp head between camera and courier drew huge in the foreground as a dithered cage over her legs. The near lamp head must be cut clear over the courier.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L3",
+  "props": [
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        1.7,
+        1.7
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "female",
+        "gearTier": 4
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 0.5
+  },
+  "frames": 30,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.85,
+    "seeThroughOpenFramesMin": 10,
+    "drawCallsMax": 400,
+    "trianglesMax": 600000
+  }
+}

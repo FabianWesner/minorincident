@@ -1,0 +1,130 @@
+{
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
+  "revision": "a7265a9d83148185361cb37f3201a6f804d309ac",
+  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "toolSha256": "02d719aa73169fea60359a1f90f843a59791cc3635808e9dde46ee66bcfeae5f",
+  "method": "Read-only production L8 construction from each physical run’s saved actual L7 result; compare humans/corgi HP, racks and selection. Archived physical ledger/logs independently qualify the live handover. No save/actor mutations; constructor control has identical state hash.",
+  "rows": [
+    {
+      "tier": "low",
+      "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
+      "inputSha256": "bce4ed517e63d57c288cf9554e4be0ef48dddadcc4ee7918d510d0850821d973",
+      "completionArchive": "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
+      "completionArchiveSha256": "e6594c898eb935cc9bcac7c373437a09ec9a4f53827c4643774bddd67ec3c8a6",
+      "expectedIds": [],
+      "humans": [],
+      "companions": [
+        {
+          "id": 308,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ]
+      },
+      "selected": "weapon.rocket-launcher",
+      "readOnlyStateHash": "fd43c4b2",
+      "controlHash": "fd43c4b2"
+    },
+    {
+      "tier": "high",
+      "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-high-input.json",
+      "inputSha256": "e288b2678b9e5446d222e95b4de2599862317670d9af9f803dcfc91bfd09f7b4",
+      "completionArchive": "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
+      "completionArchiveSha256": "bdf24938f2ceaaf3a2cc569aa0313ceaef9a8141ce3fb5a3f5b8e7dea921c13a",
+      "expectedIds": [
+        32,
+        396,
+        389,
+        391,
+        394,
+        395,
+        398,
+        401,
+        402
+      ],
+      "humans": [
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60
+        },
+        {
+          "id": 396,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 389,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 391,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 394,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 395,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 398,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 401,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 402,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "companions": [
+        {
+          "id": 421,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ]
+      },
+      "selected": "weapon.rocket-launcher",
+      "readOnlyStateHash": "93f82b7e",
+      "controlHash": "93f82b7e"
+    }
+  ]
+}

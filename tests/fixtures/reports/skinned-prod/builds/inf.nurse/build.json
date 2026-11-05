@@ -1,0 +1,76 @@
+{
+  "id": "inf.nurse",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse",
+  "elapsedSeconds": 31.934,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/lod0.glb",
+      "sourceSha256": "ae0160683c358274fe6a513114436c588093bb8a63b89eed1cc4a348a3a38232",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.nurse.lod0.glb",
+          "bytes": 473752,
+          "sha256": "1c32558cdd8a246d65925fe3d333bbd74f61a9ef49517c5b0480ac30d048b47f",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.nurse.lod0.low.glb",
+          "bytes": 406292,
+          "sha256": "dd9ab40ab64b96b8d4d2c9aa26c06dcad0868b9d07684654c34c2e28085e46e7",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/lod1.glb",
+      "sourceSha256": "12949c40d8832bcc5dad7e590c7ece5b55049568827abc6ab693ab992fa733f8",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.nurse.lod1.glb",
+          "bytes": 206628,
+          "sha256": "1f3052f2b0a54894b1515f5127a986a6bc1019ca2252de0e82db78560ca42ec2",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.nurse.lod1.low.glb",
+          "bytes": 206628,
+          "sha256": "1f3052f2b0a54894b1515f5127a986a6bc1019ca2252de0e82db78560ca42ec2",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/lod2.glb",
+      "sourceSha256": "130eeea09fceec1fe96bd8f35898fc2bf54807d268113208e107aa790ff43928",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.nurse.lod2.glb",
+          "bytes": 95968,
+          "sha256": "4b468fcf075d31981f87d7ad6745556d76055a7f0a5cd5917aa5a9c8ef0d595c",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.nurse.lod2.low.glb",
+          "bytes": 95968,
+          "sha256": "4b468fcf075d31981f87d7ad6745556d76055a7f0a5cd5917aa5a9c8ef0d595c",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.nurse:lod0:infected": "/assets/civilians/inf.nurse.lod0.infected.6e6e309b5b5de985.bin.gz",
+    "inf.nurse:lod1:infected": "/assets/civilians/inf.nurse.lod1.infected.0d1cc51804531b7e.bin.gz",
+    "inf.nurse:lod2:infected": "/assets/civilians/inf.nurse.lod2.infected.3e3ebbd1a29f5741.bin.gz"
+  }
+}

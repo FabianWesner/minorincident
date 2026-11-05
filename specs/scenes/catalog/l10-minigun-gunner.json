@@ -1,0 +1,246 @@
+{
+ "name": "l10-minigun-gunner",
+ "note": "L10 finale deck, game follow camera: the courier climbs the stair onto the 3 m deck (support heights), mans the minigun, swings the aim east, south, west and north and quits. Look for: the gunner visible on the duckboard behind the grips (head, torso, both hands), facing the aim, no handgun drawn, the deck floor never dissolved under her (only rails/posts near the lens may dither), the stair and deck walkable, the dismount leaving her on the deck (feet >= 2.9 m). The HUD is on: the weapon icon must read Minigun (machine-gun icon) while mounted and the heat bar shows.",
+ "ground": "sidewalk",
+ "size": 150,
+ "props": [
+  {
+   "id": "console",
+   "asset": "kit.dispersal-console",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "platform",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tank-a",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    14,
+    -12
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tank-b",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    -14,
+    14
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "sphere",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    22,
+    16
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tower-e",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    31,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tower-nw",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    -30,
+    26
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "fan-w",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -38,
+    -16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "hall-s",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    -32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-straight",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-tee",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-elbow",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    32
+   ],
+   "yaw": 0
+  }
+ ],
+ "minigun": {
+  "at": [
+   -10,
+   3,
+   -6
+  ],
+  "yaw": 0
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1.7,
+    -6
+   ],
+   "yaw": 180,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.rocket-launcher"
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "moveTo": [
+     -8.3,
+     -6
+    ]
+   }
+  },
+  {
+   "frame": 230,
+   "actor": "courier",
+   "do": {
+    "mountGun": true
+   }
+  },
+  {
+   "frame": 245,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": [
+      20,
+      -6
+     ],
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 335,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": [
+      -10,
+      20
+     ],
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 425,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": [
+      -40,
+      -6
+     ],
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 515,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": [
+      -10,
+      -30
+     ],
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 610,
+   "actor": "courier",
+   "do": {
+    "dismountGun": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 1
+ },
+ "frames": 700,
+ "shots": [
+  40,
+  120,
+  200,
+  280,
+  370,
+  460,
+  550,
+  640,
+  690
+ ],
+ "sheet": 9,
+ "expect": {
+  "consoleErrors": 0,
+  "minigunRoundsMin": 60,
+  "minigunMountedFramesMin": 350,
+  "minigunFeetMin": 2.9
+ },
+ "hud": true,
+ "megaHud": true
+}

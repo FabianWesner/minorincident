@@ -1,0 +1,83 @@
+{
+  "name": "l4-finale-lakeshore",
+  "note": "PO #17: existing stragglers travel on foot from Plaza Way through the Lakeshore junction toward the side-street beat. The courier can pass on either sidewalk and continue along the open road.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        4,
+        34
+      ],
+      [
+        48,
+        60
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        8,
+        43
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "moveTo": [
+          35,
+          43
+        ],
+        "pace": "run"
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        6,
+        44
+      ]
+    },
+    {
+      "id": "side-0",
+      "kind": "infected",
+      "at": [
+        14,
+        39
+      ],
+      "state": "chase",
+      "yaw": 225
+    },
+    {
+      "id": "side-1",
+      "kind": "infected",
+      "at": [
+        15,
+        38
+      ],
+      "state": "chase",
+      "yaw": 225
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

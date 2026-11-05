@@ -1,0 +1,10 @@
+{
+  "extends": "../l7-corridor/corridor.json",
+  "name": "qa-l7-entry-corridor",
+  "note": "Production corridor checkpoint approach; inspect the walkable lane and bus after retry. Follow the courier during the approach so close zoom does not crop the subject; the bus departure retains its authored cinematic.",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "observerHash": "01d7f644e8eb2375073eefe0229d1ee6157baa3b8e00102677a65935e65aa927",
+  "revision": "524ea45a6eb129b64f196c59e4b418b6a039f3d1",
+  "fixtureHash": "013d03541eb624e8eea60a047e669c606605785ea1d9677e17b2ac48920b4e98",
+  "method": "Actual mortal L3 battery at high tier; process-local inside threshold7 counterexample, restored in finally. Acceptance targets remain3/8/60.",
+  "rows": [
+    {
+      "variant": "control",
+      "check": {
+        "id": "L3-04",
+        "clause": "exact first-of fallback boundary and cause",
+        "value": {
+          "fallbackBoundary": [
+            {
+              "tick": 2794,
+              "firstEligibleTick": 2794,
+              "expectedCause": "inside",
+              "actualCause": "inside",
+              "inside": 8,
+              "turned": 0,
+              "elapsed": 394
+            }
+          ],
+          "delayedFallback": false
+        },
+        "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
+        "status": "PASS"
+      },
+      "controlReportSha256": "2d606380b77ee042c9337610d67f6649f7b14acd584fb7a4fb37483c8b319170"
+    },
+    {
+      "variant": "inside-threshold-broken-to-seven",
+      "check": {
+        "id": "L3-04",
+        "clause": "exact first-of fallback boundary and cause",
+        "value": {
+          "fallbackBoundary": [
+            {
+              "tick": 2780,
+              "firstEligibleTick": -1,
+              "expectedCause": "",
+              "actualCause": "inside",
+              "inside": 7,
+              "turned": 0,
+              "elapsed": 380
+            }
+          ],
+          "delayedFallback": false
+        },
+        "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
+        "status": "FAIL"
+      },
+      "controlReportSha256": null
+    }
+  ]
+}

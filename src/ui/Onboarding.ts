@@ -1,0 +1,100 @@
+// Pattern from folio-2025 InputFlag.js / World/Intro.js (Bruno Simon, MIT, 41046b5):
+// persistent prompt identity and active input-mode glyphs. Completion uses sim events.
+import type { Bindings } from '../input/Bindings';
+import type { InputFrame, Scheme } from '../input/InputFrame';
+import type { SimWorld } from '../sim/world/SimWorld';
+import type { GameEvent } from '../sim/world/types';
+import { node, text, setHidden, attribute } from './dom';
+export const onboardingKey = 'minor-incident.onboarding.v1';
+const lessons = ['move', 'evade', 'interact', 'pickup', 'attack', 'selector', 'second-side', 'vehicle'] as const;
+type Lesson = typeof lessons[number];
+const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Infected nearby. Keep moving', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Attack with your active weapon', selector: 'Switch to your next weapon', 'second-side': 'Try your other weapon', vehicle: 'Stand by the door to enter' };
+export class Onboarding {
+  readonly element = node('div', 'onboarding-prompt');
+  private readonly seen = new Set<Lesson>();
+  private readonly completed = new Set<Lesson>();
+  private current: Lesson | null = null;
+  private storage: Storage | undefined;
+  private x = 0;
+  private z = 0;
+  private startTick = 0;
+  private readonly stops: (() => void)[] = [];
+  constructor(private readonly world: SimWorld, private readonly bindings: Bindings) {
+    this.element.className = 'onboarding hud-panel'; this.element.hidden = true; this.element.setAttribute('role', 'status');
+    try { this.storage = localStorage; const saved: unknown = JSON.parse(localStorage.getItem(onboardingKey) ?? '[]'); if (Array.isArray(saved)) for (const value of saved) if (lessons.includes(value)) this.seen.add(value); } catch { /* Fresh session if storage is unavailable. */ }
+  }
+  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.current = null; this.element.hidden = true; }
+  reset(): void {
+    this.clear();
+    this.current = null; this.completed.clear(); this.element.hidden = true;
+    const player = this.world.entities.get(1); this.x = player?.transform.x ?? 0; this.z = player?.transform.z ?? 0; this.startTick = this.world.tick;
+    for (const type of ['interact.completed', 'pickup.collected', 'combat.attack', 'loadout.switched', 'vehicle.entered'] as const) this.stops.push(this.world.events.on(type, this.event, 20));
+  }
+  private readonly event = (event: GameEvent): void => {
+    if (event.type === 'interact.completed') this.completed.add('interact');
+    if (event.type === 'pickup.collected') this.completed.add('pickup');
+    if (event.type === 'combat.attack' && event.sourceId === 1) { this.completed.add('attack'); if (event.side === 'RIGHT') this.completed.add('second-side'); }
+    if (event.type === 'loadout.switched') { this.completed.add('selector'); this.completed.add('second-side'); }
+    if (event.type === 'vehicle.entered') this.completed.add('vehicle');
+  };
+  observe(frame: InputFrame): void {
+    const player = this.world.entities.get(1); if (!player) return;
+    if (Math.hypot(player.transform.x - this.x, player.transform.z - this.z) > 1) this.completed.add('move');
+    if (this.current === 'evade' && this.world.tick - this.startTick > 60 && Math.hypot(frame.move.x, frame.move.z) > .1) this.completed.add('evade');
+  }
+  private glyph(lesson: Lesson, scheme: Scheme): string {
+    if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? 'WASD / arrows move' : lesson === 'attack' ? 'LMB shoots · Space aim assist' : lesson === 'second-side' ? 'RMB / Q cycle · LMB / Space attack' : lesson === 'selector' ? 'RMB / Q' : 'Stand / E / F';
+    return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
+  }
+  /** Prime native font fallback/text shaping without selecting or consuming a lesson. */
+  prepare(scheme: Scheme): void {
+    const hidden = this.element.hidden, value = this.element.textContent;
+    this.element.hidden = false;
+    for (const lesson of lessons) {
+      text(this.element, `${this.glyph(lesson, scheme)} · ${descriptions[lesson]}`);
+      this.element.getBoundingClientRect();
+    }
+    this.element.textContent = value; this.element.hidden = hidden;
+  }
+  update(scheme: Scheme, playing: boolean): void {
+    const level = this.world.missions?.def.id ?? this.world.scenario;
+    if (!playing || !level || !/^L[1-6]$/.test(level)) { setHidden(this.element, true); return; }
+    const l1 = this.world.missions?.def.l1 ? this.world.missions : null;
+    if (l1) {
+      const player = this.world.entities.get(1)!;
+      if (player.health.current <= 0) { setHidden(this.element, false); attribute(this.element, 'data-action', 'respawn'); text(this.element, `You died · Returning to ${l1.state.checkpoint === 'bat' ? 'the garage' : l1.state.checkpoint === 'accident' ? 'the facility' : 'the morning'}…`); return; }
+      if (l1.state.steps.weapon?.status === 'completed') { this.completed.add('pickup'); this.completed.add('interact'); }
+      if (this.current === 'evade' && l1.state.steps.escape?.status === 'completed') this.completed.add('evade');
+    }
+    if (this.current === 'vehicle' && this.world.tick - this.startTick >= 180) this.completed.add('vehicle');
+    if (this.current && this.completed.has(this.current)) { this.current = null; this.startTick = this.world.tick; }
+    if (!this.current) {
+      const first = level === 'L1' ? 0 : level === 'L2' ? 5 : 7, last = level === 'L1' ? 7 : level === 'L2' ? 7 : 8;
+      for (let i = first; i < last; i++) {
+        const lesson = lessons[i]; if (this.seen.has(lesson) || this.completed.has(lesson)) continue;
+        const player = this.world.entities.get(1)!;
+        if (lesson === 'evade') {
+          let nearby = false; for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && Math.hypot(entity.transform.x - player.transform.x, entity.transform.z - player.transform.z) < 12) { nearby = true; break; }
+          if (!nearby) break;
+        }
+        if (lesson === 'interact' && this.world.interactables?.activeId == null && this.world.missions?.def.steps.find(s => this.world.missions!.state.steps[s.id].status === 'active')?.type !== 'interact') break;
+        if (lesson === 'pickup') {
+          let nearby = false; for (const entity of this.world.entities.iterate()) if (entity.pickup && Math.hypot(entity.transform.x - player.transform.x, entity.transform.z - player.transform.z) < 8) { nearby = true; break; }
+          if (!nearby) break;
+        }
+        if (l1 && lesson === 'selector') { this.completed.add('selector'); continue; }
+        if (l1 && ['attack', 'second-side'].includes(lesson) && !player.weapons) break;
+        if (lesson === 'vehicle' && !this.world.vehicles?.canInteract()) break;
+        this.current = lesson; this.seen.add(lesson); this.startTick = this.world.tick;
+        try { this.storage?.setItem(onboardingKey, JSON.stringify([...this.seen])); } catch { /* Once per session when storage is disabled. */ }
+        break;
+      }
+    }
+    setHidden(this.element, !this.current || (!!l1 && this.world.tick - this.startTick >= 180) || (this.current === 'vehicle' && !this.world.vehicles?.canInteract()));
+    if (!this.current) return;
+    attribute(this.element, 'data-action', this.current); attribute(this.element, 'data-scheme', scheme);
+    text(this.element, `${this.glyph(this.current, scheme)} · ${descriptions[this.current]}`);
+  }
+  dispose(): void { this.clear(); this.element.remove(); }
+}

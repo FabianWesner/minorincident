@@ -1,0 +1,37 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 540,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "note": "vfx-stunning-3: the lingering blast plume. A barrel blast at f8, then 9 s of the dark, buoyant, wind-bent column over the aftermath fires (heat haze on high).",
+  "script": [
+    {
+      "frame": 8,
+      "effect": {
+        "blast": "explosion.barrel",
+        "at": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "name": "vfx-smoke-column"
+}

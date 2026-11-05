@@ -1,0 +1,201 @@
+import { skinnedBrow, referenceSkullWidth } from './headMeasurements';
+import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
+import type { Node } from 'three/webgpu';
+import { attribute, varying, vec3, vec4 } from 'three/tsl';
+import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
+const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: {slot: string}}[]).map(a => [a.id, a.accessory?.slot]));
+import { infectedDefinitions } from '../../data/infected';
+import type { EntitySnapshot } from '../../sim/world/types';
+import { characterNodes } from '../../data/survivor';
+export const crowdAccessoryIds = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf && 'accessory' in a).map(a => a.id).sort();
+const authoredInfectedHeads = new Set(manifest.filter(a => a.id.startsWith('inf.') && 'crowdSkin' in a && a.crowdSkin).map(a => a.id));
+/** Resolve identity without consulting pose, health, quality, LOD or pool membership. */
+export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[] = crowdAccessoryIds) {
+  const selected = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
+  const model = selected.startsWith('infected.') ? infectedDefinitions.find(def => def.id === selected)?.asset ?? selected : selected;
+  const uniform = /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model);
+  // Explicit bare-head fixtures retain authored hair for anatomy review.
+  const eligible = !e.appearance?.accessories.includes('none') && !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
+  const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
+  // A person who turned keeps the head piece they wore alive (story-true); infected generated as infected are capped.
+  const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;
+  // Aftermath and continuous infected bodies carry authored headwear (or deliberately bare hair).
+  // Random caps must not replace a named person's cap, ponytail or fitted glasses.
+  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') || authoredInfectedHeads.has(model) ? 0 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
+  // Q-267: fitted hats on this narrow head become upright cones. Retire these
+  // combinations; the same hats fit the other heads, and her own hair stays.
+  const picked = slot ? ids[slot - 1] : null;
+  const retired = model.replace(/\.aftermath$/, '') === 'npc.civilian-woman-b' && accessoryKinds.get(picked ?? '') === 'hat';
+  const accessory = retired ? null : picked, kind = accessoryKinds.get(accessory ?? '');
+  const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
+  return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,
+    accessory, accessories: e.appearance?.accessories.length ? e.appearance.accessories.filter(id => !retired || id !== picked) : accessory ? [accessory] : [], slot: accessory ? slot : 0, hidesHair, tint: e.appearance?.tint ?? shirtTones[channels.shirt], infectedSkin: !!e.infected };
+}
+const colors = { hair: hairTones.map(c => new Color(c)), skin: skinTones.map(c => new Color(c)), infected: infectedSkinTones.map(c => new Color(c)), trousers: trouserTones.map(c => new Color(c)), shirt: shirtTones.map(c => new Color(c)) };
+/** _variant.xyz: shirt RGB in the remainder modulo 2; hair/skin/trousers in integer pairs.
+ * X also contains five accessory slot bits and a covered hair/headwear bit above the three hair bits. Z also carries the accessory tint palette index above the trouser bits. W remains the pose blend. */
+export function packedAppearance(id: number, shirt: Color, accessory = 0, hidesHair = false): [number, number, number] {
+  const a = crowdAppearance(id);
+  // Keep the remainder strictly below 2, including HDR story tints.
+  return [Math.min(1, shirt.r) + 2 * a.hair + 16 * (accessory % 32) + (hidesHair ? 512 : 0), Math.min(1, shirt.g) + 2 * a.skin, Math.min(1, shirt.b) + 2 * a.trousers + 16 * crowdAppearance(id + 503).shirt];
+}
+export function writeCrowdAppearance(target: InstancedBufferAttribute | InterleavedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false): void {
+  target.setXYZW(index, ...packedAppearance(id, shirt, accessory, hidesHair), blend);
+}
+export function crowdShirt(id: number): Color { return colors.shirt[crowdAppearance(id).shirt]; }
+const pickColor = (palette: Color[], index: Node<'float'>) => {
+  let color: Node<'vec3'> = vec3(palette[0].r, palette[0].g, palette[0].b);
+  for (let i = 1; i < palette.length; i++) color = index.equal(i).select(vec3(palette[i].r, palette[i].g, palette[i].b), color);
+  return color;
+};
+export function crowdSkinColor(infected = false) {
+  return varying(pickColor(infected ? colors.infected : colors.skin, attribute('_variant', 'vec4').y.div(2).floor().mod(6)), 'crowdSkinTone');
+}
+/** No new vertex attribute: _parts.y tags skin (-1), hair (-2), trousers (-3), accessory hat (-4) and hair (-5); positive values retain shirt shading. */
+export function crowdAppearanceColor(infected = false) {
+  const variant = attribute('_variant', 'vec4'), parts = attribute('_parts', 'vec4'), source = attribute('color', 'vec3');
+  const shirt = variant.xyz.mod(2);
+  const hair = pickColor(colors.hair, variant.x.div(2).floor().mod(8));
+  const skin = pickColor(infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6));
+  const trousers = pickColor(colors.trousers, variant.z.div(2).floor().mod(8));
+  const accessory = pickColor(colors.shirt, variant.z.div(16).floor().mod(12));
+  const garment = parts.y.greaterThan(0).select(shirt.mul(parts.y), source);
+  // Preserve the authored highlights and seams instead of flattening every material to one tone.
+  const shade = source.dot(vec3(.2126, .7152, .0722));
+  // Palette selection belongs to the vertices: repeating eight-tone branches for every shaded pixel costs frame time.
+  return varying(parts.y.equal(-1).select(skin.mul(shade.div(infected ? .35 : .45).clamp(.65, 1.2)),
+    parts.y.equal(-4).select(source.mul(accessory), parts.y.equal(-5).select(source.mul(hair), parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))))), 'crowdAppearanceColor');
+}
+/** Trouser tone (xyz) and the painted-skin vertex region (w) share one vertex output (Q-201: crowd pipelines keep
+ * <= 14 of the 15/16 portable outputs). Varyings dedupe by name, so every caller reads the same slot. */
+function crowdRegionTrousersSkin() {
+  const variant = attribute('_variant', 'vec4'), parts = attribute('_parts', 'vec4');
+  const exposed = parts.x.equal(characterNodes.indexOf('head')).or(parts.y.equal(-1)).and(parts.z.lessThan(.5)).select(1, 0);
+  return varying(vec4(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), exposed), 'crowdRegionTrousersSkin');
+}
+/** Vertex-classed exposed skin (head or skin-tagged, not an eye) for the painted-skin estimate. */
+export function crowdPaintedSkinRegion(): Node<'float'> { return crowdRegionTrousersSkin().w; }
+/** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers). Two varyings only:
+ * skin is picked per pixel from its index (six tones), trousers share their slot with the painted-skin region. */
+export function crowdRegionColours(infected = false) {
+  const variant = attribute('_variant', 'vec4');
+  const hairSkin = varying(vec4(pickColor(colors.hair, variant.x.div(2).floor().mod(8)), variant.y.div(2).floor().mod(6)), 'crowdRegionHairSkin');
+  const trousers = crowdRegionTrousersSkin().xyz;
+  return { hair: hairSkin.xyz, skin: pickColor(infected ? colors.infected : colors.skin, hairSkin.w.round()), trousers, shirt: variant.xyz.mod(2) };
+}
+/** Annotate the authored skinned atlas without replacing skin, eye or garment ownership. */
+export function markCrowdAppearance(geometry: BufferGeometry): void {
+  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position');
+  if (!geometry.userData.crowdAtlas || !geometry.userData.crowdBinds) throw new Error('Crowd appearance requires the v2 skinned atlas contract');
+  // Source paint owns skin, hair and wounds. Only the authored crown yields
+  // to shared hats; palette matching would hide the entire textured face.
+  const binds = geometry.userData.crowdBinds as number[];
+  const inverse = new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16), point = new Vector3();
+  let low = Infinity, high = -Infinity;
+  const headY = (i: number) => { point.fromBufferAttribute(position, i); point.applyMatrix4(inverse); return point.y; };
+  for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
+  const brow = skinnedBrow(geometry);
+  let frameTop = -Infinity;
+  for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
+  const grip = geometry.getAttribute('_gripPosition');
+  if (brow && grip) {
+    // Reuse the hand alternate-position stream for a closed bare scalp. A
+    // textured cap cannot be cut away without opening the welded forehead.
+    const rest = inverse.clone().invert(), eyes = new Box3(), skin = new Box3();
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024) {
+      point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+      if (parts.getZ(i) > 1.5) eyes.expandByPoint(point);
+      else if (parts.getY(i) === -1) skin.expandByPoint(point);
+    }
+    const unit = brow.width / referenceSkullWidth;
+    const eye = eyes.getCenter(new Vector3()), front = eye.x - .025 * unit, back = skin.min.x;
+    const centre = new Vector3((front + back) * .5, brow.y - .09 * unit, brow.centre.z);
+    // The covered scalp belongs inside the cap, not at the old chibi hair
+    // crown. Its reduced dome prevents a tuft piercing a shallow flat cap.
+    const radii = new Vector3(Math.max(.08 * unit, (front - back) * .5), .10 * unit, brow.width * .5), alternate = new Vector3();
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
+      point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+      const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045 * unit)) / (.065 * unit))), weight = t * t * (3 - 2 * t);
+      alternate.copy(point).sub(centre).divide(radii);
+      if (alternate.length() > 1) alternate.normalize();
+      alternate.multiply(radii).add(centre);
+      // The cap bill retracts behind the iris plane as its crown closes.
+      alternate.x = Math.min(alternate.x, front);
+      alternate.lerp(point, 1 - weight).applyMatrix4(rest);
+      grip.setXYZ(i, alternate.x, alternate.y, alternate.z);
+      parts.setW(i, weight * 3);
+    }
+    geometry.userData.headwearMorph = true;
+  } else {
+    const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : low + (high - low) * .82;
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) parts.setW(i, headY(i) > crown ? 4 : 0);
+  }
+}
+/** Count unique GPU buffers and attribute locations (an interleaved matrix is one buffer/four locations).
+ * The limits apply to the complete crowd layout, including the default instance transform.
+ * Pass `instanceMatrix` when a pass may still bind Three's implicit instancing (mask/id passes of static-attribute
+ * batches); `explicitMatrix` only for a separate matrix buffer NOT already present as geometry attributes. */
+export function crowdVertexLayout(geometry: BufferGeometry, instanceMatrix?: InstancedBufferAttribute, explicitMatrix = false) {
+  const columns = /^_(crowd|placement)\d$/;
+  const all = Object.entries(geometry.attributes), surface = all.filter(([name]) => !columns.test(name)).map(([, a]) => a), own = all.filter(([name]) => columns.test(name)).map(([, a]) => a);
+  const count = (list: typeof surface, extra: unknown[]) => {
+    const buffers = new Set<unknown>(extra);
+    for (const a of list) buffers.add('data' in a ? a.data : a);
+    return { buffers: buffers.size, locations: list.reduce((n, a) => n + Math.ceil(a.itemSize / 4), 0) + 4 * extra.length };
+  };
+  // A pass binds either the geometry's explicit matrix columns (_crowd0-3/_placement0-3) or Three's implicit
+  // instanceMatrix (mask/id passes of static-attribute batches), never both: the compiled programs confirm it
+  // (tests/e2e/crowd-gpu-limits.spec.ts). Report the worse of the two passes.
+  const explicit = count([...surface, ...own], explicitMatrix ? [Symbol()] : []);
+  const implicit = instanceMatrix ? count(surface, [instanceMatrix]) : explicit;
+  const buffers = Math.max(explicit.buffers, implicit.buffers), locations = Math.max(explicit.locations, implicit.locations);
+  return { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 };
+}
+
+export interface CrowdLook { model: string; key: string; hair: number | null; skin: number | null; trousers: number | null; shirt: string | null; accessory: string | null }
+/** Record only channels actually present in this LOD's geometry; an unrendered slot cannot improve the metric. */
+export function renderedCrowdLook(id: number, model: string, geometry: BufferGeometry, shirt: Color, accessory: string | null): CrowdLook {
+  let tags = geometry.userData.appearanceTags as number[] | undefined;
+  if (!tags) {
+    const parts = geometry.getAttribute('_parts'); tags = [];
+    for (let i = 0; i < parts.count; i++) if (!tags.includes(parts.getY(i))) tags.push(parts.getY(i));
+    geometry.userData.appearanceTags = tags;
+  }
+  // Scene Lab observes this every frame, but these channels change only with identity, outfit or LOD.
+  // Avoid repeated colour conversion and JSON allocation in crowded phone scenes.
+  let cache = geometry.userData.crowdLooks as Map<number, { r: number; g: number; b: number; look: CrowdLook }> | undefined;
+  if (!(cache instanceof Map)) { cache = new Map(); geometry.userData.crowdLooks = cache; }
+  const previous = cache.get(id);
+  if (previous && previous.r === shirt.r && previous.g === shirt.g && previous.b === shirt.b && previous.look.model === model && previous.look.accessory === accessory) return previous.look;
+  const a = crowdAppearance(id), look = { model, hair: accessoryKinds.get(accessory ?? '') === 'hair' || tags.includes(-2) && accessoryKinds.get(accessory ?? '') !== 'hat' ? a.hair : null, skin: tags.includes(-1) ? a.skin : null,
+    trousers: tags.includes(-3) ? a.trousers : null, shirt: tags.some(t => t > 0) ? shirt.getHexString() : null, accessory };
+  const result = { ...look, key: JSON.stringify(look) };
+  if (cache.size >= 512) cache.delete(cache.keys().next().value!);
+  cache.set(id, { r: shirt.r, g: shirt.g, b: shirt.b, look: result });
+  return result;
+}
+/** Per twenty submitted, living figures (or the whole crowd if it has fewer); largest share uses the whole crowd. */
+export function crowdVariety(looks: readonly CrowdLook[]) {
+  const counts = (keys: string[]) => {
+    const totals = new Map<string, number>(); for (const key of keys) totals.set(key, (totals.get(key) ?? 0) + 1);
+    return { distinct: totals.size, largest: Math.max(0, ...totals.values()) };
+  };
+  const all = counts(looks.map(l => l.key)), models = counts(looks.map(l => l.model));
+  const groups = Array.from({ length: Math.ceil(looks.length / 20) }, (_, i) => { const start = Math.min(i * 20, Math.max(0, looks.length - 20)), sample = looks.slice(start, start + 20); return { figures: sample.length, distinct: counts(sample.map(l => l.key)).distinct }; });
+  return { figures: looks.length, distinct: all.distinct, per20: groups, largestSameLookShare: looks.length ? all.largest / looks.length : 0, largestModelShare: looks.length ? models.largest / looks.length : 0 };
+}
+
+/** The person's hair tone (xyz) under a covered scalp, with the per-vertex cover weight (w) in the same output. */
+export function crowdCoveredScalp(weight: Node<'float'>): Node<'vec4'> {
+  return varying(vec4(pickColor(colors.hair, attribute('_variant', 'vec4').x.div(2).floor().mod(8)), weight), 'crowdCoveredScalp');
+}
+
+/** Authored hats give way to the selected rigid accessory without stacking two hats. */
+export function crowdHeadwearVisibility() {
+  const parts = attribute('_parts', 'vec4');
+  const covered = attribute('_variant', 'vec4').x.div(512).floor().mod(2).equal(1);
+  const flags = parts.w.mod(128), slot = flags.div(8).floor();
+  const selected = attribute('_variant', 'vec4').x.div(16).floor().mod(32);
+  return parts.w.greaterThanEqual(1024).select(1, slot.greaterThan(0).select(slot.equal(selected).select(1, 0), parts.y.equal(-2).or(flags.greaterThanEqual(4)).and(covered).select(0, 1)));
+}

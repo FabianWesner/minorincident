@@ -1,0 +1,52 @@
+{
+  "name": "qa-l2-gate-hitch",
+  "seed": 2,
+  "time": "L2",
+  "ground": "asphalt",
+  "size": 36,
+  "props": [
+    {
+      "id": "bridge",
+      "asset": "bld.river-bridge",
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "suv",
+      "asset": "veh.police-suv",
+      "at": [
+        4,
+        11
+      ]
+    },
+    {
+      "id": "sedan",
+      "asset": "veh.police-sedan",
+      "at": [
+        -4,
+        11
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      5
+    ],
+    "zoom": 1.45
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    60,
+    120
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "clippingMax": 0
+  }
+}

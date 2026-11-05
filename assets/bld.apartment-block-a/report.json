@@ -1,0 +1,53 @@
+{
+  "id": "bld.apartment-block-a",
+  "status": "integrated",
+  "dimensions": {
+    "x": 10.3002,
+    "y": 12.85,
+    "z": 12.6002,
+    "tolerance": 0.015
+  },
+  "budget": {
+    "triangles": 30000,
+    "materials": 8,
+    "fileKB": 1500,
+    "drawCalls": 8
+  },
+  "authoredLodTriangles": {
+    "lod1": 12000,
+    "lod2": 4000
+  },
+  "tiers": [
+    {
+      "lod": 0,
+      "triangles": 23368,
+      "drawCalls": 8,
+      "materials": 6,
+      "productionBytes": 329832,
+      "sourceTriangles": 23368,
+      "sourceBytes": 1657920,
+      "sourceSha256": "deb460aa66694f772a51929fea339bc96ee1f7b3e5cf71aee4cec325fbd0d709"
+    },
+    {
+      "lod": 1,
+      "triangles": 4968,
+      "drawCalls": 8,
+      "materials": 6,
+      "productionBytes": 76648,
+      "sourceTriangles": 4968,
+      "sourceBytes": 357060,
+      "sourceSha256": "5e5bf136e3f9953a50c11c654b1d1ab6c75555568346476091f90a14a189b8ae"
+    },
+    {
+      "lod": 2,
+      "triangles": 2752,
+      "drawCalls": 8,
+      "materials": 6,
+      "productionBytes": 45152,
+      "sourceTriangles": 2752,
+      "sourceBytes": 180836,
+      "sourceSha256": "73eab05ef570cee3391769bee6359b7fe17a14e266e7edfbb7f639b1491d8677"
+    }
+  ],
+  "independentAcceptance": "pending"
+}

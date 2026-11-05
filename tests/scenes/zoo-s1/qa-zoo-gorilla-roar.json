@@ -1,0 +1,77 @@
+{
+  "name": "qa-zoo-gorilla-roar",
+  "note": "Z-S1 fixed seed game camera: inspect telegraph, facing/velocity, clipping, ground contact and visible actors. Sim tests cover boundaries, cooldown and restore.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 48,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        7,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "regular",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -7,
+        2
+      ],
+      "yaw": 180,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3,
+      0
+    ],
+    "zoom": 1.3
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "gorilla.roar",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 365,
+  "shots": [
+    0,
+    59,
+    60,
+    120,
+    360
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

@@ -1,0 +1,222 @@
+{
+ "name": "qa-l3-station-yard",
+ "note": "E21 station yard: officers at the gate posts and the armory, the courier with the handgun, infected coming through the north-east gate",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -163,
+    -26
+   ],
+   [
+    -121,
+    26
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -135.0,
+    1.5
+   ],
+   "yaw": 90,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.fire-axe"
+   ]
+  },
+  {
+   "id": "officer-1",
+   "kind": "pedestrian",
+   "at": [
+    -128.6,
+    -18.6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-2",
+   "kind": "pedestrian",
+   "at": [
+    -128.4,
+    -6.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-3",
+   "kind": "pedestrian",
+   "at": [
+    -128.4,
+    6.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-4",
+   "kind": "pedestrian",
+   "at": [
+    -128.6,
+    18.6
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-5",
+   "kind": "pedestrian",
+   "at": [
+    -157.6,
+    -16.0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-6",
+   "kind": "pedestrian",
+   "at": [
+    -144.0,
+    16.0
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-7",
+   "kind": "pedestrian",
+   "at": [
+    -140.4,
+    -5.6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "officer-8",
+   "kind": "pedestrian",
+   "at": [
+    -137.2,
+    -6.0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer"
+    }
+   }
+  },
+  {
+   "id": "wave",
+   "kind": "infected",
+   "at": [
+    -132.0,
+    -30.0
+   ],
+   "count": 5,
+   "spread": 2.5,
+   "yaw": -90,
+   "state": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -140.0,
+   0.0
+  ],
+  "zoom": 1.15
+ },
+ "frames": 360,
+ "shots": [
+  0,
+  120,
+  240,
+  360
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0
+ }
+}

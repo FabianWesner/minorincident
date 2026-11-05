@@ -1,0 +1,43 @@
+{
+  "extends": "../../../specs/scenes/catalog/qa-l9-fork-road.json",
+  "name": "qa-l9-q3-pair-outskirts-1000",
+  "note": "Q3 matched healthy/floor outskirts pair: identical position, game camera and tick. Inspect continuous hull, stage lighting/smoke and road guidance; no pre-crash wreck.",
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        455,
+        0
+      ],
+      "yaw": 0,
+      "health": 1000,
+      "floor": true,
+      "driven": true
+    }
+  ],
+  "frames": 60,
+  "sheet": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        420,
+        -70
+      ],
+      [
+        585,
+        70
+      ]
+    ]
+  }
+}

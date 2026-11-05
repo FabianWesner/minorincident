@@ -1,0 +1,32 @@
+{
+  "row": "L3-02",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-a2",
+  "date": "2026-11-05",
+  "commit": "39c9c759134a16637f62d3359d5495d1a188e157",
+  "clauses": [
+    {
+      "clause": "Attack starts 5 s after pickup (latest 40 s); waves **30 / 60 / 100** at 0 / 20 / 40 s (low \u00d70.5), streamed over 18 s from 5 directions, 20 % as police zombies from the station door; a quarter on screen within 2 s.",
+      "verdict": "FAIL",
+      "note": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-a2/L3-03-low-complete.json.gz",
+      "sha256": "c26eead29c602872ee9d8cdfec7df98f45062b5d3bec7905c6297d5802cea326",
+      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L3-03-high-complete.json.gz",
+      "sha256": "b7670fd381eb548506f3dadc3525180dbd3a3f5e03cb22d2665850bc22178fac",
+      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L3-02-PO-record.json",
+      "sha256": "a83da2200347741ba9bd35a91f743d7f8022799375478c2cf4cd5cddee992dc5",
+      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+    }
+  ],
+  "notes": "Current source PO-owned measured failure recorded only, as instructed. No game/spec/criteria tuning or PO decision fabricated."
+}

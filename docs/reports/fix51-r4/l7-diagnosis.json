@@ -1,0 +1,200 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "original": {
+    "completed": false,
+    "run": [
+      {
+        "level": "L7",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 262,
+        "simSeconds": 259,
+        "maxNoProgressSeconds": 90.2,
+        "deaths": 0,
+        "assists": 2,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit · 3 m",
+            "tick": 10,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor · Group 10/10 nearby · 306 m",
+            "tick": 2608,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "blockingIssues": [
+      {
+        "level": "L7",
+        "tick": 15554,
+        "x": -29.9,
+        "z": 49.8,
+        "severity": "P0",
+        "kind": "cannot-finish",
+        "text": "No visible progress for 90.2 s; stopping without advancing the objective",
+        "captures": [
+          "captures/accept-L7-15554-cannot-finish.jpg"
+        ],
+        "step": "corridor",
+        "objective": "Bring the group to the evacuation corridor · Group 4/8 nearby · Waiting for a survivor (74 m away) · 0 m"
+      }
+    ],
+    "receipt": "../fix51-verify/receipts/L7-low-webgpu-z1.5-browser.json"
+  },
+  "diagnostic": {
+    "method": "Separate ordinary physical low/WebGPU route with the identical candidate bundle and input driver. Only a read-only once-per-second follower/flow snapshot was added to a temporary copy of the driver. Different combat/rescue sequence: a completed rerun is not a closure of the original failure.",
+    "run": [
+      {
+        "level": "L7",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 223,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 38.233333333333334,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 165,
+          "weapon.rocket-launcher": 66
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit · 3 m",
+            "tick": 11,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor · Group 8/8 nearby · 308 m",
+            "tick": 1106,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus · 46 m",
+            "tick": 8796,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "trajectorySamples": 223,
+    "trajectory": "l7-follower-trajectory.json.gz",
+    "uncompressedSha256": "8b333af5079f5ccf5aefa46be5cabd3f6c10de2e85721b0c98cdf10d3ca3ccbf",
+    "maxDistance": 113.77339019775391,
+    "stoppedFollowingFrames": 12
+  },
+  "conclusion": "NOT RESOLVED. Initial physical route stalls with four of eight nearby and a survivor74m away. Diagnostic completes with a different cohort; no game fix or acceptance rerating is inferred. Reproduce the failing input timeline with per-follower positions and native path state, then fix the demonstrated trap."
+}

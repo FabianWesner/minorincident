@@ -1,0 +1,18 @@
+{
+ "name": "fight-police-squad-vs4",
+ "note": "PO 10-09: 'When they start to fight, they need to move like real policemen would do, not standing still'. Three police allies (post-holding officers, handguns) and the courier against 4 chasing infected at the game camera. Look for: two-handed aim with recoil while shooting, gun lowered between targets, backstep while facing the threat, sidestep past a teammate or the courier, baton strike at arm's length, no foot sliding, body facing the target.",
+ "ground": "asphalt",
+ "size": 40,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-3, 3.5], "yaw": 0, "loadout": ["weapon.bat", "weapon.fists"] },
+  { "id": "officer-1", "kind": "pedestrian", "at": [0, 0], "yaw": 0, "look": { "model": "npc.police-officer", "tint": "#2f4858", "role": "officer" }, "state": { "ally": { "role": "officer" } } },
+  { "id": "officer-2", "kind": "pedestrian", "at": [0.9, -1.4], "yaw": 0, "look": { "model": "npc.police-officer", "tint": "#2f4858", "role": "officer" }, "state": { "ally": { "role": "officer" } } },
+  { "id": "officer-3", "kind": "pedestrian", "at": [-0.4, -3.2], "yaw": 0, "look": { "model": "npc.police-officer", "tint": "#2f4858", "role": "officer" }, "state": { "ally": { "role": "officer" } } },
+  { "id": "wave", "kind": "infected", "at": [14, 0], "count": 4, "spread": 2.5, "yaw": 180, "state": "chase" }
+ ],
+ "camera": { "mode": "game", "target": [3, 0], "zoom": 1.3 },
+ "frames": 480,
+ "sheet": 20,
+ "shots": [60, 150, 240, 330],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

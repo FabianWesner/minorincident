@@ -1,0 +1,162 @@
+{
+  "row": "L1-04",
+  "status": "PASS",
+  "reviewer": "Codex sweep-a2",
+  "date": "2026-11-05",
+  "commit": "a52dfc342cc5b5bc240ce89ddf0a7cf9302defe9",
+  "clauses": [
+    {
+      "clause": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
+      "verdict": "PASS",
+      "note": "All78 fresh frames and eight representative pinned-PROD phases personally inspected. Technician147/154 takes box, signs and returns through the door; same identity throughout. Actual Delivered latch tick3326, technician at indoor spawn66,-16.5, no open door; no courier parcel. Current coat/goggles/gloves/clipboard and framing meet PROD. Speech restored in final50-frame capture. Both364-tick transfer windows have zero simulation-hidden ticks. Six independent story controls pass; between-render drawn flags and incorrect observer finished=false are explicitly diagnostic, not pixel/canonical verdicts."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-a2/L1-04-story-proof.json",
+      "sha256": "441f7d3632967b11cebd99c0f001d342b3a7f231431f2d81307ec835ae01eacb",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L1-04-image-review.json",
+      "sha256": "681350472c4a013941c20418a5cbd7b2e33bf623bd634a6420d48de87bdef771",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L1-04-final-ledger.json.gz",
+      "sha256": "04849fbca1f953b35c732be4dcc6eb27ac61d0baa0db060ea232af2607ae0b3d",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L1-04-incomplete-ledger.json.gz",
+      "sha256": "63ff339e066250d912d4b0b35beac1570f5fad0704c674a3ece671463aab7b47",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L1-04-PROD-comparison-provenance.json",
+      "sha256": "2e23cd8961b443aadc340fd38b9c4edccbd6c05c7aa33a69263dbc0659f5367f",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/lab-current-photos.json",
+      "sha256": "cc52568894d9ced23a1e44f9cc15f5f4128e076cd726695525a5a959f48c975d",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/lab-final-photos.json",
+      "sha256": "485500988c5c120254201b461f9618029410cf0d552b8fb4ab0652771fc9b786",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-01.jpg",
+      "sha256": "a2b1e8e67891b201157773e4f63b5c1c6a8127d4bbd0c71b377a183d3462537d",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-02.jpg",
+      "sha256": "14f7e7f1ef51e2e451ad48c467d5e89a8d2af839b712a067330e0d06cc681eb7",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-03.jpg",
+      "sha256": "82ddec673fb788cd8a961907b3c76248358644b9ebe240b31b755b54c18a6cf5",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-04.jpg",
+      "sha256": "d46f64596f99e0993409a303748b1c9c150deaf6f785b7b77ca813623ddf06f0",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-05.jpg",
+      "sha256": "8858ecc1829ee67a1d35bd18fcb0d3d563d72d1f428649726bb2b0da54bb21ae",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-06.jpg",
+      "sha256": "7207190d03554d2c1f47ba1015c37a4a2accdffd41e5692b19cd7b8eb8094f0f",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-current-07.jpg",
+      "sha256": "33ea6ecff9d775967bcb445127a949e7480536647a8af98f3a60da1d4f78e13b",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-01.jpg",
+      "sha256": "a2b1e8e67891b201157773e4f63b5c1c6a8127d4bbd0c71b377a183d3462537d",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-02.jpg",
+      "sha256": "e3d0bad46cfa71dba7ae09f47dd841e1d17c038d3318f190abdf34e9a777a2c2",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-03.jpg",
+      "sha256": "f8abcb6367afa370d5cf92d16dd182602396ed30b373cdfaf9892762a71efad9",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-04.jpg",
+      "sha256": "0fa8b733fda14a6be4cb93e7fbc1858b48b50de0003cd571622f0a49e0db9065",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-05.jpg",
+      "sha256": "d176e677ee386499cab4509241775759d2823e39745894f799c8df792dc39342",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-06.jpg",
+      "sha256": "0d2d199ed4b73e786225d3b214014ed9aa0f10a0e0ac4173f5044819b1107eb2",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-07.jpg",
+      "sha256": "b74139848a8d978c4da9329a09c2280d0802a86cd1f4e162136f18f3b415a881",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-08.jpg",
+      "sha256": "d78b3679ac911a1ccc19d5a563966d738f92db64f0e342d90ecf1c5036c807f7",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-09.jpg",
+      "sha256": "d234780f2d484efd985273424ff7f1c8c1eee1fd5c11ecc46447a98bef97b95b",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-10.jpg",
+      "sha256": "81225bbf1cf10388100a2d1b484be5329138d8c5acc95de29e532492eab94738",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-11.jpg",
+      "sha256": "e970e95f37d75c84cc1a1eb81b5e1fa7eab4f6e5e66f623199649c641e43bbbc",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-12.jpg",
+      "sha256": "009abe7d1332a1a7de827b3e72aff694cbb8b89efb252ae5c431abf133d059a2",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/lab-final-13.jpg",
+      "sha256": "b2e08903bcb3e9ba247aafbd0c1c88fc164558c84d0e18a85f65ddef9687bcbe",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-high.jpg",
+      "sha256": "92b801e037ff828b79f1b55cad61c8c37462598fbba5e3e530e5e53d9d3196ff",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-low.jpg",
+      "sha256": "3e647db089cbd0d0f2af54c8e4405ccc38e50043695be8d350261f121e527269",
+      "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+    }
+  ],
+  "notes": "Before receipt proves ignored stale visual review. Add exact-clause mapping only; no game/criterion change. No physical-route or performance claim. Prior PROD source0c410e111 is comparison only."
+}

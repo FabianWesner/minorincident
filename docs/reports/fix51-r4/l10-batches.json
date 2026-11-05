@@ -1,0 +1,1360 @@
+{
+  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
+  "method": "Original full-level starts plus production save/Resume batches; at most two headless clients; <=480 seconds active per child and <=10minute reservation. Initial6minute budget aborts retained; completion requires credits and all objectives with no skips.",
+  "cells": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "batches": [
+        {
+          "backend": "webgl2",
+          "tier": "low",
+          "index": 1,
+          "startTick": 13112,
+          "endTick": 28538,
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 481,
+            "simSeconds": 476,
+            "maxNoProgressSeconds": 2.5833333333333335,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.shotgun": 15,
+              "weapon.army-mg": 325
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "steps": [
+              {
+                "id": "military-zone",
+                "text": "Recover the machine gun at the checkpoint · 601 m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1857,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus · 611 m",
+                "tick": 9385,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Play the research recording · 245 m",
+                "tick": 20424,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 41.25
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    41.25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Pack the cure canister · 8 m",
+                "tick": 24865,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2713,
+                    "y": 0,
+                    "z": 41
+                  },
+                  "drawn": [
+                    2713,
+                    0,
+                    41
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Get the cure out of the laboratory · 94 m",
+                "tick": 25063,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 141 m",
+                "tick": 26381,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "1977466bd1f4d41311d57f3e67540a34d800065de4c1a1130278dc909acb99a2",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgl2-low/1/batch.json"
+        },
+        {
+          "version": 2,
+          "backend": "webgl2",
+          "tier": "low",
+          "index": 2,
+          "startTick": 28538,
+          "endTick": 28458,
+          "startSeconds": 694.1666666666666,
+          "endSeconds": 1168.4666666666667,
+          "resumeStartSha256": "f53c4b95fd6c49a64d6ab688452a2d28f0bf8b46a2474e6e9ff0120fe570528c",
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 474,
+            "maxNoProgressSeconds": 13.816666666666666,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.rocket-launcher": 137
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 13 m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex · 761 m",
+                "tick": 352,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "install",
+                "text": "Install the cure in the dispersal device · 311 m",
+                "tick": 12494,
+                "marker": {
+                  "anchor": "cure-install",
+                  "ring": {
+                    "x": 4006.5,
+                    "y": 0,
+                    "z": -39
+                  },
+                  "drawn": [
+                    4006.5,
+                    0,
+                    -39
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Activate the dispersal console · 12 m",
+                "tick": 17637,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "mega",
+                "text": "Kill the Mega Alpha · 1 m",
+                "tick": 21654,
+                "marker": {
+                  "anchor": "cure-mega",
+                  "ring": {
+                    "x": 2927.064999996382,
+                    "y": 0.7,
+                    "z": -5
+                  },
+                  "drawn": [
+                    4012.54,
+                    0.7,
+                    10.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "release",
+                "text": "Release the cure at the console · 63 m",
+                "tick": 23671,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread · 1/150 s",
+                "tick": 25054,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgl2-low/2/batch.json"
+        },
+        {
+          "version": 2,
+          "backend": "webgl2",
+          "tier": "low",
+          "index": 3,
+          "startTick": 28458,
+          "endTick": 6534,
+          "startSeconds": 1168.4666666666667,
+          "endSeconds": 1260.3666666666666,
+          "resumeStartSha256": "b89acb586f09d368c1996034194ba2566f2b3cb89f377509e09461584ddecc00",
+          "finished": true,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 115,
+            "simSeconds": 109,
+            "maxNoProgressSeconds": 16.445,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread · 58/150 s",
+                "tick": 6,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "credits",
+                "text": "Minor Incident",
+                "tick": 5524,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgl2-low/3/batch.json"
+        }
+      ],
+      "finished": true,
+      "blocked": false
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "batches": [
+        {
+          "backend": "webgpu",
+          "tier": "low",
+          "index": 1,
+          "startTick": 12488,
+          "endTick": 28515,
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 475,
+            "maxNoProgressSeconds": 7.1,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.shotgun": 30,
+              "weapon.army-mg": 302
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "steps": [
+              {
+                "id": "military-zone",
+                "text": "Recover the machine gun at the checkpoint · 600 m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1857,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus · 611 m",
+                "tick": 9810,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Play the research recording · 245 m",
+                "tick": 20722,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 41.25
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    41.25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Pack the cure canister · 8 m",
+                "tick": 25160,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2713,
+                    "y": 0,
+                    "z": 41
+                  },
+                  "drawn": [
+                    2713,
+                    0,
+                    41
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Get the cure out of the laboratory · 94 m",
+                "tick": 25357,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 140 m",
+                "tick": 27220,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "1977466bd1f4d41311d57f3e67540a34d800065de4c1a1130278dc909acb99a2",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgpu-low/1/batch.json"
+        },
+        {
+          "version": 2,
+          "backend": "webgpu",
+          "tier": "low",
+          "index": 2,
+          "startTick": 28515,
+          "endTick": 28498,
+          "startSeconds": 683.3833333333333,
+          "endSeconds": 1158.35,
+          "resumeStartSha256": "8d41c32a39ae097ff47065022205d11c7b06d872ed2720ebfaae966c6d6485d3",
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 475,
+            "maxNoProgressSeconds": 24.404,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.rocket-launcher": 207
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 60 m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex · 760 m",
+                "tick": 1011,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "install",
+                "text": "Install the cure in the dispersal device · 310 m",
+                "tick": 13229,
+                "marker": {
+                  "anchor": "cure-install",
+                  "ring": {
+                    "x": 4006.5,
+                    "y": 0,
+                    "z": -39
+                  },
+                  "drawn": [
+                    4006.5,
+                    0,
+                    -39
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Activate the dispersal console · 12 m",
+                "tick": 18298,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "mega",
+                "text": "Kill the Mega Alpha · 1083 m",
+                "tick": 22162,
+                "marker": {
+                  "anchor": "cure-mega",
+                  "ring": {
+                    "x": 2919.7149999964126,
+                    "y": 0.7,
+                    "z": -5
+                  },
+                  "drawn": [
+                    4011.89,
+                    0.7,
+                    -65.05
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "release",
+                "text": "Release the cure at the console · 83 m",
+                "tick": 24817,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread · 1/150 s",
+                "tick": 26994,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          },
+          "issues": [
+            {
+              "level": "L10",
+              "tick": 24592,
+              "x": 3988.9,
+              "z": -94.4,
+              "severity": "P2",
+              "kind": "stuck-at-ring",
+              "text": "21 s without objective progress standing at the ring (3.0 m); HUD: \"Kill the Mega Alpha · 3 m\"",
+              "captures": [
+                "captures/batch-L10-24592-stuck-at-ring.jpg"
+              ],
+              "step": "mega",
+              "objective": "Kill the Mega Alpha · 3 m"
+            },
+            {
+              "level": "L10",
+              "tick": 24621,
+              "x": 3988.9,
+              "z": -96,
+              "severity": "P2",
+              "kind": "stuck-navigating",
+              "text": "21 s without objective progress (distance 4.0 m, no marker: false); HUD: \"Kill the Mega Alpha · 4 m\"",
+              "captures": [
+                "captures/batch-L10-24621-stuck-navigating.jpg"
+              ],
+              "step": "mega",
+              "objective": "Kill the Mega Alpha · 4 m"
+            }
+          ],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgpu-low/2/batch.json"
+        },
+        {
+          "version": 2,
+          "backend": "webgpu",
+          "tier": "low",
+          "index": 3,
+          "startTick": 28498,
+          "endTick": 8433,
+          "startSeconds": 1158.35,
+          "endSeconds": 1281.9,
+          "resumeStartSha256": "6e22c3c8093cd1ff9530f65d76fa0ed5deb2076a33f26644f1720926b4bbdb17",
+          "finished": true,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 146,
+            "simSeconds": 141,
+            "maxNoProgressSeconds": 16.402,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread · 26/150 s",
+                "tick": 0,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "credits",
+                "text": "Minor Incident",
+                "tick": 7422,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgpu-low/3/batch.json"
+        }
+      ],
+      "finished": true,
+      "blocked": false
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "batches": [
+        {
+          "version": 2,
+          "backend": "webgl2",
+          "tier": "high",
+          "index": 1,
+          "startTick": 12733,
+          "endTick": 28476,
+          "startSeconds": 212.21666666666667,
+          "endSeconds": 686.8166666666667,
+          "resumeStartSha256": "72bb9c99776f6eff672af0f5a713439f91ecd4311e0a07426f545104b9995d9c",
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 475,
+            "maxNoProgressSeconds": 6.783333333333333,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.shotgun": 30,
+              "weapon.army-mg": 396
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "steps": [
+              {
+                "id": "military-zone",
+                "text": "Recover the machine gun at the checkpoint · 600 m",
+                "tick": 2,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1857,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus · 612 m",
+                "tick": 9850,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Play the research recording · 245 m",
+                "tick": 21294,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 41.25
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    41.25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Pack the cure canister · 8 m",
+                "tick": 25733,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2713,
+                    "y": 0,
+                    "z": 41
+                  },
+                  "drawn": [
+                    2713,
+                    0,
+                    41
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Get the cure out of the laboratory · 94 m",
+                "tick": 25931,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 140 m",
+                "tick": 27876,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          "issues": [],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgl2-high/1/batch.json"
+        },
+        {
+          "version": 2,
+          "backend": "webgl2",
+          "tier": "high",
+          "index": 2,
+          "startTick": 28476,
+          "endTick": 28341,
+          "startSeconds": 686.8166666666667,
+          "endSeconds": 1159.1666666666667,
+          "resumeStartSha256": "eedd2ff6c560122439479668f1a1495cebe2ceb390d60ee85b5b7fceaacadc26",
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 472,
+            "maxNoProgressSeconds": 64.198,
+            "deaths": 0,
+            "assists": 2,
+            "attacks": {
+              "weapon.rocket-launcher": 118
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher · 101 m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex · 761 m",
+                "tick": 1949,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "install",
+                "text": "Install the cure in the dispersal device · 311 m",
+                "tick": 14101,
+                "marker": {
+                  "anchor": "cure-install",
+                  "ring": {
+                    "x": 4006.5,
+                    "y": 0,
+                    "z": -39
+                  },
+                  "drawn": [
+                    4006.5,
+                    0,
+                    -39
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Activate the dispersal console · 12 m",
+                "tick": 19218,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "mega",
+                "text": "Kill the Mega Alpha · 36 m",
+                "tick": 23282,
+                "marker": {
+                  "anchor": "cure-mega",
+                  "ring": {
+                    "x": 3961.820206958438,
+                    "y": 0.7,
+                    "z": -32.096218957144266
+                  },
+                  "drawn": [
+                    3962.76,
+                    0.7,
+                    -32.13
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "release",
+                "text": "Release the cure at the console · 7 m",
+                "tick": 24448,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          "issues": [
+            {
+              "level": "L10",
+              "tick": 25678,
+              "x": 3998.1,
+              "z": -33.2,
+              "severity": "P2",
+              "kind": "stuck-navigating",
+              "text": "20 s without objective progress (distance 7.0 m, no marker: false); HUD: \"Release the cure at the console · 7 m\"",
+              "captures": [
+                "captures/batch-L10-25678-stuck-navigating.jpg"
+              ],
+              "step": "release",
+              "objective": "Release the cure at the console · 7 m"
+            }
+          ],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgl2-high/2/batch.json"
+        }
+      ],
+      "finished": false,
+      "blocked": true,
+      "error": "batch3 exit1"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "batches": [
+        {
+          "version": 2,
+          "backend": "webgpu",
+          "tier": "high",
+          "index": 1,
+          "startTick": 13579,
+          "endTick": 28486,
+          "startSeconds": 226.31666666666666,
+          "endSeconds": 701.0833333333334,
+          "resumeStartSha256": "2ece8fc2d5c7f9d0c2a0da40a93bff7785aa870a916b0484592d494ccea8b6af",
+          "finished": false,
+          "run": {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 475,
+            "maxNoProgressSeconds": 83.9,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.shotgun": 34,
+              "weapon.army-mg": 2067
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "steps": [
+              {
+                "id": "military-zone",
+                "text": "Recover the machine gun at the checkpoint · 600 m",
+                "tick": 2,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1857,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus · 611 m",
+                "tick": 9956,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          "issues": [
+            {
+              "level": "L10",
+              "tick": 22782,
+              "x": 2245.7,
+              "z": -47.1,
+              "severity": "P2",
+              "kind": "stuck-navigating",
+              "text": "20 s without objective progress (distance 225.0 m, no marker: false); HUD: \"Reach the research campus · 225 m\"",
+              "captures": [
+                "captures/batch-L10-22782-stuck-navigating.jpg"
+              ],
+              "step": "research-campus",
+              "objective": "Reach the research campus · 225 m"
+            }
+          ],
+          "inputDriverSha256": "23e8e5f2d2fb42850d00ac29ef2eebd99676c0c6261e2a9db8e818685cb39c0e",
+          "batchRunnerSha256": "08c6183bac8480133e4462af5f677b1b9972e5523b2adeb369407e6ebcd8a5ed",
+          "injectedDriverSha256": "ef86d31a7fedc0dbd9da6cf872419fcd96604ded1d57ed76b578d3e97ab20791",
+          "method": "Actual saved L10 → production level Resume; ordinary WASD/mouse; <=480s active batch; same-tier paused Settings action saves live state; no objective skips or world writes.",
+          "path": "test-results/fix51-r4/l10-batches/webgpu-high/1/batch.json"
+        }
+      ],
+      "finished": false,
+      "blocked": true,
+      "error": "batch2 exit1"
+    }
+  ]
+}

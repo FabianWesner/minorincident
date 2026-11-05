@@ -1,0 +1,170 @@
+{
+  "name": "l8-district-paths",
+  "note": "Game camera sheet of five enclosures, clean public paths, staff/service yard and strong masonry perimeter. Review clipping, grounded props and moving courier facing/visibility; no specials in this district-only fixture.",
+  "seed": 30,
+  "ground": "district",
+  "time": "L8-zoo",
+  "dof": false,
+  "layout": {
+    "district": "D-ZOO",
+    "bbox": [
+      [
+        -120,
+        -90
+      ],
+      [
+        120,
+        90
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        60,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            48,
+            0
+          ],
+          [
+            30,
+            0
+          ],
+          [
+            24,
+            0
+          ],
+          [
+            24,
+            12
+          ]
+        ]
+      },
+      "yaw": 180
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      60,
+      0,
+      -10
+    ],
+    "zoom": 3
+  },
+  "frames": 480,
+  "shots": [
+    0,
+    60,
+    120,
+    180,
+    240,
+    300,
+    360,
+    420,
+    480
+  ],
+  "sheet": 60,
+  "script": [
+    {
+      "frame": 60,
+      "camera": {
+        "mode": "game",
+        "target": [
+          -60,
+          0,
+          -10
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 120,
+      "camera": {
+        "mode": "game",
+        "target": [
+          -60,
+          0,
+          54
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 180,
+      "camera": {
+        "mode": "game",
+        "target": [
+          60,
+          0,
+          54
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 240,
+      "camera": {
+        "mode": "game",
+        "target": [
+          0,
+          0,
+          -52
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 300,
+      "camera": {
+        "mode": "game",
+        "target": [
+          0,
+          0,
+          70
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 360,
+      "camera": {
+        "mode": "game",
+        "target": [
+          96,
+          0,
+          32
+        ],
+        "zoom": 4
+      }
+    },
+    {
+      "frame": 420,
+      "camera": {
+        "mode": "game",
+        "target": [
+          108,
+          0,
+          74
+        ],
+        "zoom": 4
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "footSinkMaxCm": 0,
+    "yawDriftMaxDeg": 5,
+    "clippingMax": 0
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "row": "L2-12",
+  "status": "PASS",
+  "reviewer": "Codex sweep-a2",
+  "date": "2026-11-05",
+  "commit": "fde334030c05c3cc44c46daed6fffc020382258b",
+  "clauses": [
+    {
+      "clause": "combat: competent run meets \u2265 1 infected per 30 m of route (tune); attacks on the player \u2265 2/min, \u2264 20/min (tune).",
+      "verdict": "PASS",
+      "note": "Every numeric clause is measured PASS on current source in ordinary mortal low/high complete routes: bridge player attacks12.186/17.555 per minute within2\u201320, aggregate distinct living clear-sight infected density5.587/5.823 per30m over257.76/257.59m walked. Both complete without deaths or discontinuities. Attack rates independently recomputed from actual windups/phase seconds and densities from distinct IDs/metres. Maximum observed encounter gaps7.74/33.45m are retained; no claim of uniform spacing. Original1.62/min failure remains attributed in historical evidence."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-a2/L2-12-current-proof.json",
+      "sha256": "19cc44b0b5fa0a7c393544f3cb724f4b6db9ac7b00accc0474bbb0077488b3e7",
+      "what": "Immutable fresh complete mortal-route native receipts and independently recomputed every-clause numeric proof at both qualities; unchanged density/rate targets, original historical failure retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L2-12-low-native.json.gz",
+      "sha256": "cbc4c1e60d2fc4c753f1e4d3701bdf0e3beb081d73b2754b3c7ec369a334deb6",
+      "what": "Immutable fresh complete mortal-route native receipts and independently recomputed every-clause numeric proof at both qualities; unchanged density/rate targets, original historical failure retained."
+    },
+    {
+      "file": "docs/reports/sweep-a2/L2-12-high-native.json.gz",
+      "sha256": "12ed92dd28f981e4072cf1fc7da77dcd2045a7ea924094f4e643ee4d2a2149e7",
+      "what": "Immutable fresh complete mortal-route native receipts and independently recomputed every-clause numeric proof at both qualities; unchanged density/rate targets, original historical failure retained."
+    }
+  ],
+  "notes": "Simulation-only row. No new captures or game/checker target changes. Fresh exact full-row review closes only this historical numeric finding after all four required native clauses pass."
+}

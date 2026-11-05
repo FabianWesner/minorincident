@@ -1,0 +1,42 @@
+{
+  "row": "L7-07",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "8d6d75d4f3558f523e4887aeedeaf2ba1a0d8f24",
+  "clauses": [
+    {
+      "clause": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
+      "verdict": "PASS",
+      "note": "Fresh source8765679a native low/high complete routes: every active corridor tick independently compares living following humans within18m against the production HUD string, and exact marker identity/x/y/z against the authored corridor destination. Zero counter mismatches and zero moving markers; both independent canonical controls match. Current physical Continue photos personally reviewed in L7-02 show Group1/1 and13/13 matching the actual carried living rosters; those runs yield before full corridor completion. The offscreen world ring is not claimed visible in a still."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L7-07/counter.json.gz",
+      "sha256": "d4e1f454ae7eb44a90a07b597f909f5b016954fbd5352582695b9f249f60779e",
+      "what": "Current-source every-tick native counter/fixed-coordinate proof, or exact physical run/inspected HUD photo manifest as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/low-review/review.json",
+      "sha256": "eba9032e178e4c520deeb96a623682aab890ae721857286610066de896ffe223",
+      "what": "Current-source every-tick native counter/fixed-coordinate proof, or exact physical run/inspected HUD photo manifest as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/high-review/review.json",
+      "sha256": "6c68577ee64f1636c6a18cd1f570dcf23b31518dc3581bca1e06e3b62589e322",
+      "what": "Current-source every-tick native counter/fixed-coordinate proof, or exact physical run/inspected HUD photo manifest as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-low-arrival-input.json",
+      "sha256": "513df560514318f0997cab31b87936b381eff707fb0bd21437e13e531c59fb34",
+      "what": "Current-source every-tick native counter/fixed-coordinate proof, or exact physical run/inspected HUD photo manifest as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L7-02/L7-high-arrival-input.json",
+      "sha256": "9b6209d8d4f0958a9dc79bd0ef2fd9ac5057be10cf477955a7f5cdc66675a056",
+      "what": "Current-source every-tick native counter/fixed-coordinate proof, or exact physical run/inspected HUD photo manifest as named."
+    }
+  ],
+  "notes": "All41 physical panels reused from the immediately preceding L7-02 review were personally inspected. No game, criterion, checker or route changes."
+}

@@ -1,0 +1,136 @@
+{
+  "criterion": "E07-AC19",
+  "seed": 7,
+  "nominalCorridorWidthM": 1.5,
+  "contactDecisionCommentCommit": "2e4df83867",
+  "nominalOutsideExpectedHp": 100,
+  "nominalOutsideActualHp": 50,
+  "literalCorridorControlPass": false,
+  "results": [
+    {
+      "name": "inside",
+      "id": 4,
+      "initial": {
+        "x": 5,
+        "z": 0.75,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "hpBefore": 100,
+      "hpAfter": 50,
+      "hits": [
+        {
+          "tick": 76,
+          "attackId": 1,
+          "actionId": "infected.zebra.stampede",
+          "sourceId": 2,
+          "targetId": 4,
+          "position": {
+            "x": 5,
+            "z": 0.75,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.4061384660534483,
+            "z": 0.9138115486202569
+          },
+          "knockback": 0,
+          "amount": 25,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 88,
+          "attackId": 2,
+          "actionId": "infected.zebra.stampede",
+          "sourceId": 3,
+          "targetId": 4,
+          "position": {
+            "x": 5,
+            "z": 0.801,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.38420613318855823,
+            "z": 0.9232473380521039
+          },
+          "knockback": 0,
+          "amount": 25,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ]
+    },
+    {
+      "name": "nominal-outside",
+      "id": 5,
+      "initial": {
+        "x": 5,
+        "z": -0.76,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "hpBefore": 100,
+      "hpAfter": 50,
+      "hits": [
+        {
+          "tick": 76,
+          "attackId": 1,
+          "actionId": "infected.zebra.stampede",
+          "sourceId": 2,
+          "targetId": 5,
+          "position": {
+            "x": 5,
+            "z": -0.76,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.40166149508506604,
+            "z": -0.915788208793949
+          },
+          "knockback": 0,
+          "amount": 25,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 88,
+          "attackId": 2,
+          "actionId": "infected.zebra.stampede",
+          "sourceId": 3,
+          "targetId": 5,
+          "position": {
+            "x": 5,
+            "z": -0.801,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.38420613318855823,
+            "z": -0.9232473380521039
+          },
+          "knockback": 0,
+          "amount": 25,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ]
+    },
+    {
+      "name": "physical-outside",
+      "id": 6,
+      "initial": {
+        "x": 8,
+        "z": -0.88,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "hpBefore": 100,
+      "hpAfter": 100,
+      "hits": []
+    }
+  ]
+}

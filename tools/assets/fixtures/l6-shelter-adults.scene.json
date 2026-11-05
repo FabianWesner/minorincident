@@ -1,0 +1,93 @@
+{
+  "name": "l6-shelter-adult-assets",
+  "seed": 6,
+  "ground": "sidewalk",
+  "size": 24,
+  "time": "L2",
+  "props": [
+    {
+      "id": "adult-0",
+      "asset": "npc.civilian-man-a.aftermath",
+      "at": [
+        -3.75,
+        0,
+        -1.75
+      ]
+    },
+    {
+      "id": "adult-1",
+      "asset": "npc.civilian-man-b.aftermath",
+      "at": [
+        -1.25,
+        0,
+        -1.75
+      ]
+    },
+    {
+      "id": "adult-2",
+      "asset": "npc.civilian-woman-b.aftermath",
+      "at": [
+        1.25,
+        0,
+        -1.75
+      ]
+    },
+    {
+      "id": "adult-3",
+      "asset": "npc.marcus.aftermath",
+      "at": [
+        3.75,
+        0,
+        -1.75
+      ]
+    },
+    {
+      "id": "adult-4",
+      "asset": "npc.shelter-survivor.bandaged",
+      "at": [
+        -3.75,
+        0,
+        1.75
+      ]
+    },
+    {
+      "id": "adult-5",
+      "asset": "npc.shelter-survivor.lying",
+      "at": [
+        -1.25,
+        0,
+        1.75
+      ]
+    },
+    {
+      "id": "adult-6",
+      "asset": "npc.shelter-survivor.sitting",
+      "at": [
+        1.25,
+        0,
+        1.75
+      ]
+    }
+  ],
+  "actors": [],
+  "camera": {
+    "mode": "orbit",
+    "target": [
+      0,
+      0.7,
+      0
+    ],
+    "radius": 17,
+    "azimuth": 45,
+    "polar": 54
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  }
+}

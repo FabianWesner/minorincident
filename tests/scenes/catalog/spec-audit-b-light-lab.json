@@ -1,0 +1,18 @@
+{
+  "name": "spec-audit-b-light-lab",
+  "note": "E25 audit: game-camera trailer pools, fence occlusion, beams and night player readability; quality/zoom/backend matrix.",
+  "ground": "asphalt",
+  "size": 50,
+  "time": "night",
+  "dof": false,
+  "props": [
+    { "id": "trailer", "asset": "prop.light-tower-trailer", "at": [-10, 0], "powerGroup": "trailer" },
+    { "id": "fence", "asset": "prop.privacy-fence", "at": [8, 0], "scale": [1, 1, 4] }
+  ],
+  "actors": [{ "id": "courier", "kind": "courier", "at": [-3, -3] }],
+  "camera": { "mode": "game", "target": [-3, -3], "zoom": 1 },
+  "frames": 120,
+  "shots": [0, 60, 120],
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

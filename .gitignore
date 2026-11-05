@@ -1,0 +1,132 @@
+# Reference repos (cloned separately, not part of this project)
+/folio-2025/
+/references/img2threejs/
+
+# Dependencies
+node_modules
+
+# Build output & caches
+dist/
+dist-ssr/
+.vite/
+.vite-cache/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Tooling
+.playwright-mcp/
+coverage/
+.cache/
+
+# Editors & OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+.DS_Store
+Thumbs.db
+
+# Blender by-products (build.py is the source of truth)
+*.blend
+*.blend1
+*.blend@
+
+# Asset experiment: keep scripts, briefs, reports and results; drop heavy outputs
+experiment/gallery/
+experiment/**/*.glb
+experiment/**/renders/
+experiment/tools/.locks/
+epics-pipeline/load.log
+
+# ---- Public repo scope: game only (decision 2026-10-05) ----
+# Concept drafts, references and the draft pipeline
+/assets/regions/
+/assets/**/reference*.png
+/assets/**/prompt.md
+/assets/**/description.txt
+/assets/**/renders/
+/assets/**/notes-review/
+# Experiments, pilots and analysis
+/assets/fire-engine/
+/assets/fire-engine-blender/
+/docs/bruno-reference/
+# Orchestration and dev-only tooling
+/epics-pipeline/
+/preview/
+# Test artefacts (screenshots/videos are deleted after verification)
+/test-results/
+/playwright-report/
+# Review captures are local evidence; commit only their JSON manifests and reports.
+/docs/reports/**/*.png
+/docs/reports/**/*.jpg
+/docs/reports/**/*.jpeg
+/docs/reports/**/*.webp
+/docs/reports/**/*.gif
+/docs/reports/**/*.mp4
+/docs/reports/**/*.webm
+/docs/reports/**/*.mov
+/docs/reports/**/*.glb
+/docs/reports/**/*.jsonl
+/docs/reports/**/*.csv
+/docs/reports/**/*.tsv
+/docs/reports/**/*.txt
+/docs/reports/qa-ab/
+!/docs/reports/qa-ab/
+/docs/reports/qa-ab/*
+!/docs/reports/qa-ab/README.md
+!/docs/reports/qa-ab/*/
+/docs/reports/qa-ab/*/*
+!/docs/reports/qa-ab/*/summary.json
+# Per asset keep only the source script, exported models and its notes/review/report
+/assets/*/*
+!/assets/*/build.py
+!/assets/*/model*.glb
+!/assets/*/notes.md
+!/assets/*/review.md
+!/assets/*/report.json
+/.claude/
+
+# Python build caches
+__pycache__/
+*.pyc
+epics-pipeline/.meshopt-cache/
+test-results/look-round/ref/
+.wrangler/
+
+# Tests always write receipts here; CI rejects forced additions to this tree.
+# Pin inputs under tests/fixtures/ instead of unignoring generated artifacts.
+
+# Shared local dependency and production build stores.
+/.mi-worktree-cache/
+
+# Scene review captures are generated evidence, not scene specifications.
+/docs/scenes/**/*.png
+/docs/scenes/**/*.jpg
+/docs/scenes/**/*.jpeg
+/docs/scenes/**/*.webp
+/docs/scenes/**/*.gif
+/docs/scenes/**/*.mp4
+/docs/scenes/**/*.webm
+/docs/scenes/**/*.mov
+/docs/scenes/**/*.glb
+/docs/reports/**/*.avif
+/docs/reports/**/*.svg
+/docs/reports/**/*.bmp
+/docs/reports/**/*.tif
+/docs/reports/**/*.tiff
+/docs/scenes/**/*.avif
+/docs/scenes/**/*.svg
+/docs/scenes/**/*.bmp
+/docs/scenes/**/*.tif
+/docs/scenes/**/*.tiff

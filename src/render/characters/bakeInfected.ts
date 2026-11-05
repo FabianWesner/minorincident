@@ -1,0 +1,307 @@
+import { crowdLimbParts } from '../../assets/crowdParts';
+// Runtime adaptation of Bruno InstancedGroup.js (MIT).
+import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type SkinnedMesh, type Texture } from 'three';
+import { packSkin, restInverses } from './skinnedCrowd';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { characterNodes } from '../../data/survivor';
+import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
+import type { CharacterRig } from './rig';
+import type { CrowdClip } from '../../assets/crowd';
+import { authoredSoles } from './footSoles';
+type SkinnedCrowdClip = CrowdClip & { binds: Float32Array };
+type BakedCrowd = { geometry: import('three').BufferGeometry; clip: SkinnedCrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
+// Keep sampled animation and small bind transforms across loads. The source
+// registry already owns the geometry; cached expanded triangle soup otherwise
+// pins another vertex buffer after the scene indexes/disposes its own copy.
+const bakedCrowds = new Map<string, { clip: SkinnedCrowdClip; transforms: Matrix4[] }>();
+const bakedCrowdLimit = 64;
+// LODs with exactly the same skeleton share geometry-independent samples
+// within a cold load. Grounded/death poses still sample each model's own bounds.
+const rigPoses = new Map<string, Map<string, Float32Array>>();
+export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
+  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
+export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-') && !clip.startsWith('dog-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
+  'npc-give', 'npc-wave', 'npc-glance', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot'] as const;
+export const framesPerClip = 24;
+/** Clips whose feet legitimately leave the floor plane (seated, knocked down, rising, dying): Scene Lab's rule. */
+const unplantedClips = /death|die|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
+const sole = new Vector3();
+/** Bake once at level load: merged color geometry, part indices and the shared authored glTF actions. */
+export function bakeInfected(...args: Parameters<typeof bakeInfectedSteps>): BakedCrowd {
+  const steps = bakeInfectedSteps(...args);
+  let step = steps.next();
+  while (!step.done) step = steps.next();
+  return step.value;
+}
+/** Same bake, paced behind a loading card. Keep each CPU slice short without
+ * changing any sampled frame, vertex, material or retained clip. */
+export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Parameters<typeof bakeInfectedSteps>): Promise<BakedCrowd> {
+  const steps = bakeInfectedSteps(...args);
+  let start = performance.now(), step = steps.next();
+  while (!step.done) {
+    if (performance.now() - start >= 8) { await pause(); start = performance.now(); }
+    step = steps.next();
+  }
+  return step.value;
+}
+function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
+  let hasSkinnedMesh = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) hasSkinnedMesh = true; });
+  if (!hasSkinnedMesh) throw new Error('Crowd bake requires the v2 skinned figure contract');
+  preserveUV ||= root.userData.assetTextureMode === 'baseColor' || root.getObjectByName('root')?.userData.crowdAtlas === true;
+  const texturedHumanoid = preserveUV && !root.getObjectByName('body');
+  const rig = {} as CharacterRig;
+  for (const name of characterNodes) {
+    let node = root.getObjectByName(name);
+    if (!node) { node = root.clone(false); node.name = name; node.position.set(0, 0, 0); root.add(node); }
+    rig[name] = node;
+  }
+  const animalRig = !!root.getObjectByName('body') || root.getObjectByName('root')?.userData.crowdQuadruped === true && !!root.getObjectByName('legFL');
+  // Quadruped skins carry an extended animal pose set (trunk, tail, four
+  // legs and paws). Weapon/backpack sockets are not used by animals and would
+  // push the sampled pose indices beyond the shared 32-part crowd contract.
+  const parts: Object3D[] = characterNodes.filter(name => !animalRig || !/Socket/.test(name)).map((name) => rig[name]);
+  for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
+  // Some quadruped cast rigs contain more deforming bones than their legacy
+  // AssetDef animatedNodes list (lion rigs add neck, four legs, paws and body).
+  // The skin itself is authoritative; include its named bones in the pose set.
+  if (animalRig) root.traverse(node => {
+    const skinned = node as SkinnedMesh;
+    if (!skinned.isSkinnedMesh) return;
+    for (const bone of skinned.skeleton.bones) {
+      if (/Socket/.test(bone.name) || parts.includes(bone)) continue;
+      parts.push(bone);
+    }
+  });
+  // Pose frames need joint matrices, not every rigid mesh's world matrix.
+  // Include each joint's ancestors in tree order; source meshes get a full
+  // update once after the rest pose is restored, before geometry extraction.
+  const required = new Set<Object3D>();
+  for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
+  const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
+  if (preserveIndices) root.updateMatrixWorld(true);
+  const sourceSoles = authoredSoles(root);
+  const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
+    ? JSON.stringify([crawlingRestPose, sourceSoles, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order, node.userData.cowerHeadLift])]) : undefined;
+  const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
+  if (poseKey) {
+    rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);
+    if (rigPoses.size > 8) rigPoses.delete(rigPoses.keys().next().value!);
+  }
+  const updateJoints = () => {
+    for (const node of joints) {
+      if (node.matrixAutoUpdate) node.updateMatrix();
+      if (node.matrixWorldAutoUpdate) { if (node.parent) node.matrixWorld.multiplyMatrices(node.parent.matrixWorld, node.matrix); else node.matrixWorld.copy(node.matrix); }
+      node.matrixWorldNeedsUpdate = false;
+    }
+  };
+  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}:${preserveUV}` : undefined;
+  const template = key ? bakedCrowds.get(key) : undefined, cached = template?.clip;
+  if (template) {
+    bakedCrowds.delete(key!); bakedCrowds.set(key!, template); root.updateMatrixWorld(true);
+  }
+  const matrices = cached ? cached.matrices : new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
+  if (!cached) {
+    const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
+    let matrixOffset = 0;
+    // Standing and gait frames keep both soles on the floor (QA: infected feet 2-6 cm under the floor in the hunched
+    // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
+    // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
+    const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
+    const lowestSole = () => Math.min(...feet.flatMap((foot, side) => sourceSoles ? sourceSoles[side].map(point => sole.copy(point).applyMatrix4(foot.matrixWorld).y) : [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
+    const floor = lowestSole(), flying = !!root.getObjectByName('wingL');
+    // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
+    // hoof bounds together instead of moving a whole upper leg away from its shoulder.
+    const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
+    const declaredHooves = root.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
+    const hoofPoints = declaredHooves ? Object.entries(declaredHooves).flatMap(([name, points]) => {
+      const paw = root.getObjectByName(name); return paw ? points.map(point => ({ paw, point: new Vector3().fromArray(point) })) : [];
+    }) : preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
+      const paw = root.getObjectByName(name); if (!paw) return [];
+      const points: { paw: Object3D; point: Vector3 }[] = [];
+      paw.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const position = node.geometry.getAttribute('position');
+        for (let i = 0; i < position.count; i++) points.push({ paw, point: paw.worldToLocal(new Vector3().fromBufferAttribute(position, i).applyMatrix4(node.matrixWorld)) });
+      });
+      return points;
+    }) : [];
+    const lowestHoof = () => {
+      let bottom = Infinity;
+      for (const { paw, point } of hoofPoints) bottom = Math.min(bottom, sole.copy(point).applyMatrix4(paw.matrixWorld).y);
+      return bottom;
+    };
+    const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
+
+    const mixer = new AnimationMixer(root);
+    for (const clip of clipNames) {
+      const reusable = !groundClips.test(clip) && clip !== 'animal-death';
+      const shared = reusable ? sharedPoses?.get(clip) : undefined;
+      if (shared) { (matrices as Float32Array).set(shared, matrixOffset); matrixOffset += shared.length; continue; }
+      const clipStart = matrixOffset;
+      const embedded = root.animations.find(animation => animation.name === clip);
+      const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
+      if (action) { action.clampWhenFinished = true; action.reset().play(); }
+      const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+      const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = !hoofPoints.length && (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
+      for (let frame = 0; frame < framesPerClip; frame++) {
+        for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
+        const t = frame / (framesPerClip - 1);
+        if (action) mixer.setTime(t * duration); else sampleClip(root, name, t * duration);
+        updateJoints();
+        if (hoofPoints.length && !unplantedClips.test(clip)) {
+          const deficit = hoofFloor - lowestHoof();
+          if (Math.abs(deficit) > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+        }
+        if (planted) {
+          const deficit = floor - lowestSole();
+          if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+        }
+        for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
+        if ((frame + 1) % 6 === 0) yield;
+      }
+      action?.stop();
+      if (reusable) sharedPoses?.set(clip, new Float32Array(matrices.slice(clipStart, matrixOffset)));
+    }
+    mixer.uncacheRoot(root);
+    for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
+    root.updateMatrixWorld(true);
+  }
+  yield;
+  const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
+  const transforms = template?.transforms ?? []; let meshIndex = 0;
+  let shirtColor: import('three').Color | undefined;
+  let texture: Texture | undefined;
+  let doubleSided = false;
+  // Welded bodies keep vertices in world rest space. The shader combines unchanged joint rows with inverse binds.
+  const binds = restInverses(parts);
+  root.traverse((node) => {
+    if (!(node instanceof Mesh)) return;
+    let capNode: Object3D | null = node;
+    while (capNode && !capNode.name.startsWith('stump_')) capNode = capNode.parent;
+    const capIndex = preserveUV && capNode ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(capNode.name.replace(/^stump_/, '')) : -1;
+    const cap = capIndex >= 0;
+    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !cap) return;
+    // A named animated part can itself be a Mesh (not only a parent joint).
+    let owner: Object3D | null = node;
+    while (owner && !parts.includes(owner)) owner = owner.parent;
+    const part = parts.indexOf(owner ?? rig.root);
+    // Reuse the exact first bake's double-precision bind transform. Sampling
+    // and restoring Euler clips can round a rest quaternion. The bind used
+    // for geometry must match the sampled atlas on subsequent loads.
+    const bind = transforms[meshIndex++];
+    if (bind) relative.copy(bind);
+    else { if ((node as SkinnedMesh).isSkinnedMesh) relative.copy(root.matrixWorld); else relative.copy(node.matrixWorld); if (key) transforms.push(relative.clone()); }
+    // CrowdView can retain authored indices through the bake. Expanding every
+    // triangle first repeated transforms, attribute packing and welding work.
+    // Civilian grip tessellation still requests the original triangle soup.
+    const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone();
+    if (preserveIndices && !geometry.index) {
+      const indices = new Uint32Array(geometry.getAttribute('position').count);
+      for (let i = 0; i < indices.length; i++) indices[i] = i;
+      geometry.setIndex(new BufferAttribute(indices, 1));
+    }
+    if (cap) { geometry.computeVertexNormals(); geometry.setAttribute('uv', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 2), 2)); }
+    // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
+    for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
+      const attribute = geometry.getAttribute(name);
+      if (attribute.array instanceof Float32Array && !attribute.normalized) continue;
+      const values = new Float32Array(attribute.count * attribute.itemSize);
+      for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) values[i * attribute.itemSize + c] = attribute.getComponent(i, c);
+      geometry.setAttribute(name, new BufferAttribute(values, attribute.itemSize));
+    }
+    geometry.applyMatrix4(relative);
+    // Every source material is folded into vertex colors, yielding one draw per role.
+    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial & MeshStandardMaterial;
+    if (preserveUV && material.map) {
+      if (texture && texture !== material.map) throw new Error('Textured infected crowd assets must use one shared atlas');
+      texture = material.map;
+    }
+    doubleSided ||= material.side === DoubleSide;
+    const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
+    const clothing = material.name === 'pal_infectedShirt' || texturedHumanoid && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
+    // Shared atlas materials can disable vertexColors; skinned palette regions
+    // still own their authored COLOR_0 data (e.g. the firefighter's dark collar).
+    const sourceColor = geometry.getAttribute('color');
+    const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
+    for (let i = 0; i < count; i++) {
+      colors[i * 3] = base[0] * (sourceColor ? sourceColor.getX(i) : 1);
+      colors[i * 3 + 1] = base[1] * (sourceColor ? sourceColor.getY(i) : 1);
+      colors[i * 3 + 2] = base[2] * (sourceColor ? sourceColor.getZ(i) : 1);
+    }
+    const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
+    const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
+    if (map.some(part => part < 0 || part >= 32)) throw new Error(`Crowd skin joints must belong to the 32-part pose contract (parts=${parts.map(p => p.name).join(',')}; map=${map.join(',')})`);
+    const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
+    for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
+      if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
+      else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
+    }
+    const semantic = geometry.getAttribute('_crowd_part'), semanticParts = semantic ? Float32Array.from({ length: count }, (_, i) => map[semantic.getX(i)]) : undefined;
+    const packed = packSkin(joints, weights, count, semanticParts);
+    indices.set(packed.dominant);
+    for (let i = 0; i < count; i++) {
+      const name = parts[indices[i]].name;
+      const region = geometry.getAttribute('_crowd_region');
+      shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+      emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
+    }
+    // Integer bits in the fourth weight identify every limb touched by a
+    // triangle. Its fractional part remains the fourth skin weight. Shared
+    // vertices are compacted after this triangle-local mask is assigned.
+    if (!cap && preserveUV) {
+      const groups = crowdLimbParts(animalRig);
+      for (let t = 0; t < count; t += 3) {
+        let mask = 0;
+        for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;
+        for (let k = 0; k < 3; k++) packed.skin[(t + k) * 4 + 3] += mask;
+      }
+    }
+    geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
+    geometry.deleteAttribute('_crowd_region'); geometry.deleteAttribute('_crowd_part');
+    geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
+    if (preserveUV) {
+      const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
+      for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; }
+      geometry.setAttribute('uv', new BufferAttribute(uv, 2));
+    }
+    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
+    if (preserveUV) geometry.setAttribute('_vein', new BufferAttribute(new Float32Array(count).fill(cap ? 1024 + capIndex : 0), 1));
+    if (!preserveUV) geometry.deleteAttribute('uv');
+    geometries.push(geometry);
+  });
+  yield;
+  const geometry = mergeGeometries(geometries); if (!geometry) throw new Error('Infected geometry merge failed'); for (const source of geometries) source.dispose();
+  yield;
+  // CrowdView welds and packs these attributes immediately; avoid interleaving
+  // them only to deinterleave the same data again before that weld.
+  if (!preserveIndices) {
+    // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
+    // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
+    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index', ...(preserveUV ? ['uv'] : [])];
+    const attributes = names.map((name) => geometry.getAttribute(name));
+    const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
+    const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
+    let offset = 0;
+    for (let a = 0; a < attributes.length; a++) {
+      const attribute = attributes[a];
+      for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
+      geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
+      offset += attribute.itemSize;
+      yield;
+    }
+  }
+  const clip: SkinnedCrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices, binds };
+  clip.binds = binds; geometry.userData.crowdBinds = Array.from(binds);
+  if (preserveUV) geometry.userData.crowdAtlas = true;
+  const spectacleTop = root.getObjectByName('root')?.userData.spectacleTop;
+  if (typeof spectacleTop === 'number') geometry.userData.crowdGlassesTop = spectacleTop;
+  const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
+  if (key) {
+    bakedCrowds.set(key, { clip, transforms });
+    if (bakedCrowds.size > bakedCrowdLimit) {
+      const oldest = bakedCrowds.keys().next().value!;
+      bakedCrowds.delete(oldest);
+    }
+  }
+  return baked;
+}

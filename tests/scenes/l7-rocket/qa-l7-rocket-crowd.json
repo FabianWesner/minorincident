@@ -1,0 +1,269 @@
+{
+  "name": "qa-l7-rocket-crowd",
+  "note": "Actual rocket into a dense crowd; identical game camera before/after. Review launcher grip/clipping, feet, facing, no invisible active targets or jitter, readable launch/impact and a wide permanent opening.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "night",
+  "dof": false,
+  "infectedCap": 200,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.rocket-launcher",
+        "weapon.kick"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "front",
+      "kind": "infected",
+      "at": [
+        8,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "at": [
+        8.3,
+        -1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "at": [
+        8.75,
+        -1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "at": [
+        9.200000000000001,
+        -1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "at": [
+        9.65,
+        -1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-4",
+      "kind": "infected",
+      "at": [
+        10.100000000000001,
+        -1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-5",
+      "kind": "infected",
+      "at": [
+        8.3,
+        -0.6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-6",
+      "kind": "infected",
+      "at": [
+        8.75,
+        -0.6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-7",
+      "kind": "infected",
+      "at": [
+        9.200000000000001,
+        -0.6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-8",
+      "kind": "infected",
+      "at": [
+        9.65,
+        -0.6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-9",
+      "kind": "infected",
+      "at": [
+        10.100000000000001,
+        -0.6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-10",
+      "kind": "infected",
+      "at": [
+        8.3,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-11",
+      "kind": "infected",
+      "at": [
+        8.75,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-12",
+      "kind": "infected",
+      "at": [
+        9.200000000000001,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-13",
+      "kind": "infected",
+      "at": [
+        9.65,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-14",
+      "kind": "infected",
+      "at": [
+        10.100000000000001,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-15",
+      "kind": "infected",
+      "at": [
+        8.3,
+        0.5999999999999999
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-16",
+      "kind": "infected",
+      "at": [
+        8.75,
+        0.5999999999999999
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-17",
+      "kind": "infected",
+      "at": [
+        9.200000000000001,
+        0.5999999999999999
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-18",
+      "kind": "infected",
+      "at": [
+        9.65,
+        0.5999999999999999
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-19",
+      "kind": "infected",
+      "at": [
+        10.100000000000001,
+        0.5999999999999999
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-20",
+      "kind": "infected",
+      "at": [
+        8.3,
+        1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-21",
+      "kind": "infected",
+      "at": [
+        8.75,
+        1.2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-22",
+      "kind": "infected",
+      "at": [
+        9.200000000000001,
+        1.2
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "attack": "front",
+        "seconds": 0.1
+      }
+    }
+  ],
+  "frames": 240,
+  "shots": [
+    0,
+    30,
+    240
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

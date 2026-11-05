@@ -1,0 +1,74 @@
+import { noiseForAction } from '../noise';
+import { l4 } from '../l4';
+import { actions as fixtures } from './fixtures';
+import { validateAction, type ActionDef } from './schema';
+
+/** Full M1–M3 roster. Seconds/metres/HP; upgrades modify the named hooks in E13.
+ * Utility actions intentionally deal no damage. E27 consumes the smoke/fire definitions. */
+const base: ActionDef = { ...fixtures['weapon.bat'], effect: null, pellets: 1, distanceFalloff: null };
+const melee = (id: string, asset: string, damage: number, range: number, arc: number, swing: number, tier: number, knockback = 0.3): ActionDef => ({ ...base, id: `weapon.${id}`, viewAssetId: asset, iconId: `icon.${id}`, damage, range, arc, windup: swing * 0.2, active: 0.1, recovery: swing * 0.8 - 0.1, cooldown: swing, knockback, stagger: .2, tier });
+const gun = (id: string, damage: number, range: number, fireRate: number, magazine: number, reloadTime: number, spread: number, tier = 1): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'ranged', viewAssetId: `wpn.${id}`, iconId: `icon.${id}`, damage, range, fireRate, magazine, reloadTime, spread, arc: 0, maxTargets: 1, windup: 0, active: 1 / 60, recovery: 0, cooldown: 0, knockback: 0, stagger: 0, noiseRadius: noiseForAction(`weapon.${id}`).radius, aimIndicator: 'line', tier, upgradeHooks: ['damage', 'magazine', 'reloadTime', 'spread'] });
+const thrown = (id: string, damage: number, radius: number, fuse: number): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'throwable', viewAssetId: `thr.${id === 'grenade' ? 'frag-grenade' : id}`, iconId: `icon.${id}`, damage, range: 12, arc: 0, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown: 0.25, charges: 2, recharge: 12, projectile: { speed: 12, gravity: 9.81, pierce: 0 }, splash: { radius, falloff: 0.5 }, fuse, knockback: damage ? 0.5 : 0, stagger: damage ? 0.5 : 0, noiseRadius: damage ? noiseForAction(`weapon.${id}`).radius : 0, aimIndicator: 'arc', tier: 1, upgradeHooks: ['damage', 'charges', 'recharge', 'radius'] });
+const ability = (id: string, radius: number, duration: number, cooldown: number, kind: NonNullable<ActionDef['effect']>['kind']): ActionDef => ({ ...base, id: `ability.${id}`, category: 'ability', damage: 0, range: radius, arc: 360, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown, knockback: 0, stagger: 0, noiseRadius: 0, aimIndicator: 'circle', tier: 2, effect: { kind, radius, duration }, viewAssetId: `ability.${id}`, iconId: `icon.${id}`, upgradeHooks: ['cooldown', 'duration', 'radius'] });
+export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries(([
+  // E19 §5.6 + PO #11: unarmed 9 per hit (5 hits per 40 HP); 1.45 m reach so punches land on infected waiting at arm's length, one body per punch; per-move timing/knockback in meleeCombos.
+  { ...melee('fists', 'wpn.fists', 9, 1.45, 80, 0.4, 0, 0.2), maxTargets: 1, stagger: 0 },
+  { ...melee('kick', 'wpn.kick', 18, 1.5, 60, 0.65, 0, 1.2), knockdown: true },
+  // PO 2026-10-07 (00 §6.2): >= 3 infected within the bat's reach turn the click into a 360° roundhouse that strikes the
+  // 3 nearest (12 each, <= 0.8 m shove, a stagger that breaks their bites; 0.8 s lockout, <= 1.25 per second). Tuned by
+  // the crowd battery: the PO's "fight a few, not all at once" - stand vs 4-6 wins, stand vs 10 loses (l1-crowd.test).
+  { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2, roundhouse: { threshold: 3, radius: 2.2, maxTargets: 3, damage: 7, knockback: .45, stagger: .3, windup: .1, active: .17, recovery: .18, cooldown: .45, hitStopMs: 45 } },
+  melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
+  melee('machete', 'wpn.machete', 32, 1.8, 110, 0.45, 0, 0.2),
+  melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
+  { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
+  melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
+  melee('police-baton', 'wpn.police-baton', 22, 1.7, 85, 0.35, 1, 0.3),
+  // E20 §5.3: single swing 45 (one hit per 40 HP infected), 100°, 2.1 m, 0.75 s; the same crowd sweep as the bat, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
+  // PO 10-08 fight speed: one axe swing 0.5 s (was 0.75), the crowd sweep 0.5 s (was 1 s) at 13 per target (was 25), same crowd TTK.
+  // PO 10-10: axe x1.25.
+  { ...melee('fire-axe', 'wpn.fire-axe', 56, 2.1, 100, 0.5, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 16, knockback: 2.5, stagger: .8, windup: .12, active: .18, recovery: .2, cooldown: .5, hitStopMs: 60 } },
+  melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
+  // E21 §5.2 handgun (first ranged weapon): 20 damage (2 hits per 40 HP infected), 22 m, 3 shots/s, one target per shot.
+  // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
+  // Its own id: 'weapon.pistol' stays the E05 magazine-and-reload reference gun (fixtures, tests); the campaign carries this one.
+  fixtures['weapon.pistol'],
+  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
+  // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
+  { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
+  { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
+  gun('smg', 18, 20, 8, 30, 1.5, 2),
+  { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
+  gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
+  fixtures['weapon.machine-gun'],
+  // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
+  // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
+  // Its own id: 'weapon.machine-gun' stays the E06 magazine-and-reload reference (fixtures, balance rows, tests).
+  { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
+  { ...gun('rocket-launcher', 180, 35, 2.4, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
+  fixtures['weapon.grenade'],
+  { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 6 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 15, slow: 0 } },
+  thrown('pipe-bomb', 150, 4.5, 2),
+  { ...thrown('firecracker-lure', 0, 15, 0), splash: null, effect: { kind: 'lure', radius: 15, duration: 5 } },
+  { ...thrown('smoke-grenade', 0, 6, 0), splash: null, effect: { kind: 'smoke', radius: 6, duration: 12 } },
+  { ...thrown('flashbang', 0, 5, 1), tier: 2, status: { kind: 'stunned', duration: 3, maxStacks: 1, dps: 0, slow: 0 } },
+  { ...ability('corgi-lure', 15, 5, 12, 'lure'), tier: 1 },
+  { ...fixtures['ability.ground-slam'], knockdown: true },
+  ability('shield-bubble', 2.5, 4, 14, 'shield'),
+  ability('adrenaline', 1, 5, 15, 'adrenaline'),
+  { ...ability('turret', 18, 8, 20, 'turret'), damage: 16, fireRate: 5, noiseRadius: 25, upgradeHooks: ['damage', 'cooldown', 'duration'] },
+] satisfies ActionDef[]).map((definition) => { const def = validateAction(definition); return [def.id, def]; }));
+/**
+ * E32 §5.7 (L10-S6) mounted rotary minigun: fired from its mount (MountedGun), never carried in a rack, so it is deliberately not part of
+ * `catalog` (no roster, balance, pickup or upgrade rows). 20 rounds/s at 8 each: an ordinary infected (40 HP) falls in 5 rounds (0.25 s),
+ * a regular Alpha (200 HP, bullets x0.5) in 50 rounds (2.5 s of landed fire, 8 s of fire fit in the heat budget). Spin, heat and range
+ * live in `src/data/minigun.ts`. Presentation (tracer, muzzle, noise cue) resolves the id through `action()`.
+ */
+export const mountedActions: Readonly<Record<string, ActionDef>> = {
+  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 8, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
+};
+/** Fixture-only projectile remains available for E05 regression, outside the player roster. */
+export function action(id: string): ActionDef { const def = catalog[id] ?? mountedActions[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }
+
+/** Damage balance keeps the E05 swept-projectile reference alongside every damaging catalog action. */
+export const balanceActions = [...Object.values(catalog).filter((def) => def.damage > 0), fixtures['weapon.test-projectile']];

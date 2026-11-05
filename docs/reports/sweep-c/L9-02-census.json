@@ -1,0 +1,4348 @@
+{
+  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
+  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
+  "revision": "17dab51b92fc7db2e9a7f2da6e705c6073626ecb",
+  "toolSha256": "ad12650d7d490cf7c050576231b986bdf957ff9a18dcd2064b1a57805127d6f3",
+  "criterion": "Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m.",
+  "method": "Actual first complete resident admissions on ordinary native routes at both qualities, seed1. Observe production encounter IDs and real entity archetypes, not authored runner counts alone. Repeat every route without the observer and require equal final states. No population, timer, cap or actor writes. This census measures counts/composition; physical detour qualification is separate.",
+  "cells": [
+    {
+      "tier": "low",
+      "route": "road",
+      "finished": true,
+      "finalHash": "3a335ef4",
+      "groups": [
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 890,
+          "expectedCount": 8,
+          "ids": [
+            716,
+            717,
+            718,
+            719,
+            720,
+            721,
+            722,
+            723
+          ],
+          "actors": [
+            {
+              "id": 716,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 717,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 718,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 719,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 720,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 721,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 722,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 723,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "road-1",
+          "route": "road",
+          "tick": 1310,
+          "expectedCount": 6,
+          "ids": [
+            751,
+            752,
+            753,
+            754,
+            755,
+            756
+          ],
+          "actors": [
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -330.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -330.65
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -330.65
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -330.65
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -329.35
+            },
+            {
+              "id": 756,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -329.35
+            }
+          ]
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "tick": 4040,
+          "expectedCount": 6,
+          "ids": [
+            899,
+            900,
+            901,
+            902,
+            903,
+            904
+          ],
+          "actors": [
+            {
+              "id": 899,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -330.65
+            },
+            {
+              "id": 900,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -330.65
+            },
+            {
+              "id": 901,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -330.65
+            },
+            {
+              "id": 902,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -330.65
+            },
+            {
+              "id": 903,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -329.35
+            },
+            {
+              "id": 904,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -329.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5840,
+          "expectedCount": 8,
+          "ids": [
+            1005,
+            1006,
+            1007,
+            1008,
+            1009,
+            1010,
+            1011,
+            1012,
+            1013
+          ],
+          "actors": [
+            {
+              "id": 1005,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1006,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1007,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1008,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1009,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1010,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1011,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1012,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1013,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        }
+      ],
+      "controlHash": "3a335ef4",
+      "controlIdentical": true
+    },
+    {
+      "tier": "low",
+      "route": "countryside",
+      "finished": true,
+      "finalHash": "dac18d79",
+      "groups": [
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 780,
+          "expectedCount": 8,
+          "ids": [
+            739,
+            740,
+            741,
+            742,
+            743,
+            744,
+            745,
+            746
+          ],
+          "actors": [
+            {
+              "id": 739,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 740,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 741,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 860,
+          "expectedCount": 6,
+          "ids": [
+            747,
+            748,
+            749,
+            750,
+            751,
+            752
+          ],
+          "actors": [
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "tick": 2820,
+          "expectedCount": 6,
+          "ids": [
+            919,
+            920,
+            921,
+            922,
+            923,
+            924
+          ],
+          "actors": [
+            {
+              "id": 919,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 920,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 239.35
+            },
+            {
+              "id": 921,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 0.65,
+              "z": 239.35
+            },
+            {
+              "id": 922,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 923,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 240.65
+            },
+            {
+              "id": 924,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 3830,
+          "expectedCount": 6,
+          "ids": [
+            962,
+            963,
+            964,
+            965,
+            966,
+            967
+          ],
+          "actors": [
+            {
+              "id": 962,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 239.35
+            },
+            {
+              "id": 963,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 239.35
+            },
+            {
+              "id": 964,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.65,
+              "z": 239.35
+            },
+            {
+              "id": 965,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.95,
+              "z": 239.35
+            },
+            {
+              "id": 966,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 240.65
+            },
+            {
+              "id": 967,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5790,
+          "expectedCount": 8,
+          "ids": [
+            1057,
+            1058,
+            1059,
+            1060,
+            1061,
+            1062,
+            1063,
+            1064,
+            1065
+          ],
+          "actors": [
+            {
+              "id": 1057,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1058,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1059,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1060,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1061,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1062,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1063,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1064,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1065,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        }
+      ],
+      "controlHash": "dac18d79",
+      "controlIdentical": true
+    },
+    {
+      "tier": "low",
+      "route": "dry-shortcut",
+      "finished": true,
+      "finalHash": "e4174977",
+      "groups": [
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 530,
+          "expectedCount": 8,
+          "ids": [
+            715,
+            716,
+            717,
+            718,
+            719,
+            720,
+            721,
+            722
+          ],
+          "actors": [
+            {
+              "id": 715,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 716,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 717,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 718,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 719,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 720,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 721,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 722,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 1040,
+          "expectedCount": 8,
+          "ids": [
+            750,
+            751,
+            752,
+            753,
+            754,
+            755,
+            756,
+            757
+          ],
+          "actors": [
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 756,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 757,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "tick": 1550,
+          "expectedCount": 8,
+          "ids": [
+            791,
+            792,
+            793,
+            794,
+            795,
+            796,
+            797,
+            798,
+            799
+          ],
+          "actors": [
+            {
+              "id": 791,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": -60,
+              "z": -33
+            },
+            {
+              "id": 792,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 793,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -30.65
+            },
+            {
+              "id": 794,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -30.65
+            },
+            {
+              "id": 795,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -30.65
+            },
+            {
+              "id": 796,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -29.35
+            },
+            {
+              "id": 797,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -29.35
+            },
+            {
+              "id": 798,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -29.35
+            },
+            {
+              "id": 799,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "tick": 2060,
+          "expectedCount": 8,
+          "ids": [
+            827,
+            828,
+            829,
+            830,
+            831,
+            832,
+            833,
+            834
+          ],
+          "actors": [
+            {
+              "id": 827,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
+            {
+              "id": 828,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -30.65
+            },
+            {
+              "id": 829,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -30.65
+            },
+            {
+              "id": 830,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -30.65
+            },
+            {
+              "id": 831,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -29.35
+            },
+            {
+              "id": 832,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -29.35
+            },
+            {
+              "id": 833,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -29.35
+            },
+            {
+              "id": 834,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 2560,
+          "expectedCount": 8,
+          "ids": [
+            872,
+            873,
+            874,
+            875,
+            876,
+            877,
+            878,
+            879
+          ],
+          "actors": [
+            {
+              "id": 872,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 873,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 874,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 875,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 876,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 877,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 878,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 879,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 3070,
+          "expectedCount": 8,
+          "ids": [
+            907,
+            908,
+            909,
+            910,
+            911,
+            912,
+            913,
+            914,
+            915
+          ],
+          "actors": [
+            {
+              "id": 907,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 908,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 909,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 910,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 911,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 912,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 913,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 914,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 915,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        }
+      ],
+      "controlHash": "e4174977",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "route": "road",
+      "finished": true,
+      "finalHash": "bf08aa33",
+      "groups": [
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 140,
+          "expectedCount": 6,
+          "ids": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "actors": [
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 140,
+          "expectedCount": 8,
+          "ids": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "actors": [
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "road-1",
+          "route": "road",
+          "tick": 770,
+          "expectedCount": 6,
+          "ids": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "actors": [
+            {
+              "id": 758,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -330.65
+            },
+            {
+              "id": 759,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -330.65
+            },
+            {
+              "id": 760,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -330.65
+            },
+            {
+              "id": 761,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -330.65
+            },
+            {
+              "id": 762,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -329.35
+            },
+            {
+              "id": 763,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -329.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 890,
+          "expectedCount": 8,
+          "ids": [
+            764,
+            765,
+            766,
+            767,
+            768,
+            769,
+            770,
+            771
+          ],
+          "actors": [
+            {
+              "id": 764,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 765,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 766,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 767,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 768,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "tick": 3530,
+          "expectedCount": 6,
+          "ids": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911
+          ],
+          "actors": [
+            {
+              "id": 906,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -330.65
+            },
+            {
+              "id": 907,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -330.65
+            },
+            {
+              "id": 908,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -330.65
+            },
+            {
+              "id": 909,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -330.65
+            },
+            {
+              "id": 910,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -329.35
+            },
+            {
+              "id": 911,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -329.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1077,
+            1078,
+            1079,
+            1080,
+            1081,
+            1082,
+            1083,
+            1084
+          ],
+          "actors": [
+            {
+              "id": 1077,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 1078,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 1079,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 1080,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 1081,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 1082,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 1083,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 1084,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091,
+            1092,
+            1093
+          ],
+          "actors": [
+            {
+              "id": 1085,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1086,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1087,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1088,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1089,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1090,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1091,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1092,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1093,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 6670,
+          "expectedCount": 6,
+          "ids": [
+            1208,
+            1209,
+            1210,
+            1211,
+            1212,
+            1213
+          ],
+          "actors": [
+            {
+              "id": 1208,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 239.35
+            },
+            {
+              "id": 1209,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 239.35
+            },
+            {
+              "id": 1210,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.025,
+              "z": 239.9995190528383
+            },
+            {
+              "id": 1211,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 202.2,
+              "z": 239.35
+            },
+            {
+              "id": 1212,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 240.65
+            },
+            {
+              "id": 1213,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 240.65
+            }
+          ]
+        }
+      ],
+      "controlHash": "bf08aa33",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "route": "countryside",
+      "finished": true,
+      "finalHash": "0db49757",
+      "groups": [
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 140,
+          "expectedCount": 6,
+          "ids": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "actors": [
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 140,
+          "expectedCount": 8,
+          "ids": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "actors": [
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 780,
+          "expectedCount": 8,
+          "ids": [
+            757,
+            758,
+            759,
+            760,
+            761,
+            762,
+            763,
+            764
+          ],
+          "actors": [
+            {
+              "id": 757,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 758,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 759,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 760,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 761,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 762,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 763,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 764,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "tick": 2310,
+          "expectedCount": 6,
+          "ids": [
+            927,
+            928,
+            929,
+            930,
+            931,
+            932
+          ],
+          "actors": [
+            {
+              "id": 927,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 928,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 239.35
+            },
+            {
+              "id": 929,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 0.65,
+              "z": 239.35
+            },
+            {
+              "id": 930,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 931,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 240.65
+            },
+            {
+              "id": 932,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 3320,
+          "expectedCount": 6,
+          "ids": [
+            1013,
+            1014,
+            1015,
+            1016,
+            1017,
+            1018
+          ],
+          "actors": [
+            {
+              "id": 1013,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 239.35
+            },
+            {
+              "id": 1014,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 239.35
+            },
+            {
+              "id": 1015,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.65,
+              "z": 239.35
+            },
+            {
+              "id": 1016,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.95,
+              "z": 239.35
+            },
+            {
+              "id": 1017,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 240.65
+            },
+            {
+              "id": 1018,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 5200,
+          "expectedCount": 8,
+          "ids": [
+            1199,
+            1200,
+            1201,
+            1202,
+            1203,
+            1204,
+            1205,
+            1206
+          ],
+          "actors": [
+            {
+              "id": 1199,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 1200,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 1201,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 1202,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 1203,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 1204,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 1205,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 1206,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5200,
+          "expectedCount": 8,
+          "ids": [
+            1207,
+            1208,
+            1209,
+            1210,
+            1211,
+            1212,
+            1213,
+            1214,
+            1215
+          ],
+          "actors": [
+            {
+              "id": 1207,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1208,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1209,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1210,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1211,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1212,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1213,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1214,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1215,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        }
+      ],
+      "controlHash": "0db49757",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "route": "dry-shortcut",
+      "finished": true,
+      "finalHash": "0f4672b2",
+      "groups": [
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 140,
+          "expectedCount": 6,
+          "ids": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "actors": [
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 140,
+          "expectedCount": 8,
+          "ids": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "actors": [
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 530,
+          "expectedCount": 8,
+          "ids": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763,
+            764,
+            765
+          ],
+          "actors": [
+            {
+              "id": 758,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 759,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 760,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 761,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 762,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 763,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 764,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 765,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "tick": 1040,
+          "expectedCount": 8,
+          "ids": [
+            768,
+            769,
+            770,
+            771,
+            772,
+            773,
+            774,
+            775,
+            776
+          ],
+          "actors": [
+            {
+              "id": 768,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": -60,
+              "z": -33
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -30.65
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -30.65
+            },
+            {
+              "id": 772,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -30.65
+            },
+            {
+              "id": 773,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -29.35
+            },
+            {
+              "id": 774,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -29.35
+            },
+            {
+              "id": 775,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -29.35
+            },
+            {
+              "id": 776,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "tick": 1550,
+          "expectedCount": 8,
+          "ids": [
+            814,
+            815,
+            816,
+            817,
+            818,
+            819,
+            820,
+            821
+          ],
+          "actors": [
+            {
+              "id": 814,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
+            {
+              "id": 815,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -30.65
+            },
+            {
+              "id": 816,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -30.65
+            },
+            {
+              "id": 817,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -30.65
+            },
+            {
+              "id": 818,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -29.35
+            },
+            {
+              "id": 819,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -29.35
+            },
+            {
+              "id": 820,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -29.35
+            },
+            {
+              "id": 821,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 2060,
+          "expectedCount": 8,
+          "ids": [
+            860,
+            861,
+            862,
+            863,
+            864,
+            865,
+            866,
+            867
+          ],
+          "actors": [
+            {
+              "id": 860,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 861,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 862,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 863,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 864,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 865,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 866,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 867,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 2560,
+          "expectedCount": 8,
+          "ids": [
+            919,
+            920,
+            921,
+            922,
+            923,
+            924,
+            925,
+            926,
+            927
+          ],
+          "actors": [
+            {
+              "id": 919,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 920,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 921,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 922,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 923,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 924,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 925,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 926,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 927,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ]
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 4850,
+          "expectedCount": 6,
+          "ids": [
+            1134,
+            1135,
+            1136,
+            1137,
+            1138,
+            1139
+          ],
+          "actors": [
+            {
+              "id": 1134,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 239.35
+            },
+            {
+              "id": 1135,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 239.35
+            },
+            {
+              "id": 1136,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.025,
+              "z": 239.9995190528383
+            },
+            {
+              "id": 1137,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 202.2,
+              "z": 239.35
+            },
+            {
+              "id": 1138,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 240.65
+            },
+            {
+              "id": 1139,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 240.65
+            }
+          ]
+        }
+      ],
+      "controlHash": "0f4672b2",
+      "controlIdentical": true
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "groups": [
+        {
+          "id": "road-1",
+          "route": "road",
+          "tick": 1310,
+          "expectedCount": 6,
+          "ids": [
+            751,
+            752,
+            753,
+            754,
+            755,
+            756
+          ],
+          "actors": [
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -330.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -330.65
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -330.65
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -330.65
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -329.35
+            },
+            {
+              "id": 756,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "tick": 4040,
+          "expectedCount": 6,
+          "ids": [
+            899,
+            900,
+            901,
+            902,
+            903,
+            904
+          ],
+          "actors": [
+            {
+              "id": 899,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -330.65
+            },
+            {
+              "id": 900,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -330.65
+            },
+            {
+              "id": 901,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -330.65
+            },
+            {
+              "id": 902,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -330.65
+            },
+            {
+              "id": 903,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -329.35
+            },
+            {
+              "id": 904,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 860,
+          "expectedCount": 6,
+          "ids": [
+            747,
+            748,
+            749,
+            750,
+            751,
+            752
+          ],
+          "actors": [
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "tick": 2820,
+          "expectedCount": 6,
+          "ids": [
+            919,
+            920,
+            921,
+            922,
+            923,
+            924
+          ],
+          "actors": [
+            {
+              "id": 919,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 920,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 239.35
+            },
+            {
+              "id": 921,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 0.65,
+              "z": 239.35
+            },
+            {
+              "id": 922,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 923,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 240.65
+            },
+            {
+              "id": 924,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 3830,
+          "expectedCount": 6,
+          "ids": [
+            962,
+            963,
+            964,
+            965,
+            966,
+            967
+          ],
+          "actors": [
+            {
+              "id": 962,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 239.35
+            },
+            {
+              "id": 963,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 239.35
+            },
+            {
+              "id": 964,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.65,
+              "z": 239.35
+            },
+            {
+              "id": 965,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.95,
+              "z": 239.35
+            },
+            {
+              "id": 966,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 198.05,
+              "z": 240.65
+            },
+            {
+              "id": 967,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 199.35,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 890,
+          "expectedCount": 8,
+          "ids": [
+            716,
+            717,
+            718,
+            719,
+            720,
+            721,
+            722,
+            723
+          ],
+          "actors": [
+            {
+              "id": 716,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 717,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 718,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 719,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 720,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 721,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 722,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 723,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 1040,
+          "expectedCount": 8,
+          "ids": [
+            750,
+            751,
+            752,
+            753,
+            754,
+            755,
+            756,
+            757
+          ],
+          "actors": [
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 756,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 757,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "tick": 1550,
+          "expectedCount": 8,
+          "ids": [
+            791,
+            792,
+            793,
+            794,
+            795,
+            796,
+            797,
+            798,
+            799
+          ],
+          "actors": [
+            {
+              "id": 791,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": -60,
+              "z": -33
+            },
+            {
+              "id": 792,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 793,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -30.65
+            },
+            {
+              "id": 794,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -30.65
+            },
+            {
+              "id": 795,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -30.65
+            },
+            {
+              "id": 796,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -29.35
+            },
+            {
+              "id": 797,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -29.35
+            },
+            {
+              "id": 798,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -29.35
+            },
+            {
+              "id": 799,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "tick": 2060,
+          "expectedCount": 8,
+          "ids": [
+            827,
+            828,
+            829,
+            830,
+            831,
+            832,
+            833,
+            834
+          ],
+          "actors": [
+            {
+              "id": 827,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
+            {
+              "id": 828,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -30.65
+            },
+            {
+              "id": 829,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -30.65
+            },
+            {
+              "id": 830,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -30.65
+            },
+            {
+              "id": 831,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -29.35
+            },
+            {
+              "id": 832,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -29.35
+            },
+            {
+              "id": 833,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -29.35
+            },
+            {
+              "id": 834,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 2560,
+          "expectedCount": 8,
+          "ids": [
+            872,
+            873,
+            874,
+            875,
+            876,
+            877,
+            878,
+            879
+          ],
+          "actors": [
+            {
+              "id": 872,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 873,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 874,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 875,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 876,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 877,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 878,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 879,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5840,
+          "expectedCount": 8,
+          "ids": [
+            1005,
+            1006,
+            1007,
+            1008,
+            1009,
+            1010,
+            1011,
+            1012,
+            1013
+          ],
+          "actors": [
+            {
+              "id": 1005,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1006,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1007,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1008,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1009,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1010,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1011,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1012,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1013,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        }
+      ],
+      "shortcutAlphas": 2,
+      "failures": [
+        {
+          "id": "dry-shortcut-3",
+          "expectedCount": 8,
+          "actualCount": 9
+        },
+        {
+          "id": "dry-shortcut-6",
+          "expectedCount": 8,
+          "actualCount": 9
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "groups": [
+        {
+          "id": "road-1",
+          "route": "road",
+          "tick": 770,
+          "expectedCount": 6,
+          "ids": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "actors": [
+            {
+              "id": 758,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -330.65
+            },
+            {
+              "id": 759,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -330.65
+            },
+            {
+              "id": 760,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -330.65
+            },
+            {
+              "id": 761,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -330.65
+            },
+            {
+              "id": 762,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -329.35
+            },
+            {
+              "id": 763,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "road-2",
+          "route": "road",
+          "tick": 3530,
+          "expectedCount": 6,
+          "ids": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911
+          ],
+          "actors": [
+            {
+              "id": 906,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -330.65
+            },
+            {
+              "id": 907,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -330.65
+            },
+            {
+              "id": 908,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -330.65
+            },
+            {
+              "id": 909,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -330.65
+            },
+            {
+              "id": 910,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -329.35
+            },
+            {
+              "id": 911,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -329.35
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-1",
+          "route": "countryside",
+          "tick": 140,
+          "expectedCount": 6,
+          "ids": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "actors": [
+            {
+              "id": 742,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 239.35
+            },
+            {
+              "id": 743,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 239.35
+            },
+            {
+              "id": 744,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -249.35,
+              "z": 239.35
+            },
+            {
+              "id": 745,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -248.05,
+              "z": 239.35
+            },
+            {
+              "id": 746,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -251.95,
+              "z": 240.65
+            },
+            {
+              "id": 747,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -250.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-2",
+          "route": "countryside",
+          "tick": 2310,
+          "expectedCount": 6,
+          "ids": [
+            927,
+            928,
+            929,
+            930,
+            931,
+            932
+          ],
+          "actors": [
+            {
+              "id": 927,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 928,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 239.35
+            },
+            {
+              "id": 929,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 0.65,
+              "z": 239.35
+            },
+            {
+              "id": 930,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 1.9500000000000002,
+              "z": 239.35
+            },
+            {
+              "id": 931,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -1.9500000000000002,
+              "z": 240.65
+            },
+            {
+              "id": 932,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -0.65,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "countryside-3",
+          "route": "countryside",
+          "tick": 6670,
+          "expectedCount": 6,
+          "ids": [
+            1208,
+            1209,
+            1210,
+            1211,
+            1212,
+            1213
+          ],
+          "actors": [
+            {
+              "id": 1208,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 239.35
+            },
+            {
+              "id": 1209,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 239.35
+            },
+            {
+              "id": 1210,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.025,
+              "z": 239.9995190528383
+            },
+            {
+              "id": 1211,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 202.2,
+              "z": 239.35
+            },
+            {
+              "id": 1212,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 200.55,
+              "z": 240.65
+            },
+            {
+              "id": 1213,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 201.35,
+              "z": 240.65
+            }
+          ],
+          "runners": 6,
+          "alphas": 0,
+          "actualCount": 6,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-1",
+          "route": "dry-shortcut",
+          "tick": 140,
+          "expectedCount": 8,
+          "ids": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "actors": [
+            {
+              "id": 748,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -23.15
+            },
+            {
+              "id": 749,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -23.15
+            },
+            {
+              "id": 750,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -23.15
+            },
+            {
+              "id": 751,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -23.15
+            },
+            {
+              "id": 752,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -301.95,
+              "z": -21.85
+            },
+            {
+              "id": 753,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -300.65,
+              "z": -21.85
+            },
+            {
+              "id": 754,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -299.35,
+              "z": -21.85
+            },
+            {
+              "id": 755,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -298.05,
+              "z": -21.85
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-2",
+          "route": "dry-shortcut",
+          "tick": 890,
+          "expectedCount": 8,
+          "ids": [
+            764,
+            765,
+            766,
+            767,
+            768,
+            769,
+            770,
+            771
+          ],
+          "actors": [
+            {
+              "id": 764,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -30.65
+            },
+            {
+              "id": 765,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -30.65
+            },
+            {
+              "id": 766,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -30.65
+            },
+            {
+              "id": 767,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -30.65
+            },
+            {
+              "id": 768,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -151.95,
+              "z": -29.35
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -150.65,
+              "z": -29.35
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -149.35,
+              "z": -29.35
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -148.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-3",
+          "route": "dry-shortcut",
+          "tick": 1040,
+          "expectedCount": 8,
+          "ids": [
+            768,
+            769,
+            770,
+            771,
+            772,
+            773,
+            774,
+            775,
+            776
+          ],
+          "actors": [
+            {
+              "id": 768,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": -60,
+              "z": -33
+            },
+            {
+              "id": 769,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 770,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -30.65
+            },
+            {
+              "id": 771,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -30.65
+            },
+            {
+              "id": 772,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -30.65
+            },
+            {
+              "id": 773,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -61.95,
+              "z": -29.35
+            },
+            {
+              "id": 774,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
+              "z": -29.35
+            },
+            {
+              "id": 775,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -59.35,
+              "z": -29.35
+            },
+            {
+              "id": 776,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -58.05,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        },
+        {
+          "id": "dry-shortcut-4",
+          "route": "dry-shortcut",
+          "tick": 1550,
+          "expectedCount": 8,
+          "ids": [
+            814,
+            815,
+            816,
+            817,
+            818,
+            819,
+            820,
+            821
+          ],
+          "actors": [
+            {
+              "id": 814,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
+            {
+              "id": 815,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -30.65
+            },
+            {
+              "id": 816,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -30.65
+            },
+            {
+              "id": 817,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -30.65
+            },
+            {
+              "id": 818,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -29.35
+            },
+            {
+              "id": 819,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 59.35,
+              "z": -29.35
+            },
+            {
+              "id": 820,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 60.65,
+              "z": -29.35
+            },
+            {
+              "id": 821,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 61.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-5",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1077,
+            1078,
+            1079,
+            1080,
+            1081,
+            1082,
+            1083,
+            1084
+          ],
+          "actors": [
+            {
+              "id": 1077,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 1078,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
+            {
+              "id": 1079,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -30.65
+            },
+            {
+              "id": 1080,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -30.65
+            },
+            {
+              "id": 1081,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -29.35
+            },
+            {
+              "id": 1082,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -29.35
+            },
+            {
+              "id": 1083,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 150.65,
+              "z": -29.35
+            },
+            {
+              "id": 1084,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 151.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 0,
+          "actualCount": 8,
+          "status": "PASS"
+        },
+        {
+          "id": "dry-shortcut-6",
+          "route": "dry-shortcut",
+          "tick": 5430,
+          "expectedCount": 8,
+          "ids": [
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091,
+            1092,
+            1093
+          ],
+          "actors": [
+            {
+              "id": 1085,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "x": 240,
+              "z": -33
+            },
+            {
+              "id": 1086,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -30.65
+            },
+            {
+              "id": 1087,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -30.65
+            },
+            {
+              "id": 1088,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -30.65
+            },
+            {
+              "id": 1089,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -30.65
+            },
+            {
+              "id": 1090,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 238.05,
+              "z": -29.35
+            },
+            {
+              "id": 1091,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 239.35,
+              "z": -29.35
+            },
+            {
+              "id": 1092,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 240.65,
+              "z": -29.35
+            },
+            {
+              "id": 1093,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 241.95,
+              "z": -29.35
+            }
+          ],
+          "runners": 8,
+          "alphas": 1,
+          "actualCount": 9,
+          "status": "FAIL"
+        }
+      ],
+      "shortcutAlphas": 2,
+      "failures": [
+        {
+          "id": "dry-shortcut-3",
+          "expectedCount": 8,
+          "actualCount": 9
+        },
+        {
+          "id": "dry-shortcut-6",
+          "expectedCount": 8,
+          "actualCount": 9
+        }
+      ]
+    }
+  ]
+}
