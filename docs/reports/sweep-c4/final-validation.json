@@ -1,0 +1,113 @@
+{
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "revision": "3f098be645f1d125ec7e36269717e6097a9e17f1",
+  "typecheck": "PASS",
+  "lint": "PASS",
+  "unit": {
+    "status": "PASS",
+    "tests": 107,
+    "files": 27,
+    "commandSeconds": 34.4
+  },
+  "acceptance": {
+    "command": "npm run qa:accept -- --level <level> --reuse --tier both --skip-browser",
+    "levels": [
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "exitCodes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "counts": {
+      "PASS": 18,
+      "FAIL": 4,
+      "NOT CHECKED": 25
+    },
+    "producerErrors": 0
+  },
+  "threatWrapper": {
+    "command": "npm run qa:threat",
+    "status": "FAIL",
+    "exitCode": 1,
+    "childExitCode": 124,
+    "seconds": 601.3,
+    "reason": "600-second execution budget; levels1\u20136 zero flags, timed out inL7"
+  },
+  "threatFull": {
+    "command": "node --import tsx/esm tools/qa/threat-audit.ts",
+    "status": "PASS",
+    "exitCode": 0,
+    "seconds": 942.977113834,
+    "flags": [],
+    "levels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "workers": 1,
+    "tier": "low",
+    "archive": {
+      "file": "docs/reports/sweep-c4/final-threat-audit.json.gz",
+      "sha256": "bcd6223229415dac575fc8cdcaee1c88f3a2e303c1d74b66b515eb83c33f18eb",
+      "uncompressedSha256": "a172b1c1286ab290dce282a515344cec9b6c7942f11f9c9083dfea95b582883c"
+    }
+  },
+  "logs": [
+    {
+      "file": "test-results/sweep-c4/final-unit.log",
+      "sha256": "e5f6e2f342daea4d710f81bea5ee4c6a83586b3238c1e9db40a0867ac1569352"
+    },
+    {
+      "file": "test-results/sweep-c4/final-threat.log",
+      "sha256": "fc68fe54abdc98ec7c83eb6a70f4d76f73f375c88ad4df8b60fb458044693d3f"
+    },
+    {
+      "file": "test-results/sweep-c4/final-threat-full.log",
+      "sha256": "84ea5402ea5df2e7ded69688def2d0e65e6ec60a1ae9a95ee81fa87d662c4819"
+    },
+    {
+      "file": "test-results/sweep-c4/final-L7.log",
+      "sha256": "366af911b7424b9cd559e12239702f5b2c4f82cc38453deebfb6f4f1c4ec542d"
+    },
+    {
+      "file": "test-results/sweep-c4/final-L8.log",
+      "sha256": "e8192de083746a70a0f306cbade30d189c140d79ec3b71f6ab9ecef204b35adb"
+    },
+    {
+      "file": "test-results/sweep-c4/final-L9.log",
+      "sha256": "39e9ad64961d19ade5562b121bbc54263921a939266cb0bbd9e7f096199a4891"
+    },
+    {
+      "file": "test-results/sweep-c4/final-L10.log",
+      "sha256": "39b3b019600b63c4da273c852b05c0929a5dbc151f51ead20cded19ce2a58e47"
+    }
+  ],
+  "newPassRows": [
+    "L7-03",
+    "L7-07",
+    "L8-05",
+    "L8-06",
+    "L8-07",
+    "L9-05",
+    "L9-07",
+    "L10-02",
+    "L10-05",
+    "L10-06",
+    "L10-09"
+  ],
+  "allAcceptanceComplete": false,
+  "rawCapturesDeleted": true,
+  "imagesCommitted": false
+}
