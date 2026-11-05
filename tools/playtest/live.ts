@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { spawn, type ChildProcess } from 'node:child_process';
-import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { launchBrowser } from '../browser-pool/client';
 import { look, type Body, type Eyes } from './eyes';
@@ -125,31 +125,6 @@ if (process.argv.includes('--l3-retreat-prefix')) {
 }
 
 if (step) await page.evaluate(() => window.__SS__!.pause());
-
-// Continue a bounded L1 screenshot run by physically replaying only its own
-// earlier Luna inputs. Tick counts come from the private action ledger; no
-// position, objective or inventory is assigned. The player sees its own notes.
-if (process.env.SCREEN_REPLAY_PREFIX) {
-  if (!screenOnly || !step || level !== 'L1' || !process.env.LUNA_RUN_DIR) throw Error('Recorded screen prefix requires paused L1 screen play');
-  const previous = resolve(process.env.SCREEN_REPLAY_PREFIX);
-  const records = readFileSync(resolve(previous, 'log.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line) as { player_turn: number; action: { move?: string; hold?: string; key?: string; ms?: number; wait?: number } });
-  const timing = readFileSync(resolve(previous, 'timing.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line) as { playerTurn: number; beforeTick: number; afterTick: number });
-  await page.evaluate(() => window.__SS__!.cheats.god(true));
-  for (const record of records) {
-    const t = timing.find(t => t.playerTurn === record.player_turn);
-    if (!t) throw Error('Recorded action has no completed tick interval');
-    const a = record.action;
-    if (Object.keys(a).some(k => !['move','hold','key','ms','wait','playerTurn','playerLevel'].includes(k))) throw Error('Unsupported recorded input; cannot replay it honestly');
-    const keys = [...new Set([...(a.move ?? '').toLowerCase()].filter(k => 'wasd'.includes(k)))].map(k => `Key${k.toUpperCase()}`);
-    if (a.hold) keys.push(a.hold.length === 1 ? `Key${a.hold.toUpperCase()}` : a.hold);
-    if (a.key) await page.keyboard.press(a.key.length === 1 ? `Key${a.key.toUpperCase()}` : a.key);
-    try {
-      for (const key of keys) await page.keyboard.down(key);
-      for (let remaining = t.afterTick - t.beforeTick; remaining > 0; remaining -= 60) await page.evaluate(async n => window.__SS__!.step(n), Math.min(60, remaining));
-    } finally { for (const key of keys.reverse()) await page.keyboard.up(key); }
-  }
-  writeFileSync(resolve(process.env.LUNA_RUN_DIR, 'replay-prefix.json'), JSON.stringify({ previous, actions: records.length, method: 'Earlier Luna physical keyboard inputs replayed for their exact observed tick durations. No relocation, objective/inventory writes, route plan or new navigation decisions.' }, null, 2) + '\n');
-}
 
 // PO 11-01: "a mode where the user cannot die, so an agent has a chance to play it. This is not for judging fun but to check
 // the acceptance criterias". Screen play is immortal unless LUNA_MORTAL=1: attacks still land and are logged, but the courier takes no damage.

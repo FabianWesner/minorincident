@@ -10,13 +10,10 @@ const port = level === 'L1' ? 4891 : 4893, livePort = port + 1;
 const out = resolve(`test-results/fix64-a/screen-${level}-${tier}-${suffix}`);
 mkdirSync(out, { recursive: true });
 if (existsSync(`${out}/log.jsonl`)) throw Error('Use a fresh output directory; this run already has actions');
-const replay = process.env.SCREEN_REPLAY_PREFIX;
-const earlier = replay ? readFileSync(resolve(replay, 'log.jsonl'), 'utf8').trim().split('\n').filter(Boolean) : [];
-const baseTurn = earlier.length;
-writeFileSync(`${out}/player.jsonl`, replay ? readFileSync(resolve(replay, 'player.jsonl'), 'utf8') : '');
+writeFileSync(`${out}/player.jsonl`, '');
 const fd = openSync(`${out}/live.log`, 'w');
 const live = spawn(process.execPath, ['--import', 'tsx/esm', 'tools/playtest/live.ts', '--screen', '--step', '--autofight', '--level', level, '--quality', tier, ...(level === 'L3' && suffix.startsWith('route') ? ['--l3-retreat-prefix'] : [])], {
-  env: { ...process.env, E2E_PORT: String(port), LIVE_PORT: String(livePort), LUNA_RUN_DIR: out, LUNA_TIMING_LEDGER: '1', LUNA_TURN_OFFSET: String(baseTurn), MI_BROWSER_POOL: '1', BROWSER_POOL: 'on' }, stdio: ['ignore', fd, fd],
+  env: { ...process.env, E2E_PORT: String(port), LIVE_PORT: String(livePort), LUNA_RUN_DIR: out, LUNA_TIMING_LEDGER: '1', MI_BROWSER_POOL: '1', BROWSER_POOL: 'on' }, stdio: ['ignore', fd, fd],
 });
 closeSync(fd);
 const base = `http://127.0.0.1:${livePort}`;
@@ -33,7 +30,7 @@ try {
   }
   if (!current) throw Error('Live server did not become ready');
   for (let batch = 0; batch < batches; batch++) {
-    const prior = lines(`${out}/log.jsonl`), from = baseTurn + prior.length + 1, to = from;
+    const prior = lines(`${out}/log.jsonl`), from = prior.length + 1, to = from;
     await fetch(`${base}/batch`, { method: 'POST', body: JSON.stringify({ from, to }) });
     const task = `${prompt}\nPlay exactly turn ${from}: one action, record it, then stop. Current visible HUD: ${current.hud}\nYour previous recorded observations: ${readFileSync(`${out}/player.jsonl`, 'utf8').split('\n').slice(-9).join('\n')}`;
     const log = openSync(`${out}/codex-${batch}.jsonl`, 'w');
