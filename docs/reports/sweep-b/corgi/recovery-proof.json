@@ -1,0 +1,70 @@
+{
+  "sourceHash": "db77f86487ffd1cdfff7dc191159abd18ef6e4cce1cf6c84fa628fbbefab843f",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f",
+  "tool": "tools/qa/sweep-b-corgi-recovery.ts",
+  "toolSha256": "6c22957c88b28085a4ceb46c382521b24f5d007694f4fb98d28007da9c73ae35",
+  "method": "Controlled synthetic crowd contact; actual Companion.update and SolidRegistry.commit. Pre-fix fault suppresses only history invalidation.",
+  "cases": [
+    {
+      "fault": true,
+      "old": {
+        "x": 10,
+        "z": 10,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "current": {
+        "x": 20,
+        "z": 10,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "recovered": {
+        "x": 10,
+        "z": 10,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "displacementM": 10,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 9,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "fault": false,
+      "old": {
+        "x": 10,
+        "z": 10,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "current": {
+        "x": 20,
+        "z": 10,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "recovered": {
+        "x": 19.999801238402,
+        "z": 9.999900619201,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "displacementM": 0.00022222222222215268,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 9,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    }
+  ]
+}
