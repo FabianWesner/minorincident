@@ -1,11 +1,11 @@
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { loadLevel } from '../../sim-runner/levels';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { requireClearPoint } from '../../../src/sim/missions/missionHelpers';
 import { provenance } from './probe';
-import { atomicJson } from './report';
 
 const rows = [];
 for (const tier of ['low', 'high'] as const) {
@@ -33,6 +33,8 @@ for (const tier of ['low', 'high'] as const) {
     console.log(tier, events);
   } finally { world.dispose(); }
 }
-atomicJson('docs/reports/sweep-c3/L9-04/stopped-contact.json', { ...provenance(),
+const output = 'docs/reports/sweep-c3/L9-04';
+mkdirSync(output, { recursive: true });
+writeFileSync(`${output}/stopped-contact.json.gz`, gzipSync(JSON.stringify({ ...provenance(),
   toolSha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),
-  method: 'Explicit native capability fixture: four ordinary runners spawned on body-clear points around the ordinary occupied L9 APC;600 normal braked keyboard ticks. All HP, AI, factions, timers and damage unchanged, no actor movement writes, no courier protection. Every actual contact/attack transaction and windup retained. Separate from physical route qualification.', rows });
+  method: 'Explicit native capability fixture: four ordinary runners spawned on body-clear points around the ordinary occupied L9 APC;600 normal braked keyboard ticks. All HP, AI, factions, timers and damage unchanged, no actor movement writes, no courier protection. Every actual contact/attack transaction and windup retained. Separate from physical route qualification.', rows })));

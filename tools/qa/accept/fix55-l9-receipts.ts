@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import type { FixtureReceipt } from './fixtures';
 import type { NativeReceipt } from './probe';
 import type { L9NativeProof } from './fix55-l9-native';
@@ -8,6 +9,9 @@ export function fix55L9Receipts(sourceHash:string):{path:string;receipt:FixtureR
  const proofPath='docs/reports/fix55-c/L9-native.json';if(!existsSync(proofPath))return [];
  const sha=(data:Buffer)=>createHash('sha256').update(data).digest('hex');
  const proof=JSON.parse(readFileSync(proofPath,'utf8')) as L9NativeProof;
+ const surroundPath='docs/reports/sweep-c3/L9-04/stopped-contact.json.gz';
+ const surround=existsSync(surroundPath)?JSON.parse(gunzipSync(readFileSync(surroundPath)).toString()) as {sourceHash:string;toolSha256:string;rows:{tier:string;events:{type:string;tick:number;targetId?:number;attackId?:number;hitAt?:number;before?:number;after?:number}[]}[]}:null;
+ const surroundFresh=!!surround&&surround.sourceHash===sourceHash&&surround.toolSha256===sha(readFileSync('tools/qa/accept/sweep-c3-l9-contact.ts'));
  if(proof.sourceHash!==sourceHash||proof.toolSha256!==sha(readFileSync('tools/qa/accept/fix55-l9-native.ts')))return [];
  const results:{path:string;receipt:FixtureReceipt}[]=[];
  for(const tier of ['low','high'] as const){
@@ -39,6 +43,13 @@ export function fix55L9Receipts(sourceHash:string):{path:string;receipt:FixtureR
   add('L9-04','safe route retains more durability than risky shortcut',{safe:canonical.preCrashDurability,shortcut:shortcut.preCrashDurability},'both routes complete; safe pre-crash durability strictly greater',canonical.finished&&shortcut.finished&&canonical.preCrashDurability>shortcut.preCrashDurability);
   const hits=shortcut.hits as {source:string;before:number;after:number;contactId:number|null;attackId:number|null}[];
   add('L9-04','shortcut durability billing per unique contact onset',hits,'nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge',hits.length>0&&hits.every(hit=>hit.after===Math.max(0,hit.before-10))&&new Set(hits.map(hit=>`${hit.source}/${hit.contactId}/${hit.attackId}`)).size===hits.length);
+  const surroundRow=surroundFresh?surround!.rows.find(row=>row.tier===tier):undefined;
+  if(surroundRow){
+   const windups=surroundRow.events.filter(event=>event.type==='vehicle.attack-windup');
+   const attacks=surroundRow.events.filter(event=>event.type==='vehicle.durability-hit'&&event.attackId!==null&&event.attackId!==undefined);
+   const matched=attacks.map(hit=>({hit,windup:windups.find(event=>event.attackId===hit.attackId&&event.targetId===hit.targetId)}));
+   add('L9-04','stopped-surround attacks deal10 damage after at least0.6s windup',{windups,matched},'at least one actual attack hit; every hit has its matching actual windup, ≥36 ticks lead, and exactly10 durability damage',matched.length>0&&matched.every(({hit,windup})=>!!windup&&hit.tick-windup.tick!>=36&&hit.after===Math.max(0,hit.before!-10)),surroundPath);
+  }
   add('L9-05','zero durability driving and smoke state',zero,'actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate',zero.finished&&zero.drivenMetres>1000&&zero.zero.movingTicks>0&&Math.abs(zero.zero.maxCap-.6)<.02&&zero.zero.smokingTicks===zero.zero.ticks);
   add('L9-06','native safe rough/road traversal without wedge',{canonical:canonical.finished,zero:zero.finished,zeroDistance:zero.drivenMetres},'ordinary safe route and0HP detour both complete without relocation',canonical.finished&&zero.finished);
   for(const row of [canonical,zero]){
