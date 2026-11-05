@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T20:14:51.101Z",
+  "generatedAt": "2026-11-05T22:15:14.163Z",
   "policies": [
     {
       "tier": "low",
@@ -921,7 +921,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -1050,7 +1050,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -3256,7 +3256,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -3388,7 +3388,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     }
   ],
@@ -3613,7 +3613,7 @@
         ],
         "notes": "Actual production InputFrames, no weapon/ammo/actor injection or objective skip. Only stationary browser courier damage is suppressed; separate acquisition-location probes are ordinary mortal input. No performance timing or audible-quality verdict.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -4261,7 +4261,7 @@
         ],
         "notes": "Current source PO-owned measured failure recorded only, as instructed. No game/spec/criteria tuning or PO decision fabricated.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -4518,7 +4518,7 @@
         ],
         "notes": "No game or criterion changes. Moving policy mortal; stationary control survival protected as declared by existing native runner. Numeric row requires no pixel verdict.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -5007,23 +5007,24 @@
         ],
         "notes": "No game changes. Protected native-input presentation; not physical keyboard or mortal difficulty qualification.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":55,\"within3to6\":52,\"minM\":4.739992556384009,\"medianM\":5.754150922803517,\"maxM\":7.4635789679913},{\"id\":31,\"samples\":55,\"within3to6\":52,\"minM\":4.322399762479623,\"medianM\":5.619907839891667,\"maxM\":6.671842107884287},{\"id\":32,\"samples\":55,\"within3to6\":7,\"minM\":5.393776776224756,\"medianM\":6.475450421449417,\"maxM\":7.8137652095043215},{\"id\":33,\"samples\":55,\"within3to6\":11,\"minM\":4.872… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex fix63-a): Both tiers form4. Low still fails the unchanged3–6m calm follow band: back members median6.475/6.364m, max7.814m; high has no calm survivors. Moving-fire code and visual inspection do not excuse that distance failure. Tighter controller trial was rejected after3 reached the army line.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":55,\"within3to6\":52,\"minM\":4.739992556384009,\"medianM\":5.754150922803517,\"maxM\":7.4635789679913},{\"id\":31,\"samples\":55,\"within3to6\":52,\"minM\":4.322399762479623,\"medianM\":5.619907839891667,\"maxM\":6.671842107884287},{\"id\":32,\"samples\":55,\"within3to6\":7,\"minM\":5.393776776224756,\"medianM\":6.475450421449417,\"maxM\":7.8137652095043215},{\"id\":33,\"samples\":55,\"within3to6\":11,\"minM\":4.872… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex fix64-a): Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-        "docs/reports/fix63-a/L3-06-native-proof.json",
-        "docs/reports/fix63-a/L3-visual-proof.json",
-        "docs/reports/fix63-a/L3-06-reviewed.jpg"
+        "docs/reports/fix64-a/L3-officer-ledger.json",
+        "docs/reports/fix64-a/L3-06-trial-summary.json",
+        "docs/reports/fix64-a/L3-06-rejected-trial.json.gz",
+        "docs/reports/fix64-a/L3-06-rejected-trial.patch"
       ],
       "expected": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
       "checks": [
@@ -5318,66 +5319,73 @@
       "reviewDecision": {
         "row": "L3-06",
         "status": "FAIL",
-        "reviewer": "Codex fix63-a",
+        "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "b092ea0463aa87d8a7bad7d912a6609ca681d967",
+        "commit": "b49e9c332dece65a4500827351e1e3239fea07a8",
         "clauses": [
           {
             "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
             "verdict": "FAIL",
-            "note": "Both tiers form4. Low still fails the unchanged3–6m calm follow band: back members median6.475/6.364m, max7.814m; high has no calm survivors. Moving-fire code and visual inspection do not excuse that distance failure. Tighter controller trial was rejected after3 reached the army line."
+            "note": "Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix63-a/L3-06-native-proof.json",
-            "sha256": "1905753b5b3a7fa8beb7fd1856cb0f4f7d1dac1bb3d0ba7f5176f6c3efd7e674",
-            "what": "Both tiers form4. Low still fails the unchanged3–6m calm follow band: back members median6.475/6.364m, max7.814m; high has no calm survivors. Moving-fire code and visual inspection do not excuse that distance failure. Tighter controller trial was rejected after3 reached the army line."
+            "file": "docs/reports/fix64-a/L3-officer-ledger.json",
+            "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
+            "what": "Original fresh mortal both-tier native reports, full shot/hit/loss ledgers, unchanged baseline follow ranges."
           },
           {
-            "file": "docs/reports/fix63-a/L3-visual-proof.json",
-            "sha256": "4c523dea01b2fdf5ecb295e1571516b58eca364c7b6551653261abd63f355321",
-            "what": "Personally inspected low/high presentation. Moving shot speeds are recorded; opening pixel fraction and calm spacing are not inferred from screenshots."
+            "file": "docs/reports/fix64-a/L3-06-trial-summary.json",
+            "sha256": "36ad9fa1663b16077ddd249c40c00e80a865ea334a63aaf579d8d464a69bcc66",
+            "what": "Candidate medians, every member band samples, per-segment sizes and4 surviving army arrivals; explains rejection."
           },
           {
-            "file": "docs/reports/fix63-a/L3-06-reviewed.jpg",
-            "sha256": "c2379eb257b30d0e7106408cc791b1fac29c7510cd67530fb089ce215c65c48a",
-            "what": "Low/high zoom1.5 retreat poses, guns raised while walking/running amid attackers."
+            "file": "docs/reports/fix64-a/L3-06-rejected-trial.json.gz",
+            "sha256": "2eee37b61b48abe6e4a0247aa353cbe7872106721b11680a76754cc7f2474d41",
+            "what": "Complete candidate report and read-only event ledger; exact game source hash for the rejected change."
+          },
+          {
+            "file": "docs/reports/fix64-a/L3-06-rejected-trial.patch",
+            "sha256": "67707dc57b9eb5a0a26f6a2c447429de868fd1cbd897eb3e8ed9d956fae3b420",
+            "what": "Exact calm-only feedforward controller trial, reverted byte-for-byte after the cardinality regression."
           }
         ],
-        "notes": "Current exact PO criterion. Historical superseded review is archived in fix63-a; no old receipt was rebound.",
+        "notes": "Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement≤2 at army prevents shipping this otherwise promising spacing improvement.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
       "id": "L3-07",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "high/controlled-fixture mortal segment1 officers land kills and player damage: {\"officerKills\":0,\"playerKills\":8,\"damage\":11,\"share\":0,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one kill; player damage<100HP; FAIL) Manual review FAIL (STALE, Codex fix63-a): The dropped60percent share is no longer enforced. High still records0 officer kills in S1 (8 player kills,11HP damage) and fails the new positive-kill clause. Low records9 officer kills and0HP S1 damage, but a later death leaves the existing uninterrupted-route guard unqualified. Yard collapse itself is allowed by the PO decision.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":116,\"officerKills\":27,\"playerKills\":8,\"damage\":0,\"deaths\":1,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS); high/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":37,\"officerKills\":6,\"playerKills\":10,\"damage\":11,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS) Manual review PASS (FRESH, Codex fix64-a): Both tiers visibly fire during the squad retreat, and exact browser combat.hit events prove positive pistol damage while moving. The mortal full native routes record squad hits during formation-to-segment1-end and player damage0HP low/11HP high. The old zero-hit result discarded targets west ofx-126 even while the squad was retreating through the yard; the PO explicitly allows the squad to be overwhelmed there. No combat rule was weakened.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-        "docs/reports/fix63-a/L3-07-native-proof.json",
-        "docs/reports/fix63-a/L3-visual-proof.json",
-        "docs/reports/fix63-a/L3-06-reviewed.jpg"
+        "docs/reports/fix64-a/L3-officer-ledger.json",
+        "docs/reports/fix64-a/L3-07-browser-review.json",
+        "docs/reports/fix64-a/L3-07-opening-review.json",
+        "docs/reports/fix64-a/L3-07-checker-proof.json"
       ],
       "expected": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
       "checks": [
         {
           "id": "L3-07",
-          "clause": "mortal segment1 officers land kills and player damage",
+          "clause": "mortal segment1 officers land hits and player damage",
           "value": {
-            "officerKills": 9,
-            "playerKills": 6,
+            "completed": true,
+            "officerHits": 116,
+            "officerKills": 27,
+            "playerKills": 8,
             "damage": 0,
-            "share": 0.6,
             "deaths": 1,
             "outcome": "complete"
           },
-          "target": "officers land at least one kill; player damage<100HP",
-          "status": "NOT CHECKED",
+          "target": "officers land at least one hit; player damage<100HP",
+          "status": "PASS",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -5385,17 +5393,18 @@
         },
         {
           "id": "L3-07",
-          "clause": "mortal segment1 officers land kills and player damage",
+          "clause": "mortal segment1 officers land hits and player damage",
           "value": {
-            "officerKills": 0,
-            "playerKills": 8,
+            "completed": true,
+            "officerHits": 37,
+            "officerKills": 6,
+            "playerKills": 10,
             "damage": 11,
-            "share": 0,
             "deaths": 0,
             "outcome": "complete"
           },
-          "target": "officers land at least one kill; player damage<100HP",
-          "status": "FAIL",
+          "target": "officers land at least one hit; player damage<100HP",
+          "status": "PASS",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
@@ -5410,7 +5419,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Segment 1: officers make ≥ 60 % of kills; player damage < 100 HP (never a whole life)."
       },
-      "remaining": "Positive officer-kill checker replaces60% share. High still records0 S1 officer kills; low S1 succeeds but later death leaves uninterrupted-route guard unqualified. Diagnose combat without suppressing yard overwhelm. See fix63-a.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
@@ -5418,37 +5427,42 @@
       },
       "reviewDecision": {
         "row": "L3-07",
-        "status": "FAIL",
-        "reviewer": "Codex fix63-a",
+        "status": "PASS",
+        "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "b092ea0463aa87d8a7bad7d912a6609ca681d967",
+        "commit": "34fdbead3e54a8e23e401d4d586b53cfdabe1b19",
         "clauses": [
           {
-            "clause": "Segment 1: the squad visibly fights (officers land kills); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
-            "verdict": "FAIL",
-            "note": "The dropped60percent share is no longer enforced. High still records0 officer kills in S1 (8 player kills,11HP damage) and fails the new positive-kill clause. Low records9 officer kills and0HP S1 damage, but a later death leaves the existing uninterrupted-route guard unqualified. Yard collapse itself is allowed by the PO decision."
+            "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
+            "verdict": "PASS",
+            "note": "Both tiers visibly fire during the squad retreat, and exact browser combat.hit events prove positive pistol damage while moving. The mortal full native routes record squad hits during formation-to-segment1-end and player damage0HP low/11HP high. The old zero-hit result discarded targets west ofx-126 even while the squad was retreating through the yard; the PO explicitly allows the squad to be overwhelmed there. No combat rule was weakened."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix63-a/L3-07-native-proof.json",
-            "sha256": "2d323dd97c4f6a0976a606d9974bcd0f17fb706c27fed47225380b7b499b9d1e",
-            "what": "The dropped60percent share is no longer enforced. High still records0 officer kills in S1 (8 player kills,11HP damage) and fails the new positive-kill clause. Low records9 officer kills and0HP S1 damage, but a later death leaves the existing uninterrupted-route guard unqualified. Yard collapse itself is allowed by the PO decision."
+            "file": "docs/reports/fix64-a/L3-officer-ledger.json",
+            "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
+            "what": "Read-only fresh mortal native shot/hit/loss ledger. High has37 successful squad gunshot rolls in the initial retreat window; excluded witnesses lie west ofx-126, proving the old spatial check missed valid squad combat."
           },
           {
-            "file": "docs/reports/fix63-a/L3-visual-proof.json",
-            "sha256": "4c523dea01b2fdf5ecb295e1571516b58eca364c7b6551653261abd63f355321",
-            "what": "Personally inspected low/high presentation. Moving shot speeds are recorded; opening pixel fraction and calm spacing are not inferred from screenshots."
+            "file": "docs/reports/fix64-a/L3-07-browser-review.json",
+            "sha256": "aa063fcbe43c0ad25abb170a34530f8b77481ce66058fc09b85844b917868e5a",
+            "what": "Personally inspected both exact moving-hit frames. Event damageType=bullet, amount12.5, source is active squad, actual production zoom1. The yard camera locks wheel zoom, recorded honestly."
           },
           {
-            "file": "docs/reports/fix63-a/L3-06-reviewed.jpg",
-            "sha256": "c2379eb257b30d0e7106408cc791b1fac29c7510cd67530fb089ce215c65c48a",
-            "what": "Low/high zoom1.5 retreat poses, guns raised while walking/running amid attackers."
+            "file": "docs/reports/fix64-a/L3-07-opening-review.json",
+            "sha256": "a6f71f6788de173a560f68cf8260b9bcabd1dab81e89ccc70a254f5667e044b9",
+            "what": "Personally inspected all7 opening/cover/retreat captures; guns rise and fire amid an increasingly overwhelming living crowd."
+          },
+          {
+            "file": "docs/reports/fix64-a/L3-07-checker-proof.json",
+            "sha256": "0caf1323118e199f1477703a4bd85094bbc6d5982052513f2308d15246d2e858",
+            "what": "Seven boundary/absence controls reject missing/incomplete segment observation, zero gun hits and100HP; kills and later deaths are not required by this row."
           }
         ],
-        "notes": "Current exact PO criterion. Historical superseded review is archived in fix63-a; no old receipt was rebound.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup. Fresh moving-hit browser replay after the L1 cue change retains the same pistol-hit frames and actual locked zoom1; its source hash is current.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -7055,7 +7069,7 @@
         ],
         "notes": "No game changes. Numeric trajectory/frustum review; no image or performance-timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -7385,22 +7399,19 @@
         ],
         "notes": "Damage protection after ordinary mortal yard prefix; static matrix uses disclosed teleports and cannot qualify route discovery. No nav/actor coordinates during screen decisions. Ended when browser connection closed. Input notes preserve mistakes; image-review file corrects them.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
       "id": "L3-13",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex fix62-a): Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL. Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
+      "value": "Manual review FAIL (STALE, Codex fix64-a): Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix62-a/L3-13-browser.json.gz",
-        "docs/reports/fix62-a/L3-13-image-review.json",
-        "docs/reports/fix62-a/reviewed/ramp-high-1.jpg",
-        "docs/reports/fix62-a/reviewed/ramp-high-2.jpg",
-        "docs/reports/fix62-a/reviewed/ramp-low-1.jpg",
-        "docs/reports/fix62-a/reviewed/ramp-low-2.jpg"
+        "docs/reports/fix64-a/L3-13-image-review.json",
+        "docs/reports/fix64-a/L3-13-frames.json.gz",
+        "docs/reports/fix64-a/L3-13-support-audit.json"
       ],
       "expected": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
       "checks": [],
@@ -7423,51 +7434,36 @@
       "reviewDecision": {
         "row": "L3-13",
         "status": "FAIL",
-        "reviewer": "Codex fix62-a",
+        "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+        "commit": "1623f1d509a3ccaf1d7fc688e157544a93620ba4",
         "clauses": [
           {
             "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
             "verdict": "FAIL",
-            "note": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+            "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix62-a/L3-13-browser.json.gz",
-            "sha256": "1d0953bd7200cf2aa68d1b339830f8520038d4a1c225bb90f1b814ee98ccf123",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+            "file": "docs/reports/fix64-a/L3-13-image-review.json",
+            "sha256": "c0921ce211634204f4aa9e4b99b57471260308a286f99c5519468eba276afbf8",
+            "what": "Personally inspected all72 captures; exact per-image hashes, observations, full-route command count/tick endpoints and actual camera limitation."
           },
           {
-            "file": "docs/reports/fix62-a/L3-13-image-review.json",
-            "sha256": "b391778c6af6c123ad6626a568d9ebb13b969d69503945b344fc31f452559beb",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+            "file": "docs/reports/fix64-a/L3-13-frames.json.gz",
+            "sha256": "d95fabb8a9b7b051b87c062692d97ffcda6b524b148aa94a7fb42a8d5888a9eb",
+            "what": "Exact captured actor health/transforms and rendered-foot samples for both tiers across the full route; compressed from the physical traversal receipts."
           },
           {
-            "file": "docs/reports/fix62-a/reviewed/ramp-high-1.jpg",
-            "sha256": "015eb4093e8a44679a2cb352132b124a0a15a0544bacb4ba145935cb6dd56ef2",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/ramp-high-2.jpg",
-            "sha256": "811cb59ae4331cba9543774014d8f72ee5f025c5ccdde52d0e0949b8c86c87c4",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/ramp-low-1.jpg",
-            "sha256": "7befde972055aa6f9f5f219e8133f263c1073e3152d9ff8f63aa445fe6bf9d66",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/ramp-low-2.jpg",
-            "sha256": "171a6ba9dba829ab673b12d442a3cdc4a7bf1e229f3a0d42f5c18d6f50072396",
-            "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+            "file": "docs/reports/fix64-a/L3-13-support-audit.json",
+            "sha256": "f8f91efc0e90644ec335863554c197da91c64348c41a1b64a5aa8ee852b426c9",
+            "what": "Read-only native support/formula correlation:167 root/foot witnesses,0 outside-width roots. Prevents falsely attributing the visible hanging appearance to actor-root penetration."
           }
         ],
-        "notes": "Courier damage suppressed solely for geometry observation. No relocation/spawns/progression skip. No wall, body, nav or target changes. WebGL2/Metal headless pool. First low setup failure excluded; successful repeat retained.",
+        "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -7646,7 +7642,7 @@
         ],
         "notes": "No game changes; courier damage protection qualifies mechanics/presentation, not mortality or physical keyboard/alternate zoom coverage. Civilian groups stand beside evacuation buses; no fabricated seated-passenger census.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
@@ -7740,24 +7736,19 @@
         ],
         "notes": "Closes the horde readability defect. Native game input and controlled80-infected fixture are labelled separately; survival protection is only for presentation. Frozen-clock attempt retained under rejected/ and excluded. Final-source refresh on ba261cb1a: both tiers and actualzoom0.5/1.5 personally re-reviewed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
       "id": "L3-16",
       "status": "FAIL",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex fix62-a): Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities. Open prior FAIL: Late-afternoon light is present, but the reviewed checkpoint street frame at tick5257 / low / zoom1.5 contains zero identifiable smoke columns, below >=2 in every street frame. Street damage-type variety is not fully audited.",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex fix64-a): Fresh final24-frame low/high, three-street, actual zoom0.5/1/1.5 matrix inspected. Default zoom1 moving frames show two forms; closest Commerce frames still show only one identifiable vertical stem and a clipped diffuse right patch. Two framing/size trials were rejected because they moved broad haze into the foreground without reliable full-matrix readability. Original game smoke restored. Open prior FAIL: Late-afternoon light is present, but the reviewed checkpoint street frame at tick5257 / low / zoom1.5 contains zero identifiable smoke columns, below >=2 in every street frame. Street damage-type variety is not fully audited.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix62-a/L3-16-browser.json.gz",
-        "docs/reports/fix62-a/L3-16-image-review.json",
-        "docs/reports/fix62-a/reviewed/smoke-01.jpg",
-        "docs/reports/fix62-a/reviewed/smoke-02.jpg",
-        "docs/reports/fix62-a/reviewed/smoke-03.jpg",
-        "docs/reports/fix62-a/reviewed/smoke-04.jpg",
-        "docs/reports/fix62-a/reviewed/smoke-05.jpg",
-        "docs/reports/fix62-a/reviewed/smoke-06.jpg",
+        "docs/reports/fix64-a/L3-16-image-review.json",
+        "docs/reports/fix64-a/L3-16-rejected-1.patch",
+        "docs/reports/fix64-a/L3-16-rejected-2.patch",
         "docs/reports/batch51-qa/L3.jpg"
       ],
       "expected": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
@@ -7780,61 +7771,36 @@
       "reviewDecision": {
         "row": "L3-16",
         "status": "FAIL",
-        "reviewer": "Codex fix62-a",
+        "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+        "commit": "5fcfe692e8d8b9386e8cce10834e87011c736b94",
         "clauses": [
           {
             "clause": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
             "verdict": "FAIL",
-            "note": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+            "note": "Fresh final24-frame low/high, three-street, actual zoom0.5/1/1.5 matrix inspected. Default zoom1 moving frames show two forms; closest Commerce frames still show only one identifiable vertical stem and a clipped diffuse right patch. Two framing/size trials were rejected because they moved broad haze into the foreground without reliable full-matrix readability. Original game smoke restored."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix62-a/L3-16-browser.json.gz",
-            "sha256": "9666064b2da861d124a574d2e24dd6b464f134d9456a698c8644dd667d7d3b8c",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+            "file": "docs/reports/fix64-a/L3-16-image-review.json",
+            "sha256": "9dfbfce09822bf1cdff6f9bf1883332ade2faf16dea0918eae452a35829555ba",
+            "what": "All54 baseline/trial/final records inspected and hashed; final24 actual zoom/street/quality matrix, exact count counterexample, scoped default-zoom success and PO review prompt."
           },
           {
-            "file": "docs/reports/fix62-a/L3-16-image-review.json",
-            "sha256": "945dffdf4c5b0cee770071eecc0ebf71e8cec345a4c3fc3e0792c60aeae2032e",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+            "file": "docs/reports/fix64-a/L3-16-rejected-1.patch",
+            "sha256": "3a731ceada640288dda7b1ea5eeef502fe1b6486556b4fb28f66de5ed4c25e32",
+            "what": "Rejected lower-stem/crest-framing selector trial; no shipped emitter/rate/pool change."
           },
           {
-            "file": "docs/reports/fix62-a/reviewed/smoke-01.jpg",
-            "sha256": "2e191b5c725d5786137924ac3a196cde4a6be85fa41b16fbba69dd73561468ab",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/smoke-02.jpg",
-            "sha256": "3009eb3d71ef8cf9fb2b1cd407ea4b247d2a47c889f7d26b2f3d89eccd5567d9",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/smoke-03.jpg",
-            "sha256": "e07520046caa03c19641a2734c9530aa79f96550d6fb0a85c456af56e8dc74dd",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/smoke-04.jpg",
-            "sha256": "cc9d54ceacb73d0316d4387a5ffeb3937e95ae2a20264644f5865b274cdd358c",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/smoke-05.jpg",
-            "sha256": "8c3e894df0a37bfa65efefbe77a9f5e6a46ee1f2af24dfc9baba8fe1a2762c86",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/smoke-06.jpg",
-            "sha256": "bd34db488e073df40a8ae9b13f812834eb3cf1363629317c97b38a5f2ab15395",
-            "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+            "file": "docs/reports/fix64-a/L3-16-rejected-2.patch",
+            "sha256": "7607718f1182a85fd4cf293315999dba755aa996ac24a5d9ae7e914c70048060",
+            "what": "Rejected stable framing plus smaller puff-size trial; original smoke source restored byte-for-byte."
           }
         ],
-        "notes": "No cap, spawn count, or target changes. Real VFX presentation clock advanced alongside paused simulation; earlier frozen-clock captures excluded. Moving prefix uses native complete InputFrames; static street poses disclosed. Courier protection for presentation only.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     }
   ]

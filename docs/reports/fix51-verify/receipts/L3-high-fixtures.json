@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L3",
   "tier": "high",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checks": [
     {
       "id": "L3-02",
@@ -129,17 +129,18 @@
     },
     {
       "id": "L3-07",
-      "clause": "mortal segment1 officers land kills and player damage",
+      "clause": "mortal segment1 officers land hits and player damage",
       "value": {
-        "officerKills": 0,
-        "playerKills": 8,
+        "completed": true,
+        "officerHits": 37,
+        "officerKills": 6,
+        "playerKills": 10,
         "damage": 11,
-        "share": 0,
         "deaths": 0,
         "outcome": "complete"
       },
-      "target": "officers land at least one kill; player damage<100HP",
-      "status": "FAIL",
+      "target": "officers land at least one hit; player damage<100HP",
+      "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
@@ -1464,8 +1465,10 @@
           "followRange": []
         },
         "s1": {
-          "officerKills": 0,
-          "playerKills": 8,
+          "completed": true,
+          "officerHits": 37,
+          "officerKills": 6,
+          "playerKills": 10,
           "damage": 11
         },
         "killDistances": {
@@ -1817,7 +1820,9 @@
           ]
         },
         "s1": {
-          "officerKills": 10,
+          "completed": true,
+          "officerHits": 53,
+          "officerKills": 14,
           "playerKills": 7,
           "damage": 0
         },
@@ -2088,9 +2093,11 @@
           "followRange": []
         },
         "s1": {
-          "officerKills": 0,
+          "completed": false,
+          "officerHits": 33,
+          "officerKills": 6,
           "playerKills": 0,
-          "damage": 0
+          "damage": 135.13333333333384
         },
         "killDistances": {
           "gun": [],

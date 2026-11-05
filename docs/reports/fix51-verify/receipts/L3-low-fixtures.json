@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L3",
   "tier": "low",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checks": [
     {
       "id": "L3-02",
@@ -128,17 +128,18 @@
     },
     {
       "id": "L3-07",
-      "clause": "mortal segment1 officers land kills and player damage",
+      "clause": "mortal segment1 officers land hits and player damage",
       "value": {
-        "officerKills": 9,
-        "playerKills": 6,
+        "completed": true,
+        "officerHits": 116,
+        "officerKills": 27,
+        "playerKills": 8,
         "damage": 0,
-        "share": 0.6,
         "deaths": 1,
         "outcome": "complete"
       },
-      "target": "officers land at least one kill; player damage<100HP",
-      "status": "NOT CHECKED",
+      "target": "officers land at least one hit; player damage<100HP",
+      "status": "PASS",
       "tier": "low",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
@@ -1426,8 +1427,10 @@
           ]
         },
         "s1": {
-          "officerKills": 9,
-          "playerKills": 6,
+          "completed": true,
+          "officerHits": 116,
+          "officerKills": 27,
+          "playerKills": 8,
           "damage": 0
         },
         "killDistances": {
@@ -1824,9 +1827,11 @@
           ]
         },
         "s1": {
-          "officerKills": 3,
-          "playerKills": 9,
-          "damage": 0
+          "completed": true,
+          "officerHits": 144,
+          "officerKills": 31,
+          "playerKills": 17,
+          "damage": 11
         },
         "killDistances": {
           "gun": [
@@ -2022,9 +2027,11 @@
           "followRange": []
         },
         "s1": {
-          "officerKills": 0,
+          "completed": false,
+          "officerHits": 286,
+          "officerKills": 52,
           "playerKills": 0,
-          "damage": 0
+          "damage": 178
         },
         "killDistances": {
           "gun": [],

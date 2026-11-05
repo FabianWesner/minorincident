@@ -3,7 +3,7 @@
   "status": "FAIL",
   "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "b49e9c332dece65a4500827351e1e3239fea07a8",
+  "commit": "91c25c7feccd8e6b58f829304151d2ee62fd6d38",
   "clauses": [
     {
       "clause": "Squad of 3\u20134 forms, follows 3\u20136 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, \u2264 2 at the army line; every loss a bite/kill/separation.",
@@ -12,6 +12,11 @@
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/fix64-a/L3-06-current.json",
+      "sha256": "5614dcbb1670032c91943c4842e780e99bf563fee2fddb3b8ee9bd8c555b5881",
+      "what": "Fresh final-source native/fixture checks: low rear medians6.475/6.364m, max7.814m; high loses all4 in yard; final survivors1/0, every loss bite."
+    },
     {
       "file": "docs/reports/fix64-a/L3-officer-ledger.json",
       "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
@@ -33,5 +38,5 @@
       "what": "Exact calm-only feedforward controller trial, reverted byte-for-byte after the cardinality regression."
     }
   ],
-  "notes": "Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement\u22642 at army prevents shipping this otherwise promising spacing improvement."
+  "notes": "Final source refresh: native low/high and all controlled fixtures rerun after the L1 marker change. Calm spacing still fails; rejected candidate remains reverted. Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement\u22642 at army prevents shipping this otherwise promising spacing improvement."
 }
