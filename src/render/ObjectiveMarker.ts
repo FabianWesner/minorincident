@@ -1,4 +1,4 @@
-import { Group, Mesh, MeshBasicNodeMaterial, TorusGeometry, ConeGeometry, Vector3 } from 'three/webgpu';
+import { Group, Mesh, MeshBasicNodeMaterial, TorusGeometry, ConeGeometry, Shape, ShapeGeometry } from 'three/webgpu';
 import { markerAnchor, objectiveRingRadius } from '../sim/missions/markerAnchor';
 import type { SimWorld } from '../sim/world/SimWorld';
 /** Resolve the marker on its walkable layer, including paving/roof edges, rather than an obsolete authored street height. */
@@ -8,22 +8,33 @@ export function markerSurfaceY(world: SimWorld, anchor: { x: number; z: number; 
   const layer = anchor.y && Math.abs(anchor.y) > .05 ? anchor.y : feet;
   return Math.max(anchor.y ?? 0, world.districts?.supportBelow(anchor.x, anchor.z, layer) ?? 0);
 }
-/** Two shared geometries; no per-frame marker allocation or renderer state read by sim. */
+/** Flat ground chevron (tip toward local -Z): an outlined arrow, unlike the pale leaf triangles strewn over L1's streets. */
+function chevron(size: number): ShapeGeometry {
+  const s = new Shape(), p = [[0, .45], [.6, -.15], [.6, -.47], [0, .12], [-.6, -.47], [-.6, -.15]];
+  s.moveTo(p[0][0] * size, p[0][1] * size); for (const [x, y] of p.slice(1)) s.lineTo(x * size, y * size); s.closePath();
+  return new ShapeGeometry(s).rotateX(-Math.PI / 2);
+}
+const cueSpacing = [1.3, 2.4, 3.5];
+/** Shared geometries; no per-frame marker allocation or renderer state read by sim. */
 export class ObjectiveMarker extends Group {
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly ringMaterial = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
   private readonly ring = new Mesh(new TorusGeometry(objectiveRingRadius-.05,.05,6,24),this.ringMaterial);
   private readonly arrow = new Mesh(new ConeGeometry(0.25,0.5,4),this.material);
-  private readonly routeCue = new Mesh(new ConeGeometry(.42, 1.2, 3), this.ringMaterial);
+  // fix65-a (L1-16): a single pale cone 1.6 m ahead read as one more leaf on the pavement. A trail of three dark-outlined
+  // chevrons along the next walkable leg reads as a route from the game camera at zoom 0.5-1.5.
+  private readonly outlineMaterial = new MeshBasicNodeMaterial({ color: '#3b2616', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
+  private readonly cueGeometry = chevron(1);
+  private readonly cueOutlineGeometry = chevron(1.32);
+  private readonly routeCue = new Group();
+  private readonly cueMarks = cueSpacing.map(() => { const g = new Group(), o = new Mesh(this.cueOutlineGeometry, this.outlineMaterial), m = new Mesh(this.cueGeometry, this.ringMaterial); o.renderOrder = 92; m.renderOrder = 93; m.position.y = .01; o.position.z = .06; g.add(o, m); return g; });
   private readonly cueRoute = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly cuePoint = { x: 0, z: 0 };
   private readonly cueFrom = { x: Infinity, z: Infinity };
-  private readonly cueDirection = new Vector3();
-  private readonly cueUp = new Vector3(0, 1, 0);
   private cueTick = -Infinity;
   private cueAnchor: object | null = null;
   private cueReady = false;
-  constructor(private readonly world: SimWorld){super();this.ring.renderOrder=94;this.arrow.renderOrder=95;this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.routeCue.renderOrder=93;this.add(this.ring,this.arrow,this.routeCue);}
+  constructor(private readonly world: SimWorld){super();this.ring.renderOrder=94;this.arrow.renderOrder=95;this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.routeCue.add(...this.cueMarks);this.add(this.ring,this.arrow,this.routeCue);}
   // The L3 corridor steer ('l3-route') only guides the HUD arrow; the world ring stays at the army checkpoint (PO 10-31:
   // "Checkpoint should not move with me").
   // L5 search spots are unmarked (Q-302, found by sound); this marker draws the single current objective.
@@ -54,15 +65,20 @@ export class ObjectiveMarker extends Group {
       }
       const dx = this.cuePoint.x - player.transform.x, dz = this.cuePoint.z - player.transform.z, distance = Math.hypot(dx, dz);
       if (this.cueReady && distance > .6 && Math.hypot(anchor.x - player.transform.x, anchor.z - player.transform.z) > 2) {
-        this.cueDirection.set(dx / distance, 0, dz / distance);
-        const ahead = Math.min(1.6, distance * .7), x = player.transform.x + dx / distance * ahead, z = player.transform.z + dz / distance * ahead;
-        const y = (this.world.districts?.supportBelow(x, z, player.transform.y - .7) ?? 0) + .18;
-        this.routeCue.position.set(x - this.position.x, y - this.position.y, z - this.position.z).divideScalar(this.scale.x);
-        this.routeCue.scale.setScalar(1 / this.scale.x);
-        this.routeCue.quaternion.setFromUnitVectors(this.cueUp, this.cueDirection);
+        const ux = dx / distance, uz = dz / distance, yaw = Math.atan2(-ux, -uz), inv = 1 / this.scale.x;
+        this.routeCue.position.set(-this.position.x, -this.position.y, -this.position.z).multiplyScalar(inv);
+        this.routeCue.scale.setScalar(inv);
+        for (const [i, mark] of this.cueMarks.entries()) {
+          // Chevrons past the next turn would point into the wall; keep them on this leg.
+          const ahead = Math.min(cueSpacing[i], Math.max(.9, distance - .3) * (i + 1) / cueSpacing.length), x = player.transform.x + ux * ahead, z = player.transform.z + uz * ahead;
+          mark.position.set(x, (this.world.districts?.supportBelow(x, z, player.transform.y - .7) ?? 0) + .12, z);
+          mark.rotation.set(0, yaw, 0);
+          // A slow travelling pulse (presentation only) leads the eye along the leg.
+          mark.scale.setScalar(.9 + .18 * Math.max(0, Math.sin(this.world.tick * .12 - i * 1.1)));
+        }
         this.routeCue.visible = true;
       }
     }
   }
-  dispose():void{this.ring.geometry.dispose();this.arrow.geometry.dispose();this.routeCue.geometry.dispose();this.material.dispose();this.ringMaterial.dispose();this.clear();}
+  dispose():void{this.ring.geometry.dispose();this.arrow.geometry.dispose();this.cueGeometry.dispose();this.cueOutlineGeometry.dispose();this.outlineMaterial.dispose();this.material.dispose();this.ringMaterial.dispose();this.clear();}
 }
