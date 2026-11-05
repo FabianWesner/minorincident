@@ -31,6 +31,8 @@ The final runner supplies a fresh attached image for exactly one action per mode
 - Fresh `npm run qa:accept -- --level L1 --skip-browser --tier both` and L3 equivalent: completed both native routes, fixtures and checkpoint controls; zero fixture/checkpoint errors. Exit 1 represents open acceptance rows. Final exact-source receipt reuse/review refresh: L1 has 1 fresh FAIL and 11 other incomplete rows; L3 has 4 fresh FAILs and 6 other incomplete rows. All six assigned decisions are FRESH. Other incomplete rows are outside this lane.
 - Literal `npm run qa:threat`, zero arguments and run alone: **PASS, all 10 levels, 0 failure flags**, 507.2 s audit /511.5 s wrapper, unchanged 600 s limit. [Final gate record](qa-threat-final.json) and [full compressed JSON receipt](qa-threat-final.json.gz). Earlier one-shot timeout and subsequent sequential diagnostic remain historical, not passing one-shot evidence.
 
+Threat gate scope: the existing command aggregates passive and focused-check failures. Its full receipt also retains two L3 skilled-route timing diagnostics: `station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS` and `station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS`. These are diagnostic fields outside the command’s exit gate; zero gate flags does not mean every diagnostic array is empty.
+
 Shared all-level indexes are restored to the base rather than committing a two-level regeneration that drops unrelated levels. The coordinator can regenerate them after merging. Updated L1/L3 JSON and native receipts are retained.
 
 Full command logs and SHA-256 values: [validation records](gates.json). The QA build also passed.
