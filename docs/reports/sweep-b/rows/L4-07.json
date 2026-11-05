@@ -1,0 +1,276 @@
+{
+  "row": "L4-07",
+  "status": "FAIL",
+  "revision": "c588315a96eb07fa312d9612f1b8b370403eda48",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "criterion": "combat: reachable \u2265 90 % (no clumps locked at sheds/walls); passive first attack \u2264 10 s (measured 4.87 s); passive attacks \u2265 6/min (tune). PO: \"they are not attacking me\" / \"The Zombies are somehow locked there\". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap.",
+  "criteriaSha256": "144ccc0bf29d3dab1d91e5b38e3bf40c1ee16f78c83917ef9c55207fcccbd63a",
+  "observation": "Both-tier complete/passive policies retain actual windup and bounded-path ledgers. High complete minimum reachable share89.1892% fails90%; low complete96%, passive98.63/98.68% pass. Passive first attacks9.333/7.367s pass10s. The stronger no-permanent-trap clause remains unproven (blocked IDs retained); FAIL is established independently by high complete reachability.",
+  "checks": [
+    {
+      "id": "L4-07",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 178,
+        "playerWindups": 591,
+        "groupWindups": 0,
+        "attacksPerMinute": 199.2134831460674
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 96,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "post-opening legal ground or barrier path for every sampled infected",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": {
+        "firstTick": 3169,
+        "lastTick": 12529,
+        "samples": 79,
+        "minimumPercent": 97.33333333333334,
+        "worstTick": 7609,
+        "blockedIds": [
+          211,
+          352
+        ]
+      },
+      "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 190,
+        "playerWindups": 3019,
+        "groupWindups": 0,
+        "attacksPerMinute": 953.3684210526316
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 9.333333333333334,
+        "windowSeconds": 190
+      },
+      "target": "\u226410 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "real player/group windups per minute",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 953.3684210526316,
+      "target": "6 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 98.63013698630137,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "post-opening legal ground or barrier path for every sampled infected",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 98.71794871794873,
+        "worstTick": 9649,
+        "blockedIds": [
+          327
+        ]
+      },
+      "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 190,
+        "playerWindups": 441,
+        "groupWindups": 0,
+        "attacksPerMinute": 139.26315789473685
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": 89.1891891891892,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "post-opening legal ground or barrier path for every sampled infected",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 86.95652173913044,
+        "worstTick": 13129,
+        "blockedIds": [
+          427,
+          446,
+          464,
+          490,
+          497,
+          498,
+          503,
+          542,
+          555
+        ]
+      },
+      "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 190,
+        "playerWindups": 2123,
+        "groupWindups": 0,
+        "attacksPerMinute": 670.421052631579
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 7.366666666666666,
+        "windowSeconds": 190
+      },
+      "target": "\u226410 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "real player/group windups per minute",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 670.421052631579,
+      "target": "6 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 98.68421052631578,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-07",
+      "clause": "post-opening legal ground or barrier path for every sampled infected",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 98.71794871794873,
+        "worstTick": 9769,
+        "blockedIds": [
+          251
+        ]
+      },
+      "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "c2111f410bad8133759677b4074820f49448359813769f4f78f3de46c31b4d3d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "7cefb4b7d44343bcf326ce8aa54b82b12a021f8c934c1bd1a0bfe21d0b52ac58"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "bb345403d53b9975b8791c5f1a4527cf1a1a485cac0e8f68930d9ec5a9c15cfa"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "ba656fe9eae86a0b3f961f31f5e44d6c5ebba6691c624cf226001130bfbf8625"
+    }
+  ]
+}
