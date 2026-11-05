@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "commit": "34fdbead3e54a8e23e401d4d586b53cfdabe1b19",
   "clauses": [
     {
       "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required \u2014 at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" \u2014 the \u2265 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
@@ -19,7 +19,7 @@
     },
     {
       "file": "docs/reports/fix64-a/L3-07-browser-review.json",
-      "sha256": "3500441dc0b17b78865d940c5ead3188f1d1af32b71784d697f76220c2514b6c",
+      "sha256": "aa063fcbe43c0ad25abb170a34530f8b77481ce66058fc09b85844b917868e5a",
       "what": "Personally inspected both exact moving-hit frames. Event damageType=bullet, amount12.5, source is active squad, actual production zoom1. The yard camera locks wheel zoom, recorded honestly."
     },
     {
@@ -33,5 +33,5 @@
       "what": "Seven boundary/absence controls reject missing/incomplete segment observation, zero gun hits and100HP; kills and later deaths are not required by this row."
     }
   ],
-  "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup."
+  "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup. Fresh moving-hit browser replay after the L1 cue change retains the same pistol-hit frames and actual locked zoom1; its source hash is current."
 }
