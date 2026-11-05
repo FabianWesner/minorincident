@@ -1,52 +1,47 @@
 {
   "row": "L9-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
+  "reviewer": "Codex sweep-c4",
   "date": "2026-11-05",
-  "commit": "49a2d32d12effbc75e1a553d8ecfa193c4771557",
+  "commit": "7abb609dd4600bd46df41f136027d1e010cde6b6",
   "clauses": [
     {
       "clause": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
       "verdict": "PASS",
-      "note": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+      "note": "Both qualities, actual healthy-start1000HP and production-damaged0HP physical WASD routes reach postimpact crawl. Healthy starts have860/960HP before crash after ordinary contacts; zero stays0. One impact each at ticks9960/14585(low healthy/zero) and7305/10473(high). Wreck objective follows impact in event-array order on that same tick; every earlier sampled HUD says Drive toward the city, later HUD says Get clear of the wreck. Each case has10 fall samples retaining hull entity and4 physics wheels. All96 visual captures personally inspected: whole green hull descends with attached rendered sidewheels and moving headlights across fall0\u20139; impact flash/fire leaves wreck visible and courier outside. All raw hashes verified and images deleted. Eight actual-consumer faults reject duplicate impact,early objective/HUD,missing hull/wheel,unfinished drive,unseen image,stale source, with exact bytes restored."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c4/L9-05-prior-qualification.json",
-      "sha256": "71af0128866c2d8b9b599de85e944fca16242aa20631e1672b0a21be56169e89",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
-      "sha256": "e12d7e7ea34e4b8caacf5593057c3e293d441394641e79a5c3e10a3c2125f63a",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
-      "sha256": "27e4ebe0844c3d82061c46dd5994730784554093f4fd931fa00fceaa0baa2818",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-05/second-review/review.json",
-      "sha256": "f2bb9a9e2146122db7aedf5b4bc603bdd3e757b6324b6bd1950033ed2072d85b",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
-      "sha256": "295db0c5b1c56cd637b9dd6866a8ca2338779fb4e42fe18ef8028f313a9d5aee",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-05/native.json.gz",
-      "sha256": "b541d8a6d7fb5360c2f9eed602123a5c2dba6fb65162cc3004d744b7c268ebc0",
-      "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
+      "file": "docs/reports/sweep-c3/L9-05/qualification.json",
+      "sha256": "4a7802248b720e506312c5f167402d49e92ff5637b64a3983361dab55dfe8f62",
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
     },
     {
       "file": "docs/reports/sweep-c3/L9-07/coverage-proof.json",
       "sha256": "0d7b76ff498dc0fa2e3ef5002bf8743b51f28b580bcc68349d68ee55aec63f78",
-      "what": "Eight source-bound duplicate impact, early objective/HUD, missing hull/wheel, unfinished, unseen and stale controls reject; exactbytes restored."
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-05-full-review.json",
+      "sha256": "8527e65c6e043fde2f625b36c699835c8cf6331e0ee6ded410b5dbc105662e39",
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-05-zero-review.json",
+      "sha256": "f0214a58706d38890605f6b3332c14412e760754e2d837e1c6b8a4bcf227a7f9",
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
+      "sha256": "3b6dc320b2d1238b71050a222dcfe98146d2f137a07c8cf8b8ee75393925fd8a",
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz",
+      "sha256": "e72e19b78fda9333de999a33150ddeecf3ca1de1eadb18415a020fc6207c4f35",
+      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
     }
   ],
-  "notes": "Full unchanged row, native event-order controls plus current physical whole-hull fall review. Prior qualification manifest archived byte-for-byte by sweep-c4; this historical verdict is not requalified by that path move."
+  "notes": "Existing full/zero fixture contract means healthy1000HP start plus normal contacts versus0HP setup; exact1000HP at impact is not asserted. The scripted cinematic overrides requested0.5/1.5 zoom, so paired fall images share production framing. Crash flash is bright but whole fall hull remains visible. No target, actor state after setup, game or performance changes."
 }
