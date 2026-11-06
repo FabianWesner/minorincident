@@ -135,6 +135,7 @@ export class GameView implements Lifecycle {
   missionHidden = false;
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
   background = false;
+  private scenePrepared = false;
   private frozenFrame: HTMLCanvasElement | null = null;
   private frozenUpdates = false;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
@@ -361,6 +362,7 @@ export class GameView implements Lifecycle {
     const warm = async (): Promise<void> => { try { await this.warmUp(cooperative, restorePrewarmed, corgiPrewarmed); } finally { restorePrewarmed(); } };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
+      this.scenePrepared = true;
       if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
       this.update(1);
       this.missionUI?.prepare();
@@ -566,7 +568,10 @@ export class GameView implements Lifecycle {
     // model/LOD once; both views get independent rig clones and share its atlas.
     const registry = this.world.scenario === 'L4' ? this.crowdRegistry ??= new AssetRegistry(() => {}, { materials: this.materials!, textureSize: this.quality === 'low' ? 512 : 1024 }) : undefined;
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch), registry); this.npcs.setQuality(this.quality); }
+    // L7 begins its mission before loading actors. Its initial batches still
+    // belong to the full scene warm-up below, rather than the serialized
+    // gameplay streaming queue (which otherwise compiles them twice).
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve(), registry); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = __QA_HOOKS__ && (this.params.has('debug') || this.params.get('aimcone') === '1'); }
     if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories, registry); this.healthBars = new HealthBars(this.world, bounds => this.character?.healthBarBounds(bounds) ?? false); this.barScene.add(this.healthBars); }
@@ -575,7 +580,7 @@ export class GameView implements Lifecycle {
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
-    if (this.crowd) this.crowd.warmBatch = batch => this.warmHidden(batch);
+    if (this.crowd) this.crowd.warmBatch = batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve();
     return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(this.view), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
@@ -1242,6 +1247,7 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    this.scenePrepared = false;
     for (const stop of this.cameraStops) stop(); this.cameraStops = []; this.cameraSnap = false;
     if (this.shutter) {
       this.shutter.removeFromParent(); this.shutter.traverse(o => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null;
