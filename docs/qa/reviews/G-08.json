@@ -1,0 +1,27 @@
+{
+  "row": "G-08",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "f9f6eedac52a868fd4601a2729eb3368a87aeabd",
+  "clauses": [
+    {
+      "clause": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
+      "verdict": "FAIL",
+      "note": "Current L1 routeCue remains1.6m ahead of heroine and steers next walkable leg. Over54 physical-input ticks its world position changes2.997m low/2.915m high while the depot destination ring moves0m. All six original-size frames inspected. L4 cellar fix alone did not close G08."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-08-L1-cue-before.json",
+      "sha256": "e0c61761a9c9d09cb1bc4628cdcc5f49ac8ffc80910aec6050e661caf785a887",
+      "what": "Both-quality physical movement, actual marker children/world coordinates, HUD/camera and six reviewed/hashed/deleted original frames."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-08-L1-cue-source.json",
+      "sha256": "b6323884dc28ec7936a42401dfc9a8ba259013beeea98eb491cfa5cd06f77943",
+      "what": "Exact source diagnosis of the separate moving nav-steering cone missed by the primary-marker observer."
+    }
+  ],
+  "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations."
+}

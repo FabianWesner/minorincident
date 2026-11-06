@@ -17,6 +17,9 @@ try {
   await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&debug=1&renderer=webgl&quality=${tier}&audio=muted&dpr=1`);
   await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
   await page.evaluate(async tier => { const a = window.__SS__; await a.ready; await a.loadLevel('L1', { seed: 1 }); a.settings.set({ quality: tier }); a.missions.begin(); a.pause(); window.__SCENE__.game.ui.show(null); }, tier);
+  await page.evaluate(() => window.__SS__.resume());
+  await page.waitForFunction(() => !window.__SCENE__.game.world.storyLock && window.__SCENE__.game.view.marker?.visible, null, { timeout: 120000 });
+  await page.evaluate(() => { window.__SS__.pause(); window.__SCENE__.game.ui.show(null); });
   const samples = [], captures = [];
   for (let i = 0; i < 3; i++) {
    if (i) {
