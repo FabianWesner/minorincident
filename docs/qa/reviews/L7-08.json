@@ -1,0 +1,56 @@
+{
+  "row": "L7-08",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "b0adebf70f139e87b17a4b4bb1069c91a4c31e0a",
+  "clauses": [
+    {
+      "clause": "Final corridor starts blocked by \u2265 120 / 60 regulars + \u2265 2 Alphas; the player opens a gap \u2265 1 survivor uses.",
+      "verdict": "PASS",
+      "note": "Current source43b485e8: seeded finalhorde totals60low/120high regulars at60HP plus2Alphas at300HP, alladmitted/not hidden/pending. Exact independent unchanged canonical native controls match final state. Counts refer to the final horde per E29\u00a75.3, including immediate approach: the source narrow core x[-84,-30],z[43,56] initially contains39/78regulars+1Alpha; remaining members stand immediately south/east, not all inside that rectangle. Remote tick0 photos show broad dense enemy rows across evacuation road/approach near bus/wrecks. Actual physical L7 runs use qualified progressed L5/L6 campaigns1/4humans, normal enemy/follower HP/AI/caps, courier protected only. Ordinary completion planner is detached before any tick and translated to physical WASD/E/Digit7/ShiftLMB; all6957/6198input ticks contiguous and nativeDriverfalse. Low uses3logged90tick physical sidestep recoveries around obstruction, no actor relocation. Both runs complete and actual original1/4humans enter a body-clear interior of an actual rocket blast disc INSIDE authored core, then cross westx-68 alive/not hidden/not infected. Low289: blast4711,inside6012,west6286; high32/389/30/31: blast4693,inside5064\u20135106,west5377\u20135503; nearest living finalbody clearance\u22655.618m high, none remain low. Same-tick actual rocket kill events identify original cohort victims inside blast; old/missing corpses are never inferred to be newly killed. All50final panels and52additional exploratory panels personally viewed, rawdigestsverified/deleted. Approach label is30m before entrance; close rocket photos crop much of gap; event/body ledger supplies actual use geometry. Remote and cinematic poses override requestedzoom, no independent zoom coverage claim there. Earlier probe counted already-dead bodies on a later blast and lost its final ledger at handover; preserved as exploratory. Remote initial camera delayed early aiming and killed sole low survivor in separate exploratory run; excluded from passage qualification, only its tick0 census image used. Final low retains normal opening camera. Canonical high native run has0crossings and is used only for census/control; physical high supplies4. Twenty-one semantic faults reject, exact original bytes restored. No game/criteria change."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
+      "sha256": "58df4e87b8f3caa930b4048c0204839eb12d69d188cedf21210583764eaa72da",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
+      "sha256": "72797fcf49ca91d850da23b02509f90bafa5360485e476d79cf77cd30348aa2e",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/low-review.json",
+      "sha256": "74073c3f18666751561283b40277e17db506d9916f74fc5d5f43e1b920b1ab94",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/high-review.json",
+      "sha256": "0c98a8c7ae4c18974e75567560fa9d5da4edceae143f6d480f64d8666a3ca14d",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/native-current.json.gz",
+      "sha256": "6c7ba9f865b2680c92a0617045c66f9a77717ff8d773ebbbb0ef1caa54d12a27",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/coverage-proof.json",
+      "sha256": "f0b016aa1f0573fcf65bcd2ded89feeecc52e9c8fa2d951be1ce568077891aa5",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low.json.gz",
+      "sha256": "51d06926ccd7999a42e234d79d5448eeaa6cbbe1d79a1c21ceb341877ad8bc19",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low-review.json",
+      "sha256": "dbc46dccd2fb4fc7d3cb50afafa332b1e21d870ad47d014e99ee18025e94cbf7",
+      "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+    }
+  ]
+}

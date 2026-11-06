@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T06:13:33.129Z",
+  "generatedAt": "2026-11-06T07:49:26.768Z",
   "policies": [
     {
       "tier": "low",
@@ -68,7 +68,21 @@
       "policy": "real-input-browser",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-corridor-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-low-rocket-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-corridor-browser.json"
     },
     {
       "tier": "high",
@@ -10949,13 +10963,2285 @@
     },
     {
       "id": "L7-08",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete initial live final-corridor cohort: {\"regulars\":[{\"id\":77,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-76.6,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":78,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-73.8,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":79,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-71,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":80,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{… (full values in JSON) (target at least60 live regulars and2Alphas admitted before first tick; PASS); low/complete observed native survivor crossing prior rocket footprint: [{\"tick\":5300,\"id\":56,\"hp\":100,\"position\":{\"x\":-68.02680976324115,\"z\":48.068505501244154,\"y\":0.7,\"yaw\":-3.2077280340246435},\"nearbyRocketBlasts\":[5118,5135],\"nearestLivingFinalActor\":null},{\"tick\":5311,\"id\":58,\"hp\":100,\"position\":{\"x\":-68.05415459184523,\"z\":48.18411819409998,\"y\":0.7,\"yaw\":-3.3633666993919995},\"nearbyRocketBlasts\":[5118,5135],\"nearestLivingFinalActor\":null},{\"tick\":5327,\"id\":66,\"hp… (full values in JSON) (target living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive; PASS); high/complete initial live final-corridor cohort: {\"regulars\":[{\"id\":77,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-76.6,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":78,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-73.8,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":79,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-71,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":80,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{… (full values in JSON) (target at least120 live regulars and2Alphas admitted before first tick; PASS); high/complete observed native survivor crossing prior rocket footprint: [] (target living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive; NOT CHECKED); low/physical-corridor initial admitted final horde census with canonical control: {\"census\":true,\"regulars\":60,\"alphas\":2,\"namedCoreRegulars\":39,\"namedCoreAlphas\":1,\"canonicalControl\":true} (target At least60/120full-health admitted regulars and2Alphas in initial finalgroup; physical and independent unchanged canonical controls. Exact O-review judges initial crowded corridor view.; PASS); low/physical-corridor physical rocket-cleared disc used by living carried human: {\"input\":true,\"rocketCohortKills\":62,\"qualifyingBlasts\":8,\"uses\":[{\"id\":289,\"blastTick\":4711,\"passageTick\":6012,\"crossingTick\":6286,\"nearestLivingFinal\":null}]} (target Inside authored corridor bounds, actual ShiftLMB rocket kills original finalgroup actor inside blast; same actual carried healthy human walks through body-clear interior of that blast disc then crosses west beyondx-68. Missing actors never assumed dead; every input is physical, no native driver ticks.; PASS); low/physical-corridor reviewed physical corridor strips: {\"valid\":true,\"seen\":true,\"reviewed\":true} (target Every capture digest/seen note checked; paired actual approach, confirmed rocket-kill and survivor-crossing strips. Remote census and cinematic camera override limitations explicit in exact O-review.; PASS); high/physical-corridor initial admitted final horde census with canonical control: {\"census\":true,\"regulars\":120,\"alphas\":2,\"namedCoreRegulars\":78,\"namedCoreAlphas\":1,\"canonicalControl\":true} (target At least60/120full-health admitted regulars and2Alphas in initial finalgroup; physical and independent unchanged canonical controls. Exact O-review judges initial crowded corridor view.; PASS); high/physical-corridor physical rocket-cleared disc used by living carried human: {\"input\":true,\"rocketCohortKills\":121,\"qualifyingBlasts\":11,\"uses\":[{\"id\":32,\"blastTick\":4693,\"passageTick\":5091,\"crossingTick\":5377,\"nearestLivingFinal\":5.7591157290480846},{\"id\":389,\"blastTick\":4693,\"passageTick\":5106,\"crossingTick\":5387,\"nearestLivingFinal\":9.43585840056586},{\"id\":30,\"blastTick\":4693,\"passageTick\":5076,\"crossingTick\":5433,\"nearestLivingFinal\":5.618033413508628},{\"id\":31,\"blastT… (full values in JSON) (target Inside authored corridor bounds, actual ShiftLMB rocket kills original finalgroup actor inside blast; same actual carried healthy human walks through body-clear interior of that blast disc then crosses west beyondx-68. Missing actors never assumed dead; every input is physical, no native driver ticks.; PASS); high/physical-corridor reviewed physical corridor strips: {\"valid\":true,\"seen\":true,\"reviewed\":true} (target Every capture digest/seen note checked; paired actual approach, confirmed rocket-kill and survivor-crossing strips. Remote census and cinematic camera override limitations explicit in exact O-review.; PASS) Manual review PASS (FRESH, Codex sweep-c5): Current source43b485e8: seeded finalhorde totals60low/120high regulars at60HP plus2Alphas at300HP, alladmitted/not hidden/pending. Exact independent unchanged canonical native controls match final state. Counts refer to the final horde per E29§5.3, including immediate approach: the source narrow core x[-84,-30],z[43,56] initially contains39/78regulars+1Alpha; remaining members stand immediately south/east, not all inside that rectangle. Remote tick0 photos show broad dense enemy rows across evacuation road/approach near bus/wrecks. Actual physical L7 runs use qualified progressed L5/L6 campaigns1/4humans, normal enemy/follower HP/AI/caps, courier protected only. Ordinary completion planner is detached before any tick and translated to physical WASD/E/Digit7/ShiftLMB; all6957/6198input ticks contiguous and nativeDriverfalse. Low uses3logged90tick physical sidestep recoveries around obstruction, no actor relocation. Both runs complete and actual original1/4humans enter a body-clear interior of an actual rocket blast disc INSIDE authored core, then cross westx-68 alive/not hidden/not infected. Low289: blast4711,inside6012,west6286; high32/389/30/31: blast4693,inside5064–5106,west5377–5503; nearest living finalbody clearance≥5.618m high, none remain low. Same-tick actual rocket kill events identify original cohort victims inside blast; old/missing corpses are never inferred to be newly killed. All50final panels and52additional exploratory panels personally viewed, rawdigestsverified/deleted. Approach label is30m before entrance; close rocket photos crop much of gap; event/body ledger supplies actual use geometry. Remote and cinematic poses override requestedzoom, no independent zoom coverage claim there. Earlier probe counted already-dead bodies on a later blast and lost its final ledger at handover; preserved as exploratory. Remote initial camera delayed early aiming and killed sole low survivor in separate exploratory run; excluded from passage qualification, only its tick0 census image used. Final low retains normal opening camera. Canonical high native run has0crossings and is used only for census/control; physical high supplies4. Twenty-one semantic faults reject, exact original bytes restored. No game/criteria change.",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix55-c/L7-corridor.json",
+        "docs/reports/sweep-c5/L7-08/native-current.json.gz",
+        "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
+        "docs/reports/sweep-c5/L7-08/low-review.json",
+        "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
+        "docs/reports/sweep-c5/L7-08/high-review.json",
+        "docs/reports/sweep-c5/L7-08/coverage-proof.json",
+        "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low.json.gz",
+        "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low-review.json"
+      ],
       "expected": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L7-08",
+          "clause": "initial live final-corridor cohort",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "regulars": [
+              {
+                "id": 77,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 78,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 79,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 80,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.2,
+                  "y": 0.9201999999999999,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 81,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.400000000000006,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 82,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 83,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 84,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 85,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 86,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -50.93806023374435,
+                  "y": 0.7,
+                  "z": 36.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 87,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 88,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 89,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 90,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 91,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 92,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 93,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 94,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 95,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 96,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 97,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 98,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 99,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 100,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 101,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.46066017177982,
+                  "y": 0.7,
+                  "z": 45.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 102,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -61.83463313526982,
+                  "y": 0.7,
+                  "z": 45.84775906502257,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 103,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -58.3,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 104,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 105,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 106,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 107,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.66066017177981,
+                  "y": 0.7,
+                  "z": 49.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 108,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 109,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 110,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 111,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 112,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 113,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 114,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 115,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 116,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 117,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.79134171618254,
+                  "y": 0.8099999999999999,
+                  "z": 52.46193976625565,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 118,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -74.72387953251129,
+                  "y": 0.8099999999999999,
+                  "z": 52.38268343236509,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 119,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.53806023374436,
+                  "y": 0.8099999999999999,
+                  "z": 52.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 120,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.04775906502257,
+                  "y": 0.8099999999999999,
+                  "z": 52.76536686473018,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 121,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.16536686473019,
+                  "y": 0.83,
+                  "z": 50.15224093497743,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 122,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 123,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.3,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 124,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 125,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 126,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 52.707106781186546,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 127,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 128,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 129,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 130,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 131,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 132,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 133,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 134,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -55.93933982822018,
+                  "y": 0.7,
+                  "z": 57.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 135,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 136,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ],
+            "alphas": [
+              {
+                "id": 75,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -64,
+                  "y": 0.83,
+                  "z": 50,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 76,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -43,
+                  "y": 0.83,
+                  "z": 41.7,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ]
+          },
+          "target": "at least60 live regulars and2Alphas admitted before first tick",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "observed native survivor crossing prior rocket footprint",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 5300,
+              "id": 56,
+              "hp": 100,
+              "position": {
+                "x": -68.02680976324115,
+                "z": 48.068505501244154,
+                "y": 0.7,
+                "yaw": -3.2077280340246435
+              },
+              "nearbyRocketBlasts": [
+                5118,
+                5135
+              ],
+              "nearestLivingFinalActor": null
+            },
+            {
+              "tick": 5311,
+              "id": 58,
+              "hp": 100,
+              "position": {
+                "x": -68.05415459184523,
+                "z": 48.18411819409998,
+                "y": 0.7,
+                "yaw": -3.3633666993919995
+              },
+              "nearbyRocketBlasts": [
+                5118,
+                5135
+              ],
+              "nearestLivingFinalActor": null
+            },
+            {
+              "tick": 5327,
+              "id": 66,
+              "hp": 100,
+              "position": {
+                "x": -68.0273721951673,
+                "z": 47.79965637993638,
+                "y": 0.7,
+                "yaw": 2.7465837907197606
+              },
+              "nearbyRocketBlasts": [
+                5135
+              ],
+              "nearestLivingFinalActor": null
+            }
+          ],
+          "target": "living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "initial live final-corridor cohort",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "regulars": [
+              {
+                "id": 77,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 78,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 79,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 80,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.2,
+                  "y": 0.9201999999999999,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 81,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.400000000000006,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 82,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 83,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 84,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 85,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 86,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -50.93806023374435,
+                  "y": 0.7,
+                  "z": 36.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 87,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 88,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 89,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 90,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.9201999999999999,
+                  "z": 39.31818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 91,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.9201999999999999,
+                  "z": 39.31818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 92,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 93,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 94,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 95,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 96,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 97,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 98,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 99,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 100,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -67.84644660940673,
+                  "y": 0.7,
+                  "z": 39.98991702695692,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 101,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.04644660940673,
+                  "y": 0.7,
+                  "z": 39.98991702695692,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 102,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 103,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 104,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 105,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 106,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 107,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 108,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 109,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 110,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 111,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 112,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 113,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 114,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 115,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 116,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 117,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 118,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 119,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 120,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 121,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.46066017177982,
+                  "y": 0.7,
+                  "z": 44.333387444507096,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 122,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.365366864730184,
+                  "y": 0.83,
+                  "z": 41.4249682077047,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 123,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -58.3,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 124,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 125,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 126,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 127,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 128,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 129,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 130,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 131,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.01731656763492,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 132,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.21731656763491,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 133,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.417316567634906,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 134,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 135,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 136,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 137,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.36536686473018,
+                  "y": 0.7,
+                  "z": 45.061331844068334,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 138,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 139,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 140,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 141,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 142,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 143,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 144,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 145,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 146,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 147,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.52387953251129,
+                  "y": 0.7,
+                  "z": 49.10995615963782,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 148,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 149,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 150,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 151,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 152,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 153,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 154,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 155,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 156,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 157,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -75.89289321881344,
+                  "y": 0.83,
+                  "z": 51.25256132664109,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 158,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 159,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 52.04545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 160,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.66193976625564,
+                  "y": 0.83,
+                  "z": 50.354112829272005,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 161,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.86193976625565,
+                  "y": 0.83,
+                  "z": 50.354112829272005,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 162,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 163,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 164,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 165,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 166,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 167,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.79134171618254,
+                  "y": 0.8099999999999999,
+                  "z": 52.825576129892006,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 168,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -74.72387953251129,
+                  "y": 0.8099999999999999,
+                  "z": 52.74631979600145,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 169,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.64644660940672,
+                  "y": 0.8099999999999999,
+                  "z": 52.717189754229636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 170,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.04775906502257,
+                  "y": 0.8099999999999999,
+                  "z": 53.12900322836654,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 171,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.15,
+                  "y": 0.83,
+                  "z": 50.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 172,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 173,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.3,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 174,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57.35355339059328,
+                  "y": 0.8099999999999999,
+                  "z": 52.01008297304308,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 175,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 176,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 53.070743144822906,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 177,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 178,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 179,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71.35355339059328,
+                  "y": 0.8099999999999999,
+                  "z": 54.53537157241146,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 180,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -67.62597485145237,
+                  "y": 0.8099999999999999,
+                  "z": 55.56763748058511,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 181,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -64.82597485145237,
+                  "y": 0.8099999999999999,
+                  "z": 55.56763748058511,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 182,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 183,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 184,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 185,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 186,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 54.888924963004726,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 187,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 188,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 189,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 190,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 191,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 192,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 193,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 194,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -55.93933982822018,
+                  "y": 0.7,
+                  "z": 57.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 195,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 196,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ],
+            "alphas": [
+              {
+                "id": 75,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -64,
+                  "y": 0.83,
+                  "z": 50,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 76,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -43,
+                  "y": 0.83,
+                  "z": 41.7,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ]
+          },
+          "target": "at least120 live regulars and2Alphas admitted before first tick",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "observed native survivor crossing prior rocket footprint",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "initial admitted final horde census with canonical control",
+          "tier": "low",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "census": true,
+            "regulars": 60,
+            "alphas": 2,
+            "namedCoreRegulars": 39,
+            "namedCoreAlphas": 1,
+            "canonicalControl": true
+          },
+          "target": "At least60/120full-health admitted regulars and2Alphas in initial finalgroup; physical and independent unchanged canonical controls. Exact O-review judges initial crowded corridor view.",
+          "receipt": "docs/reports/sweep-c5/L7-08/native-current.json.gz",
+          "level": "L7"
+        },
+        {
+          "id": "L7-08",
+          "clause": "physical rocket-cleared disc used by living carried human",
+          "tier": "low",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "input": true,
+            "rocketCohortKills": 62,
+            "qualifyingBlasts": 8,
+            "uses": [
+              {
+                "id": 289,
+                "blastTick": 4711,
+                "passageTick": 6012,
+                "crossingTick": 6286,
+                "nearestLivingFinal": null
+              }
+            ]
+          },
+          "target": "Inside authored corridor bounds, actual ShiftLMB rocket kills original finalgroup actor inside blast; same actual carried healthy human walks through body-clear interior of that blast disc then crosses west beyondx-68. Missing actors never assumed dead; every input is physical, no native driver ticks.",
+          "receipt": "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
+          "level": "L7"
+        },
+        {
+          "id": "L7-08",
+          "clause": "reviewed physical corridor strips",
+          "tier": "low",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "seen": true,
+            "reviewed": true
+          },
+          "target": "Every capture digest/seen note checked; paired actual approach, confirmed rocket-kill and survivor-crossing strips. Remote census and cinematic camera override limitations explicit in exact O-review.",
+          "receipt": "docs/reports/sweep-c5/L7-08/low-review.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-08",
+          "clause": "initial admitted final horde census with canonical control",
+          "tier": "high",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "census": true,
+            "regulars": 120,
+            "alphas": 2,
+            "namedCoreRegulars": 78,
+            "namedCoreAlphas": 1,
+            "canonicalControl": true
+          },
+          "target": "At least60/120full-health admitted regulars and2Alphas in initial finalgroup; physical and independent unchanged canonical controls. Exact O-review judges initial crowded corridor view.",
+          "receipt": "docs/reports/sweep-c5/L7-08/native-current.json.gz",
+          "level": "L7"
+        },
+        {
+          "id": "L7-08",
+          "clause": "physical rocket-cleared disc used by living carried human",
+          "tier": "high",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "input": true,
+            "rocketCohortKills": 121,
+            "qualifyingBlasts": 11,
+            "uses": [
+              {
+                "id": 32,
+                "blastTick": 4693,
+                "passageTick": 5091,
+                "crossingTick": 5377,
+                "nearestLivingFinal": 5.7591157290480846
+              },
+              {
+                "id": 389,
+                "blastTick": 4693,
+                "passageTick": 5106,
+                "crossingTick": 5387,
+                "nearestLivingFinal": 9.43585840056586
+              },
+              {
+                "id": 30,
+                "blastTick": 4693,
+                "passageTick": 5076,
+                "crossingTick": 5433,
+                "nearestLivingFinal": 5.618033413508628
+              },
+              {
+                "id": 31,
+                "blastTick": 4693,
+                "passageTick": 5064,
+                "crossingTick": 5503,
+                "nearestLivingFinal": 5.707530110450013
+              }
+            ]
+          },
+          "target": "Inside authored corridor bounds, actual ShiftLMB rocket kills original finalgroup actor inside blast; same actual carried healthy human walks through body-clear interior of that blast disc then crosses west beyondx-68. Missing actors never assumed dead; every input is physical, no native driver ticks.",
+          "receipt": "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
+          "level": "L7"
+        },
+        {
+          "id": "L7-08",
+          "clause": "reviewed physical corridor strips",
+          "tier": "high",
+          "policy": "physical-corridor",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "seen": true,
+            "reviewed": true
+          },
+          "target": "Every capture digest/seen note checked; paired actual approach, confirmed rocket-kill and survivor-crossing strips. Remote census and cinematic camera override limitations explicit in exact O-review.",
+          "receipt": "docs/reports/sweep-c5/L7-08/high-review.json",
+          "level": "L7"
+        }
+      ],
       "historical": {
         "id": "L7-08",
         "level": "L7",
@@ -10964,7 +13250,70 @@
         "evidence": [],
         "method": "NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it."
       },
-      "remaining": "NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
+        "clause": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses."
+      },
+      "reviewDecision": {
+        "row": "L7-08",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "b0adebf70f139e87b17a4b4bb1069c91a4c31e0a",
+        "clauses": [
+          {
+            "clause": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
+            "verdict": "PASS",
+            "note": "Current source43b485e8: seeded finalhorde totals60low/120high regulars at60HP plus2Alphas at300HP, alladmitted/not hidden/pending. Exact independent unchanged canonical native controls match final state. Counts refer to the final horde per E29§5.3, including immediate approach: the source narrow core x[-84,-30],z[43,56] initially contains39/78regulars+1Alpha; remaining members stand immediately south/east, not all inside that rectangle. Remote tick0 photos show broad dense enemy rows across evacuation road/approach near bus/wrecks. Actual physical L7 runs use qualified progressed L5/L6 campaigns1/4humans, normal enemy/follower HP/AI/caps, courier protected only. Ordinary completion planner is detached before any tick and translated to physical WASD/E/Digit7/ShiftLMB; all6957/6198input ticks contiguous and nativeDriverfalse. Low uses3logged90tick physical sidestep recoveries around obstruction, no actor relocation. Both runs complete and actual original1/4humans enter a body-clear interior of an actual rocket blast disc INSIDE authored core, then cross westx-68 alive/not hidden/not infected. Low289: blast4711,inside6012,west6286; high32/389/30/31: blast4693,inside5064–5106,west5377–5503; nearest living finalbody clearance≥5.618m high, none remain low. Same-tick actual rocket kill events identify original cohort victims inside blast; old/missing corpses are never inferred to be newly killed. All50final panels and52additional exploratory panels personally viewed, rawdigestsverified/deleted. Approach label is30m before entrance; close rocket photos crop much of gap; event/body ledger supplies actual use geometry. Remote and cinematic poses override requestedzoom, no independent zoom coverage claim there. Earlier probe counted already-dead bodies on a later blast and lost its final ledger at handover; preserved as exploratory. Remote initial camera delayed early aiming and killed sole low survivor in separate exploratory run; excluded from passage qualification, only its tick0 census image used. Final low retains normal opening camera. Canonical high native run has0crossings and is used only for census/control; physical high supplies4. Twenty-one semantic faults reject, exact original bytes restored. No game/criteria change."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
+            "sha256": "58df4e87b8f3caa930b4048c0204839eb12d69d188cedf21210583764eaa72da",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
+            "sha256": "72797fcf49ca91d850da23b02509f90bafa5360485e476d79cf77cd30348aa2e",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/low-review.json",
+            "sha256": "74073c3f18666751561283b40277e17db506d9916f74fc5d5f43e1b920b1ab94",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/high-review.json",
+            "sha256": "0c98a8c7ae4c18974e75567560fa9d5da4edceae143f6d480f64d8666a3ca14d",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/native-current.json.gz",
+            "sha256": "6c7ba9f865b2680c92a0617045c66f9a77717ff8d773ebbbb0ef1caa54d12a27",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/coverage-proof.json",
+            "sha256": "f0b016aa1f0573fcf65bcd2ded89feeecc52e9c8fa2d951be1ce568077891aa5",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low.json.gz",
+            "sha256": "51d06926ccd7999a42e234d79d5448eeaa6cbbe1d79a1c21ceb341877ad8bc19",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low-review.json",
+            "sha256": "dbc46dccd2fb4fc7d3cb50afafa332b1e21d870ad47d014e99ee18025e94cbf7",
+            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
+      }
     },
     {
       "id": "L7-09",

@@ -1,0 +1,26 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "note": "QA-only checkpoint, not final gate. Initial concurrent unit run had3x30s timeouts; subsequent isolated rerun passed107/107 in27files,35s total. L9 acceptance reports0freshfailures/0incomplete, processstill1 due unrelated global rows. tsc/lint pass.",
+  "artifacts": [
+    {
+      "file": "docs/reports/sweep-c5/checkpoint-after-l9/L9-accept.log",
+      "sha256": "dab30d378b016f5afb8e12fd75f82b3f1b265c48f07d956da0d2e59cb37d395b"
+    },
+    {
+      "file": "docs/reports/sweep-c5/checkpoint-after-l9/lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "file": "docs/reports/sweep-c5/checkpoint-after-l9/tsc.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/reports/sweep-c5/checkpoint-after-l9/unit-alone.log",
+      "sha256": "f487bfe1811865854a03e2a42a197bdf5628ca8dd64eb43be92bf456a4bcf6aa"
+    },
+    {
+      "file": "docs/reports/sweep-c5/checkpoint-after-l9/unit-concurrent.log",
+      "sha256": "6397cb97f4fc6225f31ede6593fb758e5c87c527fa24c9c5ae17e27eb50e080b"
+    }
+  ]
+}

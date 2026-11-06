@@ -53,6 +53,8 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 
 | L9-06 | current PASS; six complete physical detours plus three real offroad stall/press/reverse cases/tier,8.05–8.52mbackward escape,24reviewedpanels/15faults |
 
+| L7-08 | current PASS;60/120regular+2Alpha whole-horde census, actual core rocket gap used by1/4carried humans,50final panels/21faults; core-vs-approach placement explicit |
+
 ## Still open rows
 
 These are the `qa:accept` currentStatus values. The separate status field preserves historical failures until fresh exact-criterion review; it must not be mistaken for a new measured failure.
@@ -61,7 +63,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 |---|---|---|
 | L7-01 | NOT CHECKED | Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured. |
 | L7-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep. |
-| L7-08 | NOT CHECKED | NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it. |
 | L7-09 | FAIL | Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks. |
 | L7-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge. |
 | L7-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1. |
@@ -75,7 +76,7 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 
 ## Evidence and gates
 
-Current QA-only checkpoint: `npx tsc --noEmit`, `npm run lint`, and `npm test -- --maxWorkers=4` pass (107 tests,27 files). This is not the final gate run; scoped final acceptance and `qa:threat` remain required.
+Current QA-only checkpoint (isolated post-L9 rerun107/107; concurrent run had3timeouts, both logs retained in checkpoint-after-l9): `npx tsc --noEmit`, `npm run lint`, and `npm test -- --maxWorkers=4` pass (107 tests,27 files). This is not the final gate run; scoped final acceptance and `qa:threat` remain required.
 
 Row-specific commits:
 
@@ -92,4 +93,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 12. Current PASS rows listed above: 35. No game code was changed. Perf work was not performed.
+Open current rows: 11. Current PASS rows listed above: 36. No game code was changed. Perf work was not performed.
