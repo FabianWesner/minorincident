@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:24:55.189Z",
+  "generatedAt": "2026-11-06T04:32:38.448Z",
   "policies": [
     {
       "tier": "low",
@@ -6251,20 +6251,498 @@
     },
     {
       "id": "L10-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c4): Both full ordinary native routes preserve canonical final states and collect all four weapons at named anchors, with same-tick checkpoint arsenals. At each naturally reached pre-pickup state, four-second inventory-only comparisons(named/all weapons versus unchanged) produce zero births and identical infected censuses. Eight current physical WASD approach slices then independently collect handgun/shotgun/MG/rocket within authored radius with no E input; snapshot tick equals actual collection tick51/52 and stores new weapon/checkpoint. Zero spawn calls on each collection tick. Rocket approaches admit one dog at tick50 before pickup51/52, retained as normal positional admission rather than an inventory trigger. All16 before/after captures personally inspected,hashed and deleted: ring3m ahead before, new held weapon and advanced objective after; Security booth,medkits,Corgi and canister readable. Not measured by this batch run.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete all four named checkpoint pickup and snapshot transactions: [{\"weapon\":\"weapon.pistol\",\"tick\":3497,\"x\":765.1019897460938,\"z\":24.9973201751709,\"interact\":true,\"checkpoint\":\"cure-residential\",\"snapshotTick\":3497,\"snapshotWeapons\":[\"weapon.fire-axe\",\"weapon.pistol\"],\"expectedDistance\":1.8980121457446952,\"expectedRadius\":2},{\"weapon\":\"weapon.shotgun\",\"tick\":11461,\"x\":1256.1455078125,\"z\":25.00066375732422,\"interact\":true,\"checkpoint\":\"cure-industrial\",\"snapshot… (full values in JSON) (target exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon; PASS); low/complete inventory changes alone spawn zero enemies at every weapon approach: [{\"weapon\":\"weapon.pistol\",\"snapshotTick\":3483,\"snapshotSha256\":\"3d4ff0bd112359908d194a544e630a8e9e6dbd00c5826b2832655e8636785959\",\"cases\":[{\"add\":[],\"before\":6,\"births\":[],\"censusSha256\":\"bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d\",\"checkpoint\":\"cure-crash\"},{\"add\":[\"weapon.pistol\"],\"before\":6,\"births\":[],\"censusSha256\":\"bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d… (full values in JSON) (target four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s; PASS); high/complete all four named checkpoint pickup and snapshot transactions: [{\"weapon\":\"weapon.pistol\",\"tick\":3497,\"x\":765.1019897460938,\"z\":24.9973201751709,\"interact\":true,\"checkpoint\":\"cure-residential\",\"snapshotTick\":3497,\"snapshotWeapons\":[\"weapon.fire-axe\",\"weapon.pistol\"],\"expectedDistance\":1.8980121457446952,\"expectedRadius\":2},{\"weapon\":\"weapon.shotgun\",\"tick\":11461,\"x\":1255.7462158203125,\"z\":25.001005172729492,\"interact\":true,\"checkpoint\":\"cure-industrial\",\"snap… (full values in JSON) (target exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon; PASS); high/complete inventory changes alone spawn zero enemies at every weapon approach: [{\"weapon\":\"weapon.pistol\",\"snapshotTick\":3483,\"snapshotSha256\":\"6de815b356dd857cfc8029981d9e7b272cf0217e517a40e4ae40242a57c5c8e1\",\"cases\":[{\"add\":[],\"before\":7,\"births\":[],\"censusSha256\":\"66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2\",\"checkpoint\":\"cure-crash\"},{\"add\":[\"weapon.pistol\"],\"before\":7,\"births\":[],\"censusSha256\":\"66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c869… (full values in JSON) (target four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s; PASS) Manual review PASS (FRESH, Codex sweep-c5): Both current full native routes preserve canonical control hashes and collect the four expected weapons at named anchors; checkpoint snapshots include each new weapon on the exact collection tick.24 four-second inventory-only comparisons(named/all weapons versus unchanged baseline at each approach and tier) have zero births and identical every-tick infected censuses. Eight physical WASD approach slices from those production Resume snapshots collect the intended weapon without E input; snapshot ticks51/52 equal the actual collection tick, with zero spawn calls. All16 before/after captures personally inspected: named ring3m ahead before, equipped weapon and next objective after, with Security booth/medkits/corgi and corridor canister visible. No page errors. Focused regional capability, not a continuous physical finale; no actor/objective/arsenal writes in physical slices.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-r10c/L10-pickups-proof.json",
-        "docs/reports/sweep-c4/L10-05-review.json",
-        "docs/reports/sweep-c4/L10-05-summary.json",
-        "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
-        "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
-        "tools/qa/accept/sweep-c4-l10-pickups.mjs"
+        "docs/reports/sweep-c5/L10-05/native-pickups.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-residential-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-industrial-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-military-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/low-review.json",
+        "docs/reports/sweep-c5/L10-05/low-physical.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-residential-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-industrial-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-military-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+        "docs/reports/sweep-c5/L10-05/high-review.json",
+        "docs/reports/sweep-c5/L10-05/high-physical.json.gz",
+        "docs/reports/sweep-c5/L10-05/summary.json"
       ],
       "expected": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-05",
+          "clause": "all four named checkpoint pickup and snapshot transactions",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "tick": 3497,
+              "x": 765.1019897460938,
+              "z": 24.9973201751709,
+              "interact": true,
+              "checkpoint": "cure-residential",
+              "snapshotTick": 3497,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol"
+              ],
+              "expectedDistance": 1.8980121457446952,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "tick": 11461,
+              "x": 1256.1455078125,
+              "z": 25.00066375732422,
+              "interact": true,
+              "checkpoint": "cure-industrial",
+              "snapshotTick": 11461,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun"
+              ],
+              "expectedDistance": 0.8544924452985647,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "tick": 21369,
+              "x": 1855.1417236328125,
+              "z": 25.002906799316406,
+              "interact": true,
+              "checkpoint": "cure-military",
+              "snapshotTick": 21369,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ],
+              "expectedDistance": 1.8582786406591019,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "tick": 39247,
+              "x": 2935.140625,
+              "z": -4.997618198394775,
+              "interact": true,
+              "checkpoint": "cure-corridor",
+              "snapshotTick": 39247,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "expectedDistance": 1.8593765255063015,
+              "expectedRadius": 2
+            }
+          ],
+          "target": "exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "inventory changes alone spawn zero enemies at every weapon approach",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "snapshotTick": 3483,
+              "snapshotSha256": "3d4ff0bd112359908d194a544e630a8e9e6dbd00c5826b2832655e8636785959",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol"
+                  ],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "snapshotTick": 11432,
+              "snapshotSha256": "293e71ecb9a61538f5d8ed678785b77c3a53c6fea7fb29b65a77b007110403fd",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.shotgun"
+                  ],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "snapshotTick": 21354,
+              "snapshotSha256": "6e52bd646912af1833d05e30097eaabd9589cfae6446d9cca1d30ec4162a6a5f",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.army-mg"
+                  ],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "snapshotTick": 39232,
+              "snapshotSha256": "c461fa918bc817714244ad21c3297c9121ffd47afe207035c9acac1eaeb423ff",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                }
+              ],
+              "identical": true
+            }
+          ],
+          "target": "four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "all four named checkpoint pickup and snapshot transactions",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "tick": 3497,
+              "x": 765.1019897460938,
+              "z": 24.9973201751709,
+              "interact": true,
+              "checkpoint": "cure-residential",
+              "snapshotTick": 3497,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol"
+              ],
+              "expectedDistance": 1.8980121457446952,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "tick": 11461,
+              "x": 1255.7462158203125,
+              "z": 25.001005172729492,
+              "interact": true,
+              "checkpoint": "cure-industrial",
+              "snapshotTick": 11461,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun"
+              ],
+              "expectedDistance": 1.2537845826165168,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "tick": 21450,
+              "x": 1855.1417236328125,
+              "z": 25.002906799316406,
+              "interact": true,
+              "checkpoint": "cure-military",
+              "snapshotTick": 21450,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ],
+              "expectedDistance": 1.8582786406591019,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "tick": 39367,
+              "x": 2935.12109375,
+              "z": -4.9975690841674805,
+              "interact": true,
+              "checkpoint": "cure-corridor",
+              "snapshotTick": 39367,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "expectedDistance": 1.8789078225503368,
+              "expectedRadius": 2
+            }
+          ],
+          "target": "exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "inventory changes alone spawn zero enemies at every weapon approach",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "snapshotTick": 3483,
+              "snapshotSha256": "6de815b356dd857cfc8029981d9e7b272cf0217e517a40e4ae40242a57c5c8e1",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "snapshotTick": 11438,
+              "snapshotSha256": "3e0de086cf4ae22bdf9d4cd4263edf6f7f0193f88f31ab699758161898cdebfe",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.shotgun"
+                  ],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "snapshotTick": 21435,
+              "snapshotSha256": "adac5a361d23e0e805cc1cc4780ffee836fa051a3824d6e973250c30bfed29d2",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.army-mg"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "snapshotTick": 39353,
+              "snapshotSha256": "2d07aab77f4156fb78876be037dfcc9a2a47ecfd5d545a2d98fa26c79383a1aa",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                }
+              ],
+              "identical": true
+            }
+          ],
+          "target": "four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        }
+      ],
       "historical": {
         "id": "L10-05",
         "level": "L10",
@@ -6273,7 +6751,7 @@
         "evidence": [],
         "method": "NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route."
       },
-      "remaining": "NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
@@ -6282,50 +6760,89 @@
       "reviewDecision": {
         "row": "L10-05",
         "status": "PASS",
-        "reviewer": "Codex sweep-c4",
+        "reviewer": "Codex sweep-c5",
         "date": "2026-11-06",
-        "commit": "9d6c6d5be84d8755c4f2a58352c9fff7548e8b45",
+        "commit": "ad4a41f860c93cb63fef6b06b5eab3acc2725b49",
         "clauses": [
           {
             "clause": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
             "verdict": "PASS",
-            "note": "Both full ordinary native routes preserve canonical final states and collect all four weapons at named anchors, with same-tick checkpoint arsenals. At each naturally reached pre-pickup state, four-second inventory-only comparisons(named/all weapons versus unchanged) produce zero births and identical infected censuses. Eight current physical WASD approach slices then independently collect handgun/shotgun/MG/rocket within authored radius with no E input; snapshot tick equals actual collection tick51/52 and stores new weapon/checkpoint. Zero spawn calls on each collection tick. Rocket approaches admit one dog at tick50 before pickup51/52, retained as normal positional admission rather than an inventory trigger. All16 before/after captures personally inspected,hashed and deleted: ring3m ahead before, new held weapon and advanced objective after; Security booth,medkits,Corgi and canister readable."
+            "note": "Both current full native routes preserve canonical control hashes and collect the four expected weapons at named anchors; checkpoint snapshots include each new weapon on the exact collection tick.24 four-second inventory-only comparisons(named/all weapons versus unchanged baseline at each approach and tier) have zero births and identical every-tick infected censuses. Eight physical WASD approach slices from those production Resume snapshots collect the intended weapon without E input; snapshot ticks51/52 equal the actual collection tick, with zero spawn calls. All16 before/after captures personally inspected: named ring3m ahead before, equipped weapon and next objective after, with Security booth/medkits/corgi and corridor canister visible. No page errors. Focused regional capability, not a continuous physical finale; no actor/objective/arsenal writes in physical slices."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix51-r10c/L10-pickups-proof.json",
-            "sha256": "4faa464da6a7a6071e9033b9584d81c98edba3182e5644812419471b3e072ca2",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/native-pickups.json.gz",
+            "sha256": "a53d531cced335c873255cfad091e4d77aee76289d652c164fb0f929e58892dd",
+            "what": "Full competent native routes and24 inventory-only controlled comparisons from actual pre-pickup snapshots; unchanged final states and every-tick infected censuses."
           },
           {
-            "file": "docs/reports/sweep-c4/L10-05-review.json",
-            "sha256": "a72b741d91dd3949a10d51bcb938f52a77f9aa684d2d34acddf7a587ca8093b1",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-residential-save.json.gz",
+            "sha256": "e744f58cf05e460bd8e5d50c5e136e4734cdd21ed7622c80e207d51a8686255d",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
           },
           {
-            "file": "docs/reports/sweep-c4/L10-05-summary.json",
-            "sha256": "1d75baf5fd0170b986c7accf04e680a66f49e661517e7ce1fcb63abf56c5ac88",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-industrial-save.json.gz",
+            "sha256": "46c251ae24cc7b06c02a4caaf1c5282a83cb84f0364f5e8405e4529df27e228a",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
           },
           {
-            "file": "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
-            "sha256": "0f6dc8f04e2093e02523a8ea981d457a100fbdb05bf5563723d06a4516a9b7d5",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-military-save.json.gz",
+            "sha256": "3ac0d532f3c5c3cf87fcab263a5bdec7e6e60bc034362e4a21827f8234e0699e",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
           },
           {
-            "file": "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
-            "sha256": "96983e55c2823908f64593de83c49c2a87849f5dbc7789fda9b42dfc6c8b3e50",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+            "sha256": "a203c6b62a8f8bb2bd3962e76450eec8b17a636bc912ea7bc0d5afff9c978d64",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
           },
           {
-            "file": "tools/qa/accept/sweep-c4-l10-pickups.mjs",
-            "sha256": "19aef51aa006232cecd65c3279ecb9c2d8dfb1bdcdc483b1850ca9b2025dbb22",
-            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+            "file": "docs/reports/sweep-c5/L10-05/low-review.json",
+            "sha256": "f613d8d5811187a9855f43bf2a28626a3dc7403620478c8f02aaac052b7f66eb",
+            "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/low-physical.json.gz",
+            "sha256": "d4b6635185bd3babf5094d104b7071acef332fd12a6f858e6f395bf4c5fce9e1",
+            "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-residential-save.json.gz",
+            "sha256": "aa89db86b55e353fe5291c2204518c2126ea7bc9153b1cd78a9d9583d72c4d44",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-industrial-save.json.gz",
+            "sha256": "b9d8e13ce40095bdc7ca7e2751f830ed16f1edde06d17e9d9d865d6b876888bd",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-military-save.json.gz",
+            "sha256": "03d7ec195dcce8b8f1c862025317ae113d8824175ff7f2579c73f22c42ec0f2f",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+            "sha256": "eca0abb02bf33e3d422d25a60eda4e4fa7f7d7a427545b6545b0048114a1363b",
+            "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/high-review.json",
+            "sha256": "c684256c7bbcf136bca036f61a5daec5251a92c77797ce4e0ac9386496c19c1e",
+            "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/high-physical.json.gz",
+            "sha256": "93b1d4c18702fdc336d282c85f4d6471ef9b37df0e8af20b4a082256a380ef8c",
+            "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L10-05/summary.json",
+            "sha256": "19dc059db87962afdbf61f3984c9578cd9f67903e0bf98500f0d6f6b013dfe4a",
+            "what": "Eight collected weapons at named checkpoints, same-tick snapshots, no interaction input, zero spawn calls and actual runtime metadata."
           }
         ],
-        "notes": "Focused regional approach capability from native-generated snapshots, not a continuous physical finale. Save validation rejected initial mismatched export; exporter now copies exact snapshot arsenal and retains the validation guard. Added exact-criterion review requirement so native-only measurements cannot silently replace the tracker physical NEXT. No game/criteria/count/timer/cap changes.",
-        "freshness": "STALE",
+        "freshness": "FRESH",
         "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
