@@ -1,5 +1,7 @@
 # fix68-g — global gameplay corrections
 
+> Follow-up: [fix68-g2](../fix68-g2/README.md) integrates main0991b9d and fixes the L5 interaction; its final threat gate passes with0flags. The report below preserves the original time-boxed history and scoped evidence.
+
 **PARTIAL / NO-GO.** The requested counterexamples have scoped corrections and receipts, but the required standalone threat gate fails with12 L7 pace flags on the current continuation source (14 before the two admission fixes). Full global-row closure and release acceptance are not achieved.
 
 Base: `be6af29`, branch `lane/fix68-g`. No push or deployment. Scheduled counts, population caps, maximum run speeds, announcement timers and acceptance thresholds are unchanged. No performance work or protected reference/spec edits.

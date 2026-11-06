@@ -1,0 +1,242 @@
+{
+  "codeCommit": "28dad2b8ef41ad86b172db6444bc077ffc3f0470",
+  "sourceHash": "ac3c744520ec8043bfb75ce0e832f6e07024aa2ac05ed9aba5ae161cfad018f4",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "startedAt": "2026-11-06T08:49:53.365832+00:00",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g2/logs/tsc-frozen.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "command": "npm run lint",
+      "startedAt": "2026-11-06T08:50:06.601005+00:00",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g2/logs/lint-frozen.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692"
+    },
+    {
+      "command": "npm test",
+      "startedAt": "2026-11-06T08:50:16.562098+00:00",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g2/logs/test-frozen.log.gz",
+      "sha256": "e24ee7ef8c7c549111282954e1288c60be61d97359ee4c62fc4ccf0314bbe34f"
+    },
+    {
+      "command": "npm run qa:accept -- --level L5 --skip-browser",
+      "exitCode": 1,
+      "scope": "both tiers and both policies;12checkpoint clauses;20fixture checks;0fixture/checkpoint errors; onlyL5-08freshFAIL",
+      "log": "docs/reports/fix68-g2/logs/accept-L5-final.log.gz"
+    },
+    {
+      "command": "read-only verbatim incoming fix70-s followerPaceVerdict on six native receipts",
+      "exitCode": 0,
+      "scope": "Both aggregate votes PASS at both tiers. Individual highseed3 Dale FAIL retained. Not an adopted checker or incoming whole-game gate."
+    },
+    {
+      "command": "npm run qa:threat",
+      "exitCode": 0,
+      "levels": 10,
+      "flags": 0,
+      "seconds": 505.54216875000003,
+      "manifest": "docs/reports/fix68-g2/threat/manifest.json",
+      "scope": "Only check owned by this lane; one-minute load5.8457 at start. Peer QA processes were present and explicitly recorded, so no whole-host isolation claim."
+    }
+  ],
+  "threat": {
+    "command": "npm run qa:threat",
+    "exitCode": 0,
+    "revision": "28dad2b8ef41ad86b172db6444bc077ffc3f0470",
+    "sourceHash": "ac3c744520ec8043bfb75ce0e832f6e07024aa2ac05ed9aba5ae161cfad018f4",
+    "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+    "seconds": 505.54216875000003,
+    "levels": 10,
+    "flags": [],
+    "startedAt": "2026-11-06T09:13:32.919121+00:00",
+    "startLoad": [
+      5.845703125,
+      6.03515625,
+      5.798828125
+    ],
+    "otherOwnedChecks": [],
+    "peerQAJobsAtStart": [
+      {
+        "pid": 9753,
+        "elapsed": "04:06",
+        "cpu": "0.0",
+        "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6",
+        "threat": true
+      },
+      {
+        "pid": 9927,
+        "elapsed": "04:05",
+        "cpu": "93.3",
+        "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6",
+        "threat": true
+      },
+      {
+        "pid": 16378,
+        "elapsed": "01:18",
+        "cpu": "75.6",
+        "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix70-s",
+        "threat": false
+      }
+    ],
+    "standaloneScope": "Only check owned by this lane; peer jobs are recorded, not claimed absent.",
+    "files": [
+      {
+        "file": "docs/reports/fix68-g2/threat/L1.json.gz",
+        "sha256": "9f92ae44bad5db4de32a3e152ca57e1a2409f7cfeb1fe6d59f79662d707c4270",
+        "rawSha256": "7d6cff158dab230d58a0f4ef64767bc3858984b5ddc12c91361d0109db33437d",
+        "original": "test-results/qa-threat/L1.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L10.json.gz",
+        "sha256": "a60a4a54d6add72b5b3873f4c436cec3d2a679f5d7e6b113a1ae3d7d481d5e1b",
+        "rawSha256": "2d1a5377c281194ef0da7204c24ef9cdb0ada4227d56d0fbe7fbbe591fa7e0f8",
+        "original": "test-results/qa-threat/L10.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L2.json.gz",
+        "sha256": "5f0b374d6d20f26635ac33ff77884f1af6e57f4839316fd74563a3f492d83971",
+        "rawSha256": "0ffb5913e429590c07def995128d69d233eb445740e04116c7f563c0cecc3c3e",
+        "original": "test-results/qa-threat/L2.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L3.json.gz",
+        "sha256": "32f5feb52a313e6147510150f4b5a3f13fa292572c797013af1c4ed902ceafd5",
+        "rawSha256": "8634b3caf14659fff7a61bb095a607f434148d8f31facbcca9b0474c281e727a",
+        "original": "test-results/qa-threat/L3.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L4.json.gz",
+        "sha256": "8fc77bcbe0d8b7b9832c2e7d9d224f5103438db250feaf9a180842573ffe2e8c",
+        "rawSha256": "ab7281727273e47e14b8996aad69102c897b7990d4ac182fbee6c72a0526868d",
+        "original": "test-results/qa-threat/L4.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L5.json.gz",
+        "sha256": "c8fe1215e48c693b6cb31445435ebce80f0f1364906b535c17d1b267ccb0dffe",
+        "rawSha256": "7d9daf5e8378ce6c520dacf902d50c153dd5c10cf59826955219130187023ab9",
+        "original": "test-results/qa-threat/L5.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L6.json.gz",
+        "sha256": "5bae91b27e38896e068b77232a160b80dca42a6b7bd844a551802e13721c82fd",
+        "rawSha256": "8eebf63fd23e48095941194b2f22f81690dce7d698a6c387146412381d2e4c8c",
+        "original": "test-results/qa-threat/L6.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L7.json.gz",
+        "sha256": "c0979523a561feb15e2ff3a239212389ae9e68783538be9e62c7c8a980282043",
+        "rawSha256": "7a30e63584c89278be66b95e04b9a1955d6838dbcdcde4bb785768935093d2d1",
+        "original": "test-results/qa-threat/L7.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L8.json.gz",
+        "sha256": "47ade34dda04d6f9454286ee991d690db4fb3eb8e4fa3a9e2ac5f148f36ae870",
+        "rawSha256": "1cc45bc7cf4ec54c70a12a076e3c9fed4fda274c54f371f880461feb20c87b83",
+        "original": "test-results/qa-threat/L8.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/L9.json.gz",
+        "sha256": "8bb3db28d29cda102301fc3df2930b725131822b0e0e4441295ec2bee3a0cb61",
+        "rawSha256": "71b8341cc0b625b81e87d930ec45d51346c22e11a32f2b96a7e5c8471d7d2134",
+        "original": "test-results/qa-threat/L9.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/README.md.gz",
+        "sha256": "95ff9a9a3edf82cea0b877e81fc0938c139fd2250e49e7e0dace371d7c8427fe",
+        "rawSha256": "9c8f6e6719c404f821442b8044c72b26b67c4c466e398ae1e3f89b4ee6b28e73",
+        "original": "test-results/qa-threat/README.md"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/audit.json.gz",
+        "sha256": "dd012f9e5946a78f7f914531ed0f6b5770a6868914926c5339cc637b97730fd7",
+        "rawSha256": "b22ca7c42c4a700ebfdadb64647d5c5587069f1d14fcf987fcbaada0b9fbbce7",
+        "original": "test-results/qa-threat/audit.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/threat-start.json.gz",
+        "sha256": "89fa8b8d812be279b750ec247f1ec1f4181bfce60787d0980d7af7fdefbcac5e",
+        "rawSha256": "e91763f902e0603e5d3a6200e8885436fd5915567e7145d4bdc859239cc17f46",
+        "original": "test-results/fix68-g2/threat-start.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/threat-exit.json.gz",
+        "sha256": "2e60f0f619c90f02a99250955fe0795aae9e73f54ba2468239b721302f2d2797",
+        "rawSha256": "05f4173cdb417f36f269c95ce1196fb301a8a67cc307a0494c859f190e6c01e9",
+        "original": "test-results/fix68-g2/threat-exit.json"
+      },
+      {
+        "file": "docs/reports/fix68-g2/threat/threat-final.log.gz",
+        "sha256": "704dc84ada5a87a703b29986d6e182a61ad8848c77679950f1b2b062f9bee1ed",
+        "rawSha256": "2491a1dd71e4897d3524cb50b37c49f85f3fe25f472ade3451471ce330f9cd28",
+        "original": "test-results/fix68-g2/threat-final.log"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "file": "docs/reports/fix68-g2/logs/baseline.log.gz",
+      "sha256": "0f3fefafc69d16d7e175686ebc33860216a8dc0a5fa0f2b3486a260daaa31ece",
+      "rawSha256": "e7d112503020f480056f02e928151237a6cda986e6a8dfd1c754e8afa6b2a428",
+      "commandLog": "baseline.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/merged-skilled-trace.log.gz",
+      "sha256": "ae6e566dee0d4e2431d4052fa1aa5b659df39376600c3b6e69895a83f76d5dcb",
+      "rawSha256": "591410e96a634cb5aa3ee0c6573d0efe3f6f2180273aa7e7c45ff7c75a599ae3",
+      "commandLog": "merged-skilled-trace.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/shared22-extra-seeds.log.gz",
+      "sha256": "e04392d9d27ffef09f846989cd6ace1ff078a8c0004f76a1cddd16a9dc55cc3c",
+      "rawSha256": "434e385b2c3d6cb778afa9251057f10ec2ae344d83ef5991934d5b83955f78cc",
+      "commandLog": "shared22-extra-seeds.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/global-slot-extra-seeds.log.gz",
+      "sha256": "d8d6b9381b6482281f78084e2ecd9462a0532b718cf2f7ec5d70ed99abd3318b",
+      "rawSha256": "5585fe9610de18da7754fb74a3c80a34c80ae3be5b2d7749fc9138c743edbd96",
+      "commandLog": "global-slot-extra-seeds.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/incoming-vote.log.gz",
+      "sha256": "4601ec2c5766494869993c3613e26d31f35795f12340c3f1dbe441d4a8960d25",
+      "rawSha256": "f0bbd404d799cc7f0e03cf87526dfb38f4346d56adbc7fe792e5e0a229dfcd36",
+      "commandLog": "incoming-vote.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/accept-L5.log.gz",
+      "sha256": "e513a2459c954333a6787c4290d97349889764ebf9bc5d029bb6eea1e5dddfe6",
+      "rawSha256": "9c8ed45d85b96e0750a0de1f9d6026a93a68c5658b6e6e7539092ced831d83f2",
+      "commandLog": "accept-L5.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/accept-L5-final.log.gz",
+      "sha256": "7c3f9dbc3b0d6fc0a0e62a16c324a54b9f26c6d3e1467ce6548a6aefb4fca383",
+      "rawSha256": "2e4d96db7c480904f7df22cff548b13c4218947f7b7826ab3b15a66c55c0f2b2",
+      "commandLog": "accept-L5-final.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/tsc-frozen.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "commandLog": "tsc-frozen.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/lint-frozen.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692",
+      "rawSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "commandLog": "lint-frozen.log"
+    },
+    {
+      "file": "docs/reports/fix68-g2/logs/test-frozen.log.gz",
+      "sha256": "e24ee7ef8c7c549111282954e1288c60be61d97359ee4c62fc4ccf0314bbe34f",
+      "rawSha256": "a614eb0de8d4e128bdfc84ae088365d50db713fe14d270c255bb257ae20e5e2e",
+      "commandLog": "test-frozen.log"
+    }
+  ]
+}

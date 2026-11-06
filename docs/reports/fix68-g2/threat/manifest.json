@@ -1,0 +1,133 @@
+{
+  "command": "npm run qa:threat",
+  "exitCode": 0,
+  "revision": "28dad2b8ef41ad86b172db6444bc077ffc3f0470",
+  "sourceHash": "ac3c744520ec8043bfb75ce0e832f6e07024aa2ac05ed9aba5ae161cfad018f4",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "seconds": 505.54216875000003,
+  "levels": 10,
+  "flags": [],
+  "startedAt": "2026-11-06T09:13:32.919121+00:00",
+  "startLoad": [
+    5.845703125,
+    6.03515625,
+    5.798828125
+  ],
+  "otherOwnedChecks": [],
+  "peerQAJobsAtStart": [
+    {
+      "pid": 9753,
+      "elapsed": "04:06",
+      "cpu": "0.0",
+      "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6",
+      "threat": true
+    },
+    {
+      "pid": 9927,
+      "elapsed": "04:05",
+      "cpu": "93.3",
+      "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6",
+      "threat": true
+    },
+    {
+      "pid": 16378,
+      "elapsed": "01:18",
+      "cpu": "75.6",
+      "cwd": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix70-s",
+      "threat": false
+    }
+  ],
+  "standaloneScope": "Only check owned by this lane; peer jobs are recorded, not claimed absent.",
+  "files": [
+    {
+      "file": "docs/reports/fix68-g2/threat/L1.json.gz",
+      "sha256": "9f92ae44bad5db4de32a3e152ca57e1a2409f7cfeb1fe6d59f79662d707c4270",
+      "rawSha256": "7d6cff158dab230d58a0f4ef64767bc3858984b5ddc12c91361d0109db33437d",
+      "original": "test-results/qa-threat/L1.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L10.json.gz",
+      "sha256": "a60a4a54d6add72b5b3873f4c436cec3d2a679f5d7e6b113a1ae3d7d481d5e1b",
+      "rawSha256": "2d1a5377c281194ef0da7204c24ef9cdb0ada4227d56d0fbe7fbbe591fa7e0f8",
+      "original": "test-results/qa-threat/L10.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L2.json.gz",
+      "sha256": "5f0b374d6d20f26635ac33ff77884f1af6e57f4839316fd74563a3f492d83971",
+      "rawSha256": "0ffb5913e429590c07def995128d69d233eb445740e04116c7f563c0cecc3c3e",
+      "original": "test-results/qa-threat/L2.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L3.json.gz",
+      "sha256": "32f5feb52a313e6147510150f4b5a3f13fa292572c797013af1c4ed902ceafd5",
+      "rawSha256": "8634b3caf14659fff7a61bb095a607f434148d8f31facbcca9b0474c281e727a",
+      "original": "test-results/qa-threat/L3.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L4.json.gz",
+      "sha256": "8fc77bcbe0d8b7b9832c2e7d9d224f5103438db250feaf9a180842573ffe2e8c",
+      "rawSha256": "ab7281727273e47e14b8996aad69102c897b7990d4ac182fbee6c72a0526868d",
+      "original": "test-results/qa-threat/L4.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L5.json.gz",
+      "sha256": "c8fe1215e48c693b6cb31445435ebce80f0f1364906b535c17d1b267ccb0dffe",
+      "rawSha256": "7d9daf5e8378ce6c520dacf902d50c153dd5c10cf59826955219130187023ab9",
+      "original": "test-results/qa-threat/L5.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L6.json.gz",
+      "sha256": "5bae91b27e38896e068b77232a160b80dca42a6b7bd844a551802e13721c82fd",
+      "rawSha256": "8eebf63fd23e48095941194b2f22f81690dce7d698a6c387146412381d2e4c8c",
+      "original": "test-results/qa-threat/L6.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L7.json.gz",
+      "sha256": "c0979523a561feb15e2ff3a239212389ae9e68783538be9e62c7c8a980282043",
+      "rawSha256": "7a30e63584c89278be66b95e04b9a1955d6838dbcdcde4bb785768935093d2d1",
+      "original": "test-results/qa-threat/L7.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L8.json.gz",
+      "sha256": "47ade34dda04d6f9454286ee991d690db4fb3eb8e4fa3a9e2ac5f148f36ae870",
+      "rawSha256": "1cc45bc7cf4ec54c70a12a076e3c9fed4fda274c54f371f880461feb20c87b83",
+      "original": "test-results/qa-threat/L8.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/L9.json.gz",
+      "sha256": "8bb3db28d29cda102301fc3df2930b725131822b0e0e4441295ec2bee3a0cb61",
+      "rawSha256": "71b8341cc0b625b81e87d930ec45d51346c22e11a32f2b96a7e5c8471d7d2134",
+      "original": "test-results/qa-threat/L9.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/README.md.gz",
+      "sha256": "95ff9a9a3edf82cea0b877e81fc0938c139fd2250e49e7e0dace371d7c8427fe",
+      "rawSha256": "9c8f6e6719c404f821442b8044c72b26b67c4c466e398ae1e3f89b4ee6b28e73",
+      "original": "test-results/qa-threat/README.md"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/audit.json.gz",
+      "sha256": "dd012f9e5946a78f7f914531ed0f6b5770a6868914926c5339cc637b97730fd7",
+      "rawSha256": "b22ca7c42c4a700ebfdadb64647d5c5587069f1d14fcf987fcbaada0b9fbbce7",
+      "original": "test-results/qa-threat/audit.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/threat-start.json.gz",
+      "sha256": "89fa8b8d812be279b750ec247f1ec1f4181bfce60787d0980d7af7fdefbcac5e",
+      "rawSha256": "e91763f902e0603e5d3a6200e8885436fd5915567e7145d4bdc859239cc17f46",
+      "original": "test-results/fix68-g2/threat-start.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/threat-exit.json.gz",
+      "sha256": "2e60f0f619c90f02a99250955fe0795aae9e73f54ba2468239b721302f2d2797",
+      "rawSha256": "05f4173cdb417f36f269c95ce1196fb301a8a67cc307a0494c859f190e6c01e9",
+      "original": "test-results/fix68-g2/threat-exit.json"
+    },
+    {
+      "file": "docs/reports/fix68-g2/threat/threat-final.log.gz",
+      "sha256": "704dc84ada5a87a703b29986d6e182a61ad8848c77679950f1b2b062f9bee1ed",
+      "rawSha256": "2491a1dd71e4897d3524cb50b37c49f85f3fe25f472ade3451471ce330f9cd28",
+      "original": "test-results/fix68-g2/threat-final.log"
+    }
+  ]
+}
