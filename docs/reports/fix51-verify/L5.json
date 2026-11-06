@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L5",
-  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
-  "observerHash": "9954946cd2baca7001d78c0fc904daf6ce44ee5e925c624cdfe83a2c825894f9",
+  "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T12:15:42.846Z",
+  "generatedAt": "2026-11-06T20:39:12.195Z",
   "policies": [
     {
       "tier": "low",
@@ -62,20 +62,6 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json"
-    },
-    {
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json"
-    },
-    {
-      "tier": "high",
-      "policy": "real-input-webgl2",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json"
     }
   ],
   "globals": [
@@ -553,7 +539,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -938,7 +924,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1079,14 +1065,14 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"phase\":\"step/look\",\"id\":30,\"samples\":111,\"median\":4.430891316393229,\"groupMedian\":4.450635197740783,\"ratio\":0.9955638059579504},{\"phase\":\"step/look\",\"id\":32,\"samples\":75,\"median\":4.470379079088337,\"groupMedian\":4.450635197740783,\"ratio\":1.0044361940420496},{\"phase\":… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"phase\":\"step/look\",\"id\":30,\"samples\":114,\"median\":4.248401266832439,\"groupMedian\":4.299462525080636,\"ratio\":0.9881238043243},{\"phase\":\"step/look\",\"id\":32,\"samples\":84,\"median\":4.1813167335282415,\"groupMedian\":4.299462525080636,\"ratio\":0.9725207997829499},{\"phase\":\"ste… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"seed\":2,\"valid\":true,\"samples\":135,\"median\":4.342453576274158,\"groupMedian\":4.3699278154119625,\"ratio\":0.9937128849037489},{\"seed\":3,\"valid\":true,\"samples\":126,\"median\":4.437383052847879,\"groupMedian\":4.428498327332077,\"ratio\"… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"seed\":2,\"valid\":true,\"samples\":137,\"median\":4.26728611684063,\"groupMedian\":4.133922737569598,\"ratio\":1.0322607333850264},{\"seed\":3,\"valid\":true,\"samples\":128,\"median\":4.447189613994879,\"groupMedian\":4.4131743157392656,\"ratio\":1.… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -1113,80 +1099,309 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": [
-            {
-              "phase": "step/look",
-              "id": 31,
-              "samples": 129,
-              "median": 4.3046312954604415,
-              "groupMedian": 4.450635197740783,
-              "ratio": 0.9671948169657996
-            },
-            {
-              "phase": "step/look",
-              "id": 30,
-              "samples": 111,
-              "median": 4.430891316393229,
-              "groupMedian": 4.450635197740783,
-              "ratio": 0.9955638059579504
-            },
-            {
-              "phase": "step/look",
-              "id": 32,
-              "samples": 75,
-              "median": 4.470379079088337,
-              "groupMedian": 4.450635197740783,
-              "ratio": 1.0044361940420496
-            },
-            {
-              "phase": "step/look",
-              "id": 28,
-              "samples": 43,
-              "median": 4.5233920512670664,
-              "groupMedian": 4.450635197740783,
-              "ratio": 1.0163475212624067
-            },
-            {
-              "phase": "step/metro",
-              "id": 28,
-              "samples": 47,
-              "median": 4.502767424237598,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1.0006693286858654
-            },
-            {
-              "phase": "step/metro",
-              "id": 30,
-              "samples": 48,
-              "median": 4.4959648903908,
-              "groupMedian": 4.499755608729292,
-              "ratio": 0.9991575723954567
-            },
-            {
-              "phase": "step/metro",
-              "id": 31,
-              "samples": 48,
-              "median": 4.463309424067778,
-              "groupMedian": 4.499755608729292,
-              "ratio": 0.9919004079708661
-            },
-            {
-              "phase": "step/metro",
-              "id": 32,
-              "samples": 48,
-              "median": 4.666383706373201,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1.0370304772376213
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 47,
-              "median": 4.499755608729292,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1
-            }
-          ],
+          "value": {
+            "rows": [
+              {
+                "phase": "step/look",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 129,
+                    "median": 4.3046312954604415,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 0.9671948169657996
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 135,
+                    "median": 4.342453576274158,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 0.9937128849037489
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 126,
+                    "median": 4.437383052847879,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 1.0020062614590968
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 111,
+                    "median": 4.430891316393229,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 0.9955638059579504
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 111,
+                    "median": 4.397402054549768,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 1.0062871150962514
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 112,
+                    "median": 4.419613601816275,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 0.9979937385409029
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 75,
+                    "median": 4.470379079088337,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 1.0044361940420496
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 78,
+                    "median": 4.503678383269953,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 1.0306070428409084
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 80,
+                    "median": 4.4525867539603645,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 1.0054394119287833
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.5233920512670664,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 1.0163475212624067
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.342052676543085,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 0.993621144319463
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.324812759247781,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 0.976586743311076
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.502767424237598,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1.0006693286858654
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.496638975744775,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 0.9991743921545483
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.3687506267116,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 0.992983941574844
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.4959648903908,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 0.9991575723954567
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.503032697929675,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1.000595107384782
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.399618607913122,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.463309424067778,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 0.9919004079708661
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.500354503730368,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.396641023215771,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 0.9993232175416308
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.666383706373201,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1.0370304772376213
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.477026337907631,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 0.9948163715095333
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.50142179273423,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1.0231390931563944
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 29,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.499755608729292,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.504779731330291,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1.000983306447582
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.500984889294994,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1.0230397883124587
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              }
+            ],
+            "flags": [],
+            "pass": true
+          },
           "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         },
@@ -1244,80 +1459,309 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": [
-            {
-              "phase": "step/look",
-              "id": 31,
-              "samples": 137,
-              "median": 4.366413559282058,
-              "groupMedian": 4.299462525080636,
-              "ratio": 1.015571954357287
-            },
-            {
-              "phase": "step/look",
-              "id": 30,
-              "samples": 114,
-              "median": 4.248401266832439,
-              "groupMedian": 4.299462525080636,
-              "ratio": 0.9881238043243
-            },
-            {
-              "phase": "step/look",
-              "id": 32,
-              "samples": 84,
-              "median": 4.1813167335282415,
-              "groupMedian": 4.299462525080636,
-              "ratio": 0.9725207997829499
-            },
-            {
-              "phase": "step/look",
-              "id": 28,
-              "samples": 47,
-              "median": 4.350523783328833,
-              "groupMedian": 4.299462525080636,
-              "ratio": 1.0118761956757
-            },
-            {
-              "phase": "step/metro",
-              "id": 28,
-              "samples": 43,
-              "median": 4.5075446978873766,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1.0400118246935053
-            },
-            {
-              "phase": "step/metro",
-              "id": 30,
-              "samples": 44,
-              "median": 4.227657311177811,
-              "groupMedian": 4.334128315527339,
-              "ratio": 0.975434274991793
-            },
-            {
-              "phase": "step/metro",
-              "id": 31,
-              "samples": 43,
-              "median": 4.281412292159527,
-              "groupMedian": 4.334128315527339,
-              "ratio": 0.9878369952317856
-            },
-            {
-              "phase": "step/metro",
-              "id": 32,
-              "samples": 46,
-              "median": 4.334128315527339,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 43,
-              "median": 4.518719555006736,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1.042590164859237
-            }
-          ],
+          "value": {
+            "rows": [
+              {
+                "phase": "step/look",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 137,
+                    "median": 4.366413559282058,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 1.015571954357287
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 137,
+                    "median": 4.26728611684063,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 1.0322607333850264
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 128,
+                    "median": 4.447189613994879,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 1.0077076715810431
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 114,
+                    "median": 4.248401266832439,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 0.9881238043243
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 112,
+                    "median": 4.074405861892231,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 0.985602808892273
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 108,
+                    "median": 4.379159017483652,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 0.9922923284189569
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 84,
+                    "median": 4.1813167335282415,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 0.9725207997829499
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 80,
+                    "median": 4.18653567595033,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 1.0127271218454517
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 77,
+                    "median": 4.4685986731327905,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 1.0125588416473508
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.350523783328833,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 1.0118761956757
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.081309799188867,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 0.9872728781545483
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 3.947744963831267,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 0.8945363770816669
+                  }
+                ],
+                "measured": 3,
+                "failures": 1,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.5075446978873766,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1.0400118246935053
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 53,
+                    "median": 4.49451681927172,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 1.0013162731707785
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.438829657084955,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 0.995918048081551
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.227657311177811,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 0.975434274991793
+                  },
+                  {
+                    "seed": 2,
+                    "valid": false,
+                    "samples": 2,
+                    "median": 0,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.472469647675428,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1.0034656848134251
+                  }
+                ],
+                "measured": 2,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.281412292159527,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 0.9878369952317856
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 51,
+                    "median": 4.482700349164654,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0.9986837268292214
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 49,
+                    "median": 4.45702301071411,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.334128315527339,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 53,
+                    "median": 4.403027735481363,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0.9809337688659858
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 49,
+                    "median": 4.405982088719927,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 0.9885482031680144
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 29,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.518719555006736,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1.042590164859237
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 51,
+                    "median": 4.50057627338474,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 1.0026662358595115
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.5001998469131905,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1.009687371165751
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              }
+            ],
+            "flags": [],
+            "pass": true
+          },
           "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
@@ -1465,7 +1909,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1540,7 +1984,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1708,7 +2152,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3312,62 +3756,21 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "G-25",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS); high/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS) Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "value": "Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L5-low-browser.json",
-        "docs/reports/fix51-verify/receipts/L5-high-browser.json",
         "docs/reports/batch51-qa/quality-repro.json",
         "docs/reports/batch51-qa/gates/visual-L4.log"
       ],
       "expected": "Zero console errors over a full real-input play-through of the level.",
-      "checks": [
-        {
-          "id": "G-25",
-          "clause": "physical WASD/mouse full-level browser console",
-          "tier": "low",
-          "policy": "real-input-webgl2",
-          "status": "PASS",
-          "value": {
-            "backend": "webgl2",
-            "zoom": 1.5,
-            "completed": true,
-            "skipped": [],
-            "consoleErrors": [],
-            "immortal": true,
-            "frameTiming": false
-          },
-          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-          "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json",
-          "level": "L5"
-        },
-        {
-          "id": "G-25",
-          "clause": "physical WASD/mouse full-level browser console",
-          "tier": "high",
-          "policy": "real-input-webgl2",
-          "status": "PASS",
-          "value": {
-            "backend": "webgl2",
-            "zoom": 1.5,
-            "completed": true,
-            "skipped": [],
-            "consoleErrors": [],
-            "immortal": true,
-            "frameTiming": false
-          },
-          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-          "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json",
-          "level": "L5"
-        }
-      ],
+      "checks": [],
       "historical": {
         "id": "G-25",
         "level": "global",
@@ -3441,7 +3844,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3529,7 +3932,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
@@ -4412,7 +4815,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4479,80 +4882,309 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": [
-            {
-              "phase": "step/look",
-              "id": 31,
-              "samples": 129,
-              "median": 4.3046312954604415,
-              "groupMedian": 4.450635197740783,
-              "ratio": 0.9671948169657996
-            },
-            {
-              "phase": "step/look",
-              "id": 30,
-              "samples": 111,
-              "median": 4.430891316393229,
-              "groupMedian": 4.450635197740783,
-              "ratio": 0.9955638059579504
-            },
-            {
-              "phase": "step/look",
-              "id": 32,
-              "samples": 75,
-              "median": 4.470379079088337,
-              "groupMedian": 4.450635197740783,
-              "ratio": 1.0044361940420496
-            },
-            {
-              "phase": "step/look",
-              "id": 28,
-              "samples": 43,
-              "median": 4.5233920512670664,
-              "groupMedian": 4.450635197740783,
-              "ratio": 1.0163475212624067
-            },
-            {
-              "phase": "step/metro",
-              "id": 28,
-              "samples": 47,
-              "median": 4.502767424237598,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1.0006693286858654
-            },
-            {
-              "phase": "step/metro",
-              "id": 30,
-              "samples": 48,
-              "median": 4.4959648903908,
-              "groupMedian": 4.499755608729292,
-              "ratio": 0.9991575723954567
-            },
-            {
-              "phase": "step/metro",
-              "id": 31,
-              "samples": 48,
-              "median": 4.463309424067778,
-              "groupMedian": 4.499755608729292,
-              "ratio": 0.9919004079708661
-            },
-            {
-              "phase": "step/metro",
-              "id": 32,
-              "samples": 48,
-              "median": 4.666383706373201,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1.0370304772376213
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 47,
-              "median": 4.499755608729292,
-              "groupMedian": 4.499755608729292,
-              "ratio": 1
-            }
-          ],
+          "value": {
+            "rows": [
+              {
+                "phase": "step/look",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 129,
+                    "median": 4.3046312954604415,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 0.9671948169657996
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 135,
+                    "median": 4.342453576274158,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 0.9937128849037489
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 126,
+                    "median": 4.437383052847879,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 1.0020062614590968
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 111,
+                    "median": 4.430891316393229,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 0.9955638059579504
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 111,
+                    "median": 4.397402054549768,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 1.0062871150962514
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 112,
+                    "median": 4.419613601816275,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 0.9979937385409029
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 75,
+                    "median": 4.470379079088337,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 1.0044361940420496
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 78,
+                    "median": 4.503678383269953,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 1.0306070428409084
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 80,
+                    "median": 4.4525867539603645,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 1.0054394119287833
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.5233920512670664,
+                    "groupMedian": 4.450635197740783,
+                    "ratio": 1.0163475212624067
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.342052676543085,
+                    "groupMedian": 4.3699278154119625,
+                    "ratio": 0.993621144319463
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.324812759247781,
+                    "groupMedian": 4.428498327332077,
+                    "ratio": 0.976586743311076
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.502767424237598,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1.0006693286858654
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.496638975744775,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 0.9991743921545483
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.3687506267116,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 0.992983941574844
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.4959648903908,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 0.9991575723954567
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.503032697929675,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1.000595107384782
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.399618607913122,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.463309424067778,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 0.9919004079708661
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.500354503730368,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.396641023215771,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 0.9993232175416308
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.666383706373201,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1.0370304772376213
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.477026337907631,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 0.9948163715095333
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.50142179273423,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1.0231390931563944
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 29,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.499755608729292,
+                    "groupMedian": 4.499755608729292,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.504779731330291,
+                    "groupMedian": 4.500354503730368,
+                    "ratio": 1.000983306447582
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 45,
+                    "median": 4.500984889294994,
+                    "groupMedian": 4.399618607913122,
+                    "ratio": 1.0230397883124587
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              }
+            ],
+            "flags": [],
+            "pass": true
+          },
           "target": "every ratio≥0.95; bar pixels and absolute formation remain open",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         },
@@ -4871,80 +5503,309 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": [
-            {
-              "phase": "step/look",
-              "id": 31,
-              "samples": 137,
-              "median": 4.366413559282058,
-              "groupMedian": 4.299462525080636,
-              "ratio": 1.015571954357287
-            },
-            {
-              "phase": "step/look",
-              "id": 30,
-              "samples": 114,
-              "median": 4.248401266832439,
-              "groupMedian": 4.299462525080636,
-              "ratio": 0.9881238043243
-            },
-            {
-              "phase": "step/look",
-              "id": 32,
-              "samples": 84,
-              "median": 4.1813167335282415,
-              "groupMedian": 4.299462525080636,
-              "ratio": 0.9725207997829499
-            },
-            {
-              "phase": "step/look",
-              "id": 28,
-              "samples": 47,
-              "median": 4.350523783328833,
-              "groupMedian": 4.299462525080636,
-              "ratio": 1.0118761956757
-            },
-            {
-              "phase": "step/metro",
-              "id": 28,
-              "samples": 43,
-              "median": 4.5075446978873766,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1.0400118246935053
-            },
-            {
-              "phase": "step/metro",
-              "id": 30,
-              "samples": 44,
-              "median": 4.227657311177811,
-              "groupMedian": 4.334128315527339,
-              "ratio": 0.975434274991793
-            },
-            {
-              "phase": "step/metro",
-              "id": 31,
-              "samples": 43,
-              "median": 4.281412292159527,
-              "groupMedian": 4.334128315527339,
-              "ratio": 0.9878369952317856
-            },
-            {
-              "phase": "step/metro",
-              "id": 32,
-              "samples": 46,
-              "median": 4.334128315527339,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 43,
-              "median": 4.518719555006736,
-              "groupMedian": 4.334128315527339,
-              "ratio": 1.042590164859237
-            }
-          ],
+          "value": {
+            "rows": [
+              {
+                "phase": "step/look",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 137,
+                    "median": 4.366413559282058,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 1.015571954357287
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 137,
+                    "median": 4.26728611684063,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 1.0322607333850264
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 128,
+                    "median": 4.447189613994879,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 1.0077076715810431
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 114,
+                    "median": 4.248401266832439,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 0.9881238043243
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 112,
+                    "median": 4.074405861892231,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 0.985602808892273
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 108,
+                    "median": 4.379159017483652,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 0.9922923284189569
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 84,
+                    "median": 4.1813167335282415,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 0.9725207997829499
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 80,
+                    "median": 4.18653567595033,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 1.0127271218454517
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 77,
+                    "median": 4.4685986731327905,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 1.0125588416473508
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/look",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.350523783328833,
+                    "groupMedian": 4.299462525080636,
+                    "ratio": 1.0118761956757
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.081309799188867,
+                    "groupMedian": 4.133922737569598,
+                    "ratio": 0.9872728781545483
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 3.947744963831267,
+                    "groupMedian": 4.4131743157392656,
+                    "ratio": 0.8945363770816669
+                  }
+                ],
+                "measured": 3,
+                "failures": 1,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 28,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.5075446978873766,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1.0400118246935053
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 53,
+                    "median": 4.49451681927172,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 1.0013162731707785
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.438829657084955,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 0.995918048081551
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 30,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 44,
+                    "median": 4.227657311177811,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 0.975434274991793
+                  },
+                  {
+                    "seed": 2,
+                    "valid": false,
+                    "samples": 2,
+                    "median": 0,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 48,
+                    "median": 4.472469647675428,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1.0034656848134251
+                  }
+                ],
+                "measured": 2,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 31,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.281412292159527,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 0.9878369952317856
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 51,
+                    "median": 4.482700349164654,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0.9986837268292214
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 49,
+                    "median": 4.45702301071411,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 32,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 46,
+                    "median": 4.334128315527339,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 53,
+                    "median": 4.403027735481363,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 0.9809337688659858
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 49,
+                    "median": 4.405982088719927,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 0.9885482031680144
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              },
+              {
+                "phase": "step/metro",
+                "id": 29,
+                "seeds": [
+                  {
+                    "seed": 1,
+                    "valid": true,
+                    "samples": 43,
+                    "median": 4.518719555006736,
+                    "groupMedian": 4.334128315527339,
+                    "ratio": 1.042590164859237
+                  },
+                  {
+                    "seed": 2,
+                    "valid": true,
+                    "samples": 51,
+                    "median": 4.50057627338474,
+                    "groupMedian": 4.488608584218187,
+                    "ratio": 1.0026662358595115
+                  },
+                  {
+                    "seed": 3,
+                    "valid": true,
+                    "samples": 47,
+                    "median": 4.5001998469131905,
+                    "groupMedian": 4.45702301071411,
+                    "ratio": 1.009687371165751
+                  }
+                ],
+                "measured": 3,
+                "failures": 0,
+                "pass": true
+              }
+            ],
+            "flags": [],
+            "pass": true
+          },
           "target": "every ratio≥0.95; bar pixels and absolute formation remain open",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
@@ -5290,7 +6151,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -5415,7 +6276,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -5516,7 +6377,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -10980,7 +11841,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ]

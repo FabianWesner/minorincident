@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L6",
-  "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+  "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T12:43:35.170Z",
+  "generatedAt": "2026-11-06T20:42:20.359Z",
   "policies": [
     {
       "tier": "low",
@@ -575,7 +575,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1250,7 +1250,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1391,7 +1391,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2277,7 +2277,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2352,7 +2352,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2524,7 +2524,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4715,7 +4715,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4803,7 +4803,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4891,7 +4891,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
@@ -8002,14 +8002,14 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L6-05",
-      "status": "PASS",
+      "status": "FAIL",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 11.419508326724822 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 139.88897700237905 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary stationary first attack after l6.breach1: 2.0833333333333335 (target player windup≤15s after this breach caption; PASS); low/stationary stationary first attack after l6.breach2: 9.083333333333334 (target player windup≤15s after this breach caption; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 11.419508326724822 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 139.88897700237905 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary stationary first attack after l6.breach1: 2.0833333333333335 (target player windup≤15s after this breach caption; PASS); high/stationary stationary first attack after l6.breach2: 9.083333333333334 (target player windup≤15s after this breach caption; PASS) Manual review PASS (FRESH, Codex/fix71-b2): Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement. Requalified prior FAIL: Native low complete step/stop: 25.55 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. ",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 11.419508326724822 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 139.88897700237905 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary stationary first attack after l6.breach1: 2.0833333333333335 (target player windup≤15s after this breach caption; PASS); low/stationary stationary first attack after l6.breach2: 9.083333333333334 (target player windup≤15s after this breach caption; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 11.419508326724822 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 139.88897700237905 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary stationary first attack after l6.breach1: 2.0833333333333335 (target player windup≤15s after this breach caption; PASS); high/stationary stationary first attack after l6.breach2: 9.083333333333334 (target player windup≤15s after this breach caption; PASS) Manual review PASS (STALE, Codex/fix71-b2): Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement. Open prior FAIL: Native low complete step/stop: 25.55 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. ",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
@@ -8257,7 +8257,7 @@
         ],
         "method": "Native complete/passive phase ledgers. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
-      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L6-05",
         "status": "PASS",
@@ -8283,8 +8283,8 @@
             "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -8308,9 +8308,9 @@
     },
     {
       "id": "L6-07",
-      "status": "PASS",
+      "status": "FAIL",
       "currentStatus": "PASS",
-      "value": "low/complete ordinary retreat route completion: complete (target complete; PASS); low/complete retreat player/group windups per minute: 23.277591973244146 (target 4 ≤ value ≤ Infinity; PASS); low/complete actual HP lost during retreat: 80 (target 30 ≤ value ≤ Infinity; PASS); low/complete retreat concurrent infected cap: 17 (target 0 ≤ value ≤ 30; PASS); high/complete ordinary retreat route completion: complete (target complete; PASS); high/complete retreat player/group windups per minute: 23.277591973244146 (target 4 ≤ value ≤ Infinity; PASS); high/complete actual HP lost during retreat: 80 (target 30 ≤ value ≤ Infinity; PASS); high/complete retreat concurrent infected cap: 17 (target 0 ≤ value ≤ 60; PASS) Manual review PASS (FRESH, Codex/fix71-b2): Both final merged-source ordinary complete routes finish. Whole retreat measures23.278 player/group windups/min,80 actual player HP lost,17 concurrent infected peak, both tiers. All unchanged numeric thresholds pass; no human difficulty or perceived-pressure claim. Requalified prior FAIL: Native competent run takes 0 damage, below the >=30 HP tuning target; survivor attack/cap clauses need separate full retreat analysis.",
+      "value": "low/complete ordinary retreat route completion: complete (target complete; PASS); low/complete retreat player/group windups per minute: 23.277591973244146 (target 4 ≤ value ≤ Infinity; PASS); low/complete actual HP lost during retreat: 80 (target 30 ≤ value ≤ Infinity; PASS); low/complete retreat concurrent infected cap: 17 (target 0 ≤ value ≤ 30; PASS); high/complete ordinary retreat route completion: complete (target complete; PASS); high/complete retreat player/group windups per minute: 23.277591973244146 (target 4 ≤ value ≤ Infinity; PASS); high/complete actual HP lost during retreat: 80 (target 30 ≤ value ≤ Infinity; PASS); high/complete retreat concurrent infected cap: 17 (target 0 ≤ value ≤ 60; PASS) Manual review PASS (STALE, Codex/fix71-b2): Both final merged-source ordinary complete routes finish. Whole retreat measures23.278 player/group windups/min,80 actual player HP lost,17 concurrent infected peak, both tiers. All unchanged numeric thresholds pass; no human difficulty or perceived-pressure claim. Open prior FAIL: Native competent run takes 0 damage, below the >=30 HP tuning target; survivor attack/cap clauses need separate full retreat analysis.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
@@ -8419,7 +8419,7 @@
         ],
         "method": "Current-head ordinary mortal complete policy, 212.78 s, zero deaths, damageTaken=0; an immortal or forced-death diagnostic cannot qualify the competent damage target."
       },
-      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L6-07",
         "status": "PASS",
@@ -8440,8 +8440,8 @@
             "what": "Both final merged-source ordinary complete routes finish. Whole retreat measures23.278 player/group windups/min,80 actual player HP lost,17 concurrent infected peak, both tiers. All unchanged numeric thresholds pass; no human difficulty or perceived-pressure claim."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -9005,7 +9005,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -9057,7 +9057,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -10066,9 +10066,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+              "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
               "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-              "revision": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+              "revision": "5a7f84ba13e2a42d4cf5073a94ccb2e3b35f2195",
               "tier": "low",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": false,
@@ -18227,9 +18227,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+              "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
               "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-              "revision": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+              "revision": "5a7f84ba13e2a42d4cf5073a94ccb2e3b35f2195",
               "tier": "high",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": false,
@@ -25997,7 +25997,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ]
