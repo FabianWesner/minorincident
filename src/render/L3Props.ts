@@ -49,7 +49,7 @@ export class L3Props extends Group {
       [-22, 28, 0], [-13.75, 28, -Math.PI / 2], [-13.75, 14, -Math.PI / 2],
       [-22, 0, 0], [-13.75, 0, -Math.PI / 2], [-13.75, -14, -Math.PI / 2], [-13.75, -28, 0],
     ];
-    const worn = materials.fromColor('l3-worn-turn-paint', new Color('#77736a'));
+    const worn = materials.fromColor('l3-worn-turn-paint', new Color('#868174'));
     const paint = new InstancedMesh(this.detourGeometry, worn, detours.length);
     paint.receiveShadow = true;
     for (const [i, [x, z, direction]] of detours.entries()) {

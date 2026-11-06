@@ -176,7 +176,7 @@ export class Blasts extends Group {
         const sun = normalWorld.dot(vec3(.45, .78, .43)).mul(.5).add(.5);
         const ambient = host.ambient ? host.ambient.clamp(.12, 1) : float(1);
         // vqa-3 #3: street smoke greys as it rises and thins, so a column reads as dispersing smoke, not a dark curtain.
-        const base = vec3(st.w).add(st.z.greaterThan(1.5).select(progress.mul(.22), 0)).mul(mix(.62, 1.12, sun)).mul(ambient);
+        const base = vec3(st.w).add(st.z.greaterThan(1.5).select(progress.mul(.18), 0)).mul(mix(.62, 1.12, sun)).mul(ambient);
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
         // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
         const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75)).mul(streetSmoke.select(0, 1));
@@ -185,7 +185,8 @@ export class Blasts extends Group {
         // the readability aura does not turn the foreground smoke into a bright veil.
         // Practical light scales with the smoke's albedo: dark soot reflects little of the fire's light.
         const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .45)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(1.4).min(1)) : vec3(0));
-        const edge = normalView.z.abs().smoothstep(.05, .7);
+        // Street columns get a softer rim so stacked puffs blend instead of drawing ring arcs.
+        const rim = normalView.z.abs().smoothstep(.05, .7), edge = st.z.greaterThan(1.5).select(rim.mul(rim), rim);
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
         // Dark (soot) puffs stay dense for most of their life and fade late, so a blast column reads as a solid dark plume.
         const dark = smoothstep(.16, .07, st.w).mul(st.z.greaterThanEqual(0).select(1, 0));
@@ -503,7 +504,7 @@ export class Blasts extends Group {
         // Street wreck smoke must clear cars and frontage props as a column;
         // the same bounded puff lifetime and pool keep its particle budget fixed.
         // vqa-3 #3: a narrow stem at the base that widens upward (taper, then billow); same count and lifetime.
-        this.puff(c.x + j() * .3, ground + .2, c.z + j() * .3, j() * .1, 1 + this.rng.next() * .3, j() * .1, 6, c.size * .35, c.size * 2.1, c.heat, c.shade, born);
+        this.puff(c.x + j() * .4, ground + .2, c.z + j() * .4, j() * .22, 1 + this.rng.next() * .3, j() * .22, 6, c.size * .35, c.size * 1.95, c.heat, c.shade, born);
       } else if (c.plume) {
         // Blast plume: hot buoyant soot that climbs fast, swells with height and bends downwind (wind drift grows with age in TSL).
         // Thickest in its first seconds: up to 2.5 puffs per emission, easing to one by 4 s (same birth time, so the cohort spacing holds).
