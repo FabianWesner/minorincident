@@ -191,8 +191,13 @@ export class CorpseLayout {
     // First prefer an unoccupied footprint, nearest to the death position.
     // Combat bodies stay within 1 m. Once the L10 fight ends, use the surrounding
     // floor (up to 4 m) so the final collapsed crowd reads as individual people.
-    for (let ring = 0; ring <= (epilogue ? 10 : startsOnVehicle ? 30 : 5); ring++) {
-      const distance = ring * (epilogue ? .4 : .2), samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
+    // L4-17 (fix70-v): a war piles hundreds of bodies on the same spot; stacking them in the 1 m
+    // search ring built a 2-3 m mound. A spot already tall (> 2 layers) keeps searching outward in
+    // wider 0.3 m rings (to 5.5 m) for a free footprint, so piles spread sideways. Bodies are never removed.
+    const mound = feet + .45;
+    for (let ring = 0; ring <= (epilogue ? 22 : startsOnVehicle ? 30 : 20); ring++) {
+      if (ring > (epilogue ? 10 : 5) && !startsOnVehicle && best && best.y <= mound) break;
+      const distance = epilogue ? ring * .4 : startsOnVehicle || ring <= 5 ? ring * .2 : 1 + (ring - 5) * .3, samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
         for (let turn = 0; turn < 4; turn++) {
