@@ -2,7 +2,7 @@
 
 Base: `1ae35ca575aa5c7a450695c99ccaf270eaffe91f`. Current game-source SHA-256: `aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d`.
 
-**P1 fixed and qualified. Of the 37 assigned acceptance rows, 29 have current verdicts: 16 PASS and 13 measured FAIL. Eight remain open. The full sweep goal is incomplete.** The original [work list](work-list.json) and [current row summary](row-summary.json) preserve the exact scope. PASS rows with a P prompt still require the stated PO taste review.
+**P1 fixed and qualified. Of the 37 assigned acceptance rows, 30 have current verdicts: 16 PASS and 14 measured FAIL. Seven remain open. The full sweep goal is incomplete.** The original [work list](work-list.json) and [current row summary](row-summary.json) preserve the exact scope. PASS rows with a P prompt still require the stated PO taste review.
 
 ## Corgi P1
 
@@ -41,6 +41,7 @@ Each row has its own verdict commit and exact-criterion review in `docs/qa/revie
 | L4-08 | PASS | `eaf9203` | [Alphas](L4-08-proof.json): six/eight actual staggered offscreen admissions, ≥6 directions, three/six actual line attackers. |
 | L4-11 | FAIL | `3c715f7` | [Live duels](L4-11-proof.json): courier survives all12 duels, but frontal first-damage→incapacitation takes9.4 s at20 m and12.7 s at26 m, above6 s. |
 | L4-12 | FAIL | `4836e53` | [Review](../../qa/reviews/L4-12.json): actual nearest20 high-tier sample at tick5820 has only three infected looks. |
+| L4-13 | FAIL | continuation commit | [Actual admissions](L4-13-proof.json): first nine-second collapse interval admits low0/0/0 against2/edge, high1/1/1 against3/edge; both canonical hashes unchanged. Escape-window and pursuer identities retained without blanket qualification. |
 | L4-14 | PASS | `c8cb782` | [Live damage](L4-14-proof.json): actual cellar entry has4 fires,3 burning/burned vehicle IDs,14 windows and21 renderer scorch instances at both tiers. Legacy controller scorch0 is not the renderer census. |
 | L4-15 | PASS | `6e755c8` | [Solidity/camera](L4-15-proof.json): all60 wall segments block actual capsule sweeps at each tier; positive diagonal camera offsets bound all blends to36–41.85°. Reviewed textured/readable structures and continuing terrain. |
 | L4-16 | FAIL | `6d7f068` | [Review](../../qa/reviews/L4-16.json): low zoom1.5 decoded filtered battle is audible for5.55 simulated seconds, below6; the other physical cells exceed6. Same-cellar handover and entrants recorded. |
@@ -65,12 +66,11 @@ Each row has its own verdict commit and exact-criterion review in `docs/qa/revie
 
 The `7f0a5c5` report fix has an actual [before/after receipt](review-fail-proof.json): fresh measured FAIL reviews on plain S rows were previously ignored. PASS still requires complete objective evidence; no blanket manual-PASS route was introduced. No specs or acceptance targets changed.
 
-## Eight rows still open
+## Seven rows still open
 
 | Row | What is established | Remaining NEXT |
 | --- | --- | --- |
 | L4-10 | Two actual HMG shooters; tank enters+22 s, actual intervals8–12 s; protected soldier/armed-ally impact clearance≥15 m; helicopter orbit/withdraw ledger. | Observe actual rendered tank muzzle/tracer endpoints against the current barrier wall, not a guessed 2D ray or a fallback muzzle. |
-| L4-13 | Current native escape has55/76 unique visible living encounters. | Record actual40 s gap occupancy, chasing pursuer identities and admitted three-body/9 s cohorts. Scheduled wave totals alone are insufficient; per-edge/tier semantics must be preserved. |
 | L5-06 | Physical caption/edge-call/radar examples; authored/native cue range≤25 m. | Complete no-hidden-ring/arrow/pin inspection and synchronize actual audible call windows with ♪ visibility at both tiers, including >30 m exclusion. |
 | L5-07 | Authored-map tours complete some routes. | Genuine muted screenshot-only discovery, recording every cue read; no coordinates, minimap targets or authored destinations. Existing tours explicitly do not qualify. |
 | L5-09 | Mortal native complete rescues5; matched moving evade-only reaches600 s with no terminal result. | First actual reach→bite timestamps, a valid evade-only result, and a mortal human-like protection route. Timeouts are not rescue percentages. |
@@ -78,7 +78,7 @@ The `7f0a5c5` report fix has an actual [before/after receipt](review-fail-proof.
 | L6-08 | [58 individual walks](rows/L6-08-partial.json), all29 IDs at both tiers including injured: settled2.1995157–2.2000000 m/s. | Unoccluded-head controls and actual pixels for every missing bar, plus ordinary group pace. Reviewed batches still include geometric/courier occlusion; neither blanket PASS nor a false bar FAIL is claimed. |
 | L6-14 | Underground courier/eye visibility reviewed qualitatively. | Actual courier/background luminance≥3:1 with defined masks and positive identification of brightest infected-eye pixels at both tiers. No subjective score substitutes for these measurements. |
 
-These gaps remain work, not a human-only blocker. The brief's ~3-hour time box prevents calling this a completed37-row sweep.
+These gaps remain work, not a human-only blocker. The original ~3-hour handoff was incomplete; the active goal explicitly resumed work afterward.
 
 ## PO questions retained exactly
 
@@ -105,4 +105,8 @@ All browser work is headless through the shared pool, at most two owned contexts
 - `npm run qa:accept -- --level L4|L5|L6 --reuse --skip-browser`: whole group refreshed at both tiers on the current source, reusing the fresh canonical native/fixture/checkpoint receipts and current scoped browser evidence. Nonzero exits reflect the retained measured FAIL/NOT CHECKED rows; checkpoint controls agree and fixture errors are zero.
 - `npm run qa:threat`: **FAIL — full gate not qualified**. Two unchanged zero-flag attempts ran alone within this lane. Attempt1 returned watchdog exit124 at601.6 s during L4 high-tier hold; attempt2 returned exit124 at601.0 s. Unrelated lanes continued native acceptance/browser jobs; no quiet-machine or contention-causality claim is made. No flags, budgets or criteria were changed.
 
-All66 file references in the29 current verdict reviews match their recorded SHA-256: [evidence audit](review-evidence-audit.json). Final commands, outcomes, native control hashes and original log digests are retained in [validation manifest](validation.json) and its [compressed log archive](validation-logs.json.gz). No owned check remains running at handoff. The eight open rows above remain unqualified; this is the brief’s time-box handoff, not completion of the full sweep goal.
+All69 file references in the30 current verdict reviews match their recorded SHA-256: [evidence audit](review-evidence-audit.json). Final commands, outcomes, native control hashes and original log digests are retained in [validation manifest](validation.json) and its [compressed log archive](validation-logs.json.gz). No owned check remains running at handoff. The original gate receipts describe the time-box handoff; the continuation below records later work. The seven open rows above remain unqualified.
+
+## Goal continuation
+
+L4-13 closed FAIL after the original handoff using actual per-edge admissions and two canonical-hash controls. No game changes. Typecheck and lint pass for the new producer; refreshed L4 acceptance reports8 FAIL/1 NOT CHECKED with fixture/checkpoint errors0. [Continuation receipt](continuation-L4-13.json) retains original logs and SHA-256 digests. Previous threat timeout remains unqualified; it was not rerun concurrently with row work.

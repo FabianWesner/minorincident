@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T01:22:18.899Z",
+  "generatedAt": "2026-11-06T01:57:10.616Z",
   "policies": [
     {
       "tier": "low",
@@ -7270,11 +7270,15 @@
     },
     {
       "id": "L4-13",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/sweep-b): Actual mortal native complete routes preserve both canonical final hashes (low1a99e716/high6f55579b). First collapse wave low12889→13429 admits zero of the scheduled two bodies per each of edges0/1/2; high13609→14149 admits only one per each edge (IDs677/685/686), below three per edge. This preserves the source per-edge interpretation and low half-budget, rather than comparing pooled nine with three. Every-tick pending/admitted-ID conservation proves real births; scheduled totals alone are not PASS. All observed high collapse cohorts contain only one or two bodies, and low six cohorts one each, under existing cap pressure. Both tiers open exactly2400-tick escape windows, renewed after respawn; sampled live pursuer identities remain targeted to courier. Gap occupancy/clearing samples retained without claiming every corridor pixel clear; prior native ledger establishes55/76 actual visible route encounters. The actual wave shortfall closes FAIL; other clauses are not blanket-qualified, and no counts/caps/timers are changed. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-b/L4-13-proof.json",
+        "docs/reports/sweep-b/L4-escape.json.gz",
+        "docs/reports/sweep-b/L4-native-ledger.json.gz"
+      ],
       "expected": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "checks": [],
       "historical": {
@@ -7285,7 +7289,40 @@
         "evidence": [],
         "method": "NEXT: Complete real-input cellar escape; census route contacts, forty-second gap and each three-per-nine-second pursuit group with a native event observer."
       },
-      "remaining": "NEXT: Complete real-input cellar escape; census route contacts, forty-second gap and each three-per-nine-second pursuit group with a native event observer."
+      "remaining": "NEXT: Complete real-input cellar escape; census route contacts, forty-second gap and each three-per-nine-second pursuit group with a native event observer.",
+      "reviewDecision": {
+        "row": "L4-13",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "fa8cc42e2e9055654b3593e216bef0c70530249b",
+        "clauses": [
+          {
+            "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
+            "verdict": "FAIL",
+            "note": "Actual mortal native complete routes preserve both canonical final hashes (low1a99e716/high6f55579b). First collapse wave low12889→13429 admits zero of the scheduled two bodies per each of edges0/1/2; high13609→14149 admits only one per each edge (IDs677/685/686), below three per edge. This preserves the source per-edge interpretation and low half-budget, rather than comparing pooled nine with three. Every-tick pending/admitted-ID conservation proves real births; scheduled totals alone are not PASS. All observed high collapse cohorts contain only one or two bodies, and low six cohorts one each, under existing cap pressure. Both tiers open exactly2400-tick escape windows, renewed after respawn; sampled live pursuer identities remain targeted to courier. Gap occupancy/clearing samples retained without claiming every corridor pixel clear; prior native ledger establishes55/76 actual visible route encounters. The actual wave shortfall closes FAIL; other clauses are not blanket-qualified, and no counts/caps/timers are changed."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L4-13-proof.json",
+            "sha256": "5858265748f3f93ffb76d5c0922ef9eb91bda9cae2fa3ba6cef82b034e815b92",
+            "what": "Actual mortal native complete routes preserve both canonical final hashes (low1a99e716/high6f55579b). First collapse wave low12889→13429 admits zero of the scheduled two bodies per each of edges0/1/2; high13609→14149 admits only one per each edge (IDs677/685/686), below three per edge. This preserves the source per-edge interpretation and low half-budget, rather than comparing pooled nine with three. Every-tick pending/admitted-ID conservation proves real births; scheduled totals alone are not PASS. All observed high collapse cohorts contain only one or two bodies, and low six cohorts one each, under existing cap pressure. Both tiers open exactly2400-tick escape windows, renewed after respawn; sampled live pursuer identities remain targeted to courier. Gap occupancy/clearing samples retained without claiming every corridor pixel clear; prior native ledger establishes55/76 actual visible route encounters. The actual wave shortfall closes FAIL; other clauses are not blanket-qualified, and no counts/caps/timers are changed."
+          },
+          {
+            "file": "docs/reports/sweep-b/L4-escape.json.gz",
+            "sha256": "21315cb44921dd9082786ec4113a6243ada3698c92111f0e7cb1e31d577b79c0",
+            "what": "Actual mortal native complete routes preserve both canonical final hashes (low1a99e716/high6f55579b). First collapse wave low12889→13429 admits zero of the scheduled two bodies per each of edges0/1/2; high13609→14149 admits only one per each edge (IDs677/685/686), below three per edge. This preserves the source per-edge interpretation and low half-budget, rather than comparing pooled nine with three. Every-tick pending/admitted-ID conservation proves real births; scheduled totals alone are not PASS. All observed high collapse cohorts contain only one or two bodies, and low six cohorts one each, under existing cap pressure. Both tiers open exactly2400-tick escape windows, renewed after respawn; sampled live pursuer identities remain targeted to courier. Gap occupancy/clearing samples retained without claiming every corridor pixel clear; prior native ledger establishes55/76 actual visible route encounters. The actual wave shortfall closes FAIL; other clauses are not blanket-qualified, and no counts/caps/timers are changed."
+          },
+          {
+            "file": "docs/reports/sweep-b/L4-native-ledger.json.gz",
+            "sha256": "476901193887d5ba5a1b4898af5752bb7aa7fcc4f3e0a30a5245766d692343a6",
+            "what": "Actual mortal native complete routes preserve both canonical final hashes (low1a99e716/high6f55579b). First collapse wave low12889→13429 admits zero of the scheduled two bodies per each of edges0/1/2; high13609→14149 admits only one per each edge (IDs677/685/686), below three per edge. This preserves the source per-edge interpretation and low half-budget, rather than comparing pooled nine with three. Every-tick pending/admitted-ID conservation proves real births; scheduled totals alone are not PASS. All observed high collapse cohorts contain only one or two bodies, and low six cohorts one each, under existing cap pressure. Both tiers open exactly2400-tick escape windows, renewed after respawn; sampled live pursuer identities remain targeted to courier. Gap occupancy/clearing samples retained without claiming every corridor pixel clear; prior native ledger establishes55/76 actual visible route encounters. The actual wave shortfall closes FAIL; other clauses are not blanket-qualified, and no counts/caps/timers are changed."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L4-14",
