@@ -1,0 +1,25 @@
+{
+  "status": "NOT CHECKED",
+  "attempts": [
+    {
+      "command": "COMPOUND_REST_OUT=docs/reports/sweep-a3/L3-14-native-rest.json.gz npx tsx tools/qa/sweep-a2-compound.ts",
+      "profiles": {
+        "low": "complete",
+        "high": "evade-only"
+      },
+      "exitCode": 1,
+      "stdout": "low301 rest ticks;900ticks evacuation wait",
+      "failure": "high rest.length0 !=301; no complete ledger written because assertion occurred before output write"
+    },
+    {
+      "profiles": {
+        "low": "complete",
+        "high": "complete"
+      },
+      "exitCode": 1,
+      "stdout": "low301 rest ticks;900ticks evacuation wait",
+      "failure": "high rest.length0 !=301; no complete ledger written because assertion occurred before output write"
+    }
+  ],
+  "notes": "Both trials used courier damage suppression. High browser complete route independently reaches compound, but low browser tour stops at x165.859. These trials do not qualify both-tier rest or visual clauses. No assertions weakened; temporary profile/output edits reverted. Current numeric counts remain in qa:accept receipts; more focused observation is required."
+}
