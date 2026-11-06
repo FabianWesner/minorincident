@@ -743,7 +743,7 @@
         "audioPath": "test-results/vqa-1b/sweep-b-L4-high-z1.5/sweep-b-L4-high-z1.5-audio.json",
         "audioSha256": "b19d11a6f2fc78294cc7d2daf1dbd2810cb47a5ae860fd01d8e50e825ebd2a9c"
       },
-      "target": "decoded RMS≥0.001 spans≥6sim seconds; gaps≤1.5s; positive-gain voices filtered≤750Hz in live graph",
+      "target": "decoded RMS\u22650.001 spans\u22656sim seconds; gaps\u22641.5s; positive-gain voices filtered\u2264750Hz in live graph",
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
     },
     {
@@ -855,6 +855,167 @@
       },
       "target": "courier/corgi inspected in actual cellar at both photo zooms and qualities",
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-12",
+      "clause": "actual nearest20 living infected distinct looks",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "samples": 380,
+        "minimumDistinctLooks": 3,
+        "counterexample": {
+          "tick": 5820,
+          "actors": [
+            {
+              "id": 337,
+              "x": -19.109532462214073,
+              "z": -2.871068917170936,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 336,
+              "x": -21.266252097655688,
+              "z": -2.4781898378923044,
+              "model": "infected.firefighter",
+              "archetype": "infected.firefighter"
+            },
+            {
+              "id": 379,
+              "x": -18.264336149385393,
+              "z": -5.835560244113815,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 380,
+              "x": -19.518755329350444,
+              "z": -2.089095739245687,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 253,
+              "x": -20.775193905222025,
+              "z": -1.541040450931903,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 384,
+              "x": -19.917830058134886,
+              "z": -1.2734452931057265,
+              "model": "infected.firefighter",
+              "archetype": "infected.firefighter"
+            },
+            {
+              "id": 326,
+              "x": -22.186102582956753,
+              "z": -2.0506330697296224,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 381,
+              "x": -17.749551792109692,
+              "z": -6.585337102505911,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 269,
+              "x": -18.46015487542557,
+              "z": -1.5359018458876235,
+              "model": "infected.firefighter",
+              "archetype": "infected.firefighter"
+            },
+            {
+              "id": 324,
+              "x": -21.532076091178517,
+              "z": -1.4271897636009003,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 351,
+              "x": -19.093864742914015,
+              "z": -0.8890856406419752,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 346,
+              "x": -20.996592113524084,
+              "z": -0.8673461829931437,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 284,
+              "x": -23.31218102911949,
+              "z": -2.73278869262804,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 385,
+              "x": -18.000109627691955,
+              "z": -7.48537139828943,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 332,
+              "x": -18.16406094271682,
+              "z": -0.8074805480525357,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            },
+            {
+              "id": 335,
+              "x": -21.844627520201616,
+              "z": -0.5572398329325674,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 281,
+              "x": -18.307134775653587,
+              "z": -8.415411679139437,
+              "model": "infected.firefighter",
+              "archetype": "infected.firefighter"
+            },
+            {
+              "id": 292,
+              "x": -17.450046908849334,
+              "z": -0.7863519848006568,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 330,
+              "x": -21.11352835961971,
+              "z": 0.0011964818920243902,
+              "model": "infected.riot",
+              "archetype": "infected.riot"
+            },
+            {
+              "id": 342,
+              "x": -20.28239510003208,
+              "z": 0.16247339561863053,
+              "model": "infected.hazmat",
+              "archetype": "infected.hazmat"
+            }
+          ]
+        },
+        "observedHash": "6f55579b",
+        "canonicalHash": "6f55579b"
+      },
+      "target": "at least4 distinct infected looks in every20-infected sample",
+      "receipt": "docs/reports/sweep-b/L4-12-proof.json"
     }
   ],
   "observations": {
