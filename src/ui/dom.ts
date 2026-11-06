@@ -12,21 +12,24 @@ export function text(element: HTMLElement, value: string): void {
 export function setHidden(element: HTMLElement, value: boolean): void {
   if (element.hidden !== value) element.hidden = value;
 }
+// These helpers own their inline properties and attributes. Retain the last
+// requested value rather than materializing native DOM strings on every frame.
+const attributes = new WeakMap<HTMLElement, Map<string, string>>();
 export function attribute(element: HTMLElement, name: string, value: string): void {
-  if (element.getAttribute(name) !== value) element.setAttribute(name, value);
+  let saved = attributes.get(element);
+  if (saved?.get(name) === value) return;
+  element.setAttribute(name, value);
+  if (!saved) { saved = new Map(); attributes.set(element, saved); }
+  saved.set(name, value);
 }
-const styles = new WeakMap<HTMLElement, Map<string, { input: string; serialized: string }>>();
+const styles = new WeakMap<HTMLElement, Map<string, string>>();
 export function style(element: HTMLElement, name: string, value: string): void {
   let saved = styles.get(element);
-  const previous = saved?.get(name), actual = element.style.getPropertyValue(name);
-  // CSSOM rounds fractional positions. Compare its canonical value as well as
-  // our input, so an unchanged projection does not invalidate layout every frame.
-  if (previous?.input === value && previous.serialized === actual) return;
-  if (actual !== value) element.style.setProperty(name, value);
-  const serialized = element.style.getPropertyValue(name);
-  if (previous) { previous.input = value; previous.serialized = serialized; return; }
+  // Compare the input, not CSSOM's rounded serialization of projected positions.
+  if (saved?.get(name) === value) return;
+  element.style.setProperty(name, value);
   if (!saved) { saved = new Map(); styles.set(element, saved); }
-  saved.set(name, { input: value, serialized });
+  saved.set(name, value);
 }
 export function button(id: string, label: string, click: () => void): HTMLButtonElement {
   const element = node('button', id, label);
