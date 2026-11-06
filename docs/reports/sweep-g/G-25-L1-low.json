@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "level": "L1",
+  "tier": "low",
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "fixtureHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgpu",
+      "status": "PASS",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-L1-low.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 183,
+      "simSeconds": 164,
+      "maxNoProgressSeconds": 13.866666666666667,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot · 55 m",
+          "tick": 24,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex · 107 m",
+          "tick": 1177,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself · 63 m",
+          "tick": 5632,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station · 101 m",
+          "tick": 7201,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.53,
+              "z": 41.27
+            },
+            "drawn": [
+              -76.6,
+              0.53,
+              41.27
+            ],
+            "playerY": 0.9649999737739563,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

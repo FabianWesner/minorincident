@@ -25,6 +25,8 @@ const run = spawnSync(process.execPath, ['--import', 'tsx/esm', 'tools/qa/accept
   env: { ...process.env, BROWSER_POOL_JOB_ID: 'sweep-g', BROWSER_POOL_WAIT_MS: process.env.BROWSER_POOL_WAIT_MS ?? '120000',
     PLAYTEST_GOD: '1', PLAYTEST_BACKEND: 'webgpu', PLAYTEST_NO_FRAME_TIMING: '1', PLAYTEST_FRAME_GATE: '0', PLAYTEST_CPU_PROFILE: '0',
     PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_ACCEPTANCE_CAPTURES: '1', PLAYTEST_ACCEPTANCE_CAPTURE_TIERS: 'single',
+    ...(level === 'L7' ? { PLAYTEST_L7_ESCORT_ROUTE: '1' } : {}),
+    ...(level === 'L5' ? { PLAYTEST_L5_TOUR: '1' } : {}),
     PLAYTEST_REVEAL_AUDIT: '1', QA_ACCEPT_KEEP_CAPTURES: '1' },
 });
 if (run.error) console.error(run.error);
