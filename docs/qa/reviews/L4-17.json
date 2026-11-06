@@ -3,29 +3,29 @@
   "status": "FAIL",
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "58a3280f03cff4548e69791f10058555561f6609",
+  "commit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
   "clauses": [
     {
       "clause": "Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse.",
       "verdict": "FAIL",
-      "note": "Current ground-level-search candidate still FAILS L4-17: first150s war, actual settled frozen-vertex tops reach1.704m low and1.646m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. Isolated Alpha pose reaches1.48m at0.05m root height; spreading alone cannot establish<=~1m. Later plaza frames show stretched-looking angular strips on nearby figures, without a corpse-only attribution. Courier is visible in reviewed follow frames; continuous pixel-depth and universal limbs remain unqualified."
+      "note": "Current L4-only ground-level-search change still FAILS L4-17: first150s war, actual settled frozen-vertex tops reach1.704m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha death pose itself reaches about1.48m, so spreading alone does not establish<=~1m. Angular strips are visible on nearby figures without a corpse-only attribution. Courier is visible in the reviewed follow frames; continuous pixel-depth and universal limbs remain unqualified."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/fix73-b/L4-17-render-review.json",
-      "sha256": "001c483ea96f37193ef7ed9c1b89b7e3e3ed69272440532c8a0f256d2f8ee28a",
-      "what": "Current ground-level-search candidate still FAILS L4-17: first150s war, actual settled frozen-vertex tops reach1.704m low and1.646m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. Isolated Alpha pose reaches1.48m at0.05m root height; spreading alone cannot establish<=~1m. Later plaza frames show stretched-looking angular strips on nearby figures, without a corpse-only attribution. Courier is visible in reviewed follow frames; continuous pixel-depth and universal limbs remain unqualified."
+      "sha256": "54b94d7d4a0491e5bc7d5ab3b28919e8978f78a6ed6886529fc4a6427ddca347",
+      "what": "Current L4-only ground-level-search change still FAILS L4-17: first150s war, actual settled frozen-vertex tops reach1.704m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha death pose itself reaches about1.48m, so spreading alone does not establish<=~1m. Angular strips are visible on nearby figures without a corpse-only attribution. Courier is visible in the reviewed follow frames; continuous pixel-depth and universal limbs remain unqualified."
     },
     {
       "file": "docs/reports/fix73-b/L4-17-low-render.json.gz",
-      "sha256": "dd781fd06ae5d9c1fe11e034b85723f233f3b5f111be7b3b23b39a602c790791",
-      "what": "Full production renderer samples and capture metadata through first150s war; not a full-route PASS."
+      "sha256": "6e88749ebf676975005f3963d9bd67f839d63e0b42c6589155c83807a4fe3bdd",
+      "what": "Full current-source production renderer samples through first150s war, not a full-route PASS."
     },
     {
       "file": "docs/reports/fix73-b/L4-17-high-render.json.gz",
-      "sha256": "d769cd35bd2c7bc9847a876a83f118f60c5091480c44d17e67fdc9103b819cb5",
-      "what": "Full production renderer samples and capture metadata through first150s war; not a full-route PASS."
+      "sha256": "ab09a43254ad0d46b12bf3bfcfb1b85feffcd1dc4f7d1da005d292e66d5d2d92",
+      "what": "Full current-source production renderer samples through first150s war, not a full-route PASS."
     }
   ]
 }
