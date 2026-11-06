@@ -1,11 +1,13 @@
 {
-  "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
+  "gameCommit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
+  "sourceHash": "75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-  "method": "Current-source full-rate native L4 complete routes; every-tick nearest-20 census and collapse admission ledger; state hashes independently compared against canonical acceptance receipts by the original observer.",
+  "method": "Current-source full-rate read-only L4 native complete-route observer. Every war tick checks nearest20 living nonhidden admitted infected; each scheduled collapse quota is matched with real admitted actor counts in its540tick window. Both final complete state hashes match separate current-source qa:accept controls.",
   "tiers": [
     {
       "tier": "low",
       "finalHash": "c3184e26",
+      "canonicalHash": "c3184e26",
       "peak": 80,
       "mixChecks": 10679,
       "minimumLooks": 3,
@@ -155,7 +157,8 @@
           }
         ]
       },
-      "collapseWindows": 18,
+      "escapeGapWindows": 18,
+      "collapseQuotaWindows": 56,
       "missedQuotaWindows": 23,
       "firstMiss": {
         "tick": 28009,
@@ -166,6 +169,28 @@
           "2": 1
         }
       },
+      "saturationSampleBeforeFirstMiss": {
+        "tick": 27960,
+        "count": 79,
+        "reserved": 1,
+        "pendingTurns": 0,
+        "characters": 89,
+        "collapsePend": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "player": {
+          "x": -16.586458206176758,
+          "y": 0.7099999785423279,
+          "z": -10.974562644958496,
+          "yaw": -4.050253756904346
+        }
+      },
       "firstWindow": {
         "tick": 12889,
         "expectedPerEdge": 2,
@@ -174,11 +199,518 @@
           "1": 2,
           "2": 2
         }
-      }
+      },
+      "collapseQuotas": [
+        {
+          "tick": 12889,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 13429,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 3
+          }
+        },
+        {
+          "tick": 13969,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 14509,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 15049,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 15589,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 3,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16129,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16669,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 3
+          }
+        },
+        {
+          "tick": 17209,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 17749,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 18289,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 18829,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 19369,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 19909,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 20449,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 20989,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 21529,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 22069,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 22609,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 23149,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 23689,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 24229,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 24769,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 25309,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 25849,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 26389,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 26929,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 27469,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 28009,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 28549,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "tick": 29089,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "tick": 29629,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 3,
+            "4": 3,
+            "5": 2
+          }
+        },
+        {
+          "tick": 30169,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 30709,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 31249,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 3
+          }
+        },
+        {
+          "tick": 31789,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 32329,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 3,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 32869,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 0
+          }
+        },
+        {
+          "tick": 33409,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 0,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 33949,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 34489,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 1,
+            "6": 3
+          }
+        },
+        {
+          "tick": 35029,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 35569,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 36109,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 36649,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 4,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 37189,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 1,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 37729,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 38269,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "5": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 38809,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 39349,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "2": 1
+          }
+        },
+        {
+          "tick": 39889,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 40429,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "tick": 40969,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 1,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 41509,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 42049,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "5": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 42589,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        }
+      ]
     },
     {
       "tier": "high",
       "finalHash": "0bef7d9f",
+      "canonicalHash": "0bef7d9f",
       "peak": 120,
       "mixChecks": 10715,
       "minimumLooks": 3,
@@ -328,7 +860,8 @@
           }
         ]
       },
-      "collapseWindows": 2,
+      "escapeGapWindows": 2,
+      "collapseQuotaWindows": 9,
       "missedQuotaWindows": 5,
       "firstMiss": {
         "tick": 15085,
@@ -339,6 +872,28 @@
           "6": 0
         }
       },
+      "saturationSampleBeforeFirstMiss": {
+        "tick": 15060,
+        "count": 120,
+        "reserved": 44,
+        "pendingTurns": 0,
+        "characters": 136,
+        "collapsePend": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "player": {
+          "x": 48.4892463684082,
+          "y": 0.7099999785423279,
+          "z": -19.398082733154297,
+          "yaw": 1.570198912641864
+        }
+      },
       "firstWindow": {
         "tick": 12925,
         "expectedPerEdge": 3,
@@ -347,7 +902,90 @@
           "1": 3,
           "2": 3
         }
-      }
+      },
+      "collapseQuotas": [
+        {
+          "tick": 12925,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "1": 3,
+            "2": 3
+          }
+        },
+        {
+          "tick": 13465,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 3,
+            "2": 3,
+            "3": 3
+          }
+        },
+        {
+          "tick": 14005,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 3,
+            "3": 3,
+            "4": 3
+          }
+        },
+        {
+          "tick": 14545,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 3,
+            "4": 3,
+            "5": 3
+          }
+        },
+        {
+          "tick": 15085,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 3,
+            "5": 3,
+            "6": 0
+          }
+        },
+        {
+          "tick": 15625,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "5": 3,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16165,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "1": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 16705,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "1": 0,
+            "2": 2
+          }
+        },
+        {
+          "tick": 17245,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          }
+        }
+      ]
     }
   ]
 }

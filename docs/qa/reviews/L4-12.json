@@ -3,19 +3,19 @@
   "status": "FAIL",
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "58a3280f03cff4548e69791f10058555561f6609",
+  "commit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
   "clauses": [
     {
       "clause": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
       "verdict": "FAIL",
-      "note": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
+      "note": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/fix73-b/L4-native-summary.json",
-      "sha256": "b7247e0d39d696d83f0f64d74a93c989eb58ecde767c810f6ff5bd755ebdb555",
-      "what": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
+      "sha256": "8b664c0055b7288d431106849120c8f0da865acf0f90dc641566c7f30f80e79a",
+      "what": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
     },
     {
       "file": "docs/reports/fix71-b/L4-release-capture-review.json",
