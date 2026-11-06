@@ -24,7 +24,7 @@ L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded me
 - `npx tsc --noEmit` — PASS.
 - `npm run lint` — PASS.
 - `npm test -- --maxWorkers=4` — FAIL: 106/107 tests pass. Existing architecture test `tests/shared/architecture.test.ts` rejects `src/sim/progression/Save.ts` importing `three/addons/libs/fflate.module.js`; that import predates this lane (last source commit `7bd7cdf`).
-- Full L10 `qa:accept` low/high, both policies — initial tuning rerun passed L10-11. A later status refresh rechecked all four policy receipts, fixtures and checkpoints, then exited while loading L10-11 review because the tool had rewritten its cited aggregate JSON first; the review hash is refreshed to the resulting report, whose L10-11 status is PASS. L10-03 current-source simultaneous census rerun completed, showing the failure above.
+- Full L10 `qa:accept` low/high, both policies — initial tuning rerun passed L10-11. The final status refresh rechecked all four policy receipts, fixtures and checkpoints and refreshed the acceptance tracker: L10-11 is current PASS, L10-03 is a fresh current FAIL, with remaining L10 criteria incomplete. The CLI exits 1 for those open rows. L10-03 current-source simultaneous census rerun completed, showing the failure above.
 - `npm run qa:threat` — PASS, 474.9 s, zero flags. The complete final gates are not all green: the unit suite has the architecture failure above, and eight physical-input/review rows remain open.
 
 Per-row commits: L10-11 and L10-03 evidence/review commits are present. Other open rows have no completed evidence to commit.
