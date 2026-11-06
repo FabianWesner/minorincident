@@ -27,7 +27,7 @@ try{
     if(second)await session.page.evaluate(async()=>{await window.__SS__!.step(60);});
     samples.push(await session.page.evaluate(()=>{
      const g=(window.__SCENE__ as unknown as{game:Game}).game,w=g.world,s=w.missions!.state.l6!;
-     return {tick:w.tick,tier:w.infected!.director.tier,renderTier:g.view.getState().quality,roster:s.survivors.map(r=>{const e=w.entities.get(r.id)!;return{id:r.id,key:r.key,routine:r.routine,injured:r.injured,status:r.status,at:{...e.transform},hp:e.health,story:e.civilian!.story,activity:e.civilian!.schedule[e.civilian!.scheduleStep]?.activity,handProp:e.appearance?.handProp};})};
+     return {tick:w.tick,tier:w.infected!.director.tier,renderTier:g.view.getState().quality,roster:s.survivors.map(r=>{const e=w.entities.get(r.id)!;return{id:r.id,key:r.key,routine:r.routine,injured:r.injured,status:r.status,at:{...e.transform},hp:e.health,story:e.civilian!.story,activity:e.civilian!.schedule?.[e.civilian!.scheduleStep!]?.activity,handProp:e.appearance?.handProp};})};
     }));
    }
    const files=[];
