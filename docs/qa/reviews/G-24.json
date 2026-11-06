@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "715da4ac13157aa385870b1f2d8e38f414edce45",
+  "commit": "e7fe7fff51eb4a9a53b1444d03fb174c1af44e85",
   "clauses": [
     {
       "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or \u2264 15 m); dead ones show none; normal animals none.",
@@ -12,6 +12,21 @@
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-high.json",
+      "sha256": "f7991992c53b66734afd47b16358d781dc940e7fd380d25edd22496f42b8f9f3",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-low.json",
+      "sha256": "6305299a6c866e9e6ee9af5c8e0640dba4a6d30431f7e12bd7fccdccbb1f9e54",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-24-final-captures.json",
+      "sha256": "dd8f7c480ce8c4a71a9362ca6e797331bde540a466ef7ca2886b88e094c5fcab",
+      "what": "All ten original frames viewed: full bars for nearby healthy Alpha/zoo infected, no bars for far healthy actors, partial bars for far damaged actors, none for normal animals or dead actors."
+    },
     {
       "file": "docs/reports/sweep-g/G-24-webgl2-high-captures.json",
       "sha256": "46336ef1f0cc845c90788ea7a4adf19f8fec1fd6e51d850ba6fff6049abca52d",
@@ -52,5 +67,6 @@
       "sha256": "e2103ba73abba5c12cce45c68301abd638cd0169aba23b8ed67f0cd76c669112",
       "what": "webgpu/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
     }
-  ]
+  ],
+  "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
 }
