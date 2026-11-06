@@ -98,7 +98,7 @@ export class Npcs {
     // At its catch-up pace the ordinary crowd response carries the dog several
     // metres beyond a corner before it can turn back toward the courier.
     moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
-      (this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) || this.world.scenario === 'L7' && e.companion) ? l5FollowerTracking : undefined);
+      this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

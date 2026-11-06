@@ -65,10 +65,7 @@ export class LevelSevenEncounters {
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      // Only the lead centre slot overlaps the three-metre launcher approach.
-      const arrival = formationSlot(leader, heading, slot);
-      if (slot === 1) arrival.z += 2.4;
-      const at = this.clearPoint(arrival, .4);
+      const at = this.clearPoint(formationSlot(leader, heading, slot), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -128,7 +125,7 @@ export class LevelSevenEncounters {
         // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
         // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
         const close = ai.director.tier === 'low' ? 4 : 5, j = i - close;
-        p = j < 0 ? { x: centre.x + 4 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
+        p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
           : { x: centre.x - Math.floor(j / 10) * 1.6, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 10 >> 1) * 1.8) };
       } else if (ai.director.tier === 'low' && group !== l7Encounters.finalGroup && centre.x > 90) {
         const row = Math.floor(i / 10);
@@ -219,8 +216,7 @@ export class LevelSevenEncounters {
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
-    const goal = formationSlot(p.transform, this.state.started ? leaderHeading(p.transform.yaw, v) : { x: -1, z: 0 }, slot);
-    if (!this.state.started && slot === 1) goal.z += 2.4;
+    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
     // Reuse the L5 formation rule around cover: a clear slot across a wreck
     // can still send one follower around its far side at every corner.
     const nav = w.infected!.nav;
@@ -261,7 +257,7 @@ export class LevelSevenEncounters {
       } else c.l1!.target = null;
       let approach = this.approaches.get(e.id);
       if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
-      if (distance(approach, destination) - distance(e.transform, destination) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
       if (approach.around && distance(e.transform, approach.around[0]) < .15) approach.around.shift();
       if (!approach.around?.length) delete approach.around;
       // The pre-boarding corridor wait has no recovery timer. Use the bus
@@ -273,7 +269,7 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      if (!w.npcs!.move(e, destination, 5.2, c, 0, budget) && (w.tick + e.id) % 30 === 0) this.escapePocket(e);
+      w.npcs!.move(e, destination, 5.2, c, 0, budget);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
@@ -330,9 +326,8 @@ export class LevelSevenEncounters {
       }
       step = next;
     }
-    // Contact can push a follower away from the small escape route after it
-    // was planned. A blocked leg must release ownership back to normal
-    // navigation, rather than claiming the survivor forever without moving.
+    // Contact can invalidate a fine-grid escape leg after it was planned.
+    // Release a blocked route so ordinary navigation can replan.
     if (step <= 1e-6) { this.pocketRoutes.delete(e.id); return false; }
     // This is continuous, swept locomotion, including the tight rounded
     // corners that the square-margin route grid cannot represent.

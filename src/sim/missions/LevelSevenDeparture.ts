@@ -91,8 +91,7 @@ export class LevelSevenDeparture {
     if (!near) {
       let approach = this.approaches.get(e.id);
       if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
-      // Sideways crowd jitter is not progress toward this fixed queue.
-      if (distance(approach, queue) - distance(e.transform, queue) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
       if (approach.around && distance(e.transform, approach.around[0]) < .15) approach.around.shift();
       if (!approach.around?.length) delete approach.around;
       let goal = approach.around?.[0] ?? queue;

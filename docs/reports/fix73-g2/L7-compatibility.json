@@ -1,0 +1,420 @@
+{
+  "method": "Ordinary unpaused native complete policy with production acceptance/threat observers; canonical followerPaceVerdict stepsOnly/humansOnly, unchanged two-of-three seed rule. No checker, threshold, population or timer edits.",
+  "cases": [
+    {
+      "label": "queue-replan",
+      "tier": "low",
+      "change": "Replan stalled queue detours; rejected, still low/high pace flags.",
+      "sourceHash": "b722409a613d4164ebaaf9ee67ec03782f28d1dd0be3eda863f5aba9b81fc08b",
+      "run": {
+        "completed": true,
+        "time": 103.2,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [
+        "step/departure:SLOW_FOLLOWER:52"
+      ],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 103.71666666666667
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 106.85
+        }
+      ],
+      "contact": {
+        "attacks": 1,
+        "attacksPerMinute": 0.823045267489712,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "0ed23b67"
+    },
+    {
+      "label": "queue-replan",
+      "tier": "high",
+      "change": "Replan stalled queue detours; rejected, still low/high pace flags.",
+      "sourceHash": "b722409a613d4164ebaaf9ee67ec03782f28d1dd0be3eda863f5aba9b81fc08b",
+      "run": {
+        "completed": true,
+        "time": 102.8,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [
+        "step/departure:SLOW_FOLLOWER:63",
+        "step/departure:SLOW_FOLLOWER:72"
+      ],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 138.03333333333333
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 111.36666666666666
+        }
+      ],
+      "contact": {
+        "attacks": 8,
+        "attacksPerMinute": 6.596426935409986,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "5a149ad6"
+    },
+    {
+      "label": "occupied-leg",
+      "tier": "low",
+      "change": "Actor-aware corpse planning and original close-infected positions; high pace clears but low52 still fails.",
+      "sourceHash": "bbbb69c51e8890ceb6864179645b550b353cbfee4d1865149ae1e0dab9a9216c",
+      "run": {
+        "completed": true,
+        "time": 105.08333333333333,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [
+        "step/departure:SLOW_FOLLOWER:52"
+      ],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 103.81666666666666
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 162.18333333333334
+        }
+      ],
+      "contact": {
+        "attacks": 9,
+        "attacksPerMinute": 7.414187643020595,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "d2d5e5b7"
+    },
+    {
+      "label": "occupied-leg",
+      "tier": "high",
+      "change": "Actor-aware corpse planning and original close-infected positions; high pace clears but low52 still fails.",
+      "sourceHash": "bbbb69c51e8890ceb6864179645b550b353cbfee4d1865149ae1e0dab9a9216c",
+      "run": {
+        "completed": true,
+        "time": 148.53333333333333,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 127.18333333333334
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 102.26666666666667
+        }
+      ],
+      "contact": {
+        "attacks": 23,
+        "attacksPerMinute": 18.873945748803283,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "04a5f3e1"
+    },
+    {
+      "label": "human-tracking",
+      "tier": "low",
+      "change": "L5 response for all L7 humans throughout escort; pace vote clears but new low seed2 timeout, rejected.",
+      "sourceHash": "377e638c8a6b101545e629bbe7b8a1484e8bb9f293b8bcba12f97ab2633ab8d7",
+      "run": {
+        "completed": true,
+        "time": 102.9,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": false,
+          "outcome": "tick-budget",
+          "time": 1200
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 102.53333333333333
+        }
+      ],
+      "contact": {
+        "attacks": 9,
+        "attacksPerMinute": 7.410795974382434,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "b013e841"
+    },
+    {
+      "label": "human-tracking",
+      "tier": "high",
+      "change": "L5 response for all L7 humans throughout escort; pace vote clears but new low seed2 timeout, rejected.",
+      "sourceHash": "377e638c8a6b101545e629bbe7b8a1484e8bb9f293b8bcba12f97ab2633ab8d7",
+      "run": {
+        "completed": true,
+        "time": 104.31666666666666,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 104.9
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 143.03333333333333
+        }
+      ],
+      "contact": {
+        "attacks": 24,
+        "attacksPerMinute": 19.534252769613385,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "b3050584"
+    },
+    {
+      "label": "boarding-tracking",
+      "tier": "low",
+      "change": "Response limited to boarding; low52 still fails, rejected.",
+      "sourceHash": "708c686bc269cfe2ceb3fdfb37028b93f0add09d29997685914b3a12747cf853",
+      "run": {
+        "completed": true,
+        "time": 103.95,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [
+        "step/departure:SLOW_FOLLOWER:52"
+      ],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 103.85
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 182.55
+        }
+      ],
+      "contact": {
+        "attacks": 9,
+        "attacksPerMinute": 7.414187643020595,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "ed71406d"
+    },
+    {
+      "label": "boarding-tracking",
+      "tier": "high",
+      "change": "Response limited to boarding; low52 still fails, rejected.",
+      "sourceHash": "708c686bc269cfe2ceb3fdfb37028b93f0add09d29997685914b3a12747cf853",
+      "run": {
+        "completed": true,
+        "time": 148.61666666666667,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 146.16666666666666
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 102.26666666666667
+        }
+      ],
+      "contact": {
+        "attacks": 23,
+        "attacksPerMinute": 18.873945748803283,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "68bff878"
+    },
+    {
+      "label": "main-escort",
+      "tier": "low",
+      "change": "Restore main escort formation, NPC movement/response, corpse planner and native bot; retain opening grace, boarding latch/text and blocked-pocket release.",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "run": {
+        "completed": true,
+        "time": 138.83333333333334,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 103.73333333333333
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 102.11666666666666
+        }
+      ],
+      "contact": {
+        "attacks": 9,
+        "attacksPerMinute": 7.400639561443581,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "30e28540"
+    },
+    {
+      "label": "main-escort",
+      "tier": "high",
+      "change": "Restore main escort formation, NPC movement/response, corpse planner and native bot; retain opening grace, boarding latch/text and blocked-pocket release.",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "run": {
+        "completed": true,
+        "time": 104.48333333333333,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "paceFlags": [],
+      "seedOutcomes": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "time": null
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 105.93333333333334
+        },
+        {
+          "seed": 3,
+          "valid": false,
+          "outcome": "tick-budget",
+          "time": 1200
+        }
+      ],
+      "contact": {
+        "attacks": 24,
+        "attacksPerMinute": 19.73954763536669,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0
+      },
+      "nativeStateHash": "08b6e3e8"
+    }
+  ],
+  "cause": "Restoring completion exposed departure pace regressions in35d5042 escort additions. A stalled queue-leg replan did not resolve them. Broader human tracking changed pre-boarding collision/combat timing and introduced a low-seed timeout. Restore main escort mechanics and bot policy while preserving the requested boarding latch/grace/text fixes and blocked-pocket release.",
+  "scope": "Focused diagnostics; final complete acceptance and full standalone threat gate recorded separately.",
+  "input": {
+    "file": "docs/reports/fix73-g2/L7-compatibility-input.json.gz",
+    "sha256": "2e0d5eea806901e443421bf8b8f4d6d03da9d18f47d660838bd94552ec661aa6"
+  }
+}

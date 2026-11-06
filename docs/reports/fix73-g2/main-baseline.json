@@ -115,7 +115,27 @@
             }
           },
           "regions": {},
-          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740"
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": null
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 103.73333333333333
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "time": 102.11666666666666
+            }
+          ]
         },
         "high": {
           "run": {
@@ -143,7 +163,27 @@
             }
           },
           "regions": {},
-          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740"
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": null
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 105.93333333333334
+            },
+            {
+              "seed": 3,
+              "valid": false,
+              "outcome": "tick-budget",
+              "time": 1200
+            }
+          ]
         }
       }
     },
@@ -1859,7 +1899,8 @@
               }
             }
           },
-          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740"
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": []
         },
         "high": {
           "run": {
@@ -2153,9 +2194,11 @@
               }
             }
           },
-          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740"
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": []
         }
       }
     }
-  }
+  },
+  "method": "Published main report/receipt snapshot via git show at183ca95, not a fresh baseline execution. It already retains low R6 dogPeak6; the game bound remains5 and the new result must satisfy5 independently of that retained failure."
 }
