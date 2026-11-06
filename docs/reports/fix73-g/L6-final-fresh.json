@@ -1,0 +1,133 @@
+{
+  "observations": {
+    "status": "PASS for unpaused fresh low route and shield feedback; poor follower survival retained",
+    "source": {
+      "sourceHash": "a1d9231082fb8f49ea88dc68fb3a1c3e252bc21eac20cb4bff6105dadbe6f204",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "revision": "739a50461a6333b8dd55f088ba5c97376d185a44",
+      "input": {
+        "level": "L6",
+        "tier": "low",
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "source": "fresh",
+        "courierGodMode": true,
+        "movingCoverRoute": false,
+        "noSkip": true,
+        "frameTiming": false
+      }
+    },
+    "method": "Final body-preserving game, headless shared Metal WebGL2, zoom1.5, ordinary unpaused WASD/mouse, courier protected, normal follower damage, no actor edits/skips.",
+    "completion": {
+      "time": 192.28333333333333,
+      "kills": 0,
+      "knockdowns": 74,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 4,
+      "optionalObjectives": [],
+      "survivors": [
+        "shelter-0",
+        "shelter-3",
+        "shelter-4",
+        "shelter-19"
+      ],
+      "survivorsIn": 29,
+      "survivorsLost": 25
+    },
+    "gates": [
+      {
+        "id": 45,
+        "x": 90,
+        "closedAt": 0,
+        "hold": 0,
+        "requested": false,
+        "passed": true
+      },
+      {
+        "id": 46,
+        "x": 150,
+        "closedAt": 8248,
+        "hold": 0,
+        "requested": false,
+        "passed": true
+      },
+      {
+        "id": 47,
+        "x": 210,
+        "closedAt": 0,
+        "hold": 0,
+        "requested": false,
+        "passed": true
+      }
+    ],
+    "shieldBreaks": 28,
+    "shieldBreaksOnObserved600HpIds": 25,
+    "largeShieldIds": [
+      100,
+      103,
+      106,
+      109,
+      112,
+      115
+    ],
+    "limitation": "Only4of29 followers survive this unguarded physical MG policy; native shotgun-cover policy saves27. Not a mortal or escort-difficulty qualification. Readable E interaction was captured by the earlier fresh high human probe in L6-gate.json; UI/gate interaction code is unchanged.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-1238-stuck-navigating.jpg",
+      "sha256": "3fc18b5f944f92254ae466e225eb008374b93712846c63a6b28af8a94bb420ae",
+      "what": "Shelter calm opening: courier and corgi by civilians, rest objective; automatic stuck label is the authored waiting phase, not a gate stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-result.jpg",
+      "sha256": "4137fd2fc745640d2dbfc580ed9fa29cbbed89d3384eb6edb974d98aec27da82",
+      "what": "Result panel clearly shows192.28s,74knockdowns,0deaths,4out/29start/25lost."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-shield-break-t4982.jpg",
+      "sha256": "2b5475b02ccba98f6a48a19ef0c7b33f9f3eaa4e9630ceaa3d8edd0012b1cf84",
+      "what": "Readable SHIELD BROKEN1.5s HUD cue while courier fires toward retreating shield bearer; followers on stairs."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-shield-break-t5105.jpg",
+      "sha256": "53bf9aa712c86e2c74a9953938f7ea75ccff44c5e4e705aa63349afa392a1076",
+      "what": "Readable SHIELD BROKEN1.5s HUD cue and red-bar riot front at lower right while courier covers tunnel."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t10557.jpg",
+      "sha256": "a363673f187782f05e7b5b74af274652cc53cb30a161616aee344a39474b74e5",
+      "what": "Courier and corgi near exit-side ring with retreat objective7m; clear immediate stairs."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t11.jpg",
+      "sha256": "4b7938ea2d60cba8f3e6c1e9a65a3893e83c1e251da93d3760285949571a4455",
+      "what": "Initial shelter, courier100HP and corgi; injured-survivor speech visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t2117.jpg",
+      "sha256": "09d3fa4d9c58abff34c73e3e28f9a2daf21a4baf93d7c6df04268295cde84f51",
+      "what": "Shelter after first breach, objective countdown0:34, civilians in background."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t4224.jpg",
+      "sha256": "72c37ba4a873cb211d5bf91a83f1e07a8bec12cb901a65e6b3062cacb83e0763",
+      "what": "Packed group under attack during retreat; readable SHIELD STRAIN\u00b7CHIP cue above, courier firing."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t6331.jpg",
+      "sha256": "7bf04a8935c4ab73ced0422bae19bf614652000752360ee310652da5e366a67d",
+      "what": "Courier and followers at gate90; yellow interaction ring visible and SHIELD BROKEN1.5s over riot front below."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-final-low/captures/fix73-L6-final-low-L6-t8433.jpg",
+      "sha256": "6441db001cc5c90eed2d846c91070672969b9e981b3aa60b6e7933c7953d51cd",
+      "what": "Courier ahead of remaining followers in tunnel; readable Survivor under attack! Turn back! prompt."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L6-final-fresh-input.json.gz",
+    "sha256": "27d00d09add6b1ffe52290d64ac4fee116b9b0646c6efb0f8ae219d56a59e2bb"
+  }
+}
