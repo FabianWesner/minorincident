@@ -1,0 +1,67 @@
+{
+  "row": "L4-06",
+  "status": "PASS",
+  "sourceHash": "ed35ecd05820dbc242dca7d5d7502e9a123a49626e8db657dda36bbbace1b031",
+  "change": "Increase low-tier alarm infected9\u219212. High18 unchanged. No cap, timer, threshold or policy changes.",
+  "observation": "Both exact production stationary policies complete the190s hold. First physical breach52.7167s at both tiers;62 low/66 high living; sustained post45s plaza minima63/66. Previous current-source low census59 failed. All fixed numeric horde criteria pass.",
+  "before": "docs/reports/fix67-b/L4-06-before.json.gz",
+  "trial": "docs/reports/fix67-b/L4-06-alarm-trial.json",
+  "rows": [
+    {
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "3d300e8da9af418149eb15bb28901a48ceaa2f24f8f4883147a0f90de7daac0d",
+      "hold": {
+        "tier": "low",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 52.71666666666667,
+        "firstBreachAfterTurnSeconds": 19.9,
+        "aliveAtFirstBreach": 62,
+        "peakAlive": 80,
+        "peakPlazaAlive": 77,
+        "minPlazaAliveAfter45Seconds": 63,
+        "samplesAfter45Seconds": 8892,
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 8.283333333333333,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    },
+    {
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "31dc5e7b652457f0c6383c3b68264ef283425519db32072240b929db8410d3e1",
+      "hold": {
+        "tier": "high",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 52.71666666666667,
+        "firstBreachAfterTurnSeconds": 19.9,
+        "aliveAtFirstBreach": 66,
+        "peakAlive": 94,
+        "peakPlazaAlive": 90,
+        "minPlazaAliveAfter45Seconds": 66,
+        "samplesAfter45Seconds": 8892,
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 7.716666666666667,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    }
+  ]
+}
