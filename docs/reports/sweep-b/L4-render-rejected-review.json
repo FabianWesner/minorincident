@@ -1,0 +1,35 @@
+{
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "images": 2,
+  "sheets": 1,
+  "records": [
+    {
+      "source": "test-results/sweep-b/L4-render/captures/low-cellar-entry.jpg",
+      "sha256": "33741cb140502e1db8085689d22717493a7e9357976ba817ea1abc6a5d706bc5",
+      "sheet": "test-results/sweep-b/L4-render-review/review/L4-render-01.jpg",
+      "cell": 1,
+      "sheetSha256": "043ae74ed33c65f0cc58bf9420bd5e8b8cf10f3686e056b94d678025e2215358",
+      "observation": "Two controlled cellar-entry frames show courtyard, braced entrance ring, dog and golden protected courier. No pile or combat is framed; renderer counters only. Initial tier setup is unqualified and not used for acceptance."
+    },
+    {
+      "source": "test-results/sweep-b/L4-render/captures/high-cellar-entry.jpg",
+      "sha256": "befdbda8952cf9a80e92f967d0a462dde1fd9641d87349f75b82419472f00503",
+      "sheet": "test-results/sweep-b/L4-render-review/review/L4-render-01.jpg",
+      "cell": 2,
+      "sheetSha256": "043ae74ed33c65f0cc58bf9420bd5e8b8cf10f3686e056b94d678025e2215358",
+      "observation": "Two controlled cellar-entry frames show courtyard, braced entrance ring, dog and golden protected courier. No pile or combat is framed; renderer counters only. Initial tier setup is unqualified and not used for acceptance."
+    }
+  ],
+  "archives": [
+    {
+      "source": "test-results/sweep-b/L4-render/proof.json",
+      "sha256": "ad4571027131cb8678a5766e156a897078ac8c5b1a1b7641796b1ab1d84b2b3e",
+      "archive": "test-results/sweep-b/L4-render-review/evidence/L4-render-proof.json.gz",
+      "archiveSha256": "2558bd1605605c547544d35455b435585cc949867286b7f669286fd3a37b95ca"
+    }
+  ],
+  "captureMetadataArchive": "test-results/sweep-b/L4-render-review/evidence/capture-metadata.json.gz",
+  "captureMetadataSha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+  "cleanup": "Raw JPEGs and capture metadata deleted after inspection and digest verification. Numbered sheets remain in ignored test-results."
+}

@@ -672,11 +672,13 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['convoy vehicle identities', 'convoy duration'].map(clause => ({ clause, policy: 'complete' })),
     ...['courier control restored after actual convoy stop', 'full passenger bus parks inside the military perimeter'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
+  ['L4-14', [{ clause: 'actual cellar-entry live damage and renderer scorch census', policy: 'controlled-fixture' }]],
   ['L4-18', [{ clause: 'reviewed clean living plaza and readable battle courier', policy: 'real-input-webgl2' }]],
   ['L4-16', [
     { clause: 'uninterrupted standing bar interaction with E continuously false', policy: 'controlled-fixture' },
     ...['actual cellar entrant roster', 'decoded low-pass battle audible after barring', 'actual same-basement L5 handover', 'reviewed visible companion in cellar'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
   ]],
+  ['L5-02', [{ clause: 'actual opening objective silence allied-fire and moving-vehicle clocks', policy: 'controlled-fixture' }]],
   ['L5-03', [{ clause: 'actual initial infected positions accepted cohorts and all street bands', policy: 'controlled-fixture' }]],
   ['L5-13', [{ clause: 'zero-survivor ordinary route and rescued result', policy: 'controlled-fixture' }]],
   ['L5-11', [{ clause: 'reviewed heroine colour in fog and bus hiding-place readability', policy: 'real-input-webgl2' }]],
