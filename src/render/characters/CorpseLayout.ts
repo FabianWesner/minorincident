@@ -343,6 +343,7 @@ export class CorpseLayout {
     }
     // A narrow doorway can fit the actor but reject a conservative full-body
     // strip. Keep the bounded root and heap layer, never teleport it elsewhere.
+    if (!best) state.bestY = Infinity;
     if (!best) for (let i = 0; i < 80 && !best; i++) {
       const angle = initialYaw + i * Math.PI * 2 / 80;
       best = evaluateCandidate(state, e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
