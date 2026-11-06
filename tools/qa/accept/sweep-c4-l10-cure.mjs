@@ -30,7 +30,7 @@ try {
   page.on('pageerror', error => errors.push(error.message)); page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   try {
     await page.addInitScript('window.__name=f=>f');
-    await page.goto(`http://127.0.0.1:${port}/?test=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);
+    await page.goto(`http://127.0.0.1:${port}/?test=1&ui=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);
     await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
     setup = await page.evaluate(async ({ campaign, tier }) => {
       const a = window.__SS__, g = window.__SCENE__.game; await a.ready; a.pause(); a.campaign.restore(campaign);
