@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -253,19 +253,19 @@
       "clause": "mortal checkpoint restore at L4/nests",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "PASS",
+      "status": "FAIL",
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "113cdfff18ca6091719668f459ffa97ea2cb85d3816823f1f5b762eef0f3c622",
+        "snapshotSha256": "bf4181e9dc5a3f8ea1423e0489e251a2f21fb77ee540c18d6c9644fd8d5e7933",
         "damage": 100,
         "expected": {
           "id": "nests",
           "anchor": {
-            "x": -11,
+            "x": -9.8,
             "y": 0.7099999785423279,
-            "z": 16,
-            "yaw": -0.44798806272077435
+            "z": -16.5,
+            "yaw": 1.6856249444955436
           },
           "gates": {},
           "racks": {
@@ -320,7 +320,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0,
+        "positionError": 32.52214630063643,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -336,7 +336,7 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "6e417000019b136a81b6f0990836140900739a42a60bb8d690ab90034e50d5a8",
+        "snapshotSha256": "299f9aa57a20a52124a7dfd7ede86d837426d364a6f0d2ea599a2596aaa5d73e",
         "damage": 100,
         "expected": {
           "id": "armor",
@@ -344,7 +344,7 @@
             "x": -11,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": -1.0591383248952948
+            "yaw": 2.941366768213776
           },
           "gates": {},
           "racks": {
@@ -415,7 +415,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "de17d9517e6ebea045b0a070d46087f37fb36a3714e4d3d3face8889e8159828",
+        "snapshotSha256": "ada83c6b78e4741a269539e3c51cbbec1a0447bc1344893ab8b3eadd27016d3e",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -423,7 +423,7 @@
             "x": -4,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": -0.743563175133649
+            "yaw": 2.9841817422750307
           },
           "gates": {},
           "racks": {
@@ -488,8 +488,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "c95cf0b3",
-    "control": "c95cf0b3",
+    "observed": "6f55579b",
+    "control": "6f55579b",
     "identical": true
   }
 }

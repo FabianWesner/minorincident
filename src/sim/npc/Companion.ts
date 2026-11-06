@@ -136,7 +136,11 @@ export class Companion {
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
         this.world.npcs!.move(e, player.transform, 9, c, 1.5);
-        if (this.world.tick >= c.until) { c.courage = 100; c.state = 'follow'; }
+        if (this.world.tick >= c.until) {
+          // Hidden travel has no collision history. Recovery starts a new
+          // contact transaction at the current pose, never at the pre-hide one.
+          this.world.solids.forget(e); c.courage = 100; c.state = 'follow';
+        }
         continue;
       }
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);

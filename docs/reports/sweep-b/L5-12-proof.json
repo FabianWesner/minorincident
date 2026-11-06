@@ -1,0 +1,109 @@
+{
+  "row": "L5-12",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "37a2370e99e647a801c3688bd9f049007ec405b561063868ea94cb686c109397",
+  "ledger": "docs/reports/sweep-b/L5-render-ledger.json.gz",
+  "ledgerSha256": "af5375bb80c5c745837834a73e24ab6eeb15a6feee8fd50dfbd704956cb1432a",
+  "observation": "Both corrected100low/150high mortal renderer runs complete through actual shutter closure. During each intended3s resident-view sequence the renderer submits at most19 of24 station identities, so at most19 can be visible (minimum20). Reviewed every metro-second capture: camera stays at exterior stairs/canopy with courier, dog and a small follower group; no20\u201330-resident interior look appears, then L6 loads. The physical routes show the same exterior framing. This closes FAIL through resident visibility; no unconditional PASS for continuous crossing, body-overlap or end-camera clauses.",
+  "rows": [
+    {
+      "tier": "low",
+      "stationCount": 24,
+      "samples": [
+        {
+          "tick": 12180,
+          "phase": "metro",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12240,
+          "phase": "metro",
+          "submittedStationFigures": 17,
+          "drawnStationFigures": 17
+        },
+        {
+          "tick": 12300,
+          "phase": "metro",
+          "submittedStationFigures": 19,
+          "drawnStationFigures": 19
+        },
+        {
+          "tick": 12360,
+          "phase": "shelter",
+          "submittedStationFigures": 19,
+          "drawnStationFigures": 19
+        },
+        {
+          "tick": 12420,
+          "phase": "shelter",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12480,
+          "phase": "shelter",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12534,
+          "phase": "done",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        }
+      ],
+      "maximumSubmitted": 19
+    },
+    {
+      "tier": "high",
+      "stationCount": 24,
+      "samples": [
+        {
+          "tick": 12240,
+          "phase": "metro",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12300,
+          "phase": "metro",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12360,
+          "phase": "metro",
+          "submittedStationFigures": 19,
+          "drawnStationFigures": 19
+        },
+        {
+          "tick": 12420,
+          "phase": "shelter",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12480,
+          "phase": "shelter",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12540,
+          "phase": "shelter",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        },
+        {
+          "tick": 12562,
+          "phase": "done",
+          "submittedStationFigures": 18,
+          "drawnStationFigures": 18
+        }
+      ],
+      "maximumSubmitted": 19
+    }
+  ]
+}

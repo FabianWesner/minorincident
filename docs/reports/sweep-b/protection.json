@@ -1,0 +1,3959 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "838cde8be51514297c09a2360884c494d47d6fb4",
+  "producerSha256": "98555e9daf322f45df52455ce4451798bd6bfbb13e90c9ead19aeb11b91f9498",
+  "method": "Matched production loadLevel, seed1 progressed campaign, same tier and ordinary mortal input. Complete final-state hashes must equal current canonical receipts. Evade-only is the actual moving no-attack policy, not the stationary protection policy. Full result/roster/bite/death ledgers retained; no human-like browser benchmark is claimed.",
+  "rows": [
+    {
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "completed": true,
+      "time": 206.58333333333334,
+      "deaths": 0,
+      "result": {
+        "rescued": 5,
+        "survivors": [
+          "dale",
+          "rosa",
+          "okafor",
+          "mia",
+          "sam"
+        ]
+      },
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "sheltered",
+          "foundAt": 7381,
+          "cueAt": 7496,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "sheltered",
+          "foundAt": 9797,
+          "cueAt": 9966,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "sheltered",
+          "foundAt": 3770,
+          "cueAt": 4039,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "sheltered",
+          "foundAt": 1921,
+          "cueAt": 2119,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "sheltered",
+          "foundAt": 5861,
+          "cueAt": 5940,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "l5.found",
+          "tick": 1921,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "l5.found",
+          "tick": 3770,
+          "key": "okafor",
+          "id": 30,
+          "count": 2
+        },
+        {
+          "type": "l5.found",
+          "tick": 5861,
+          "key": "sam",
+          "id": 32,
+          "count": 3
+        },
+        {
+          "type": "l5.found",
+          "tick": 7381,
+          "key": "dale",
+          "id": 28,
+          "count": 4
+        },
+        {
+          "type": "l5.found",
+          "tick": 9797,
+          "key": "rosa",
+          "id": 29,
+          "count": 5
+        }
+      ],
+      "finalHash": "41e92b1f",
+      "canonicalHash": "41e92b1f"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "policy": "evade-only",
+      "completed": false,
+      "time": 600,
+      "deaths": 22,
+      "result": null,
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "following",
+          "foundAt": 35963,
+          "cueAt": 36303,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "l5.found",
+          "tick": 1549,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 2155,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -11.004609601612332,
+            "z": -39.98108235634323
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 2155,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 3003,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 3123
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 3892,
+          "sourceId": 198,
+          "targetId": 31,
+          "position": {
+            "x": -46.4486837748154,
+            "z": -37.96367829626866
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 3892,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 3921,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 4041
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 4760,
+          "sourceId": 198,
+          "targetId": 31,
+          "position": {
+            "x": -47.59827415707793,
+            "z": -37.777814391361275
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 4760,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 5005,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 5125
+        },
+        {
+          "type": "player.died",
+          "tick": 6908,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 7028
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 7657,
+          "sourceId": 136,
+          "targetId": 31,
+          "position": {
+            "x": -40.550942264213106,
+            "z": -44.6596558366877
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 7657,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 8451,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 8571
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9211,
+          "sourceId": 84,
+          "targetId": 31,
+          "position": {
+            "x": -49.42266587480118,
+            "z": -44.521070726002996
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 9211,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 9744,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 9864
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 10550,
+          "sourceId": 162,
+          "targetId": 31,
+          "position": {
+            "x": -19.37891311266899,
+            "z": -30.845582711106548
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 10550,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 11101,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 11221
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 11828,
+          "sourceId": 136,
+          "targetId": 31,
+          "position": {
+            "x": -41.18875523495065,
+            "z": -41.41380365248207
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 11828,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 12696,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 12816
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 13429,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -42.29259694214582,
+            "z": -43.6804574110444
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 13429,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 14111,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 14231
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 14860,
+          "sourceId": 162,
+          "targetId": 31,
+          "position": {
+            "x": -41.21980534015733,
+            "z": -45.16299375986949
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 14860,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 16038,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 16158
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 16864,
+          "sourceId": 84,
+          "targetId": 31,
+          "position": {
+            "x": -41.0943081154883,
+            "z": -42.35247453681994
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 16864,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 18109,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 18229
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 19750,
+          "sourceId": 148,
+          "targetId": 31,
+          "position": {
+            "x": 3.4886657040226052,
+            "z": -36.074331093678815
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 19750,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 19966,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 20086
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 20694,
+          "sourceId": 268,
+          "targetId": 31,
+          "position": {
+            "x": -41.05194843488945,
+            "z": -43.57342287936145
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 20694,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 21833,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 21953
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 22660,
+          "sourceId": 84,
+          "targetId": 31,
+          "position": {
+            "x": -36.29745909279764,
+            "z": -45.01066882656937
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 22660,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 23424,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 23544
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 24153,
+          "sourceId": 112,
+          "targetId": 31,
+          "position": {
+            "x": -21.20904345713843,
+            "z": -33.313464955210605
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 24153,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 24819,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 24939
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 25539,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -21.43661829662098,
+            "z": -33.63331250558543
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 25539,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 26166,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 26286
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 27959,
+          "sourceId": 158,
+          "targetId": 31,
+          "position": {
+            "x": -12.160549222907395,
+            "z": -34.30634142181275
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 27959,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 28032,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 28152
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 28908,
+          "sourceId": 162,
+          "targetId": 31,
+          "position": {
+            "x": -38.59117991703142,
+            "z": -32.694571300350525
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 28908,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 29318,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 29438
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 30043,
+          "sourceId": 136,
+          "targetId": 31,
+          "position": {
+            "x": -40.49275713434225,
+            "z": -44.60276260134922
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 30043,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 30613,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 30733
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 31339,
+          "sourceId": 268,
+          "targetId": 31,
+          "position": {
+            "x": -41.05203519700185,
+            "z": -41.122003924873574
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 31339,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 32769,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 32889
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 33502,
+          "sourceId": 136,
+          "targetId": 31,
+          "position": {
+            "x": -21.888595540151872,
+            "z": -33.60348023959835
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 33502,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 34470,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 34590
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 35214,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -43.527998095409075,
+            "z": -44.74174925317424
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 35214,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 35843,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 35963
+        }
+      ],
+      "finalHash": "eff362fd",
+      "canonicalHash": null
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "completed": true,
+      "time": 217.45,
+      "deaths": 0,
+      "result": {
+        "rescued": 5,
+        "survivors": [
+          "dale",
+          "rosa",
+          "okafor",
+          "mia",
+          "sam"
+        ]
+      },
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "sheltered",
+          "foundAt": 7593,
+          "cueAt": 7886,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "sheltered",
+          "foundAt": 10154,
+          "cueAt": 10378,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "sheltered",
+          "foundAt": 4028,
+          "cueAt": 4082,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "sheltered",
+          "foundAt": 2126,
+          "cueAt": 2496,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "sheltered",
+          "foundAt": 6259,
+          "cueAt": 6572,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "l5.found",
+          "tick": 2126,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "l5.found",
+          "tick": 4028,
+          "key": "okafor",
+          "id": 30,
+          "count": 2
+        },
+        {
+          "type": "l5.found",
+          "tick": 6259,
+          "key": "sam",
+          "id": 32,
+          "count": 3
+        },
+        {
+          "type": "l5.found",
+          "tick": 7593,
+          "key": "dale",
+          "id": 28,
+          "count": 4
+        },
+        {
+          "type": "l5.found",
+          "tick": 10154,
+          "key": "rosa",
+          "id": 29,
+          "count": 5
+        }
+      ],
+      "finalHash": "5493dad2",
+      "canonicalHash": "5493dad2"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "policy": "evade-only",
+      "completed": false,
+      "time": 600,
+      "deaths": 28,
+      "result": null,
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "following",
+          "foundAt": 35494,
+          "cueAt": 35551,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "l5.found",
+          "tick": 1414,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "player.died",
+          "tick": 2152,
+          "id": 1
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 2171,
+          "sourceId": 332,
+          "targetId": 31,
+          "position": {
+            "x": -6.964287216743633,
+            "z": -38.764751391497036
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 2171,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 2272
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 2967,
+          "sourceId": 288,
+          "targetId": 31,
+          "position": {
+            "x": -14.358449601308996,
+            "z": -35.21223926023302
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 2967,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 3137,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 3257
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 3979,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -16.294987496432853,
+            "z": -36.4588571012064
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 3979,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 4266,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 4386
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 5022,
+          "sourceId": 332,
+          "targetId": 31,
+          "position": {
+            "x": -13.604164474711242,
+            "z": -36.18991551442458
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 5022,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 5368,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 5488
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 6132,
+          "sourceId": 156,
+          "targetId": 31,
+          "position": {
+            "x": -11.93694686573194,
+            "z": -35.7044075648967
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 6132,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 6363,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 6483
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 7163,
+          "sourceId": 332,
+          "targetId": 31,
+          "position": {
+            "x": -18.165204481787523,
+            "z": -36.98040939261356
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 7163,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 8037,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 8157
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8812,
+          "sourceId": 288,
+          "targetId": 31,
+          "position": {
+            "x": -14.634311344544162,
+            "z": -35.52181931938149
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 8812,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 9234,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 9354
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 10011,
+          "sourceId": 288,
+          "targetId": 31,
+          "position": {
+            "x": -13.595498179545611,
+            "z": -38.656786380322885
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 10011,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 10651,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 10771
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 11379,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -15.335698516603484,
+            "z": -34.9704296463939
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 11379,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 11984,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 12104
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 12727,
+          "sourceId": 156,
+          "targetId": 31,
+          "position": {
+            "x": -20.484153397658243,
+            "z": -42.787917758860445
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 12727,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 12974,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 13094
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 13724,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -15.533062509201374,
+            "z": -36.05938553342789
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 13724,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 13988,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 14108
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 14778,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -15.290634011505773,
+            "z": -36.614605539021106
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 14778,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 15090,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 15210
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 15919,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -16.07384908557776,
+            "z": -39.1518294996441
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 15919,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 16580,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 16700
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 17488,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -14.546231495386547,
+            "z": -35.49387080084259
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 17488,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 17888,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 18008
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 18622,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -15.964508833781302,
+            "z": -36.25182757370925
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 18622,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 19110,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 19230
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 19857,
+          "sourceId": 360,
+          "targetId": 31,
+          "position": {
+            "x": -15.599394349916782,
+            "z": -36.20182672403452
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 19857,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 20111,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 20231
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 20839,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -14.977307254298625,
+            "z": -35.84825995398118
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 20839,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 21112,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 21232
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 21891,
+          "sourceId": 86,
+          "targetId": 31,
+          "position": {
+            "x": -16.154777906404327,
+            "z": -33.88852200490864
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 21891,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 22195,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 22315
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 22985,
+          "sourceId": 108,
+          "targetId": 31,
+          "position": {
+            "x": -15.784406137055619,
+            "z": -33.91786481815457
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 22985,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 23547,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 23667
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 24325,
+          "sourceId": 288,
+          "targetId": 31,
+          "position": {
+            "x": -14.44770622354253,
+            "z": -36.46413330764052
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 24325,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 24773,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 24893
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 25542,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -16.942786365551825,
+            "z": -38.26076727794121
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 25542,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 26200,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 26320
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 26944,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -16.702315448082995,
+            "z": -36.019092719867935
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 26944,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 27598,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 27718
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 28338,
+          "sourceId": 84,
+          "targetId": 31,
+          "position": {
+            "x": -19.479507725140785,
+            "z": -33.10143973392927
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 28338,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 28975,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 29095
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 29729,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -13.556740173061153,
+            "z": -37.94663318240632
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 29729,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 30252,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 30372
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 31092,
+          "sourceId": 198,
+          "targetId": 31,
+          "position": {
+            "x": -14.520136409776786,
+            "z": -38.85013392421759
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 31092,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 31375,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 31495
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 32129,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -14.596491325796205,
+            "z": -38.1158276374897
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 32129,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 32726,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 32846
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 33475,
+          "sourceId": 260,
+          "targetId": 31,
+          "position": {
+            "x": -16.876646830133918,
+            "z": -34.02136303008113
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 33475,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 34192,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 34312
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 34933,
+          "sourceId": 162,
+          "targetId": 31,
+          "position": {
+            "x": -20.11571185218761,
+            "z": -27.044468766611747
+          },
+          "turns": false
+        },
+        {
+          "type": "l5.lost",
+          "tick": 34933,
+          "key": "mia",
+          "id": 31,
+          "cause": "dead"
+        },
+        {
+          "type": "player.died",
+          "tick": 35374,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "survivor-1",
+          "tick": 35494
+        }
+      ],
+      "finalHash": "6abf45d0",
+      "canonicalHash": null
+    },
+    {
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "completed": true,
+      "time": 279.5833333333333,
+      "deaths": 0,
+      "result": {
+        "rescued": 1,
+        "survivorsIn": 29,
+        "survivorsLost": 28,
+        "survivors": [
+          "shelter-0"
+        ]
+      },
+      "roster": [
+        {
+          "key": "shelter-0",
+          "id": 16,
+          "injured": false,
+          "routine": "guard",
+          "status": "out",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 17,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 18,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 19,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 20,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 21,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 22,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 23,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 24,
+          "injured": false,
+          "routine": "treat",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 25,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 26,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 27,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 28,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 30,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 31,
+          "injured": true,
+          "routine": "share",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 32,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 33,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 34,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 35,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 36,
+          "injured": true,
+          "routine": "share",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 37,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 38,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 39,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 40,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 41,
+          "injured": false,
+          "routine": "treat",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 42,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 43,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 44,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "outbreak.bite",
+          "tick": 3778,
+          "sourceId": 81,
+          "targetId": 22,
+          "position": {
+            "x": 3.733549112661853,
+            "z": -10.707573245055952
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 4012,
+          "sourceId": 81,
+          "targetId": 30,
+          "position": {
+            "x": 7.258477177171719,
+            "z": -5.271032563574801
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 4147,
+          "sourceId": 85,
+          "targetId": 17,
+          "position": {
+            "x": 3.659683582060631,
+            "z": -7.618796868205623
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8145,
+          "sourceId": 111,
+          "targetId": 29,
+          "position": {
+            "x": 121.4610146190237,
+            "z": 15.05074205640318
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8220,
+          "sourceId": 111,
+          "targetId": 28,
+          "position": {
+            "x": 120.58506505810061,
+            "z": 13.387043528101943
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8453,
+          "sourceId": 111,
+          "targetId": 40,
+          "position": {
+            "x": 122.40571582938529,
+            "z": 14.556710182060842
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8481,
+          "sourceId": 29,
+          "targetId": 42,
+          "position": {
+            "x": 125.12521161193055,
+            "z": 15.752734112066756
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8650,
+          "sourceId": 29,
+          "targetId": 44,
+          "position": {
+            "x": 130.6907585458918,
+            "z": 14.983462698388228
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8708,
+          "sourceId": 111,
+          "targetId": 43,
+          "position": {
+            "x": 132.95399315191872,
+            "z": 14.340193027341762
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8806,
+          "sourceId": 120,
+          "targetId": 34,
+          "position": {
+            "x": 136.7360134999348,
+            "z": 14.935423423108766
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8842,
+          "sourceId": 29,
+          "targetId": 31,
+          "position": {
+            "x": 136.87482995099288,
+            "z": 14.234383847990902
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8975,
+          "sourceId": 120,
+          "targetId": 39,
+          "position": {
+            "x": 140.49953422270974,
+            "z": 16.01746176718101
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9035,
+          "sourceId": 111,
+          "targetId": 36,
+          "position": {
+            "x": 141.34031227911575,
+            "z": 15.818821521820878
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9039,
+          "sourceId": 40,
+          "targetId": 37,
+          "position": {
+            "x": 140.6221088855498,
+            "z": 14.30728630885179
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9050,
+          "sourceId": 120,
+          "targetId": 41,
+          "position": {
+            "x": 140.11322020489882,
+            "z": 15.05921282440891
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9109,
+          "sourceId": 34,
+          "targetId": 38,
+          "position": {
+            "x": 141.30691142466304,
+            "z": 14.535952624520714
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9154,
+          "sourceId": 111,
+          "targetId": 33,
+          "position": {
+            "x": 142.49981856521686,
+            "z": 15.852002688413473
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9210,
+          "sourceId": 40,
+          "targetId": 32,
+          "position": {
+            "x": 143.83384564351843,
+            "z": 14.965530042945833
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9245,
+          "sourceId": 42,
+          "targetId": 27,
+          "position": {
+            "x": 144.07638041574882,
+            "z": 15.638422534478073
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9255,
+          "sourceId": 120,
+          "targetId": 35,
+          "position": {
+            "x": 142.35272314603134,
+            "z": 15.552110277560802
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9257,
+          "sourceId": 34,
+          "targetId": 25,
+          "position": {
+            "x": 145.2296820086739,
+            "z": 14.196155113735259
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9298,
+          "sourceId": 43,
+          "targetId": 26,
+          "position": {
+            "x": 145.28484126339313,
+            "z": 14.916527492782603
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9334,
+          "sourceId": 111,
+          "targetId": 24,
+          "position": {
+            "x": 145.4423528024153,
+            "z": 15.612285596342883
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9362,
+          "sourceId": 40,
+          "targetId": 19,
+          "position": {
+            "x": 146.67657244765073,
+            "z": 14.26754518930787
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9404,
+          "sourceId": 29,
+          "targetId": 23,
+          "position": {
+            "x": 147.63874144937395,
+            "z": 15.22646248799459
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9412,
+          "sourceId": 42,
+          "targetId": 21,
+          "position": {
+            "x": 147.00178733476147,
+            "z": 16.76907728754959
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9481,
+          "sourceId": 36,
+          "targetId": 18,
+          "position": {
+            "x": 148.20930702091516,
+            "z": 15.77832841943507
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9549,
+          "sourceId": 111,
+          "targetId": 20,
+          "position": {
+            "x": 148.42239407952425,
+            "z": 14.885377865159166
+          },
+          "turns": false
+        }
+      ],
+      "finalHash": "9f2436f8",
+      "canonicalHash": "9f2436f8"
+    },
+    {
+      "level": "L6",
+      "tier": "low",
+      "policy": "evade-only",
+      "completed": false,
+      "time": 600,
+      "deaths": 13,
+      "result": null,
+      "roster": [
+        {
+          "key": "shelter-0",
+          "id": 16,
+          "injured": false,
+          "routine": "guard",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 17,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 18,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 19,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 20,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 21,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 22,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 23,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 24,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 25,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 26,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 27,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 28,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 30,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 31,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 32,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 33,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 34,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 35,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 36,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 37,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 38,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 39,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 40,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 41,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 42,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 43,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 44,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "player.died",
+          "tick": 2580,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 2700
+        },
+        {
+          "type": "player.died",
+          "tick": 5237,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 5357
+        },
+        {
+          "type": "player.died",
+          "tick": 7879,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 7999
+        },
+        {
+          "type": "player.died",
+          "tick": 10512,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 10632
+        },
+        {
+          "type": "player.died",
+          "tick": 13171,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 13291
+        },
+        {
+          "type": "player.died",
+          "tick": 15799,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 15919
+        },
+        {
+          "type": "player.died",
+          "tick": 18469,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 18589
+        },
+        {
+          "type": "player.died",
+          "tick": 21115,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 21235
+        },
+        {
+          "type": "player.died",
+          "tick": 23822,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 23942
+        },
+        {
+          "type": "player.died",
+          "tick": 26458,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 26578
+        },
+        {
+          "type": "player.died",
+          "tick": 29093,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 29213
+        },
+        {
+          "type": "player.died",
+          "tick": 31722,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 31842
+        },
+        {
+          "type": "player.died",
+          "tick": 34324,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 34444
+        }
+      ],
+      "finalHash": "d48b26a6",
+      "canonicalHash": null
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "completed": true,
+      "time": 279.5833333333333,
+      "deaths": 0,
+      "result": {
+        "rescued": 1,
+        "survivorsIn": 29,
+        "survivorsLost": 28,
+        "survivors": [
+          "shelter-0"
+        ]
+      },
+      "roster": [
+        {
+          "key": "shelter-0",
+          "id": 16,
+          "injured": false,
+          "routine": "guard",
+          "status": "out",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 17,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 18,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 19,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 20,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 21,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 22,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 23,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 24,
+          "injured": false,
+          "routine": "treat",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 25,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 26,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 27,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 28,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 30,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 31,
+          "injured": true,
+          "routine": "share",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 32,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 33,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 34,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 35,
+          "injured": false,
+          "routine": "rest",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 36,
+          "injured": true,
+          "routine": "share",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 37,
+          "injured": false,
+          "routine": "sit",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 38,
+          "injured": false,
+          "routine": "talk",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 39,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 40,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 41,
+          "injured": false,
+          "routine": "treat",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 42,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 43,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 44,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "outbreak.bite",
+          "tick": 3778,
+          "sourceId": 81,
+          "targetId": 22,
+          "position": {
+            "x": 3.733549112661853,
+            "z": -10.707573245055952
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 4012,
+          "sourceId": 81,
+          "targetId": 30,
+          "position": {
+            "x": 7.258477177171719,
+            "z": -5.271032563574801
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 4147,
+          "sourceId": 85,
+          "targetId": 17,
+          "position": {
+            "x": 3.659683582060631,
+            "z": -7.618796868205623
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8145,
+          "sourceId": 111,
+          "targetId": 29,
+          "position": {
+            "x": 121.4610146190237,
+            "z": 15.05074205640318
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8220,
+          "sourceId": 111,
+          "targetId": 28,
+          "position": {
+            "x": 120.58506505810061,
+            "z": 13.387043528101943
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8453,
+          "sourceId": 111,
+          "targetId": 40,
+          "position": {
+            "x": 122.40571582938529,
+            "z": 14.556710182060842
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8481,
+          "sourceId": 29,
+          "targetId": 42,
+          "position": {
+            "x": 125.12521161193055,
+            "z": 15.752734112066756
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8650,
+          "sourceId": 29,
+          "targetId": 44,
+          "position": {
+            "x": 130.6907585458918,
+            "z": 14.983462698388228
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8708,
+          "sourceId": 111,
+          "targetId": 43,
+          "position": {
+            "x": 132.95399315191872,
+            "z": 14.340193027341762
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8806,
+          "sourceId": 120,
+          "targetId": 34,
+          "position": {
+            "x": 136.7360134999348,
+            "z": 14.935423423108766
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8842,
+          "sourceId": 29,
+          "targetId": 31,
+          "position": {
+            "x": 136.87482995099288,
+            "z": 14.234383847990902
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 8975,
+          "sourceId": 120,
+          "targetId": 39,
+          "position": {
+            "x": 140.49953422270974,
+            "z": 16.01746176718101
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9035,
+          "sourceId": 111,
+          "targetId": 36,
+          "position": {
+            "x": 141.34031227911575,
+            "z": 15.818821521820878
+          },
+          "turns": true
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9039,
+          "sourceId": 40,
+          "targetId": 37,
+          "position": {
+            "x": 140.6221088855498,
+            "z": 14.30728630885179
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9050,
+          "sourceId": 120,
+          "targetId": 41,
+          "position": {
+            "x": 140.11322020489882,
+            "z": 15.05921282440891
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9109,
+          "sourceId": 34,
+          "targetId": 38,
+          "position": {
+            "x": 141.30691142466304,
+            "z": 14.535952624520714
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9154,
+          "sourceId": 111,
+          "targetId": 33,
+          "position": {
+            "x": 142.49981856521686,
+            "z": 15.852002688413473
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9210,
+          "sourceId": 40,
+          "targetId": 32,
+          "position": {
+            "x": 143.83384564351843,
+            "z": 14.965530042945833
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9245,
+          "sourceId": 42,
+          "targetId": 27,
+          "position": {
+            "x": 144.07638041574882,
+            "z": 15.638422534478073
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9255,
+          "sourceId": 120,
+          "targetId": 35,
+          "position": {
+            "x": 142.35272314603134,
+            "z": 15.552110277560802
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9257,
+          "sourceId": 34,
+          "targetId": 25,
+          "position": {
+            "x": 145.2296820086739,
+            "z": 14.196155113735259
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9298,
+          "sourceId": 43,
+          "targetId": 26,
+          "position": {
+            "x": 145.28484126339313,
+            "z": 14.916527492782603
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9334,
+          "sourceId": 111,
+          "targetId": 24,
+          "position": {
+            "x": 145.4423528024153,
+            "z": 15.612285596342883
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9362,
+          "sourceId": 40,
+          "targetId": 19,
+          "position": {
+            "x": 146.67657244765073,
+            "z": 14.26754518930787
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9404,
+          "sourceId": 29,
+          "targetId": 23,
+          "position": {
+            "x": 147.63874144937395,
+            "z": 15.22646248799459
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9412,
+          "sourceId": 42,
+          "targetId": 21,
+          "position": {
+            "x": 147.00178733476147,
+            "z": 16.76907728754959
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9481,
+          "sourceId": 36,
+          "targetId": 18,
+          "position": {
+            "x": 148.20930702091516,
+            "z": 15.77832841943507
+          },
+          "turns": false
+        },
+        {
+          "type": "outbreak.bite",
+          "tick": 9549,
+          "sourceId": 111,
+          "targetId": 20,
+          "position": {
+            "x": 148.42239407952425,
+            "z": 14.885377865159166
+          },
+          "turns": false
+        }
+      ],
+      "finalHash": "fd135572",
+      "canonicalHash": "fd135572"
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "policy": "evade-only",
+      "completed": false,
+      "time": 600,
+      "deaths": 13,
+      "result": null,
+      "roster": [
+        {
+          "key": "shelter-0",
+          "id": 16,
+          "injured": false,
+          "routine": "guard",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 17,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 18,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 19,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 20,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 21,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 22,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 23,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 24,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 25,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 26,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 27,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 28,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 30,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 31,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 32,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 33,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 34,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 35,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 36,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 37,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 38,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 39,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 40,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 41,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 42,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 43,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 44,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "player.died",
+          "tick": 2580,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 2700
+        },
+        {
+          "type": "player.died",
+          "tick": 5237,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 5357
+        },
+        {
+          "type": "player.died",
+          "tick": 7879,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 7999
+        },
+        {
+          "type": "player.died",
+          "tick": 10512,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 10632
+        },
+        {
+          "type": "player.died",
+          "tick": 13171,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 13291
+        },
+        {
+          "type": "player.died",
+          "tick": 15799,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 15919
+        },
+        {
+          "type": "player.died",
+          "tick": 18469,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 18589
+        },
+        {
+          "type": "player.died",
+          "tick": 21115,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 21235
+        },
+        {
+          "type": "player.died",
+          "tick": 23822,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 23942
+        },
+        {
+          "type": "player.died",
+          "tick": 26458,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 26578
+        },
+        {
+          "type": "player.died",
+          "tick": 29093,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 29213
+        },
+        {
+          "type": "player.died",
+          "tick": 31722,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 31842
+        },
+        {
+          "type": "player.died",
+          "tick": 34324,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "shelter",
+          "tick": 34444
+        }
+      ],
+      "finalHash": "94b7aaa0",
+      "canonicalHash": null
+    }
+  ]
+}

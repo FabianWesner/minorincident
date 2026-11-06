@@ -1,0 +1,47 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "row": "L4-13",
+  "status": "FAIL",
+  "gameChanged": false,
+  "commands": [
+    {
+      "command": "node --import tsx/esm tools/qa/sweep-b-l4-escape.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run qa:accept -- --level L4 --reuse --skip-browser",
+      "exitCode": 1,
+      "reason": "8 measured FAIL/1 NOT CHECKED retained"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    }
+  ],
+  "logs": [
+    {
+      "file": "test-results/sweep-b/L4-escape.log",
+      "sha256": "ffacce1a34c147b12be6d3c1147b9bdf1d8ff8f7138cd21bca10170979622e87",
+      "text": "low complete 1a99e716 [ { start: 12649, until: 15049 }, { start: 13371, until: 15771 } ] 6\nhigh complete 6f55579b [ { start: 13369, until: 15769 }, { start: 14284, until: 16684 } ] 16\n"
+    },
+    {
+      "file": "test-results/sweep-b/L4-escape-accept.log",
+      "sha256": "027240e444b77f444998dc6406fa8157ddc33a876a531539c752002dfba42832",
+      "text": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L4 --reuse --skip-browser\n\n[qa:accept] L4 low/complete: reuse matching receipt\n[qa:accept] L4 low/stationary: reuse matching receipt\n[qa:accept] L4 high/complete: reuse matching receipt\n[qa:accept] L4 high/stationary: reuse matching receipt\n[qa:accept] L4 low/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 high/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4: 8 fresh failing rows; 1 incomplete rows; docs/reports/fix51-verify/L4.json\n"
+    },
+    {
+      "file": "test-results/sweep-b/continuation-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    {
+      "file": "test-results/sweep-b/continuation-lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "text": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    }
+  ]
+}

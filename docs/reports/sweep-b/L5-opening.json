@@ -1,0 +1,408 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "7d5bce454d4383ed0e1d8a4136466af915f4752e",
+  "producerSha256": "9b8108143481b3470e1a677170befcee9a27aabc402f41e02ceaab031e44f1b3",
+  "method": "Actual ordinary mortal competent input, seed1, first80s. Read-only event observer versus independent identical run without observer; exact state hashes required.",
+  "rows": [
+    {
+      "tier": "low",
+      "hashes": [
+        "2f733146",
+        "2f733146"
+      ],
+      "events": [
+        {
+          "type": "dialogue.line",
+          "id": "L5.hours",
+          "text": "Hours later.",
+          "tick": 0
+        },
+        {
+          "type": "l5.emerged",
+          "tick": 99
+        },
+        {
+          "type": "l5.searching",
+          "tick": 699
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.search",
+          "text": "Is anyone still alive?",
+          "tick": 699
+        },
+        {
+          "type": "l5.found",
+          "tick": 1921,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.found.mia",
+          "text": "Mia: Is it over? Please say it’s over. Take me with you.",
+          "tick": 1921
+        },
+        {
+          "type": "l5.found",
+          "tick": 3770,
+          "key": "okafor",
+          "id": 30,
+          "count": 2
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.found.okafor",
+          "text": "Mr. Okafor: Bless you, child. Please, take me with you.",
+          "tick": 3770
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "hashes": [
+        "339acd18",
+        "339acd18"
+      ],
+      "events": [
+        {
+          "type": "dialogue.line",
+          "id": "L5.hours",
+          "text": "Hours later.",
+          "tick": 0
+        },
+        {
+          "type": "l5.emerged",
+          "tick": 99
+        },
+        {
+          "type": "l5.searching",
+          "tick": 699
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.search",
+          "text": "Is anyone still alive?",
+          "tick": 699
+        },
+        {
+          "type": "l5.found",
+          "tick": 2126,
+          "key": "mia",
+          "id": 31,
+          "count": 1
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.found.mia",
+          "text": "Mia: Is it over? Please say it’s over. Take me with you.",
+          "tick": 2126
+        },
+        {
+          "type": "l5.found",
+          "tick": 4028,
+          "key": "okafor",
+          "id": 30,
+          "count": 2
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L5.found.okafor",
+          "text": "Mr. Okafor: Bless you, child. Please, take me with you.",
+          "tick": 4028
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4406,
+          "sourceId": 30,
+          "targetId": 246,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -27.894426626387062,
+            "z": 11.596193492929817
+          },
+          "to": {
+            "x": -33.99497804127026,
+            "z": 22.515541991180964
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4421,
+          "sourceId": 30,
+          "targetId": 174,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -27.937573578899812,
+            "z": 11.606761099850164
+          },
+          "to": {
+            "x": -6.878781841725907,
+            "z": 12.502402767287995
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4428,
+          "sourceId": 30,
+          "targetId": 174,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -28.01052163804874,
+            "z": 11.62462763201047
+          },
+          "to": {
+            "x": -6.816635004766257,
+            "z": 12.601183307011542
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4464,
+          "sourceId": 30,
+          "targetId": 300,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -28.174326986188674,
+            "z": 11.664747047862196
+          },
+          "to": {
+            "x": -32.76233025263087,
+            "z": 16.23880502499338
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4471,
+          "sourceId": 30,
+          "targetId": 300,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -28.188821485306523,
+            "z": 11.65739721340376
+          },
+          "to": {
+            "x": -32.76233025263087,
+            "z": 16.23880502499338
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4514,
+          "sourceId": 30,
+          "targetId": 264,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -29.185364056645117,
+            "z": 10.656363170487042
+          },
+          "to": {
+            "x": -32.09449782248009,
+            "z": 16.05934642587951
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4521,
+          "sourceId": 30,
+          "targetId": 264,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -29.344216173975884,
+            "z": 10.494715887828878
+          },
+          "to": {
+            "x": -32.09449782248009,
+            "z": 16.05934642587951
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4528,
+          "sourceId": 30,
+          "targetId": 264,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -29.459488891902197,
+            "z": 10.382704817059997
+          },
+          "to": {
+            "x": -32.09449782248009,
+            "z": 16.05934642587951
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4564,
+          "sourceId": 30,
+          "targetId": 264,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -30.602793290264536,
+            "z": 9.81755034344407
+          },
+          "to": {
+            "x": -31.31094340319731,
+            "z": 15.569424169086234
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4571,
+          "sourceId": 30,
+          "targetId": 284,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -30.83225228718874,
+            "z": 9.726060870060357
+          },
+          "to": {
+            "x": -24.629377339311105,
+            "z": 18.399125889786006
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4578,
+          "sourceId": 30,
+          "targetId": 284,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -30.992077604103972,
+            "z": 9.663292764145647
+          },
+          "to": {
+            "x": -24.629377339311105,
+            "z": 18.399125889786006
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4614,
+          "sourceId": 30,
+          "targetId": 284,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -30.784861205543855,
+            "z": 9.956337136550426
+          },
+          "to": {
+            "x": -24.835410203323747,
+            "z": 18.179490208298304
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4621,
+          "sourceId": 30,
+          "targetId": 284,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -30.583434075715154,
+            "z": 9.994612993899645
+          },
+          "to": {
+            "x": -25.019132955703306,
+            "z": 17.9888761821848
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4628,
+          "sourceId": 30,
+          "targetId": 284,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -30.37115228017624,
+            "z": 9.952219665402524
+          },
+          "to": {
+            "x": -25.236325508583324,
+            "z": 17.724885893728494
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4736,
+          "sourceId": 30,
+          "targetId": 160,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -30.691027642950637,
+            "z": 9.44289287561874
+          },
+          "to": {
+            "x": -44.2203775421196,
+            "z": 19.48610405047168
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4743,
+          "sourceId": 30,
+          "targetId": 160,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -30.725380250290645,
+            "z": 9.453106062983846
+          },
+          "to": {
+            "x": -44.2203775421196,
+            "z": 19.48610405047168
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 4771,
+          "sourceId": 30,
+          "targetId": 354,
+          "role": "civilian",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -30.841070361491393,
+            "z": 9.39577781401776
+          },
+          "to": {
+            "x": -28.722181903456825,
+            "z": 22.155936792452096
+          }
+        }
+      ]
+    }
+  ]
+}

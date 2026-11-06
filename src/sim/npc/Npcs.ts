@@ -7,7 +7,7 @@ import { Companion } from './Companion';
 import { Escorts } from './Escorts';
 import { populateMorning } from './MorningRoutines';
 import { Civilians } from './Civilians';
-import { moveAgent } from '../locomotion/AgentMotion';
+import { followerTracking, moveAgent } from '../locomotion/AgentMotion';
 import type { Point } from './types';
 /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
 export class Npcs {
@@ -92,7 +92,10 @@ export class Npcs {
     if (e.passengerOf !== undefined || e.pendingAdmission) return;
     this.world.solids.wrote(e, 'npc.move');
     const x = e.transform.x, z = e.transform.z;
-    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e));
+    // At its catch-up pace the ordinary crowd response carries the dog several
+    // metres beyond a corner before it can turn back toward the courier.
+    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
+      this.world.scenario === 'L5' && e.companion ? followerTracking : undefined);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

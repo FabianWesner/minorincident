@@ -103,6 +103,12 @@ const remainingChecks: Record<string, string> = {
 };
 export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const objectiveReviews: Record<string, string> = {
+    'L4-15': source.expected,
+    'L6-09': source.expected,
+    'L6-08': source.expected,
+    'L6-04': source.expected,
+    'L4-02': source.expected,
+    'L4-08': source.expected,
     'G-11': source.expected,
     'G-12': source.expected,
     'G-24': source.expected,
@@ -159,7 +165,10 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const required = completeNativeRows.get(source.id);
   const complete = !!required && ['low', 'high'].every(tier => required.every(requirement => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS'))) && checks.every(check => check.status !== 'FAIL');
   const decision = loadReviews(source.id);
-  const reviewCheck = review || source.baseline.status === 'FAIL' ? decision : undefined;
+  // A fresh measured counterexample must also close a plain S row. Previously
+  // these valid FAIL reviews were silently ignored unless the row had a named
+  // review gate or an older failure. PASS still needs its existing full scope.
+  const reviewCheck = review || source.baseline.status === 'FAIL' || decision?.status === 'FAIL' ? decision : undefined;
   const freshness = reviewCheck ? reviewFreshness(reviewCheck, source.level) : undefined;
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
   const allReviewPass = !reviewClause || (!!reviewCheck && !!matchingReview && freshness === 'FRESH' && reviewCheck.status === 'PASS' && matchingReview.verdict === 'PASS');

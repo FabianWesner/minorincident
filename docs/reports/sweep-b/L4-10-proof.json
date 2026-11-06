@@ -1,0 +1,318 @@
+{
+  "row": "L4-10",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "97beb76649356ef67d3c07ced8e2a757dff1779b199456ad5d807c28358481ff",
+  "nativeLedger": "docs/reports/sweep-b/L4-tank-clearance.json.gz",
+  "nativeLedgerSha256": "f218516d47e9345ed5b00c142794476d81bf64263023553cb7d0e0a27abd86a3",
+  "observation": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain\u226515m clearance and8\u201312s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed.",
+  "rows": [
+    {
+      "tier": "low",
+      "status": "FAIL",
+      "nativeHash": "1a99e716",
+      "canonicalHash": "1a99e716",
+      "liveArmedAllyCounterexamples": [
+        {
+          "tick": 12649,
+          "phase": "collapse",
+          "tankPhase": "silent",
+          "impact": {
+            "x": 16.3,
+            "z": -9.5
+          },
+          "ally": {
+            "id": 49,
+            "at": {
+              "x": 16.15910457655455,
+              "z": -22.47507874640588,
+              "y": 0.7,
+              "yaw": -1.5339988755881957
+            },
+            "health": {
+              "current": 100,
+              "max": 80
+            },
+            "hidden": false,
+            "civilianState": "calm",
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": 18.12568951052383,
+                "z": -23.65601454947404
+              },
+              "hold": true,
+              "targetId": 50,
+              "nextAttack": 12668,
+              "hits": 106,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 20,
+                "shotS": 0.7,
+                "rangeM": 12,
+                "nearM": 8,
+                "hitNear": 0.5,
+                "hitFar": 0.25
+              },
+              "weapon": "pistol",
+              "range": 12,
+              "lastHp": 100,
+              "still": {
+                "x": 16.170976100718775,
+                "z": -22.34562292736937,
+                "tick": 12643
+              },
+              "mag": 6,
+              "burstN": 0,
+              "strikeAt": 0,
+              "strikeTarget": 50,
+              "repoHits": 100,
+              "step": {
+                "x": 16.116468474395347,
+                "z": -24.00270474213947,
+                "until": 12683
+              },
+              "stepAfter": 12695,
+              "reloadUntil": 12422,
+              "aimMoveRestUntil": 12226,
+              "baton": false,
+              "panicUntil": 9437,
+              "aimMoveAt": 12533
+            },
+            "soldier": false,
+            "armedEntry": {
+              "id": 49,
+              "weapon": "pistol",
+              "armedAt": 1969
+            },
+            "distance": 12.975843710363556
+          }
+        }
+      ],
+      "minimumWarShotClearance": 15.037746582322224,
+      "warShotIntervalsSeconds": [
+        11.383333333333333,
+        10.666666666666666,
+        10.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.766666666666667,
+        11.45,
+        11.433333333333334,
+        9.733333333333333,
+        8.116666666666667,
+        9.533333333333333,
+        8.016666666666667
+      ],
+      "rendererLedger": "docs/reports/sweep-b/L4-tank-low-renderer-ledger.json.gz",
+      "rendererLedgerSha256": "a6037f0a32ff1b7f0ebbccac75bbcae1ea9f4a85e3664cbde0ac9b6a7b480793",
+      "actualRendererShots": 14,
+      "actualTriangleHits": [
+        {
+          "tick": 11171,
+          "intersections": [
+            {
+              "part": "sign",
+              "instance": 1,
+              "distance": 40.780456978457025,
+              "point": [
+                -22.6818995712704,
+                1.15,
+                -17.399999618530273
+              ],
+              "face": 1
+            }
+          ]
+        }
+      ],
+      "positiveTriangleControls": 13
+    },
+    {
+      "tier": "high",
+      "status": "FAIL",
+      "nativeHash": "6f55579b",
+      "canonicalHash": "6f55579b",
+      "liveArmedAllyCounterexamples": [
+        {
+          "tick": 13369,
+          "phase": "collapse",
+          "tankPhase": "silent",
+          "impact": {
+            "x": 16.3,
+            "z": -9.5
+          },
+          "ally": {
+            "id": 46,
+            "at": {
+              "x": 14.290580779825964,
+              "z": 4.8107610188294165,
+              "y": 0.7,
+              "yaw": 1.8573986009637093
+            },
+            "health": {
+              "current": 100,
+              "max": 80
+            },
+            "hidden": false,
+            "civilianState": "calm",
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": 11.305299940098664,
+                "z": 2.8700764131668772
+              },
+              "hold": true,
+              "targetId": 619,
+              "nextAttack": 13374,
+              "hits": 118,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 20,
+                "shotS": 0.7,
+                "rangeM": 12,
+                "nearM": 8,
+                "hitNear": 0.5,
+                "hitFar": 0.25
+              },
+              "weapon": "pistol",
+              "range": 12,
+              "lastHp": 100,
+              "still": {
+                "x": 14.39293775269207,
+                "z": 5.028113120550754,
+                "tick": 13362
+              },
+              "mag": 4,
+              "burstN": 0,
+              "strikeAt": 0,
+              "strikeTarget": 619,
+              "step": {
+                "x": 14.113800868455435,
+                "z": 3.508916957202638,
+                "until": 13382
+              },
+              "stepAfter": 13394,
+              "aimMoveRestUntil": 13135,
+              "repoHits": 116,
+              "reloadUntil": 13250,
+              "baton": false,
+              "aimMoveAt": 13286
+            },
+            "soldier": false,
+            "armedEntry": {
+              "id": 46,
+              "weapon": "pistol",
+              "armedAt": 1969
+            },
+            "distance": 14.451146893601642
+          }
+        },
+        {
+          "tick": 13369,
+          "phase": "collapse",
+          "tankPhase": "silent",
+          "impact": {
+            "x": 16.3,
+            "z": -9.5
+          },
+          "ally": {
+            "id": 61,
+            "at": {
+              "x": 14.143976842387703,
+              "z": -22.772655771346777,
+              "y": 0.7,
+              "yaw": -1.9914550485263023
+            },
+            "health": {
+              "current": 100,
+              "max": 80
+            },
+            "hidden": false,
+            "civilianState": "calm",
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": 18.059617142160512,
+                "z": -22.087704952030474
+              },
+              "hold": true,
+              "targetId": 525,
+              "nextAttack": 13396,
+              "hits": 150,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 20,
+                "shotS": 0.7,
+                "rangeM": 12,
+                "nearM": 8,
+                "hitNear": 0.5,
+                "hitFar": 0.25
+              },
+              "weapon": "pistol",
+              "range": 12,
+              "lastHp": 100,
+              "still": {
+                "x": 14.086066997551459,
+                "z": -22.460074374526748,
+                "tick": 13362
+              },
+              "mag": 3,
+              "burstN": 0,
+              "strikeAt": 0,
+              "strikeTarget": 525,
+              "repoHits": 146,
+              "step": {
+                "x": 14.338267808968281,
+                "z": -23.55669512470586,
+                "until": 13381
+              },
+              "stepAfter": 13393,
+              "aimMoveRestUntil": 13188,
+              "reloadUntil": 13303,
+              "baton": false,
+              "aimMoveAt": 13303
+            },
+            "soldier": false,
+            "armedEntry": {
+              "id": 61,
+              "weapon": "pistol",
+              "armedAt": 1969
+            },
+            "distance": 13.446628837029206
+          }
+        }
+      ],
+      "minimumWarShotClearance": 15.031521147624153,
+      "warShotIntervalsSeconds": [
+        8.133333333333333,
+        9.533333333333333,
+        8.35,
+        9.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.783333333333333,
+        11.383333333333333,
+        11.433333333333334,
+        10.2,
+        8.116666666666667,
+        9.533333333333333,
+        10.533333333333333,
+        10.916666666666666
+      ],
+      "rendererLedger": "docs/reports/sweep-b/L4-tank-high-renderer-ledger.json.gz",
+      "rendererLedgerSha256": "053dfa4605bfe46dcf7a2680a129c6f93743853a115abf1eaafa941a35732397",
+      "actualRendererShots": 14,
+      "actualTriangleHits": [],
+      "positiveTriangleControls": 13
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "fd744f1c158a7c5f274a218037d48b1e71312ef2df30aca489546c83bebac844",
+  "ledger": "docs/reports/sweep-b/L4-solids.json",
+  "ledgerSha256": "67d89fe1a4149e3ea8028fc680bde696853ea5e1631f10434267acea64394de8",
+  "observation": "Both tiers: all60 actual intact military-wall segments block the production courier capsule normal sweep (3m requested from1.5m away). Actual authored L4 cinematic offsets are all[15,19,15], with the same diagonal azimuth as the36\u00b0 follow rig; positive-offset blends therefore stay between36\u00b0 and41.85\u00b0, including user zoom0.5/1.5. Current full-route rendered-second timelines remain within those bounds; no top-down endpoint or cancellation exists. All151 physical-route images and the two renderer-entry supplements were inspected: sandbag/pallet/wall surfaces are shaded/textured, their openings/readable shape persist, and surrounding streets/terrain continue beyond them without a void. Pixel review is in the linked capture manifest; continuous angle exclusion is source geometry plus actual runtime timeline, not a claim inferred from sparse stills alone.",
+  "rows": [
+    {
+      "tier": "low",
+      "actualSolidWallSegments": 60,
+      "allCapsulesBlocked": true,
+      "observedCameraSamples": 330,
+      "minCameraElevationDeg": 35.99999999999999,
+      "maxCameraElevationDeg": 41.84980547114921,
+      "allAuthoredCinematicOffsets": [
+        15,
+        19,
+        15
+      ]
+    },
+    {
+      "tier": "high",
+      "actualSolidWallSegments": 60,
+      "allCapsulesBlocked": true,
+      "observedCameraSamples": 263,
+      "minCameraElevationDeg": 35.99999999999999,
+      "maxCameraElevationDeg": 41.84980547114921,
+      "allAuthoredCinematicOffsets": [
+        15,
+        19,
+        15
+      ]
+    }
+  ]
+}

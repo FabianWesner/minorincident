@@ -1,0 +1,63 @@
+{
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "images": 4,
+  "sheets": 1,
+  "records": [
+    {
+      "source": "test-results/sweep-b/L6-carry/captures/low-opening.jpg",
+      "sha256": "4618cec07ba813d4b719ef6b2235d183edb544c6bbed0ca28128fddbd0e14d28",
+      "sheet": "test-results/sweep-b/L6-carry-review/review/L6-carry-01.jpg",
+      "cell": 1,
+      "sheetSha256": "5cc9f7ed29262384d1f155864d02bd69d9a258b4e97aea9d940fda773828cac4",
+      "observation": "Both actual L5\u2192L6 campaign handovers: normal opening shows warm furnishings mostly empty, while24 residents cluster in standing rows on the tracks beyond. Explicit overview shows the carried cohort all upright/gesturing; no seated, lying, treatment or sharing presentation, despite corresponding assigned routine labels. Source IDs and fullHP retained. This is not the L6-default preset."
+    },
+    {
+      "source": "test-results/sweep-b/L6-carry/captures/low-overview.jpg",
+      "sha256": "c8049f853e7ae34216978c80bd2bb395f1d9faa07631b59eeb06d0888050c648",
+      "sheet": "test-results/sweep-b/L6-carry-review/review/L6-carry-01.jpg",
+      "cell": 2,
+      "sheetSha256": "5cc9f7ed29262384d1f155864d02bd69d9a258b4e97aea9d940fda773828cac4",
+      "observation": "Both actual L5\u2192L6 campaign handovers: normal opening shows warm furnishings mostly empty, while24 residents cluster in standing rows on the tracks beyond. Explicit overview shows the carried cohort all upright/gesturing; no seated, lying, treatment or sharing presentation, despite corresponding assigned routine labels. Source IDs and fullHP retained. This is not the L6-default preset."
+    },
+    {
+      "source": "test-results/sweep-b/L6-carry/captures/high-opening.jpg",
+      "sha256": "d375c162382f92f7baee31fe5782df9686c602fe960a2dd79a63a01c629c9f1a",
+      "sheet": "test-results/sweep-b/L6-carry-review/review/L6-carry-01.jpg",
+      "cell": 3,
+      "sheetSha256": "5cc9f7ed29262384d1f155864d02bd69d9a258b4e97aea9d940fda773828cac4",
+      "observation": "Both actual L5\u2192L6 campaign handovers: normal opening shows warm furnishings mostly empty, while24 residents cluster in standing rows on the tracks beyond. Explicit overview shows the carried cohort all upright/gesturing; no seated, lying, treatment or sharing presentation, despite corresponding assigned routine labels. Source IDs and fullHP retained. This is not the L6-default preset."
+    },
+    {
+      "source": "test-results/sweep-b/L6-carry/captures/high-overview.jpg",
+      "sha256": "8ab138f29c188a2d1481c0f7d72e017330a96b55a8e332af7478e909463a1371",
+      "sheet": "test-results/sweep-b/L6-carry-review/review/L6-carry-01.jpg",
+      "cell": 4,
+      "sheetSha256": "5cc9f7ed29262384d1f155864d02bd69d9a258b4e97aea9d940fda773828cac4",
+      "observation": "Both actual L5\u2192L6 campaign handovers: normal opening shows warm furnishings mostly empty, while24 residents cluster in standing rows on the tracks beyond. Explicit overview shows the carried cohort all upright/gesturing; no seated, lying, treatment or sharing presentation, despite corresponding assigned routine labels. Source IDs and fullHP retained. This is not the L6-default preset."
+    }
+  ],
+  "archives": [
+    {
+      "source": "test-results/sweep-b/L6-carry/high-actual-L5-save.json",
+      "sha256": "aa3fec2a2d943cf6873af7e34c2fae2fd497fae4396d3701ec27193689541a54",
+      "archive": "test-results/sweep-b/L6-carry-review/evidence/L6-carry-high-actual-L5-save.json.gz",
+      "archiveSha256": "4cb8ada0245bf67823621836a3da03d029add4a4704f51c469de9c9948d404de"
+    },
+    {
+      "source": "test-results/sweep-b/L6-carry/low-actual-L5-save.json",
+      "sha256": "1bbc88c0a25f17374076a13470ffa605a23ba8f2e462f245f4d949069a074598",
+      "archive": "test-results/sweep-b/L6-carry-review/evidence/L6-carry-low-actual-L5-save.json.gz",
+      "archiveSha256": "080da8c294fabf4e8a740448f217f3fe36cfa45e3f7d30e43a6c38de684212ee"
+    },
+    {
+      "source": "test-results/sweep-b/L6-carry/proof.json",
+      "sha256": "6b637d2bd2547884831d79f0cacc6d333432da022e49095a51b31ced0da73616",
+      "archive": "test-results/sweep-b/L6-carry-review/evidence/L6-carry-proof.json.gz",
+      "archiveSha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701"
+    }
+  ],
+  "captureMetadataArchive": "test-results/sweep-b/L6-carry-review/evidence/capture-metadata.json.gz",
+  "captureMetadataSha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+  "cleanup": "Raw JPEGs and capture metadata deleted after inspection and digest verification. Numbered sheets remain in ignored test-results."
+}

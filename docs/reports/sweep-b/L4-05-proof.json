@@ -1,0 +1,51 @@
+{
+  "row": "L4-05",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "37a2370e99e647a801c3688bd9f049007ec405b561063868ea94cb686c109397",
+  "ledger": "docs/reports/sweep-b/L4-cohorts.json.gz",
+  "ledgerSha256": "12bc9b2a5f268723eed3377c0812c09f71fa5d71316e63138847c88a53293ab9",
+  "observation": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
+  "rows": [
+    {
+      "tier": "low",
+      "smallest": 1,
+      "largest": 5,
+      "firstSingleton": {
+        "key": "2840:23",
+        "actors": [
+          {
+            "id": 229,
+            "tick": 2840,
+            "origin": 23,
+            "edge": 0,
+            "x": -76.9,
+            "z": 55
+          }
+        ]
+      },
+      "nativeStateHash": "1a99e716",
+      "canonicalStateHash": "1a99e716"
+    },
+    {
+      "tier": "high",
+      "smallest": 1,
+      "largest": 5,
+      "firstSingleton": {
+        "key": "2340:17",
+        "actors": [
+          {
+            "id": 279,
+            "tick": 2340,
+            "origin": 17,
+            "edge": 4,
+            "x": 0,
+            "z": 18.8
+          }
+        ]
+      },
+      "nativeStateHash": "6f55579b",
+      "canonicalStateHash": "6f55579b"
+    }
+  ]
+}

@@ -1,0 +1,2125 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L6",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 279.5833333333333,
+        "deaths": 0,
+        "kills": 27,
+        "damageTaken": 130,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "shelter",
+            "t": 33.2
+          },
+          {
+            "id": "stop",
+            "t": 69.11666666666666
+          },
+          {
+            "id": "retreat",
+            "t": 270.01666666666665
+          },
+          {
+            "id": "exit",
+            "t": 279.5833333333333
+          }
+        ],
+        "furthestObjective": "exit",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 135,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "samples": 16775,
+      "observedHash": "9f2436f8",
+      "canonicalHash": "9f2436f8",
+      "events": [
+        {
+          "type": "l6.bang",
+          "tick": 1872,
+          "breach": 1,
+          "position": {
+            "x": -10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach1",
+          "tick": 1992
+        },
+        {
+          "type": "l6.bang",
+          "tick": 3133,
+          "breach": 2,
+          "position": {
+            "x": 10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach2",
+          "tick": 3253
+        },
+        {
+          "type": "l6.abandon",
+          "tick": 4147
+        },
+        {
+          "type": "l6.bang",
+          "tick": 5495,
+          "breach": 3,
+          "position": {
+            "x": 54,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 6532,
+          "breach": 6,
+          "position": {
+            "x": 78,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 8091,
+          "breach": 4,
+          "position": {
+            "x": 126,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 9671,
+          "breach": 7,
+          "position": {
+            "x": 162,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 12072,
+          "breach": 5,
+          "position": {
+            "x": 198,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 13635,
+          "breach": 8,
+          "position": {
+            "x": 228,
+            "z": 18.8
+          }
+        }
+      ],
+      "power": [
+        {
+          "tick": 3253,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        },
+        {
+          "tick": 3254,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": 57,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -10.08473523668321,
+            "z": -4.14808346455787,
+            "y": 1.300000011920929,
+            "yaw": 0.6844836692522773
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 59,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 10.8,
+            "y": 1.300000011920929,
+            "z": 2,
+            "yaw": 0
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 22,
+          "pathFailures": 0
+        },
+        {
+          "id": 60,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -9.14755814241903,
+            "z": -4.1096145969545805,
+            "y": 1.300000011920929,
+            "yaw": 5.075821323829149
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 5,
+          "pathFailures": 0
+        },
+        {
+          "id": 62,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 11.614859100576815,
+            "z": 1.875603567005648,
+            "y": 1.300000011920929,
+            "yaw": 0.009695856762780997
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 7,
+          "pathFailures": 0
+        },
+        {
+          "id": 64,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -9.530438183164025,
+            "z": -3.2844238132970314,
+            "y": 1.300000011920929,
+            "yaw": 0.6395449529400774
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 66,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 11.272898567843816,
+            "z": 2.719139372624637,
+            "y": 1.300000011920929,
+            "yaw": 6.092526448901424
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 5,
+          "pathFailures": 0
+        },
+        {
+          "id": 68,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -10.44695648458806,
+            "z": -3.301944544384869,
+            "y": 1.300000011920929,
+            "yaw": 4.451023998306949
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 7,
+          "pathFailures": 0
+        },
+        {
+          "id": 70,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 10.359835940933888,
+            "z": 2.6458080011937635,
+            "y": 1.300000011920929,
+            "yaw": 0.06303943535408828
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 4,
+          "pathFailures": 0
+        },
+        {
+          "id": 72,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3253,
+          "birth": {
+            "x": -10,
+            "y": 1.2999999999999998,
+            "z": -19.4,
+            "yaw": 0
+          },
+          "firstShelterFloor": 3253,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 40,
+          "pathFailures": 0
+        },
+        {
+          "id": 73,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3298,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.895519854488858
+          },
+          "firstShelterFloor": 3298,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 10,
+          "pathFailures": 0
+        },
+        {
+          "id": 75,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3343,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.6758755085695496
+          },
+          "firstShelterFloor": 3343,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 77,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3388,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.904013367744631
+          },
+          "firstShelterFloor": 3388,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 79,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3433,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.706279820303742
+          },
+          "firstShelterFloor": 3433,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 13,
+          "pathFailures": 0
+        },
+        {
+          "id": 81,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3478,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.100734279125924
+          },
+          "firstShelterFloor": 3478,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 26,
+          "pathFailures": 0
+        },
+        {
+          "id": 83,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3523,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.909667694271744
+          },
+          "firstShelterFloor": 3523,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 85,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3568,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.9038541232600306
+          },
+          "firstShelterFloor": 3568,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 87,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3613,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.1150379574964955
+          },
+          "firstShelterFloor": 3613,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 89,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3658,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.3876486905753763
+          },
+          "firstShelterFloor": 3658,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 91,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 4242,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.76087061865343
+          },
+          "firstShelterFloor": 4242,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 25,
+          "pathFailures": 0
+        },
+        {
+          "id": 93,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 4842,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.475737835600328
+          },
+          "firstShelterFloor": 4842,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 19,
+          "pathFailures": 0
+        },
+        {
+          "id": 95,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 5442,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.1205220578602395
+          },
+          "firstShelterFloor": 5442,
+          "firstTrack": 8793,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 28,
+          "pathFailures": 0
+        },
+        {
+          "id": 97,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 54,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5743,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 27,
+          "pathFailures": 0
+        },
+        {
+          "id": 98,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 55.0884097751874,
+            "z": 12.520792214576742,
+            "y": 1.5700000143051147,
+            "yaw": 1.3113989388124905
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5794,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 100,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 54.68790189359284,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 0.5633604174455193
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5615,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 47,
+          "pathFailures": 0
+        },
+        {
+          "id": 102,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 6042,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.997011207953963
+          },
+          "firstShelterFloor": 6042,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 15,
+          "pathFailures": 0
+        },
+        {
+          "id": 104,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 6642,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.681392421118914
+          },
+          "firstShelterFloor": 6642,
+          "firstTrack": null,
+          "end": null,
+          "pathAtBirth": true,
+          "pathSamples": 0,
+          "pathFailures": 0
+        },
+        {
+          "id": 106,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 78,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6722,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 26,
+          "pathFailures": 0
+        },
+        {
+          "id": 107,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 79.08840977518742,
+            "z": 17.320792214576738,
+            "y": 1.5700000143051147,
+            "yaw": 3.81245140897829
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6758,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 56,
+          "pathFailures": 0
+        },
+        {
+          "id": 109,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 78.68790189359287,
+            "z": 18.146710673898177,
+            "y": 1.5700000143051147,
+            "yaw": 3.526270417945596
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6787,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 49,
+          "pathFailures": 0
+        },
+        {
+          "id": 111,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 7842,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.3631579693895841
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 7997,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 76,
+          "pathFailures": 0
+        },
+        {
+          "id": 113,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8437,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 63,
+          "pathFailures": 0
+        },
+        {
+          "id": 114,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 127.08840977518742,
+            "z": 12.520792214576737,
+            "y": 1.5700000143051147,
+            "yaw": 2.7285316218369755
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 10647,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 10,
+          "pathFailures": 0
+        },
+        {
+          "id": 116,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 126.68790189359287,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 4.194809731348596
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8211,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 33,
+          "pathFailures": 0
+        },
+        {
+          "id": 120,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 8442,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.9999893020761057
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8616,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 125,
+          "pathFailures": 0
+        },
+        {
+          "id": 128,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 9042,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 3.495608997962953
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9149,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 17,
+          "pathFailures": 0
+        },
+        {
+          "id": 132,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 161,
+            "y": 1.5700000143051147,
+            "z": 17.400000000000002,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9961,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 34,
+          "pathFailures": 0
+        },
+        {
+          "id": 133,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 162.8,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 4.539998835346048
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9822,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 41,
+          "pathFailures": 0
+        },
+        {
+          "id": 135,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 160.29289321881345,
+            "z": 18.10710678118655,
+            "y": 1.5700000143051147,
+            "yaw": 0.07176960965231846
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9990,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 52,
+          "pathFailures": 0
+        },
+        {
+          "id": 137,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 12042,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.8845428959417079
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12136,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 13,
+          "pathFailures": 0
+        },
+        {
+          "id": 139,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12288,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 140,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 199.0884097751874,
+            "z": 12.520792214576744,
+            "y": 1.5700000143051147,
+            "yaw": 1.4452812222898452
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12377,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 142,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 198.68790189359282,
+            "z": 13.346710673898182,
+            "y": 1.2999999999999998,
+            "yaw": 1.1728438638488998
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12192,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 12,
+          "pathFailures": 0
+        },
+        {
+          "id": 144,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 12642,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0.6533560699428228
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12772,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 52,
+          "pathFailures": 0
+        },
+        {
+          "id": 146,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 13242,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1002891049965395
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 13339,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 148,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 228,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 13841,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 42,
+          "pathFailures": 0
+        },
+        {
+          "id": 149,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 229.0884097751874,
+            "z": 17.320792214576745,
+            "y": 1.5700000143051147,
+            "yaw": 3.654645612144863
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14043,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 12,
+          "pathFailures": 0
+        },
+        {
+          "id": 151,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 228.68790189359282,
+            "z": 18.146710673898184,
+            "y": 1.5700000143051147,
+            "yaw": 4.4316147634115515
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14019,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 20,
+          "pathFailures": 0
+        },
+        {
+          "id": 153,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 13842,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.4393330667563404
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14690,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 155,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 14442,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 6.190794976282887
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14502,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 4,
+          "pathFailures": 0
+        },
+        {
+          "id": 157,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 15042,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1046589773506925
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 16004,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 2,
+          "pathFailures": 0
+        }
+      ],
+      "firstBreachPass": true,
+      "sideEntriesPass": false
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L6",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 279.5833333333333,
+        "deaths": 0,
+        "kills": 27,
+        "damageTaken": 130,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "shelter",
+            "t": 33.2
+          },
+          {
+            "id": "stop",
+            "t": 69.11666666666666
+          },
+          {
+            "id": "retreat",
+            "t": 270.01666666666665
+          },
+          {
+            "id": "exit",
+            "t": 279.5833333333333
+          }
+        ],
+        "furthestObjective": "exit",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 135,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "samples": 16775,
+      "observedHash": "fd135572",
+      "canonicalHash": "fd135572",
+      "events": [
+        {
+          "type": "l6.bang",
+          "tick": 1872,
+          "breach": 1,
+          "position": {
+            "x": -10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach1",
+          "tick": 1992
+        },
+        {
+          "type": "l6.bang",
+          "tick": 3133,
+          "breach": 2,
+          "position": {
+            "x": 10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach2",
+          "tick": 3253
+        },
+        {
+          "type": "l6.abandon",
+          "tick": 4147
+        },
+        {
+          "type": "l6.bang",
+          "tick": 5495,
+          "breach": 3,
+          "position": {
+            "x": 54,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 6532,
+          "breach": 6,
+          "position": {
+            "x": 78,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 8091,
+          "breach": 4,
+          "position": {
+            "x": 126,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 9671,
+          "breach": 7,
+          "position": {
+            "x": 162,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 12072,
+          "breach": 5,
+          "position": {
+            "x": 198,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 13635,
+          "breach": 8,
+          "position": {
+            "x": 228,
+            "z": 18.8
+          }
+        }
+      ],
+      "power": [
+        {
+          "tick": 3253,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        },
+        {
+          "tick": 3254,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": 57,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -10.08473523668321,
+            "z": -4.14808346455787,
+            "y": 1.300000011920929,
+            "yaw": 0.6844836692522773
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 59,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 10.8,
+            "y": 1.300000011920929,
+            "z": 2,
+            "yaw": 0
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 22,
+          "pathFailures": 0
+        },
+        {
+          "id": 60,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -9.14755814241903,
+            "z": -4.1096145969545805,
+            "y": 1.300000011920929,
+            "yaw": 5.075821323829149
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 5,
+          "pathFailures": 0
+        },
+        {
+          "id": 62,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 11.614859100576815,
+            "z": 1.875603567005648,
+            "y": 1.300000011920929,
+            "yaw": 0.009695856762780997
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 7,
+          "pathFailures": 0
+        },
+        {
+          "id": 64,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -9.530438183164025,
+            "z": -3.2844238132970314,
+            "y": 1.300000011920929,
+            "yaw": 0.6395449529400774
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 66,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 11.272898567843816,
+            "z": 2.719139372624637,
+            "y": 1.300000011920929,
+            "yaw": 6.092526448901424
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 5,
+          "pathFailures": 0
+        },
+        {
+          "id": 68,
+          "wave": 1,
+          "door": 0,
+          "bornAt": 1992,
+          "birth": {
+            "x": -10.44695648458806,
+            "z": -3.301944544384869,
+            "y": 1.300000011920929,
+            "yaw": 4.451023998306949
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 7,
+          "pathFailures": 0
+        },
+        {
+          "id": 70,
+          "wave": 1,
+          "door": 1,
+          "bornAt": 1992,
+          "birth": {
+            "x": 10.359835940933888,
+            "z": 2.6458080011937635,
+            "y": 1.300000011920929,
+            "yaw": 0.06303943535408828
+          },
+          "firstShelterFloor": 1992,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 4,
+          "pathFailures": 0
+        },
+        {
+          "id": 72,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3253,
+          "birth": {
+            "x": -10,
+            "y": 1.2999999999999998,
+            "z": -19.4,
+            "yaw": 0
+          },
+          "firstShelterFloor": 3253,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 40,
+          "pathFailures": 0
+        },
+        {
+          "id": 73,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3298,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.895519854488858
+          },
+          "firstShelterFloor": 3298,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 10,
+          "pathFailures": 0
+        },
+        {
+          "id": 75,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3343,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.6758755085695496
+          },
+          "firstShelterFloor": 3343,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 77,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3388,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.904013367744631
+          },
+          "firstShelterFloor": 3388,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 79,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3433,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.706279820303742
+          },
+          "firstShelterFloor": 3433,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 13,
+          "pathFailures": 0
+        },
+        {
+          "id": 81,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3478,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.100734279125924
+          },
+          "firstShelterFloor": 3478,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 26,
+          "pathFailures": 0
+        },
+        {
+          "id": 83,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3523,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.909667694271744
+          },
+          "firstShelterFloor": 3523,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 85,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3568,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.9038541232600306
+          },
+          "firstShelterFloor": 3568,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 87,
+          "wave": 2,
+          "door": 0,
+          "bornAt": 3613,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.1150379574964955
+          },
+          "firstShelterFloor": 3613,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 89,
+          "wave": 2,
+          "door": 1,
+          "bornAt": 3658,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.3876486905753763
+          },
+          "firstShelterFloor": 3658,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 91,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 4242,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.76087061865343
+          },
+          "firstShelterFloor": 4242,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 25,
+          "pathFailures": 0
+        },
+        {
+          "id": 93,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 4842,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.475737835600328
+          },
+          "firstShelterFloor": 4842,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 19,
+          "pathFailures": 0
+        },
+        {
+          "id": 95,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 5442,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.1205220578602395
+          },
+          "firstShelterFloor": 5442,
+          "firstTrack": 8793,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 28,
+          "pathFailures": 0
+        },
+        {
+          "id": 97,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 54,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5743,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 27,
+          "pathFailures": 0
+        },
+        {
+          "id": 98,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 55.0884097751874,
+            "z": 12.520792214576742,
+            "y": 1.5700000143051147,
+            "yaw": 1.3113989388124905
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5794,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 16,
+          "pathFailures": 0
+        },
+        {
+          "id": 100,
+          "wave": 4,
+          "door": 2,
+          "bornAt": 5615,
+          "birth": {
+            "x": 54.68790189359284,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 0.5633604174455193
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 5615,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 47,
+          "pathFailures": 0
+        },
+        {
+          "id": 102,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 6042,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.997011207953963
+          },
+          "firstShelterFloor": 6042,
+          "firstTrack": null,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 15,
+          "pathFailures": 0
+        },
+        {
+          "id": 104,
+          "wave": 3,
+          "door": 0,
+          "bornAt": 6642,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.681392421118914
+          },
+          "firstShelterFloor": 6642,
+          "firstTrack": null,
+          "end": null,
+          "pathAtBirth": true,
+          "pathSamples": 0,
+          "pathFailures": 0
+        },
+        {
+          "id": 106,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 78,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6722,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 26,
+          "pathFailures": 0
+        },
+        {
+          "id": 107,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 79.08840977518742,
+            "z": 17.320792214576738,
+            "y": 1.5700000143051147,
+            "yaw": 3.81245140897829
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6758,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 56,
+          "pathFailures": 0
+        },
+        {
+          "id": 109,
+          "wave": 4,
+          "door": 5,
+          "bornAt": 6652,
+          "birth": {
+            "x": 78.68790189359287,
+            "z": 18.146710673898177,
+            "y": 1.5700000143051147,
+            "yaw": 3.526270417945596
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 6787,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 49,
+          "pathFailures": 0
+        },
+        {
+          "id": 111,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 7842,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.3631579693895841
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 7997,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 76,
+          "pathFailures": 0
+        },
+        {
+          "id": 113,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8437,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 63,
+          "pathFailures": 0
+        },
+        {
+          "id": 114,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 127.08840977518742,
+            "z": 12.520792214576737,
+            "y": 1.5700000143051147,
+            "yaw": 2.7285316218369755
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 10647,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 10,
+          "pathFailures": 0
+        },
+        {
+          "id": 116,
+          "wave": 4,
+          "door": 3,
+          "bornAt": 8211,
+          "birth": {
+            "x": 126.68790189359287,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 4.194809731348596
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8211,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 33,
+          "pathFailures": 0
+        },
+        {
+          "id": 120,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 8442,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.9999893020761057
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 8616,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 125,
+          "pathFailures": 0
+        },
+        {
+          "id": 128,
+          "wave": 3,
+          "door": 3,
+          "bornAt": 9042,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 3.495608997962953
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9149,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 17,
+          "pathFailures": 0
+        },
+        {
+          "id": 132,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 161,
+            "y": 1.5700000143051147,
+            "z": 17.400000000000002,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9961,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 34,
+          "pathFailures": 0
+        },
+        {
+          "id": 133,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 162.8,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 4.539998835346048
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9822,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 41,
+          "pathFailures": 0
+        },
+        {
+          "id": 135,
+          "wave": 4,
+          "door": 6,
+          "bornAt": 9791,
+          "birth": {
+            "x": 160.29289321881345,
+            "z": 18.10710678118655,
+            "y": 1.5700000143051147,
+            "yaw": 0.07176960965231846
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 9990,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 52,
+          "pathFailures": 0
+        },
+        {
+          "id": 137,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 12042,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.8845428959417079
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12136,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 13,
+          "pathFailures": 0
+        },
+        {
+          "id": 139,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12288,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 29,
+          "pathFailures": 0
+        },
+        {
+          "id": 140,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 199.0884097751874,
+            "z": 12.520792214576744,
+            "y": 1.5700000143051147,
+            "yaw": 1.4452812222898452
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12377,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 142,
+          "wave": 4,
+          "door": 4,
+          "bornAt": 12192,
+          "birth": {
+            "x": 198.68790189359282,
+            "z": 13.346710673898182,
+            "y": 1.2999999999999998,
+            "yaw": 1.1728438638488998
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12192,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 12,
+          "pathFailures": 0
+        },
+        {
+          "id": 144,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 12642,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0.6533560699428228
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 12772,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 52,
+          "pathFailures": 0
+        },
+        {
+          "id": 146,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 13242,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1002891049965395
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 13339,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 14,
+          "pathFailures": 0
+        },
+        {
+          "id": 148,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 228,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 13841,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 42,
+          "pathFailures": 0
+        },
+        {
+          "id": 149,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 229.0884097751874,
+            "z": 17.320792214576745,
+            "y": 1.5700000143051147,
+            "yaw": 3.654645612144863
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14043,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 12,
+          "pathFailures": 0
+        },
+        {
+          "id": 151,
+          "wave": 4,
+          "door": 7,
+          "bornAt": 13755,
+          "birth": {
+            "x": 228.68790189359282,
+            "z": 18.146710673898184,
+            "y": 1.5700000143051147,
+            "yaw": 4.4316147634115515
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14019,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 20,
+          "pathFailures": 0
+        },
+        {
+          "id": 153,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 13842,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.4393330667563404
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14690,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 6,
+          "pathFailures": 0
+        },
+        {
+          "id": 155,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 14442,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 6.190794976282887
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 14502,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 4,
+          "pathFailures": 0
+        },
+        {
+          "id": 157,
+          "wave": 3,
+          "door": 4,
+          "bornAt": 15042,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1046589773506925
+          },
+          "firstShelterFloor": null,
+          "firstTrack": 16004,
+          "end": "downed",
+          "pathAtBirth": true,
+          "pathSamples": 2,
+          "pathFailures": 0
+        }
+      ],
+      "firstBreachPass": true,
+      "sideEntriesPass": false
+    }
+  ]
+}

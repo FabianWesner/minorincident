@@ -672,10 +672,16 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['convoy vehicle identities', 'convoy duration'].map(clause => ({ clause, policy: 'complete' })),
     ...['courier control restored after actual convoy stop', 'full passenger bus parks inside the military perimeter'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
+  ['L4-15', [{ clause: 'actual military-wall capsule solidity and bounded isometric camera family', policy: 'controlled-fixture' }]],
+  ['L4-14', [{ clause: 'actual cellar-entry live damage and renderer scorch census', policy: 'controlled-fixture' }]],
+  ['L4-18', [{ clause: 'reviewed clean living plaza and readable battle courier', policy: 'real-input-webgl2' }]],
   ['L4-16', [
     { clause: 'uninterrupted standing bar interaction with E continuously false', policy: 'controlled-fixture' },
     ...['actual cellar entrant roster', 'decoded low-pass battle audible after barring', 'actual same-basement L5 handover', 'reviewed visible companion in cellar'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
   ]],
+  ['L5-02', [{ clause: 'actual opening objective silence allied-fire and moving-vehicle clocks', policy: 'controlled-fixture' }]],
+  ['L5-03', [{ clause: 'actual initial infected positions accepted cohorts and all street bands', policy: 'controlled-fixture' }]],
+  ['L5-14', [{ clause: 'sun intensity state multiplier at metro/end', policy: 'complete' }, { clause: 'reviewed four exact matched L4 L5 camera pairs', policy: 'controlled-fixture' }]],
   ['L5-13', [{ clause: 'zero-survivor ordinary route and rescued result', policy: 'controlled-fixture' }]],
   ['L5-11', [{ clause: 'reviewed heroine colour in fog and bus hiding-place readability', policy: 'real-input-webgl2' }]],
   ['L5-05', [
@@ -685,9 +691,16 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ]],
   ['L5-01', ['authored shotgun start distance and moving approach pickup', 'one close shotgun shell incapacitates60HP regular', 'two close shotgun shells incapacitate300HP Alpha within0.6s'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L5-04', [{ clause: 'living Alphas have body-clear routes after actual cellar exit', policy: 'controlled-fixture' }]],
+  ['L6-02', [{ clause: 'actual headlamp approach persistence head-following beam and no new weapons', policy: 'controlled-fixture' }]],
   ['L6-03', [{ clause: 'actual first breach bang clock and six shelter-floor arrivals', policy: 'controlled-fixture' }]],
+  ['L6-04', [
+    ...['second breach delay', 'second-wave admitted identities', 'second-wave source accesses'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'actual second breach arrivals power and abandon condition', policy: 'controlled-fixture' },
+  ]],
   ['L4-06', ['first physical breach level clock', 'living infected at first breach', 'sustained plaza living minimum after +45 s'].map(clause => ({ clause, policy: 'stationary' }))],
+  ['L4-08', [{ clause: 'actual Alpha admission directions and line hits', policy: 'controlled-fixture' }]],
   ['L4-03', [{ clause: 'actual MG pickup klaxon and attack start share simulation tick', policy: 'real-input-webgl2' }]],
+  ['L4-02', [{ clause: 'pre-pickup reception census routines separation and reviewed calm visuals', policy: 'real-input-webgl2' }]],
   ['L4-04', ['complete', 'stationary'].flatMap(policy => ['soldiers at turn', 'civilian census at turn excluding soldiers', 'actual armed civilian share at turn', 'every war tick observed from turn through line break', 'war living infected plus reserved slots and pending turns', 'war living character identity census'].map(clause => ({ clause, policy })))],
   ['L4-09', [
     ...['line1 actual beat after first turn', 'nests actual beat after first turn', 'armor actual beat after first turn', 'fallback after third line break'].map(clause => ({ clause, policy: 'complete' })),
@@ -706,6 +719,8 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L7-04', ['actual resident and later regular admissions', 'actual resident and later Alpha admissions', 'concurrent cap'].map(clause => ({ clause, policy: 'complete' }))],
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],
+  ['L6-08', [{ clause: 'observed human follower pace versus phase group median', policy: 'complete' }, { clause: 'all original follower settled speed and per-ID visible bars', policy: 'controlled-fixture' }]],
+  ['L6-09', [{ clause: 'actual gates width collision endurance refusal and persistent prompt', policy: 'controlled-fixture' }]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],
   ['L9-04', [
     ...['shortcut durability billing per unique contact onset', 'stopped-surround attacks deal10 damage after at least0.6s windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),

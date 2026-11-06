@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L5",
   "tier": "low",
-  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checks": [
     {
       "id": "L5-13",
@@ -48,7 +48,7 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 271,
+            "admitted": 270,
             "deferred": 0,
             "requests": [],
             "offenders": []
@@ -2798,10 +2798,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 204.46666666666667,
+          "time": 206.58333333333334,
           "deaths": 0,
-          "kills": 79,
-          "damageTaken": 50,
+          "kills": 78,
+          "damageTaken": 62.5,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -2810,11 +2810,11 @@
             },
             {
               "id": "look",
-              "t": 157.86666666666667
+              "t": 163.28333333333333
             },
             {
               "id": "metro",
-              "t": 204.46666666666667
+              "t": 206.58333333333334
             }
           ],
           "furthestObjective": "metro",
@@ -2859,7 +2859,7 @@
             }
           ]
         },
-        "finalHash": "50818562"
+        "finalHash": "41e92b1f"
       },
       "target": "at least2 living Alphas; every actual body has a legal path to the street courier",
       "status": "PASS",
@@ -3043,7 +3043,7 @@
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 271,
+          "admitted": 270,
           "deferred": 0,
           "requests": [],
           "offenders": []

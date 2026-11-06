@@ -1,0 +1,1471 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "revision": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+  "ledger": "docs/reports/sweep-b/L6-trajectories.json",
+  "ledgerSha256": "586d2300cfb9677cc9fd4c9757bf9fde935eb7b96e8aa4473a4e73a4c01544ae",
+  "observer": "tools/qa/accept/fix53-l6-trajectories.ts",
+  "observerSha256": "359e8dfe8d64a43111d150681f61549c2a894d5317328ac282a9d81e6c368ec4",
+  "layout": "public/assets/layouts/D-SUBWAY.layout.json",
+  "layoutSha256": "3456bb73ffc3dff3b1c0fbd108f727beb87034121a4379311dc6bf3c0d7923ea",
+  "method": "Actual admission identities followed every tick; native final state must equal canonical control. Birth centres checked in XZ against authored floor polygons; raised rail supports make nominal surface height insufficient for a birth-height verdict. Strict same-body track arrivals remain in the original ledger. Bounded paths measured at birth and2Hz. No actor/input/RNG mutation. This is not a pixel/lighting verdict.",
+  "results": [
+    {
+      "tier": "low",
+      "canonicalHash": "9f2436f8",
+      "observedHash": "9f2436f8",
+      "events": [
+        {
+          "type": "l6.bang",
+          "tick": 1872,
+          "breach": 1,
+          "position": {
+            "x": -10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach1",
+          "tick": 1992
+        },
+        {
+          "type": "l6.bang",
+          "tick": 3133,
+          "breach": 2,
+          "position": {
+            "x": 10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach2",
+          "tick": 3253
+        },
+        {
+          "type": "l6.abandon",
+          "tick": 4147
+        },
+        {
+          "type": "l6.bang",
+          "tick": 5495,
+          "breach": 3,
+          "position": {
+            "x": 54,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 6532,
+          "breach": 6,
+          "position": {
+            "x": 78,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 8091,
+          "breach": 4,
+          "position": {
+            "x": 126,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 9671,
+          "breach": 7,
+          "position": {
+            "x": 162,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 12072,
+          "breach": 5,
+          "position": {
+            "x": 198,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 13635,
+          "breach": 8,
+          "position": {
+            "x": 228,
+            "z": 18.8
+          }
+        }
+      ],
+      "power": [
+        {
+          "tick": 3253,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        },
+        {
+          "tick": 3254,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        }
+      ],
+      "allAdmissionBirths": [
+        {
+          "id": 57,
+          "wave": 1,
+          "birth": {
+            "x": -10.08473523668321,
+            "z": -4.14808346455787,
+            "y": 1.300000011920929,
+            "yaw": 0.6844836692522773
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 59,
+          "wave": 1,
+          "birth": {
+            "x": 10.8,
+            "y": 1.300000011920929,
+            "z": 2,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 60,
+          "wave": 1,
+          "birth": {
+            "x": -9.14755814241903,
+            "z": -4.1096145969545805,
+            "y": 1.300000011920929,
+            "yaw": 5.075821323829149
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 62,
+          "wave": 1,
+          "birth": {
+            "x": 11.614859100576815,
+            "z": 1.875603567005648,
+            "y": 1.300000011920929,
+            "yaw": 0.009695856762780997
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 64,
+          "wave": 1,
+          "birth": {
+            "x": -9.530438183164025,
+            "z": -3.2844238132970314,
+            "y": 1.300000011920929,
+            "yaw": 0.6395449529400774
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 66,
+          "wave": 1,
+          "birth": {
+            "x": 11.272898567843816,
+            "z": 2.719139372624637,
+            "y": 1.300000011920929,
+            "yaw": 6.092526448901424
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 68,
+          "wave": 1,
+          "birth": {
+            "x": -10.44695648458806,
+            "z": -3.301944544384869,
+            "y": 1.300000011920929,
+            "yaw": 4.451023998306949
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 70,
+          "wave": 1,
+          "birth": {
+            "x": 10.359835940933888,
+            "z": 2.6458080011937635,
+            "y": 1.300000011920929,
+            "yaw": 0.06303943535408828
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 72,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "y": 1.2999999999999998,
+            "z": -19.4,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 73,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.895519854488858
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 75,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.6758755085695496
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 77,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.904013367744631
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 79,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.706279820303742
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 81,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.100734279125924
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 83,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.909667694271744
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 85,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.9038541232600306
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 87,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.1150379574964955
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 89,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.3876486905753763
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 91,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.76087061865343
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 93,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.475737835600328
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 95,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.1205220578602395
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 97,
+          "wave": 4,
+          "birth": {
+            "x": 54,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 98,
+          "wave": 4,
+          "birth": {
+            "x": 55.0884097751874,
+            "z": 12.520792214576742,
+            "y": 1.5700000143051147,
+            "yaw": 1.3113989388124905
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 100,
+          "wave": 4,
+          "birth": {
+            "x": 54.68790189359284,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 0.5633604174455193
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 102,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.997011207953963
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 104,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.681392421118914
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 106,
+          "wave": 4,
+          "birth": {
+            "x": 78,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 107,
+          "wave": 4,
+          "birth": {
+            "x": 79.08840977518742,
+            "z": 17.320792214576738,
+            "y": 1.5700000143051147,
+            "yaw": 3.81245140897829
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 109,
+          "wave": 4,
+          "birth": {
+            "x": 78.68790189359287,
+            "z": 18.146710673898177,
+            "y": 1.5700000143051147,
+            "yaw": 3.526270417945596
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 111,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.3631579693895841
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 113,
+          "wave": 4,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 114,
+          "wave": 4,
+          "birth": {
+            "x": 127.08840977518742,
+            "z": 12.520792214576737,
+            "y": 1.5700000143051147,
+            "yaw": 2.7285316218369755
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 116,
+          "wave": 4,
+          "birth": {
+            "x": 126.68790189359287,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 4.194809731348596
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 120,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.9999893020761057
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 128,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 3.495608997962953
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 132,
+          "wave": 4,
+          "birth": {
+            "x": 161,
+            "y": 1.5700000143051147,
+            "z": 17.400000000000002,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 133,
+          "wave": 4,
+          "birth": {
+            "x": 162.8,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 4.539998835346048
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 135,
+          "wave": 4,
+          "birth": {
+            "x": 160.29289321881345,
+            "z": 18.10710678118655,
+            "y": 1.5700000143051147,
+            "yaw": 0.07176960965231846
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 137,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.8845428959417079
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 139,
+          "wave": 4,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 140,
+          "wave": 4,
+          "birth": {
+            "x": 199.0884097751874,
+            "z": 12.520792214576744,
+            "y": 1.5700000143051147,
+            "yaw": 1.4452812222898452
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 142,
+          "wave": 4,
+          "birth": {
+            "x": 198.68790189359282,
+            "z": 13.346710673898182,
+            "y": 1.2999999999999998,
+            "yaw": 1.1728438638488998
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 144,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0.6533560699428228
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 146,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1002891049965395
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 148,
+          "wave": 4,
+          "birth": {
+            "x": 228,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 149,
+          "wave": 4,
+          "birth": {
+            "x": 229.0884097751874,
+            "z": 17.320792214576745,
+            "y": 1.5700000143051147,
+            "yaw": 3.654645612144863
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 151,
+          "wave": 4,
+          "birth": {
+            "x": 228.68790189359282,
+            "z": 18.146710673898184,
+            "y": 1.5700000143051147,
+            "yaw": 4.4316147634115515
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 153,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.4393330667563404
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 155,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 6.190794976282887
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 157,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1046589773506925
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        }
+      ],
+      "allBirthsOnFloor": true,
+      "allBirthPaths": true,
+      "sideEntryCounts": {
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3
+      },
+      "sideEntryExactTwo": false,
+      "sideBodiesReachTracks": true,
+      "sidePathSamples": 583,
+      "sidePathFailures": 0
+    },
+    {
+      "tier": "high",
+      "canonicalHash": "fd135572",
+      "observedHash": "fd135572",
+      "events": [
+        {
+          "type": "l6.bang",
+          "tick": 1872,
+          "breach": 1,
+          "position": {
+            "x": -10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach1",
+          "tick": 1992
+        },
+        {
+          "type": "l6.bang",
+          "tick": 3133,
+          "breach": 2,
+          "position": {
+            "x": 10,
+            "z": -18
+          }
+        },
+        {
+          "type": "l6.breach2",
+          "tick": 3253
+        },
+        {
+          "type": "l6.abandon",
+          "tick": 4147
+        },
+        {
+          "type": "l6.bang",
+          "tick": 5495,
+          "breach": 3,
+          "position": {
+            "x": 54,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 6532,
+          "breach": 6,
+          "position": {
+            "x": 78,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 8091,
+          "breach": 4,
+          "position": {
+            "x": 126,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 9671,
+          "breach": 7,
+          "position": {
+            "x": 162,
+            "z": 18.8
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 12072,
+          "breach": 5,
+          "position": {
+            "x": 198,
+            "z": 11.2
+          }
+        },
+        {
+          "type": "l6.bang",
+          "tick": 13635,
+          "breach": 8,
+          "position": {
+            "x": 228,
+            "z": 18.8
+          }
+        }
+      ],
+      "power": [
+        {
+          "tick": 3253,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        },
+        {
+          "tick": 3254,
+          "main": false,
+          "emergency": true,
+          "lightGroups": [
+            "shelter-camp",
+            "self",
+            "metro-emergency"
+          ]
+        }
+      ],
+      "allAdmissionBirths": [
+        {
+          "id": 57,
+          "wave": 1,
+          "birth": {
+            "x": -10.08473523668321,
+            "z": -4.14808346455787,
+            "y": 1.300000011920929,
+            "yaw": 0.6844836692522773
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 59,
+          "wave": 1,
+          "birth": {
+            "x": 10.8,
+            "y": 1.300000011920929,
+            "z": 2,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 60,
+          "wave": 1,
+          "birth": {
+            "x": -9.14755814241903,
+            "z": -4.1096145969545805,
+            "y": 1.300000011920929,
+            "yaw": 5.075821323829149
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 62,
+          "wave": 1,
+          "birth": {
+            "x": 11.614859100576815,
+            "z": 1.875603567005648,
+            "y": 1.300000011920929,
+            "yaw": 0.009695856762780997
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 64,
+          "wave": 1,
+          "birth": {
+            "x": -9.530438183164025,
+            "z": -3.2844238132970314,
+            "y": 1.300000011920929,
+            "yaw": 0.6395449529400774
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 66,
+          "wave": 1,
+          "birth": {
+            "x": 11.272898567843816,
+            "z": 2.719139372624637,
+            "y": 1.300000011920929,
+            "yaw": 6.092526448901424
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 68,
+          "wave": 1,
+          "birth": {
+            "x": -10.44695648458806,
+            "z": -3.301944544384869,
+            "y": 1.300000011920929,
+            "yaw": 4.451023998306949
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 70,
+          "wave": 1,
+          "birth": {
+            "x": 10.359835940933888,
+            "z": 2.6458080011937635,
+            "y": 1.300000011920929,
+            "yaw": 0.06303943535408828
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 72,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "y": 1.2999999999999998,
+            "z": -19.4,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 73,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.895519854488858
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 75,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.6758755085695496
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 77,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.904013367744631
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 79,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.706279820303742
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 81,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 3.100734279125924
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 83,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.909667694271744
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 85,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 2.9038541232600306
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 87,
+          "wave": 2,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.1150379574964955
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 89,
+          "wave": 2,
+          "birth": {
+            "x": 10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 0.3876486905753763
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 91,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.76087061865343
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 93,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.475737835600328
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 95,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 4.1205220578602395
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 97,
+          "wave": 4,
+          "birth": {
+            "x": 54,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 98,
+          "wave": 4,
+          "birth": {
+            "x": 55.0884097751874,
+            "z": 12.520792214576742,
+            "y": 1.5700000143051147,
+            "yaw": 1.3113989388124905
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 100,
+          "wave": 4,
+          "birth": {
+            "x": 54.68790189359284,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 0.5633604174455193
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 102,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.997011207953963
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 104,
+          "wave": 3,
+          "birth": {
+            "x": -10,
+            "z": -19.4,
+            "y": 1.2999999999999998,
+            "yaw": 5.681392421118914
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 106,
+          "wave": 4,
+          "birth": {
+            "x": 78,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 107,
+          "wave": 4,
+          "birth": {
+            "x": 79.08840977518742,
+            "z": 17.320792214576738,
+            "y": 1.5700000143051147,
+            "yaw": 3.81245140897829
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 109,
+          "wave": 4,
+          "birth": {
+            "x": 78.68790189359287,
+            "z": 18.146710673898177,
+            "y": 1.5700000143051147,
+            "yaw": 3.526270417945596
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 111,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.3631579693895841
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 113,
+          "wave": 4,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 114,
+          "wave": 4,
+          "birth": {
+            "x": 127.08840977518742,
+            "z": 12.520792214576737,
+            "y": 1.5700000143051147,
+            "yaw": 2.7285316218369755
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 116,
+          "wave": 4,
+          "birth": {
+            "x": 126.68790189359287,
+            "z": 13.346710673898178,
+            "y": 1.2999999999999998,
+            "yaw": 4.194809731348596
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 120,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.9999893020761057
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 128,
+          "wave": 3,
+          "birth": {
+            "x": 126,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 3.495608997962953
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 132,
+          "wave": 4,
+          "birth": {
+            "x": 161,
+            "y": 1.5700000143051147,
+            "z": 17.400000000000002,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 133,
+          "wave": 4,
+          "birth": {
+            "x": 162.8,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 4.539998835346048
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 135,
+          "wave": 4,
+          "birth": {
+            "x": 160.29289321881345,
+            "z": 18.10710678118655,
+            "y": 1.5700000143051147,
+            "yaw": 0.07176960965231846
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 137,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 1.8845428959417079
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 139,
+          "wave": 4,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 140,
+          "wave": 4,
+          "birth": {
+            "x": 199.0884097751874,
+            "z": 12.520792214576744,
+            "y": 1.5700000143051147,
+            "yaw": 1.4452812222898452
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 142,
+          "wave": 4,
+          "birth": {
+            "x": 198.68790189359282,
+            "z": 13.346710673898182,
+            "y": 1.2999999999999998,
+            "yaw": 1.1728438638488998
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 144,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 0.6533560699428228
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 146,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1002891049965395
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 148,
+          "wave": 4,
+          "birth": {
+            "x": 228,
+            "z": 17.400000000000002,
+            "y": 1.5700000143051147,
+            "yaw": 0
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 149,
+          "wave": 4,
+          "birth": {
+            "x": 229.0884097751874,
+            "z": 17.320792214576745,
+            "y": 1.5700000143051147,
+            "yaw": 3.654645612144863
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 151,
+          "wave": 4,
+          "birth": {
+            "x": 228.68790189359282,
+            "z": 18.146710673898184,
+            "y": 1.5700000143051147,
+            "yaw": 4.4316147634115515
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 153,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 2.4393330667563404
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 155,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 6.190794976282887
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        },
+        {
+          "id": 157,
+          "wave": 3,
+          "birth": {
+            "x": 198,
+            "z": 12.6,
+            "y": 1.5700000143051147,
+            "yaw": 4.1046589773506925
+          },
+          "onWalkableFloor": true,
+          "pathAtBirth": true
+        }
+      ],
+      "allBirthsOnFloor": true,
+      "allBirthPaths": true,
+      "sideEntryCounts": {
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3
+      },
+      "sideEntryExactTwo": false,
+      "sideBodiesReachTracks": true,
+      "sidePathSamples": 583,
+      "sidePathFailures": 0
+    }
+  ]
+}

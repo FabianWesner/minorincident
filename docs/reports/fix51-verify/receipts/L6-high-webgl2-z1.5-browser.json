@@ -1,0 +1,2314 @@
+{
+  "version": 1,
+  "level": "L6",
+  "tier": "high",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "fixtureHash": "8bc3634afc12bae5efa261774e4abdc1d357c1e9d0dd6d37a17231e7557b0c00",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L6-04",
+      "clause": "actual second breach arrivals power and abandon condition",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "breach2DelayS": 21.016666666666666,
+        "breach2Tick": 3253,
+        "powerOffTick": 3253,
+        "firstTwoPowerSamples": [
+          {
+            "tick": 3253,
+            "mainPower": false,
+            "emergency": true,
+            "lightGroups": [
+              "shelter-camp",
+              "self",
+              "metro-emergency"
+            ]
+          },
+          {
+            "tick": 3254,
+            "mainPower": false,
+            "emergency": true,
+            "lightGroups": [
+              "shelter-camp",
+              "self",
+              "metro-emergency"
+            ]
+          }
+        ],
+        "wave2ActualBodies": [
+          {
+            "id": 72,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3253,
+            "birth": {
+              "x": -10,
+              "y": 1.2999999999999998,
+              "z": -19.4,
+              "yaw": 0
+            },
+            "firstShelterFloor": 3253,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 40,
+            "pathFailures": 0
+          },
+          {
+            "id": 73,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3298,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.895519854488858
+            },
+            "firstShelterFloor": 3298,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 10,
+            "pathFailures": 0
+          },
+          {
+            "id": 75,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3343,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.6758755085695496
+            },
+            "firstShelterFloor": 3343,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 77,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3388,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.904013367744631
+            },
+            "firstShelterFloor": 3388,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 79,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3433,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 0.706279820303742
+            },
+            "firstShelterFloor": 3433,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 13,
+            "pathFailures": 0
+          },
+          {
+            "id": 81,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3478,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.100734279125924
+            },
+            "firstShelterFloor": 3478,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 26,
+            "pathFailures": 0
+          },
+          {
+            "id": 83,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3523,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.909667694271744
+            },
+            "firstShelterFloor": 3523,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 14,
+            "pathFailures": 0
+          },
+          {
+            "id": 85,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3568,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.9038541232600306
+            },
+            "firstShelterFloor": 3568,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 29,
+            "pathFailures": 0
+          },
+          {
+            "id": 87,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3613,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.1150379574964955
+            },
+            "firstShelterFloor": 3613,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 89,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3658,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 0.3876486905753763
+            },
+            "firstShelterFloor": 3658,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 29,
+            "pathFailures": 0
+          }
+        ],
+        "abandonTick": 4147,
+        "abandonAfterBreach2S": 14.9,
+        "bittenOrLostAtAbandon": 3,
+        "ordinaryControlHash": "d9d2c6a1",
+        "observedHash": "d9d2c6a1"
+      },
+      "target": "breach2 after20\u201330s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten",
+      "receipt": "docs/reports/sweep-b/L6-04-proof.json"
+    },
+    {
+      "id": "L6-09",
+      "clause": "actual gates width collision endurance refusal and persistent prompt",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "gates": [
+          {
+            "x": 90,
+            "widthM": 2.200000000000001,
+            "exactFiveRunnerIds": [
+              57,
+              58,
+              59,
+              60,
+              61
+            ],
+            "heldSeconds": 9.816666666666666,
+            "openMovement": {
+              "before": {
+                "x": 88,
+                "y": 1.3049999999999997,
+                "z": 15,
+                "yaw": 0.3205919885488634
+              },
+              "after": {
+                "x": 96.75464630126953,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "crossed": true
+            },
+            "closedMovement": {
+              "before": {
+                "x": 88,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "after": {
+                "x": 89.49490356445312,
+                "y": 1.2699999809265137,
+                "z": 14.999999046325684,
+                "yaw": 0
+              },
+              "crossed": false
+            },
+            "openSight": true,
+            "closedSight": false
+          },
+          {
+            "x": 150,
+            "widthM": 2.200000000000001,
+            "exactFiveRunnerIds": [
+              57,
+              58,
+              59,
+              60,
+              61
+            ],
+            "heldSeconds": 9.816666666666666,
+            "openMovement": {
+              "before": {
+                "x": 148,
+                "y": 1.3049999999999997,
+                "z": 15,
+                "yaw": 0.3205919885488634
+              },
+              "after": {
+                "x": 156.75465393066406,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "crossed": true
+            },
+            "closedMovement": {
+              "before": {
+                "x": 148,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "after": {
+                "x": 149.49490356445312,
+                "y": 1.2699999809265137,
+                "z": 14.999999046325684,
+                "yaw": 0
+              },
+              "crossed": false
+            },
+            "openSight": true,
+            "closedSight": false
+          },
+          {
+            "x": 210,
+            "widthM": 2.200000000000001,
+            "exactFiveRunnerIds": [
+              57,
+              58,
+              59,
+              60,
+              61
+            ],
+            "heldSeconds": 9.816666666666666,
+            "openMovement": {
+              "before": {
+                "x": 208,
+                "y": 1.3049999999999997,
+                "z": 15,
+                "yaw": 0.3205919885488634
+              },
+              "after": {
+                "x": 216.75465393066406,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "crossed": true
+            },
+            "closedMovement": {
+              "before": {
+                "x": 208,
+                "y": 1.2699999809265137,
+                "z": 15,
+                "yaw": 0
+              },
+              "after": {
+                "x": 209.49490356445312,
+                "y": 1.2699999809265137,
+                "z": 14.999999046325684,
+                "yaw": 0
+              },
+              "crossed": false
+            },
+            "openSight": true,
+            "closedSight": false
+          }
+        ],
+        "refusalAndPromptBoundaries": [
+          {
+            "x": 90,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 93.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 150,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 153.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 210,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 213.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          }
+        ]
+      },
+      "target": "three chokepoints\u22642.5m; closed movement/sight blockers;8\u201312s vs exactly5; refuse survivor\u22642m; ring/prompt remain at gate until close",
+      "receipt": "docs/reports/sweep-b/L6-09-proof.json"
+    },
+    {
+      "id": "L6-12",
+      "clause": "closed Northgate remains passable above misplaced blocker",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "gateAt": 2,
+        "gate": {
+          "kind": "barricade",
+          "archetype": "l6.service-gate",
+          "faction": "environment",
+          "transform": {
+            "x": 258,
+            "z": 15.9,
+            "y": 3.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 10000,
+            "max": 10000
+          },
+          "interactable": {
+            "kind": "barricade",
+            "radius": 1.6,
+            "holdTime": 2,
+            "instant": false,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": false,
+            "enabled": false,
+            "hint": "",
+            "label": "Repair",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 73,
+          "barricade": {
+            "slot": {
+              "id": "l6-night-exit",
+              "groupId": "l6-exit",
+              "a": {
+                "x": 258,
+                "z": 13.75
+              },
+              "b": {
+                "x": 258,
+                "z": 18.05
+              },
+              "height": 2.5,
+              "initialHp": 10000
+            },
+            "coverage": 1,
+            "props": [],
+            "intact": true,
+            "hitTick": -60,
+            "breaks": 0
+          },
+          "combat": {
+            "radius": 2.1500000000000004,
+            "armor": 0,
+            "shield": false,
+            "staggerUntil": 0,
+            "attacking": false,
+            "damageMultiplier": 1,
+            "statuses": []
+          }
+        },
+        "gateWalls": [
+          {
+            "type": "world.blocker.changed",
+            "tick": 2,
+            "id": 73,
+            "blocked": true,
+            "wall": {
+              "x": 258,
+              "z": 15.9,
+              "y": 1.25,
+              "halfY": 1.25,
+              "halfX": 0.35,
+              "halfZ": 2.5000000000000004,
+              "entityId": 73
+            }
+          }
+        ],
+        "open": {
+          "before": {
+            "x": 255.5,
+            "y": 4.62,
+            "z": 15.9,
+            "yaw": 0.3205919885488634
+          },
+          "requested": {
+            "x": 6,
+            "y": 0,
+            "z": 0
+          },
+          "movement": {
+            "x": 6,
+            "y": -0.01500188559293747,
+            "z": 0
+          },
+          "crossed": true
+        },
+        "closed": {
+          "before": {
+            "x": 255.5,
+            "y": 4.62,
+            "z": 15.9,
+            "yaw": 0.3205919885488634
+          },
+          "requested": {
+            "x": 6,
+            "y": 0,
+            "z": 0
+          },
+          "movement": {
+            "x": 6,
+            "y": -0.01500188559293747,
+            "z": 0
+          },
+          "crossed": true
+        },
+        "roster": [
+          {
+            "id": 16,
+            "status": "out"
+          },
+          {
+            "id": 17,
+            "status": "out"
+          },
+          {
+            "id": 18,
+            "status": "out"
+          },
+          {
+            "id": 19,
+            "status": "out"
+          },
+          {
+            "id": 20,
+            "status": "out"
+          },
+          {
+            "id": 21,
+            "status": "out"
+          },
+          {
+            "id": 22,
+            "status": "out"
+          },
+          {
+            "id": 23,
+            "status": "out"
+          },
+          {
+            "id": 24,
+            "status": "out"
+          },
+          {
+            "id": 25,
+            "status": "out"
+          },
+          {
+            "id": 26,
+            "status": "out"
+          },
+          {
+            "id": 27,
+            "status": "out"
+          },
+          {
+            "id": 28,
+            "status": "out"
+          },
+          {
+            "id": 29,
+            "status": "out"
+          },
+          {
+            "id": 30,
+            "status": "out"
+          },
+          {
+            "id": 31,
+            "status": "out"
+          },
+          {
+            "id": 32,
+            "status": "out"
+          },
+          {
+            "id": 33,
+            "status": "out"
+          },
+          {
+            "id": 34,
+            "status": "out"
+          },
+          {
+            "id": 35,
+            "status": "out"
+          },
+          {
+            "id": 36,
+            "status": "out"
+          },
+          {
+            "id": 37,
+            "status": "out"
+          },
+          {
+            "id": 38,
+            "status": "out"
+          },
+          {
+            "id": 39,
+            "status": "out"
+          },
+          {
+            "id": 40,
+            "status": "out"
+          },
+          {
+            "id": 41,
+            "status": "out"
+          },
+          {
+            "id": 42,
+            "status": "out"
+          },
+          {
+            "id": 43,
+            "status": "out"
+          },
+          {
+            "id": 44,
+            "status": "out"
+          }
+        ],
+        "result": null
+      },
+      "target": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
+      "receipt": "docs/reports/sweep-b/L6-12-proof.json"
+    },
+    {
+      "id": "L6-02",
+      "clause": "actual headlamp approach persistence head-following beam and no new weapons",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "before": {
+          "tick": 0,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 3,
+            "y": 1.3049999999999997,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "flashlight": false,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": false
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 0.32059198854886345,
+          "headlampOn": 0,
+          "beam": [
+            0.9490490319615965,
+            -0.3151284419609829
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false
+          }
+        },
+        "afterIdle": {
+          "tick": 120,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 3,
+            "y": 1.3200000524520874,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "flashlight": false,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": false
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 0.3205919885488633,
+          "headlampOn": 0,
+          "beam": [
+            0.9490490319615966,
+            -0.3151284419609827
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false
+          }
+        },
+        "afterApproach": {
+          "tick": 165,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 1.1219995021820068,
+            "y": 1.3200000524520874,
+            "z": -2.5039985179901123,
+            "yaw": 2.214297435588181
+          },
+          "flashlight": true,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": true
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 2.2142974067470855,
+          "headlampOn": 1,
+          "beam": [
+            -0.5999999769271234,
+            -0.800000017304657
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false
+          }
+        },
+        "opposed": {
+          "tick": 225,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 43.753963470458984,
+            "y": 1.2699999809265137,
+            "z": 14.626964569091797,
+            "yaw": 0
+          },
+          "flashlight": true,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": true
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 3.1415926535547865,
+          "headlampOn": 1,
+          "beam": [
+            -1,
+            -3.500678669874065e-11
+          ],
+          "input": {
+            "move": {
+              "x": 1,
+              "z": 0
+            },
+            "aim": {
+              "x": -1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "strafe": true
+          }
+        }
+      },
+      "target": "No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim",
+      "receipt": "docs/reports/sweep-b/L6-02-proof.json"
+    },
+    {
+      "id": "L6-01",
+      "clause": "actual carried L5 residents lose L6 shelter routine presentation",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "carriedCount": 24,
+        "identicalIds": true,
+        "allFullHealth": true,
+        "assignedRoutines": {
+          "sit": 5,
+          "talk": 5,
+          "treat": 5,
+          "rest": 4,
+          "share": 4
+        },
+        "actualStoryClips": {
+          "idle": 8,
+          "npc-gesture": 16,
+          "npc-sit": 0,
+          "death-side": 0,
+          "npc-cower": 0,
+          "npc-give": 0
+        },
+        "throughTick": 240
+      },
+      "target": "Actual24residents+0\u20135 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s",
+      "receipt": "docs/reports/sweep-b/L6-01-proof.json"
+    },
+    {
+      "id": "L6-08",
+      "clause": "all original follower settled speed and per-ID visible bars",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "perIdBars": [
+          {
+            "id": 16,
+            "injured": false,
+            "bar": {
+              "id": 16,
+              "fraction": 1,
+              "x": 844.6505277423535,
+              "y": 400.9732430978946,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.3019988702926,
+                5.2019856788185646,
+                15.67447401753984
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              834,
+              397,
+              857,
+              406
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 17,
+            "injured": false,
+            "bar": {
+              "id": 17,
+              "fraction": 1,
+              "x": 835.2022864333383,
+              "y": 406.6951668716208,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2471388836961,
+                5.14558174163858,
+                15.833094026670736
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              824,
+              403,
+              847,
+              412
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 18,
+            "injured": false,
+            "bar": {
+              "id": 18,
+              "fraction": 1,
+              "x": 843.0940908474126,
+              "y": 403.9147216442816,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.357153717497,
+                5.233479300646634,
+                15.783999268034055
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              832,
+              400,
+              855,
+              409
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 19,
+            "injured": false,
+            "bar": {
+              "id": 19,
+              "fraction": 1,
+              "x": 857.2385534439928,
+              "y": 394.2013352319822,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.3454591636076,
+                5.220907077442265,
+                15.418556869448537
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              846,
+              390,
+              869,
+              399
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 20,
+            "injured": false,
+            "bar": {
+              "id": 20,
+              "fraction": 1,
+              "x": 850.7262621801233,
+              "y": 398.1455913133021,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2565773744048,
+                5.116238110828322,
+                15.457880379623212
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              840,
+              394,
+              863,
+              403
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 21,
+            "injured": true,
+            "bar": {
+              "id": 21,
+              "fraction": 1,
+              "x": 844.8058139990978,
+              "y": 397.3695024714052,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1876579705981,
+                5.128920820182222,
+                15.521791595628489
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              834,
+              393,
+              857,
+              402
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 22,
+            "injured": false,
+            "bar": {
+              "id": 22,
+              "fraction": 1,
+              "x": 848.2563694482556,
+              "y": 395.400778983362,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.24668370450036,
+                5.196920736751331,
+                15.516741382722891
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              837,
+              391,
+              860,
+              400
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 23,
+            "injured": false,
+            "bar": {
+              "id": 23,
+              "fraction": 1,
+              "x": 849.2851919745943,
+              "y": 395.2389850349583,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2477091520992,
+                5.18697986526384,
+                15.491281387206545
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              838,
+              391,
+              861,
+              400
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 24,
+            "injured": false,
+            "bar": {
+              "id": 24,
+              "fraction": 1,
+              "x": 845.7949349325215,
+              "y": 399.0356047647343,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.23000246958895,
+                5.133895450302152,
+                15.549824780990257
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              835,
+              395,
+              858,
+              404
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 25,
+            "injured": false,
+            "bar": {
+              "id": 25,
+              "fraction": 1,
+              "x": 844.512685212016,
+              "y": 400.6012962906715,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.27759948697854,
+                5.18037620153399,
+                15.645414981515806
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              834,
+              397,
+              857,
+              406
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 26,
+            "injured": true,
+            "bar": {
+              "id": 26,
+              "fraction": 1,
+              "x": 843.9760792957373,
+              "y": 398.51077177326016,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2452086411123,
+                5.19042851815694,
+                15.620101352751686
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              833,
+              395,
+              856,
+              404
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 27,
+            "injured": false,
+            "bar": {
+              "id": 27,
+              "fraction": 1,
+              "x": 816.0273801502842,
+              "y": 381.83522066329806,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.65953019133735,
+                5.198018092954538,
+                15.602201967155096
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              805,
+              378,
+              828,
+              387
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 28,
+            "injured": false,
+            "bar": {
+              "id": 28,
+              "fraction": 1,
+              "x": 837.8938411126546,
+              "y": 401.8256917171089,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2643004472684,
+                5.231541516470873,
+                15.79767952517971
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              827,
+              398,
+              850,
+              407
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 29,
+            "injured": false,
+            "bar": {
+              "id": 29,
+              "fraction": 1,
+              "x": 845.6475299314363,
+              "y": 400.46995125147436,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.22864904431714,
+                5.103922865275161,
+                15.548302078527296
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              835,
+              396,
+              858,
+              405
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 30,
+            "injured": false,
+            "bar": {
+              "id": 30,
+              "fraction": 1,
+              "x": 843.5557703817772,
+              "y": 400.438266256629,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.19765984181413,
+                5.09470509501873,
+                15.561096540727547
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              833,
+              396,
+              856,
+              405
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 31,
+            "injured": true,
+            "bar": {
+              "id": 31,
+              "fraction": 1,
+              "x": 848.4104267469975,
+              "y": 397.5560033065628,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.28678978050885,
+                5.200769999660553,
+                15.562777405630747
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              837,
+              394,
+              860,
+              403
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 32,
+            "injured": false,
+            "bar": {
+              "id": 32,
+              "fraction": 1,
+              "x": 809.5373960761895,
+              "y": 384.6428868573388,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.62128658299036,
+                5.181618814867621,
+                15.714711380048428
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              799,
+              381,
+              822,
+              390
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 33,
+            "injured": false,
+            "bar": {
+              "id": 33,
+              "fraction": 1,
+              "x": 837.3859740818232,
+              "y": 403.39326611162187,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2680994440623,
+                5.210774968277228,
+                15.812408583313932
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              826,
+              399,
+              849,
+              408
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 34,
+            "injured": false,
+            "bar": {
+              "id": 34,
+              "fraction": 1,
+              "x": 837.8176704977982,
+              "y": 397.15028847722,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2046890061147,
+                5.25435002417027,
+                15.729460219646079
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              827,
+              393,
+              850,
+              402
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 35,
+            "injured": false,
+            "bar": {
+              "id": 35,
+              "fraction": 1,
+              "x": 847.5758377274151,
+              "y": 396.6687163722876,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.23818987950256,
+                5.168972004665504,
+                15.51985043629573
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              837,
+              393,
+              860,
+              402
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 36,
+            "injured": true,
+            "bar": {
+              "id": 36,
+              "fraction": 1,
+              "x": 842.5480709409636,
+              "y": 402.3293476258811,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2550057036307,
+                5.142920282706568,
+                15.66185413426414
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              832,
+              398,
+              855,
+              407
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 37,
+            "injured": false,
+            "bar": {
+              "id": 37,
+              "fraction": 1,
+              "x": 817.3775056465342,
+              "y": 380.63054706904546,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.59986726454895,
+                5.1318053015589715,
+                15.491082112113613
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              806,
+              377,
+              829,
+              386
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 38,
+            "injured": false,
+            "bar": {
+              "id": 38,
+              "fraction": 1,
+              "x": 821.4737705416403,
+              "y": 373.6033099368136,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.5670411013177,
+                5.183261605988299,
+                15.35520667062304
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              810,
+              370,
+              833,
+              379
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 39,
+            "injured": false,
+            "bar": {
+              "id": 39,
+              "fraction": 1,
+              "x": 818.9147023696826,
+              "y": 377.75063062402376,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.5481705874933,
+                5.1081848060183574,
+                15.388751527739728
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              808,
+              374,
+              831,
+              383
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 40,
+            "injured": false,
+            "bar": {
+              "id": 40,
+              "fraction": 1,
+              "x": 857.992873120937,
+              "y": 403.9989807225488,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.485301294515,
+                5.184686973955467,
+                15.569138326832984
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              847,
+              400,
+              870,
+              409
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 41,
+            "injured": false,
+            "bar": {
+              "id": 41,
+              "fraction": 1,
+              "x": 839.7809431680741,
+              "y": 397.60095070906584,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1512950880501,
+                5.149099918835564,
+                15.60408677887655
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              829,
+              394,
+              852,
+              403
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 42,
+            "injured": false,
+            "bar": {
+              "id": 42,
+              "fraction": 1,
+              "x": 844.5481692335777,
+              "y": 395.00732406547877,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1940789881118,
+                5.190671646492612,
+                15.543264931715232
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              834,
+              391,
+              857,
+              400
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 43,
+            "injured": false,
+            "bar": {
+              "id": 43,
+              "fraction": 1,
+              "x": 846.5435739057294,
+              "y": 398.60419492640625,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2808402389248,
+                5.197653515143175,
+                15.60126670300556
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              836,
+              395,
+              859,
+              404
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          },
+          {
+            "id": 44,
+            "injured": false,
+            "bar": {
+              "id": 44,
+              "fraction": 1,
+              "x": 843.5042901037295,
+              "y": 398.0331242384662,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.21228792562175,
+                5.165016547655281,
+                15.588453315636293
+              ]
+            },
+            "greenPixels": 54,
+            "crop": [
+              833,
+              394,
+              856,
+              403
+            ],
+            "drawn": true,
+            "health": {
+              "current": 60,
+              "max": 60
+            }
+          }
+        ],
+        "individualSettledWalks": [
+          {
+            "id": 16,
+            "injured": false,
+            "min": 2.1995157036283848,
+            "max": 2.199999941316922
+          },
+          {
+            "id": 17,
+            "injured": false,
+            "min": 2.1995157028061483,
+            "max": 2.199999941317314
+          },
+          {
+            "id": 18,
+            "injured": false,
+            "min": 2.1995157028061483,
+            "max": 2.199999941317314
+          },
+          {
+            "id": 19,
+            "injured": false,
+            "min": 2.1995157028061483,
+            "max": 2.199999941317314
+          },
+          {
+            "id": 20,
+            "injured": false,
+            "min": 2.1995157018916784,
+            "max": 2.1999999413172056
+          },
+          {
+            "id": 21,
+            "injured": true,
+            "min": 2.1995157018916784,
+            "max": 2.1999999413172056
+          },
+          {
+            "id": 22,
+            "injured": false,
+            "min": 2.1995157018916784,
+            "max": 2.1999999413172056
+          },
+          {
+            "id": 23,
+            "injured": false,
+            "min": 2.1995157008687363,
+            "max": 2.199999941317289
+          },
+          {
+            "id": 24,
+            "injured": false,
+            "min": 2.1995157008687363,
+            "max": 2.199999941317289
+          },
+          {
+            "id": 25,
+            "injured": false,
+            "min": 2.1995157008687363,
+            "max": 2.199999941317289
+          },
+          {
+            "id": 26,
+            "injured": true,
+            "min": 2.1995156997189023,
+            "max": 2.199999941316899
+          },
+          {
+            "id": 27,
+            "injured": false,
+            "min": 2.1995156997189023,
+            "max": 2.199999941316899
+          },
+          {
+            "id": 28,
+            "injured": false,
+            "min": 2.1995156997189023,
+            "max": 2.199999941316899
+          },
+          {
+            "id": 29,
+            "injured": false,
+            "min": 2.199515698416391,
+            "max": 2.199999941316716
+          },
+          {
+            "id": 30,
+            "injured": false,
+            "min": 2.199515698416391,
+            "max": 2.199999941316716
+          },
+          {
+            "id": 31,
+            "injured": true,
+            "min": 2.199515698416391,
+            "max": 2.199999941316716
+          },
+          {
+            "id": 32,
+            "injured": false,
+            "min": 2.1995157285311073,
+            "max": 2.1999999413204554
+          },
+          {
+            "id": 33,
+            "injured": false,
+            "min": 2.1995157285311073,
+            "max": 2.1999999413204554
+          },
+          {
+            "id": 34,
+            "injured": false,
+            "min": 2.1995157285311073,
+            "max": 2.1999999413204554
+          },
+          {
+            "id": 35,
+            "injured": false,
+            "min": 2.1995157285312255,
+            "max": 2.199999941320441
+          },
+          {
+            "id": 36,
+            "injured": true,
+            "min": 2.1995157285312255,
+            "max": 2.199999941320441
+          },
+          {
+            "id": 37,
+            "injured": false,
+            "min": 2.1995157285312255,
+            "max": 2.199999941320441
+          },
+          {
+            "id": 38,
+            "injured": false,
+            "min": 2.199515728530845,
+            "max": 2.1999999413204994
+          },
+          {
+            "id": 39,
+            "injured": false,
+            "min": 2.199515728530845,
+            "max": 2.1999999413204994
+          },
+          {
+            "id": 40,
+            "injured": false,
+            "min": 2.199515728530845,
+            "max": 2.1999999413204994
+          },
+          {
+            "id": 41,
+            "injured": false,
+            "min": 2.1995157285314724,
+            "max": 2.199999941320003
+          },
+          {
+            "id": 42,
+            "injured": false,
+            "min": 2.1995157285314724,
+            "max": 2.199999941320003
+          },
+          {
+            "id": 43,
+            "injured": false,
+            "min": 2.1995157285314724,
+            "max": 2.199999941320003
+          },
+          {
+            "id": 44,
+            "injured": false,
+            "min": 2.1995157285312157,
+            "max": 2.19999994132004
+          }
+        ],
+        "nativeGroupPace": {
+          "id": "L6-08",
+          "clause": "observed human follower pace versus phase group median",
+          "level": "L6",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/retreat",
+              "id": 16,
+              "samples": 121,
+              "median": 2.1999972590566585,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1
+            },
+            {
+              "phase": "step/retreat",
+              "id": 21,
+              "samples": 51,
+              "median": 2.199975607658986,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 0.9999901584433419
+            },
+            {
+              "phase": "step/retreat",
+              "id": 23,
+              "samples": 51,
+              "median": 2.1999999999997044,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1.000001245884755
+            },
+            {
+              "phase": "step/retreat",
+              "id": 24,
+              "samples": 49,
+              "median": 2.1999997869179206,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1.000001149029278
+            },
+            {
+              "phase": "step/retreat",
+              "id": 26,
+              "samples": 49,
+              "median": 2.1999999785588815,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1.0000012361389141
+            },
+            {
+              "phase": "step/retreat",
+              "id": 29,
+              "samples": 42,
+              "median": 2.199907255077726,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 0.999959089049515
+            },
+            {
+              "phase": "step/retreat",
+              "id": 31,
+              "samples": 49,
+              "median": 2.1999993817095107,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1.0000009648434076
+            },
+            {
+              "phase": "step/retreat",
+              "id": 34,
+              "samples": 49,
+              "median": 2.1999967365242696,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 0.9999997624849819
+            },
+            {
+              "phase": "step/retreat",
+              "id": 36,
+              "samples": 49,
+              "median": 2.1999618203846327,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 0.9999838914926462
+            },
+            {
+              "phase": "step/retreat",
+              "id": 39,
+              "samples": 49,
+              "median": 2.199828328201937,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 0.9999232131521864
+            },
+            {
+              "phase": "step/retreat",
+              "id": 41,
+              "samples": 49,
+              "median": 2.199999999989563,
+              "groupMedian": 2.1999972590566585,
+              "ratio": 1.0000012458801453
+            },
+            {
+              "phase": "step/exit",
+              "id": 16,
+              "samples": 19,
+              "median": 2.1987789280533727,
+              "groupMedian": 2.1987789280533727,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio\u22650.95; bar pixels and absolute formation remain open",
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+        },
+        "rendererErrors": []
+      },
+      "target": "Every original follower including injured walks2.2m/s and has actual unoccluded bar pixels; ordinary group pace retained",
+      "receipt": "docs/reports/sweep-b/L6-08-proof.json"
+    }
+  ],
+  "observations": {
+    "scope": "Current-source supplementary native clauses and185 reviewed physical images. Four physical routes remain unfinished; no full-route G-25 PASS.",
+    "captureReview": "docs/reports/sweep-b/L6-capture-review.json",
+    "captureReviewSha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083"
+  }
+}

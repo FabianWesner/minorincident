@@ -49,6 +49,7 @@ function assertL4ObjectiveClearance() {
 }
 
 test('admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it', async () => {
+  await assertCorgiRecovery();
   const source = assertL4ObjectiveClearance();
   const camp = new SimWorld(); worlds.push(camp); await camp.init(); camp.loadComposition(compositions.L4, [source], 1);
   camp.combat!.damage.god = true;
@@ -186,3 +187,30 @@ test('corpses: a blast flight stops before a thin wall and lands with its identi
   for (let i = 0; i < 300; i++) r.update();
   expect(r.entities.get(body)!.transform).toEqual(landed); expect(r.entities.get(body)!.corpse).toBe(true);
 });
+
+async function assertCorgiRecovery() {
+  const w = await arena();
+  const dog = w.entities.get(w.npcs!.companion.spawn())!;
+  expect(w.solids.relocate(dog, { x: 10, y: .3, z: 10 }, 'test.corgi-before-hide', 0, false)).toBe(true);
+  w.tick++; w.solids.commit();
+  const old = { ...dog.transform };
+  dog.companion!.state = 'hide';
+  w.tick++; w.solids.commit();
+  Object.assign(dog.transform, { x: 20, z: 10 });
+  w.tick++; w.solids.commit();
+  // Recovery in a crowded passage must never reuse the position the pet had
+  // before its collision-free hidden travel. Ordinary local repair still runs.
+  for (let i = 0; i < 8; i++) {
+    const angle = i * Math.PI / 4, x = 20 + Math.cos(angle) * 1.3, z = 10 + Math.sin(angle) * 1.3;
+    const id = w.infected!.spawn('infected.alpha', { x, z }, { state: 'idle' }), e = w.entities.get(id)!;
+    Object.assign(e.transform, { x, z }); w.solids.remember(e, 'test.recovery-crowd');
+  }
+  const current = { ...dog.transform };
+  dog.companion!.until = w.tick;
+  w.npcs!.companion.update();
+  expect(dog.companion!.state).toBe('follow');
+  w.tick++; w.solids.commit();
+  expect(Math.hypot(dog.transform.x - current.x, dog.transform.z - current.z)).toBeLessThanOrEqual(4.01);
+  expect(Math.hypot(dog.transform.x - old.x, dog.transform.z - old.z)).toBeGreaterThan(6);
+  expect(w.solids.snapshot()).toMatchObject({ failures: 0 });
+}

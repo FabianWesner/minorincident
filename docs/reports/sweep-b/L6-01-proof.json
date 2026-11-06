@@ -1,0 +1,52 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "ledger": "docs/reports/sweep-b/L6-carry-ledger.json.gz",
+  "ledgerSha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701",
+  "observation": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions.",
+  "rows": [
+    {
+      "tier": "low",
+      "carriedCount": 24,
+      "identicalIds": true,
+      "allFullHealth": true,
+      "assignedRoutines": {
+        "sit": 5,
+        "talk": 5,
+        "treat": 5,
+        "rest": 4,
+        "share": 4
+      },
+      "actualStoryClips": {
+        "idle": 8,
+        "npc-gesture": 16,
+        "npc-sit": 0,
+        "death-side": 0,
+        "npc-cower": 0,
+        "npc-give": 0
+      },
+      "throughTick": 240
+    },
+    {
+      "tier": "high",
+      "carriedCount": 24,
+      "identicalIds": true,
+      "allFullHealth": true,
+      "assignedRoutines": {
+        "sit": 5,
+        "talk": 5,
+        "treat": 5,
+        "rest": 4,
+        "share": 4
+      },
+      "actualStoryClips": {
+        "idle": 8,
+        "npc-gesture": 16,
+        "npc-sit": 0,
+        "death-side": 0,
+        "npc-cower": 0,
+        "npc-give": 0
+      },
+      "throughTick": 240
+    }
+  ]
+}

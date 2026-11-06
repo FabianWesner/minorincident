@@ -1,0 +1,26 @@
+{
+  "row": "L6-04",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "0dbc9a92cd16e681cec94c730d756d4298ef5df5",
+  "clauses": [
+    {
+      "clause": "Breach 2 at +20\u201330 s from \u2265 2 accesses, \u2265 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or \u2265 3 bitten.",
+      "verdict": "PASS",
+      "note": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L6-04-proof.json",
+      "sha256": "2e36462a6b2b56d7807b5c66114ad90d782b08663817d52951c788f4b93c769f",
+      "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-capture-review.json",
+      "sha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083",
+      "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+    }
+  ]
+}

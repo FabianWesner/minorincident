@@ -1,0 +1,762 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "inputs": [
+    {
+      "file": "docs/reports/sweep-b/L6-gates.json",
+      "sha256": "525390fd3972c5a3acc08db58642f11d850830ce4a6cf619efb2d5893af181f6"
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-controls.json",
+      "sha256": "76293c8ba729c51de4329a1af35132f8d3c58f02ffbaa9a3e49a8759f1c10293"
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-capture-review.json",
+      "sha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083"
+    }
+  ],
+  "method": "Controlled actual gates at90/150/210, unchanged2.2m widths; actual ordinary input crosses open and fails to cross closed collider. Exactly five mortal ordinary runners break each closed leaf in9.8167s. Production closable/guide/gateStatus refusal at\u22642m and fixed prompt/marker exercised with original roster. Physical low/high routes show Everyone through/E-or-click, stationary yellow gate rings, and closed gate/brace prompt; routes remain unfinished.",
+  "rows": [
+    {
+      "tier": "low",
+      "status": "PASS",
+      "gates": [
+        {
+          "x": 90,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 88,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 96.75464630126953,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 88,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 89.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        },
+        {
+          "x": 150,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 148,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 156.75465393066406,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 148,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 149.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        },
+        {
+          "x": 210,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 208,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 216.75465393066406,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 208,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 209.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        }
+      ],
+      "refusalAndPromptBoundaries": [
+        {
+          "x": 90,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 92.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 93.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 92.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        },
+        {
+          "x": 150,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 152.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 153.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 152.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        },
+        {
+          "x": 210,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 212.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 213.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 212.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "status": "PASS",
+      "gates": [
+        {
+          "x": 90,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 88,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 96.75464630126953,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 88,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 89.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        },
+        {
+          "x": 150,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 148,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 156.75465393066406,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 148,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 149.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        },
+        {
+          "x": 210,
+          "widthM": 2.200000000000001,
+          "exactFiveRunnerIds": [
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "heldSeconds": 9.816666666666666,
+          "openMovement": {
+            "before": {
+              "x": 208,
+              "y": 1.3049999999999997,
+              "z": 15,
+              "yaw": 0.3205919885488634
+            },
+            "after": {
+              "x": 216.75465393066406,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "crossed": true
+          },
+          "closedMovement": {
+            "before": {
+              "x": 208,
+              "y": 1.2699999809265137,
+              "z": 15,
+              "yaw": 0
+            },
+            "after": {
+              "x": 209.49490356445312,
+              "y": 1.2699999809265137,
+              "z": 14.999999046325684,
+              "yaw": 0
+            },
+            "crossed": false
+          },
+          "openSight": true,
+          "closedSight": false
+        }
+      ],
+      "refusalAndPromptBoundaries": [
+        {
+          "x": 90,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 92.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 93.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 92.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 92.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        },
+        {
+          "x": 150,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 152.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 153.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 152.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 152.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        },
+        {
+          "x": 210,
+          "boundaries": [
+            {
+              "survivorOffsetM": -1.99,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 0,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 1.8,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2,
+              "closable": false,
+              "status": "Let everyone pass \u00b7 28/29 through"
+            },
+            {
+              "survivorOffsetM": 2.01,
+              "closable": true,
+              "status": "Everyone through \u00b7 E or click the gate to close it"
+            }
+          ],
+          "markerSamples": [
+            {
+              "player": {
+                "x": 212.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 213.5,
+                "z": 16.5
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            },
+            {
+              "player": {
+                "x": 212.4,
+                "z": 17.3
+              },
+              "marker": "l6-next",
+              "at": {
+                "x": 212.4,
+                "z": 17.3,
+                "y": 0.6,
+                "radius": 2
+              },
+              "prompt": "Everyone through \u00b7 E or click the gate to close it",
+              "closedAt": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

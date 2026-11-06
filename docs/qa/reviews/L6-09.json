@@ -1,0 +1,21 @@
+{
+  "row": "L6-09",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "f2777448d3e3b786084d5d2482a5fed44c475597",
+  "clauses": [
+    {
+      "clause": "Gates: \u2265 3 chokepoints \u2264 2.5 m; a closed gate blocks movement + sight and holds 8\u201312 s vs 5 infected; refuses to close with a survivor \u2264 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click).",
+      "verdict": "PASS",
+      "note": "All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L6-09-proof.json",
+      "sha256": "1102c17794e37aaa311574b12d7799cbfa9882ffa5bea828303f52a9af0cd5a5",
+      "what": "All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim."
+    }
+  ]
+}

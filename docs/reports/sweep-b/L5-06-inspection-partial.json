@@ -1,0 +1,50 @@
+{
+  "row": "L5-06",
+  "status": "NOT CHECKED",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "scope": "Source inspection only; no new browser or audio measurement. Stopped at orchestrator handoff.",
+  "sourceFiles": [
+    {
+      "file": "src/sim/missions/LevelFiveAftermath.ts",
+      "sha256": "709d0c2734b348b6fe3042513958ad5c856be0a73241ea491db6e57c95aff2db"
+    },
+    {
+      "file": "src/ui/Hud.ts",
+      "sha256": "e45b45a7968c7c2d90fd72bbb1e717a798883fb95b34323865570d7a01ad55a0"
+    },
+    {
+      "file": "src/data/l5.ts",
+      "sha256": "b50ba5f4af26ee391d7274d9761c20eebe3aa3a5ec2152092be5d5db9c75f77c"
+    },
+    {
+      "file": "src/audio/AudioEventMapper.ts",
+      "sha256": "0ca63c2b79d2e4223539efe66c2e24387ea41c0e2bafb65d611f704e7bb824d1"
+    },
+    {
+      "file": "src/data/audioCues.ts",
+      "sha256": "ba242ef8039df8c07bb2d17fd84406a9e59078a8f750f55fa85e9919b7c80e4e"
+    },
+    {
+      "file": "src/audio/AudioService.ts",
+      "sha256": "8c2bc20970a92b84d35a8104a2645e329c31f64adf5a3b8985b73de3f18a7ae4"
+    },
+    {
+      "file": "src/audio/AudioGraph.ts",
+      "sha256": "c290f56276aef8322ee6204b0cd7b650ef1ddae8a54b96490d66d40dc79b6ac6"
+    },
+    {
+      "file": "src/audio/acoustics.ts",
+      "sha256": "c9dbaec86aa2375766f57e68ea31f366ef9e63572047155a75c6bfe8f1aad1c0"
+    }
+  ],
+  "observations": [
+    "Mission cue expiry and HUD music-note visibility use simulated ticks; cue mapping uses audio voices with different durations. This suggests a timing question, not a measured failure.",
+    "Actual audible duration includes playback rate and reverberation; source-buffer end alone cannot establish silence.",
+    "A paused/manual simulation clock must not be compared directly with a running AudioContext clock."
+  ],
+  "remaining": [
+    "Measure normal running, unlocked, unmuted audio voices and reverberation against visible music-note timing at both tiers.",
+    "Inspect absence of hidden rings/arrows/pins and cue exclusion beyond 30 m."
+  ],
+  "verdictChanged": false
+}

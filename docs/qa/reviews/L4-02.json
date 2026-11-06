@@ -1,57 +1,26 @@
 {
   "row": "L4-02",
-  "status": "FAIL",
-  "reviewer": "Codex/fix54-b",
-  "date": "2026-11-04",
-  "commit": "cbb3c24a693f6e45f70db7ff0ffac1100a7e3449",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "eaf9203be269eec226d90064f13a4302114cfb3e",
   "clauses": [
     {
-      "clause": "Until pickup: 0 infected, 0 combat, 0 damage decals; ≥ 30 civilians in routines at low, ≥ 40 at high; soldiers relaxed (chat/coffee/patrol). Civilians do not clump outside the camp or overlap.",
-      "verdict": "FAIL",
-      "note": "Matching prior receipts show32 civilians at low and64 at high, meeting the amended ≥30/≥40 count targets; pre-pickup infected/combat/decals are zero. Reviewed low/high contact sheets show civilians sitting, chatting, and standing around the camp, with soldiers at ease and no active engagement visible. Some people are close together in the camp/line; sampled stills do not establish the universal no-clump/no-overlap clause, so the row remains FAIL pending that evidence."
+      "clause": "Until pickup: 0 infected, 0 combat, 0 damage decals; \u2265 40 civilians in routines at high, \u2265 30 at low (orchestrator 2026-11-04: low follows the L4-04 50 % low budget, 30\u201335; the old \u2265 40 at low contradicted L4-04); soldiers relaxed (chat/coffee/patrol). Civilians do not clump outside the camp or overlap.",
+      "verdict": "PASS",
+      "note": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix53-b/L4-02.json",
-      "sha256": "305ee1c7fa6c4cc6c5cfb8c2a4034adca3d9176d2756639a07086ca1fbb97f01",
-      "what": "Matching calm census at both qualities and route zooms: low32 and high64, both meeting the amended ≥30/≥40 floors."
+      "file": "docs/reports/sweep-b/L4-02-proof.json",
+      "sha256": "1c7528318ea6083e77d99cfffa815e89745fc12baabbd265ba1437e739418784",
+      "what": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
     },
     {
-      "file": "docs/reports/fix53-b/L4-opening-review.json",
-      "sha256": "25e5832edf4183be2b9801cdd062907fa1fe5aea8de8d262a7caf8c2971d282e",
-      "what": "Every original image inspected; per-image SHA256 and what was visible; contact sheet/archive hashes."
-    },
-    {
-      "file": "docs/reports/fix53-b/L4-opening/L4-low-z0.5-webgl2.jpg",
-      "sha256": "c89ad342d6572e78c9acbb7f3a8a3e276623176b27894d9ceb31270902daf90b",
-      "what": "Reviewed contact sheet: intact bus/camp before pickup, MG/hold transition and early mixed battle."
-    },
-    {
-      "file": "docs/reports/fix53-b/L4-opening/L4-low-z1.5-webgl2.jpg",
-      "sha256": "92d7ce691862fd77130a6b72b0c8d6d13b43ca38a5130b06cc6201cae6f70d07",
-      "what": "Reviewed contact sheet: intact bus/camp before pickup, MG/hold transition and early mixed battle."
-    },
-    {
-      "file": "docs/reports/fix53-b/L4-opening/L4-high-z0.5-webgl2.jpg",
-      "sha256": "f40c00f4567f7a61ad1d560303dbd4af73cff675f6cebac833e9ac9621647cb6",
-      "what": "Reviewed contact sheet: intact bus/camp before pickup, MG/hold transition and early mixed battle."
-    },
-    {
-      "file": "docs/reports/fix53-b/L4-opening/L4-high-z1.5-webgl2.jpg",
-      "sha256": "1674412e03c52aa80caaca056b125022725a7c6216a5e71e4b6998c70597439b",
-      "what": "Reviewed contact sheet: intact bus/camp before pickup, MG/hold transition and early mixed battle."
-    },
-    {
-      "file": "docs/reports/fix53-b/L4-count-regression.json",
-      "sha256": "f668345ef660c0aaa3812e5f06c180441a63c80cdc3170616428808ff52b72af",
-      "what": "Isolated32-versus40 comparison: exact original source haszero passive wave flags;40-person trial introduces north/south contact failures and is reverted."
-    },
-    {
-      "file": "docs/reports/fix54-b/prior-receipts/L4-low-stationary.json",
-      "sha256": "a721d24072e8c51aa1dc2a3672f2666eabda28edd6f22f311f66dd921336300e",
-      "what": "Fresh native replay on restored original source, actual32-person turn census andzero passive wave flags."
+      "file": "docs/reports/sweep-b/L4-capture-review.json",
+      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
+      "what": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
     }
-  ],
-  "notes": "The amended count floors pass on the retained source. Routine and relaxed-soldier activity are visible in the reviewed contact sheets; the universal no-clump/no-overlap requirement remains unqualified because sampled stills cannot establish it. The 40-person low population trial remains rejected because it conflicted with L4-04 and introduced passive wave-contact failures."
+  ]
 }

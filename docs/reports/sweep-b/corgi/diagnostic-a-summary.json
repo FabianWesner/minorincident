@@ -1,0 +1,50 @@
+{
+  "sourceHash": "40d943f389f6cfeae328a933e65c7cbded6e3b128894bc322415de12e0947f30",
+  "rejectedChange": "speculative L5 flow-field exclusion; removed",
+  "rows": [
+    {
+      "cell": "sweep-b-l5-a-L5-webgpu-high-z1.5",
+      "samples": 507,
+      "within6mShare": 0.9783037475345168,
+      "maxSeparationM": 8.597560890353297,
+      "recoveries": [
+        {
+          "from": 6030,
+          "to": 6060,
+          "displacementM": 2.2163910162975777,
+          "separationM": 2.466356863381312
+        },
+        {
+          "from": 9690,
+          "to": 9720,
+          "displacementM": 1.1764393471651406,
+          "separationM": 2.1484787949776964
+        },
+        {
+          "from": 12120,
+          "to": 12150,
+          "displacementM": 3.163080235643661,
+          "separationM": 3.6082585089533423
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-a-L5-webgpu-high-z1.5-companion-trace.json.gz",
+      "sha256": "cedaab36e470c50f359950a113c962967e0847a0a7cfa674abb73b8180de4be4"
+    },
+    {
+      "cell": "sweep-b-l5-a-L5-webgpu-low-z1.5",
+      "samples": 409,
+      "within6mShare": 0.9315403422982885,
+      "maxSeparationM": 15.416921286668503,
+      "recoveries": [
+        {
+          "from": 8970,
+          "to": 9000,
+          "displacementM": 2.737781885074289,
+          "separationM": 13.94512875397517
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-a-L5-webgpu-low-z1.5-companion-trace.json.gz",
+      "sha256": "96b3d7a99a982ded0c4d9872b2b7da2b54a504f6b0ddb5f4ff4f60a69e671e46"
+    }
+  ]
+}

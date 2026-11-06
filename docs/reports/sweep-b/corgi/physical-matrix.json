@@ -1,0 +1,629 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "c8b0484fffe83c4b3ba17d4f7f13906254d1ed03",
+  "method": "Physical WASD/mouse authored rescue tour; seed1 progressed saves; protected courier, mortal followers; no frame timing. The unchanged E08-AC04 proximity bound is checked over the fixed first180sim seconds and the whole observed route. Driver failures remain explicit.",
+  "tool": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-b/tools/qa/sweep-b-corgi-matrix.py",
+  "toolSha256": "6b23dcda8a2653581fee7fa3b868128f0f25ce22a6ad479726772c6bbc7aa472",
+  "matrix": "test-results/vqa-fix-5-matrix/sweep-b-l5-c/results.json",
+  "matrixSha256": "20bf3638a8afb93c73b75305aab38e271fe504b4bffffc01506eb90d3ce45287",
+  "proximityStatus": "PASS",
+  "fullPhysicalRouteCompletedAtBothTiers": true,
+  "canonicalNativeControls": [
+    {
+      "tier": "low",
+      "nativeStateHash": "41e92b1f",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "receiptSha256": "db7cf0854e3d5937c6c558a0a6649371601f8ea1b1f73d97f8424c6fbe58f40f"
+    },
+    {
+      "tier": "high",
+      "nativeStateHash": "5493dad2",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "receiptSha256": "f3e1e9abd297cd878561ac56000a12bf98aa4d9a31a6f8bd680bab1b4e25c0a9"
+    }
+  ],
+  "cells": [
+    {
+      "level": "L5",
+      "backend": "webgl2",
+      "zoom": 0.5,
+      "tier": "high",
+      "tag": "sweep-b-l5-c-L5-webgl2-high-z0.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:36:21.919Z",
+      "ended": "2026-11-05T23:40:56.075Z",
+      "exit": 0,
+      "samples": 522,
+      "within6mSamples": 522,
+      "within6mShare": 1.0,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 360,
+      "first180SecondsWithin6mShare": 1.0,
+      "maximumSeparationM": 5.46483313220953,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 3930,
+          "toTick": 3960,
+          "displacementM": 2.1854249683048983
+        },
+        {
+          "fromTick": 5700,
+          "toTick": 5730,
+          "displacementM": 1.7314329238688944
+        }
+      ],
+      "finished": false,
+      "skipped": [],
+      "issues": [
+        {
+          "level": "L5",
+          "tick": 11472,
+          "x": -32.6,
+          "z": 13,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "21 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 1/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgl2-high-z0.5-L5-11472-stuck-navigating.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        },
+        {
+          "level": "L5",
+          "tick": 15614,
+          "x": -32.6,
+          "z": 13,
+          "severity": "P0",
+          "kind": "cannot-finish",
+          "text": "No visible progress for 90.0 s; stopping without advancing the objective",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgl2-high-z0.5-L5-15614-cannot-finish.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgl2-high-z0.5-companion-trace.json.gz",
+      "traceSha256": "3ee65e22c8dffc24c9cf02ea34ebf6b67c8ec515efa1c063042ab64aab09b7e3",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "tier": "high",
+      "tag": "sweep-b-l5-c-L5-webgl2-high-z1.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:31:13.601Z",
+      "ended": "2026-11-05T23:36:21.724Z",
+      "exit": 0,
+      "samples": 577,
+      "within6mSamples": 565,
+      "within6mShare": 0.9792027729636048,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 348,
+      "first180SecondsWithin6mShare": 0.9666666666666667,
+      "maximumSeparationM": 9.3327986370776,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 5250,
+          "toTick": 5280,
+          "displacementM": 2.124581107021133
+        },
+        {
+          "fromTick": 9930,
+          "toTick": 9960,
+          "displacementM": 1.5052673043149003
+        },
+        {
+          "fromTick": 11580,
+          "toTick": 11610,
+          "displacementM": 0.9527472607178299
+        },
+        {
+          "fromTick": 13560,
+          "toTick": 13590,
+          "displacementM": 0.03724625571062288
+        },
+        {
+          "fromTick": 14730,
+          "toTick": 14760,
+          "displacementM": 0.31822949021684604
+        },
+        {
+          "fromTick": 16080,
+          "toTick": 16110,
+          "displacementM": 0.5
+        }
+      ],
+      "finished": true,
+      "skipped": [],
+      "issues": [],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgl2-high-z1.5-companion-trace.json.gz",
+      "traceSha256": "0553f9863c928cac098da0f7a5769cefe6ca1ec9a45ecbd1a2ee51a5e235d3b5",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgl2",
+      "zoom": 0.5,
+      "tier": "low",
+      "tag": "sweep-b-l5-c-L5-webgl2-low-z0.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:36:21.918Z",
+      "ended": "2026-11-05T23:41:08.958Z",
+      "exit": 0,
+      "samples": 554,
+      "within6mSamples": 541,
+      "within6mShare": 0.9765342960288809,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 352,
+      "first180SecondsWithin6mShare": 0.9777777777777777,
+      "maximumSeparationM": 8.42025154102387,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 4320,
+          "toTick": 4350,
+          "displacementM": 1.4615720594455088
+        },
+        {
+          "fromTick": 6120,
+          "toTick": 6150,
+          "displacementM": 2.0856897381899775
+        },
+        {
+          "fromTick": 7860,
+          "toTick": 7890,
+          "displacementM": 0.6848237428718907
+        },
+        {
+          "fromTick": 9240,
+          "toTick": 9270,
+          "displacementM": 1.0005963069811221
+        },
+        {
+          "fromTick": 11070,
+          "toTick": 11100,
+          "displacementM": 1.2661866123024275
+        },
+        {
+          "fromTick": 12690,
+          "toTick": 12720,
+          "displacementM": 1.4452809974500964
+        },
+        {
+          "fromTick": 14820,
+          "toTick": 14850,
+          "displacementM": 2.3430865850575704
+        }
+      ],
+      "finished": false,
+      "skipped": [],
+      "issues": [
+        {
+          "level": "L5",
+          "tick": 10550,
+          "x": -35.1,
+          "z": 1.9,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "21 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 4/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgl2-low-z0.5-L5-10550-stuck-navigating.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        },
+        {
+          "level": "L5",
+          "tick": 15190,
+          "x": -7.9,
+          "z": 2.2,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "66 s without objective progress standing at the ring (undefined m); HUD: \"Look for anyone still alive \u00b7 Survivors found 4/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgl2-low-z0.5-L5-15190-stuck-at-ring.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        },
+        {
+          "level": "L5",
+          "tick": 16636,
+          "x": -4.1,
+          "z": 2.9,
+          "severity": "P0",
+          "kind": "cannot-finish",
+          "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgl2-low-z0.5-L5-16636-cannot-finish.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgl2-low-z0.5-companion-trace.json.gz",
+      "traceSha256": "947a9638ec9d6e887cf30a6782102b102e6ee5fd4930007ef1f45946965c9bdd",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "tier": "low",
+      "tag": "sweep-b-l5-c-L5-webgl2-low-z1.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:31:13.600Z",
+      "ended": "2026-11-05T23:35:28.123Z",
+      "exit": 0,
+      "samples": 466,
+      "within6mSamples": 466,
+      "within6mShare": 1.0,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 360,
+      "first180SecondsWithin6mShare": 1.0,
+      "maximumSeparationM": 4.285218841079583,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 9300,
+          "toTick": 9330,
+          "displacementM": 1.7905465665895708
+        },
+        {
+          "fromTick": 12210,
+          "toTick": 12240,
+          "displacementM": 2.447559927011756
+        }
+      ],
+      "finished": true,
+      "skipped": [],
+      "issues": [],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgl2-low-z1.5-companion-trace.json.gz",
+      "traceSha256": "3d02b6f99173fb9d9364144b7230ab73589bdd6f4c1b677b66859eb1f6826797",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgpu",
+      "zoom": 0.5,
+      "tier": "high",
+      "tag": "sweep-b-l5-c-L5-webgpu-high-z0.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:25:09.680Z",
+      "ended": "2026-11-05T23:30:31.730Z",
+      "exit": 0,
+      "samples": 625,
+      "within6mSamples": 619,
+      "within6mShare": 0.9904,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 355,
+      "first180SecondsWithin6mShare": 0.9861111111111112,
+      "maximumSeparationM": 7.874559144153615,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 3630,
+          "toTick": 3660,
+          "displacementM": 2.2172488884756842
+        },
+        {
+          "fromTick": 6000,
+          "toTick": 6030,
+          "displacementM": 2.7011856253031317
+        },
+        {
+          "fromTick": 8370,
+          "toTick": 8400,
+          "displacementM": 2.8694792861574094
+        },
+        {
+          "fromTick": 10140,
+          "toTick": 10170,
+          "displacementM": 3.2772464525974287
+        },
+        {
+          "fromTick": 11580,
+          "toTick": 11610,
+          "displacementM": 4.103196434831163
+        },
+        {
+          "fromTick": 13020,
+          "toTick": 13050,
+          "displacementM": 2.8018678222216087
+        },
+        {
+          "fromTick": 14370,
+          "toTick": 14400,
+          "displacementM": 1.5309289770111663
+        },
+        {
+          "fromTick": 15630,
+          "toTick": 15660,
+          "displacementM": 3.7844521018539727
+        },
+        {
+          "fromTick": 17040,
+          "toTick": 17070,
+          "displacementM": 2.8729610511278127
+        },
+        {
+          "fromTick": 18690,
+          "toTick": 18720,
+          "displacementM": 4.148161535459804
+        }
+      ],
+      "finished": false,
+      "skipped": [],
+      "issues": [
+        {
+          "level": "L5",
+          "tick": 12485,
+          "x": -35.1,
+          "z": 2,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 3/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgpu-high-z0.5-L5-12485-stuck-navigating.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        },
+        {
+          "level": "L5",
+          "tick": 18766,
+          "x": -34.4,
+          "z": 2.4,
+          "severity": "P0",
+          "kind": "cannot-finish",
+          "text": "No visible progress for 90.0 s; stopping without advancing the objective",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgpu-high-z0.5-L5-18766-cannot-finish.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgpu-high-z0.5-companion-trace.json.gz",
+      "traceSha256": "31bff5f68fe9a62001f90cdc9a2303a17222684dc8131f413e60821510121b90",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "tier": "high",
+      "tag": "sweep-b-l5-c-L5-webgpu-high-z1.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:20:07.722Z",
+      "ended": "2026-11-05T23:24:37.838Z",
+      "exit": 0,
+      "samples": 511,
+      "within6mSamples": 511,
+      "within6mShare": 1.0,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 360,
+      "first180SecondsWithin6mShare": 1.0,
+      "maximumSeparationM": 5.554765058849211,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 3660,
+          "toTick": 3690,
+          "displacementM": 1.3765154154650945
+        },
+        {
+          "fromTick": 6900,
+          "toTick": 6930,
+          "displacementM": 2.2488904909403633
+        },
+        {
+          "fromTick": 9300,
+          "toTick": 9330,
+          "displacementM": 2.54218186575377
+        },
+        {
+          "fromTick": 12720,
+          "toTick": 12750,
+          "displacementM": 0.9142499682637338
+        },
+        {
+          "fromTick": 14430,
+          "toTick": 14460,
+          "displacementM": 0.06340754841198108
+        }
+      ],
+      "finished": true,
+      "skipped": [],
+      "issues": [],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgpu-high-z1.5-companion-trace.json.gz",
+      "traceSha256": "adb93451d512f58d4a0ece8aab2f4cf43f377d6bf1ee0071cbd4ee54ccfac5a3",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgpu",
+      "zoom": 0.5,
+      "tier": "low",
+      "tag": "sweep-b-l5-c-L5-webgpu-low-z0.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:25:09.680Z",
+      "ended": "2026-11-05T23:31:13.386Z",
+      "exit": 0,
+      "samples": 707,
+      "within6mSamples": 707,
+      "within6mShare": 1.0,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 360,
+      "first180SecondsWithin6mShare": 1.0,
+      "maximumSeparationM": 5.954067118065227,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 4110,
+          "toTick": 4140,
+          "displacementM": 2.2390866005559613
+        },
+        {
+          "fromTick": 9060,
+          "toTick": 9090,
+          "displacementM": 0.024837027079866708
+        },
+        {
+          "fromTick": 11880,
+          "toTick": 11910,
+          "displacementM": 2.807788421643547
+        },
+        {
+          "fromTick": 14340,
+          "toTick": 14370,
+          "displacementM": 0.8994960323251803
+        },
+        {
+          "fromTick": 15840,
+          "toTick": 15870,
+          "displacementM": 0.31402881667037297
+        },
+        {
+          "fromTick": 18540,
+          "toTick": 18570,
+          "displacementM": 2.152623053449451
+        },
+        {
+          "fromTick": 20310,
+          "toTick": 20340,
+          "displacementM": 0.00032712146236677626
+        }
+      ],
+      "finished": true,
+      "skipped": [],
+      "issues": [
+        {
+          "level": "L5",
+          "tick": 14984,
+          "x": -42.4,
+          "z": 3.3,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 4/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgpu-low-z0.5-L5-14984-stuck-navigating.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        },
+        {
+          "level": "L5",
+          "tick": 17273,
+          "x": -7.3,
+          "z": 2.7,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "37 s without objective progress standing at the ring (undefined m); HUD: \"Look for anyone still alive \u00b7 Survivors found 4/5\"",
+          "captures": [
+            "captures/sweep-b-l5-c-L5-webgpu-low-z0.5-L5-17273-stuck-at-ring.jpg"
+          ],
+          "step": "look",
+          "objective": "Look for anyone still alive"
+        }
+      ],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgpu-low-z0.5-companion-trace.json.gz",
+      "traceSha256": "5a936c9646f3c9775ff185a20e046cadb58f989f62d061f0a050e6d0a03b039a",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    },
+    {
+      "level": "L5",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "tier": "low",
+      "tag": "sweep-b-l5-c-L5-webgpu-low-z1.5",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+      "started": "2026-11-05T23:20:07.721Z",
+      "ended": "2026-11-05T23:25:09.408Z",
+      "exit": 0,
+      "samples": 580,
+      "within6mSamples": 578,
+      "within6mShare": 0.996551724137931,
+      "first180SecondsSamples": 360,
+      "first180SecondsWithin6mSamples": 358,
+      "first180SecondsWithin6mShare": 0.9944444444444445,
+      "maximumSeparationM": 7.150728483454635,
+      "longestAbove10mS": 0.0,
+      "recoveries": [
+        {
+          "fromTick": 4950,
+          "toTick": 4980,
+          "displacementM": 0.1326569751722115
+        },
+        {
+          "fromTick": 10020,
+          "toTick": 10050,
+          "displacementM": 0.5611209731991914
+        },
+        {
+          "fromTick": 12720,
+          "toTick": 12750,
+          "displacementM": 0.4285733497395122
+        },
+        {
+          "fromTick": 13980,
+          "toTick": 14010,
+          "displacementM": 0.0
+        },
+        {
+          "fromTick": 15300,
+          "toTick": 15330,
+          "displacementM": 0.0
+        },
+        {
+          "fromTick": 16500,
+          "toTick": 16530,
+          "displacementM": 0.08094003194285007
+        }
+      ],
+      "finished": true,
+      "skipped": [],
+      "issues": [],
+      "trace": "docs/reports/sweep-b/corgi/sweep-b-l5-c-L5-webgpu-low-z1.5-companion-trace.json.gz",
+      "traceSha256": "06f952bde635c328e8b5681ec15ee1dbae554b4426cf0352c79bd5e6357866a4",
+      "missingRootSamples": 0,
+      "outsideHideInvisibleSamples": 0,
+      "hideHudMismatches": 0
+    }
+  ],
+  "captureReview": {
+    "file": "docs/reports/sweep-b/corgi/physical-capture-review.json",
+    "sha256": "300cd867c356151c6a25dd15c822b1c157f5a0bca663efb90cca2e9edd5a7e11",
+    "images": 260,
+    "sheets": 46
+  }
+}
