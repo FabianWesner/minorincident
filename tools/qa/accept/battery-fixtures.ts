@@ -1,3 +1,4 @@
+import { armyLineVerdict } from '../threat/l3ArmyLine';
 import { loadL2, runL2 } from '../../sim-runner/l2Bots';
 import { loadL3, runL3 } from '../../sim-runner/l3Bots';
 import { l3, l3Street } from '../../../src/data/l3';
@@ -224,9 +225,9 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
           observations['L3/squad-3-seeds'] = seedRuns;
           const valid = (r: typeof seedRuns[number]) => r.outcome === 'complete' && r.atCheckpoint !== null && r.atCheckpoint >= 0;   // a death only restores the checkpoint; it is reported per seed
           const seedOk = (r: typeof seedRuns[number]) => r.atFallback !== null && r.atFallback >= 3 && r.atFallback <= 4 && r.segmentEnds.every((n, i, a) => n >= 0 && n <= (i ? a[i - 1] : r.atFallback!)) && r.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause));
-          const armyOk = seedRuns.filter(r => valid(r) && r.atCheckpoint! <= 2).length;
-          const measured = seedRuns.filter(valid).length;
-          add('L3-06', 'native squad cardinality and loss causes (formation/teleport review open)', { seeds: seedRuns.map(r => ({ seed: r.seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.atFallback, atCheckpoint: r.atCheckpoint, segmentEnds: r.segmentEnds, lossCauses: r.losses.map(l => l.cause) })), atArmyAtMost2: `${armyOk}/${measured}` }, 'forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)', measured >= 2 ? seedRuns.filter(valid).every(seedOk) && armyOk >= 2 : undefined);
+          const army = armyLineVerdict(seedRuns.map(r => ({ seed: r.seed, valid: valid(r), army: r.atCheckpoint })));
+          const armyOk = army.within, measured = army.measured;
+          add('L3-06', 'native squad cardinality and loss causes (formation/teleport review open)', { seeds: seedRuns.map(r => ({ seed: r.seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.atFallback, atCheckpoint: r.atCheckpoint, segmentEnds: r.segmentEnds, lossCauses: r.losses.map(l => l.cause) })), atArmyAtMost2: `${armyOk}/${measured}` }, 'forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)', army.pass === undefined ? undefined : seedRuns.filter(valid).every(seedOk) && army.pass);
           const followRange = report.squad?.followRange ?? [];
           add('L3-06', 'calm squad following distance by member', followRange, 'every sampled living officer follows 3–6 m from the courier outside combat', report.squad && report.outcome === 'complete' && followRange.length > 0 ? followRange.every(member => member.samples > 0 && member.within3to6 === member.samples) : undefined);
           add('L3-11', 'initial authored medkit entities by street', medkits, '≥2 perstreet;≥7total', Object.values(medkits).every(n => n >= 2) && Object.values(medkits).reduce((a, b) => a + b, 0) >= 7);

@@ -1,3 +1,5 @@
+import { armyLineVerdict, type ArmyLineVerdict } from '../threat/l3ArmyLine';
+import { l3ArmySeeds } from '../threat/l3ArmySeeds';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -17,6 +19,8 @@ export interface NativeReceipt {
   run: LevelReport | null; observation: AcceptanceObservation | null;
   threat: ReturnType<ThreatObserver['finish']> | null; highHold?: ReturnType<L4HoldCensus['finish']>;
   nativeStateHash: string | null; error: string | null;
+  /** L3-06 army line over seeds 1–3 (complete policy only; tools/qa/threat/l3ArmyLine.ts). */
+  l3Army?: ArmyLineVerdict;
 }
 function hashFiles(paths: string[]): string {
   const hash = createHash('sha256');
@@ -66,5 +70,9 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
       },
     });
   } catch (error) { receipt.error = error instanceof Error ? error.stack ?? error.message : String(error); }
+  if (level === 'L3' && policy === 'complete') {
+    const army = receipt.threat?.l3Squad?.army ?? null;
+    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!receipt.run?.completed && army !== null, army }, ...await l3ArmySeeds(tier)]);
+  }
   return receipt;
 }
