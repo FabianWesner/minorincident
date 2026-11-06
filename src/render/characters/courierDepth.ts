@@ -4,6 +4,8 @@ import { livingStencil } from './figureStencil';
 
 /** 1 while the courier draws in the near-camera depth slice (CharacterView.setForeground). */
 export const courierForegroundOn = uniform(0);
+/** 1 while the foreground is due to a vehicle hull hiding her on foot: the full x-ray contour at every zoom (vqa-3 P1). */
+export const courierXray = uniform(0);
 // Compress depth into a near-camera slice: the courier clears world blockers,
 // while her own face, cap, hair and limbs still occlude one another correctly.
 const slice = positionView.z.negate().mul(.001).clamp(.001, .1);
