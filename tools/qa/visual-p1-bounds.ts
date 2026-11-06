@@ -8,7 +8,7 @@ import { VehicleBody } from '../../src/sim/vehicles/VehicleBody';
 import type { MissionId } from '../../src/levels/missions';
 import { Cuboid } from '@dimforge/rapier3d-compat';
 
-const out = 'test-results/visual-p1-1102'; mkdirSync(out, { recursive: true });
+const out = process.env.BOUNDS_OUT ?? 'test-results/visual-p1-1102'; mkdirSync(out, { recursive: true });
 const levels = (process.env.BOUNDS_LEVELS ?? 'L1,L2,L3,L4,L5,L6,L7,L8,L9,L10').split(',') as MissionId[];
 const results: { level: string; runs: number; walked: number; driven: number; failures: unknown[]; probes: unknown[] }[] = [];
 const counterproof = process.env.BOUNDS_COUNTERPROOF === '1';
