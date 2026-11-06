@@ -3,15 +3,25 @@
   "status": "FAIL",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "5668a7eb7c7419e1d2203b0afc7c68fb94a59841",
+  "commit": "f1eeb1810ed698d1f68dc9fb5f21b275aa74e7c9",
   "clauses": [
     {
       "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height \u2264 ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
       "verdict": "FAIL",
-      "note": "Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix. Independent full physical L10 low epilogue also shows corpses as red/black folded shards and pointed geometry; per-capture metadata records actual dead/corpse entities and death-back clips (e.g. runner454 drawn)."
+      "note": "Final-source ordinary physical L10 low/high cure epilogues still show folded, pointed corpse torso/limb panels around the console. All48 ending frames inspected; high epilogue close frame reopened at1280x720. This confirms the unchanged no-spiky-limbs clause fails. Prior controlled floating-pile and lifetime evidence remains historical, without relabelling its source."
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-25-final-cue-L10-high-webgl2-batch3-captures.json",
+      "sha256": "e85fefce8799de9586957055df63dc45d7db7923c29e12c2e991b6c8c9007cc2",
+      "what": "Final-source full L10 ending captures; every frame viewed/hashed/deleted, with pointed and folded corpse geometry visible. Full-size suspect frames explicitly marked."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-25-final-cue-L10-low-webgl2-batch3-captures.json",
+      "sha256": "0a6466cf3553af74fd4ddc1527f0f27d1c5da704682d1d834e79fafe1460b7ab",
+      "what": "Final-source full L10 ending captures; every frame viewed/hashed/deleted, with pointed and folded corpse geometry visible. Full-size suspect frames explicitly marked."
+    },
     {
       "file": "docs/reports/sweep-g/G-14-scenes-captures.json",
       "sha256": "f6f0e0ecdf0703f6978621c2b0e3dd5ffcdab493e33c23e80c0ec3e0069f7d09",
