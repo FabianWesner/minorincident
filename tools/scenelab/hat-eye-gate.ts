@@ -53,6 +53,8 @@ try {
   const suitReference = await eyePass('suit-reference-close');
   assert.ok(suitReference.redPixels > 0 && suitReference.peak > 0, 'resolved suit-zombie reference eyes');
   for (const model of models) for (const hat of hats) for (const infected of [false, true]) {
+    // Q-267 (CrowdAppearance.retired): npc.civilian-woman-b never wears a hat, so there is no hat to fit; every other model/hat pair runs.
+    if (model === 'npc.civilian-woman-b') continue;
     const name = `${model}-${hat}-${infected ? 'infected' : 'live'}`;
     await session.load({ name, ground: 'asphalt', time: 'L1', dof: false, size: 100,
       actors: [{ id: 'courier', kind: 'courier', at: [4, 4] }, { id: 'figure', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model, accessories: [hat], handProp: null }, state: 'idle' }],

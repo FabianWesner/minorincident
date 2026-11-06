@@ -431,6 +431,8 @@ class CivilianBatch extends Group {
     const lurchScale = this.world.scenario === 'L10' && e.archetype === 'infected.runner' ? .35 : 1;
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined, lurchScale);
     if (this.world.scenario === 'L10' && e.archetype === 'infected.runner' && moving && !heavy) layers.maxBodyLean = 38 * Math.PI / 180;
+    // G-17: standing and walking infected never lean past the 42 degree acceptance limit (idle hunch read 45-52 degrees); attacks, crawlers and the dead keep their authored pose.
+    if (!heavy && b.state !== 'dead' && b.state !== 'attack' && clip !== 'crawl' && !b.legLost) layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
     const contact = !!target?.survivor && Math.hypot(presented.x - target.transform.x, presented.z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15 ||
       this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false;

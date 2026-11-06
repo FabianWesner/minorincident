@@ -48,6 +48,8 @@ export function glassesTop(geometry: BufferGeometry): number | null {
 /** Authored head-local frame tops of the spectacled civilian bases (measured from the shipped LOD0 bakes; pinned
  * against the GLBs by tests/unit/render/crowd-hat-glasses.test.ts). Runtime bakes recolour the frames, so this is data. */
 export const spectacleTops: Readonly<Record<string, number>> = { 'npc.civilian-woman-b': .2204, 'npc.civilian-elderly': .2088 };
+/** Extra hat raise (metres at reference skull width) for heads whose brow the hard hat's brim would cover. */
+const hardHatRaise: Readonly<Record<string, number>> = { 'npc.civilian-woman-a': .012 };
 /** Gap between the frame top and the hat's lowest point (metres, head-local). */
 export const glassesClearance = .012;
 function authoredFit(fit: Fit, out: Matrix4): Matrix4 {
@@ -273,10 +275,9 @@ export class CrowdAccessories extends Group {
   private glassesLift(id: string, model: string): number {
     let top = this.measuredGlasses.get(model) ?? spectacleTops[model.replace(/\.aftermath$/, '')];
     const browSeat = this.minimumHatY.get(model);
-    // The baseball cap's lower rim wraps the scalp below the brow; seating
-    // that rim above the brow leaves the whole crown visibly suspended.
-    // G-26 (sweep-g): the hard hat's rim sat 1.8 cm above the brow line and read as floating; seat it on the brow line (1.6 cm lower is the most the hat/eye gate allows: 5 cm covered the eyes, 7 new failures).
-    const rimDepth = (id === 'acc.hat-baseball-cap' ? .075 : id === 'acc.hat-hard-hat' ? .016 : 0) * (this.brows.get(model)?.width ?? referenceSkullWidth) / referenceSkullWidth;
+    // G-26 (sweep-g): the hard hat sits on the brow line. Its front brim covers the eyes of the wide-browed woman-a unless it rides a bit higher (hat/eye gate: <= 90% eye pixels at 0 cm, 95% needed), so that head gets a per-model raise.
+    // The baseball cap seats on the brow line too: its authored 7.5 cm rim depth put the bill 3-6 cm below the brow (hat/eye gate) and hid woman-a's eyes.
+    const rimDepth = (id === 'acc.hat-hard-hat' ? -(hardHatRaise[model.replace(/\.aftermath$/, '')] ?? 0) : 0) * (this.brows.get(model)?.width ?? referenceSkullWidth) / referenceSkullWidth;
     const seat = browSeat === undefined ? undefined : browSeat - rimDepth;
     if (definitions.get(id)?.slot !== 'hat' || top === undefined && seat === undefined) return 0;
     if (top !== undefined && this.measuredModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;

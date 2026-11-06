@@ -815,6 +815,10 @@ export class SceneLab {
   }
   private applyCamera(): void {
     const c = this.camera; if (!c) return;
+    // The ambient leaf/dust field is sized for the game camera (3-5 px at zoom 1). A macro camera a few metres away
+    // blows each mote up to a hand-sized pale triangle in every capture, so hide it there (harness only).
+    const macro = (c.mode === 'close' || c.mode === 'orbit') && (c.radius ?? (c.mode === 'close' ? 5 : 10)) < 12;
+    this.game.view.scene.traverse(n => { if (n.name === 'ambient-gpu-life') n.visible = !macro; });
     if (this.spec?.cureProgression?.epilogueElapsed !== undefined && c.mode === 'game' && c.target === 'courier') {
       const view = this.game.view.view;
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
