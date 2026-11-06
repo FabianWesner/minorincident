@@ -368,6 +368,9 @@ export class NavGrid {
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number, capsule = false): void {
+    // Keep substeps in numeric locals. Shared callers pass many transform
+    // shapes; publishing each substep boxes coordinates on that hot path.
+    let x = position.x, z = position.z;
     // This square is strictly inside the 0.2 m step circle. Its common small
     // moves have exactly one substep, without a hypotenuse calculation.
     const count = Math.abs(dx) <= .125 && Math.abs(dz) <= .125 ? 1 : Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
@@ -376,36 +379,37 @@ export class NavGrid {
     // Checked only once a step is refused, so free movement costs nothing extra.
     let touched = false, rounded = false, wedged = Infinity;
     for (let i = 0; i < count; i++) {
-      if (this.clear(position.x + dx, position.z + dz, radius, rounded)) { position.x += dx; position.z += dz; continue; }
+      if (this.clear(x + dx, z + dz, radius, rounded)) { x += dx; z += dz; continue; }
       if (!touched) {
         touched = true;
-        if (!this.clear(position.x, position.z, radius)) {
+        if (!this.clear(x, z, radius)) {
           // Rapier's capsule fits beside box corners that the square grid margin rejects.
           // Recover using its circular footprint first, retaining the full body radius;
           // shallow contact corrections still use the smallest bounded margin cut.
-          rounded = capsule && this.clear(position.x, position.z, radius, true);
+          rounded = capsule && this.clear(x, z, radius, true);
           let fit: number | undefined;
           if (!rounded) for (const cut of marginSteps) {
-            if (cut < radius && this.clear(position.x, position.z, radius - cut, capsule)) { fit = cut; break; }
+            if (cut < radius && this.clear(x, z, radius - cut, capsule)) { fit = cut; break; }
           }
           if (rounded || fit !== undefined) { if (fit !== undefined) radius -= fit; rounded = capsule; i--; continue; }
           // fix55-l3: a body shoved deeper than the largest margin cut (the L3 corgi pressed 0.12 m into a kerb blocker by
           // a crowd) refused every step, outward ones included, and stood wedged for good. Accept steps that do not push it
           // further in, so it can slide along the face and out; inward steps stay refused.
-          wedged = this.penetration(position.x, position.z, radius);
+          wedged = this.penetration(x, z, radius);
         }
       }
       if (Number.isFinite(wedged)) {
-        const both = this.penetration(position.x + dx, position.z + dz, radius);
-        if (both <= wedged) { position.x += dx; position.z += dz; wedged = both; continue; }
-        const alongX = this.penetration(position.x + dx, position.z, radius);
-        if (alongX <= wedged) { position.x += dx; wedged = alongX; }
-        const alongZ = this.penetration(position.x, position.z + dz, radius);
-        if (alongZ <= wedged) { position.z += dz; wedged = alongZ; }
+        const both = this.penetration(x + dx, z + dz, radius);
+        if (both <= wedged) { x += dx; z += dz; wedged = both; continue; }
+        const alongX = this.penetration(x + dx, z, radius);
+        if (alongX <= wedged) { x += dx; wedged = alongX; }
+        const alongZ = this.penetration(x, z + dz, radius);
+        if (alongZ <= wedged) { z += dz; wedged = alongZ; }
         continue;
       }
-      if (this.clear(position.x + dx, position.z, radius, rounded)) position.x += dx; if (this.clear(position.x, position.z + dz, radius, rounded)) position.z += dz;
+      if (this.clear(x + dx, z, radius, rounded)) x += dx; if (this.clear(x, z + dz, radius, rounded)) z += dz;
     }
+    position.x = x; position.z = z;
   }
   private neighbor(cell: number, direction: number): number {
     const x = cell % this.width, z = Math.floor(cell / this.width);
