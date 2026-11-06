@@ -92,7 +92,9 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
  * Fixed infected starts are scattered in singles with a few authored pairs; low tier takes the first 100. */
 const l5AuthoredWanderers: readonly { at: P; n: number; alpha?: boolean }[] = [
   { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
-  { at: [-26, 40], n: 2 }, { at: [-40, -37.4], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
+  { at: [-26, 40], n: 2 },
+  // Open northern street: leave a body-clear pursuit after firearm hit reactions.
+  { at: [-42, -41.5], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [10, 13], n: 1 },
   // PO 10-20 ("L5 feels quite empty"): retain these nine original lone shamblers.
   { at: [-46, -37.5], n: 1 }, { at: [36, -37.4], n: 1 }, { at: [-12, 43.6], n: 1 }, { at: [40, 28.5], n: 1 }, { at: [14, -24], n: 1 },
