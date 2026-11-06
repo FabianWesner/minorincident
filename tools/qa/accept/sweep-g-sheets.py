@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw
 run = Path(sys.argv[1])
 dest = Path('test-results/sweep-g/review') / run.name
 dest.mkdir(parents=True, exist_ok=True)
-files = sorted((run / 'captures').glob('*.jpg'), key=lambda p: p.stat().st_mtime_ns)
+files = sorted((run / 'captures').glob('*.jpg') if (run / 'captures').exists() else run.glob('*.png'), key=lambda p: p.stat().st_mtime_ns)
 rows = []
 for offset in range(0, len(files), 4):
     sheet = Image.new('RGB', (1280, 772), '#172029')

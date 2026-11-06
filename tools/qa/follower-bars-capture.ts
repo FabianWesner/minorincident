@@ -11,7 +11,8 @@ import { loadLevel } from '../sim-runner/levels';
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
 const tier = (process.argv[3] ?? 'low') as 'low' | 'high';
 if (!['webgl2', 'webgpu'].includes(backend) || !['low', 'high'].includes(tier)) throw new Error('Expected backend and quality');
-const out = `test-results/fix51-r10g/G-12-${backend}-${tier}`;
+const reportSlug = process.env.QA_REPORT_SLUG ?? 'fix51-r10g';
+const out = `test-results/${reportSlug}/G-12-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend, tier });
 type Bar = { id: number; x: number; y: number; width: number; height: number };
@@ -75,9 +76,9 @@ try {
       await session.step(1);
     }
   }
-  await session.makeSheet(shots, `test-results/fix51-r10g/G-12-${backend}-${tier}.jpg`, 640, 380);
+  await session.makeSheet(shots, `test-results/${reportSlug}/G-12-${backend}-${tier}.jpg`, 640, 380);
 } finally {
-  writeFileSync(`docs/reports/fix51-r10g/G-12-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier, setup: 'isolated production renderer; actual L6 survivor model roster plus L7 fallback models up to35; healthy follow mode; remove one fixture entity per group-size sample; no gameplay route or timing claim', rows, negative, errors: session.errors }, null, 2) + '\n');
+  writeFileSync(`docs/reports/${reportSlug}/G-12-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier, setup: 'isolated production renderer; actual L6 survivor model roster plus L7 fallback models up to35; healthy follow mode; remove one fixture entity per group-size sample; no gameplay route or timing claim', rows, negative, errors: session.errors }, null, 2) + '\n');
   await session.close(); stopServer();
 }
 console.log(`${backend}/${tier}: ${rows.length} group-size samples, ${shots.length} captures`);

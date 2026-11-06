@@ -19,3 +19,5 @@ G-13: current high Dale pace fails (93.59% search, 94.58% metro). Exact intentio
 G-08: fixed active L4 minimap waypoint and routed distance; verified low/high show real cellar distance79m with no route pin. [Diagnosis](G-08-diagnosis.json). Whole-row destination trajectory coverage remains open.
 
 G-11: four fresh backend/quality pickup-ring fixtures PASS; eight full-size frames inspected; one collection and5.796m away/return without respawn. Native all-level duplicate ledger refresh remains part of final acceptance.
+
+G-12: fresh shared follower-bar matrix PASS (140 group-size identity/count samples; 17 captures reviewed including negative control). Campaign occlusion remains G-07.
