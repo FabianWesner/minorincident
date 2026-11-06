@@ -17,3 +17,5 @@ Baseline console batch paused safely between routes before game fixes: nine comp
 G-13: current high Dale pace fails (93.59% search, 94.58% metro). Exact intentional far-follower waiting passes: 0.748% low, 0% high; both read-only traces match canonical state hashes and medians. One pace-floor trial was reverted after high pace regressed to88.43% and Mia turned in both tiers. See [diagnosis](G-13-diagnosis.json) and [rejected trial](G13-after/REJECTED.json).
 
 G-08: fixed active L4 minimap waypoint and routed distance; verified low/high show real cellar distance79m with no route pin. [Diagnosis](G-08-diagnosis.json). Whole-row destination trajectory coverage remains open.
+
+G-11: four fresh backend/quality pickup-ring fixtures PASS; eight full-size frames inspected; one collection and5.796m away/return without respawn. Native all-level duplicate ledger refresh remains part of final acceptance.

@@ -8,7 +8,8 @@ import { provenance } from './accept/probe';
 
 const backend = (process.argv[2] ?? 'webgl2') as Backend, tier = (process.argv[3] ?? 'low') as 'low' | 'high';
 if (!['webgl2', 'webgpu'].includes(backend) || !['low', 'high'].includes(tier)) throw new Error('Expected backend and quality');
-const out = `test-results/fix51-r10g/G-11-${backend}-${tier}`;
+const reportSlug = process.env.QA_REPORT_SLUG ?? 'fix51-r10g';
+const out = `test-results/${reportSlug}/G-11-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend, tier });
 const rows: unknown[] = [], shots: { frame: number; jpeg: Buffer }[] = [];
@@ -60,9 +61,9 @@ try {
   }
   await capture('before');
   await session.step(480); await capture('after-revisit');
-  await session.makeSheet(shots, `test-results/fix51-r10g/G-11-${backend}-${tier}.jpg`, 640, 380);
+  await session.makeSheet(shots, `test-results/${reportSlug}/G-11-${backend}-${tier}.jpg`, 640, 380);
 } finally {
-  writeFileSync(`docs/reports/fix51-r10g/G-11-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier,
+  writeFileSync(`docs/reports/${reportSlug}/G-11-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier,
     setup: 'paired authored/survivor-only pickup renderer fixture and Scene Lab native run-input out-and-back route; no timing claim', rows, errors: session.errors }, null, 2) + '\n');
   await session.close(); stopServer();
 }

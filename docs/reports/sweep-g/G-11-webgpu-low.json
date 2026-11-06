@@ -1,0 +1,146 @@
+{
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f",
+  "scriptSha256": "e4206b6445093b98c7f80e927168f7a6174c2ec68281618c629526407e2c6c38",
+  "backend": "webgpu",
+  "tier": "low",
+  "setup": "paired authored/survivor-only pickup renderer fixture and Scene Lab native run-input out-and-back route; no timing claim",
+  "rows": [
+    {
+      "stage": "before",
+      "backend": "webgpu",
+      "quality": "low",
+      "pickups": [
+        {
+          "id": 4,
+          "at": {
+            "x": -3,
+            "z": 0
+          },
+          "survivorOnly": false,
+          "present": true,
+          "markerMeshes": 1,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 435.072880032671,
+            "y": 235.79375629784565
+          }
+        },
+        {
+          "id": 5,
+          "at": {
+            "x": 3,
+            "z": 0
+          },
+          "survivorOnly": true,
+          "present": true,
+          "markerMeshes": 0,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 885.6108066181343,
+            "y": 505.6296349072946
+          }
+        }
+      ],
+      "player": {
+        "x": -8,
+        "y": 0.705,
+        "z": -3,
+        "yaw": 0
+      },
+      "ledger": {
+        "collections": [],
+        "maxAwayAfterCollection": 0,
+        "returned": false
+      },
+      "replacementAtCourierSpot": [
+        4
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "yellowPixels": 635
+        },
+        {
+          "id": 5,
+          "yellowPixels": 0
+        }
+      ],
+      "file": "test-results/sweep-g/G-11-webgpu-low/before.png",
+      "sha256": "24835148b7c4c0f88c81e9f01bd2cb0b4e4535e88ec7c7351fa68387133c090a",
+      "reviewed": true,
+      "observation": "Courier pickup visibly has one yellow ring; survivor-only handgun at right has none."
+    },
+    {
+      "stage": "after-revisit",
+      "backend": "webgpu",
+      "quality": "low",
+      "pickups": [
+        {
+          "id": 4,
+          "at": {
+            "x": -3,
+            "z": 0
+          },
+          "survivorOnly": false,
+          "present": false,
+          "markerMeshes": 0,
+          "modelLoaded": false,
+          "pixel": {
+            "x": 435.072880032671,
+            "y": 235.79375629784565
+          }
+        },
+        {
+          "id": 5,
+          "at": {
+            "x": 3,
+            "z": 0
+          },
+          "survivorOnly": true,
+          "present": true,
+          "markerMeshes": 0,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 885.6108066181343,
+            "y": 505.6296349072946
+          }
+        }
+      ],
+      "player": {
+        "x": -3.129439115524292,
+        "y": 0.7049999833106995,
+        "z": -0.07766369730234146,
+        "yaw": -6.823606207736799
+      },
+      "ledger": {
+        "collections": [
+          {
+            "id": 4,
+            "tick": 62,
+            "source": 1
+          }
+        ],
+        "maxAwayAfterCollection": 5.79595056474294,
+        "returned": true
+      },
+      "replacementAtCourierSpot": [],
+      "pixels": [
+        {
+          "id": 4,
+          "yellowPixels": 88
+        },
+        {
+          "id": 5,
+          "yellowPixels": 0
+        }
+      ],
+      "file": "test-results/sweep-g/G-11-webgpu-low/after-revisit.png",
+      "sha256": "1e60358d605c8e92952968ded5a577c2c291447f33c8654c5741d08515179486",
+      "reviewed": true,
+      "observation": "Courier returned with follower; collected courier weapon and yellow ring remain absent; survivor-only handgun remains without a ring."
+    }
+  ],
+  "errors": []
+}

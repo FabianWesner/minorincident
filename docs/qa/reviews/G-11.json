@@ -1,62 +1,37 @@
 {
   "row": "G-11",
   "status": "PASS",
-  "reviewer": "fix51-r10g/Sol",
-  "date": "2026-11-03",
-  "commit": "eb8746663ed895be1c32a0a9834865b5fc0161bb",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f",
   "clauses": [
     {
       "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
       "verdict": "PASS",
-      "note": "All four native Metal backend/quality cells: survivor-only handgun is visible without a ring; courier pickup has one yellow ring before collection. After exactly one collection, courier moves5.796m away and returns within0.151m; original entity and marker stay absent with no replacement. I inspected all eight full-size screenshots. Native per-level duplicate ledgers and L1 persistence fixtures independently qualify non-respawn."
+      "note": "All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10g/G-11-review.json",
-      "sha256": "554ea87fc3df639684dd5060d332e698cac62868418094502f7c97380d9ed72f",
-      "what": "I inspected all eight full-size captures and checked the four complete ledgers."
+      "file": "docs/reports/sweep-g/G-11-webgl2-high.json",
+      "sha256": "5d8d4632d508f4cdda17f857f8fe31be86a9ecdaf1906cf62e47d54684aff053",
+      "what": "webgl2/high: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-11-webgl2-low.json",
-      "sha256": "b77939ca3638896a0e28120c28e135b113f8daf1f2ea39ff53239f13c98d864e",
-      "what": "webgl2/low: Native ledger, renderer identities and raw capture SHA-256."
+      "file": "docs/reports/sweep-g/G-11-webgl2-low.json",
+      "sha256": "e6cb38494e924f58057ab0e2e85422457fc006e0436e37068e55eb7d443cd460",
+      "what": "webgl2/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-11-webgl2-low.jpg",
-      "sha256": "f8266174f214c83eb41a231935f793374a9c8823d2da0911b4f9ce7b68dc6735",
-      "what": "webgl2/low: Compact before/after contact sheet; both full-size originals inspected."
+      "file": "docs/reports/sweep-g/G-11-webgpu-high.json",
+      "sha256": "718324492fffe96fcef3701a92a6103a7757abc0191264818b6a2b9142e3310b",
+      "what": "webgpu/high: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-11-webgl2-high.json",
-      "sha256": "eaaace4fc1b065ca8b56f174a6849cb8efad6dc757f4b893bcfd27932dbd22d2",
-      "what": "webgl2/high: Native ledger, renderer identities and raw capture SHA-256."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-11-webgl2-high.jpg",
-      "sha256": "88c6a55ccd216b99d0978d5ee98ebbd1604a3d80f18615a9bc4a2ab2b9bdb432",
-      "what": "webgl2/high: Compact before/after contact sheet; both full-size originals inspected."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-11-webgpu-low.json",
-      "sha256": "9ccd7d626ccd83f593c70df5c3572d9de9f89abe76931b253bb7749ed342ee30",
-      "what": "webgpu/low: Native ledger, renderer identities and raw capture SHA-256."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-11-webgpu-low.jpg",
-      "sha256": "3c8cb1a1d02dffdb92dbab6598828fd3658de69a46ba79c9e4e9fca7ad05d3b3",
-      "what": "webgpu/low: Compact before/after contact sheet; both full-size originals inspected."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-11-webgpu-high.json",
-      "sha256": "225e9010ba314c765c32efeab71bc48902c5a2bd33fea0ac135100fb69a4e948",
-      "what": "webgpu/high: Native ledger, renderer identities and raw capture SHA-256."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-11-webgpu-high.jpg",
-      "sha256": "972cb84b16c5b2cc6c9dd2624c5e1e642125c0a92805525edbbc95994abd15d6",
-      "what": "webgpu/high: Compact before/after contact sheet; both full-size originals inspected."
+      "file": "docs/reports/sweep-g/G-11-webgpu-low.json",
+      "sha256": "225158e7be06df47dbb74847fc0b7b3d341f7effe21cf15920a9c7672a96c0cc",
+      "what": "webgpu/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
     }
   ],
-  "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim."
+  "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim."
 }
