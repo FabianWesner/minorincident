@@ -7,7 +7,7 @@ import { evaluate } from './evaluate.ts';
 
 const [row, level] = process.argv.slice(2);
 if (!/^G-\d{2}$/.test(row) || !/^L([1-9]|10)$/.test(level)) throw new Error('Usage: sweep-g-native.mjs G-NN L<N>');
-const root = 'docs/reports/sweep-g'; mkdirSync(root, { recursive: true });
+const root = process.env.SWEEP_G_NATIVE_OUT ?? 'docs/reports/sweep-g'; mkdirSync(root, { recursive: true });
 const identity = provenance(), results = [];
 for (const tier of ['low', 'high']) for (const policy of row === 'G-13' ? ['complete'] : ['complete', 'stationary']) {
   console.log(`Begin ${row} ${level} ${tier}/${policy}`);

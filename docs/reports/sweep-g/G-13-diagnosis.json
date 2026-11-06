@@ -1,0 +1,25 @@
+{
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "status": "FAIL",
+  "pace": "High Dale id28: search3.9368956/4.2066202=0.9358809; metro4.1642774/4.4029169=0.9457997. Low observed pace comparisons pass.",
+  "exactWaiting": {
+    "low": {
+      "completed": true,
+      "identical": true,
+      "escortTicks": 10295,
+      "waitTicks": 77,
+      "soleWaitTicks": 77,
+      "waitPercent": 0.7479358912093249
+    },
+    "high": {
+      "completed": true,
+      "identical": true,
+      "escortTicks": 11277,
+      "waitTicks": 0,
+      "soleWaitTicks": 0,
+      "waitPercent": 0
+    }
+  },
+  "observation": "The read-only trace reproduces every canonical per-follower median exactly. High Dale search samples are all calm/brisk, with repeated row-slot braking and steering corrections. Exact waiting follows the existing bot.lag wait branch and actual stationary courier, with a live human >10m behind; corgi, combat stops and detours are excluded. Both final world states equal canonical controls.",
+  "next": "Coupled L5 formation/combat tuning is still required; the single speed-floor trial worsened high pace and survivor attrition and was reverted."
+}
