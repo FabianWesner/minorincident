@@ -77,7 +77,7 @@ export function installAgentMotion(world: SimWorld): void {
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       const yaw = e.transform.yaw;
       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
-        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        (world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) || world.scenario === 'L7' && e.companion) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Braking retains the authored approach distance. The windup owns facing,
       // so residual steering must not turn the strike away from its victim.
       if (e.infected?.state === 'attack') e.transform.yaw = yaw;

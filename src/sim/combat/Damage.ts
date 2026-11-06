@@ -3,6 +3,7 @@ import { alphaDamageMultiplier, humanInfected, riotShieldResponse } from '../../
 import { cureCanKill, storyProtected } from '../npc/storyProtection';
 import { Status } from './Status';
 import { l1v2 } from '../../data/l1v2';
+import { l7Encounters } from '../../data/l7';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot, GameEvent } from '../world/types';
@@ -177,6 +178,8 @@ export class Damage {
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
+    if (target.id === 1 && this.world.scenario === 'L7' && this.world.l7Encounters?.state.started === false &&
+        (this.world.missions?.state.stats.time ?? Infinity) < l7Encounters.openingGraceSeconds) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick, hit.actionId === 'infected.zebra.stampede');
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
     // Keep ordinary player melee in reach even after knockback upgrades. Special

@@ -91,7 +91,8 @@ export class LevelSevenDeparture {
     if (!near) {
       let approach = this.approaches.get(e.id);
       if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
-      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      // Sideways crowd jitter is not progress toward this fixed queue.
+      if (distance(approach, queue) - distance(e.transform, queue) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
       if (approach.around && distance(e.transform, approach.around[0]) < .15) approach.around.shift();
       if (!approach.around?.length) delete approach.around;
       let goal = approach.around?.[0] ?? queue;
@@ -128,10 +129,9 @@ export class LevelSevenDeparture {
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
     const d = Math.hypot(player.transform.x - this.boarding[0], player.transform.z - this.boarding[2]);
-    // Once the corridor is cleared the party heads straight for the bus.
-    // The courier may cover a distant straggler without recalling everyone
-    // already approaching the door back into the horde.
-    if (s.phase === 'waiting' && (w.missions?.state.steps.departure?.status === 'active' || d <= cfg.boardRadius)) {
+    // Reach the bus to start boarding, then cover a distant straggler without
+    // recalling everyone already approaching the door back into the horde.
+    if (s.phase === 'waiting' && d <= cfg.boardRadius) {
       s.phase = 'boarding'; this.progress.clear();
     }
     // Boarding owns this exceptional step-through just like the door crossing. Keep the figure

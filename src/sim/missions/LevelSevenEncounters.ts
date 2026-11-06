@@ -65,8 +65,10 @@ export class LevelSevenEncounters {
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      // Leave the three-metre approach to the launcher clear of the party.
-      const at = this.clearPoint(formationSlot({ x: leader.x + 4, z: leader.z }, heading, slot), .4);
+      // Only the lead centre slot overlaps the three-metre launcher approach.
+      const arrival = formationSlot(leader, heading, slot);
+      if (slot === 1) arrival.z += 2.4;
+      const at = this.clearPoint(arrival, .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -217,8 +219,8 @@ export class LevelSevenEncounters {
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
-    const goal = this.state.started ? formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot)
-      : formationSlot({ x: p.transform.x + 4, z: p.transform.z }, { x: -1, z: 0 }, slot);
+    const goal = formationSlot(p.transform, this.state.started ? leaderHeading(p.transform.yaw, v) : { x: -1, z: 0 }, slot);
+    if (!this.state.started && slot === 1) goal.z += 2.4;
     // Reuse the L5 formation rule around cover: a clear slot across a wreck
     // can still send one follower around its far side at every corner.
     const nav = w.infected!.nav;
@@ -259,7 +261,7 @@ export class LevelSevenEncounters {
       } else c.l1!.target = null;
       let approach = this.approaches.get(e.id);
       if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
-      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      if (distance(approach, destination) - distance(e.transform, destination) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
       if (approach.around && distance(e.transform, approach.around[0]) < .15) approach.around.shift();
       if (!approach.around?.length) delete approach.around;
       // The pre-boarding corridor wait has no recovery timer. Use the bus
@@ -271,7 +273,7 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      w.npcs!.move(e, destination, 5.2, c, 0, budget);
+      if (!w.npcs!.move(e, destination, 5.2, c, 0, budget) && (w.tick + e.id) % 30 === 0) this.escapePocket(e);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;

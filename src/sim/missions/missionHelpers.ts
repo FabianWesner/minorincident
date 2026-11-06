@@ -16,7 +16,9 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
   const clearOfCorpses = (from: Point, to: Point) => bodies.every(body => {
     const x = to.x - from.x, z = to.z - from.z, length = x * x + z * z;
     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;
-    return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + actorRadius(body);
+    const reach = actorRadius(e) + actorRadius(body);
+    // A touching body may leave its contact skin, but never cut farther in.
+    return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= Math.min(reach, distance(from, body.transform)) - 1e-6;
   });
   for (const body of bodies) {
     const reach = actorRadius(e) + actorRadius(body), along = ((body.transform.x - e.transform.x) * dx + (body.transform.z - e.transform.z) * dz) / length2;
@@ -31,7 +33,9 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
         // Query a copied footprint at each proposed leg; skip its real body's
         // current reservation, while retaining every other actor and solid.
         const probe = { ...e, transform: { ...e.transform, ...from }, contactExempt: e.id };
-        if (!world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || !world.infected!.nav.visible(from, at, actorRadius(e)) || world.solids.sweep(probe, { x: x / length, z: z / length }, length) < length - .01) break;
+        // Plan around corpses and static geometry; moving people can clear a
+        // leg before it is walked. Ordinary per-tick sweeps still own contact.
+        if (!world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id, false) || !world.infected!.nav.visible(from, at, actorRadius(e)) || !clearOfCorpses(from, at) || world.solids.sweep(probe, { x: x / length, z: z / length }, length, actorRadius(e), false, false) < length - .01) break;
         path.push(at); travelled += length;
         if (clearOfCorpses(at, goal)) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
         from = at;

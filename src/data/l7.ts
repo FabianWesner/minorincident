@@ -11,6 +11,8 @@ export const l7DefaultArsenal = {
 
 /** Encounter anchors on the retained Northgate, Harbor and Lakeshore roads; E2 owns the bus. */
 export const l7Encounters = {
+  /** Courier protection ends on launcher pickup, or after the opening eight seconds. */
+  openingGraceSeconds: 8,
   finalGroup: 700, firstStreetGroup: 701,
   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
   // The party forms east of the courier, behind the westbound escape heading.
@@ -25,7 +27,7 @@ export const l7Encounters = {
  * defaults from epic 29 section 5.5: 6-10 s shot, bus moves >= 30 m.
  */
 export const l7Departure = {
-  /** Followers load as soon as the corridor is clear; the courier boards last inside this radius. */
+  /** Reach this radius to start boarding; followers keep loading while the courier covers the rear and boards last. */
   boardRadius: 6,
   /** Departure approach includes crowd separation in this movement bound. */
   followMs: 4.6,
