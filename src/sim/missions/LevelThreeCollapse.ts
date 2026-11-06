@@ -634,6 +634,7 @@ export class LevelThreeCollapse {
     const finalIds = new Set(s.finaleIds ?? []);
     const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
     for (const e of [...ai.active]) {
+      if (!e.motion && s.waveIds.includes(e.id)) continue; // An announced admission must participate in the fixed step before it can retire.
       if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
       if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
       const downBehind = e.health.current <= 0 && world.tick - e.infected!.deadAt > 120 && dist(e.transform, world.entities.get(1)!.transform) > 10;
