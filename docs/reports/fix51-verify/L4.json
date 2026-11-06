@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:19:43.996Z",
+  "generatedAt": "2026-11-06T03:27:16.609Z",
   "policies": [
     {
       "tier": "low",
@@ -1150,7 +1150,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -1279,7 +1279,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -3216,7 +3216,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -3348,7 +3348,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     }
   ],
@@ -3687,7 +3687,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -4298,7 +4298,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -4415,7 +4415,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -4710,7 +4710,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -4816,7 +4816,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5033,21 +5033,17 @@
     },
     {
       "id": "L4-10",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (STALE, Codex/sweep-b): Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Current-source native evidence clears every ordinary and forced tank impact from registered live actors at both tiers and retains the 8–12 s cadence and canonical route hashes. The previous fuel-truck clearance defect is resolved. The current-source renderer capture/review needed to close the wall, orbit/withdrawal, and full spectacle clauses could not run because the sandbox rejected the local Vite bind (EPERM), so this exact-criterion row remains open.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L4-high-complete.json",
         "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-        "docs/reports/sweep-b/L4-10-proof.json",
-        "docs/reports/sweep-b/L4-tank-clearance.json.gz",
-        "docs/reports/sweep-b/L4-tank-capture-review.json",
-        "docs/reports/sweep-b/L4-tank-low-renderer-ledger.json.gz",
-        "docs/reports/sweep-b/L4-tank-high-renderer-ledger.json.gz",
-        "docs/reports/sweep-b/L4-capture-review.json"
+        "docs/reports/sweep-b/L4-10-clearance-recheck.json",
+        "docs/reports/sweep-b/L4-10-proof.json"
       ],
       "expected": "Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
       "checks": [
@@ -5110,50 +5106,30 @@
       "reviewDecision": {
         "row": "L4-10",
         "status": "FAIL",
-        "reviewer": "Codex/sweep-b",
+        "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "d2064792f953a7f5a37788b7e6ae8d88fede81b4",
+        "commit": "c9b7527a6e29a2f723658d77382359d554650b3d",
         "clauses": [
           {
             "clause": "Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
             "verdict": "FAIL",
-            "note": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
+            "note": "Current-source native evidence clears every ordinary and forced tank impact from registered live actors at both tiers and retains the 8–12 s cadence and canonical route hashes. The previous fuel-truck clearance defect is resolved. The current-source renderer capture/review needed to close the wall, orbit/withdrawal, and full spectacle clauses could not run because the sandbox rejected the local Vite bind (EPERM), so this exact-criterion row remains open."
           }
         ],
         "evidence": [
           {
+            "file": "docs/reports/sweep-b/L4-10-clearance-recheck.json",
+            "sha256": "543b2d5cc6efea109c507089823bdd858504d2bca1b03076985e51b7292a5aa1",
+            "what": "Current-source low/high route ledger: all tank impacts satisfy the 15 m live-actor clearance, ordinary cadence remains 8–12 s, and canonical hashes match."
+          },
+          {
             "file": "docs/reports/sweep-b/L4-10-proof.json",
             "sha256": "b7c2195605db829f46929b20f3e716f9250a2120861bd17493d4a061f6d043e0",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
-          },
-          {
-            "file": "docs/reports/sweep-b/L4-tank-clearance.json.gz",
-            "sha256": "f218516d47e9345ed5b00c142794476d81bf64263023553cb7d0e0a27abd86a3",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
-          },
-          {
-            "file": "docs/reports/sweep-b/L4-tank-capture-review.json",
-            "sha256": "27eabfab4fd8e78286e2a011338d39141367d56face1ee36ab8c1c9448755378",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
-          },
-          {
-            "file": "docs/reports/sweep-b/L4-tank-low-renderer-ledger.json.gz",
-            "sha256": "a6037f0a32ff1b7f0ebbccac75bbcae1ea9f4a85e3664cbde0ac9b6a7b480793",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
-          },
-          {
-            "file": "docs/reports/sweep-b/L4-tank-high-renderer-ledger.json.gz",
-            "sha256": "053dfa4605bfe46dcf7a2680a129c6f93743853a115abf1eaafa941a35732397",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
-          },
-          {
-            "file": "docs/reports/sweep-b/L4-capture-review.json",
-            "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-            "what": "Ordinary mortal L4 complete routes at both tiers preserve canonical final hashes low1a99e716/high6f55579b. The forced fuel-truck tank shot violates the unconditional15m player/ally limit: low tick12649 impact(16.3,-9.5) is12.97584m from actual ally49; high tick13369 is14.45115m from ally46 and13.44663m from ally61. Every cited body has actual100HP, is visible/calm/engaged, and has a current pistol gun plus an armed registry entry since tick1969. These are live gun-bearing allies at the shot tick; decorative unarmed civilians/corpses are excluded. Ordinary war shots retain≥15m clearance and8–12s cadence; the compulsory fuel shot has no criterion exemption. Separately, actual renderer Vfx.shots records28 tank shots with real muzzle/tracer endpoints. Event-time triangle tests against the currently drawn MilitaryPerimeter find no concrete/wire intersections and one low sign-plane intersection, retained without using sign semantics as the verdict. All26 visible-wall positive across-concrete controls intersect. Six camera-only tank frames reviewed; single-shot flash/tracer pixels are not claimed visible in each still. This closes FAIL through the measured live-ally distance; unmeasured clauses are not promoted to PASS and no source targets/counts/timers/caps were changed."
+            "what": "Historical baseline counterexample that motivated the relocated fuel truck; the current-source recheck supersedes its measured distance but not its old visual evidence."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "freshness": "FRESH",
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5400,7 +5376,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5452,7 +5428,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5508,7 +5484,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5632,7 +5608,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5715,7 +5691,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5773,7 +5749,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     },
     {
@@ -5829,7 +5805,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
+        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
       }
     }
   ]
