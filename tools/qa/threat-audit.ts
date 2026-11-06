@@ -1,5 +1,5 @@
 import { execFileSync, fork } from 'node:child_process';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -64,6 +64,7 @@ if (parallelLevels) {
   const worker = async () => {
     for (let level = pending.shift(); level; level = pending.shift()) {
       const out = join(values.out!, level);
+      await rm(join(out, 'audit.json'), { force: true });
       const code = await new Promise<number | null>((resolve, reject) => {
         const child = fork(fileURLToPath(import.meta.url), ['--levels', level, '--maxWorkers', '1', '--out', out], {
           execArgv: ['--import', 'tsx/esm'], stdio: 'inherit',
