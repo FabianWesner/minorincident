@@ -28,7 +28,7 @@ The shared headless browser pool could not start in this sandbox. The pool log r
 - `npm test`: failed one existing process-cleanup assertion in `tests/tools/test-budget-tools.test.ts` (`successful wrapper still cleans its process group`; expected exit 0, received 1). Other reported tests passed.
 - `npm run qa:threat`: completed alone with load below 6; final audit reported 0 acceptance fail flags. L4 high hold census: complete, 65 living at first breach, peak 93, minimum plaza population after 45 seconds 54, and all six arrival edges observed.
 
-No raw visual captures were produced, so there were no new captures to delete. Current evidence commits: `f5ef383` (L4-12), `2c24a1d` (L4-13), `ba3783d` (corrected high G-13 review and report), and `58a3280` (L4-17 candidate). The initial report commit was `823fd89`. Existing review text in the acceptance JSON remains historical and should be reconciled when the required visual evidence is available.
+No raw visual captures were produced, so there were no new captures to delete. Current evidence commits: `f5ef383` (L4-12), `2c24a1d` (L4-13), `80b5185` (high G-13 evidence summary), `ba3783d` (corrected high G-13 verdict and report), and `58a3280` (L4-17 candidate). The initial report commit was `823fd89`. Existing review text in the acceptance JSON remains historical and should be reconciled when the required visual evidence is available.
 
 ## Follow-up
 
