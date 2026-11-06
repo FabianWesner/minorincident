@@ -20,6 +20,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 | L10-02 | requalified current source; opening at tick 5400, Mega separation ~119 m, matched low/high cues |
 | L10-04 | requalified current source; seven regions, low/high reachability and combat rates meet thresholds |
 | L10-05 | current PASS; four named pickups/same-tick snapshots,24 inventory-only cases and eight physical WASD approaches;16 frames reviewed |
+| L10-06 | current PASS; mechanics plus four physical dog/corgi quality/zoom cells,42 final frames reviewed; first46-frame matrix retained as inconclusive |
 | L10-10 | existing current PASS |
 | L10-13 | existing current PASS |
 | L10-15 | existing current PASS |
@@ -53,7 +54,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L9-07 | NOT CHECKED | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. |
 | L9-09 | NOT CHECKED | NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries. |
 | L10-03 | FAIL | Same-tick census: low industrial max9<16 and campus33<35 with required species; high industrial15<25; high corridor never has required dogs/Alphas together. Full ledgers and identical native controls retained. |
-| L10-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi. |
 | L10-07 | NOT CHECKED | Native pursuit mechanics pass on current source; still needs minimap and audible gain review with real-input capture. |
 | L10-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. |
 | L10-09 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state. |
@@ -78,4 +78,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 30. Current PASS rows listed above: 17. No game code was changed. Perf work was not performed.
+Open current rows: 29. Current PASS rows listed above: 18. No game code was changed. Perf work was not performed.

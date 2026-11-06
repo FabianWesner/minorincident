@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:32:38.448Z",
+  "generatedAt": "2026-11-06T04:43:51.320Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,34 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json"
     }
   ],
   "globals": [
@@ -6848,13 +6876,17 @@
     },
     {
       "id": "L10-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); low/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); low/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); low/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); high/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); high/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); high/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); high/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); low/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); low/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); low/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); high/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); high/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); high/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); high/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); low/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom0.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"1cc9f7113b3bc904614db09b358025cb7fcb940baaddd5debb804680580ea663\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"7272ebeee5cb880fa3e6abc2f3b5dec2718c0dcb2e5a8a676… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); low/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom1.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"3a06ccd72bc2d468b39eb3b77be005e4ea4d5dc62af65152686c98f96fe417fa\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"b4a40793a2da3979e0345205f031411e8c05b17aa922b911f… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); high/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom0.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"c66541a6f58842bbf76ec3a050cdd2efbcbadb3af898478c0778616948c80b00\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"2dc946435d6f6c22cd2f9387ba3b6430a5e87c04e8c36162e… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); high/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom1.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"6312fcbb14eb8ec36089e96498a9ec0e8d150d036962d94914266be43b4a99bf\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"5eba6b23f1563f6377bc7a167108905b2317de6cf68bb9bda… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json"
       ],
       "expected": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "checks": [
@@ -7109,6 +7141,162 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
           "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom0.5",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "1cc9f7113b3bc904614db09b358025cb7fcb940baaddd5debb804680580ea663"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "7272ebeee5cb880fa3e6abc2f3b5dec2718c0dcb2e5a8a676d11e8ba60014be4"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "c2888b6426e04008847d9a9cec73989b66beff27c13be8608993d7468a177ebd"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom1.5",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "3a06ccd72bc2d468b39eb3b77be005e4ea4d5dc62af65152686c98f96fe417fa"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "b4a40793a2da3979e0345205f031411e8c05b17aa922b911f4d4166100068e4b"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "4fcd9a0b46a696048088c5ad33b25697c63b492bce8fb5b9fb93c4922e0be476"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z1.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z1.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom0.5",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "c66541a6f58842bbf76ec3a050cdd2efbcbadb3af898478c0778616948c80b00"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "2dc946435d6f6c22cd2f9387ba3b6430a5e87c04e8c36162ed8c36cef04e67b7"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "38cb3a3fb623a3943cdd4456ebdba3e99f660c2f7e4e7067c2737cc91ac2e782"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-high-dog-z0.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-high-dog-z0.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom1.5",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "6312fcbb14eb8ec36089e96498a9ec0e8d150d036962d94914266be43b4a99bf"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "5eba6b23f1563f6377bc7a167108905b2317de6cf68bb9bda2ec5bbf997370a4"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "6e05fb418e1a78800818ab66ade6f000d364e36a0a1a86102b2771071afb04ca"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-high-dog-z1.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-high-dog-z1.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json",
+          "level": "L10"
         }
       ],
       "historical": {
@@ -7121,7 +7309,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-07",

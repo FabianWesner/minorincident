@@ -16,6 +16,8 @@ import { atomicJson } from './report';
 
 const [tierArg, zoomArg] = process.argv.slice(2);
 assert(zoomArg === '0.5' || zoomArg === '1.5');
+// Wide framing can show the approach before the human crowd occludes the dog.
+const captureRangeM = zoomArg === '1.5' ? 12 : 3;
 const saveArg = `docs/reports/fix51-r10c/L10-${tierArg}-dog-save.json.gz`;
 const levelArg = 'L10';
 assert(tierArg === 'low' || tierArg === 'high');
@@ -73,7 +75,7 @@ try {
     if (existsSync(latest) && !existsSync(control) && shots < 3) {
       let observation;
       try { observation = JSON.parse(readFileSync(latest, 'utf8')); } catch { await delay(50); continue; }
-      if (observation.level === 'L10' && observation.phase === 'playing' && observation.enemies.some((enemy: { archetype: string; drawn: boolean; hp: number; d: number }) => enemy.archetype === 'infected.dog' && enemy.drawn && enemy.hp > 0 && enemy.d < 3)) {
+      if (observation.level === 'L10' && observation.phase === 'playing' && observation.enemies.some((enemy: { archetype: string; drawn: boolean; hp: number; d: number }) => enemy.archetype === 'infected.dog' && enemy.drawn && enemy.hp > 0 && enemy.d < captureRangeM)) {
         writeFileSync(control, JSON.stringify({ manual: true, keys: shots === 0 ? ['a'] : [], ms: 150, capture: `living-dog-${shots++}` }));
       }
     }
@@ -88,7 +90,7 @@ try {
 } catch (caught) { error = String(caught); }
 finally { server.kill('SIGTERM'); rmSync(join(out, 'profile'), { recursive: true, force: true }); }
 atomicJson(`docs/reports/fix51-r10c/${cell}-input.json`, { ...identity, browserHash: hash,
-  zoom: Number(zoomArg), seedSaveSha256: createHash('sha256').update(JSON.stringify(save)).digest('hex'),
+  zoom: Number(zoomArg), captureRangeM, seedSaveSha256: createHash('sha256').update(JSON.stringify(save)).digest('hex'),
   toolSha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'), out, levels, tier: tierArg,
   method: 'Shared headless Metal WebGL2, native-generated naturally progressed production Resume; only saved cameraZoom changed to requested photo framing. No objective skips or actor writes. Stand for dog approach then physical A key sidestep and screenshots; courier protection begins when the normal run initializes. Read-only ledger. Living appearance only, native mechanics fixtures remain separate. Every overwritten latest image copied for inspection. No frame timing.', result, error });
 console.log(cell, { result, error });
