@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "ebc1ebf040cfafb546bc3d7aca0b09950449a011",
+  "commit": "3e5e612e745f0596444bb1ca40a6a68912060687",
   "clauses": [
     {
       "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable \u2265 95%; none stand harmless behind the platform/gate line.",
@@ -13,9 +13,9 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L6-06-trajectories.json.gz",
-      "sha256": "9d88b0dcec15624ce5d997a4dbcf19954a9fd3a77f43cc65b9b34923f326c9b9",
-      "what": "Both current-source mortal complete routes admit exactly two at each of six alternating doors. Every one of the 12 identities reaches the authored track polygon, has a path at birth, and is later downed. Each tier has381 near-player path samples, zero failures (100%). Every-tick geometry observer preserves canonical complete world hash: low4a1802d3/high10d0a475. Earlier spawn-coordinate inference is superseded by this actor trajectory proof."
+      "file": "docs/reports/fix71-b/L6-06-release-trajectories.json.gz",
+      "sha256": "41e331ce0a8e8ed1b1bfbe7f1d641f7890213b5545f11d0a8515aed675f67619",
+      "what": "Final-source every-tick track geometry and production nav trajectory proof. Exactly two actors at six alternating doors, all12 reach tracks and are downed;381/381 near-player path samples pass per tier. Observer preserves fresh canonical complete hashes low4a1802d3/high10d0a475."
     }
   ]
 }
