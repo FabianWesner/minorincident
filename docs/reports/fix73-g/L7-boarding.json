@@ -1,0 +1,267 @@
+{
+  "finding": "brief2: L7 boarding while covering stragglers",
+  "status": "Boarding latch PASS; low close-camera unguarded survival FAIL retained",
+  "method": "Shared headless Metal WebGL2. Normal unpaused WASD/mouse from L7-default high and fresh level-select low. Courier god mode only; follower HP/damage unchanged. High includes a six-second physical WASD retreat and return. Low close-camera failure is retained; low wide repeat uses the existing moving-cover input policy. No objective skips or actor writes.",
+  "change": "Once departure objective becomes active, survivors independently walk into the bus. Courier leaving16m no longer recalls them. Every living follower still physically boards and courier must return within6m before departure. Empty roster now says No survivors.",
+  "results": [
+    {
+      "label": "fix73-L7-bus-before",
+      "finished": true,
+      "startingRoster": 24,
+      "boarded": 24,
+      "losses": 0,
+      "lossesAfterDepartureObjective": [],
+      "maxBoardedWhileCourierBeyond16m": null,
+      "maxCourierDistanceWhileBoarding": null,
+      "minimumBoardingGapTicks": 15
+    },
+    {
+      "label": "fix73-L7-bus-after-high",
+      "finished": true,
+      "startingRoster": 24,
+      "boarded": 24,
+      "losses": 0,
+      "lossesAfterDepartureObjective": [],
+      "maxBoardedWhileCourierBeyond16m": 24,
+      "maxCourierDistanceWhileBoarding": 45.98346199535519,
+      "minimumBoardingGapTicks": 15
+    },
+    {
+      "label": "fix73-L7-bus-after-low",
+      "finished": true,
+      "startingRoster": 24,
+      "boarded": 3,
+      "losses": 21,
+      "lossesAfterDepartureObjective": [
+        {
+          "type": "mission.signal",
+          "tick": 4992,
+          "name": "l7.survivor-turned",
+          "actorId": 73
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5112,
+          "name": "l7.survivor-turned",
+          "actorId": 72
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5180,
+          "name": "l7.survivor-turned",
+          "actorId": 71
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5311,
+          "name": "l7.survivor-turned",
+          "actorId": 70
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5317,
+          "name": "l7.survivor-turned",
+          "actorId": 69
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5383,
+          "name": "l7.survivor-turned",
+          "actorId": 68
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5422,
+          "name": "l7.survivor-turned",
+          "actorId": 66
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5688,
+          "name": "l7.survivor-turned",
+          "actorId": 67
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5760,
+          "name": "l7.survivor-turned",
+          "actorId": 61
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5762,
+          "name": "l7.survivor-turned",
+          "actorId": 56
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5789,
+          "name": "l7.survivor-turned",
+          "actorId": 54
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5898,
+          "name": "l7.survivor-turned",
+          "actorId": 59
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5966,
+          "name": "l7.survivor-turned",
+          "actorId": 64
+        },
+        {
+          "type": "mission.signal",
+          "tick": 5973,
+          "name": "l7.survivor-turned",
+          "actorId": 57
+        },
+        {
+          "type": "mission.signal",
+          "tick": 6564,
+          "name": "l7.survivor-turned",
+          "actorId": 63
+        }
+      ],
+      "maxBoardedWhileCourierBeyond16m": 0,
+      "maxCourierDistanceWhileBoarding": 45.10840192329668,
+      "minimumBoardingGapTicks": 15
+    },
+    {
+      "label": "fix73-L7-bus-after-low-wide",
+      "finished": true,
+      "startingRoster": 24,
+      "boarded": 23,
+      "losses": 1,
+      "lossesAfterDepartureObjective": [],
+      "maxBoardedWhileCourierBeyond16m": 0,
+      "maxCourierDistanceWhileBoarding": 46.94250389393102,
+      "minimumBoardingGapTicks": 15
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-result.jpg",
+      "sha256": "7ab6605636890edbe01fa30c7b4143de9c8ef891f79a4f684333b731998f7683",
+      "what": "Actual handover shows the Level8 Zoo loading card; roster values come from the live boarding ledger, not this card."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-t1806.jpg",
+      "sha256": "6bf7301bcce92bd9d521ef64ea0847f6fbee1137c5a9208f6c5843aee9d2b9ca",
+      "what": "Living follower column with green bars follows the rocket courier toward the corridor; burning wrecks and dead infected along route; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-t3.jpg",
+      "sha256": "ed3e96009af6070d0b71e495cfdc6495b9cf4fc2e57d0e43e081357294a0d58f",
+      "what": "Opening launcher ring and approach clear of followers beside the army truck; courier100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-t3618.jpg",
+      "sha256": "8856e51598426e03ff09276a81a217c8f133834e61956ee950d9017e5ade4d44",
+      "what": "Living follower column with green bars follows the rocket courier toward the corridor; burning wrecks and dead infected along route; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-t5436.jpg",
+      "sha256": "7ea518c16a99569c4c78fe626f888e91c18ee52b584d28d7f796b57808762808",
+      "what": "Living follower column with green bars follows the rocket courier toward the corridor; burning wrecks and dead infected along route; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-before/captures/fix73-L7-bus-before-L7-t7240.jpg",
+      "sha256": "51393f44a4b3979197f0ec0c94aa38ce4bc274bd05e0ad21e132cfff2e5dc0a7",
+      "what": "At bus approach, rocket blast and red-bar threats ahead; HUD Aboard0/24 waiting2m, courier23m from bus."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-result.jpg",
+      "sha256": "9789ac815b39d0a485270561f10497c4da81dc524e56d57cd48e1adcd4081e14",
+      "what": "Actual handover shows the Level8 Zoo loading card; roster values come from the live boarding ledger, not this card."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-t1816.jpg",
+      "sha256": "0417a92b135f60e5cdf4c0adda3452a1b5faf0a1a4150e7d2941a654cdd2772c",
+      "what": "Rocket courier and green-bar follower column advance through the ruined streets; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-t3.jpg",
+      "sha256": "37e792e1c6c1d15d299407282189c07c50533f43014d749209860144811294dd",
+      "what": "Opening launcher ring and approach clear of followers beside the army truck; courier100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-t3631.jpg",
+      "sha256": "5f3a0a2c07844c6ce74165667cc2d8d015f0a0a558eea8e5cea4399979ba8556",
+      "what": "Rocket courier and green-bar follower column advance through the ruined streets; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-t5442.jpg",
+      "sha256": "d71ae6728a51b292144ab09a9d6200be2bc39bbe588266493b96be7a41bde50a",
+      "what": "Rocket courier and green-bar follower column advance through the ruined streets; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-L7-t7252.jpg",
+      "sha256": "6fc965fdd13a2f39675346d9459c3a7daeb5ec735c115c83ce88cdcc3d165f6e",
+      "what": "Crowded bus approach with rocket explosion beyond; HUD Aboard0/24 waiting3m, courier21m from bus."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-bus-cover-away.jpg",
+      "sha256": "daed475b5155f633c2b24a9806247a38bcd1cd2bba3555a7802cc411c9222791",
+      "what": "Courier and corgi 42m from bus; HUD says Aboard11/24 and waiting46m. Boarding continues while courier is away."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-high/captures/fix73-L7-bus-after-high-bus-return-start.jpg",
+      "sha256": "58056f0e53857ac1a1d303639cd547959354977c936f43f01267ea0bf36f1f2a",
+      "what": "Same distant courier pose; HUD counter has advanced to18/24 without returning to the bus."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low/captures/fix73-L7-bus-after-low-L7-result.jpg",
+      "sha256": "4b1b4e920c7d3e719b75c5429635fb8006926805b265383987b897e96846ca7b",
+      "what": "Actual handover shows the Level8 Zoo loading card; roster values come from the live boarding ledger, not this card."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low/captures/fix73-L7-bus-after-low-L7-t2124.jpg",
+      "sha256": "54b744b8d092700870001ea8cd00a9c5c69099ba62c8b2ba5f374fa388d7e675",
+      "what": "Close camera shows courier with launcher; HUD24/24 nearby and offscreen wait warning; narrow view does not show the whole party."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low/captures/fix73-L7-bus-after-low-L7-t4233.jpg",
+      "sha256": "9b234a4a7fb69640b719bc8f92da9dcadb65e12f7c1e5ee5f917032aa879075f",
+      "what": "Close camera shows courier alone on road; HUD21/21 nearby and corridor48m. Offscreen follower presence is not visually proved."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low/captures/fix73-L7-bus-after-low-L7-t6341.jpg",
+      "sha256": "5f5280fcd96cef1f645884206ca41f929659a395b1dc8f20522da78a8a082b87",
+      "what": "Close view of courier and remaining four survivors in the battle at the bus approach; HUD0/4 waiting1m. This is retained failed low-close survival evidence."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low/captures/fix73-L7-bus-after-low-L7-t9.jpg",
+      "sha256": "a9b4da4932fb325dfa57be70f915fe5c25ac11401a2dfea60f46151e96cdb99b",
+      "what": "Opening launcher ring and approach clear of followers beside the army truck; courier100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low-wide/captures/fix73-L7-bus-after-low-wide-L7-result.jpg",
+      "sha256": "2ceae67816b12ce1a737edefa3f1a42158f9ba2a3d0a0149b11488882ce40513",
+      "what": "Actual handover shows the Level8 Zoo loading card; roster values come from the live boarding ledger, not this card."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low-wide/captures/fix73-L7-bus-after-low-wide-L7-t2118.jpg",
+      "sha256": "995175a620a424e8ceebb4428e0001264e0f6885f24f029188fa4d9ff9621717",
+      "what": "Wide moving-cover route: courier guards a visible green-bar follower column near wrecks; HUD24/24 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low-wide/captures/fix73-L7-bus-after-low-wide-L7-t4234.jpg",
+      "sha256": "893a812b0aac124f431387cc5663bb11dca6928e9afef130ccbf8571ab729ed4",
+      "what": "Wide camera shows green-bar follower column behind courier near final approach; HUD23/23 nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low-wide/captures/fix73-L7-bus-after-low-wide-L7-t6341.jpg",
+      "sha256": "eaa84492ebfbd2b8b8c1bb7d123c358d350bf65f642e31e0067c938c3823e699",
+      "what": "Actual departure camera shows bus and wrecked skyline under pink ash/fog; all23 surviving humans boarded per ledger."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-bus-after-low-wide/captures/fix73-L7-bus-after-low-wide-L7-t8.jpg",
+      "sha256": "c733966d9e311f2daecdecc27d5f142990ff4dd3e40d73245c23264dac2a04d6",
+      "what": "Opening launcher ring and approach clear of followers beside the army truck; courier100HP."
+    }
+  ],
+  "rawCapturesDeleted": true,
+  "limitation": "This closes the boarding recall defect, not all L7 difficulty/escort/camera criteria. Low close view with default unguarded driver loses21/24; PO should compare that combat workload with the wide moving-cover repeat saving23/24."
+}

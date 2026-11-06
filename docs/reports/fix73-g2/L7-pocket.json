@@ -1,0 +1,21 @@
+{
+  "cause": "35d5042 added escapePocket for nearby failed navigation. Survivor68 acquired a fine-grid escape route near(-19.27,47.81), then contact moved it to(-20.17,47.29). Its next leg was blocked, but walkPocketRoute returnedtrue withstep0 forever, suppressing normal follow navigation. The courier therefore waited at waypoint5(-36,41.7), before boarding. Boarding latch, rear-cover policy and opening grace were not the deadlocked phase.",
+  "fix": "Delete a pocket route when its next leg cannot move and returnfalse so ordinary navigation can replan. Keep original bodies, contact sweeps, speeds, counts and bus recovery timers.",
+  "before": {
+    "boundedDiagnosticSeconds": 300,
+    "completed": false,
+    "previousAcceptanceTimeout": 1200,
+    "stuckFollower": 68,
+    "boardingPhase": "waiting"
+  },
+  "after": {
+    "completed": true,
+    "time": 102.8,
+    "deaths": 0
+  },
+  "scope": "Unpaused shared native high complete policy seed1. No forced movement, actor edits or policy/checker changes. Final qa:accept reruns both tiers after main merge.",
+  "input": {
+    "file": "docs/reports/fix73-g2/L7-pocket-input.json.gz",
+    "sha256": "dfb759c4bd96929013b46faf2ad58b7937e29dcbd8c764a8f9f9a0a35a28ec58"
+  }
+}

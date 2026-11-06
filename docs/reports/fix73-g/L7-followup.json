@@ -1,0 +1,117 @@
+{
+  "finding": "Follow-up to opening and boarding: full threat gate revealed follower pace/wait regressions",
+  "rejectedFullGate": "threat-rejected.json",
+  "method": "Unchanged native skilled/passive policies over seeds1\u20133, then ordinary-input policy corrected to use the physically demonstrated rear-cover strategy. No thresholds, census filters or verdict logic changed. Trace snapshots clone motion values to avoid retaining live references.",
+  "finalChange": "Clear only lead centre slot before launcher pickup, move close infected10m west from base. Start boarding at original6m then latch. L7 corgi reuses L5 precise tracking, with existing speed/body bounds. Plan corpse detours without treating moving people as permanent obstacles; actual per-tick sweeps still enforce contact. Sideways jitter no longer resets queue-stall detours. All original15/36/1200tick boarding/recovery clocks retained. Add bounded8second courier damage grace ending on normal launcher pickup; enemy AI remains active. Whole-cohort staging and persistent formation-heading variants were rejected after9/21flag focused failures. No enemy/NPC health, counts, caps, boarding/recovery clocks or acceptance criteria changed. Pre-boarding detour guards also measure net progress, and failed nearby navigation reuses the existing bounded escape route on its existing30tick cadence. Cover input now stays with the survivor until they reach the bus approach, avoiding a premature return/shuttle.",
+  "results": [
+    {
+      "name": "L7-latch-only",
+      "change": "Boarding starts at existing6m, no recall; all followers still shifted4m at opening.",
+      "flags": [
+        "step/departure:SLOW_FOLLOWER:20"
+      ],
+      "passiveFlags": [
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "step/departure:SLOW_FOLLOWER:20",
+        "step/corridor:SLOW_FOLLOWER:51",
+        "step/corridor:SLOW_FOLLOWER:52",
+        "step/corridor:SLOW_FOLLOWER:53",
+        "step/corridor:SLOW_FOLLOWER:55",
+        "step/corridor:SLOW_FOLLOWER:56",
+        "step/corridor:SLOW_FOLLOWER:58",
+        "step/corridor:SLOW_FOLLOWER:59",
+        "step/corridor:SLOW_FOLLOWER:64",
+        "phase/encounters:SLOW_FOLLOWER:51",
+        "phase/encounters:SLOW_FOLLOWER:52",
+        "phase/encounters:SLOW_FOLLOWER:53",
+        "phase/encounters:SLOW_FOLLOWER:55",
+        "phase/encounters:SLOW_FOLLOWER:56",
+        "phase/encounters:SLOW_FOLLOWER:58",
+        "phase/encounters:SLOW_FOLLOWER:59",
+        "phase/encounters:SLOW_FOLLOWER:64"
+      ],
+      "skilledWaitPercent": 27.22616233254531,
+      "passiveWaitPercent": 10.757639179573044
+    },
+    {
+      "name": "L7-centre-only",
+      "change": "Only centre slot moved2.4m aside; close cluster still10m west of base.",
+      "flags": [
+        "step/departure:SLOW_FOLLOWER:20"
+      ],
+      "passiveFlags": [
+        "step/departure:SLOW_FOLLOWER:20",
+        "step/corridor:SLOW_FOLLOWER:67",
+        "phase/encounters:SLOW_FOLLOWER:67"
+      ],
+      "skilledWaitPercent": 9.62671905697446,
+      "passiveWaitPercent": 9.214953271028037
+    },
+    {
+      "name": "L7-minimal-opening",
+      "change": "Close cluster only4m west of base instead of10m; single centre slot clear.",
+      "flags": [
+        "step/departure:SLOW_FOLLOWER:20"
+      ],
+      "passiveFlags": [
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "step/departure:SLOW_FOLLOWER:20"
+      ],
+      "skilledWaitPercent": 25.031820110309717,
+      "passiveWaitPercent": 10.071942446043165
+    },
+    {
+      "name": "L7-pet-tracking",
+      "change": "Reuse existing L5 corgi tracking for L7 tight corners.",
+      "flags": [],
+      "passiveFlags": [
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+      ],
+      "skilledWaitPercent": 25.742574257425744,
+      "passiveWaitPercent": 9.200077474336625
+    },
+    {
+      "name": "L7-queue-detour",
+      "change": "Queue jitter guard uses net progress; corpse detour plans around static/corpse footprints, per-step crowd contact retained.",
+      "flags": [],
+      "passiveFlags": [
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+      ],
+      "skilledWaitPercent": 23.842559818773893,
+      "passiveWaitPercent": 9.200077474336625
+    },
+    {
+      "name": "L7-cover-policy",
+      "change": "Ordinary-input native driver covers survivors12m away until within8m, then returns; boarding remains latched, human strategy independently proved in earlier physical retreat.",
+      "flags": [],
+      "passiveFlags": [],
+      "skilledWaitPercent": 0.24743052912066996,
+      "passiveWaitPercent": 9.200077474336625
+    }
+  ],
+  "finalScopedThreatFlags": [],
+  "input": {
+    "file": "docs/reports/fix73-g/L7-followup-input.json.gz",
+    "sha256": "f9dbd222ecd66a1d8f19d1dee6f5d864905851d6eadc88164dc2041a444bce8b"
+  },
+  "limitation": "Focused audit retains mandatory PARTIAL_LEVEL_SELECTION diagnostic flag; final full all-level gate is required separately.",
+  "finalGraceAudit": {
+    "flags": [],
+    "passiveFlags": [],
+    "skilledWaitPercent": 0.10693281055070397,
+    "passiveWaitPercent": 9.220013109023379
+  },
+  "finalAudit": {
+    "flags": [],
+    "passiveFlags": [],
+    "skilledWaitPercent": 1.7083480098626276,
+    "passiveWaitPercent": 9.220013109023379
+  },
+  "spatialOnlyFocusedAudit": {
+    "source": "single centre slot2.4m aside; close cluster10m west; boarding6m latch; precise corgi tracking, crowd-aware detour and ordinary-input cover policy",
+    "flags": [],
+    "passiveFlags": [],
+    "skilledWaitPercent": 0.10693281055070397,
+    "passiveWaitPercent": 9.220013109023379
+  }
+}

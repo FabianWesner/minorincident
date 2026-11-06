@@ -1,0 +1,165 @@
+{
+  "status": "PASS: final production600HP/0.5m/4.5mps fronts both demonstrate90tick shield openings and down by ordinary unpaused aimed input at both tiers",
+  "method": "Same controlled production-admission counter fixture as L6-gate, updated setup keeps both fronts before gate90 instead of putting one beyond an intervening grille/outside camera. No actor or HP writes after resume. All8 new captures personally reviewed.",
+  "results": {
+    "high": [
+      {
+        "initial": [
+          {
+            "id": 57,
+            "archetype": "infected.riot",
+            "hp": 600,
+            "shield": true,
+            "radius": 0.5,
+            "speed": 4.5
+          },
+          {
+            "id": 58,
+            "archetype": "infected.riot",
+            "hp": 600,
+            "shield": true,
+            "radius": 0.5,
+            "speed": 4.5
+          }
+        ]
+      },
+      {
+        "actor": {
+          "id": 57,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true,
+          "radius": 0.5,
+          "speed": 4.5
+        },
+        "breakTick": 43,
+        "windowTicks": 90
+      },
+      {
+        "downed": 57,
+        "tick": 743,
+        "hp": 0
+      },
+      {
+        "actor": {
+          "id": 58,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true,
+          "radius": 0.5,
+          "speed": 4.5
+        },
+        "breakTick": 139,
+        "windowTicks": 90
+      },
+      {
+        "downed": 58,
+        "tick": 778,
+        "hp": 0
+      }
+    ],
+    "low": [
+      {
+        "initial": [
+          {
+            "id": 57,
+            "archetype": "infected.riot",
+            "hp": 600,
+            "shield": true,
+            "radius": 0.5,
+            "speed": 4.5
+          },
+          {
+            "id": 58,
+            "archetype": "infected.riot",
+            "hp": 600,
+            "shield": true,
+            "radius": 0.5,
+            "speed": 4.5
+          }
+        ]
+      },
+      {
+        "actor": {
+          "id": 57,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true,
+          "radius": 0.5,
+          "speed": 4.5
+        },
+        "breakTick": 45,
+        "windowTicks": 90
+      },
+      {
+        "downed": 57,
+        "tick": 766,
+        "hp": 0
+      },
+      {
+        "actor": {
+          "id": 58,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true,
+          "radius": 0.5,
+          "speed": 4.5
+        },
+        "breakTick": 135,
+        "windowTicks": 90
+      },
+      {
+        "downed": 58,
+        "tick": 777,
+        "hp": 0
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "file": "test-results/fix73-g/L6-counter-high/diagnostic-final.jpg",
+      "sha256": "455f9a1cf99e36bbd4f0b39543466db47d29665556cba816103080db327fe21e",
+      "what": "Both shield fronts are down at lower right, courier standing by grille; orange gunfire feedback remains. HUD hidden in controlled fixture."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/resolved.jpg",
+      "sha256": "5814d4b5e74b1646ed81d990256860d1cbdae8bdc2c48424dc008cb12bd8044f",
+      "what": "Both shield fronts are down at lower right, courier standing by grille; orange gunfire feedback remains. HUD hidden in controlled fixture."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/shield-break-57.jpg",
+      "sha256": "127b3c0a18107f3aae1c2f8d8927cfad02381c42f7b8bdb418b41ccb4041d3e5",
+      "what": "Aimed gunfire sparks on one of two living shielded fronts; both red health bars visible, courier by grille."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/shield-break-58.jpg",
+      "sha256": "05b57ca701e89ca8d66d63a86205310f9925eaec952abccbcb41dd93522363b1",
+      "what": "Aimed fire strikes second shield bearer at very low health; other front is down nearby."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/diagnostic-final.jpg",
+      "sha256": "bd51c6fe144654359124e171fa886ebb8af4112a34d8f9dff28e881fae244c2c",
+      "what": "Both shield fronts are down at lower right, courier standing by grille; orange gunfire feedback remains. HUD hidden in controlled fixture."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/resolved.jpg",
+      "sha256": "2143961afc5bd29bf26bb823ca9abc1574ab2e7302e73c18b6142e19b1a86c95",
+      "what": "Both shield fronts are down at lower right, courier standing by grille; orange gunfire feedback remains. HUD hidden in controlled fixture."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/shield-break-57.jpg",
+      "sha256": "eb59f49d3227d1b1dc798c59605dd2adf8c0bd4c83b7f7fec22a16ed797d7f58",
+      "what": "Aimed gunfire sparks on one of two living shielded fronts; both red health bars visible, courier by grille."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/shield-break-58.jpg",
+      "sha256": "17076d5836ead18ee271a9a1b99e0e2008b6d9cc50742afab8e95a92d738afa8",
+      "what": "Aimed fire strikes second shield bearer at very low health; other front is down nearby."
+    }
+  ],
+  "rawCapturesDeleted": true,
+  "input": {
+    "file": "docs/reports/fix73-g/L6-final-counter-input.json.gz",
+    "sha256": "327115d4990720cf582a31e8b3e688884541749b6b0b4422f3bd7fb4f78261f8"
+  }
+}

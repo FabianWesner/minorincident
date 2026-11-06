@@ -1,0 +1,2204 @@
+{
+  "revision": "183ca95b13493bf8fc20d0033faf17786c5172eb",
+  "levels": {
+    "L7": {
+      "reportSha256": "abd9acdb3dde33a23f220814eae44c56da9f5c3c9293c570695e52b3d8309ec5",
+      "freshFailRows": [
+        "L7-01",
+        "L7-05"
+      ],
+      "freshFailGlobals": [],
+      "failedChecks": [
+        {
+          "id": "L7-01",
+          "clause": "physical launcher approach pickup and first rocket frame gate",
+          "tier": "low",
+          "policy": "physical-pickup",
+          "status": "FAIL",
+          "value": {
+            "valid": false,
+            "mechanics": true,
+            "distance": 3,
+            "windows": [
+              {
+                "event": "pickup.collected",
+                "tick": 14,
+                "samples": 20,
+                "valid": true,
+                "maxMs": 49.899999999999636
+              },
+              {
+                "event": "combat.attack",
+                "tick": 26,
+                "samples": 22,
+                "valid": true,
+                "maxMs": 16.800000000000182
+              }
+            ],
+            "frameGate": true
+          },
+          "target": "Exit\u22645m, moving auto-pickup without E, first physical rocket; each event frame\u226450ms in an unpaused quiet context.",
+          "receipt": "docs/reports/fix72-c/L7-01/low.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-01",
+          "clause": "physical launcher approach pickup and first rocket frame gate",
+          "tier": "high",
+          "policy": "physical-pickup",
+          "status": "FAIL",
+          "value": {
+            "valid": false,
+            "mechanics": true,
+            "distance": 3,
+            "windows": [
+              {
+                "event": "pickup.collected",
+                "tick": 14,
+                "samples": 19,
+                "valid": true,
+                "maxMs": 50
+              },
+              {
+                "event": "combat.attack",
+                "tick": 26,
+                "samples": 22,
+                "valid": true,
+                "maxMs": 16.800000000000182
+              }
+            ],
+            "frameGate": true
+          },
+          "target": "Exit\u22645m, moving auto-pickup without E, first physical rocket; each event frame\u226450ms in an unpaused quiet context.",
+          "receipt": "docs/reports/fix72-c/L7-01/high.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-05",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 10.366666666666667,
+            "windowSeconds": 239.76666666666668
+          },
+          "target": "\u226410 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        }
+      ],
+      "complete": {
+        "low": {
+          "run": {
+            "level": "L7",
+            "policy": "complete",
+            "seed": 1,
+            "completed": true,
+            "time": 138.83333333333334,
+            "deaths": 0,
+            "kills": 0,
+            "damageTaken": 0,
+            "failures": {},
+            "objectiveTimeline": [],
+            "furthestObjective": "bus-departure",
+            "activeObjectives": [],
+            "outcome": "complete",
+            "blocker": null,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 254,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            }
+          },
+          "regions": {},
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": null
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 103.73333333333333
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "time": 102.11666666666666
+            }
+          ]
+        },
+        "high": {
+          "run": {
+            "level": "L7",
+            "policy": "complete",
+            "seed": 1,
+            "completed": true,
+            "time": 104.48333333333333,
+            "deaths": 0,
+            "kills": 0,
+            "damageTaken": 0,
+            "failures": {},
+            "objectiveTimeline": [],
+            "furthestObjective": "bus-departure",
+            "activeObjectives": [],
+            "outcome": "complete",
+            "blocker": null,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 454,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            }
+          },
+          "regions": {},
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": null
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 105.93333333333334
+            },
+            {
+              "seed": 3,
+              "valid": false,
+              "outcome": "tick-budget",
+              "time": 1200
+            }
+          ]
+        }
+      }
+    },
+    "L10": {
+      "reportSha256": "a077619c5a8805edbb39dc0879a670a8439703a607dea13e9534a3016004fa2f",
+      "freshFailRows": [
+        "L10-03"
+      ],
+      "freshFailGlobals": [],
+      "failedChecks": [
+        {
+          "id": "L10-03",
+          "clause": "destroyed-corridor concurrent dog peak",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 6,
+          "target": "3 \u2264 value \u2264 5",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+        },
+        {
+          "id": "L10-03",
+          "clause": "same-tick regional count and species composition",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 6602,
+                  "count": 8,
+                  "regular": 8,
+                  "dogs": 2,
+                  "alphas": 0,
+                  "ids": [
+                    110,
+                    112,
+                    114,
+                    115,
+                    116,
+                    118,
+                    120,
+                    121,
+                    122,
+                    123
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 115,
+                      "archetype": "infected.dog",
+                      "x": 840.1366259766182,
+                      "z": 73.30163809946414,
+                      "cureRegion": "residential-fringe",
+                      "hidden": false
+                    },
+                    {
+                      "id": 116,
+                      "archetype": "infected.dog",
+                      "x": 849.1643365075932,
+                      "z": 81.8842955874376,
+                      "cureRegion": "residential-fringe",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 13440,
+                  "count": 24,
+                  "regular": 20,
+                  "dogs": 3,
+                  "alphas": 1,
+                  "ids": [
+                    135,
+                    136,
+                    137,
+                    139,
+                    142,
+                    143,
+                    144,
+                    145,
+                    146,
+                    147,
+                    148,
+                    149,
+                    150,
+                    151,
+                    152,
+                    153,
+                    154,
+                    155,
+                    156,
+                    157,
+                    158,
+                    159,
+                    160,
+                    161
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 137,
+                      "archetype": "infected.dog",
+                      "x": 1296.8892870239958,
+                      "z": 36.89714411730869,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 145,
+                      "archetype": "infected.dog",
+                      "x": 1377.3525429681922,
+                      "z": 104.51112888018677,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 146,
+                      "archetype": "infected.dog",
+                      "x": 1363.0076855139343,
+                      "z": 100.37186043577638,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 147,
+                      "archetype": "infected.alpha",
+                      "x": 1379.7971235573375,
+                      "z": 92.24082064702641,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 24220,
+                  "count": 30,
+                  "regular": 24,
+                  "dogs": 4,
+                  "alphas": 2,
+                  "ids": [
+                    135,
+                    136,
+                    147,
+                    177,
+                    178,
+                    179,
+                    180,
+                    181,
+                    182,
+                    183,
+                    184,
+                    185,
+                    186,
+                    187,
+                    188,
+                    189,
+                    190,
+                    191,
+                    192,
+                    193,
+                    194,
+                    195,
+                    196,
+                    197,
+                    198,
+                    199,
+                    200,
+                    201,
+                    202,
+                    203
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 147,
+                      "archetype": "infected.alpha",
+                      "x": 1926.6204983065138,
+                      "z": -10.965096098057167,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 179,
+                      "archetype": "infected.dog",
+                      "x": 1902.7612799474066,
+                      "z": 10.950582536957636,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 180,
+                      "archetype": "infected.dog",
+                      "x": 1902.1363921994118,
+                      "z": 26.497524873087983,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 185,
+                      "archetype": "infected.dog",
+                      "x": 2017.3525429681922,
+                      "z": -70.48887111981323,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 186,
+                      "archetype": "infected.dog",
+                      "x": 2003.0076855139343,
+                      "z": -74.62813956422362,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 187,
+                      "archetype": "infected.alpha",
+                      "x": 2019.7971235573375,
+                      "z": -82.75917935297359,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 33850,
+                  "count": 54,
+                  "regular": 49,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    231,
+                    232,
+                    233,
+                    234,
+                    235,
+                    236,
+                    237,
+                    238,
+                    239,
+                    240,
+                    241,
+                    242,
+                    243,
+                    244,
+                    245,
+                    246,
+                    247,
+                    248,
+                    249,
+                    250,
+                    251,
+                    252,
+                    253,
+                    254,
+                    255,
+                    256,
+                    257,
+                    258,
+                    259,
+                    260,
+                    261,
+                    262,
+                    263,
+                    264,
+                    265,
+                    266,
+                    267,
+                    268,
+                    269,
+                    270,
+                    271,
+                    272,
+                    273,
+                    274,
+                    275,
+                    276,
+                    277,
+                    278,
+                    279,
+                    280,
+                    281,
+                    282,
+                    283,
+                    284
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 233,
+                      "archetype": "infected.dog",
+                      "x": 2513.5402023926536,
+                      "z": 2.140589271279161,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 234,
+                      "archetype": "infected.dog",
+                      "x": 2526.5718349189797,
+                      "z": -10.94240186621583,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 239,
+                      "archetype": "infected.dog",
+                      "x": 2610.672935139087,
+                      "z": 51.20084682610685,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 240,
+                      "archetype": "infected.dog",
+                      "x": 2619.41429506171,
+                      "z": 34.2682163945129,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 241,
+                      "archetype": "infected.alpha",
+                      "x": 2623.463351374549,
+                      "z": 56.27940995837626,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 41670,
+                  "count": 69,
+                  "regular": 61,
+                  "dogs": 5,
+                  "alphas": 3,
+                  "ids": [
+                    309,
+                    311,
+                    312,
+                    313,
+                    314,
+                    315,
+                    316,
+                    317,
+                    318,
+                    319,
+                    320,
+                    321,
+                    322,
+                    323,
+                    324,
+                    325,
+                    326,
+                    327,
+                    328,
+                    329,
+                    330,
+                    331,
+                    332,
+                    333,
+                    334,
+                    335,
+                    336,
+                    337,
+                    338,
+                    339,
+                    340,
+                    341,
+                    342,
+                    343,
+                    344,
+                    345,
+                    346,
+                    347,
+                    348,
+                    349,
+                    350,
+                    351,
+                    352,
+                    353,
+                    354,
+                    355,
+                    356,
+                    357,
+                    358,
+                    359,
+                    360,
+                    361,
+                    362,
+                    363,
+                    364,
+                    365,
+                    366,
+                    367,
+                    368,
+                    369,
+                    370,
+                    371,
+                    372,
+                    373,
+                    374,
+                    375,
+                    376,
+                    377,
+                    378
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 311,
+                      "archetype": "infected.alpha",
+                      "x": 3056.7165666521364,
+                      "z": 85.03832684039968,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 332,
+                      "archetype": "infected.dog",
+                      "x": 3058.7185817100726,
+                      "z": 81.21823206247524,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 333,
+                      "archetype": "infected.dog",
+                      "x": 3062.9732082381993,
+                      "z": 83.15384040175746,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 334,
+                      "archetype": "infected.alpha",
+                      "x": 3056.7165666521364,
+                      "z": 96.03832684039968,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 355,
+                      "archetype": "infected.dog",
+                      "x": 3058.7185817100726,
+                      "z": 92.21823206247524,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 356,
+                      "archetype": "infected.dog",
+                      "x": 3062.9732082381993,
+                      "z": 94.15384040175746,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 357,
+                      "archetype": "infected.alpha",
+                      "x": 3064.0338684099793,
+                      "z": 106.21450057353728,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 378,
+                      "archetype": "infected.dog",
+                      "x": 3058.7185817100726,
+                      "z": 103.21823206247524,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 56978,
+                  "count": 75,
+                  "regular": 69,
+                  "dogs": 4,
+                  "alphas": 2,
+                  "ids": [
+                    446,
+                    447,
+                    448,
+                    449,
+                    450,
+                    451,
+                    452,
+                    453,
+                    454,
+                    455,
+                    456,
+                    457,
+                    458,
+                    459,
+                    460,
+                    461,
+                    462,
+                    463,
+                    464,
+                    465,
+                    466,
+                    467,
+                    468,
+                    469,
+                    470,
+                    471,
+                    472,
+                    473,
+                    474,
+                    475,
+                    476,
+                    477,
+                    478,
+                    479,
+                    480,
+                    481,
+                    482,
+                    483,
+                    484,
+                    485,
+                    486,
+                    487,
+                    488,
+                    489,
+                    490,
+                    491,
+                    492,
+                    493,
+                    494,
+                    495,
+                    496,
+                    497,
+                    498,
+                    499,
+                    500,
+                    501,
+                    502,
+                    503,
+                    504,
+                    505,
+                    506,
+                    507,
+                    508,
+                    509,
+                    510,
+                    511,
+                    512,
+                    513,
+                    514,
+                    515,
+                    516,
+                    517,
+                    518,
+                    519,
+                    520
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 446,
+                      "archetype": "infected.dog",
+                      "x": 3984.030963711848,
+                      "z": -44.1786451914832,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 447,
+                      "archetype": "infected.dog",
+                      "x": 4026.8947897288886,
+                      "z": -26.373077036871713,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 448,
+                      "archetype": "infected.dog",
+                      "x": 3984.9498265143247,
+                      "z": -6.332865322135003,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 449,
+                      "archetype": "infected.dog",
+                      "x": 4003.595104697847,
+                      "z": -50.33683509538737,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 450,
+                      "archetype": "infected.alpha",
+                      "x": 4017.1168984070478,
+                      "z": -6.508239162903562,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 451,
+                      "archetype": "infected.alpha",
+                      "x": 3976.652007026422,
+                      "z": -30.78329394362881,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-03",
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "tier": "low",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "99215cf9",
+            "controlIdentical": true
+          },
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-03",
+          "clause": "same-tick regional count and species composition",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 6590,
+                  "count": 14,
+                  "regular": 14,
+                  "dogs": 1,
+                  "alphas": 0,
+                  "ids": [
+                    110,
+                    111,
+                    112,
+                    113,
+                    116,
+                    118,
+                    119,
+                    120,
+                    121,
+                    123,
+                    124,
+                    125,
+                    126,
+                    127,
+                    128
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 116,
+                      "archetype": "infected.dog",
+                      "x": 860.533785946076,
+                      "z": 77.64429300970967,
+                      "cureRegion": "residential-fringe",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 13440,
+                  "count": 32,
+                  "regular": 27,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    145,
+                    146,
+                    147,
+                    148,
+                    149,
+                    150,
+                    152,
+                    153,
+                    156,
+                    157,
+                    158,
+                    159,
+                    160,
+                    161,
+                    162,
+                    163,
+                    164,
+                    165,
+                    166,
+                    167,
+                    168,
+                    169,
+                    170,
+                    171,
+                    172,
+                    173,
+                    174,
+                    175,
+                    176,
+                    177,
+                    178,
+                    179
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 147,
+                      "archetype": "infected.dog",
+                      "x": 1314.3981692398252,
+                      "z": 89.14746038384415,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 148,
+                      "archetype": "infected.dog",
+                      "x": 1300.3732207513629,
+                      "z": 32.42076377687235,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 158,
+                      "archetype": "infected.dog",
+                      "x": 1367.2365361140166,
+                      "z": 98.48032509827549,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 159,
+                      "archetype": "infected.dog",
+                      "x": 1378.3545379350908,
+                      "z": 97.06404229739381,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 160,
+                      "archetype": "infected.alpha",
+                      "x": 1368.52545026016,
+                      "z": 108.30225897604846,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 25716,
+                  "count": 45,
+                  "regular": 40,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    157,
+                    160,
+                    203,
+                    204,
+                    205,
+                    206,
+                    207,
+                    208,
+                    209,
+                    210,
+                    214,
+                    216,
+                    217,
+                    218,
+                    221,
+                    222,
+                    223,
+                    224,
+                    225,
+                    226,
+                    227,
+                    228,
+                    229,
+                    231,
+                    232,
+                    233,
+                    234,
+                    235,
+                    236,
+                    237,
+                    238,
+                    239,
+                    240,
+                    241,
+                    242,
+                    243,
+                    244,
+                    245,
+                    246,
+                    247,
+                    248,
+                    249,
+                    250,
+                    251,
+                    252
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 160,
+                      "archetype": "infected.alpha",
+                      "x": 1932.3469676983332,
+                      "z": -33.899284206321816,
+                      "cureRegion": "industrial-area",
+                      "hidden": false
+                    },
+                    {
+                      "id": 205,
+                      "archetype": "infected.dog",
+                      "x": 1891.1546209893397,
+                      "z": 8.949714499276814,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 232,
+                      "archetype": "infected.dog",
+                      "x": 2012.6028504092246,
+                      "z": -77.78187631961501,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 233,
+                      "archetype": "infected.dog",
+                      "x": 2020.6796943683996,
+                      "z": -85.25331507887849,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    },
+                    {
+                      "id": 234,
+                      "archetype": "infected.dog",
+                      "x": 1931.4784819165795,
+                      "z": -5.708086531838891,
+                      "cureRegion": "military-zone",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 33930,
+                  "count": 58,
+                  "regular": 53,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    266,
+                    274,
+                    275,
+                    276,
+                    277,
+                    278,
+                    279,
+                    280,
+                    281,
+                    282,
+                    283,
+                    284,
+                    285,
+                    286,
+                    287,
+                    288,
+                    289,
+                    290,
+                    291,
+                    292,
+                    293,
+                    294,
+                    295,
+                    296,
+                    297,
+                    298,
+                    299,
+                    300,
+                    301,
+                    302,
+                    303,
+                    304,
+                    305,
+                    306,
+                    307,
+                    308,
+                    309,
+                    310,
+                    311,
+                    312,
+                    313,
+                    314,
+                    315,
+                    316,
+                    317,
+                    318,
+                    319,
+                    320,
+                    321,
+                    322,
+                    323,
+                    324,
+                    325,
+                    326,
+                    327,
+                    328,
+                    329,
+                    330
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 276,
+                      "archetype": "infected.dog",
+                      "x": 2509.700367011313,
+                      "z": -2.011699413321054,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 277,
+                      "archetype": "infected.dog",
+                      "x": 2509.547945268949,
+                      "z": -0.08559744608648442,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 284,
+                      "archetype": "infected.dog",
+                      "x": 2610.672935139087,
+                      "z": 51.20084682610685,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 285,
+                      "archetype": "infected.dog",
+                      "x": 2619.41429506171,
+                      "z": 34.2682163945129,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    },
+                    {
+                      "id": 286,
+                      "archetype": "infected.alpha",
+                      "x": 2623.463351374549,
+                      "z": 56.27940995837626,
+                      "cureRegion": "research-campus",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 41790,
+                  "count": 98,
+                  "regular": 91,
+                  "dogs": 5,
+                  "alphas": 2,
+                  "ids": [
+                    354,
+                    372,
+                    376,
+                    377,
+                    378,
+                    379,
+                    380,
+                    381,
+                    382,
+                    383,
+                    384,
+                    385,
+                    386,
+                    387,
+                    388,
+                    389,
+                    390,
+                    391,
+                    392,
+                    393,
+                    394,
+                    395,
+                    396,
+                    397,
+                    398,
+                    399,
+                    400,
+                    401,
+                    402,
+                    403,
+                    404,
+                    405,
+                    406,
+                    407,
+                    408,
+                    409,
+                    410,
+                    411,
+                    412,
+                    413,
+                    414,
+                    415,
+                    416,
+                    417,
+                    418,
+                    419,
+                    420,
+                    421,
+                    422,
+                    423,
+                    424,
+                    425,
+                    426,
+                    427,
+                    428,
+                    429,
+                    430,
+                    431,
+                    432,
+                    433,
+                    434,
+                    435,
+                    436,
+                    437,
+                    438,
+                    439,
+                    440,
+                    441,
+                    442,
+                    443,
+                    444,
+                    445,
+                    446,
+                    447,
+                    448,
+                    449,
+                    450,
+                    451,
+                    452,
+                    453,
+                    454,
+                    455,
+                    456,
+                    457,
+                    458,
+                    459,
+                    460,
+                    461,
+                    462,
+                    463,
+                    464,
+                    465,
+                    466,
+                    467,
+                    468,
+                    469,
+                    470,
+                    471
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 376,
+                      "archetype": "infected.dog",
+                      "x": 3060.6775046900157,
+                      "z": 86.5505433070381,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 377,
+                      "archetype": "infected.dog",
+                      "x": 3056.0468841252864,
+                      "z": 79.54682227399864,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 378,
+                      "archetype": "infected.alpha",
+                      "x": 3065.97951404686,
+                      "z": 82.11294688628055,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 411,
+                      "archetype": "infected.dog",
+                      "x": 3060.6775046900157,
+                      "z": 97.5505433070381,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 412,
+                      "archetype": "infected.dog",
+                      "x": 3056.0468841252864,
+                      "z": 90.54682227399864,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 413,
+                      "archetype": "infected.alpha",
+                      "x": 3065.97951404686,
+                      "z": 93.11294688628055,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 446,
+                      "archetype": "infected.dog",
+                      "x": 3060.6775046900157,
+                      "z": 108.5505433070381,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 57170,
+                  "count": 140,
+                  "regular": 134,
+                  "dogs": 3,
+                  "alphas": 3,
+                  "ids": [
+                    482,
+                    541,
+                    542,
+                    544,
+                    545,
+                    546,
+                    547,
+                    548,
+                    549,
+                    550,
+                    551,
+                    552,
+                    553,
+                    554,
+                    555,
+                    556,
+                    557,
+                    558,
+                    559,
+                    560,
+                    561,
+                    563,
+                    564,
+                    565,
+                    566,
+                    567,
+                    568,
+                    569,
+                    570,
+                    571,
+                    572,
+                    573,
+                    574,
+                    576,
+                    577,
+                    578,
+                    579,
+                    580,
+                    581,
+                    582,
+                    584,
+                    585,
+                    586,
+                    587,
+                    588,
+                    589,
+                    590,
+                    591,
+                    592,
+                    593,
+                    594,
+                    595,
+                    597,
+                    598,
+                    599,
+                    600,
+                    601,
+                    602,
+                    603,
+                    604,
+                    605,
+                    606,
+                    607,
+                    608,
+                    609,
+                    610,
+                    611,
+                    612,
+                    613,
+                    614,
+                    615,
+                    616,
+                    617,
+                    618,
+                    619,
+                    620,
+                    621,
+                    622,
+                    623,
+                    624,
+                    625,
+                    626,
+                    627,
+                    628,
+                    629,
+                    630,
+                    631,
+                    632,
+                    633,
+                    634,
+                    635,
+                    636,
+                    637,
+                    638,
+                    639,
+                    640,
+                    641,
+                    642,
+                    643,
+                    644,
+                    645,
+                    646,
+                    647,
+                    648,
+                    649,
+                    650,
+                    652,
+                    653,
+                    654,
+                    655,
+                    656,
+                    657,
+                    658,
+                    659,
+                    660,
+                    661,
+                    662,
+                    663,
+                    664,
+                    665,
+                    666,
+                    667,
+                    668,
+                    669,
+                    670,
+                    671,
+                    672,
+                    673,
+                    674,
+                    675,
+                    676,
+                    677,
+                    678,
+                    679,
+                    680,
+                    681,
+                    682,
+                    683,
+                    684,
+                    685
+                  ],
+                  "specialActors": [
+                    {
+                      "id": 482,
+                      "archetype": "infected.alpha",
+                      "x": 3934.6213138155613,
+                      "z": -28.745040872818123,
+                      "cureRegion": "destroyed-corridor",
+                      "hidden": false
+                    },
+                    {
+                      "id": 541,
+                      "archetype": "infected.dog",
+                      "x": 4022.0392358904423,
+                      "z": -26.167267823296804,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 542,
+                      "archetype": "infected.dog",
+                      "x": 3989.671342065038,
+                      "z": -6.272146049464479,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 544,
+                      "archetype": "infected.dog",
+                      "x": 4013.9641842356655,
+                      "z": -9.741093293592472,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 545,
+                      "archetype": "infected.alpha",
+                      "x": 3980.347433904867,
+                      "z": -30.28122119798464,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    },
+                    {
+                      "id": 546,
+                      "archetype": "infected.alpha",
+                      "x": 4020.174145686493,
+                      "z": -41.95690669367568,
+                      "cureRegion": "dispersal-complex",
+                      "hidden": false
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-03",
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "tier": "high",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "860b50df",
+            "controlIdentical": true
+          },
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "level": "L10"
+        }
+      ],
+      "complete": {
+        "low": {
+          "run": {
+            "level": "L10",
+            "policy": "complete",
+            "seed": 1,
+            "completed": true,
+            "time": 1312.0166666666667,
+            "deaths": 0,
+            "kills": 737,
+            "damageTaken": 340,
+            "failures": {},
+            "objectiveTimeline": [
+              {
+                "id": "crash",
+                "t": 0.016666666666666666
+              },
+              {
+                "id": "residential-fringe",
+                "t": 58.28333333333333
+              },
+              {
+                "id": "industrial-area",
+                "t": 191.01666666666668
+              },
+              {
+                "id": "military-zone",
+                "t": 356.15
+              },
+              {
+                "id": "research-campus",
+                "t": 528.7666666666667
+              },
+              {
+                "id": "research",
+                "t": 592.5666666666667
+              },
+              {
+                "id": "cure",
+                "t": 594.0166666666667
+              },
+              {
+                "id": "research-exit",
+                "t": 614.7833333333333
+              },
+              {
+                "id": "destroyed-corridor",
+                "t": 654.1166666666667
+              },
+              {
+                "id": "dispersal-complex",
+                "t": 870.5666666666667
+              },
+              {
+                "id": "install",
+                "t": 946.0166666666667
+              },
+              {
+                "id": "hold",
+                "t": 1008.3833333333333
+              },
+              {
+                "id": "mega",
+                "t": 1156.55
+              },
+              {
+                "id": "release",
+                "t": 1162.0166666666667
+              },
+              {
+                "id": "epilogue",
+                "t": 1312.0166666666667
+              },
+              {
+                "id": "credits",
+                "t": 1329.0166666666667
+              }
+            ],
+            "furthestObjective": "credits",
+            "activeObjectives": [],
+            "outcome": "complete",
+            "blocker": null,
+            "cureReleases": 1,
+            "regions": [
+              {
+                "id": "crash-outskirts",
+                "seconds": 66.04999999999754,
+                "travelSeconds": 62.799999999997716,
+                "combatSeconds": 3.21666666666666,
+                "interactionSeconds": 0.03333333333333333,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 296.44077342764035
+              },
+              {
+                "id": "residential-fringe",
+                "seconds": 121.36666666666106,
+                "travelSeconds": 93.88333333332929,
+                "combatSeconds": 27.483333333333054,
+                "interactionSeconds": 0,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 543.0703822284006
+              },
+              {
+                "id": "industrial-area",
+                "seconds": 164.7000000000232,
+                "travelSeconds": 49.11666666666516,
+                "combatSeconds": 115.56666666666139,
+                "interactionSeconds": 0.016666666666666666,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 740.1545552636434
+              },
+              {
+                "id": "military-zone",
+                "seconds": 181.53333333336994,
+                "travelSeconds": 132.33333333333078,
+                "combatSeconds": 49.183333333331824,
+                "interactionSeconds": 0.016666666666666666,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 813.0622066026029
+              },
+              {
+                "id": "research-campus",
+                "seconds": 127.56666666666071,
+                "travelSeconds": 82.66666666666326,
+                "combatSeconds": 44.84999999999874,
+                "interactionSeconds": 0.05,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 573.2859988630142
+              },
+              {
+                "id": "destroyed-corridor",
+                "seconds": 214.23333333339596,
+                "travelSeconds": 186.60000000004064,
+                "combatSeconds": 27.633333333333045,
+                "interactionSeconds": 0,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 963.0005682536012
+              },
+              {
+                "id": "dispersal-complex",
+                "seconds": 436.5666666665983,
+                "travelSeconds": 64.34999999999764,
+                "combatSeconds": 11.650000000000158,
+                "interactionSeconds": 0.03333333333333333,
+                "holdSeconds": 210.53333333339302,
+                "epilogueSeconds": 150.0000000000115,
+                "otherSeconds": 0,
+                "metres": 1057.5026449611262
+              }
+            ],
+            "maxConcurrentInfected": 95,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 908,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            }
+          },
+          "regions": {
+            "crash-outskirts": {
+              "ticks": 3962,
+              "attacks": 8,
+              "groupAttacks": 0,
+              "peak": 6,
+              "normalPeak": 6,
+              "regularPeak": 6,
+              "dogPeak": 0,
+              "alphaPeak": 0,
+              "regularGroupPeaks": {
+                "crash-singletons": 2,
+                "crash-road-pair": 2,
+                "crash-bend": 2,
+                "crash-pair": 1
+              }
+            },
+            "residential-fringe": {
+              "ticks": 7282,
+              "attacks": 17,
+              "groupAttacks": 0,
+              "peak": 13,
+              "normalPeak": 12,
+              "regularPeak": 11,
+              "dogPeak": 2,
+              "alphaPeak": 0,
+              "regularGroupPeaks": {
+                "residential-fringe-direct-0": 2,
+                "fringe-patrol": 4,
+                "fringe-hedges": 4,
+                "residential-fringe-direct-3": 2,
+                "residential-fringe-direct-4": 2,
+                "fringe-exit": 4,
+                "residential-fringe-direct-5": 2
+              }
+            },
+            "industrial-area": {
+              "ticks": 9882,
+              "attacks": 23,
+              "groupAttacks": 0,
+              "peak": 24,
+              "normalPeak": 24,
+              "regularPeak": 20,
+              "dogPeak": 4,
+              "alphaPeak": 1,
+              "regularGroupPeaks": {
+                "industrial-area-direct-0": 6,
+                "depot-workers": 16,
+                "depot-alpha": 2,
+                "depot-exit": 3,
+                "industrial-area-direct-6": 6
+              }
+            },
+            "military-zone": {
+              "ticks": 10892,
+              "attacks": 35,
+              "groupAttacks": 0,
+              "peak": 36,
+              "normalPeak": 36,
+              "regularPeak": 31,
+              "dogPeak": 4,
+              "alphaPeak": 2,
+              "regularGroupPeaks": {
+                "military-zone-direct-0": 6,
+                "military-breach": 16,
+                "military-column": 14,
+                "military-exit": 10
+              }
+            },
+            "research-campus": {
+              "ticks": 7654,
+              "attacks": 58,
+              "groupAttacks": 0,
+              "peak": 54,
+              "normalPeak": 54,
+              "regularPeak": 49,
+              "dogPeak": 4,
+              "alphaPeak": 1,
+              "regularGroupPeaks": {
+                "research-campus-direct-0": 6,
+                "research-approach": 22,
+                "research-lab": 21,
+                "research-campus-direct-4": 6,
+                "research-quarantine": 10
+              }
+            },
+            "destroyed-corridor": {
+              "ticks": 12854,
+              "attacks": 20,
+              "groupAttacks": 0,
+              "peak": 69,
+              "normalPeak": 69,
+              "regularPeak": 61,
+              "dogPeak": 6,
+              "alphaPeak": 3,
+              "regularGroupPeaks": {
+                "corridor-line": 20,
+                "corridor-breach": 20,
+                "corridor-exit": 20
+              }
+            },
+            "dispersal-complex": {
+              "ticks": 17194,
+              "attacks": 96,
+              "groupAttacks": 0,
+              "peak": 94,
+              "normalPeak": 94,
+              "regularPeak": 89,
+              "dogPeak": 4,
+              "alphaPeak": 2,
+              "regularGroupPeaks": {
+                "complex-approach-0": 2,
+                "complex-approach-1": 2,
+                "complex-approach-2": 2,
+                "complex-approach-3": 2,
+                "complex-approach-4": 2,
+                "complex-approach-5": 2,
+                "dispersal-assault": 89
+              }
+            }
+          },
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": []
+        },
+        "high": {
+          "run": {
+            "level": "L10",
+            "policy": "complete",
+            "seed": 1,
+            "completed": true,
+            "time": 1260.0166666666667,
+            "deaths": 0,
+            "kills": 1322,
+            "damageTaken": 420,
+            "failures": {},
+            "objectiveTimeline": [
+              {
+                "id": "crash",
+                "t": 0.016666666666666666
+              },
+              {
+                "id": "residential-fringe",
+                "t": 58.28333333333333
+              },
+              {
+                "id": "industrial-area",
+                "t": 191.01666666666668
+              },
+              {
+                "id": "military-zone",
+                "t": 357.5
+              },
+              {
+                "id": "research-campus",
+                "t": 529.4833333333333
+              },
+              {
+                "id": "research",
+                "t": 594.0166666666667
+              },
+              {
+                "id": "cure",
+                "t": 595.2666666666667
+              },
+              {
+                "id": "research-exit",
+                "t": 616.15
+              },
+              {
+                "id": "destroyed-corridor",
+                "t": 656.1
+              },
+              {
+                "id": "dispersal-complex",
+                "t": 872.7333333333333
+              },
+              {
+                "id": "install",
+                "t": 948.1
+              },
+              {
+                "id": "hold",
+                "t": 1012.0666666666667
+              },
+              {
+                "id": "mega",
+                "t": 1109.3833333333334
+              },
+              {
+                "id": "release",
+                "t": 1110.0166666666667
+              },
+              {
+                "id": "epilogue",
+                "t": 1260.0166666666667
+              },
+              {
+                "id": "credits",
+                "t": 1277.0166666666667
+              }
+            ],
+            "furthestObjective": "credits",
+            "activeObjectives": [],
+            "outcome": "complete",
+            "blocker": null,
+            "cureReleases": 1,
+            "regions": [
+              {
+                "id": "crash-outskirts",
+                "seconds": 66.04999999999754,
+                "travelSeconds": 63.933333333330985,
+                "combatSeconds": 2.083333333333331,
+                "interactionSeconds": 0.03333333333333333,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 296.44077342764035
+              },
+              {
+                "id": "residential-fringe",
+                "seconds": 121.46666666666106,
+                "travelSeconds": 63.466666666664345,
+                "combatSeconds": 57.99999999999799,
+                "interactionSeconds": 0,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 543.0727553025105
+              },
+              {
+                "id": "industrial-area",
+                "seconds": 165.9500000000242,
+                "travelSeconds": 46.39999999999865,
+                "combatSeconds": 119.53333333332783,
+                "interactionSeconds": 0.016666666666666666,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 740.097249453485
+              },
+              {
+                "id": "military-zone",
+                "seconds": 180.9000000000361,
+                "travelSeconds": 133.99999999999878,
+                "combatSeconds": 46.883333333331954,
+                "interactionSeconds": 0.016666666666666666,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 813.0809755317974
+              },
+              {
+                "id": "research-campus",
+                "seconds": 128.833333333328,
+                "travelSeconds": 73.13333333333047,
+                "combatSeconds": 55.64999999999812,
+                "interactionSeconds": 0.05,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 573.3201127124969
+              },
+              {
+                "id": "destroyed-corridor",
+                "seconds": 214.41666666672944,
+                "travelSeconds": 186.18333333337364,
+                "combatSeconds": 28.23333333333301,
+                "interactionSeconds": 0,
+                "holdSeconds": 0,
+                "epilogueSeconds": 0,
+                "otherSeconds": 0,
+                "metres": 963.3846604994884
+              },
+              {
+                "id": "dispersal-complex",
+                "seconds": 382.3999999999809,
+                "travelSeconds": 58.46666666666463,
+                "combatSeconds": 12.050000000000178,
+                "interactionSeconds": 0.39999999999999997,
+                "holdSeconds": 161.28333333335382,
+                "epilogueSeconds": 150.0000000000115,
+                "otherSeconds": 0.19999999999999998,
+                "metres": 1005.9138757024291
+              }
+            ],
+            "maxConcurrentInfected": 190,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 1540,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            }
+          },
+          "regions": {
+            "crash-outskirts": {
+              "ticks": 3962,
+              "attacks": 8,
+              "groupAttacks": 0,
+              "peak": 7,
+              "normalPeak": 7,
+              "regularPeak": 7,
+              "dogPeak": 0,
+              "alphaPeak": 0,
+              "regularGroupPeaks": {
+                "crash-singletons": 2,
+                "crash-road-pair": 2,
+                "crash-bend": 2,
+                "crash-pair": 1
+              }
+            },
+            "residential-fringe": {
+              "ticks": 7288,
+              "attacks": 23,
+              "groupAttacks": 0,
+              "peak": 24,
+              "normalPeak": 23,
+              "regularPeak": 21,
+              "dogPeak": 2,
+              "alphaPeak": 0,
+              "regularGroupPeaks": {
+                "residential-fringe-direct-0": 3,
+                "fringe-patrol": 6,
+                "fringe-hedges": 6,
+                "residential-fringe-direct-3": 3,
+                "residential-fringe-direct-4": 3,
+                "fringe-exit": 6,
+                "residential-fringe-direct-5": 3
+              }
+            },
+            "industrial-area": {
+              "ticks": 9957,
+              "attacks": 27,
+              "groupAttacks": 0,
+              "peak": 32,
+              "normalPeak": 32,
+              "regularPeak": 27,
+              "dogPeak": 4,
+              "alphaPeak": 1,
+              "regularGroupPeaks": {
+                "industrial-area-direct-0": 8,
+                "depot-workers": 21,
+                "depot-alpha": 4,
+                "depot-exit": 4,
+                "industrial-area-direct-6": 7
+              }
+            },
+            "military-zone": {
+              "ticks": 10854,
+              "attacks": 59,
+              "groupAttacks": 0,
+              "peak": 47,
+              "normalPeak": 47,
+              "regularPeak": 41,
+              "dogPeak": 4,
+              "alphaPeak": 2,
+              "regularGroupPeaks": {
+                "military-zone-direct-0": 8,
+                "military-breach": 18,
+                "military-column": 18,
+                "military-exit": 18
+              }
+            },
+            "research-campus": {
+              "ticks": 7730,
+              "attacks": 87,
+              "groupAttacks": 0,
+              "peak": 69,
+              "normalPeak": 69,
+              "regularPeak": 64,
+              "dogPeak": 4,
+              "alphaPeak": 2,
+              "regularGroupPeaks": {
+                "research-campus-direct-0": 8,
+                "research-approach": 22,
+                "research-lab": 22,
+                "research-campus-direct-4": 8,
+                "research-quarantine": 22
+              }
+            },
+            "destroyed-corridor": {
+              "ticks": 12865,
+              "attacks": 23,
+              "groupAttacks": 0,
+              "peak": 97,
+              "normalPeak": 97,
+              "regularPeak": 90,
+              "dogPeak": 5,
+              "alphaPeak": 2,
+              "regularGroupPeaks": {
+                "corridor-line": 32,
+                "corridor-breach": 32,
+                "corridor-exit": 30
+              }
+            },
+            "dispersal-complex": {
+              "ticks": 13944,
+              "attacks": 285,
+              "groupAttacks": 0,
+              "peak": 189,
+              "normalPeak": 189,
+              "regularPeak": 182,
+              "dogPeak": 4,
+              "alphaPeak": 3,
+              "regularGroupPeaks": {
+                "complex-approach-0": 2,
+                "complex-approach-1": 2,
+                "complex-approach-2": 2,
+                "complex-approach-3": 2,
+                "complex-approach-4": 2,
+                "complex-approach-5": 2,
+                "dispersal-assault": 182
+              }
+            }
+          },
+          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "extraSeedOutcomes": []
+        }
+      }
+    }
+  },
+  "method": "Published main report/receipt snapshot via git show at183ca95, not a fresh baseline execution. It already retains low R6 dogPeak6; the game bound remains5 and the new result must satisfy5 independently of that retained failure."
+}

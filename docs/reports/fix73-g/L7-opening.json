@@ -1,0 +1,97 @@
+{
+  "finding": "brief 1: L7 continue-save opening",
+  "status": "PASS for bounded opening on both tiers",
+  "source": {
+    "sourceHash": "c6714ce890c33e77115faad38132216c3f8555477a8ec38a881dcb1807e8caef",
+    "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+    "revision": "5a7f84ba13e2a42d4cf5073a94ccb2e3b35f2195"
+  },
+  "method": "Ordinary unpaused physical WASD/mouse from L7-default, shared headless Metal WebGL2, courier god mode OFF, no actor/HP/pickup writes. High zoom1.5, low zoom0.5. Initial damage-grace attempt retained as rejected comparison. Final change clears the follower approach and moves close infected west; no immunity, count or speed changes.",
+  "observations": [
+    {
+      "label": "fix73-L7-opening-high",
+      "pickupObserved": {
+        "tick": 1013,
+        "hp": 52.79999999999984,
+        "text": "Bring the group to the evacuation corridor \u00b7 Group 23/23 nearby \u00b7 306\u00a0m"
+      },
+      "deaths": 0
+    },
+    {
+      "label": "fix73-L7-opening2-high",
+      "pickupObserved": {
+        "tick": 133,
+        "hp": 100,
+        "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 310\u00a0m"
+      },
+      "deaths": 0
+    },
+    {
+      "label": "fix73-L7-opening-low",
+      "pickupObserved": {
+        "tick": 85,
+        "hp": 100,
+        "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m"
+      },
+      "deaths": 0
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-high/captures/fix73-L7-opening-high-L7-checkpoint-yield.jpg",
+      "sha256": "51612ceb38b7e00e9adb8588895328969c4421e95fd1defde42af7c99d613271",
+      "what": "Before correction: armed courier with 23 nearby survivors at Northgate; no proof of full route completion."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-high/captures/fix73-L7-opening-high-L7-t1824.jpg",
+      "sha256": "3c37c523f4144ce95e04b17f89187d3e80eda7edd542dc1476067d0a6a9affb9",
+      "what": "Before correction: armed courier at 73HP with 23 survivors, exiting through the open gate."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-high/captures/fix73-L7-opening-high-L7-t4.jpg",
+      "sha256": "3726c36764e48163844c180181e81fc264b1ecb2d771f62762864ded41fe54be",
+      "what": "Before correction: followers occupy the launcher ring and approach beside the truck; courier has 100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-high/captures/fix73-L7-opening-high-L7-t914.jpg",
+      "sha256": "8e97d74c816830beb0ece65a63b288b63222d4735b87738487c183a45a5726b4",
+      "what": "Before correction: courier mobbed beside the truck, 63HP, launcher still 3m away; red-bar Alpha and packed infected behind."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening2-high/captures/fix73-L7-opening2-high-L7-checkpoint-yield.jpg",
+      "sha256": "09b633239972a20dc5106174c0cba68947c9d63036b8d1df29c7f12f54930556",
+      "what": "Corrected high yield: courier 100HP, rocket visible and all 24 followers nearby; road ahead open."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening2-high/captures/fix73-L7-opening2-high-L7-t1230.jpg",
+      "sha256": "5261d9622764fe79364765be09c050394ff436211cbfd007f1a276cc7bf8c9d4",
+      "what": "Corrected high: courier running west with launcher, 100HP and 24 nearby followers in a column behind."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening2-high/captures/fix73-L7-opening2-high-L7-t3.jpg",
+      "sha256": "8c7685a5b3597bd9f4617835daee6863a2fbacdb92fd3981c6bec86dc5b23cad",
+      "what": "Corrected high opening: gold launcher ring and direct approach are clear; followers stand to the right of the truck; courier 100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening2-high/captures/fix73-L7-opening2-high-L7-t608.jpg",
+      "sha256": "cf893c4fd636075e341895d6bbbdaf593f234d00193bfba805186b89836e15b0",
+      "what": "Corrected high: rocket equipped, courier 100HP, 24/24 nearby; party follows past the wreck after the opening fight."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-low/captures/fix73-L7-opening-low-L7-checkpoint-yield.jpg",
+      "sha256": "227666f838312d0a2dccce5272f29e69c91c0af1dc2d3ac571d36b11b1306787",
+      "what": "Corrected low yield: launcher carried, 24/24 nearby HUD, later attack warning for offscreen survivors; no claim of whole-route survival."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-low/captures/fix73-L7-opening-low-L7-t4.jpg",
+      "sha256": "3dbc423adefde39d815d762bf6b893236e6ca45f7ecc998cca28daf8002e3d0e",
+      "what": "Corrected low opening: launcher approach and ring clear; followers stand east of the pickup; courier 100HP."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-opening-low/captures/fix73-L7-opening-low-L7-t612.jpg",
+      "sha256": "8a2ebdf5a6cc4fbaa1c9ceb51fe347ceccafa7485876ede4b1e046e3895f9518",
+      "what": "Corrected low after pickup: close camera shows launcher carried and 24/24 nearby HUD; courier 75HP after later combat, followers outside this close frame."
+    }
+  ],
+  "rawCapturesDeleted": true
+}

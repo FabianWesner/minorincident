@@ -1,0 +1,445 @@
+{
+  "finding": "brief3: L6 gate90 and600HP riot counter",
+  "status": "PASS for counter mechanics and actual gate interaction; no whole-row survival sign-off",
+  "cause": "Hatch-front entities used infected.armored with inf.riot-cop variant. They had600HP and football frontal armor, but no riot shield strain/break. The game now spawns real infected.riot and retains600HP derived from the existing armored definition. Counts, entry cadence, caps and shield90-tick opening are unchanged.",
+  "method": "Fresh ordinary physical WASD/mouse routes through shared headless Metal WebGL2. Courier protection disclosed; follower damage remains ordinary. High after-fix includes intentional unpaused side-step/fire/idle/E inspection; its300s bound is not a spontaneous softlock. Low after-fix completes normally. Controlled fixtures invoke production hatch admission, relocate only during setup, and then use unpaused physical Shift+LMB; no synthetic damage or manual simulation stepping.",
+  "routes": [
+    {
+      "label": "fix73-L6-gate-high",
+      "finished": true,
+      "simSeconds": 206,
+      "deaths": 0,
+      "shieldBreaks": 4,
+      "breaksOnObserved600HpIds": 0,
+      "idsObservedAt600Hp": [
+        59,
+        100,
+        103,
+        106,
+        109,
+        113,
+        118
+      ],
+      "finalGates": [
+        {
+          "id": 45,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 46,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 47,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        }
+      ],
+      "physicalEInputs": [],
+      "readableGatePrompts": []
+    },
+    {
+      "label": "fix73-L6-shield-high",
+      "finished": false,
+      "simSeconds": 297,
+      "deaths": 0,
+      "shieldBreaks": 38,
+      "breaksOnObserved600HpIds": 32,
+      "idsObservedAt600Hp": [
+        59,
+        100,
+        103,
+        106,
+        109,
+        112,
+        117
+      ],
+      "finalGates": [
+        {
+          "id": 45,
+          "x": 90,
+          "closedAt": 12211,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 46,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 47,
+          "x": 210,
+          "closedAt": 15622,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        }
+      ],
+      "physicalEInputs": [
+        {
+          "t": "2026-11-06T21:10:33.722Z",
+          "manualInput": {
+            "key": "KeyE",
+            "capture": "gate90-E-pressed"
+          },
+          "level": "L6",
+          "tick": 12151
+        }
+      ],
+      "readableGatePrompts": [
+        {
+          "tick": 6416,
+          "text": "Block the tunnel\nEveryone through \u00b7 E or click the gate to close it"
+        }
+      ]
+    },
+    {
+      "label": "fix73-L6-shield-low",
+      "finished": true,
+      "simSeconds": 187,
+      "deaths": 0,
+      "shieldBreaks": 24,
+      "breaksOnObserved600HpIds": 22,
+      "idsObservedAt600Hp": [
+        59,
+        100,
+        103,
+        106,
+        109,
+        112
+      ],
+      "finalGates": [
+        {
+          "id": 45,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 46,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 47,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        }
+      ],
+      "physicalEInputs": [],
+      "readableGatePrompts": []
+    }
+  ],
+  "controlledCounterResults": [
+    {
+      "tier": "high",
+      "initial": [
+        {
+          "id": 57,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true
+        },
+        {
+          "id": 58,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true
+        }
+      ],
+      "windows": [
+        90,
+        90
+      ],
+      "downed": [
+        {
+          "id": 57,
+          "tick": 352
+        },
+        {
+          "id": 58,
+          "tick": 679
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "initial": [
+        {
+          "id": 57,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true
+        },
+        {
+          "id": 58,
+          "archetype": "infected.riot",
+          "hp": 600,
+          "shield": true
+        }
+      ],
+      "windows": [
+        90,
+        90
+      ],
+      "downed": [
+        {
+          "id": 57,
+          "tick": 351
+        },
+        {
+          "id": 58,
+          "tick": 678
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-1232-stuck-navigating.jpg",
+      "sha256": "d460058771ea0f0de99f2983fd99541eaa83589bc0c3196d2a16831c461c7d0c",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-result.jpg",
+      "sha256": "4837cb2c04ec5c6e39b83cb0aa6eab295b79b3dfbdbba664192e2c47ac588b95",
+      "what": "Actual Night Still alive result card: baseline206.1s/new low187.1s, one of29 survivors escapes and28 are lost. This does not qualify escort survival."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t10862.jpg",
+      "sha256": "fb63333d296517b059a90cb80ce225be96ed7d6cbf4c32c5fe62ae8586d774c5",
+      "what": "Night exit stairs and red-bar pursuers; HUD0/1 out and18m. This is a sampled traversal frame, not the complete exit animation."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t1816.jpg",
+      "sha256": "67a73e878a32838ea81c105a5f6e486020d95c516e135ac25b4d92c135257eef",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t3.jpg",
+      "sha256": "5c6fd4458651c56771762093cc713c5990f4abb672b93b7c42ee51209dde70c5",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t3635.jpg",
+      "sha256": "27771e5cf7ab2cb039431f03958e522608456fe7ca6e9407170ee5fe8816f3c8",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t5444.jpg",
+      "sha256": "a08de4cac6f28e6686a23707b8cc33baf9486b36cdb94ee321768b23538085e1",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t7249.jpg",
+      "sha256": "6486b75efd7b7758969e96b88096c80f08f81c247f4ac928049482f098e3fe36",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-gate-high/captures/fix73-L6-gate-high-L6-t9060.jpg",
+      "sha256": "564975c47507048c1d4d62d121ae82acced69fc91bee975884847c153c41447c",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-1234-stuck-navigating.jpg",
+      "sha256": "637ca59a1aa492f2a6391d85b119978cad31a5f1516f1203bad0c3028a7cabfb",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-checkpoint-yield.jpg",
+      "sha256": "5715c0405261908451446b85fc8dca7ebfe335aa7a54c1835b2fe2abcf3cabc7",
+      "what": "Bounded high manual-probe run ends in live tunnel combat near the exit platform. It is not a completed high route after the deliberate gate inspection hold."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-gate90-prompt-t6416.jpg",
+      "sha256": "73c70928630f1457357512fd28bdef79695bcb39e8d3ec73340006eec3bc7615",
+      "what": "Readable Block the tunnel panel above grille: Everyone through, E or click the gate to close it. Courier can stand in the gate ring amid live riot infected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t10.jpg",
+      "sha256": "1d05ae746c011e0647b903d4bf4141cd2778590ae9659ffec25130e35a52d92b",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t12268.jpg",
+      "sha256": "7c17f21f6991fcd0683faf0711e88918216b80bb525365b1cdfc2b8ab2554863",
+      "what": "After physical E the interaction panel disappears and the objective returns to Stay with the group. Fixed-tick state independently confirms gate90 closed at12211."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t14377.jpg",
+      "sha256": "e05347ee0dbdf9788ef2ae60bb703050551e62b6655cab60d8576bcc6bb38196",
+      "what": "Later tunnel fight shows SHIELD STRAIN CHIP, muzzle flashes and red-bar infected; courier continues east."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t16478.jpg",
+      "sha256": "aecb592fd184af601959a3c85114ce4d3c77e50e00838a1593f663a7d0fee019",
+      "what": "Bounded high manual-probe run ends in live tunnel combat near the exit platform. It is not a completed high route after the deliberate gate inspection hold."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t2115.jpg",
+      "sha256": "d53e603599b3fcacbd6788678d568b2e5fff6e8f19016279c2c9d266b0e29244",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-L6-t4221.jpg",
+      "sha256": "aabecfdff2a7f7ce05deac02744d4f419f37e046206ea12afdd9140029c93ffa",
+      "what": "Actual unpaused combat shows the SHIELD BROKEN1.5s label, gunfire and a riot shield figure. Other survivors and red bars remain visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-E-pressed.jpg",
+      "sha256": "ff7ce86ddc0bb0cb53edd8fb9d648df59ed1d285a3c35a34065e040d88084d03",
+      "what": "Readable Block the tunnel panel above grille: Everyone through, E or click the gate to close it. Courier can stand in the gate ring amid live riot infected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-after-E.jpg",
+      "sha256": "932320671548d16c7b4743ba65520b8c96232dc6d31d23ca04a7dbbe809ad8ef",
+      "what": "After physical E the interaction panel disappears and the objective returns to Stay with the group. Fixed-tick state independently confirms gate90 closed at12211."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-human-approach.jpg",
+      "sha256": "e9f5baab18beb13974535237f0d098049dfc041591c4ba788a4b53d4858a33ee",
+      "what": "Courier physically sidesteps beside the gate grille; HUD says Let everyone pass0/3 through. It correctly withholds closure before the living group crosses."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-human-cover.jpg",
+      "sha256": "b18d3852aae3bc65c9c4ee2aae1896622147e94a34887b02709707b94c5829ef",
+      "what": "Courier fires beside grille while real infected crowd the gate; E closure prompt remains readable above their bars."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-human-waitspot.jpg",
+      "sha256": "597bc2513b93453108502fae28331abdd54d8d8c0154c4651edfb49a78650ca7",
+      "what": "Readable Block the tunnel panel above grille: Everyone through, E or click the gate to close it. Courier can stand in the gate ring amid live riot infected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-return-to-E.jpg",
+      "sha256": "75944f8e95c1c6144e80ba6a2ecbe22b96f87e93c5440072e188451ba9d2846e",
+      "what": "Readable Block the tunnel panel above grille: Everyone through, E or click the gate to close it. Courier can stand in the gate ring amid live riot infected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-high/captures/fix73-L6-shield-high-gate90-shield-retreat.jpg",
+      "sha256": "60f9e6495d7f03c8f6761dcd52c05c879931785c0a0aaaac6a9d5e2bc2c38085",
+      "what": "Physical retreat leaves the fixed gate ring behind; live shield-bearing infected follow. This is an intentional manual probe, not a spontaneous stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-1242-stuck-navigating.jpg",
+      "sha256": "b7ba0a4df7f928fde6539a53c59cd5f3c3e72bd11cd47da4159eaa8866b487e8",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-result.jpg",
+      "sha256": "51a1824360ddd04b3b94a3cd235ec5671ce89c962e48de204ac88a2951bb88cd",
+      "what": "Actual Night Still alive result card: baseline206.1s/new low187.1s, one of29 survivors escapes and28 are lost. This does not qualify escort survival."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-shield-break-t5325.jpg",
+      "sha256": "197e8fa22b0abc450b8f611fbab02836476899e9a21eae0154203e31bd95970e",
+      "what": "Actual unpaused combat shows the SHIELD BROKEN1.5s label, gunfire and a riot shield figure. Other survivors and red bars remain visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-shield-break-t5546.jpg",
+      "sha256": "dd4d49ba983510f97965d19a2eb45a892eb56b469b1ad0cb8f4542e0cd6e33a7",
+      "what": "Actual unpaused combat shows the SHIELD BROKEN1.5s label, gunfire and a riot shield figure. Other survivors and red bars remain visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t10535.jpg",
+      "sha256": "4575185a98d156eb6df113e5f9ea6934b4a2da1f5f7daaf9c02adcf6edcfec0e",
+      "what": "Courier and corgi continue through the tunnel with Stay with the group12m; route remains traversable."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t11.jpg",
+      "sha256": "9e39d91c51ad849883d28f280dc7a4b2dbbdaf7865b19f27289269f7d132423c",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t2118.jpg",
+      "sha256": "38095c705110f0de18187072338a88744eba8d47b70d96edf19faca9f7c4245b",
+      "what": "Lit shelter with sleeping/seated inhabitants and cyan headlamp ring. Rest/defence countdown is intentional; the driver stuck warning here is not an observed game stall."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t4223.jpg",
+      "sha256": "0583774a951ce03467e9820bb26b50683b93ac994a9b337b2639be205e2f35ad",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t6327.jpg",
+      "sha256": "7ec3e6c16c43dbaa1bd181ef3ff7c9100a70d4d64f4f110f301822018e1a0280",
+      "what": "Tunnel retreat frame shows courier gunfire, red-bar infected and surviving green-bar followers beside rails/grilles. Combat pressure persists; no whole-route survival verdict is inferred."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L6-shield-low/captures/fix73-L6-shield-low-L6-t8428.jpg",
+      "sha256": "006d17db5bfdcd87ef2cc79ee27647469c9d6f55b0e89d5a726ff1a2a74abfeb",
+      "what": "Actual unpaused combat shows the SHIELD BROKEN1.5s label, gunfire and a riot shield figure. Other survivors and red bars remain visible."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/diagnostic-final.jpg",
+      "sha256": "c6199981a3755f43d3353ef658fa8dd38061482e9911412761b4b0565c4c4179",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/rejected-movement-aim.jpg",
+      "sha256": "0f4fb160ef5e4b1aeb6f57c4726f9860d42fca28becd183ca10644c15507d1d4",
+      "what": "Rejected driver diagnostic: courier alone on rails, target outside the camera; telemetry199attacks/0hits and movement-directed aim. It was excluded, then corrected to visible-target Shift+LMB."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/resolved.jpg",
+      "sha256": "4d08e3f53b89c8a5c12ded3283006029963b32b55514e76acea7136a29aee969",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/shield-break-57.jpg",
+      "sha256": "22244cfed1a5132119f7ea6d2031a1ff5992dce03bcf08b53c4a80e6540e8724",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-high/shield-break-58.jpg",
+      "sha256": "39c38554dd3c89b1773b3768c6a241c55a083e6838e7e55d89f416fafac58227",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/diagnostic-final.jpg",
+      "sha256": "a8af951d94cdf45b72be785cddf469623840146c52f8eb555b93fe17ac58fb32",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/resolved.jpg",
+      "sha256": "6cd690b987ba831d5a52ea7cdde82cc4904f887739baffdf5bce48c6f566d329",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/shield-break-57.jpg",
+      "sha256": "ab15a67521f6233e969eaa442aa608d560ec04bffd3cad41df309ec32a10eef8",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    },
+    {
+      "file": "test-results/fix73-g/L6-counter-low/shield-break-58.jpg",
+      "sha256": "dafeb525760f597e6b87a69e12b37916e581a4b27e07397400c42fe4b2e81bb3",
+      "what": "Controlled counter fixture: courier fires down the tunnel; riot front shows hit sparks/red bar, then both downed and bars absent. The normal HUD is hidden here; exact90-tick openings and600HP come from the actual hit/state ledger."
+    }
+  ],
+  "rawCapturesDeleted": true,
+  "remaining": "Escort survival is still poor under the unguarded driver (one of29 in both baseline high and final low); this check closes the mismatched shield role and readable physical E interaction, not L6 balance or all acceptance clauses."
+}

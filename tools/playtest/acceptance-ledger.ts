@@ -118,6 +118,14 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
     world.events.on('l7.follower-alarm', event => {
       if (world.missions === mission) record.events.push(structuredClone(event));
     });
+    world.events.on('combat.hit', event => {
+      if (world.missions === mission && mission.def.id === 'L6' && event.type === 'combat.hit' && world.entities.get(event.targetId)?.archetype === 'infected.riot') {
+        record.events.push({ ...event, targetHp: world.entities.get(event.targetId)!.health.current });
+      }
+    });
+    world.events.on('vehicle.durability-hit', event => {
+      if (world.missions === mission && mission.def.id === 'L9') record.events.push(structuredClone(event));
+    });
     const row = () => {
       const step = mission.def.steps.find(s => mission.state.steps[s.id]?.status === 'active');
       return step && (record.steps[step.id] ??= { ticks: 0, playerWindups: 0, groupWindups: 0, playerDamage: 0, peakAlive: 0 });
@@ -163,6 +171,7 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
       }
       const player = world.entities.get(1)!;
       const nav = world.infected!.nav;
+      const car = mission.def.id === 'L9' && world.vehicles?.active != null ? world.entities.get(world.vehicles.active) : undefined;
       const followers = [...world.entities.iterate()].filter(e => e.id !== 1 && e.health.current > 0 && !e.infected && !e.hidden && e.civilian?.survivor?.mode === 'follow');
       record.samples.push({ tick: world.tick, step: mission.def.steps.find(s => mission.state.steps[s.id]?.status === 'active')?.id,
         alive: living.length, player: { ...player.transform }, hp: player.health.current, marker: mission.state.marker,
@@ -172,7 +181,16 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
           mega: world.megaPursuit?.entity() ? { id: world.megaPursuit.state.id, mode: world.megaPursuit.state.mode, ...world.megaPursuit.entity()!.transform,
             arenaDistance: Math.hypot(world.megaPursuit.entity()!.transform.x - mission.def.anchors['cure-console'].x, world.megaPursuit.entity()!.transform.z - mission.def.anchors['cure-console'].z) } : null,
         },
-        evacuation: world.tick % 120 || !world.l7Encounters ? undefined : { roster: structuredClone(world.l7Encounters.state.roster), boarded: [...world.l7Departure!.state.boarded] },
+        evacuation: world.tick % 120 || !world.l7Encounters ? undefined : { roster: structuredClone(world.l7Encounters.state.roster), boarded: [...world.l7Departure!.state.boarded],
+          phase: world.l7Departure!.state.phase, status: world.l7Departure!.boardingStatus() },
+        subwayGates: world.tick % 120 || !mission.state.l6 ? undefined : structuredClone(mission.state.l6.gates),
+        patrols: world.tick % 120 ? undefined : mission.def.id === 'L9'
+          ? Object.fromEntries(Object.entries(mission.l9?.state.encounters?.ids ?? {}).filter(([key]) => key.startsWith('crossing-patrol-')))
+          : mission.def.id === 'L10' ? Object.fromEntries(Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('corridor-patrol-') || key.startsWith('corridor-wanderer-'))) : undefined,
+        nearbyInfected: !['L9', 'L10'].includes(mission.def.id) ? undefined : living.filter(e => !e.hidden && !e.infected?.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 40)
+          .map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, onScreen: world.infected!.director.inFrame(e.transform) })),
+        director: !['L9', 'L10'].includes(mission.def.id) ? undefined : { count: world.infected!.director.count, cap: world.infected!.director.cap, reserved: world.infected!.director.reserved, pending: world.infected!.director.pendingTurns },
+        transport: car?.vehicle ? { id: car.id, hp: car.health.current, max: car.health.max, speed: car.vehicle.forwardSpeed } : undefined,
         healthBars: world.tick % 120 ? undefined : structuredClone(root.__SCENE__!.game.view.getState().healthBars),
         largeCorpses: world.tick % 120 ? undefined : [...world.entities.iterate()].filter(e => !e.hidden && e.health.current <= 0 && e.archetype === 'infected.alpha').map(e => ({ id: e.id, x: e.transform.x, y: e.transform.y, z: e.transform.z })),
         followers: followers.map(e => ({ id: e.id, speed: e.motion?.speed ?? 0, boarded: e.passengerOf !== undefined, x: e.transform.x, z: e.transform.z,

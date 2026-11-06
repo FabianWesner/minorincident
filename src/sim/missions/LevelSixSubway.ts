@@ -7,6 +7,7 @@ import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
 import { l5Survivors } from '../../data/l5';
+import { INFECTED_TOUGHNESS, infectedDef } from '../../data/infected';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
@@ -202,16 +203,26 @@ export class LevelSixSubway {
       // cohort and for the remaining authored arrivals.
       const held = ai.director.reserved;
       if (currentEntry) ai.director.reserved = Math.max(0, held - currentEntry.remaining);
-      // One existing armored front member keeps each three-person hatch cohort
-      // relevant against the carried MG; no new stats, quota or cap.
+      // One resilient front member keeps each hatch cohort relevant against
+      // the carried MG; the riot model must use the actual shield counter.
       const hatchFront = wave === 4 && !this.s.spawnLog.some(entry=>entry.wave===4&&entry.door===requested);
       const armored = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
         || hatchFront;
-      // The first breach's existing front member must survive the now-correct
-      // elevated MG fire long enough to engage the courier. Reuse the armored
-      // hatch archetype without adding a member, cap slot or special stat.
+      // The first breach retains its armored football front. Later hatch
+      // fronts use the riot shield matching their visible model.
       let id:number;
-      try { id=armored?ai.spawn(hatchFront||wave===1?'infected.armored':'infected.riot',at,hatchFront?{variant:'inf.riot-cop'}:{}):o.spawnPedestrian(at,{model}); const e=w.entities.get(id)!; if(!armored)o.turnNow(e); }
+      try {
+        id=armored?ai.spawn(wave===1?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+        const e=w.entities.get(id)!;
+        // Keep the hatch front's existing HP, body and chase speed. Its shield
+        // can now strain and break instead of secretly applying football armor.
+        if(hatchFront){
+          const front=infectedDef('infected.armored');
+          e.health.current=e.health.max=front.hp*INFECTED_TOUGHNESS;
+          e.combat!.radius=front.radius; e.infected!.speed=front.speed;
+        }
+        if(!armored)o.turnNow(e);
+      }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later

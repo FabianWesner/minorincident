@@ -1,0 +1,49 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "gameCommit": "ec2b1da42834f5a82d6a32f9fd3d12c392a92424",
+  "mergedMain": "183ca95b13493bf8fc20d0033faf17786c5172eb",
+  "coreExitCode": 0,
+  "commands": [
+    "npx tsc --noEmit",
+    "npm run lint",
+    "npm run qa:accept -- --level L7 --skip-browser",
+    "npm run qa:accept -- --level L10 --skip-browser",
+    "npm run qa:threat"
+  ],
+  "acceptanceNoNewFailVsMain": true,
+  "newNativeSeedFailures": [],
+  "dogBoundsPass": true,
+  "threat": {
+    "exitCode": 0,
+    "admission": {
+      "waiting": false,
+      "alone": "All owned browser, unit, compiler, lint and acceptance processes finished before starting.",
+      "admittedAt": "2026-11-06T23:33:13.321573+00:00",
+      "admittedLoad": [
+        1.923828125,
+        2.28271484375,
+        2.6513671875
+      ],
+      "samples": [
+        {
+          "at": "2026-11-06T23:33:13.321573+00:00",
+          "load": [
+            1.923828125,
+            2.28271484375,
+            2.6513671875
+          ]
+        }
+      ],
+      "exitCode": 0,
+      "finishedAt": "2026-11-06T23:37:52.717642+00:00"
+    },
+    "flags": [],
+    "seconds": 277.09949179200004,
+    "revision": "ec2b1da42834f5a82d6a32f9fd3d12c392a92424",
+    "auditSha256": "45e5399185ae3806ae54628fe3beb98d6b1b719db5f09b159249060daf1b964f"
+  },
+  "input": {
+    "file": "docs/reports/fix73-g2/gates-input.json.gz",
+    "sha256": "f6db4b3755c7e5823f58340c464bfca5fa6f04f806648c09079fb001dd8b54f3"
+  }
+}

@@ -1,0 +1,427 @@
+{
+  "observations": {
+    "status": "Rejected smaller infected offset: high loses40HP before pickup; low pickup100HP but later mortal route loses twice",
+    "method": "Ordinary unpaused physical input, courier protectionOFF, high1.5/low0.5, same QA build. Initial20wallsecond windows expire during setup and are insufficient pickup checks;90second repeats carry actual input.",
+    "results": [
+      {
+        "label": "fix73-L7-final-opening-high",
+        "source": {
+          "sourceHash": "959c6077122d3d07d22bf18b1b7252e185ad9ddebe9ee0036ae9d26d37ba26ca",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "firstArmed": null,
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 22,
+            "simSeconds": 2,
+            "maxNoProgressSeconds": 1.35,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 5
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "fix73-L7-final-opening-low",
+        "source": {
+          "sourceHash": "959c6077122d3d07d22bf18b1b7252e185ad9ddebe9ee0036ae9d26d37ba26ca",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 0.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "firstArmed": null,
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 20,
+            "simSeconds": 1,
+            "maxNoProgressSeconds": 0,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "fix73-L7-final-open-high",
+        "source": {
+          "sourceHash": "959c6077122d3d07d22bf18b1b7252e185ad9ddebe9ee0036ae9d26d37ba26ca",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "firstArmed": {
+          "tick": 274,
+          "hp": 60,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m"
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 90,
+            "simSeconds": 86,
+            "maxNoProgressSeconds": 3.1166666666666667,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 32,
+              "weapon.rocket-launcher": 31
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 1,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+                "tick": 274,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.496449947357178,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "fix73-L7-final-open-low",
+        "source": {
+          "sourceHash": "959c6077122d3d07d22bf18b1b7252e185ad9ddebe9ee0036ae9d26d37ba26ca",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 0.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "firstArmed": {
+          "tick": 111,
+          "hp": 100,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m"
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 90,
+            "simSeconds": 86,
+            "maxNoProgressSeconds": 1.7166666666666666,
+            "deaths": 2,
+            "assists": 0,
+            "attacks": {
+              "weapon.rocket-launcher": 34
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 7,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+                "tick": 111,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "decision": "Restore the safer10m west move from original base close cluster while preserving narrow single-slot follower clearance and boarding corrections. No health/count/timer/cap edits.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-opening-high/captures/fix73-L7-final-opening-high-L7-checkpoint-yield.jpg",
+      "sha256": "76968724ef4087ad21b3cb27a7a3fa814b4b76efc29fb251c2155cbacbcff0e9",
+      "what": "Short high yield: courier100HP with MG at launcher3m; pickup still uncollected, initial enemies remain outside contact."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-opening-high/captures/fix73-L7-final-opening-high-L7-t4.jpg",
+      "sha256": "1e69dc44af36c41055983cad2b5b4e755ab77f1340a1dab2ca8ab6006e396e5e",
+      "what": "Initial high: courier100HP left of launcher ring, followers at truck, briefing text visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-opening-low/captures/fix73-L7-final-opening-low-L7-checkpoint-yield.jpg",
+      "sha256": "dd92715968ecd27309c93f9c4fc91ad0f604e32e2c2e2c01e9a4c412e99ae393",
+      "what": "Short low yield: close framing, courier100HP with MG by launcher3m, pickup uncollected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-opening-low/captures/fix73-L7-final-opening-low-L7-t4.jpg",
+      "sha256": "5cdcd772b9f0ae9e27fd1ab2a9c2a5fe2cf6ae3f5fc8b12b9f09bc4879878fe8",
+      "what": "Initial low: courier100HP left of ring, followers beside truck, briefing text visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-high/captures/fix73-L7-final-open-high-L7-checkpoint-yield.jpg",
+      "sha256": "786d254e998dee16316a5733076e03d677813e36dfe8224bfd8c8ae0a7772dd1",
+      "what": "High yield: armed courier100HP,23followers nearby,116m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-high/captures/fix73-L7-final-open-high-L7-t1.jpg",
+      "sha256": "a6f6e899f251764b6d83650ad0465e5bbdd526f2fca1cc93ac1e9f903e0a6f83",
+      "what": "High initial: courier100HP left of launcher ring, followers beside truck."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-high/captures/fix73-L7-final-open-high-L7-t1538.jpg",
+      "sha256": "508da370a474e093bb287a62dd140f0dd4f4718cde8250af187aadd99e10a72c",
+      "what": "High after pickup: injured courier carries launcher,24followers nearby on road, blast scorch behind."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-high/captures/fix73-L7-final-open-high-L7-t3089.jpg",
+      "sha256": "1a050816d52af272dc6151a57ddcbe51f6e71736d7fa0276cff1d2f853768ab2",
+      "what": "High mid-route: courier100HP,24followers near large Alpha telegraphs and infected behind the group."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-high/captures/fix73-L7-final-open-high-L7-t4597.jpg",
+      "sha256": "35c1b6a64077885f68cdb53d027ef6d2f65338dbbf0ead240657e2de9a037d4b",
+      "what": "High later: courier100HP,23followers moving beside cover,155m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-low/captures/fix73-L7-final-open-low-L7-checkpoint-yield.jpg",
+      "sha256": "c82d402897e2a5bd591c9f24ef39ef676d3f42d383f8aab90802bc5d0a825c8e",
+      "what": "Low yield: courier100HP with launcher,22followers nearby and Survivor lost behind you warning."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-low/captures/fix73-L7-final-open-low-L7-t1510.jpg",
+      "sha256": "8b9cef7690064242a672c725c032fb7d2457a0fa3eb7c27add13454551939e39",
+      "what": "Low mid-route: courier70HP firing near Alpha telegraph,24followers; under-attack warning visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-low/captures/fix73-L7-final-open-low-L7-t3049.jpg",
+      "sha256": "2d5bacf85916aadde120792e564829c65ad65a4c32333c73498f12bd57c850de",
+      "what": "Low after retry: courier100HP with launcher,12followers; Survivor lost behind you warning."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-low/captures/fix73-L7-final-open-low-L7-t4556.jpg",
+      "sha256": "a2e79664c40519fd96f7bc6a9ac62c18be131d8a37426a6d7751d28fdca677fc",
+      "what": "Low later: courier35HP with launcher,0/0nearby and loss warning."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-open-low/captures/fix73-L7-final-open-low-L7-t7.jpg",
+      "sha256": "e0104462a0dcb7d32f2a6271ff95a863785eee4efc76e71c7e9bb9c1483997a5",
+      "what": "Low initial: courier100HP beside launcher ring and briefing text."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L7-opening-rejected-repeat-input.json.gz",
+    "sha256": "fee4460c9cc2db208432fe29f4a5d00f789353b05b9d7e2bb386df53d77f226b"
+  }
+}

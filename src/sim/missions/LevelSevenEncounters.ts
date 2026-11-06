@@ -326,6 +326,9 @@ export class LevelSevenEncounters {
       }
       step = next;
     }
+    // Contact can invalidate a fine-grid escape leg after it was planned.
+    // Release a blocked route so ordinary navigation can replan.
+    if (step <= 1e-6) { this.pocketRoutes.delete(e.id); return false; }
     // This is continuous, swept locomotion, including the tight rounded
     // corners that the square-margin route grid cannot represent.
     w.solids.wrote(e, 'l7.pocket-walk'); delete e.locomotion;

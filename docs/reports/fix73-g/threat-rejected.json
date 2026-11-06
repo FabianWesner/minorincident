@@ -1,0 +1,51 @@
+{
+  "status": "FAIL:19L7flags; candidate rejected",
+  "sourceHash": "a1d9231082fb8f49ea88dc68fb3a1c3e252bc21eac20cb4bff6105dadbe6f204",
+  "flags": [
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/departure:SLOW_FOLLOWER:54",
+    "L7/phase/boarding:SLOW_FOLLOWER:54",
+    "L7/step/corridor:SLOW_FOLLOWER:51",
+    "L7/step/corridor:SLOW_FOLLOWER:52",
+    "L7/step/corridor:SLOW_FOLLOWER:53",
+    "L7/step/corridor:SLOW_FOLLOWER:55",
+    "L7/step/corridor:SLOW_FOLLOWER:56",
+    "L7/step/corridor:SLOW_FOLLOWER:58",
+    "L7/step/corridor:SLOW_FOLLOWER:59",
+    "L7/step/corridor:SLOW_FOLLOWER:64",
+    "L7/phase/encounters:SLOW_FOLLOWER:51",
+    "L7/phase/encounters:SLOW_FOLLOWER:52",
+    "L7/phase/encounters:SLOW_FOLLOWER:53",
+    "L7/phase/encounters:SLOW_FOLLOWER:55",
+    "L7/phase/encounters:SLOW_FOLLOWER:56",
+    "L7/phase/encounters:SLOW_FOLLOWER:58",
+    "L7/phase/encounters:SLOW_FOLLOWER:59",
+    "L7/phase/encounters:SLOW_FOLLOWER:64"
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/threat-rejected.json.gz",
+    "sha256": "15f02d6327ebcfb8a5af6913d968519280810e4f6312ba6154e1eef49ebf8918"
+  },
+  "admission": {
+    "waiting": false,
+    "alone": "All owned browser, unit, compiler, lint and acceptance processes finished before starting.",
+    "admittedAt": "2026-11-06T21:52:27.954582+00:00",
+    "admittedLoad": [
+      3.298828125,
+      4.01513671875,
+      4.572265625
+    ],
+    "samples": [
+      {
+        "at": "2026-11-06T21:52:27.954582+00:00",
+        "load": [
+          3.298828125,
+          4.01513671875,
+          4.572265625
+        ]
+      }
+    ],
+    "exitCode": 1,
+    "finishedAt": "2026-11-06T21:57:50.264749+00:00"
+  }
+}
