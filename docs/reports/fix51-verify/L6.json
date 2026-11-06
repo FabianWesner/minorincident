@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T23:44:47.390Z",
+  "generatedAt": "2026-11-06T01:22:33.260Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-webgl2-z1.5-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-webgl2-z1.5-browser.json"
     }
   ],
   "globals": [
@@ -4211,15 +4225,20 @@
   "rows": [
     {
       "id": "L6-01",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); low/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture actual carried L5 residents lose L6 shelter routine presentation: {\"tier\":\"low\",\"carriedCount\":24,\"identicalIds\":true,\"allFullHealth\":true,\"assignedRoutines\":{\"sit\":5,\"talk\":5,\"treat\":5,\"rest\":4,\"share\":4},\"actualStoryClips\":{\"idle\":8,\"npc-gesture\":16,\"npc-sit\":0,\"death-side\":0,\"npc-cower\":0,\"npc-give\":0},\"throughTick\":240} (target Actual24residents+0–5 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s; FAIL); high/controlled-fixture actual carried L5 residents lose L6 shelter routine presentation: {\"tier\":\"high\",\"carriedCount\":24,\"identicalIds\":true,\"allFullHealth\":true,\"assignedRoutines\":{\"sit\":5,\"talk\":5,\"treat\":5,\"rest\":4,\"share\":4},\"actualStoryClips\":{\"idle\":8,\"npc-gesture\":16,\"npc-sit\":0,\"death-side\":0,\"npc-cower\":0,\"npc-give\":0},\"throughTick\":240} (target Actual24residents+0–5 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s; FAIL) Manual review FAIL (FRESH, Codex/sweep-b): Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+        "docs/reports/sweep-b/L6-01-proof.json",
+        "docs/reports/sweep-b/L6-carry-ledger.json.gz",
+        "docs/reports/sweep-b/L6-carry-capture-review.json",
+        "docs/reports/sweep-b/L6-carry-low-actual-L5-save.json.gz",
+        "docs/reports/sweep-b/L6-carry-high-actual-L5-save.json.gz"
       ],
       "expected": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
       "checks": [
@@ -4894,6 +4913,70 @@
           ],
           "target": "every resident starts full health",
           "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        },
+        {
+          "id": "L6-01",
+          "clause": "actual carried L5 residents lose L6 shelter routine presentation",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "value": {
+            "tier": "low",
+            "carriedCount": 24,
+            "identicalIds": true,
+            "allFullHealth": true,
+            "assignedRoutines": {
+              "sit": 5,
+              "talk": 5,
+              "treat": 5,
+              "rest": 4,
+              "share": 4
+            },
+            "actualStoryClips": {
+              "idle": 8,
+              "npc-gesture": 16,
+              "npc-sit": 0,
+              "death-side": 0,
+              "npc-cower": 0,
+              "npc-give": 0
+            },
+            "throughTick": 240
+          },
+          "target": "Actual24residents+0–5 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s",
+          "receipt": "docs/reports/sweep-b/L6-01-proof.json",
+          "level": "L6"
+        },
+        {
+          "id": "L6-01",
+          "clause": "actual carried L5 residents lose L6 shelter routine presentation",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "value": {
+            "tier": "high",
+            "carriedCount": 24,
+            "identicalIds": true,
+            "allFullHealth": true,
+            "assignedRoutines": {
+              "sit": 5,
+              "talk": 5,
+              "treat": 5,
+              "rest": 4,
+              "share": 4
+            },
+            "actualStoryClips": {
+              "idle": 8,
+              "npc-gesture": 16,
+              "npc-sit": 0,
+              "death-side": 0,
+              "npc-cower": 0,
+              "npc-give": 0
+            },
+            "throughTick": 240
+          },
+          "target": "Actual24residents+0–5 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s",
+          "receipt": "docs/reports/sweep-b/L6-01-proof.json",
+          "level": "L6"
         }
       ],
       "historical": {
@@ -4906,19 +4989,63 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
+      "reviewDecision": {
+        "row": "L6-01",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "6e755c87e1325ba2f89a37ffe9a3692b73f0128d",
+        "clauses": [
+          {
+            "clause": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
+            "verdict": "FAIL",
+            "note": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-01-proof.json",
+            "sha256": "4433c0a90443ecef43939645122a1a5b300b060a9e108708ed0b7ebb55d54e3c",
+            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-carry-ledger.json.gz",
+            "sha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701",
+            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-carry-capture-review.json",
+            "sha256": "4c0c881df399a12fd586249eb1823f85c04025c83e21b1383d6f4ecce64b7e06",
+            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-carry-low-actual-L5-save.json.gz",
+            "sha256": "080da8c294fabf4e8a740448f217f3fe36cfa45e3f7d30e43a6c38de684212ee",
+            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-carry-high-actual-L5-save.json.gz",
+            "sha256": "4cb8ada0245bf67823621836a3da03d029add4a4704f51c469de9c9948d404de",
+            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/controlled-fixture actual headlamp approach persistence head-following beam and no new weapons: {\"tier\":\"low\",\"status\":\"PASS\",\"before\":{\"tick\":0,\"tier\":\"low\",\"renderTier\":\"low\",\"player\":{\"x\":3,\"y\":1.3049999999999997,\"z\":0,\"yaw\":0.3205919885488634},\"flashlight\":false,\"lamp\":{\"id\":56,\"at\":{\"x\":1.5,\"z\":-2,\"y\":0.9,\"yaw\":0},\"pickup\":{\"kind\":\"item\",\"item\":\"headlamp\",\"radius\":1.5,\"collected\":false}},\"newWeaponIds\":[],\"headYaw\":0.32059198854886345,\"headlampOn\":0,\"beam\":[0.9490490319615965,-0.3151284… (full values in JSON) (target No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim; PASS); high/controlled-fixture actual headlamp approach persistence head-following beam and no new weapons: {\"tier\":\"high\",\"status\":\"PASS\",\"before\":{\"tick\":0,\"tier\":\"high\",\"renderTier\":\"high\",\"player\":{\"x\":3,\"y\":1.3049999999999997,\"z\":0,\"yaw\":0.3205919885488634},\"flashlight\":false,\"lamp\":{\"id\":56,\"at\":{\"x\":1.5,\"z\":-2,\"y\":0.9,\"yaw\":0},\"pickup\":{\"kind\":\"item\",\"item\":\"headlamp\",\"radius\":1.5,\"collected\":false}},\"newWeaponIds\":[],\"headYaw\":0.32059198854886345,\"headlampOn\":0,\"beam\":[0.9490490319615965,-0.3151… (full values in JSON) (target No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+        "docs/reports/sweep-b/L6-02-proof.json"
       ],
       "expected": "No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another).",
       "checks": [
@@ -4965,6 +5092,486 @@
           "value": 0,
           "target": "0 ≤ value ≤ 0",
           "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        },
+        {
+          "id": "L6-02",
+          "clause": "actual headlamp approach persistence head-following beam and no new weapons",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "status": "PASS",
+            "before": {
+              "tick": 0,
+              "tier": "low",
+              "renderTier": "low",
+              "player": {
+                "x": 3,
+                "y": 1.3049999999999997,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "flashlight": false,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": false
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 0.32059198854886345,
+              "headlampOn": 0,
+              "beam": [
+                0.9490490319615965,
+                -0.3151284419609829
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false
+              }
+            },
+            "afterIdle": {
+              "tick": 120,
+              "tier": "low",
+              "renderTier": "low",
+              "player": {
+                "x": 3,
+                "y": 1.3200000524520874,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "flashlight": false,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": false
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 0.3205919885488633,
+              "headlampOn": 0,
+              "beam": [
+                0.9490490319615966,
+                -0.3151284419609827
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false,
+                "cancelMove": false,
+                "brake": false
+              }
+            },
+            "afterApproach": {
+              "tick": 165,
+              "tier": "low",
+              "renderTier": "low",
+              "player": {
+                "x": 1.1219995021820068,
+                "y": 1.3200000524520874,
+                "z": -2.5039985179901123,
+                "yaw": 2.214297435588181
+              },
+              "flashlight": true,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": true
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 2.2142974067470855,
+              "headlampOn": 1,
+              "beam": [
+                -0.5999999769271234,
+                -0.800000017304657
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false
+              }
+            },
+            "opposed": {
+              "tick": 225,
+              "tier": "low",
+              "renderTier": "low",
+              "player": {
+                "x": 43.753963470458984,
+                "y": 1.2699999809265137,
+                "z": 14.626964569091797,
+                "yaw": 0
+              },
+              "flashlight": true,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": true
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 3.1415926535547865,
+              "headlampOn": 1,
+              "beam": [
+                -1,
+                -3.500678669874065e-11
+              ],
+              "input": {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aim": {
+                  "x": -1,
+                  "z": 0
+                },
+                "aimSource": "pointer",
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false,
+                "strafe": true
+              }
+            }
+          },
+          "target": "No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim",
+          "receipt": "docs/reports/sweep-b/L6-02-proof.json",
+          "level": "L6"
+        },
+        {
+          "id": "L6-02",
+          "clause": "actual headlamp approach persistence head-following beam and no new weapons",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "status": "PASS",
+            "before": {
+              "tick": 0,
+              "tier": "high",
+              "renderTier": "high",
+              "player": {
+                "x": 3,
+                "y": 1.3049999999999997,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "flashlight": false,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": false
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 0.32059198854886345,
+              "headlampOn": 0,
+              "beam": [
+                0.9490490319615965,
+                -0.3151284419609829
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false
+              }
+            },
+            "afterIdle": {
+              "tick": 120,
+              "tier": "high",
+              "renderTier": "high",
+              "player": {
+                "x": 3,
+                "y": 1.3200000524520874,
+                "z": 0,
+                "yaw": 0.3205919885488634
+              },
+              "flashlight": false,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": false
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 0.3205919885488633,
+              "headlampOn": 0,
+              "beam": [
+                0.9490490319615966,
+                -0.3151284419609827
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false,
+                "cancelMove": false,
+                "brake": false
+              }
+            },
+            "afterApproach": {
+              "tick": 165,
+              "tier": "high",
+              "renderTier": "high",
+              "player": {
+                "x": 1.1219995021820068,
+                "y": 1.3200000524520874,
+                "z": -2.5039985179901123,
+                "yaw": 2.214297435588181
+              },
+              "flashlight": true,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": true
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 2.2142974067470855,
+              "headlampOn": 1,
+              "beam": [
+                -0.5999999769271234,
+                -0.800000017304657
+              ],
+              "input": {
+                "move": {
+                  "x": 0,
+                  "z": 0
+                },
+                "aim": null,
+                "aimSource": null,
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false
+              }
+            },
+            "opposed": {
+              "tick": 225,
+              "tier": "high",
+              "renderTier": "high",
+              "player": {
+                "x": 43.753963470458984,
+                "y": 1.2699999809265137,
+                "z": 14.626964569091797,
+                "yaw": 0
+              },
+              "flashlight": true,
+              "lamp": {
+                "id": 56,
+                "at": {
+                  "x": 1.5,
+                  "z": -2,
+                  "y": 0.9,
+                  "yaw": 0
+                },
+                "pickup": {
+                  "kind": "item",
+                  "item": "headlamp",
+                  "radius": 1.5,
+                  "collected": true
+                }
+              },
+              "newWeaponIds": [],
+              "headYaw": 3.1415926535547865,
+              "headlampOn": 1,
+              "beam": [
+                -1,
+                -3.500678669874065e-11
+              ],
+              "input": {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aim": {
+                  "x": -1,
+                  "z": 0
+                },
+                "aimSource": "pointer",
+                "left": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "right": {
+                  "down": false,
+                  "held": false,
+                  "up": false
+                },
+                "selector": 0,
+                "interact": false,
+                "pause": false,
+                "strafe": true
+              }
+            }
+          },
+          "target": "No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim",
+          "receipt": "docs/reports/sweep-b/L6-02-proof.json",
+          "level": "L6"
         }
       ],
       "historical": {
@@ -4977,7 +5584,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another)."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another)."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L6-03",
@@ -7276,15 +7883,17 @@
     },
     {
       "id": "L6-04",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); low/complete second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); low/complete second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); low/stationary second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); low/stationary second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); high/complete second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); high/complete second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); high/stationary second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); high/stationary second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); low/complete second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); low/complete second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); low/stationary second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); low/stationary second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); high/complete second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); high/complete second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary second breach delay: 21.016666666666666 (target 20 ≤ value ≤ 30; PASS); high/stationary second-wave admitted identities: 10 (target 10 ≤ value ≤ Infinity; PASS); high/stationary second-wave source accesses: 2 (target 2 ≤ value ≤ Infinity; PASS); low/controlled-fixture actual second breach arrivals power and abandon condition: {\"tier\":\"low\",\"status\":\"PASS\",\"breach2DelayS\":21.016666666666666,\"breach2Tick\":3253,\"powerOffTick\":3253,\"firstTwoPowerSamples\":[{\"tick\":3253,\"mainPower\":false,\"emergency\":true,\"lightGroups\":[\"shelter-camp\",\"self\",\"metro-emergency\"]},{\"tick\":3254,\"mainPower\":false,\"emergency\":true,\"lightGroups\":[\"shelter-camp\",\"self\",\"metro-emergency\"]}],\"wave2ActualBodies\":[{\"id\":72,\"wave\":2,\"door\":0,\"bornAt\":3253… (full values in JSON) (target breach2 after20–30s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten; PASS); high/controlled-fixture actual second breach arrivals power and abandon condition: {\"tier\":\"high\",\"status\":\"PASS\",\"breach2DelayS\":21.016666666666666,\"breach2Tick\":3253,\"powerOffTick\":3253,\"firstTwoPowerSamples\":[{\"tick\":3253,\"mainPower\":false,\"emergency\":true,\"lightGroups\":[\"shelter-camp\",\"self\",\"metro-emergency\"]},{\"tick\":3254,\"mainPower\":false,\"emergency\":true,\"lightGroups\":[\"shelter-camp\",\"self\",\"metro-emergency\"]}],\"wave2ActualBodies\":[{\"id\":72,\"wave\":2,\"door\":0,\"bornAt\":325… (full values in JSON) (target breach2 after20–30s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten; PASS) Manual review PASS (FRESH, Codex/sweep-b): Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+        "docs/reports/sweep-b/L6-04-proof.json",
+        "docs/reports/sweep-b/L6-capture-review.json"
       ],
       "expected": "Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten.",
       "checks": [
@@ -7419,6 +8028,458 @@
           "value": 2,
           "target": "2 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        },
+        {
+          "id": "L6-04",
+          "clause": "actual second breach arrivals power and abandon condition",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "status": "PASS",
+            "breach2DelayS": 21.016666666666666,
+            "breach2Tick": 3253,
+            "powerOffTick": 3253,
+            "firstTwoPowerSamples": [
+              {
+                "tick": 3253,
+                "mainPower": false,
+                "emergency": true,
+                "lightGroups": [
+                  "shelter-camp",
+                  "self",
+                  "metro-emergency"
+                ]
+              },
+              {
+                "tick": 3254,
+                "mainPower": false,
+                "emergency": true,
+                "lightGroups": [
+                  "shelter-camp",
+                  "self",
+                  "metro-emergency"
+                ]
+              }
+            ],
+            "wave2ActualBodies": [
+              {
+                "id": 72,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3253,
+                "birth": {
+                  "x": -10,
+                  "y": 1.2999999999999998,
+                  "z": -19.4,
+                  "yaw": 0
+                },
+                "firstShelterFloor": 3253,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 40,
+                "pathFailures": 0
+              },
+              {
+                "id": 73,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3298,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.895519854488858
+                },
+                "firstShelterFloor": 3298,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 10,
+                "pathFailures": 0
+              },
+              {
+                "id": 75,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3343,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 3.6758755085695496
+                },
+                "firstShelterFloor": 3343,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 77,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3388,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 2.904013367744631
+                },
+                "firstShelterFloor": 3388,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 79,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3433,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 0.706279820303742
+                },
+                "firstShelterFloor": 3433,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 13,
+                "pathFailures": 0
+              },
+              {
+                "id": 81,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3478,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 3.100734279125924
+                },
+                "firstShelterFloor": 3478,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 26,
+                "pathFailures": 0
+              },
+              {
+                "id": 83,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3523,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.909667694271744
+                },
+                "firstShelterFloor": 3523,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 14,
+                "pathFailures": 0
+              },
+              {
+                "id": 85,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3568,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 2.9038541232600306
+                },
+                "firstShelterFloor": 3568,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 29,
+                "pathFailures": 0
+              },
+              {
+                "id": 87,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3613,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.1150379574964955
+                },
+                "firstShelterFloor": 3613,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 89,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3658,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 0.3876486905753763
+                },
+                "firstShelterFloor": 3658,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 29,
+                "pathFailures": 0
+              }
+            ],
+            "abandonTick": 4147,
+            "abandonAfterBreach2S": 14.9,
+            "bittenOrLostAtAbandon": 3,
+            "ordinaryControlHash": "4b1a2fe3",
+            "observedHash": "4b1a2fe3"
+          },
+          "target": "breach2 after20–30s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten",
+          "receipt": "docs/reports/sweep-b/L6-04-proof.json",
+          "level": "L6"
+        },
+        {
+          "id": "L6-04",
+          "clause": "actual second breach arrivals power and abandon condition",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "status": "PASS",
+            "breach2DelayS": 21.016666666666666,
+            "breach2Tick": 3253,
+            "powerOffTick": 3253,
+            "firstTwoPowerSamples": [
+              {
+                "tick": 3253,
+                "mainPower": false,
+                "emergency": true,
+                "lightGroups": [
+                  "shelter-camp",
+                  "self",
+                  "metro-emergency"
+                ]
+              },
+              {
+                "tick": 3254,
+                "mainPower": false,
+                "emergency": true,
+                "lightGroups": [
+                  "shelter-camp",
+                  "self",
+                  "metro-emergency"
+                ]
+              }
+            ],
+            "wave2ActualBodies": [
+              {
+                "id": 72,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3253,
+                "birth": {
+                  "x": -10,
+                  "y": 1.2999999999999998,
+                  "z": -19.4,
+                  "yaw": 0
+                },
+                "firstShelterFloor": 3253,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 40,
+                "pathFailures": 0
+              },
+              {
+                "id": 73,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3298,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.895519854488858
+                },
+                "firstShelterFloor": 3298,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 10,
+                "pathFailures": 0
+              },
+              {
+                "id": 75,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3343,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 3.6758755085695496
+                },
+                "firstShelterFloor": 3343,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 77,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3388,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 2.904013367744631
+                },
+                "firstShelterFloor": 3388,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 79,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3433,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 0.706279820303742
+                },
+                "firstShelterFloor": 3433,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 13,
+                "pathFailures": 0
+              },
+              {
+                "id": 81,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3478,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 3.100734279125924
+                },
+                "firstShelterFloor": 3478,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 26,
+                "pathFailures": 0
+              },
+              {
+                "id": 83,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3523,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.909667694271744
+                },
+                "firstShelterFloor": 3523,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 14,
+                "pathFailures": 0
+              },
+              {
+                "id": 85,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3568,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 2.9038541232600306
+                },
+                "firstShelterFloor": 3568,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 29,
+                "pathFailures": 0
+              },
+              {
+                "id": 87,
+                "wave": 2,
+                "door": 0,
+                "bornAt": 3613,
+                "birth": {
+                  "x": -10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 5.1150379574964955
+                },
+                "firstShelterFloor": 3613,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 16,
+                "pathFailures": 0
+              },
+              {
+                "id": 89,
+                "wave": 2,
+                "door": 1,
+                "bornAt": 3658,
+                "birth": {
+                  "x": 10,
+                  "z": -19.4,
+                  "y": 1.2999999999999998,
+                  "yaw": 0.3876486905753763
+                },
+                "firstShelterFloor": 3658,
+                "firstTrack": null,
+                "end": "downed",
+                "pathAtBirth": true,
+                "pathSamples": 29,
+                "pathFailures": 0
+              }
+            ],
+            "abandonTick": 4147,
+            "abandonAfterBreach2S": 14.9,
+            "bittenOrLostAtAbandon": 3,
+            "ordinaryControlHash": "d9d2c6a1",
+            "observedHash": "d9d2c6a1"
+          },
+          "target": "breach2 after20–30s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten",
+          "receipt": "docs/reports/sweep-b/L6-04-proof.json",
+          "level": "L6"
         }
       ],
       "historical": {
@@ -7431,19 +8492,54 @@
         ],
         "method": "Native complete and passive release/admission ledgers agree on33.20/54.22 s and8/10 cohorts. NEXT: both-tier access/floor-crossing census plus light/power and abandon event ticks."
       },
-      "remaining": "Native complete and passive release/admission ledgers agree on33.20/54.22 s and8/10 cohorts. NEXT: both-tier access/floor-crossing census plus light/power and abandon event ticks."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten.",
+        "clause": "Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten."
+      },
+      "reviewDecision": {
+        "row": "L6-04",
+        "status": "PASS",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "0dbc9a92cd16e681cec94c730d756d4298ef5df5",
+        "clauses": [
+          {
+            "clause": "Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten.",
+            "verdict": "PASS",
+            "note": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-04-proof.json",
+            "sha256": "2e36462a6b2b56d7807b5c66114ad90d782b08663817d52951c788f4b93c769f",
+            "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-capture-review.json",
+            "sha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083",
+            "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-05",
-      "status": "FAIL",
+      "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":35.916666666666664,\"playerWindups\":3,\"groupWindups\":8,\"attacksPerMinute\":5.0116009280742455} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 5.0116009280742455 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.566666666666666,\"playerWindups\":196,\"groupWindups\":3,\"attacksPerMinute\":411.6686114352392} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":1.6166666666666667,\"windowSeconds\":28.566666666666666} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 411.6686114352392 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary stationary first attack after l6.breach1: 1.6166666666666667 (target player windup≤15s after this breach caption; PASS); low/stationary stationary first attack after l6.breach2: 6.266666666666667 (target player windup≤15s after this breach caption; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":35.916666666666664,\"playerWindups\":3,\"groupWindups\":8,\"attacksPerMinute\":5.0116009280742455} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 5.0116009280742455 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":28.566666666666666,\"playerWindups\":196,\"groupWindups\":3,\"attacksPerMinute\":411.6686114352392} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":1.6166666666666667,\"windowSeconds\":28.566666666666666} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 411.6686114352392 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary stationary first attack after l6.breach1: 1.6166666666666667 (target player windup≤15s after this breach caption; PASS); high/stationary stationary first attack after l6.breach2: 6.266666666666667 (target player windup≤15s after this breach caption; PASS) Open prior FAIL: Native low complete step/stop: 25.55 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. ",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":35.916666666666664,\"playerWindups\":3,\"groupWindups\":8,\"attacksPerMinute\":5.0116009280742455} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 5.0116009280742455 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.566666666666666,\"playerWindups\":196,\"groupWindups\":3,\"attacksPerMinute\":411.6686114352392} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":1.6166666666666667,\"windowSeconds\":28.566666666666666} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 411.6686114352392 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); low/stationary stationary first attack after l6.breach1: 1.6166666666666667 (target player windup≤15s after this breach caption; PASS); low/stationary stationary first attack after l6.breach2: 6.266666666666667 (target player windup≤15s after this breach caption; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":35.916666666666664,\"playerWindups\":3,\"groupWindups\":8,\"attacksPerMinute\":5.0116009280742455} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 5.0116009280742455 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":28.566666666666666,\"playerWindups\":196,\"groupWindups\":3,\"attacksPerMinute\":411.6686114352392} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":1.6166666666666667,\"windowSeconds\":28.566666666666666} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 411.6686114352392 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 95 ≤ value ≤ 100; PASS); high/stationary stationary first attack after l6.breach1: 1.6166666666666667 (target player windup≤15s after this breach caption; PASS); high/stationary stationary first attack after l6.breach2: 6.266666666666667 (target player windup≤15s after this breach caption; PASS) Manual review PASS (FRESH, Codex/sweep-b): Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim. Requalified prior FAIL: Native low complete step/stop: 25.55 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. ",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
         "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+        "docs/reports/sweep-b/rows/L6-05.json",
+        "docs/reports/sweep-b/L6-trajectory-proof.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "combat: **reachable ≥ 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack ≤ 15 s after each breach caption; attacks on player ≥ 4/min (tune).",
@@ -7683,15 +8779,46 @@
         ],
         "method": "Native complete/passive phase ledgers. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
+      "reviewDecision": {
+        "row": "L6-05",
+        "status": "PASS",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "f322429f3998ee50dbce9f3bdc50b950d3b03efb",
+        "clauses": [
+          {
+            "clause": "combat: **reachable ≥ 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack ≤ 15 s after each breach caption; attacks on player ≥ 4/min (tune).",
+            "verdict": "PASS",
+            "note": "Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/rows/L6-05.json",
+            "sha256": "8f1bd43c14b83082b2c14740496a43b8cae90ce0b608c4df5126a733ee751cd0",
+            "what": "Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
+            "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
+            "what": "Every admitted body birth lies inside the authored station/tunnel floor plan and has a legal bounded path; same-ID trajectories and canonical state hashes retained."
+          }
+        ],
+        "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/sweep-b): Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-b/L6-trajectory-proof.json"
+      ],
       "expected": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
       "checks": [],
       "historical": {
@@ -7702,17 +8829,41 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable ≥ 95 %; none stand harmless behind the platform/gate line. "
       },
-      "remaining": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable ≥ 95 %; none stand harmless behind the platform/gate line. "
+      "remaining": "NEXT: Extend the existing L6 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable ≥ 95 %; none stand harmless behind the platform/gate line. ",
+      "reviewDecision": {
+        "row": "L6-06",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+        "clauses": [
+          {
+            "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
+            "verdict": "FAIL",
+            "note": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
+            "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
+            "what": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-07",
-      "status": "FAIL",
+      "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete ordinary retreat route completion: complete (target complete; PASS); low/complete retreat player/group windups per minute: 51.07018417122947 (target 4 ≤ value ≤ Infinity; PASS); low/complete actual HP lost during retreat: 120 (target 30 ≤ value ≤ Infinity; PASS); low/complete retreat concurrent infected cap: 18 (target 0 ≤ value ≤ 30; PASS); high/complete ordinary retreat route completion: complete (target complete; PASS); high/complete retreat player/group windups per minute: 51.07018417122947 (target 4 ≤ value ≤ Infinity; PASS); high/complete actual HP lost during retreat: 120 (target 30 ≤ value ≤ Infinity; PASS); high/complete retreat concurrent infected cap: 18 (target 0 ≤ value ≤ 60; PASS) Open prior FAIL: Native competent run takes 0 damage, below the >=30 HP tuning target; survivor attack/cap clauses need separate full retreat analysis.",
+      "value": "low/complete ordinary retreat route completion: complete (target complete; PASS); low/complete retreat player/group windups per minute: 51.07018417122947 (target 4 ≤ value ≤ Infinity; PASS); low/complete actual HP lost during retreat: 120 (target 30 ≤ value ≤ Infinity; PASS); low/complete retreat concurrent infected cap: 18 (target 0 ≤ value ≤ 30; PASS); high/complete ordinary retreat route completion: complete (target complete; PASS); high/complete retreat player/group windups per minute: 51.07018417122947 (target 4 ≤ value ≤ Infinity; PASS); high/complete actual HP lost during retreat: 120 (target 30 ≤ value ≤ Infinity; PASS); high/complete retreat concurrent infected cap: 18 (target 0 ≤ value ≤ 60; PASS) Manual review PASS (FRESH, Codex/sweep-b): Both ordinary complete routes finish. Entire retreat records51.070 player/group windups per minute (minimum4),120 actual player HP lost (minimum30), concurrent infected peak18 (caps30low/60high). Native receipt includes the full balanced retreat window; no performance or perceived-pressure claim. Exact unchanged numeric criterion requalified at both qualities. Requalified prior FAIL: Native competent run takes 0 damage, below the >=30 HP tuning target; survivor attack/cap clauses need separate full retreat analysis.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+        "docs/reports/sweep-b/rows/L6-07.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30.",
@@ -7816,7 +8967,31 @@
         ],
         "method": "Current-head ordinary mortal complete policy, 212.78 s, zero deaths, damageTaken=0; an immortal or forced-death diagnostic cannot qualify the competent damage target."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
+      "reviewDecision": {
+        "row": "L6-07",
+        "status": "PASS",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "3bc507a85326cecb30ad0331d9a69b878edc5692",
+        "clauses": [
+          {
+            "clause": "combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30.",
+            "verdict": "PASS",
+            "note": "Both ordinary complete routes finish. Entire retreat records51.070 player/group windups per minute (minimum4),120 actual player HP lost (minimum30), concurrent infected peak18 (caps30low/60high). Native receipt includes the full balanced retreat window; no performance or perceived-pressure claim. Exact unchanged numeric criterion requalified at both qualities."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/rows/L6-07.json",
+            "sha256": "2490b069349478f68e5db1e9de15177f6dce44ab7cccffa2b7750a879a79f6d4",
+            "what": "Both ordinary complete routes finish. Entire retreat records51.070 player/group windups per minute (minimum4),120 actual player HP lost (minimum30), concurrent infected peak18 (caps30low/60high). Native receipt includes the full balanced retreat window; no performance or perceived-pressure claim. Exact unchanged numeric criterion requalified at both qualities."
+          }
+        ],
+        "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-08",
@@ -8059,13 +9234,778 @@
     },
     {
       "id": "L6-09",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Corrected low mortal retry physically closes/traverses gate checkpoints90/150/210 and reaches the exit. Gate hold duration8-12 s, five-infected resistance, sight blocking and survivor-distance refusal were not fully measured.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture actual gates width collision endurance refusal and persistent prompt: {\"tier\":\"low\",\"status\":\"PASS\",\"gates\":[{\"x\":90,\"widthM\":2.200000000000001,\"exactFiveRunnerIds\":[57,58,59,60,61],\"heldSeconds\":9.816666666666666,\"openMovement\":{\"before\":{\"x\":88,\"y\":1.3049999999999997,\"z\":15,\"yaw\":0.3205919885488634},\"after\":{\"x\":96.75464630126953,\"y\":1.2699999809265137,\"z\":15,\"yaw\":0},\"crossed\":true},\"closedMovement\":{\"before\":{\"x\":88,\"y\":1.2699999809265137,\"z\":15,\"yaw\":0},\"after\"… (full values in JSON) (target three chokepoints≤2.5m; closed movement/sight blockers;8–12s vs exactly5; refuse survivor≤2m; ring/prompt remain at gate until close; PASS); high/controlled-fixture actual gates width collision endurance refusal and persistent prompt: {\"tier\":\"high\",\"status\":\"PASS\",\"gates\":[{\"x\":90,\"widthM\":2.200000000000001,\"exactFiveRunnerIds\":[57,58,59,60,61],\"heldSeconds\":9.816666666666666,\"openMovement\":{\"before\":{\"x\":88,\"y\":1.3049999999999997,\"z\":15,\"yaw\":0.3205919885488634},\"after\":{\"x\":96.75464630126953,\"y\":1.2699999809265137,\"z\":15,\"yaw\":0},\"crossed\":true},\"closedMovement\":{\"before\":{\"x\":88,\"y\":1.2699999809265137,\"z\":15,\"yaw\":0},\"after… (full values in JSON) (target three chokepoints≤2.5m; closed movement/sight blockers;8–12s vs exactly5; refuse survivor≤2m; ring/prompt remain at gate until close; PASS) Manual review PASS (FRESH, Codex/sweep-b): All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim.",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/sweep-b/L6-09-proof.json"
+      ],
       "expected": "Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click).",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L6-09",
+          "clause": "actual gates width collision endurance refusal and persistent prompt",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "status": "PASS",
+            "gates": [
+              {
+                "x": 90,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 88,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 96.75464630126953,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 88,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 89.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              },
+              {
+                "x": 150,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 148,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 156.75465393066406,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 148,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 149.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              },
+              {
+                "x": 210,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 208,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 216.75465393066406,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 208,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 209.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              }
+            ],
+            "refusalAndPromptBoundaries": [
+              {
+                "x": 90,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 92.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 93.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 92.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              },
+              {
+                "x": 150,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 152.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 153.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 152.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              },
+              {
+                "x": 210,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 212.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 213.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 212.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "target": "three chokepoints≤2.5m; closed movement/sight blockers;8–12s vs exactly5; refuse survivor≤2m; ring/prompt remain at gate until close",
+          "receipt": "docs/reports/sweep-b/L6-09-proof.json",
+          "level": "L6"
+        },
+        {
+          "id": "L6-09",
+          "clause": "actual gates width collision endurance refusal and persistent prompt",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "status": "PASS",
+            "gates": [
+              {
+                "x": 90,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 88,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 96.75464630126953,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 88,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 89.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              },
+              {
+                "x": 150,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 148,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 156.75465393066406,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 148,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 149.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              },
+              {
+                "x": 210,
+                "widthM": 2.200000000000001,
+                "exactFiveRunnerIds": [
+                  57,
+                  58,
+                  59,
+                  60,
+                  61
+                ],
+                "heldSeconds": 9.816666666666666,
+                "openMovement": {
+                  "before": {
+                    "x": 208,
+                    "y": 1.3049999999999997,
+                    "z": 15,
+                    "yaw": 0.3205919885488634
+                  },
+                  "after": {
+                    "x": 216.75465393066406,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "crossed": true
+                },
+                "closedMovement": {
+                  "before": {
+                    "x": 208,
+                    "y": 1.2699999809265137,
+                    "z": 15,
+                    "yaw": 0
+                  },
+                  "after": {
+                    "x": 209.49490356445312,
+                    "y": 1.2699999809265137,
+                    "z": 14.999999046325684,
+                    "yaw": 0
+                  },
+                  "crossed": false
+                },
+                "openSight": true,
+                "closedSight": false
+              }
+            ],
+            "refusalAndPromptBoundaries": [
+              {
+                "x": 90,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 92.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 93.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 92.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 92.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              },
+              {
+                "x": 150,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 152.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 153.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 152.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 152.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              },
+              {
+                "x": 210,
+                "boundaries": [
+                  {
+                    "survivorOffsetM": -1.99,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 0,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 1.8,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2,
+                    "closable": false,
+                    "status": "Let everyone pass · 28/29 through"
+                  },
+                  {
+                    "survivorOffsetM": 2.01,
+                    "closable": true,
+                    "status": "Everyone through · E or click the gate to close it"
+                  }
+                ],
+                "markerSamples": [
+                  {
+                    "player": {
+                      "x": 212.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 213.5,
+                      "z": 16.5
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  },
+                  {
+                    "player": {
+                      "x": 212.4,
+                      "z": 17.3
+                    },
+                    "marker": "l6-next",
+                    "at": {
+                      "x": 212.4,
+                      "z": 17.3,
+                      "y": 0.6,
+                      "radius": 2
+                    },
+                    "prompt": "Everyone through · E or click the gate to close it",
+                    "closedAt": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "target": "three chokepoints≤2.5m; closed movement/sight blockers;8–12s vs exactly5; refuse survivor≤2m; ring/prompt remain at gate until close",
+          "receipt": "docs/reports/sweep-b/L6-09-proof.json",
+          "level": "L6"
+        }
+      ],
       "historical": {
         "id": "L6-09",
         "level": "L6",
@@ -8077,7 +10017,35 @@
         ],
         "method": "Real-input checkpoint/gate route and read-only native snapshots; no objective advances. NEXT: time each closed gate against five infected and exercise the <=2 m survivor refusal and sight/movement blockers at both tiers."
       },
-      "remaining": "Real-input checkpoint/gate route and read-only native snapshots; no objective advances. NEXT: time each closed gate against five infected and exercise the <=2 m survivor refusal and sight/movement blockers at both tiers."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click).",
+        "clause": "Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click)."
+      },
+      "reviewDecision": {
+        "row": "L6-09",
+        "status": "PASS",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "f2777448d3e3b786084d5d2482a5fed44c475597",
+        "clauses": [
+          {
+            "clause": "Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click).",
+            "verdict": "PASS",
+            "note": "All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-09-proof.json",
+            "sha256": "1102c17794e37aaa311574b12d7799cbfa9882ffa5bea828303f52a9af0cd5a5",
+            "what": "All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-10",
@@ -8536,11 +10504,13 @@
     },
     {
       "id": "L6-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/sweep-b): Matched ordinary mortal native policies use seed1, same progressed save/quality and production input. Complete finishes at both tiers with1 out of29 (3.448%), failing required60%; result balances29=1out+28lost and exact final hashes match canonical complete controls. Evade-only times out at600sim seconds with13 deaths at both tiers, so no invented evade result percentage is assigned. Four protected-courier browser routes also fail to finish; they do not qualify a mortal human-like benchmark. The independently sufficient complete-policy counterexample closes whole-row FAIL. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-b/protection.json"
+      ],
       "expected": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
       "checks": [],
       "historical": {
@@ -8551,17 +10521,43 @@
         "evidence": [],
         "method": "NEXT: Compare separate evade-only and complete native/real-input L6 runs with balanced survivors-in/out/lost ledgers."
       },
-      "remaining": "NEXT: Compare separate evade-only and complete native/real-input L6 runs with balanced survivors-in/out/lost ledgers."
+      "remaining": "NEXT: Compare separate evade-only and complete native/real-input L6 runs with balanced survivors-in/out/lost ledgers.",
+      "reviewDecision": {
+        "row": "L6-11",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "7f0a5c526fc49ac7d651e3631866f7d59550b448",
+        "clauses": [
+          {
+            "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
+            "verdict": "FAIL",
+            "note": "Matched ordinary mortal native policies use seed1, same progressed save/quality and production input. Complete finishes at both tiers with1 out of29 (3.448%), failing required60%; result balances29=1out+28lost and exact final hashes match canonical complete controls. Evade-only times out at600sim seconds with13 deaths at both tiers, so no invented evade result percentage is assigned. Four protected-courier browser routes also fail to finish; they do not qualify a mortal human-like benchmark. The independently sufficient complete-policy counterexample closes whole-row FAIL."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/protection.json",
+            "sha256": "7235606b338927c230bb02df60187af213613f2c62c86c9cd5bac60da3214446",
+            "what": "Matched ordinary mortal native policies use seed1, same progressed save/quality and production input. Complete finishes at both tiers with1 out of29 (3.448%), failing required60%; result balances29=1out+28lost and exact final hashes match canonical complete controls. Evade-only times out at600sim seconds with13 deaths at both tiers, so no invented evade result percentage is assigned. Four protected-courier browser routes also fail to finish; they do not qualify a mortal human-like benchmark. The independently sufficient complete-policy counterexample closes whole-row FAIL."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-12",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete result roster accounting: {\"in\":29,\"out\":1,\"lost\":28} (target in = out + lost; PASS); high/complete result roster accounting: {\"in\":29,\"out\":1,\"lost\":28} (target in = out + lost; PASS)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture closed Northgate remains passable above misplaced blocker: {\"tier\":\"low\",\"gateAt\":2,\"gate\":{\"kind\":\"barricade\",\"archetype\":\"l6.service-gate\",\"faction\":\"environment\",\"transform\":{\"x\":258,\"z\":15.9,\"y\":3.9,\"yaw\":0},\"health\":{\"current\":10000,\"max\":10000},\"interactable\":{\"kind\":\"barricade\",\"radius\":1.6,\"holdTime\":2,\"instant\":false,\"interruptOnDamage\":true,\"progress\":0,\"completed\":false,\"enabled\":false,\"hint\":\"\",\"label\":\"Repair\",\"key\":null,\"requires\":[],\"open\":… (full values in JSON) (target Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.; FAIL); high/controlled-fixture closed Northgate remains passable above misplaced blocker: {\"tier\":\"high\",\"gateAt\":2,\"gate\":{\"kind\":\"barricade\",\"archetype\":\"l6.service-gate\",\"faction\":\"environment\",\"transform\":{\"x\":258,\"z\":15.9,\"y\":3.9,\"yaw\":0},\"health\":{\"current\":10000,\"max\":10000},\"interactable\":{\"kind\":\"barricade\",\"radius\":1.6,\"holdTime\":2,\"instant\":false,\"interruptOnDamage\":true,\"progress\":0,\"completed\":false,\"enabled\":false,\"hint\":\"\",\"label\":\"Repair\",\"key\":null,\"requires\":[],\"open\"… (full values in JSON) (target Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.; FAIL) Manual review FAIL (FRESH, Codex/sweep-b): Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+        "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+        "docs/reports/sweep-b/L6-12-proof.json",
+        "docs/reports/sweep-b/L6-northgate.json",
+        "docs/reports/sweep-b/L6-render-initial-review.json"
       ],
       "expected": "Northgate is solid when closed and drawn open when passable; night caption \"Night. Still alive.\"; end shot frames the scene; result counts match the objective.",
       "checks": [
@@ -8594,6 +10590,514 @@
           },
           "target": "in = out + lost",
           "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+        },
+        {
+          "id": "L6-12",
+          "clause": "closed Northgate remains passable above misplaced blocker",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "value": {
+            "tier": "low",
+            "gateAt": 2,
+            "gate": {
+              "kind": "barricade",
+              "archetype": "l6.service-gate",
+              "faction": "environment",
+              "transform": {
+                "x": 258,
+                "z": 15.9,
+                "y": 3.9,
+                "yaw": 0
+              },
+              "health": {
+                "current": 10000,
+                "max": 10000
+              },
+              "interactable": {
+                "kind": "barricade",
+                "radius": 1.6,
+                "holdTime": 2,
+                "instant": false,
+                "interruptOnDamage": true,
+                "progress": 0,
+                "completed": false,
+                "enabled": false,
+                "hint": "",
+                "label": "Repair",
+                "key": null,
+                "requires": [],
+                "open": false,
+                "barricaded": false,
+                "fuel": 0,
+                "powered": false,
+                "interruptedAt": -1,
+                "cycle": 0
+              },
+              "id": 73,
+              "barricade": {
+                "slot": {
+                  "id": "l6-night-exit",
+                  "groupId": "l6-exit",
+                  "a": {
+                    "x": 258,
+                    "z": 13.75
+                  },
+                  "b": {
+                    "x": 258,
+                    "z": 18.05
+                  },
+                  "height": 2.5,
+                  "initialHp": 10000
+                },
+                "coverage": 1,
+                "props": [],
+                "intact": true,
+                "hitTick": -60,
+                "breaks": 0
+              },
+              "combat": {
+                "radius": 2.1500000000000004,
+                "armor": 0,
+                "shield": false,
+                "staggerUntil": 0,
+                "attacking": false,
+                "damageMultiplier": 1,
+                "statuses": []
+              }
+            },
+            "gateWalls": [
+              {
+                "type": "world.blocker.changed",
+                "tick": 2,
+                "id": 73,
+                "blocked": true,
+                "wall": {
+                  "x": 258,
+                  "z": 15.9,
+                  "y": 1.25,
+                  "halfY": 1.25,
+                  "halfX": 0.35,
+                  "halfZ": 2.5000000000000004,
+                  "entityId": 73
+                }
+              }
+            ],
+            "open": {
+              "before": {
+                "x": 255.5,
+                "y": 4.62,
+                "z": 15.9,
+                "yaw": 0.3205919885488634
+              },
+              "requested": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+              },
+              "movement": {
+                "x": 6,
+                "y": -0.01500188559293747,
+                "z": 0
+              },
+              "crossed": true
+            },
+            "closed": {
+              "before": {
+                "x": 255.5,
+                "y": 4.62,
+                "z": 15.9,
+                "yaw": 0.3205919885488634
+              },
+              "requested": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+              },
+              "movement": {
+                "x": 6,
+                "y": -0.01500188559293747,
+                "z": 0
+              },
+              "crossed": true
+            },
+            "roster": [
+              {
+                "id": 16,
+                "status": "out"
+              },
+              {
+                "id": 17,
+                "status": "out"
+              },
+              {
+                "id": 18,
+                "status": "out"
+              },
+              {
+                "id": 19,
+                "status": "out"
+              },
+              {
+                "id": 20,
+                "status": "out"
+              },
+              {
+                "id": 21,
+                "status": "out"
+              },
+              {
+                "id": 22,
+                "status": "out"
+              },
+              {
+                "id": 23,
+                "status": "out"
+              },
+              {
+                "id": 24,
+                "status": "out"
+              },
+              {
+                "id": 25,
+                "status": "out"
+              },
+              {
+                "id": 26,
+                "status": "out"
+              },
+              {
+                "id": 27,
+                "status": "out"
+              },
+              {
+                "id": 28,
+                "status": "out"
+              },
+              {
+                "id": 29,
+                "status": "out"
+              },
+              {
+                "id": 30,
+                "status": "out"
+              },
+              {
+                "id": 31,
+                "status": "out"
+              },
+              {
+                "id": 32,
+                "status": "out"
+              },
+              {
+                "id": 33,
+                "status": "out"
+              },
+              {
+                "id": 34,
+                "status": "out"
+              },
+              {
+                "id": 35,
+                "status": "out"
+              },
+              {
+                "id": 36,
+                "status": "out"
+              },
+              {
+                "id": 37,
+                "status": "out"
+              },
+              {
+                "id": 38,
+                "status": "out"
+              },
+              {
+                "id": 39,
+                "status": "out"
+              },
+              {
+                "id": 40,
+                "status": "out"
+              },
+              {
+                "id": 41,
+                "status": "out"
+              },
+              {
+                "id": 42,
+                "status": "out"
+              },
+              {
+                "id": 43,
+                "status": "out"
+              },
+              {
+                "id": 44,
+                "status": "out"
+              }
+            ],
+            "result": null
+          },
+          "target": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
+          "receipt": "docs/reports/sweep-b/L6-12-proof.json",
+          "level": "L6"
+        },
+        {
+          "id": "L6-12",
+          "clause": "closed Northgate remains passable above misplaced blocker",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "value": {
+            "tier": "high",
+            "gateAt": 2,
+            "gate": {
+              "kind": "barricade",
+              "archetype": "l6.service-gate",
+              "faction": "environment",
+              "transform": {
+                "x": 258,
+                "z": 15.9,
+                "y": 3.9,
+                "yaw": 0
+              },
+              "health": {
+                "current": 10000,
+                "max": 10000
+              },
+              "interactable": {
+                "kind": "barricade",
+                "radius": 1.6,
+                "holdTime": 2,
+                "instant": false,
+                "interruptOnDamage": true,
+                "progress": 0,
+                "completed": false,
+                "enabled": false,
+                "hint": "",
+                "label": "Repair",
+                "key": null,
+                "requires": [],
+                "open": false,
+                "barricaded": false,
+                "fuel": 0,
+                "powered": false,
+                "interruptedAt": -1,
+                "cycle": 0
+              },
+              "id": 73,
+              "barricade": {
+                "slot": {
+                  "id": "l6-night-exit",
+                  "groupId": "l6-exit",
+                  "a": {
+                    "x": 258,
+                    "z": 13.75
+                  },
+                  "b": {
+                    "x": 258,
+                    "z": 18.05
+                  },
+                  "height": 2.5,
+                  "initialHp": 10000
+                },
+                "coverage": 1,
+                "props": [],
+                "intact": true,
+                "hitTick": -60,
+                "breaks": 0
+              },
+              "combat": {
+                "radius": 2.1500000000000004,
+                "armor": 0,
+                "shield": false,
+                "staggerUntil": 0,
+                "attacking": false,
+                "damageMultiplier": 1,
+                "statuses": []
+              }
+            },
+            "gateWalls": [
+              {
+                "type": "world.blocker.changed",
+                "tick": 2,
+                "id": 73,
+                "blocked": true,
+                "wall": {
+                  "x": 258,
+                  "z": 15.9,
+                  "y": 1.25,
+                  "halfY": 1.25,
+                  "halfX": 0.35,
+                  "halfZ": 2.5000000000000004,
+                  "entityId": 73
+                }
+              }
+            ],
+            "open": {
+              "before": {
+                "x": 255.5,
+                "y": 4.62,
+                "z": 15.9,
+                "yaw": 0.3205919885488634
+              },
+              "requested": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+              },
+              "movement": {
+                "x": 6,
+                "y": -0.01500188559293747,
+                "z": 0
+              },
+              "crossed": true
+            },
+            "closed": {
+              "before": {
+                "x": 255.5,
+                "y": 4.62,
+                "z": 15.9,
+                "yaw": 0.3205919885488634
+              },
+              "requested": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+              },
+              "movement": {
+                "x": 6,
+                "y": -0.01500188559293747,
+                "z": 0
+              },
+              "crossed": true
+            },
+            "roster": [
+              {
+                "id": 16,
+                "status": "out"
+              },
+              {
+                "id": 17,
+                "status": "out"
+              },
+              {
+                "id": 18,
+                "status": "out"
+              },
+              {
+                "id": 19,
+                "status": "out"
+              },
+              {
+                "id": 20,
+                "status": "out"
+              },
+              {
+                "id": 21,
+                "status": "out"
+              },
+              {
+                "id": 22,
+                "status": "out"
+              },
+              {
+                "id": 23,
+                "status": "out"
+              },
+              {
+                "id": 24,
+                "status": "out"
+              },
+              {
+                "id": 25,
+                "status": "out"
+              },
+              {
+                "id": 26,
+                "status": "out"
+              },
+              {
+                "id": 27,
+                "status": "out"
+              },
+              {
+                "id": 28,
+                "status": "out"
+              },
+              {
+                "id": 29,
+                "status": "out"
+              },
+              {
+                "id": 30,
+                "status": "out"
+              },
+              {
+                "id": 31,
+                "status": "out"
+              },
+              {
+                "id": 32,
+                "status": "out"
+              },
+              {
+                "id": 33,
+                "status": "out"
+              },
+              {
+                "id": 34,
+                "status": "out"
+              },
+              {
+                "id": 35,
+                "status": "out"
+              },
+              {
+                "id": 36,
+                "status": "out"
+              },
+              {
+                "id": 37,
+                "status": "out"
+              },
+              {
+                "id": 38,
+                "status": "out"
+              },
+              {
+                "id": 39,
+                "status": "out"
+              },
+              {
+                "id": 40,
+                "status": "out"
+              },
+              {
+                "id": 41,
+                "status": "out"
+              },
+              {
+                "id": 42,
+                "status": "out"
+              },
+              {
+                "id": 43,
+                "status": "out"
+              },
+              {
+                "id": 44,
+                "status": "out"
+              }
+            ],
+            "result": null
+          },
+          "target": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
+          "receipt": "docs/reports/sweep-b/L6-12-proof.json",
+          "level": "L6"
         }
       ],
       "historical": {
@@ -8608,7 +11112,40 @@
         ],
         "method": "Ordinary damage caused the death; physical WASD/mouse resumed from the restored checkpoint. An earlier failed attempt used stale extrapolated group memory and is retained; the follow-up resets that memory and obeys the visible Stay-with-group instruction. NEXT: native closed/open Northgate collision probe and timed uninterrupted night-caption/end-shot capture at both tiers."
       },
-      "remaining": "Ordinary damage caused the death; physical WASD/mouse resumed from the restored checkpoint. An earlier failed attempt used stale extrapolated group memory and is retained; the follow-up resets that memory and obeys the visible Stay-with-group instruction. NEXT: native closed/open Northgate collision probe and timed uninterrupted night-caption/end-shot capture at both tiers."
+      "remaining": "Ordinary damage caused the death; physical WASD/mouse resumed from the restored checkpoint. An earlier failed attempt used stale extrapolated group memory and is retained; the follow-up resets that memory and obeys the visible Stay-with-group instruction. NEXT: native closed/open Northgate collision probe and timed uninterrupted night-caption/end-shot capture at both tiers.",
+      "reviewDecision": {
+        "row": "L6-12",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "63aabdf0f84e2366e0ed026435a47ed53c91c701",
+        "clauses": [
+          {
+            "clause": "Northgate is solid when closed and drawn open when passable; night caption \"Night. Still alive.\"; end shot frames the scene; result counts match the objective.",
+            "verdict": "FAIL",
+            "note": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-12-proof.json",
+            "sha256": "99f05a4401026ff56b1a49bba0692d19f41df7690e3bc0ba0583cf3a4ce6192a",
+            "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-northgate.json",
+            "sha256": "e97b825ff46792700514a05254c6fe6fb8e0191c6196a5b9d262dd9bbd0fede6",
+            "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-render-initial-review.json",
+            "sha256": "e4d0e2d421c4226edc0736a828d9ce831be6ee253230f9a12c88344ec634a949",
+            "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0–2.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     },
     {
       "id": "L6-13",
