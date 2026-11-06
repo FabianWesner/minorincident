@@ -2805,6 +2805,168 @@
       },
       "target": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used.",
       "receipt": "docs/reports/sweep-b/L5-02-proof.json"
+    },
+    {
+      "id": "L5-14",
+      "clause": "reviewed four exact matched L4 L5 camera pairs",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "pairs": [
+          {
+            "spot": "pair-plaza",
+            "pose": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                -17,
+                0,
+                3
+              ],
+              "target": [
+                -17,
+                0,
+                3
+              ],
+              "position": [
+                33,
+                40,
+                53
+              ],
+              "spot": null
+            },
+            "levels": [
+              "L4",
+              "L5"
+            ]
+          },
+          {
+            "spot": "pair-harbor-street",
+            "pose": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                -10,
+                0,
+                -39
+              ],
+              "target": [
+                -10,
+                0,
+                -39
+              ],
+              "position": [
+                -31.999999999999996,
+                13,
+                -35
+              ],
+              "spot": null
+            },
+            "levels": [
+              "L4",
+              "L5"
+            ]
+          },
+          {
+            "spot": "pair-metro-entrance",
+            "pose": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                37.7854,
+                0.13,
+                -44.199999999999996
+              ],
+              "target": [
+                37.7854,
+                0,
+                -44.199999999999996
+              ],
+              "position": [
+                51.7854,
+                17,
+                -30.199999999999996
+              ],
+              "spot": null
+            },
+            "levels": [
+              "L4",
+              "L5"
+            ]
+          },
+          {
+            "spot": "pair-kessler-lane",
+            "pose": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                68,
+                0,
+                28.6
+              ],
+              "target": [
+                68,
+                0,
+                28.6
+              ],
+              "position": [
+                54,
+                17,
+                14.600000000000001
+              ],
+              "spot": null
+            },
+            "levels": [
+              "L4",
+              "L5"
+            ]
+          }
+        ],
+        "initialRenderedSunIntensity": 0.816,
+        "endRenderedSunIntensity": 0.44964999999999994,
+        "renderedReduction": 0.44895833333333335,
+        "endSimMultiplier": 0.5
+      },
+      "target": "Same authored city geometry and matched camera pairs; sun reduction\u226530%; atmosphere comparison remains P",
+      "receipt": "docs/reports/sweep-b/L5-14-proof.json"
     }
   ],
   "observations": {

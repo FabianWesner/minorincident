@@ -680,6 +680,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ]],
   ['L5-02', [{ clause: 'actual opening objective silence allied-fire and moving-vehicle clocks', policy: 'controlled-fixture' }]],
   ['L5-03', [{ clause: 'actual initial infected positions accepted cohorts and all street bands', policy: 'controlled-fixture' }]],
+  ['L5-14', [{ clause: 'sun intensity state multiplier at metro/end', policy: 'complete' }, { clause: 'reviewed four exact matched L4 L5 camera pairs', policy: 'controlled-fixture' }]],
   ['L5-13', [{ clause: 'zero-survivor ordinary route and rescued result', policy: 'controlled-fixture' }]],
   ['L5-11', [{ clause: 'reviewed heroine colour in fog and bus hiding-place readability', policy: 'real-input-webgl2' }]],
   ['L5-05', [
