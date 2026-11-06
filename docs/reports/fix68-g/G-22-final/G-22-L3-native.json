@@ -1,0 +1,250 @@
+{
+  "sourceHash": "e852c77197ca6572ea8d3de51ca6c3889616e73123d5e6856d48a9caef412b7f",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5",
+  "generatedAt": "2026-11-06T04:22:05.877Z",
+  "row": "G-22",
+  "level": "L3",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/G-22-final/G-22-L3-low-complete.json.gz",
+      "sha256": "74ab26b55520e23333e2748e86050c7ef3db1253c44ba483d01fb46b8c08e174",
+      "outcome": "complete",
+      "nativeStateHash": "c10259a8",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 405.5,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 385.5,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 365.5,
+            "spawned": 50,
+            "firstAttackSeconds": 3.8833333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "path": "docs/reports/fix68-g/G-22-final/G-22-L3-low-stationary.json.gz",
+      "sha256": "2e7032c8adfe644769c7f33b7962cbd9bd653131dd6658c5c8e5b48b58e3c335",
+      "outcome": "tick-budget",
+      "nativeStateHash": "79a7cab8",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-stationary.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.966666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-stationary.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 50,
+            "firstAttackSeconds": 6.2,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-low-stationary.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/G-22-final/G-22-L3-high-complete.json.gz",
+      "sha256": "4e486be4774ec12006fe321cd0ab878de33c3f8f4cb60ebc6d2b39c119dd6745",
+      "outcome": "complete",
+      "nativeStateHash": "56de2856",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 241.45,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 221.45,
+            "spawned": 60,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 201.45,
+            "spawned": 100,
+            "firstAttackSeconds": 14.633333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "path": "docs/reports/fix68-g/G-22-final/G-22-L3-high-stationary.json.gz",
+      "sha256": "653425a7d68530c9fdec5f36b9b091b8dc90e89221d86661a34bef430d4c14db",
+      "outcome": "tick-budget",
+      "nativeStateHash": "303646a6",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-stationary.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 60,
+            "firstAttackSeconds": 26.516666666666666,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-stationary.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 100,
+            "firstAttackSeconds": 23.116666666666667,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-22-final/G-22-L3-high-stationary.json.gz"
+        }
+      ]
+    }
+  ]
+}

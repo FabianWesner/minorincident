@@ -189,7 +189,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push(p); return p;
     };
     for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay);
-    const cover = add(l3AlarmCoverId, 'veh.military-truck', -131.5, -5), box = l3AlarmCoverBox;
+    const cover = add(l3AlarmCoverId, 'veh.military-truck', -131.5, 5), box = l3AlarmCoverBox;
     layout.colliders.push({ id: `${l3AlarmCoverId}/cargo`, minTier: 0, maxTier: 5, aabb: {
       min: [cover.position[0] + box.x - box.halfX, box.y - box.halfY, cover.position[2] + box.z - box.halfZ],
       max: [cover.position[0] + box.x + box.halfX, box.y + box.halfY, cover.position[2] + box.z + box.halfZ] } });

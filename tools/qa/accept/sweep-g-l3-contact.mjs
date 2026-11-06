@@ -11,12 +11,13 @@ import { observeAttackStarts } from '../threat/attackStarts.ts';
 import { provenance } from './probe.ts';
 
 const tier = process.argv[2] ?? 'low';
+const passive = process.env.SWEEP_G_PASSIVE === '1';
 if (!['low', 'high'].includes(tier)) throw new Error('Expected low|high');
 const campaign = () => { const save = preset('L3-default'); save.settings.quality = tier; return save; };
 const identity = provenance(), samples = [], attacks = [], paths = [];
 let waves, observedHash, controlHash;
 const run = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefined, 0, { quality: tier,
-  beforeBegin: world => {
+  passive, beforeBegin: world => {
     const ids = new SpawnIdentities(), probe = new PathProbe();
     const observer = new WaveObserver(world, 'L3', entity => ids.identity(entity));
     const spawn = world.infected.spawn.bind(world.infected);
@@ -59,11 +60,12 @@ const run = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefine
   }, beforeDispose: world => { observedHash = stateHash(world.getState()); },
 });
 const control = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefined, 0, { quality: tier,
+  passive,
   beforeDispose: world => { controlHash = stateHash(world.getState()); } });
-const result = { ...identity, tier, method: 'Unchanged canonical complete-input prefix for90sim seconds: all three scheduled station waves plus at least40s after the third. No event injection or actor relocation. Actual attack starts on every target; independent2.5x path snapshots at cohort age18/20s. Exact final state compared with an unobserved90s control.',
+const result = { ...identity, tier, passive, method: 'Unchanged canonical input prefix for90sim seconds (passive flag records stationary protection): all three scheduled station waves plus at least40s after the third. No event injection or actor relocation. Actual attack starts on every target; independent2.5x path snapshots at cohort age18/20s. Exact final state compared with an unobserved90s control.',
   run, control, observedHash, controlHash, identical: observedHash === controlHash, waves, paths, attacks, samples };
 const data = gzipSync(JSON.stringify(result));
-const path = `docs/reports/sweep-g/G-22-L3-${tier}-trace.json.gz`; writeFileSync(path, data);
+const path = `${process.env.SWEEP_G_TRACE_OUT ?? 'docs/reports/sweep-g'}/G-22-L3-${tier}-trace.json.gz`; writeFileSync(path, data);
 console.log(JSON.stringify({ path, sha256: createHash('sha256').update(data).digest('hex'), identical: result.identical, waves,
   paths: paths.map(p => ({ wave: p.wave, age: p.ageSeconds, admitted: p.admitted, live: p.actors.length, bounded: p.actors.filter(e => e.boundedPath).length })) }));
 process.exitCode = result.identical ? 0 : 1;
