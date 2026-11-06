@@ -1,57 +1,42 @@
 {
   "row": "L10-03",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "17dab51b92fc7db2e9a7f2da6e705c6073626ecb",
+  "status": "PASS",
+  "reviewer": "Codex fix65-c",
+  "date": "2026-11-06",
+  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
-      "verdict": "FAIL",
-      "note": "Fresh current-source low/high competent and stationary native ledgers reproduce research-campus concurrent dog peak5 against unchanged2\u20134 bound. This is a measuredFAIL, not historical inference. All four native runs retained; complete routes finish; stationary outcomes are explicitly tick-budget and do not establish route completion. Species/group/pickup clauses retain their existing checks and any unmeasured scope; a current counterexample suffices for FAIL. No population, target, timer or cap was changed."
+      "verdict": "PASS",
+      "note": "Final low/high competent and stationary native regional ledgers meet all unchanged regular/species/group bounds. Campus dog peak is4 in all four policies. Complete routes finish; stationary policies intentionally end at their tick budgets. Both tiers pick up the handgun at3497 before the first fringe dog at4950, with zero premature-dog ticks and exact independent native state hashes. Low corridor regular group peaks20/20/20, dogs4, Alphas3; high groups32/32/30, dogs3, Alphas2 on complete routes. Low/high corridor pressure5.60/5.32 windups per minute retains pressure. Counts, stats, timers and global caps unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-      "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
-      "what": "Immutable current native L10-low-complete.json; exact region census and source/observer hashes retained, no visual claim."
+      "file": "docs/reports/fix65-c/L10-98ba7f93-low-complete.json.gz",
+      "sha256": "437071375ee6a621e653e0d0c2da26dfc690b249fff956a888fd8459cac8aea5",
+      "what": "Reviewed final-source low/complete regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-stationary.json.gz",
-      "sha256": "134ee0496eccea97b2d6bf95b30b161029ce370dec68a248aae9886643486265",
-      "what": "Immutable current native L10-low-stationary.json; exact region census and source/observer hashes retained, no visual claim."
+      "file": "docs/reports/fix65-c/L10-98ba7f93-low-stationary.json.gz",
+      "sha256": "b4ad49599b6de82abf86c2154e93a126b4ff43862603994043d906b924ff73cb",
+      "what": "Reviewed final-source low/stationary regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-fixtures.json.gz",
-      "sha256": "c7b4f2f71c32f2fc0b166f62cff7d101d00d672783e608b474b46e94cefe17f5",
-      "what": "Immutable current native L10-low-fixtures.json; exact region census and source/observer hashes retained, no visual claim."
+      "file": "docs/reports/fix65-c/L10-98ba7f93-high-complete.json.gz",
+      "sha256": "c508ad09d8bb57a5eb1ae1459ed1b976887533278a8a7fe33929397f9c08c462",
+      "what": "Reviewed final-source high/complete regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-checkpoints.json.gz",
-      "sha256": "c581bd29e13fa617b72bb00899efa0a58c9f4fbf2044d2418b4267e1dbba4c20",
-      "what": "Immutable current native L10-low-checkpoints.json; exact region census and source/observer hashes retained, no visual claim."
+      "file": "docs/reports/fix65-c/L10-98ba7f93-high-stationary.json.gz",
+      "sha256": "41fda4cdc8e747de79d9a8be02ebcfab6bb80ccc9e47078092616fc5f21cd337",
+      "what": "Reviewed final-source high/stationary regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
-      "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
-      "what": "Immutable current native L10-high-complete.json; exact region census and source/observer hashes retained, no visual claim."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-stationary.json.gz",
-      "sha256": "032518be2f558199988e1770e1bf55fed8db5fc15cae156e16cc3e752a233e23",
-      "what": "Immutable current native L10-high-stationary.json; exact region census and source/observer hashes retained, no visual claim."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-fixtures.json.gz",
-      "sha256": "a523956f29593e063c2465c28fb2388ef3ec0c6c54a4c0815807d878782025bd",
-      "what": "Immutable current native L10-high-fixtures.json; exact region census and source/observer hashes retained, no visual claim."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-checkpoints.json.gz",
-      "sha256": "0b6c516821d047785d37007ff66fbbb5e97aa32847fd7d016f778ab741c6aa5b",
-      "what": "Immutable current native L10-high-checkpoints.json; exact region census and source/observer hashes retained, no visual claim."
+      "file": "docs/reports/fix65-c/L10-98ba7f93-fringe-dogs.json",
+      "sha256": "f451766b92f9c8f6cb6019351e6b6b7e3520da4549a8df8cb46e1757f51b32c9",
+      "what": "Read-only complete native both-tier handgun/dog timing; state hashes equal independent controls; no dog before actual pickup."
     }
   ],
-  "notes": "Current5-dog counterexample retained; game change not small/established within sweep. No criterion/checker change."
+  "notes": "Original five-dog FAIL remains under historical/L10-03-review.json. Moving only the high patrol station avoids the campus overlap; the low tier uses its existing admission budget with Alpha/regular/dog order. Rejected shared-placement and regular-first trials are retained; no criterion relaxation."
 }
