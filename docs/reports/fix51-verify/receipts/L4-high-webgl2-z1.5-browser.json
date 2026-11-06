@@ -1211,6 +1211,35 @@
       "value": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question.",
       "target": "Clean living safe plaza; readable battle courier. Huge-mixed-war feel remains P.",
       "receipt": "docs/reports/sweep-b/L4-18-proof.json"
+    },
+    {
+      "id": "L4-05",
+      "clause": "actual admitted street cohort sizes",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "smallest": 1,
+        "largest": 5,
+        "firstSingleton": {
+          "key": "2340:17",
+          "actors": [
+            {
+              "id": 279,
+              "tick": 2340,
+              "origin": 17,
+              "edge": 4,
+              "x": 0,
+              "z": 18.8
+            }
+          ]
+        },
+        "nativeStateHash": "6f55579b",
+        "canonicalStateHash": "6f55579b"
+      },
+      "target": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
+      "receipt": "docs/reports/sweep-b/L4-05-proof.json"
     }
   ],
   "observations": {
