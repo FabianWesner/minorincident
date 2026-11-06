@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "5e104db33681dcd04e4755e07ecd073cced8230b",
+  "commit": "8023bad78de3aea29241fe2f5594a32d5f06a120",
   "clauses": [
     {
       "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
@@ -12,6 +12,21 @@
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-high.json",
+      "sha256": "6cfc667b17305aa15f6c9295b5e929eac90020fa32dd80f5594bb4b6a56a8dcc",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-low.json",
+      "sha256": "078797f07956c0ba381468d206bb448d6614121947311fca14329d2baed95b90",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-12-final-captures.json",
+      "sha256": "3e83a7ccac3b5699a211cb51f090ed439590e3fc38beb4868d4611a5d3650f04",
+      "what": "All nine original frames viewed: compact teal pips above all35/6 followers, full bars at5/1, and no bars in deliberate hidden-bars negative control. Both qualities retain all35 group-size samples and exact identities."
+    },
     {
       "file": "docs/reports/sweep-g/G-12-webgl2-high-captures.json",
       "sha256": "f5dec25a6711d0480fe8ece480243af40dbaf9584111226456f8924826c7bfc1",
@@ -52,5 +67,6 @@
       "sha256": "6bc309dc85ecffd1ecef1767501096876673af8dae00607ce25971f3887668f8",
       "what": "webgpu/low: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
     }
-  ]
+  ],
+  "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
 }
