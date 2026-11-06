@@ -5,7 +5,7 @@
   "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T10:11:23.863Z",
+  "generatedAt": "2026-11-06T10:27:41.442Z",
   "policies": [
     {
       "tier": "low",
@@ -78,6 +78,13 @@
       "receipt": "docs/reports/fix51-verify/receipts/L7-low-readability-browser.json"
     },
     {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-routes-browser.json"
+    },
+    {
       "tier": "high",
       "policy": "real-input-browser",
       "outcome": "complete",
@@ -90,6 +97,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-high-readability-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-routes-browser.json"
     }
   ],
   "globals": [
@@ -4507,13 +4521,91 @@
     },
     {
       "id": "L7-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "The actual route reaches the corridor; fresh boundary-wall poses are enclosed. The second connected path and unscripted wrong-turn clarity were not explored.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/physical-routes physical Harbor and Lakeshore corridor routes with current bounds sweep: {\"valid\":true,\"routeA\":true,\"routeB\":true,\"perimeter\":true,\"validReview\":true,\"seenA\":true,\"seenB\":true} (target Real progressed save, complete physical input trace, both distinct map branches into corridor and current production perimeter sweep; reviewed frames.; PASS); low/physical-routes screenshot-only wrong-turn and route-clarity review: {\"clarity\":true,\"commands\":16,\"note\":\"Both connected routes physically traversed at both tiers. Separate low screenshot-only controller after logged east-junction prefix reaches(-35.419,47.813), t5136, via16manual WASD commands. Plaza shortcut hits collision and recovers down-left onto marked road, then upper-left along lake road; fences/facades and wall read as limits, no dead-end street looked l… (full values in JSON) (target Separate screenshot-only controller after logged east-junction prefix; physical wrong-turn recovery and route to corridor; no post-prefix map/nav/planner recommendations.; PASS); high/physical-routes physical Harbor and Lakeshore corridor routes with current bounds sweep: {\"valid\":true,\"routeA\":true,\"routeB\":true,\"perimeter\":true,\"validReview\":true,\"seenA\":true,\"seenB\":true} (target Real progressed save, complete physical input trace, both distinct map branches into corridor and current production perimeter sweep; reviewed frames.; PASS); high/physical-routes screenshot-only wrong-turn and route-clarity review: {\"clarity\":true,\"commands\":16,\"note\":\"Both connected routes physically traversed at both tiers. Separate low screenshot-only controller after logged east-junction prefix reaches(-35.419,47.813), t5136, via16manual WASD commands. Plaza shortcut hits collision and recovers down-left onto marked road, then upper-left along lake road; fences/facades and wall read as limits, no dead-end street looked l… (full values in JSON) (target Separate screenshot-only controller after logged east-junction prefix; physical wrong-turn recovery and route to corridor; no post-prefix map/nav/planner recommendations.; PASS) Manual review PASS (FRESH, Codex sweep-c6): Current low/high actual carried-save WASD/mouse runs reach corridor by Harbor plus west rear-yard alley and by Lakeshore. All106qualification frames personally inspected;54excluded harness frames also inspected. Distinct continuously logged routes, normal collision/AI, courier protection only. A separate low screenshot-only controller after actual-input east-junction prefix makes16manual commands to corridor at(-35.419,47.813),t5136; recovers from blocked paved-plaza shortcut onto visually continuous marked roads. Visible retained facades/fences/wall and vehicle detours; no misleading dead-end street or wall/slab crossing seen. Close zoom mostly shows immediate lane; wide zoom gives usable continuity. Reviewer previously read map, so no blinded first-exposure claim. Separate production Rapier43-run perimeter sweep passes129walking and95clear driving probes per tier with zero escapes. Route A ends in native departure camera, so those last paired requestedzoom frames do not assert independentzoom. Earlier harness failures archived and excluded. Dedicated consumer rejects23semantic faults. No game or criterion changes.",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/sweep-c6/L7-06/review.json",
+        "docs/reports/sweep-c6/L7-06/low-screen-physical.json.gz",
+        "docs/reports/sweep-c6/L7-06/routes-A-producer.mjs",
+        "docs/reports/sweep-c6/L7-06/routes-B-producer.mjs",
+        "docs/reports/sweep-c6/L7-06/screen-producer.mjs",
+        "docs/reports/sweep-c6/L7-06/bounds-provenance.json",
+        "docs/reports/sweep-c6/L7-06/coverage-proof.json",
+        "docs/reports/sweep-c6/L7-06/raw-cleanup.json"
+      ],
       "expected": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L7-06",
+          "clause": "physical Harbor and Lakeshore corridor routes with current bounds sweep",
+          "tier": "low",
+          "policy": "physical-routes",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "routeA": true,
+            "routeB": true,
+            "perimeter": true,
+            "validReview": true,
+            "seenA": true,
+            "seenB": true
+          },
+          "target": "Real progressed save, complete physical input trace, both distinct map branches into corridor and current production perimeter sweep; reviewed frames.",
+          "receipt": "docs/reports/sweep-c6/L7-06/review.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-06",
+          "clause": "screenshot-only wrong-turn and route-clarity review",
+          "tier": "low",
+          "policy": "physical-routes",
+          "status": "PASS",
+          "value": {
+            "clarity": true,
+            "commands": 16,
+            "note": "Both connected routes physically traversed at both tiers. Separate low screenshot-only controller after logged east-junction prefix reaches(-35.419,47.813), t5136, via16manual WASD commands. Plaza shortcut hits collision and recovers down-left onto marked road, then upper-left along lake road; fences/facades and wall read as limits, no dead-end street looked like the route and no wall/slab crossed. One precautionary sidestep reason incorrectly described a stalled frame; the next action explicitly corrects it from HUD101→88m. The same reviewer previously read the authored map, so this is image-driven navigation, not a blinded first-exposure usability trial. Native driver detached throughout; no post-prefix nav/planner calls. Close zoom limits distant route visibility, wide zoom makes continuity legible. Courier god only; incoming companions can die naturally, no survivor-pace claim."
+          },
+          "target": "Separate screenshot-only controller after logged east-junction prefix; physical wrong-turn recovery and route to corridor; no post-prefix map/nav/planner recommendations.",
+          "receipt": "docs/reports/sweep-c6/L7-06/low-screen-physical.json.gz",
+          "level": "L7"
+        },
+        {
+          "id": "L7-06",
+          "clause": "physical Harbor and Lakeshore corridor routes with current bounds sweep",
+          "tier": "high",
+          "policy": "physical-routes",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "routeA": true,
+            "routeB": true,
+            "perimeter": true,
+            "validReview": true,
+            "seenA": true,
+            "seenB": true
+          },
+          "target": "Real progressed save, complete physical input trace, both distinct map branches into corridor and current production perimeter sweep; reviewed frames.",
+          "receipt": "docs/reports/sweep-c6/L7-06/review.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-06",
+          "clause": "screenshot-only wrong-turn and route-clarity review",
+          "tier": "high",
+          "policy": "physical-routes",
+          "status": "PASS",
+          "value": {
+            "clarity": true,
+            "commands": 16,
+            "note": "Both connected routes physically traversed at both tiers. Separate low screenshot-only controller after logged east-junction prefix reaches(-35.419,47.813), t5136, via16manual WASD commands. Plaza shortcut hits collision and recovers down-left onto marked road, then upper-left along lake road; fences/facades and wall read as limits, no dead-end street looked like the route and no wall/slab crossed. One precautionary sidestep reason incorrectly described a stalled frame; the next action explicitly corrects it from HUD101→88m. The same reviewer previously read the authored map, so this is image-driven navigation, not a blinded first-exposure usability trial. Native driver detached throughout; no post-prefix nav/planner calls. Close zoom limits distant route visibility, wide zoom makes continuity legible. Courier god only; incoming companions can die naturally, no survivor-pace claim."
+          },
+          "target": "Separate screenshot-only controller after logged east-junction prefix; physical wrong-turn recovery and route to corridor; no post-prefix map/nav/planner recommendations.",
+          "receipt": "docs/reports/sweep-c6/L7-06/low-screen-physical.json.gz",
+          "level": "L7"
+        }
+      ],
       "historical": {
         "id": "L7-06",
         "level": "L7",
@@ -4524,7 +4616,65 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
+        "clause": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\"."
+      },
+      "reviewDecision": {
+        "row": "L7-06",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c6",
+        "date": "2026-11-06",
+        "commit": "02abad35a6d5e9e0a5c9c53356b6515bb0d2dbd7",
+        "clauses": [
+          {
+            "clause": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
+            "verdict": "PASS",
+            "note": "Current low/high actual carried-save WASD/mouse runs reach corridor by Harbor plus west rear-yard alley and by Lakeshore. All106qualification frames personally inspected;54excluded harness frames also inspected. Distinct continuously logged routes, normal collision/AI, courier protection only. A separate low screenshot-only controller after actual-input east-junction prefix makes16manual commands to corridor at(-35.419,47.813),t5136; recovers from blocked paved-plaza shortcut onto visually continuous marked roads. Visible retained facades/fences/wall and vehicle detours; no misleading dead-end street or wall/slab crossing seen. Close zoom mostly shows immediate lane; wide zoom gives usable continuity. Reviewer previously read map, so no blinded first-exposure claim. Separate production Rapier43-run perimeter sweep passes129walking and95clear driving probes per tier with zero escapes. Route A ends in native departure camera, so those last paired requestedzoom frames do not assert independentzoom. Earlier harness failures archived and excluded. Dedicated consumer rejects23semantic faults. No game or criterion changes."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c6/L7-06/review.json",
+            "sha256": "971a933b21b95f0796043fa3bdc998e8dc146fe95c9f882cd18821764d9fd847",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/routes-A-producer.mjs",
+            "sha256": "cbeb740426bc587f0fc4cd2ea86e3420d6ac3ff0687bb524a76957d4f2ba2524",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/routes-B-producer.mjs",
+            "sha256": "e0351c8983248e3433ec8d59ecd900298b77d66712675eb2266ca5c8352b3b3b",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/screen-producer.mjs",
+            "sha256": "1a65b813b624ddfb3f817def171bdb6fef35183b834a09e8c4badd95fa570292",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/bounds-provenance.json",
+            "sha256": "180189a6cdb1388a04f939dd79669e040a5f556407fb6d2c47d4b0fee72ec35f",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/coverage-proof.json",
+            "sha256": "8608ec81e226a78241befd6936aba160daa73e8e85710efa4b4c53ad8e5d0cb9",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L7-06/raw-cleanup.json",
+            "sha256": "130f647e29297d9419416a9f42effb7efe20c3ab70d534f45479677c65d022b1",
+            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+      }
     },
     {
       "id": "L7-07",

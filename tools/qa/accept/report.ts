@@ -113,6 +113,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'G-12': source.expected,
     'G-24': source.expected,
     'L7-08': source.expected,
+    'L7-06': source.expected,
     'L7-11': source.expected,
     'L8-04': source.expected,
     'L8-03': source.expected,
