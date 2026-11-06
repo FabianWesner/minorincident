@@ -1,0 +1,22 @@
+{
+  "row": "G-19",
+  "status": "NOT CHECKED",
+  "coverage": "22 low/high controlled authored fixture poses,44 reviewed/hash/deleted frames; native health/target/attack samples are in refreshed level reports. No visible HP bar. Shutter closure has dog inside beside courier. Wreck full-size crop has connected panniers, no apparent hull overlap.",
+  "limits": [
+    "APC boardCar command fails Transport doorway unavailable at frame61 (two tiers); later hull/exit poses not reached.",
+    "Fixed fixture camera ignores requested zoom changes; labels retained as requests, not independent coverage.",
+    "Every actual campaign closure and vehicle boarding remains unqualified."
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-19-scenes-captures.json",
+      "sha256": "e80f9a06185bfcec8f8f5fb9451595fba33f367047961d45ffd971521d62a817",
+      "what": "All44 frames visually inspected; no HP bar; dog inside shutter and beside wreck; APC boarding incomplete."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-19-scenes.json",
+      "sha256": "2a1b6bba2df17ece5da93c08c103c22f6390daaa2a162d0a8bb84a98574946ea",
+      "what": "Read-only positions, health, collision metrics and exact retained fixture exceptions."
+    }
+  ]
+}
