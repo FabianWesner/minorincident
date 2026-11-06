@@ -8,7 +8,7 @@
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
       "verdict": "PASS",
-      "note": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Native complete-route acceptance measures follower 28 in L5 step/look with at least 46 samples in every seed. Ratios to group median: seed 1 1.0000, seed 2 0.9749, seed 3 0.8877. Only one of three valid seeds is below the unchanged 0.95 floor; the existing multi-seed rule flags only when the same follower/phase fails in at least two seeds. Pace passes; current waiting upper bound is 0%, so the measured L5 high G-13 clauses pass."
+      "note": "Current-source L5 high canonical receipt, sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Existing human-only, step-only evaluator passes every follower/phase; all have at least two qualified valid seeds. Follower 28 step/look ratios are 1.0119, 0.9873, 0.8945 (47/46/46 samples). Only one seed is below 0.95, fewer than the two required to flag. Waiting upper bound is 0%. High-tier pace/wait clauses PASS; L5-08 formation and rendered bars remain separately open."
     },
     {
       "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -24,8 +24,8 @@
   "evidence": [
     {
       "file": "docs/reports/fix73-b/G13-high-summary.json",
-      "sha256": "b96c4292edffdc7b47b010d9241a02df6a8ecd2819c8d3bb03e751b6593bdf9c",
-      "what": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Native complete-route acceptance measures follower 28 in the L5 step/look phase with at least 46 samples in every seed. Ratios to the group median: seed 1 1.0000, seed 2 0.9749, seed 3 0.8877. Seed 3 is below the unchanged 0.95 floor; the required two failing seeds are not established. L5 high G-13 remains open/FAIL."
+      "sha256": "48eef98e2c4074f7c7045d4791d4dc9a092971ea78e8dc6ab736b71ee6d9bff2",
+      "what": "Current-source L5 high canonical receipt, sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Existing human-only, step-only evaluator passes every follower/phase; all have at least two qualified valid seeds. Follower 28 step/look ratios are 1.0119, 0.9873, 0.8945 (47/46/46 samples). Only one seed is below 0.95, fewer than the two required to flag. Waiting upper bound is 0%. High-tier pace/wait clauses PASS; L5-08 formation and rendered bars remain separately open."
     },
     {
       "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
