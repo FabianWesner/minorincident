@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L6",
   "tier": "low",
-  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
-  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
-  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "fixtureHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
   "checks": [
     {
       "id": "G-25",
@@ -33,14 +33,14 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 204,
-      "simSeconds": 194,
-      "maxNoProgressSeconds": 32.86666666666667,
+      "wallSeconds": 198,
+      "simSeconds": 189,
+      "maxNoProgressSeconds": 32.626,
       "deaths": 0,
       "assists": 1,
       "attacks": {
-        "weapon.army-mg": 1173,
-        "weapon.fire-axe": 28
+        "weapon.army-mg": 1217,
+        "weapon.fire-axe": 9
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -62,7 +62,7 @@
         {
           "id": "shelter",
           "text": "Look around the shelter · rest while you can",
-          "tick": 13,
+          "tick": 11,
           "marker": {
             "anchor": null,
             "ring": null,
@@ -74,7 +74,7 @@
         {
           "id": "stop",
           "text": "Stop the infected · Retreat in 0:36",
-          "tick": 1998,
+          "tick": 2003,
           "marker": {
             "anchor": null,
             "ring": null,
@@ -85,8 +85,8 @@
         },
         {
           "id": "retreat",
-          "text": "Cover the retreat through the tunnel · 242 m",
-          "tick": 3257,
+          "text": "Cover the retreat through the tunnel · 245 m",
+          "tick": 3259,
           "marker": {
             "anchor": "l6-next",
             "ring": {
@@ -106,7 +106,7 @@
         {
           "id": "exit",
           "text": "Bring the survivors into the night · 0/1 out · 25 m",
-          "tick": 10555,
+          "tick": 10498,
           "marker": {
             "anchor": "night-exit",
             "ring": {
@@ -129,14 +129,14 @@
   "issues": [
     {
       "level": "L6",
-      "tick": 1215,
+      "tick": 1241,
       "x": 3,
       "z": 0,
       "severity": "P2",
       "kind": "stuck-navigating",
       "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter · rest while you can\"",
       "captures": [
-        "captures/accept-L6-1215-stuck-navigating.jpg"
+        "captures/accept-L6-1241-stuck-navigating.jpg"
       ],
       "step": "shelter",
       "objective": "Look around the shelter · rest while you can"

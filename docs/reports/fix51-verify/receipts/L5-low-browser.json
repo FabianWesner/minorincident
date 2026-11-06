@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L5",
   "tier": "low",
-  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
-  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
-  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "fixtureHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 292,
+      "wallSeconds": 297,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 45.71666666666667,
+      "maxNoProgressSeconds": 33.333333333333336,
       "deaths": 0,
       "assists": 4,
       "attacks": {
-        "weapon.shotgun": 119
+        "weapon.army-mg": 1097
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -53,14 +53,13 @@
         "weapon.bat",
         "weapon.army-mg",
         "weapon.handgun",
-        "weapon.kick",
-        "weapon.shotgun"
+        "weapon.kick"
       ],
       "steps": [
         {
           "id": "emerge",
           "text": "Unbar the cellar door · 4 m",
-          "tick": 16,
+          "tick": 11,
           "marker": {
             "anchor": "l5-brace",
             "ring": {
@@ -80,7 +79,7 @@
         {
           "id": "look",
           "text": "Look for anyone still alive",
-          "tick": 807,
+          "tick": 781,
           "marker": {
             "anchor": "l5-brace",
             "ring": null,
@@ -91,8 +90,8 @@
         },
         {
           "id": "metro",
-          "text": "Lead the survivors down into the Metro · Survivors in 0/3 · 67 m",
-          "tick": 15288,
+          "text": "Lead the survivors down into the Metro · Survivors in 0/1 · 65 m",
+          "tick": 15076,
           "marker": {
             "anchor": "l5-metro-in",
             "ring": {
@@ -115,56 +114,14 @@
   "issues": [
     {
       "level": "L5",
-      "tick": 5366,
-      "x": 45.4,
-      "z": 6.7,
+      "tick": 11672,
+      "x": -46.4,
+      "z": -21.9,
       "severity": "P2",
       "kind": "stuck-navigating",
-      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 1/5\"",
+      "text": "21 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
       "captures": [
-        "captures/accept-L5-5366-stuck-navigating.jpg"
-      ],
-      "step": "look",
-      "objective": "Look for anyone still alive"
-    },
-    {
-      "level": "L5",
-      "tick": 10918,
-      "x": -52.8,
-      "z": -9.6,
-      "severity": "P2",
-      "kind": "stuck-navigating",
-      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
-      "captures": [
-        "captures/accept-L5-10918-stuck-navigating.jpg"
-      ],
-      "step": "look",
-      "objective": "Look for anyone still alive"
-    },
-    {
-      "level": "L5",
-      "tick": 12453,
-      "x": -31.7,
-      "z": -5.1,
-      "severity": "P2",
-      "kind": "stuck-at-ring",
-      "text": "46 s without objective progress standing at the ring (undefined m); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
-      "captures": [
-        "captures/accept-L5-12453-stuck-at-ring.jpg"
-      ],
-      "step": "look",
-      "objective": "Look for anyone still alive"
-    },
-    {
-      "level": "L5",
-      "tick": 14269,
-      "x": -49.8,
-      "z": -23.4,
-      "severity": "P2",
-      "kind": "stuck-navigating",
-      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 4/5\"",
-      "captures": [
-        "captures/accept-L5-14269-stuck-navigating.jpg"
+        "captures/accept-L5-11672-stuck-navigating.jpg"
       ],
       "step": "look",
       "objective": "Look for anyone still alive"

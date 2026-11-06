@@ -1,0 +1,304 @@
+{
+  "gameCommit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "reviewSchemasAndPresentEvidenceHashes": "PASS",
+  "productionSourceUnchangedSinceGameCommit": true,
+  "quality": {
+    "explicitTypecheck": {
+      "command": "npx tsc --noEmit",
+      "status": 0
+    },
+    "receipt": {
+      "file": "docs/reports/fix73-b/E22-checks.json",
+      "sha256": "a21b88501ce4770693a5f50761719b67e54f8bb941460a52c04fbb0df38bb7a4"
+    },
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 22.394
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 12.418
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 26.41
+      }
+    ],
+    "unitFiles": 27,
+    "unitTests": 107
+  },
+  "acceptance": {
+    "commands": [
+      "npm run qa:accept -- --level L4 --reuse",
+      "npm run qa:accept -- --level L5 --reuse",
+      "npm run qa:accept -- --level L6 --reuse"
+    ],
+    "levels": [
+      {
+        "file": "docs/reports/fix51-verify/L4.json",
+        "sha256": "7cbbaba1d404f302ee64d3b399760976f9eb3a7e535e95635590ade0dba1c68e",
+        "level": "L4",
+        "commandExit": 1,
+        "freshFailRows": [
+          "L4-13",
+          "L4-17"
+        ],
+        "incompleteRows": 12,
+        "retainedHistoricalFailRows": []
+      },
+      {
+        "file": "docs/reports/fix51-verify/L5.json",
+        "sha256": "34260281bd35cd8f11fa36732944d0199bdba9d4d5f13df7043678cf8914c24a",
+        "level": "L5",
+        "commandExit": 1,
+        "freshFailRows": [
+          "L5-08"
+        ],
+        "incompleteRows": 9,
+        "retainedHistoricalFailRows": [
+          "L5-05"
+        ]
+      },
+      {
+        "file": "docs/reports/fix51-verify/L6.json",
+        "sha256": "ef09398f0935770080c3cd52b44d0490a727d69ea74f956fa66fb1437cdf9ebf",
+        "level": "L6",
+        "commandExit": 1,
+        "freshFailRows": [],
+        "incompleteRows": 10,
+        "retainedHistoricalFailRows": [
+          "L6-05",
+          "L6-07"
+        ]
+      }
+    ],
+    "cells": [
+      {
+        "level": "L4",
+        "tier": "low",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+          "sha256": "8ce7ad2afeb9c9625068bca0f640fb9a7db82b3f33906afc2f5cd2cd20546ef6"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+          "sha256": "3a7c4c1787f58d30267ab1496dd4103f301facaf8d40dc77b1d4a2e9970b81e4"
+        },
+        "nativeStateHash": "18e71cbb",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L4-low.json",
+          "sha256": "2421d8c32ee5f714e4fac8898004cf50db7a5e7a9f953326bf020c717797183f"
+        },
+        "captureCount": 7,
+        "issues": []
+      },
+      {
+        "level": "L4",
+        "tier": "high",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+          "sha256": "2b0b4c6299191493db93d1ed6797b65d35825cc0c85c78e42941574efa31688a"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+          "sha256": "5676bfdc715dc4f1ccf3bf61025c4cbdf14ca59a94513cff7146c84d23901e7a"
+        },
+        "nativeStateHash": "86ab19e8",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L4-high.json",
+          "sha256": "3f2d09702bec824537ed78d6b4603271dbe4ec5a121922c9b7cd519cb9f916a4"
+        },
+        "captureCount": 7,
+        "issues": []
+      },
+      {
+        "level": "L5",
+        "tier": "low",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L5-low-browser.json",
+          "sha256": "1cd4f4e94cff34e02604703e0c2ac40e69ab3099d91f4102a3f4355d5ee54856"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+          "sha256": "a45380c8ed38540675cbd47561d2b2740741590284656fb9e6d11f39c4319dec"
+        },
+        "nativeStateHash": "0a23911a",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L5-low.json",
+          "sha256": "f45077f426d04ed21f7fddc74be6480bc50f8ee6110db206bff32863cc00d548"
+        },
+        "captureCount": 9,
+        "issues": [
+          {
+            "level": "L5",
+            "tick": 11672,
+            "x": -46.4,
+            "z": -21.9,
+            "severity": "P2",
+            "kind": "stuck-navigating",
+            "text": "21 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
+            "captures": [
+              "captures/accept-L5-11672-stuck-navigating.jpg"
+            ],
+            "step": "look",
+            "objective": "Look for anyone still alive"
+          }
+        ]
+      },
+      {
+        "level": "L5",
+        "tier": "high",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L5-high-browser.json",
+          "sha256": "91a24c498ff9f9d83797c6a69199d3c5a92215eb2087c99d14e2d644372d3608"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+          "sha256": "3213544a5c4dbbfcd0c885be9ce746357677edf6c6c2360f6d41d9241660b21e"
+        },
+        "nativeStateHash": "147553b8",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L5-high.json",
+          "sha256": "495ca2da6c97b8be2b94fb22fab896b0ffbe88b1c052637d13adc99ee69a8486"
+        },
+        "captureCount": 9,
+        "issues": []
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L6-low-browser.json",
+          "sha256": "1df987e61ef478a4fb43bf8d0fe6ac1d1e002437be443ea19efed7582ba8f888"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+          "sha256": "3a18db740b1153c9195968f0cdd7e698951a6c8a9892fdf9595e81a74cd2b5e1"
+        },
+        "nativeStateHash": "269abc86",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L6-low.json",
+          "sha256": "4d3bcfcb4266e4ad6ab63b115a96b2231cb1045d38bf8eb58011a8adb3ed87fe"
+        },
+        "captureCount": 7,
+        "issues": [
+          {
+            "level": "L6",
+            "tick": 1241,
+            "x": 3,
+            "z": 0,
+            "severity": "P2",
+            "kind": "stuck-navigating",
+            "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter · rest while you can\"",
+            "captures": [
+              "captures/accept-L6-1241-stuck-navigating.jpg"
+            ],
+            "step": "shelter",
+            "objective": "Look around the shelter · rest while you can"
+          }
+        ]
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "browser": {
+          "file": "docs/reports/fix51-verify/receipts/L6-high-browser.json",
+          "sha256": "37d9c426944b9753eeddd68be6b4802c9add13ebca1afb88ab8208259e74e8e9"
+        },
+        "native": {
+          "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+          "sha256": "ad1af088bc4b66bbf35bf888c0148d94e2ff5f2dd81850ec7f1a25eedc97f823"
+        },
+        "nativeStateHash": "51053774",
+        "captureLedger": {
+          "file": "docs/reports/fix73-b/browser-capture-reviews/L6-high.json",
+          "sha256": "bf304093e9a86fafa03460b5f39728743b5814ad883212902d8d6385867e0ea0"
+        },
+        "captureCount": 7,
+        "issues": [
+          {
+            "level": "L6",
+            "tick": 1246,
+            "x": 3,
+            "z": 0,
+            "severity": "P2",
+            "kind": "stuck-navigating",
+            "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter · rest while you can\"",
+            "captures": [
+              "captures/accept-L6-1246-stuck-navigating.jpg"
+            ],
+            "step": "shelter",
+            "objective": "Look around the shelter · rest while you can"
+          }
+        ]
+      }
+    ],
+    "browserScope": "Headless shared-pool Metal WebGL2, zoom1.5, real WASD/mouse, standard immortal, no objective skips, zero console/page errors, no frame timing. Completion does not qualify retention or every visual criterion."
+  },
+  "threat": {
+    "command": "npm run qa:threat",
+    "status": 0,
+    "runAlone": true,
+    "loadBeforeStart": {
+      "oneMinute": 5.89,
+      "fiveMinutes": 5.16,
+      "fifteenMinutes": 5.14
+    },
+    "receipt": {
+      "file": "docs/reports/fix73-b/threat-audit.json.gz",
+      "sha256": "5cbe0da4bf0ed0bcad748b53aa454a27ba40dcf238a665d6fb5cad2b8d4e61b9"
+    },
+    "uncompressedSha256": "b457285d96618d003e5920f994ddb31cbc512679e34224535d9926ce9cf088f3",
+    "revision": "d53c4bf7f832ef83d98ec9b1c559989d125e63cc",
+    "mainRevision": "c1b3f8135cf3e352117b519d8e6eaab065756d64",
+    "sourceMatchesMain": false,
+    "productionSourceMatchesGameCommit": true,
+    "levels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "flags": []
+  },
+  "census": {
+    "file": "docs/reports/fix73-b/L4-look-seeds.json",
+    "sha256": "062b65e16ad458b9beaacd429adc0fe34c9624655476025bd5dc11e7ecd253f0"
+  },
+  "gameplayEquivalence": {
+    "file": "docs/reports/fix73-b/L4-look-equivalence.json",
+    "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a"
+  },
+  "renderReview": {
+    "file": "docs/reports/fix73-b/L4-17-render-review.json",
+    "sha256": "6f79ea4950bf57cff56d452b35274477abc0ea33dc7e6b8058a9e955de9ed0af"
+  },
+  "paceReview": {
+    "file": "docs/reports/fix73-b/G13-high-summary.json",
+    "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26"
+  },
+  "captures": {
+    "browserRouteCount": 46,
+    "mortalL4RowCount": 16,
+    "totalCurrentSourceReviewedAndDeleted": 62,
+    "remainingJpegs": []
+  },
+  "allOwnedChecksTerminal": true,
+  "remainingFailures": [
+    "L4-13 sustained admissions",
+    "L4-17 actual frozen geometry height",
+    "L5-08 low-tier formation; remaining compound clauses unqualified"
+  ],
+  "method": "Brief measured-FAIL path; no counts, caps, timers, criteria or checker thresholds lowered."
+}
