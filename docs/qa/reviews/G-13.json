@@ -8,7 +8,7 @@
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
       "verdict": "PASS",
-      "note": "Current-source L5 high canonical receipt, sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Existing human-only, step-only evaluator passes every follower/phase; all have at least two qualified valid seeds. Follower 28 step/look ratios are 1.0119, 0.9873, 0.8945 (47/46/46 samples). Only one seed is below 0.95, fewer than the two required to flag. Waiting upper bound is 0%. High-tier pace/wait clauses PASS; L5-08 formation and rendered bars remain separately open."
+      "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
     },
     {
       "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -24,8 +24,8 @@
   "evidence": [
     {
       "file": "docs/reports/fix73-b/G13-high-summary.json",
-      "sha256": "48eef98e2c4074f7c7045d4791d4dc9a092971ea78e8dc6ab736b71ee6d9bff2",
-      "what": "Current-source L5 high canonical receipt, sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Existing human-only, step-only evaluator passes every follower/phase; all have at least two qualified valid seeds. Follower 28 step/look ratios are 1.0119, 0.9873, 0.8945 (47/46/46 samples). Only one seed is below 0.95, fewer than the two required to flag. Waiting upper bound is 0%. High-tier pace/wait clauses PASS; L5-08 formation and rendered bars remain separately open."
+      "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
+      "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
     },
     {
       "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
