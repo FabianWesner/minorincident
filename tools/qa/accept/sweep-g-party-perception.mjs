@@ -48,6 +48,6 @@ for (const tier of ['low', 'high']) for (let n = 1; n <= 10; n++) {
  finally { w?.dispose(); }
  console.log(level, tier, result.cells.filter(c => c.level === level && c.tier === tier).length);
 }
-writeFileSync('docs/reports/sweep-g/G-18-party-perception.json.gz', gzipSync(JSON.stringify(result)));
+writeFileSync(process.env.SWEEP_G_PARTY_OUT ?? 'docs/reports/sweep-g/G-18-party-perception.json.gz', gzipSync(JSON.stringify(result)));
 console.log('cells', result.cells.length, 'errors', result.errors);
 process.exitCode = result.errors.length ? 1 : 0;
