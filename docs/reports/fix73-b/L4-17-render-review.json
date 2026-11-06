@@ -1,0 +1,283 @@
+{
+  "row": "L4-17",
+  "status": "FAIL",
+  "reviewer": "Codex/fix73-b",
+  "date": "2026-11-06",
+  "method": "Shared browser pool; headless Metal WebGL2; production mortal complete-bot route from L4 start. 184 rendered sim-second samples per tier through 150.183 seconds of war. Actual frozen vertices projected through instance/world matrices; airborne blast flights excluded. Every one of 16 captures personally inspected, hashes preserved, raw JPEGs deleted afterward. No whole-route, continuous player-depth, or universal limb qualification.",
+  "tiers": [
+    {
+      "tier": "low",
+      "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
+      "receipt": "docs/reports/fix73-b/L4-17-low-render.json.gz",
+      "sha256": "dd781fd06ae5d9c1fe11e034b85723f233f3b5f111be7b3b23b39a602c790791",
+      "sampleCount": 184,
+      "warSeconds": 150.18333333333334,
+      "maxFrozenVertexTopM": 1.7037132501602172,
+      "worst": {
+        "tick": 9420,
+        "phase": "war",
+        "warSeconds": 124.18333333333334,
+        "actualTier": "low",
+        "renderTier": "low",
+        "backend": "webgl",
+        "audit": {
+          "count": 173,
+          "sunkPairs": 0,
+          "heapPairs": 218,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.5,
+          "maxLiftM": 0.43999999999999995,
+          "courierClear": false
+        },
+        "layoutEnvelopeTopM": 0.6599999999999999,
+        "maxRenderedTopM": 1.7037132501602172,
+        "frozenBodies": 178,
+        "worst": {
+          "id": 304,
+          "x": -19.60649299621582,
+          "y": 0.49000000953674316,
+          "z": -5.301366329193115,
+          "top": 1.7037132501602172,
+          "mesh": "corpses:infected.riot:death-side:0:near",
+          "vertices": 3465
+        },
+        "player": {
+          "x": -15.611954689025879,
+          "y": 0.7099999785423279,
+          "z": -0.6234301328659058,
+          "yaw": -1.8089635896484013
+        },
+        "deaths": 5,
+        "descendAt": 0
+      },
+      "maxRootLiftM": 0.49,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
+      "receipt": "docs/reports/fix73-b/L4-17-high-render.json.gz",
+      "sha256": "d769cd35bd2c7bc9847a876a83f118f60c5091480c44d17e67fdc9103b819cb5",
+      "sampleCount": 184,
+      "warSeconds": 150.18333333333334,
+      "maxFrozenVertexTopM": 1.645605993270874,
+      "worst": {
+        "tick": 10980,
+        "phase": "war",
+        "warSeconds": 150.18333333333334,
+        "actualTier": "high",
+        "renderTier": "high",
+        "backend": "webgl",
+        "audit": {
+          "count": 192,
+          "sunkPairs": 0,
+          "heapPairs": 192,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.500000000000001,
+          "maxLiftM": 0.43999999999999995,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.6599999999999999,
+        "maxRenderedTopM": 1.645605993270874,
+        "frozenBodies": 229,
+        "worst": {
+          "id": 403,
+          "x": -14.36767292022705,
+          "y": 0.49000000953674316,
+          "z": -8.161709785461426,
+          "top": 1.645605993270874,
+          "mesh": "corpses:inf.firefighter:death-side:0:near/-1/-1",
+          "vertices": 3648
+        },
+        "player": {
+          "x": -8.854365348815918,
+          "y": 0.7049999833106995,
+          "z": -16.3491153717041,
+          "yaw": 2.996708486188215
+        },
+        "deaths": 5,
+        "descendAt": 0
+      },
+      "maxRootLiftM": 0.43999999999999995,
+      "errors": []
+    }
+  ],
+  "captures": [
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "cc132e6ca52c6ce8f906ec313b27847ebb49a761415bbbd6c03aa508d8ce5f77",
+      "tier": "low",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow",
+      "tick": 5220,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier is visible at center beside the corgi and nearby bodies. No body drawn over the courier is identified in this frame."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "6699bd416bbfa3d3cc9ad2e56625917f0476757d954a374366de16d31aa0009b",
+      "tier": "low",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 5220,
+      "reviewer": "Codex/fix73-b",
+      "what": "Compact body group at the street curb near a lamp post. Angular overlapping body surfaces, with no obvious stretched limb isolated in these early detail frames."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "b775ba82acf599229bd8df2d4c08cf891b1b95114db1b5e9146375badd17c3b5",
+      "tier": "low",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow",
+      "tick": 5220,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier is visible at center beside the corgi and nearby bodies. No body drawn over the courier is identified in this frame."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "f2f97209feaf4d5d67dab08104e0e5f3bdff798b90aeaebc658f5419b5aca8c9",
+      "tier": "low",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 5220,
+      "reviewer": "Codex/fix73-b",
+      "what": "Compact body group at the street curb near a lamp post. Angular overlapping body surfaces, with no obvious stretched limb isolated in these early detail frames."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z0.5-route.jpg",
+      "sha256": "ba4207c965c8f76ec7922e37b45c3f3df9a8866ec2f73b221c973e4c7a136e4e",
+      "tier": "low",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier remains visible in the central follow view with nearby fallen bodies; the later plaza is densely covered. The wide frame gives the courier a visible outline. No corpse covering the courier is identified in this frame."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z0.5-pile.jpg",
+      "sha256": "479f76f4ebe46a15dc353409a9295c4c0fe8f60ca19db03cfcb0050a08b1df87",
+      "tier": "low",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Dense plaza corpse field. Close detail shows a dark suited Alpha and a long tapered dark polygon toward a neighboring yellow figure; stretched-looking geometry is visible, but this frame does not isolate whether the strip belongs to a live or dead actor. Wider view shows separated bodies across the plaza."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z1.5-route.jpg",
+      "sha256": "48d729cbc5ee2ae4328b09cf1afbb0f8b55a4cefb7349ee51fda07925c3407dc",
+      "tier": "low",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier remains visible in the central follow view with nearby fallen bodies; the later plaza is densely covered. The wide frame gives the courier a visible outline. No corpse covering the courier is identified in this frame."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z1.5-pile.jpg",
+      "sha256": "01631c60f85d2df635101c65e2d2d6f029a8f5250193081f5cc6a464dd72de5c",
+      "tier": "low",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Dense plaza corpse field. Close detail shows a dark suited Alpha and a long tapered dark polygon toward a neighboring yellow figure; stretched-looking geometry is visible, but this frame does not isolate whether the strip belongs to a live or dead actor. Wider view shows separated bodies across the plaza."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "96c6966f97470ebaff9d333b70f1ec67dc158af554886f148ea105723268f811",
+      "tier": "high",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow",
+      "tick": 2820,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier, corgi, and allies are clearly visible in the opening battle; bodies beside the supply crate do not cover the courier."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "b5e02a45e1d7e15811bb203a5f9cc3765c8972f9eff2ae2f7ab0e8ae85acd510",
+      "tier": "high",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 2820,
+      "reviewer": "Codex/fix73-b",
+      "what": "Responders lie bunched near the checkpoint chairs and sign; one body has raised boots and another bends forward. Courier is outside this camera detail."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "e6d94e388a323682175a2d47bb8eb7b326e1e9a7ecd99cd37adfaa6c267c8b79",
+      "tier": "high",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow",
+      "tick": 2820,
+      "reviewer": "Codex/fix73-b",
+      "what": "Courier, corgi, and allies are clearly visible in the opening battle; bodies beside the supply crate do not cover the courier."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "4482f09f7272565fd2b4edc0353e8d479b105a27971a66c4dc426cade270d287",
+      "tier": "high",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 2820,
+      "reviewer": "Codex/fix73-b",
+      "what": "Responders lie bunched near the checkpoint chairs and sign; one body has raised boots and another bends forward. Courier is outside this camera detail."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z0.5-route.jpg",
+      "sha256": "84a40f6611f8a5741cc921a60a8f2aaa5c13b4b099d88f07a79ad9856136cbac",
+      "tier": "high",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Crowded combat around the courier, who remains visible at the center. Several figures have sharp elongated torso/arm-looking strips. No universal player-depth or limb PASS is inferred."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z0.5-pile.jpg",
+      "sha256": "ac0cda902a4156dc40fe15bfa1e66420c4a6b337f5c473458fa9d4d575da23cc",
+      "tier": "high",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Dense responder bodies and a large grey prone Alpha beside tents. Angular polygon strips are visible on several surrounding figures; this frame does not isolate a corpse-only cause. The field does not read as a clean set of low, separate bodies."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z1.5-route.jpg",
+      "sha256": "566c9ee4eef06bbf4aef919d23acc7f03ade692355c6ea787c0d5e1b03f33233",
+      "tier": "high",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Crowded combat around the courier, who remains visible at the center. Several figures have sharp elongated torso/arm-looking strips. No universal player-depth or limb PASS is inferred."
+    },
+    {
+      "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z1.5-pile.jpg",
+      "sha256": "0775b23e65fcd9313fec91ca3d4c91e62db8e475b7458b031c1483de1a5e068a",
+      "tier": "high",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved",
+      "tick": 9180,
+      "reviewer": "Codex/fix73-b",
+      "what": "Dense responder bodies and a large grey prone Alpha beside tents. Angular polygon strips are visible on several surrounding figures; this frame does not isolate a corpse-only cause. The field does not read as a clean set of low, separate bodies."
+    }
+  ]
+}
