@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "29a9274cced01b9795c57e79596e84cd71ec376d271611f4e21e6dbeb2695fe5",
+  "sourceHash": "ef2aed8867a9170a6be806a440f413c66e12404109f59d726afc18d82c3728c2",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checks": [
     {
@@ -335,6 +335,32 @@
       "tier": "low",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json"
+    },
+    {
+      "id": "L4-05",
+      "clause": "actual same-tick same-source street cohort size",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "minimum": 2,
+        "maximum": 5,
+        "cohorts": 73,
+        "admitted": 175,
+        "edges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "nativeHash": "749df8f1",
+        "canonicalHash": "749df8f1"
+      },
+      "target": "all actual street cohorts2–5;≥3 street edges;canonical final-state equality",
+      "receipt": "docs/reports/fix67-b/L4-05-recheck.json"
     }
   ],
   "errors": []

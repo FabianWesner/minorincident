@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "29a9274cced01b9795c57e79596e84cd71ec376d271611f4e21e6dbeb2695fe5",
+  "sourceHash": "ef2aed8867a9170a6be806a440f413c66e12404109f59d726afc18d82c3728c2",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -178,15 +178,15 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "cc931db3a856e6f4667a21683a04cceaa34fc0f30500d3652b10e03755083938",
+        "snapshotSha256": "0162cec5fb11b1858259a33872754e8d04fc256d2b72c58be51dcdfb20ee01d0",
         "damage": 100,
         "expected": {
           "id": "line-1",
           "anchor": {
             "x": -20,
-            "y": 0.7049990296363831,
+            "y": 0.7099999785423279,
             "z": -2,
-            "yaw": -1.308298601416261
+            "yaw": -0.2698468959457379
           },
           "gates": {},
           "racks": {
@@ -257,15 +257,15 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "3d3949f7c33f00c2b238b124f99d4c7caa8cb2de69d724ec1768b49f90db3bfd",
+        "snapshotSha256": "76d40431274e81686b41b2e2e23d98d96ccd32ba47e137f82f61bfc297f92695",
         "damage": 100,
         "expected": {
           "id": "nests",
           "anchor": {
-            "x": -9.8,
-            "y": 0.7099999785423279,
-            "z": -6.5,
-            "yaw": 2.730453527449571
+            "x": -11,
+            "y": 0.7049999833106995,
+            "z": 16,
+            "yaw": 1.2419301639617784
           },
           "gates": {},
           "racks": {
@@ -279,6 +279,7 @@
           "followers": [],
           "pickups": [
             84,
+            85,
             86,
             87,
             88,
@@ -300,8 +301,8 @@
         "observed": {
           "id": "nests",
           "position": {
-            "x": -9.8,
-            "z": -6.5
+            "x": -11,
+            "z": 16
           },
           "gates": {},
           "racks": {
@@ -335,15 +336,15 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "740568fd0951fff1641efde1b856bdd0ba626bcc1ba1db82afeff441aba826e1",
+        "snapshotSha256": "2575edd3174a4fa77c59835b613de5d212c2e0ce9dbece84829182f9d756d4a2",
         "damage": 100,
         "expected": {
           "id": "armor",
           "anchor": {
             "x": -11,
-            "y": 0.7049999833106995,
+            "y": 0.7099999785423279,
             "z": 16,
-            "yaw": 3.0795793383942636
+            "yaw": 1.712017938990416
           },
           "gates": {},
           "racks": {
@@ -357,6 +358,7 @@
           "followers": [],
           "pickups": [
             84,
+            85,
             86,
             87,
             88,
@@ -413,7 +415,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "c2a7813dc7bf9f585e6f53f1013ff7ca584a932530107b104a9b328b3a09cd9f",
+        "snapshotSha256": "977c6e5a271dc9fe658043ee5a63545d3493f1e2da5dfa3a22d31f98ae5dc5a5",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -421,7 +423,7 @@
             "x": -4,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": 1.5667899602518003
+            "yaw": 2.0356500129836004
           },
           "gates": {},
           "racks": {
@@ -435,6 +437,7 @@
           "followers": [],
           "pickups": [
             84,
+            85,
             86,
             87,
             88,
@@ -485,8 +488,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "146891dc",
-    "control": "146891dc",
+    "observed": "749df8f1",
+    "control": "749df8f1",
     "identical": true
   }
 }

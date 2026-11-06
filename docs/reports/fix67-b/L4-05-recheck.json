@@ -1,0 +1,44 @@
+{
+  "row": "L4-05",
+  "status": "SCOPED PASS",
+  "sourceHash": "ef2aed8867a9170a6be806a440f413c66e12404109f59d726afc18d82c3728c2",
+  "ledger": "docs/reports/sweep-b/L4-cohorts.json",
+  "ledgerSha256": "d336153848685e88a2f5e0faeaff2949dcd99e65d01a0c87a8bf501d8194ecc4",
+  "observation": "At both tiers every actual same-tick same-origin street cohort has2\u20135 admitted bodies and at least3 street edges participate. Complete world hashes equal current canonical controls. Admission waits for at least2 slots and leaves one-body pending remainders queued; quotas/caps/cadence are unchanged. This qualifies the singleton defect only; wall-crossing and forbidden-source clauses are not inferred.",
+  "rows": [
+    {
+      "tier": "low",
+      "minimum": 2,
+      "maximum": 5,
+      "cohorts": 73,
+      "admitted": 175,
+      "edges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "nativeHash": "749df8f1",
+      "canonicalHash": "749df8f1"
+    },
+    {
+      "tier": "high",
+      "minimum": 2,
+      "maximum": 5,
+      "cohorts": 31,
+      "admitted": 90,
+      "edges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "nativeHash": "dd3384a6",
+      "canonicalHash": "dd3384a6"
+    }
+  ]
+}
