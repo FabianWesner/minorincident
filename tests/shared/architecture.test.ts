@@ -33,6 +33,14 @@ test('the sim import graph never reaches renderer, UI, debug or DOM code (only t
           if (ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {
             for (const item of node.importClause.namedBindings.elements) expect(mathClasses.has((item.propertyName ?? item.name).text)).toBe(true);
           }
+        } else if (path === 'three/addons/libs/fflate.module.js') {
+          // The accepted save codec uses deterministic synchronous compression;
+          // worker, stream and browser adapters remain outside the sim graph.
+          expect(ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)).toBeTruthy();
+          if (ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {
+            const synchronous = new Set(['gzipSync', 'gunzipSync', 'strFromU8', 'strToU8']);
+            for (const item of node.importClause.namedBindings.elements) expect(synchronous.has((item.propertyName ?? item.name).text)).toBe(true);
+          }
         } else expect(path).toBe('@dimforge/rapier3d-compat');
       }
       ts.forEachChild(node, walk);
