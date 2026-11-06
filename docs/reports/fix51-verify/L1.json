@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L1",
-  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
   "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T12:00:58.476Z",
+  "generatedAt": "2026-11-06T13:46:43.293Z",
   "policies": [
     {
       "tier": "low",
@@ -639,7 +639,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -970,7 +970,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -1111,7 +1111,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -1301,7 +1301,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -1376,7 +1376,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -1524,7 +1524,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -2303,7 +2303,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -2391,7 +2391,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -2479,7 +2479,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     }
   ],
@@ -2563,17 +2563,17 @@
     },
     {
       "id": "L1-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); low/stationary initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/complete initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/stationary initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS) Manual review PASS (STALE, Codex sweep-a2): Fresh current-source untouched seed1 morning runs: 51 low / 58 high human civilians, zero infected or combat, every tick through 60 seconds. Maximum near-stationary interval without an authored meaningful target ahead is 133 ticks (2.217s) in both tiers. Technician faces the actual lab door. Four negative/boundary measurement controls pass.",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); low/stationary initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/complete initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/stationary initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS) Manual review PASS (FRESH, Codex sweep-a3): Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
         "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
         "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
-        "docs/reports/sweep-a2/L1-02-current-review.json",
-        "docs/reports/sweep-a2/L1-02-current-ledger.json.gz"
+        "docs/reports/sweep-a3/L1-02-current-review.json",
+        "docs/reports/sweep-a3/L1-02-current-ledger.json.gz"
       ],
       "expected": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
       "checks": [
@@ -2703,52 +2703,43 @@
       "reviewDecision": {
         "row": "L1-02",
         "status": "PASS",
-        "reviewer": "Codex sweep-a2",
-        "date": "2026-11-05",
-        "commit": "897bf99ce750445e7fbb4a514ece7ce5ca3fe248",
+        "reviewer": "Codex sweep-a3",
+        "date": "2026-11-06",
+        "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
         "clauses": [
           {
             "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
             "verdict": "PASS",
-            "note": "Fresh current-source untouched seed1 morning runs: 51 low / 58 high human civilians, zero infected or combat, every tick through 60 seconds. Maximum near-stationary interval without an authored meaningful target ahead is 133 ticks (2.217s) in both tiers. Technician faces the actual lab door. Four negative/boundary measurement controls pass."
+            "note": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-a2/L1-02-current-review.json",
-            "sha256": "861639380c50e4aaee48c1d6f7f902a7faad4145dd414c5ae54991391afd7d9d",
-            "what": "Current-source every-human/every-tick morning census and actual body-yaw/facing target observation, both qualities for sixty seconds; four negative/boundary controls. No spawn, teleport, protection or mission skips."
+            "file": "docs/reports/sweep-a3/L1-02-current-review.json",
+            "sha256": "148ec696982637b5bc139f93fe79d74d7dd5041bfd10d4e546f11bc8bb008cd3",
+            "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-02-current-ledger.json.gz",
-            "sha256": "074e579761a5dfc8b997fd2b306cce56024def2bf11b781dbb6e53c292b9c721",
-            "what": "Current-source every-human/every-tick morning census and actual body-yaw/facing target observation, both qualities for sixty seconds; four negative/boundary controls. No spawn, teleport, protection or mission skips."
+            "file": "docs/reports/sweep-a3/L1-02-current-ledger.json.gz",
+            "sha256": "daa59a04ed1e5be7d61c86666d0f219456281144f76716fb216d5f62bd5671fd",
+            "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
           }
         ],
-        "notes": "This is the source criterion’s simulation check. Animals are excluded from human count; even that stricter census meets50–60. Existing whole-native-run census53/60 also passes.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "notes": "Scripted sim criterion. Actual actor positions/yaws, authored targets, civilian identity census and combat events measured for every tick; no visual appearance claim. Native scripted observation rerun after the final constant-width ring change.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
       "id": "L1-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-a2): All20 fresh low/high frames inspected: clerk148/155 hands parcel to courier, waves, walks back through shop door, then settled panel closes. Both94-tick giving/waving windows have zero hidden ticks, and no clerk hidden while outdoors(z>−38.5). Same actor throughout, no new identity substitute; final clerkId0/closed-door state. Toast partly overlaps lower bodies but hands/parcel remain visible. Seven story controls pass; independent one-second tail confirms visual door closure. No game change. Parcel handover and subsequent delivery objective are visible; the complete clerk walk-back/door closure/no-vanish sequence was not retained as a timed strip.",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "Manual review PASS (FRESH, Codex sweep-a3): All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof. Parcel handover and subsequent delivery objective are visible; the complete clerk walk-back/door closure/no-vanish sequence was not retained as a timed strip.",
       "automatedComplete": true,
       "receipt": [
-        "docs/reports/sweep-a2/L1-03-story-proof.json",
-        "docs/reports/sweep-a2/L1-03-image-review.json",
-        "docs/reports/sweep-a2/clerk-final-ledger.json.gz",
-        "docs/reports/sweep-a2/clerk-final-photos.json",
-        "docs/reports/sweep-a2/clerk-door-tail-ledger.json.gz",
-        "docs/reports/sweep-a2/clerk-door-tail-photos.json",
-        "docs/reports/sweep-a2/reviewed/clerk-door-tail-01.jpg",
-        "docs/reports/sweep-a2/reviewed/clerk-final-01.jpg",
-        "docs/reports/sweep-a2/reviewed/clerk-final-02.jpg",
-        "docs/reports/sweep-a2/reviewed/clerk-final-03.jpg",
-        "docs/reports/sweep-a2/reviewed/clerk-final-04.jpg",
-        "docs/reports/sweep-a2/reviewed/clerk-final-05.jpg"
+        "docs/reports/sweep-a3/L1-03-current-ledger.json.gz",
+        "docs/reports/sweep-a3/L1-03-current-images.json",
+        "docs/reports/sweep-a3/L1-03-story-proof.json"
       ],
       "expected": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
       "checks": [],
@@ -2771,119 +2762,49 @@
       "reviewDecision": {
         "row": "L1-03",
         "status": "PASS",
-        "reviewer": "Codex sweep-a2",
-        "date": "2026-11-05",
-        "commit": "c814135b307ae0c84e09ed61bd26f97af6b18a49",
+        "reviewer": "Codex sweep-a3",
+        "date": "2026-11-06",
+        "commit": "7248826255c34ab9f2adedc37cf6fa46d59663d4",
         "clauses": [
           {
             "clause": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
             "verdict": "PASS",
-            "note": "All20 fresh low/high frames inspected: clerk148/155 hands parcel to courier, waves, walks back through shop door, then settled panel closes. Both94-tick giving/waving windows have zero hidden ticks, and no clerk hidden while outdoors(z>−38.5). Same actor throughout, no new identity substitute; final clerkId0/closed-door state. Toast partly overlaps lower bodies but hands/parcel remain visible. Seven story controls pass; independent one-second tail confirms visual door closure. No game change."
+            "note": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-a2/L1-03-story-proof.json",
-            "sha256": "6811516ef00cefd0eeb26d94018922999bb03162f43aa7a6df20c0b2a0602d04",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+            "file": "docs/reports/sweep-a3/L1-03-current-ledger.json.gz",
+            "sha256": "ada8126d16cae482cffde053251ba5eab18c5ece492bab79d1c7cbfa85ff73f6",
+            "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-03-image-review.json",
-            "sha256": "c75a24fbb364de26f8bbca261ce1f64e402501a93262785ddde6e83b5ae02e1f",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+            "file": "docs/reports/sweep-a3/L1-03-current-images.json",
+            "sha256": "26ef01b46d7ed4d0074f7126e300d5e86a9db28f874c94620240c95462f5ad13",
+            "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
           },
           {
-            "file": "docs/reports/sweep-a2/clerk-final-ledger.json.gz",
-            "sha256": "3cbbdc82667f5348d013cdf535e629a8b98f3fcf6ac0a2592e3433cf51310d36",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/clerk-final-photos.json",
-            "sha256": "9ee2760abcc273f0b1751973e7f9aecabb135929173408f4619a0eb8ad498729",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/clerk-door-tail-ledger.json.gz",
-            "sha256": "73d2d8636111c232415a8888c346e95fd58421e882dd49591f5f91e96be64127",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/clerk-door-tail-photos.json",
-            "sha256": "e122eacacab773406eaeaef27154e3ada99a8459a270a46a0230a951516205c1",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-door-tail-01.jpg",
-            "sha256": "d2cedc571bee0378488e60c422c23218ef547b90e653b587b7b60dd21b93bca3",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-final-01.jpg",
-            "sha256": "d3dedf10cd3d9035a4a1fe8fc426f5c90306a22ecdcc084bc2e7de46640c76a6",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-final-02.jpg",
-            "sha256": "b5e1a06d682e088a6b20c778a0868c592bebdd5cacbe3ef57b5d5a29ee6be806",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-final-03.jpg",
-            "sha256": "e26c39f007192a0f377bbce04d152e778eb04551813d88fee61bb3194ed7c281",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-final-04.jpg",
-            "sha256": "02ce8761b53acd71115ca2fede6521a8a1b55d034deffc7505668156c0165594",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/clerk-final-05.jpg",
-            "sha256": "f84af995d52a807abc4c0f59ff7b44ab41c6c8712b9a3ab8ad2210bf50814842",
-            "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+            "file": "docs/reports/sweep-a3/L1-03-story-proof.json",
+            "sha256": "0616c2f869c23cf64ec0e5173fa031452d60f35188e62df97269e75f64a8a58a",
+            "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
           }
         ],
-        "notes": "Native complete InputFrames only reach pickup, then no injected input. Current scene does not qualify unassisted navigation. No performance timing.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "notes": "Ordinary native InputFrames from fresh game; no relocation, protection, skips or actor substitution.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
       "id": "L1-04",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-a2): All78 fresh frames and eight representative pinned-PROD phases personally inspected. Technician147/154 takes box, signs and returns through the door; same identity throughout. Actual Delivered latch tick3326, technician at indoor spawn66,-16.5, no open door; no courier parcel. Current coat/goggles/gloves/clipboard and framing meet PROD. Speech restored in final50-frame capture. Both364-tick transfer windows have zero simulation-hidden ticks. Six independent story controls pass; between-render drawn flags and incorrect observer finished=false are explicitly diagnostic, not pixel/canonical verdicts. The real route reaches Delivered and the technician/Annex scene; complete walk-back and paired PROD animation comparison are not retained.",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "Manual review PASS (FRESH, Codex sweep-a3): All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment. The real route reaches Delivered and the technician/Annex scene; complete walk-back and paired PROD animation comparison are not retained.",
       "automatedComplete": true,
       "receipt": [
-        "docs/reports/sweep-a2/L1-04-story-proof.json",
-        "docs/reports/sweep-a2/L1-04-image-review.json",
-        "docs/reports/sweep-a2/L1-04-final-ledger.json.gz",
-        "docs/reports/sweep-a2/L1-04-incomplete-ledger.json.gz",
-        "docs/reports/sweep-a2/L1-04-PROD-comparison-provenance.json",
-        "docs/reports/sweep-a2/lab-current-photos.json",
-        "docs/reports/sweep-a2/lab-final-photos.json",
-        "docs/reports/sweep-a2/reviewed/lab-current-01.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-02.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-03.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-04.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-05.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-06.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-current-07.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-01.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-02.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-03.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-04.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-05.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-06.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-07.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-08.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-09.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-10.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-11.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-12.jpg",
-        "docs/reports/sweep-a2/reviewed/lab-final-13.jpg",
-        "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-high.jpg",
-        "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-low.jpg"
+        "docs/reports/sweep-a3/L1-04-current-ledger.json.gz",
+        "docs/reports/sweep-a3/L1-04-current-images.json",
+        "docs/reports/sweep-a3/L1-04-story-proof.json",
+        "docs/reports/sweep-a3/L1-04-PROD-reference.json"
       ],
       "expected": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
       "checks": [],
@@ -2906,166 +2827,41 @@
       "reviewDecision": {
         "row": "L1-04",
         "status": "PASS",
-        "reviewer": "Codex sweep-a2",
-        "date": "2026-11-05",
-        "commit": "a52dfc342cc5b5bc240ce89ddf0a7cf9302defe9",
+        "reviewer": "Codex sweep-a3",
+        "date": "2026-11-06",
+        "commit": "dc8a67dc31e4a99979f5a95f746eec2d4097f810",
         "clauses": [
           {
             "clause": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
             "verdict": "PASS",
-            "note": "All78 fresh frames and eight representative pinned-PROD phases personally inspected. Technician147/154 takes box, signs and returns through the door; same identity throughout. Actual Delivered latch tick3326, technician at indoor spawn66,-16.5, no open door; no courier parcel. Current coat/goggles/gloves/clipboard and framing meet PROD. Speech restored in final50-frame capture. Both364-tick transfer windows have zero simulation-hidden ticks. Six independent story controls pass; between-render drawn flags and incorrect observer finished=false are explicitly diagnostic, not pixel/canonical verdicts."
+            "note": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-a2/L1-04-story-proof.json",
-            "sha256": "441f7d3632967b11cebd99c0f001d342b3a7f231431f2d81307ec835ae01eacb",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+            "file": "docs/reports/sweep-a3/L1-04-current-ledger.json.gz",
+            "sha256": "ac9058571b787c69e5ca9dff03d1e3ee6d6719f419cf4640e1a2a090a8ebbf78",
+            "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-04-image-review.json",
-            "sha256": "681350472c4a013941c20418a5cbd7b2e33bf623bd634a6420d48de87bdef771",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+            "file": "docs/reports/sweep-a3/L1-04-current-images.json",
+            "sha256": "634246cfda1c19bafece96a66ba36602fa2d385f631bd7b00c8659dd6dfc8d23",
+            "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-04-final-ledger.json.gz",
-            "sha256": "04849fbca1f953b35c732be4dcc6eb27ac61d0baa0db060ea232af2607ae0b3d",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+            "file": "docs/reports/sweep-a3/L1-04-story-proof.json",
+            "sha256": "28dd82c3c021afa24311417711fbc6c0a9ad6b6c8bfe012088524576730f91b2",
+            "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-04-incomplete-ledger.json.gz",
-            "sha256": "63ff339e066250d912d4b0b35beac1570f5fad0704c674a3ece671463aab7b47",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/L1-04-PROD-comparison-provenance.json",
-            "sha256": "2e23cd8961b443aadc340fd38b9c4edccbd6c05c7aa33a69263dbc0659f5367f",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/lab-current-photos.json",
-            "sha256": "cc52568894d9ced23a1e44f9cc15f5f4128e076cd726695525a5a959f48c975d",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/lab-final-photos.json",
-            "sha256": "485500988c5c120254201b461f9618029410cf0d552b8fb4ab0652771fc9b786",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-01.jpg",
-            "sha256": "a2b1e8e67891b201157773e4f63b5c1c6a8127d4bbd0c71b377a183d3462537d",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-02.jpg",
-            "sha256": "14f7e7f1ef51e2e451ad48c467d5e89a8d2af839b712a067330e0d06cc681eb7",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-03.jpg",
-            "sha256": "82ddec673fb788cd8a961907b3c76248358644b9ebe240b31b755b54c18a6cf5",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-04.jpg",
-            "sha256": "d46f64596f99e0993409a303748b1c9c150deaf6f785b7b77ca813623ddf06f0",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-05.jpg",
-            "sha256": "8858ecc1829ee67a1d35bd18fcb0d3d563d72d1f428649726bb2b0da54bb21ae",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-06.jpg",
-            "sha256": "7207190d03554d2c1f47ba1015c37a4a2accdffd41e5692b19cd7b8eb8094f0f",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-current-07.jpg",
-            "sha256": "33ea6ecff9d775967bcb445127a949e7480536647a8af98f3a60da1d4f78e13b",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-01.jpg",
-            "sha256": "a2b1e8e67891b201157773e4f63b5c1c6a8127d4bbd0c71b377a183d3462537d",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-02.jpg",
-            "sha256": "e3d0bad46cfa71dba7ae09f47dd841e1d17c038d3318f190abdf34e9a777a2c2",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-03.jpg",
-            "sha256": "f8abcb6367afa370d5cf92d16dd182602396ed30b373cdfaf9892762a71efad9",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-04.jpg",
-            "sha256": "0fa8b733fda14a6be4cb93e7fbc1858b48b50de0003cd571622f0a49e0db9065",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-05.jpg",
-            "sha256": "d176e677ee386499cab4509241775759d2823e39745894f799c8df792dc39342",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-06.jpg",
-            "sha256": "0d2d199ed4b73e786225d3b214014ed9aa0f10a0e0ac4173f5044819b1107eb2",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-07.jpg",
-            "sha256": "b74139848a8d978c4da9329a09c2280d0802a86cd1f4e162136f18f3b415a881",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-08.jpg",
-            "sha256": "d78b3679ac911a1ccc19d5a563966d738f92db64f0e342d90ecf1c5036c807f7",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-09.jpg",
-            "sha256": "d234780f2d484efd985273424ff7f1c8c1eee1fd5c11ecc46447a98bef97b95b",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-10.jpg",
-            "sha256": "81225bbf1cf10388100a2d1b484be5329138d8c5acc95de29e532492eab94738",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-11.jpg",
-            "sha256": "e970e95f37d75c84cc1a1eb81b5e1fa7eab4f6e5e66f623199649c641e43bbbc",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-12.jpg",
-            "sha256": "009abe7d1332a1a7de827b3e72aff694cbb8b89efb252ae5c431abf133d059a2",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/lab-final-13.jpg",
-            "sha256": "b2e08903bcb3e9ba247aafbd0c1c88fc164558c84d0e18a85f65ddef9687bcbe",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-high.jpg",
-            "sha256": "92b801e037ff828b79f1b55cad61c8c37462598fbba5e3e530e5e53d9d3196ff",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/L1-04-pinned-PROD-low.jpg",
-            "sha256": "3e647db089cbd0d0f2af54c8e4405ccc38e50043695be8d350261f121e527269",
-            "what": "Current full handover trace and personally inspected images, independent actual-latch/ownership/return proof, pinned-PROD comparison; earlier incomplete harness trial retained."
+            "file": "docs/reports/sweep-a3/L1-04-PROD-reference.json",
+            "sha256": "275fb42306cb408a5648a1a6655ab58932f8f8cf8ec48fdc255daf0b7a21ec9f",
+            "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
           }
         ],
-        "notes": "Before receipt proves ignored stale visual review. Add exact-clause mapping only; no game/criterion change. No physical-route or performance claim. Prior PROD source0c410e111 is comparison only.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "notes": "P: PO to inspect technician parcel/clipboard hand poses and lab-door walk-back quality against the archived labelled PROD reference.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -3665,7 +3461,7 @@
         ],
         "notes": "Fresh ordinary complete InputFrames in real pooled headless browsers; both renderers and qualities. Every-tick six-second ledger. Fixed presentation-only doorway inspection pose; zoom1.5 setting does not qualify alternate gameplay framing. No relocation, protection or performance timing. Native actual crossing/heading proof remains independent.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -8177,7 +7973,7 @@
         ],
         "notes": "No game change. Native encounter trials are mortal and have no spawn/relocation/protection. Separate browser tour is protected only for visual observation; it does not supply the80percent count.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -8403,7 +8199,7 @@
         ],
         "notes": "No game change. Native complete input prefix obtains parcel only; all bike tests use physical page.keyboard WASD/E. Explicit read-only coordinate assistance means these are not screen-only navigation proof. No performance timing.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -9085,7 +8881,7 @@
         ],
         "notes": "Read-only coordinate assistance explicitly declared, native input only for ordinary parcel pickup prefix. No teleport, navigation injection, protection or objective skip. No unassisted readability or frame-performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -9271,48 +9067,17 @@
     },
     {
       "id": "L1-14",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); low/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED); high/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); high/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED) Manual review PASS (STALE, Codex sweep-a2): Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only.",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); low/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED); high/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); high/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED) Manual review PASS (FRESH, Codex sweep-a3): Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
         "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
         "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
-        "docs/reports/sweep-a2/L1-14-refresh-ledger.json.gz",
-        "docs/reports/sweep-a2/L1-14-refresh-measurement.json",
-        "docs/reports/sweep-a2/L1-14-garage-browser.json.gz",
-        "docs/reports/sweep-a2/garage-photos.json",
-        "docs/reports/sweep-a2/reviewed/garage-01.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-02.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-03.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-04.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-05.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-06.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-07.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-08.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-09.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-10.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-11.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-12.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-13.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-14.jpg",
-        "docs/reports/sweep-a2/L1-14-garage-door-browser.json.gz",
-        "docs/reports/sweep-a2/garage-door-photos.json",
-        "docs/reports/sweep-a2/reviewed/garage-door-01.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-02.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-03.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-04.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-05.jpg",
-        "docs/reports/sweep-a2/L1-14-garage-door-final-browser.json.gz",
-        "docs/reports/sweep-a2/garage-door-final-photos.json",
-        "docs/reports/sweep-a2/reviewed/garage-door-final-01.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-final-02.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-final-03.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-final-04.jpg",
-        "docs/reports/sweep-a2/reviewed/garage-door-final-05.jpg",
-        "docs/reports/sweep-a2/L1-14-image-review.json"
+        "docs/reports/sweep-a3/L1-14-measurements.json",
+        "docs/reports/sweep-a3/L1-14-current-ledger.json.gz"
       ],
       "expected": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "checks": [
@@ -9378,186 +9143,31 @@
       "reviewDecision": {
         "row": "L1-14",
         "status": "PASS",
-        "reviewer": "Codex sweep-a2",
-        "date": "2026-11-05",
-        "commit": "350f8587d73410b8442b52345f687660efa2d6f0",
+        "reviewer": "Codex sweep-a3",
+        "date": "2026-11-06",
+        "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
         "clauses": [
           {
             "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
             "verdict": "PASS",
-            "note": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+            "note": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-a2/L1-14-refresh-ledger.json.gz",
-            "sha256": "97c3b2eb4377fab6d08a7b32796ca6dd59cd9e27abcb57cf66edd447f1cb75cf",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+            "file": "docs/reports/sweep-a3/L1-14-measurements.json",
+            "sha256": "df799849c279e428df8cedfecd147055e7db877a39dc0e4a567858816701f434",
+            "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
           },
           {
-            "file": "docs/reports/sweep-a2/L1-14-refresh-measurement.json",
-            "sha256": "2a4ee6f27f0b46b7a4162e9a2c54edc0f1665e4b8872c7cee7b0de536226d675",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/L1-14-garage-browser.json.gz",
-            "sha256": "faa1ffae31b633fb1427a4972daed6e2a66224073596965675c424f1b29e1843",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/garage-photos.json",
-            "sha256": "afaa24ebb9a594b9a001d0bba6d4fcdb4f65be4a02e1b902b51323d805de0042",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-01.jpg",
-            "sha256": "a122d151f597e9e0e54078de6bff459f4805ebc2a3e99396abf5b46c290b7c02",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-02.jpg",
-            "sha256": "c08796f010bd37e77011444e63f86810464bf12cd1179e1defdbcf9b5b4e5f2f",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-03.jpg",
-            "sha256": "bb299cae29b2118770c549dc3fa506193e9b5c2b6310ec4dea055e0e81e675b2",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-04.jpg",
-            "sha256": "624a1cd9adbbcf1f2abe47e27dd06a6a8eacf90437d6329687ab78640f14b6aa",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-05.jpg",
-            "sha256": "23300114f45e56252c3bd4da874f00d6dfd8c9a6c59ea50d0439f9839142d85d",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-06.jpg",
-            "sha256": "a2efbb4185e542695c2b7f50ccecf28327970e5d7db94fbad21ce1c3636a9500",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-07.jpg",
-            "sha256": "2c3d520886339c66b706da80ad88e5402be62828199ad601438118993cafb511",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-08.jpg",
-            "sha256": "a12e168b6579688c84cb74240816a5449d6eb264f7e02702503c213d74e9e705",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-09.jpg",
-            "sha256": "7639830c2f8086822979646266c907308d30bfa88acfd3f11733fbc71d4f80d5",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-10.jpg",
-            "sha256": "be2ce4789cae96b31862cb136fd47a4ff5bc7f48029a3a8fbe7f0bf3eb861a60",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-11.jpg",
-            "sha256": "6f39862ed15f434d389f811bc642e0638b380b5f6897c8dcba3aeb3ec958f2bd",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-12.jpg",
-            "sha256": "6302fb92319ffb1d27894c227083ac0c23ff2f80f9b07cb5cd76c554c6cbd490",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-13.jpg",
-            "sha256": "2f2e12c7c8374d5afb7acb56b5457d98ab47fa31506369b44abb915e65119441",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-14.jpg",
-            "sha256": "465dc9596f88f6c3144b2d589ab2707ffb922ae0ad658ebfeab20a12c4c9e470",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/L1-14-garage-door-browser.json.gz",
-            "sha256": "679b68dde63e8a7e574d60c62363e5833abfa7f831c64333abc00b69896319a0",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/garage-door-photos.json",
-            "sha256": "2305144195fcc23d38f588a91e350ba8a2339d17da30fa60a85ae98b0651e67a",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-01.jpg",
-            "sha256": "6b36d80481da5396959a2d804834bc4d580c8ecf985a20ea4f2efc47f10096a1",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-02.jpg",
-            "sha256": "faad2f9b4205011375de34eb21ea22714413e0f9de30ea9e6701bf6071bc548d",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-03.jpg",
-            "sha256": "b99f821a949854f7f7b5e134d6833adfdf0f49f9cc3061d01dc0d1b4bc260054",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-04.jpg",
-            "sha256": "b3ac364675d6cf1f06f733377d063c2eb1906077160a13664bc66950a9bd4341",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-05.jpg",
-            "sha256": "916d8674c78a73f94e1b72b4a1058608b26e08df89bddbcd5f4e45cc195503f3",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/L1-14-garage-door-final-browser.json.gz",
-            "sha256": "1c884f5fe6eee423fb1d301d7570bed83c4406b885695aa8617c8b5253dae801",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/garage-door-final-photos.json",
-            "sha256": "96aae8a6fb19e50c742fd303c00d75c7e18440907fb79116e0ec501df7d298a6",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-final-01.jpg",
-            "sha256": "d330c757d1b8bf017cce3e80d9c4c97772aaa9f2db664399609b02929e48838c",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-final-02.jpg",
-            "sha256": "1d2e1429c657a9d95334a307dd781aa25a4eb5f7cb6b84717e488c52e7ea2470",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-final-03.jpg",
-            "sha256": "b6a2240035879941b71d457b8f143958dd01e9ab12983e7e7a5e5c73932789a8",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-final-04.jpg",
-            "sha256": "3af356b71b8b2895ac8f8e73d343ccdbbb63f88bb38acbb99007c59ff5bf76a9",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/reviewed/garage-door-final-05.jpg",
-            "sha256": "341fde381c8907a2ccca8b10023132a3c07c97efcea66669a6a5db154c42f376",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-          },
-          {
-            "file": "docs/reports/sweep-a2/L1-14-image-review.json",
-            "sha256": "9cc3cf77dc70a70df07f97bad44696652818ce998e4dd830f8e32bf41cb1ccc2",
-            "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+            "file": "docs/reports/sweep-a3/L1-14-current-ledger.json.gz",
+            "sha256": "559c289f68168d7c0877deab3be8118a9d7307c50da4810730c539775bfaf8f9",
+            "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
           }
         ],
-        "notes": "No game changes. Native source unchanged; first native command completed trajectories but failed reading sparse historical baseline; exact git object restored and full probe rerun successfully. Camera-only inspection disclosed, no fake mortal or unassisted-navigation claim.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "notes": "Scripted sim criterion: actual admission and nonhidden flags qualify emergence location; no screenshot appearance claim. Courier-target pursuit is distinguished from valid attacks on civilians. Native scripted observation rerun after the final constant-width ring change.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -9651,7 +9261,7 @@
         ],
         "notes": "Incoming courier damage suppressed for mechanical presentation only, infected AI untouched. Visible Get-in text is qualified; no recorded Get-in voice or mortal difficulty claim. No game/criterion change.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
@@ -9709,7 +9319,7 @@
         ],
         "notes": "Only the fresh first run decides the threshold. Excluded diagnostics are disclosed in the lane README. A physical-input replay reached a different ordinary pose; its9-action scoped follow-up is not stitched to this run or counted toward timing, and the unused replay feature was reverted. No counts, timers, caps or criterion changed. Raw images deleted after SHA/observation recording.",
         "freshness": "STALE",
-        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
+        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
       }
     },
     {
