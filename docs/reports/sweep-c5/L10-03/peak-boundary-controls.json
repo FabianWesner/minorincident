@@ -1,0 +1,552 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "0388b3488dd2823b2662e9b7fe4e8bf747b18e00",
+  "toolSha256": "23b4c367ea7e5ff4cd1f2d7c4adaa184c750dd43e926ccb6223292b77c9b86ad",
+  "control": "PASS",
+  "cases": [
+    {
+      "tier": "low",
+      "clause": "residential-fringe normal local concurrent peak bound",
+      "fault": "regularPeak=7",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential-fringe normal local concurrent peak bound",
+      "fault": "regularPeak=17",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area normal local concurrent peak bound",
+      "fault": "normalPeak=15",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area normal local concurrent peak bound",
+      "fault": "normalPeak=29",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone normal local concurrent peak bound",
+      "fault": "normalPeak=27",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone normal local concurrent peak bound",
+      "fault": "normalPeak=46",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus normal local concurrent peak bound",
+      "fault": "normalPeak=34",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus normal local concurrent peak bound",
+      "fault": "normalPeak=56",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor normal local concurrent peak bound",
+      "fault": "normalPeak=49",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor normal local concurrent peak bound",
+      "fault": "normalPeak=76",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "dispersal-complex normal local concurrent peak bound",
+      "fault": "normalPeak=74",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "dispersal-complex normal local concurrent peak bound",
+      "fault": "normalPeak=96",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential-fringe concurrent dog peak",
+      "fault": "dogPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential-fringe concurrent dog peak",
+      "fault": "dogPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "industrial-area concurrent Alpha peak",
+      "fault": "alphaPeak=2",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-zone concurrent Alpha peak",
+      "fault": "alphaPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "research-campus concurrent Alpha peak",
+      "fault": "alphaPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor concurrent dog peak",
+      "fault": "dogPeak=2",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor concurrent dog peak",
+      "fault": "dogPeak=6",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor concurrent Alpha peak",
+      "fault": "alphaPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "destroyed-corridor concurrent Alpha peak",
+      "fault": "alphaPeak=4",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-breach regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-breach regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-column regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-column regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-exit regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "military-exit regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-line regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-line regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-breach regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-breach regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-exit regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "corridor-exit regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "before pickup",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "premature tick",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "missing admitted dog",
+      "observed": "NOT CHECKED"
+    },
+    {
+      "tier": "high",
+      "clause": "residential-fringe normal local concurrent peak bound",
+      "fault": "regularPeak=11",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential-fringe normal local concurrent peak bound",
+      "fault": "regularPeak=25",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area normal local concurrent peak bound",
+      "fault": "normalPeak=24",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area normal local concurrent peak bound",
+      "fault": "normalPeak=46",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone normal local concurrent peak bound",
+      "fault": "normalPeak=44",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone normal local concurrent peak bound",
+      "fault": "normalPeak=76",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus normal local concurrent peak bound",
+      "fault": "normalPeak=54",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus normal local concurrent peak bound",
+      "fault": "normalPeak=86",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor normal local concurrent peak bound",
+      "fault": "normalPeak=79",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor normal local concurrent peak bound",
+      "fault": "normalPeak=131",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "dispersal-complex normal local concurrent peak bound",
+      "fault": "normalPeak=139",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "dispersal-complex normal local concurrent peak bound",
+      "fault": "normalPeak=191",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential-fringe concurrent dog peak",
+      "fault": "dogPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential-fringe concurrent dog peak",
+      "fault": "dogPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "industrial-area concurrent Alpha peak",
+      "fault": "alphaPeak=2",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-zone concurrent Alpha peak",
+      "fault": "alphaPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus concurrent dog peak",
+      "fault": "dogPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus concurrent dog peak",
+      "fault": "dogPeak=5",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus concurrent Alpha peak",
+      "fault": "alphaPeak=0",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "research-campus concurrent Alpha peak",
+      "fault": "alphaPeak=3",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor concurrent dog peak",
+      "fault": "dogPeak=2",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor concurrent dog peak",
+      "fault": "dogPeak=6",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor concurrent Alpha peak",
+      "fault": "alphaPeak=1",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "destroyed-corridor concurrent Alpha peak",
+      "fault": "alphaPeak=4",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-breach regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-breach regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-column regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-column regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-exit regular group size",
+      "fault": "group=9",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "military-exit regular group size",
+      "fault": "group=21",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-line regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-line regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-breach regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-breach regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-exit regular group size",
+      "fault": "group=19",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "corridor-exit regular group size",
+      "fault": "group=36",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "before pickup",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "premature tick",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "clause": "residential dogs follow actual handgun pickup",
+      "fault": "missing admitted dog",
+      "observed": "NOT CHECKED"
+    }
+  ],
+  "missingHighTier": "NOT CHECKED",
+  "originalDogProofRestored": true,
+  "dogProofSha256": "156275dd30348ae358ffa9e58d4144b627d6a77a9bc027fdae8e312733cae596"
+}
