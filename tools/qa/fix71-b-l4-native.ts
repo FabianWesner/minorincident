@@ -9,12 +9,15 @@ import { provenance } from './accept/probe';
 const identity=provenance(),rows=[];
 for(const tier of ['low','high'] as const){
  const campaign=preset('L4-default');campaign.settings.quality=tier;
- const waves:{tick:number;count:number;edges:number[]}[]=[],admissions:unknown[]=[],mix:unknown[]=[],windows:unknown[]=[];
- let previous:{pend:number[];cursor:number;ids:number;tick:number}|undefined,finalHash='',gap=0,peak=0,lastMix='',mixChecks=0;
+ const waves:{tick:number;count:number;edges:number[]}[]=[],admissions:unknown[]=[],mix:unknown[]=[],windows:unknown[]=[],population:unknown[]=[];
+ let previous:{pend:number[];cursor:number;ids:number;tick:number}|undefined,finalHash='',gap=0,peak=0,lastMix='',mixChecks=0,savedCellar=false;
  const run=await runLevel('L4','complete',1,process.argv.includes('--war-only')?211:undefined,'auto',campaign,undefined,0,{quality:tier,beforeBegin:w=>{
   w.events.on('l4.wave',e=>{if(e.type==='l4.wave'&&w.missions!.state.l4!.phase==='collapse')waves.push({tick:e.tick,count:e.count,edges:[...e.edges]});});
   w.events.on('sim.tick',()=>{
    const s=w.missions!.state.l4!,p=w.entities.get(1)!.transform;
+   if(!savedCellar&&s.phase==='cellar'&&!s.barredAt){
+    savedCellar=true;mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/cellar-resume-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,tier,origin:'Actual mortal native complete route, first rendered sim-tick cellar entry before barring',save:w.missions!.saveResume()})));
+   }
    peak=Math.max(peak,w.infected!.director.count);
    if(s.phase==='war'){
     const near=w.infected!.active.filter(e=>e.health.current>0&&!e.hidden&&!e.pendingAdmission&&!e.corpse).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z)).slice(0,20);
@@ -24,6 +27,7 @@ for(const tier of ['low','high'] as const){
     }
    }
    if(s.phase!=='collapse')return;
+   if(w.tick%60===0)population.push({tick:w.tick,count:w.infected!.director.count,reserved:w.infected!.director.reserved,pendingTurns:w.infected!.director.pendingTurns,characters:[...w.entities.iterate()].filter(e=>(!e.hidden||tier==='low')&&e.health.current>0&&(e.infected||e.civilian)).length,collapsePend:[...(s.collapsePend??[])],player:{...p}});
    if((s.director.gapUntil??0)!==gap){gap=s.director.gapUntil??0;windows.push({start:w.tick,until:gap});}
    if(previous&&previous.tick+1===w.tick){
     const demand=[...previous.pend];for(const wave of waves.filter(wave=>wave.tick===w.tick))for(const edge of wave.edges)demand[edge]+=wave.count/wave.edges.length;
@@ -38,6 +42,6 @@ for(const tier of ['low','high'] as const){
  const control=existsSync(path)?JSON.parse(gunzipSync(readFileSync(path)).toString()):null;
  const canonicalHash=control?.sourceHash===identity.sourceHash?control.rows.find((r:{tier:string})=>r.tier===tier)?.finalHash:null;
  if(canonicalHash)assert.equal(finalHash,canonicalHash,'full-rate observer must preserve the canonical final state');
- const row={tier,run,finalHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix};rows.push(row);console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
+ const row={tier,run,finalHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix,population};rows.push(row);console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
 }
 assert.equal(provenance().sourceHash,identity.sourceHash,'sources must remain fixed during observation');mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync('test-results/fix71-b/l4-native.json.gz',gzipSync(JSON.stringify({...identity,rows})));

@@ -1,0 +1,738 @@
+{
+  "sourceHash": "bc8d8a719e726f578a3c1f46ebdbb6f0e3a3fe7a9480ad6208474c53ca49cf83",
+  "observerHash": "9954946cd2baca7001d78c0fc904daf6ce44ee5e925c624cdfe83a2c825894f9",
+  "revision": "3883c4102dc7068be79170c169e4676cc553bf98",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L4",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 306.23333333333335,
+        "deaths": 7,
+        "kills": 22,
+        "damageTaken": 812.9333333333299,
+        "failures": {
+          "player-died": 7
+        },
+        "objectiveTimeline": [
+          {
+            "id": "ride",
+            "t": 30.483333333333334
+          },
+          {
+            "id": "quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "id": "hold",
+            "t": 210.81666666666666
+          },
+          {
+            "id": "hide",
+            "t": 298.06666666666666
+          },
+          {
+            "id": "bar",
+            "t": 299.23333333333335
+          },
+          {
+            "id": "wait",
+            "t": 306.23333333333335
+          }
+        ],
+        "furthestObjective": "wait",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 415,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "finalHash": "4fcff459",
+      "peak": 80,
+      "counts": [
+        {
+          "tick": 12889,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 13429,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 13969,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 1,
+            "4": 0
+          }
+        },
+        {
+          "tick": 14509,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 3,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 15049,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 15589,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 16129,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 16669,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 17209,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 0,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "tick": 17749,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        }
+      ],
+      "windows": [
+        {
+          "start": 12649,
+          "until": 15049
+        },
+        {
+          "start": 13721,
+          "until": 16121
+        }
+      ],
+      "mixChecks": 10679,
+      "minimumLooks": 5
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L4",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 667.8166666666667,
+        "deaths": 20,
+        "kills": 39,
+        "damageTaken": 2356.649999999998,
+        "failures": {
+          "player-died": 20
+        },
+        "objectiveTimeline": [
+          {
+            "id": "ride",
+            "t": 30.483333333333334
+          },
+          {
+            "id": "quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "id": "hold",
+            "t": 222.81666666666666
+          },
+          {
+            "id": "hide",
+            "t": 659.65
+          },
+          {
+            "id": "bar",
+            "t": 660.8166666666667
+          },
+          {
+            "id": "wait",
+            "t": 667.8166666666667
+          }
+        ],
+        "furthestObjective": "wait",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 24952,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "finalHash": "b8377f3d",
+      "peak": 120,
+      "counts": [
+        {
+          "tick": 13609,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "1": 3,
+            "2": 3
+          }
+        },
+        {
+          "tick": 14149,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 3,
+            "2": 3,
+            "3": 3
+          }
+        },
+        {
+          "tick": 14689,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 2
+          }
+        },
+        {
+          "tick": 15229,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 1,
+            "4": 0,
+            "5": 1
+          }
+        },
+        {
+          "tick": 15769,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 16309,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "5": 2,
+            "6": 1
+          }
+        },
+        {
+          "tick": 16849,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 17389,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          }
+        },
+        {
+          "tick": 17929,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          }
+        },
+        {
+          "tick": 18469,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 19009,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 1,
+            "4": 1,
+            "5": 2
+          }
+        },
+        {
+          "tick": 19549,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 1,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 20089,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 20629,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 21169,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "2": 0
+          }
+        },
+        {
+          "tick": 21709,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 22249,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 22789,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        {
+          "tick": 23329,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 0,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 23869,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "5": 2,
+            "6": 0
+          }
+        },
+        {
+          "tick": 24409,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 24949,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 0
+          }
+        },
+        {
+          "tick": 25489,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 26029,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 26569,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        {
+          "tick": 27109,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 27649,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 28189,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 28729,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "2": 0
+          }
+        },
+        {
+          "tick": 29269,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 29809,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 30349,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        {
+          "tick": 30889,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 31429,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 31969,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 32509,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 33049,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 1,
+            "2": 2,
+            "3": 1
+          }
+        },
+        {
+          "tick": 33589,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 34129,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        {
+          "tick": 34669,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 35209,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 35749,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 36289,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "2": 0
+          }
+        },
+        {
+          "tick": 36829,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 37369,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        },
+        {
+          "tick": 37909,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        {
+          "tick": 38449,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 0,
+            "5": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 38989,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "5": 0,
+            "6": 0
+          }
+        },
+        {
+          "tick": 39529,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        }
+      ],
+      "windows": [
+        {
+          "start": 13369,
+          "until": 15769
+        },
+        {
+          "start": 18480,
+          "until": 20880
+        },
+        {
+          "start": 20629,
+          "until": 23029
+        },
+        {
+          "start": 21450,
+          "until": 23850
+        },
+        {
+          "start": 22220,
+          "until": 24620
+        },
+        {
+          "start": 24164,
+          "until": 26564
+        },
+        {
+          "start": 25586,
+          "until": 27986
+        },
+        {
+          "start": 26778,
+          "until": 29178
+        },
+        {
+          "start": 28104,
+          "until": 30504
+        },
+        {
+          "start": 29006,
+          "until": 31406
+        },
+        {
+          "start": 30022,
+          "until": 32422
+        },
+        {
+          "start": 31069,
+          "until": 33469
+        },
+        {
+          "start": 33401,
+          "until": 35801
+        },
+        {
+          "start": 34333,
+          "until": 36733
+        },
+        {
+          "start": 35776,
+          "until": 38176
+        },
+        {
+          "start": 36864,
+          "until": 39264
+        }
+      ],
+      "mixChecks": 11399,
+      "minimumLooks": 4
+    }
+  ],
+  "ledger": {
+    "file": "docs/reports/fix71-b/L4-final-native.json.gz",
+    "sha256": "8f1305518e4ae6e6167b7e9d129e387da9588f1aba8ad078ba505801b9ca53ee"
+  }
+}

@@ -85,7 +85,10 @@ export class LevelFourWar {
     // Low's opening needs living pressure now. Keep the later street quotas
     // pending, reserving their capacity once the collapse actually starts.
     const streets = this.low && s.phase !== 'collapse' ? 0 : this.streetReserve();
-    const collapse = s.phase === 'collapse' ? Math.ceil(l4.war.collapseWaveSize * (this.low ? .5 : 1)) * l4.war.edgesPerWave : 0;
+    // Hold the next two collapse cohorts during the last defensive line too;
+    // otherwise ordinary arrivals fill every character slot before Fall back.
+    const collapse = s.phase === 'collapse' || s.phase === 'war' && this.director.current() === 2
+      ? 2 * Math.ceil(l4.war.collapseWaveSize * (this.low ? .5 : 1)) * l4.war.edgesPerWave : 0;
     const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets + this.spearheadNeed() + collapse;
     // A bitten human already owns a future slot; scripted emergence must count
     // it just as the ordinary spawn director does (otherwise streets deadlock).
