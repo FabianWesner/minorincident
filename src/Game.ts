@@ -282,6 +282,10 @@ export class Game {
         const missionStart = loadMeasure('level:world+nav', worldStart);
         if (id === 'L8') await transitionPaint();
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
+        // Restore the carried tier before assets and pipelines warm up. ui.loaded()
+        // reapplies these settings after loading; a tier change there leaves the
+        // actual gameplay graph cold (L7 low warmed with the high-tier moon).
+        if (quality === 'low' || quality === 'high' || quality === 'auto') this.quality.set(quality);
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
         if(missionIds.includes(id as MissionId)) {
