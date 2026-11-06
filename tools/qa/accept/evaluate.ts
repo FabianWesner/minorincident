@@ -672,6 +672,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['convoy vehicle identities', 'convoy duration'].map(clause => ({ clause, policy: 'complete' })),
     ...['courier control restored after actual convoy stop', 'full passenger bus parks inside the military perimeter'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
+  ['L4-18', [{ clause: 'reviewed clean living plaza and readable battle courier', policy: 'real-input-webgl2' }]],
   ['L4-16', [
     { clause: 'uninterrupted standing bar interaction with E continuously false', policy: 'controlled-fixture' },
     ...['actual cellar entrant roster', 'decoded low-pass battle audible after barring', 'actual same-basement L5 handover', 'reviewed visible companion in cellar'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
