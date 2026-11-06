@@ -1,32 +1,27 @@
 {
   "row": "L3-16",
   "status": "FAIL",
-  "reviewer": "Codex fix64-a",
-  "date": "2026-11-05",
-  "commit": "5fcfe692e8d8b9386e8cce10834e87011c736b94",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "5d99cf0b5225d154488301099c88453cb594e4b5",
   "clauses": [
     {
-      "clause": "Late-afternoon light, \u2265 2 smoke columns in every street frame; streets read their damage type.",
+      "clause": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "verdict": "FAIL",
-      "note": "Fresh final24-frame low/high, three-street, actual zoom0.5/1/1.5 matrix inspected. Default zoom1 moving frames show two forms; closest Commerce frames still show only one identifiable vertical stem and a clipped diffuse right patch. Two framing/size trials were rejected because they moved broad haze into the foreground without reliable full-matrix readability. Original game smoke restored."
+      "note": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix64-a/L3-16-image-review.json",
-      "sha256": "9dfbfce09822bf1cdff6f9bf1883332ade2faf16dea0918eae452a35829555ba",
-      "what": "All54 baseline/trial/final records inspected and hashed; final24 actual zoom/street/quality matrix, exact count counterexample, scoped default-zoom success and PO review prompt."
+      "file": "docs/reports/sweep-a3/L3-16-current-ledger.json.gz",
+      "sha256": "cc939588ed64ea7e7e06a43bb391c9266e9e0d1e5dc74405d1aee204fee2aad5",
+      "what": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
     },
     {
-      "file": "docs/reports/fix64-a/L3-16-rejected-1.patch",
-      "sha256": "3a731ceada640288dda7b1ea5eeef502fe1b6486556b4fb28f66de5ed4c25e32",
-      "what": "Rejected lower-stem/crest-framing selector trial; no shipped emitter/rate/pool change."
-    },
-    {
-      "file": "docs/reports/fix64-a/L3-16-rejected-2.patch",
-      "sha256": "7607718f1182a85fd4cf293315999dba755aa996ac24a5d9ae7e914c70048060",
-      "what": "Rejected stable framing plus smaller puff-size trial; original smoke source restored byte-for-byte."
+      "file": "docs/reports/sweep-a3/L3-16-current-images.json",
+      "sha256": "3066b4c11fdbc869741728f1f2f265ebf4d3bd71a68f0bdd422e320843ddbb7b",
+      "what": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
     }
   ],
-  "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL. Coverage clarification: per tier,6 static images cover all3 streets at0.5/1.5;6 moving images cover x-80/x-40 at0.5/1/1.5. No default-zoom moving Boulevard qualification is claimed."
+  "notes": "Static poses explicitly controlled relocation; moving-x samples are ordinary native complete route with courier protection. P: inspect smoke in close street framing; wide-frame improvement does not close every-frame requirement."
 }

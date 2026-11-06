@@ -1,0 +1,216 @@
+{
+  "row": "L2-03",
+  "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
+  "checks": [
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native ride seating and timing",
+      "value": {
+        "passenger": true,
+        "seconds": 24.316666666666666,
+        "seatedEveryTick": true,
+        "crewExitS": 0.8,
+        "controlS": 0
+      },
+      "target": "15–25s; all seated; exits≤4s; control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native seven-person seated roster and complete exit/control clocks",
+      "value": {
+        "ids": [
+          1,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "rideTicks": 1459,
+        "unseatedTicks": 0,
+        "allOutAt": 2965,
+        "controlAt": 2917,
+        "arrivedAt": 2916,
+        "allOutS": 0.8166666666666667,
+        "controlS": 0.016666666666666666
+      },
+      "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native ride seating and timing",
+      "value": {
+        "passenger": true,
+        "seconds": 24.316666666666666,
+        "seatedEveryTick": true,
+        "crewExitS": 0.8,
+        "controlS": 0
+      },
+      "target": "15–25s; all seated; exits≤4s; control≤0.5s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native seven-person seated roster and complete exit/control clocks",
+      "value": {
+        "ids": [
+          1,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "rideTicks": 1459,
+        "unseatedTicks": 0,
+        "allOutAt": 2965,
+        "controlAt": 2917,
+        "arrivedAt": 2916,
+        "allOutS": 0.8166666666666667,
+        "controlS": 0.016666666666666666
+      },
+      "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "1489ad58f85cc527a71deb23a43088cc132b6beaefcff9e6efbf7f124ba9ec87",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "abf5035a3247b77ba3ac8f4ca6fb0c005bd3ec604622176f661bcdb7b50121aa",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "675770054c76f8cf82eb79520e73ea47b927e46991d1a556e8ea73fc5bc69710",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "babd2f674031bb1dfed99bf43eeaab24b597f06fe46d1d5e9b380ed77f3defd0",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "f504f8d11840a4b4d528cd14e4c746d6aef7375731a1a52cec685f57915c2529",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "bf3b0f11b5587d78000d30e2d4d427def7c12c2290f994d1055be51f57e82d21",
+      "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c"
+    }
+  ]
+}

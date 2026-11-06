@@ -1,0 +1,30 @@
+{
+  "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
+  "runs": [
+    {
+      "tier": "low",
+      "baselineDistance": 19.00000000000001,
+      "settledMin": 28.49038143409543,
+      "settledMax": 28.502417406767286,
+      "attackSamples": 51,
+      "settledSamples": 45,
+      "settledRatios": [
+        1.4994937596892324,
+        1.5001272319351195
+      ]
+    },
+    {
+      "tier": "high",
+      "baselineDistance": 19.00000000000001,
+      "settledMin": 28.49946762839099,
+      "settledMax": 28.50186098305503,
+      "attackSamples": 46,
+      "settledSamples": 40,
+      "settledRatios": [
+        1.49997198044163,
+        1.5000979464765796
+      ]
+    }
+  ],
+  "observation": "All34 tour frames inspected. Attack1s/10s in both tiers include armory courtyard, officers and east-gate ingress/fight on right; camera uses native default zoom1. Smooth blend reaches28.5m from19m base, exact1.5 factor."
+}

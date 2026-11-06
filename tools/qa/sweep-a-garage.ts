@@ -30,4 +30,5 @@ for(const tier of ['low','high'] as const){
   runs.push({tier,picked,method:'Ordinary completion input to bat; then empty input and incoming player damage suppression only for90s mechanical garage observation. No teleport/spawn/AI edits/objective skips.',run,admission,frames});console.log(tier,picked,admission.length,frames.length);
  }finally{w.dispose();}
 }
-writeFileSync('docs/reports/sweep-a/L1-14-current-ledger.json.gz',gzipSync(JSON.stringify({...provenance(),runs})));
+const out = process.env.SWEEP_GARAGE_OUT ?? 'docs/reports/sweep-a';
+writeFileSync(`${out}/L1-14-current-ledger.json.gz`,gzipSync(JSON.stringify({...provenance(),runs})));

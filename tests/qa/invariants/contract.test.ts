@@ -234,8 +234,16 @@ describe('automatic regression invariants', () => {
         const markerResolves = step.waypoint === false || !!markerAnchor(mission);
         if (oracle.objective({ markerVisible: markerResolves, visibleAtMs: 0, hudVisible: mission.state.steps[step.id].status === 'active', text: objectiveText(mission, step.text) })) violations.push(`${id}/${step.id}: no readable objective or state-visible waypoint in the start tick`);
         if (step.waypoint !== false) {
-          marker.update(false);
-          if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
+          const ring = (marker as unknown as { ring: { scale: { x: number }; geometry: { parameters: { radius: number; tube: number } } } }).ring;
+          const anchorRadius = markerAnchor(mission)?.radius;
+          for (const zoom of [1, 1.5]) {
+            marker.update(false, zoom);
+            if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
+            const worldRadius = ring.scale.x * marker.scale.x * (ring.geometry.parameters.radius + ring.geometry.parameters.tube);
+            if (anchorRadius !== undefined && Math.abs(worldRadius - anchorRadius) > 1e-6) {
+              violations.push(`${id}/${step.id}: rendered ring radius ${worldRadius} at zoom ${zoom} should match trigger radius ${anchorRadius}`);
+            }
+          }
           // A pull-back is presentation state, so it must not remove guidance while any waypoint objective is active.
           // Apply the same 120-tick overlay to every step, including the known P1-114 checkpoint.
           for (let tick = 0; tick <= 120; tick++) { marker.update(true); world.tick++; }

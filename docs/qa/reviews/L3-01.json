@@ -1,67 +1,32 @@
 {
   "row": "L3-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "bd917c4984e458fb1f6421921621249f49af1a35",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "d660b9f3f76c0b3265e88ee5289663980db2dd79",
   "clauses": [
     {
       "clause": "Handgun only at the armory, within 40 s of start; no reload/ammo UI over 600 shots; 40 HP infected = 2 hits.",
       "verdict": "PASS",
-      "note": "All14 fresh full-HUD frames personally inspected through600 actual production handgun attacks at each quality: portrait/health, companion and handgun rack remain mounted; no courier ammo counter/reload indicator. Both tiers acquire at tick267 (4.45s); all599 shot gaps are20ticks, with800 mounted quarter-second HUD samples. Independent ordinary mortal armory-location probe starts without handgun in racks/loose pickups and grants it only after armory interaction,0.461m from its1.2m anchor. Fresh native40HP specimen takes exactly two20HP hits in each quality. Seven incomplete/stale shot/HUD controls pass. Allied Reloading callouts (30 low/20 high samples) originate in Allies.ts, not courier UI. Protected stationary firing is not survival evidence."
+      "note": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L3-01-native-clauses.json",
-      "sha256": "9b283cf463cb384a51e2a8d432c5f049c09bf4006822bf84ac0b54311bcb3d00",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
+      "file": "docs/reports/sweep-a3/L3-01-current-ledger.json.gz",
+      "sha256": "ece1164f144839b77c5453af1c71ccfb00384c38cfafd01a81970484203c5325",
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     },
     {
-      "file": "docs/reports/sweep-a2/L3-01-armory-location.json",
-      "sha256": "b5df03385f489e318d9934123c842db154d03c723c0a844ea62f489465e9eb56",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
+      "file": "docs/reports/sweep-a3/L3-01-current-images.json",
+      "sha256": "f4b479c3041a7f4c01864cfcb10b69fb1926c7a2b1129bf8d7f8176c1db2f3ed",
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     },
     {
-      "file": "docs/reports/sweep-a2/L3-01-shot-proof.json",
-      "sha256": "b94fce54da0e1446f041b3fc88d51d02460a79412c2b25601bcb80e451ecce01",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-01-browser-ledger.json.gz",
-      "sha256": "1e50a33dfcf2a85a9e25454578a1f6abdfb28bdf0213e7bfaa9513d5ff5bc931",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-01-image-review.json",
-      "sha256": "8e47402074941c390a5c86120087e56c10c9dbd767c4d1eb24f65630acb5a5d5",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-handgun-photos.json",
-      "sha256": "88a8972d2479c3e929dcd5ff13ce7c9eab8546dd1bbf72fe1907d8a9508805af",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L3-handgun-01.jpg",
-      "sha256": "c26e843fa7d491abbf88ee807d5de5060b7084cd22041d6815d2bb0159247ae2",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L3-handgun-02.jpg",
-      "sha256": "5ab7fbeb25c1fc779514d58b15bd1f3d539cb5b97d179301d85ce29902f6b6e1",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L3-handgun-03.jpg",
-      "sha256": "7caef941673ed9be593adb3695b397a732517df7a3af3fafd37ce3a460f24937",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L3-handgun-04.jpg",
-      "sha256": "a6d22d0c624c209eecea9b4ab5e7d464e7dc694e006541e4a5e7a55d1fd29307",
-      "what": "Fresh actual600-shot/full-HUD trial both tiers with personally inspected14frames, independent ordinary armory-only location/inventory transition, current40HP/two-hit native fixtures, and missing/stale/HUD/cadence rejection controls."
+      "file": "docs/reports/sweep-a3/L3-01-grant-source.json",
+      "sha256": "2073e26c627edebcda0715fdebb3677ca3682ef461a669f47698a64dfcbb4f27",
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     }
   ],
-  "notes": "Actual production InputFrames, no weapon/ammo/actor injection or objective skip. Only stationary browser courier damage is suppressed; separate acquisition-location probes are ordinary mortal input. No performance timing or audible-quality verdict."
+  "notes": "Courier damage suppressed solely to keep 600-shot count/UI observation running. Camera requested0.5/1/1.5 for final shots is actually yard-locked1; no zoom-extreme coverage claimed."
 }

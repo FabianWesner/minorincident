@@ -1,27 +1,27 @@
 {
   "row": "L3-12",
   "status": "FAIL",
-  "reviewer": "Codex fix64-a",
-  "date": "2026-11-05",
-  "commit": "7babe37b5565d42416e684e7afd2bc6c13541a6c",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "12fb8c1dcf7affe19440b5896a1a5559f73fb7ad",
   "clauses": [
     {
       "clause": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
       "verdict": "FAIL",
-      "note": "Fresh named Luna screenshot-only low route starts at actual fallback after ordinary native InputFrames, with no relocation or onward route hints.35 accepted actions,53.633s active, all70 input/action images personally inspected (36 unique). The player circles the crowded generator/gate plaza, then repeatedly approaches the truck/crate/fence dead end, ending351m from the unchanged army checkpoint after starting360m. The onward route is not discovered. This establishes a qualitative route-readability FAIL; no time threshold or physically impossible route is claimed. Crosslinks themselves are not reached, so their paint is not separately qualified. High full screenshot route remains unqualified."
+      "note": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix64-a/screen-L3-low-route-observed-images.json",
-      "sha256": "4389b571fa77c69fa883ae5fc972438f365e062b6e6f03ceeacf7d5a58a9dc1c",
-      "what": "Exact70 image hashes, duplicate references and concrete personal observations; current source and isolated screenshot protocol."
+      "file": "docs/reports/sweep-a3/L3-12-pixels-ledger.json.gz",
+      "sha256": "350c9e027f12adea0cb3100659d7150754b283fdea7f2ce29a856c9d83863207",
+      "what": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
     },
     {
-      "file": "docs/reports/fix64-a/screen-L3-low-route-observed-ledger.json.gz",
-      "sha256": "b3fa1f597254f6c3c6edf555b825cf81f03392b8aa01a0c1cfd4dd42a82e583b",
-      "what": "Exact physical actions, private tick intervals, visible HUD, player-only observations, native fallback setup and complete model-command audit.595s bounded attempt, not a whole-route PASS."
+      "file": "docs/reports/sweep-a3/L3-12-pixels-result.json",
+      "sha256": "68e457937e565a5bb5e98ce2e966c8036ce7ab4eb7fc0eea8205f6a1ba1fa869",
+      "what": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
     }
   ],
-  "notes": "Fixed l3-zone destination and no corridor steering preserved. Movement works during the early plaza circle; the later truck/fence repeats remain an unresolved combination of navigation confusion and crowd/obstacle pressure. No speculative game change. Images deleted after SHA/observation recording."
+  "notes": "Only fresh strict-pixel trial qualifies. Earlier metadata-assisted trials explicitly rejected in readability-rejected.json. Low-tier counterexample; high-tier manual route not run."
 }

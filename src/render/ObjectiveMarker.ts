@@ -13,6 +13,7 @@ export class ObjectiveMarker extends Group {
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly ringMaterial = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
   private readonly ring = new Mesh(new TorusGeometry(objectiveRingRadius-.05,.05,6,24),this.ringMaterial);
+  private ringRadius = objectiveRingRadius;
   private readonly arrow = new Mesh(new ConeGeometry(0.25,0.5,4),this.material);
   constructor(private readonly world: SimWorld){super();this.ring.renderOrder=94;this.arrow.renderOrder=95;this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.add(this.ring,this.arrow);}
   // G-08 (PO): no ring or ground cue moves with the player and nothing steers the route; only fixed destination markers.
@@ -26,6 +27,16 @@ export class ObjectiveMarker extends Group {
     // Camera pull-backs retain the active waypoint, so guidance survives the reveal.
     this.visible=!this.world.storyLock&&!this.world.l7Departure?.cinematic&&mission?.state.phase==='playing'&&!metroDone&&!!anchor;
     this.scale.setScalar(Math.max(1,zoomScale));
+    // The trigger uses the anchor radius (2 m by default, with authored
+    // exceptions such as the 1.4 m L4 cellar). Keep the visible outer edge
+    // of the torus on that same radius so the interaction cue matches play.
+    const radius = anchor?.radius ?? 2;
+    if (radius !== this.ringRadius) {
+      this.ring.geometry.dispose();
+      this.ring.geometry = new TorusGeometry(radius - .05, .05, 6, 48);
+      this.ringRadius = radius;
+    }
+    this.ring.scale.setScalar(1 / this.scale.x);
     if(anchor)this.position.set(anchor.x,markerSurfaceY(this.world,anchor),anchor.z);
   }
   dispose():void{this.ring.geometry.dispose();this.arrow.geometry.dispose();this.material.dispose();this.ringMaterial.dispose();this.clear();}

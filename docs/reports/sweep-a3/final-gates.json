@@ -1,0 +1,36 @@
+{
+  "gameCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm test",
+    "exitCode": 0,
+    "tests": 107,
+    "files": 27,
+    "maxWorkers": 4
+  },
+  "objectiveInvariant": {
+    "command": "npx vitest run --project nightly tests/qa/invariants/contract.test.ts -t '6 objectives' --maxWorkers=4",
+    "exitCode": 1,
+    "violations": 8,
+    "scope": "Existing L8 escape/depart text/marker violations; no ring-radius violation"
+  },
+  "threat": {
+    "command": "npm run qa:threat",
+    "exitCode": 0,
+    "aggregateFailFlags": 0,
+    "auditSeconds": 302.8,
+    "wrapperSeconds": 305.7,
+    "logSha256": "09c657615e2c1c16bfd3573df95b45fa3e58baee0fb0da60de66769d595c03d7",
+    "method": "Ran alone after all browser/native checks. Already completed when cancellation was attempted following orchestrator request to skip. Per-level legacy console lines say1 fail flag each; aggregate gate reports0."
+  },
+  "remainingProcesses": 0,
+  "performanceWork": "None",
+  "notes": "No more checks started after orchestrator quiet-window request."
+}

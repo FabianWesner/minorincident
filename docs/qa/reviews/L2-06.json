@@ -1,77 +1,27 @@
 {
   "row": "L2-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "f22da050fd2a94844f25d3ec7ff46f9d52b423a3",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "8b7ba25c4bccd6f5e6c348e4d7c8f25ad88bc494",
   "clauses": [
     {
-      "clause": "Ambush **24** (3 doors \u00d7 8, \u2265 3 directions \u2265 60\u00b0 apart), first visible \u2264 0.5 s after doorsOpen; spread over directions, not one pack.",
+      "clause": "Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack.",
       "verdict": "PASS",
-      "note": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
+      "note": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L2-06-webgl2-ledger.json.gz",
-      "sha256": "61c48dc1581928ad5cae04bb1f2e93edbc099c30252f8a211eb682a924fcd1f5",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
+      "file": "docs/reports/sweep-a3/L2-06-current-ledger.json.gz",
+      "sha256": "db99cf0bd526a5d6405c89c1b8fdab8c965a87b1d56b4e858b3a5885d631543a",
+      "what": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
     },
     {
-      "file": "docs/reports/sweep-a2/ambush-webgl2-photos.json",
-      "sha256": "f29f7bde9a03680057ab8ec271f1750c4f32a303be067142ff03a5badc4409b9",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgl2-01.jpg",
-      "sha256": "3624138db87ba8f729349efa3e691f86b28b553bdfd6679c729c40b3987c53fd",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgl2-02.jpg",
-      "sha256": "c22f34a45e1acce5225f4581e5cfce2a706963350589aa18b40dbb43981ce56f",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgl2-03.jpg",
-      "sha256": "df92f2f85bc2b79b409e14c88ce923c972e1c9d6af585db889b12ecbe914f44f",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L2-06-webgpu-ledger.json.gz",
-      "sha256": "85ab9f734040b2ab7c3b49ba17a80ea76ca94aa3b2e9200a31377c1ec74641b4",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/ambush-webgpu-photos.json",
-      "sha256": "53c436b7438a21342c7f7514c3e149ffbdb3498401e8fbc5d29acfcabe7054cb",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgpu-01.jpg",
-      "sha256": "be529e9a22f118a502a5a96892475cf4cc5089c41532cbe1cb3b46d4075c638c",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgpu-02.jpg",
-      "sha256": "eabe90fa2152246120478f74788aae53f2fa367c6d3ecacc4aaef902704dceae",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ambush-webgpu-03.jpg",
-      "sha256": "e9659d75dd4c7c0e0766f808bde10177b33151d1ba471e942623e9d851d5b6b9",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L2-06-image-review.json",
-      "sha256": "df43b5c3890d57b78de1884f00e0bf9549d1be7d2e1493ca878032675982d7b0",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L2-06-native-clauses.json",
-      "sha256": "5ee04c224c3e9fefe5cf22b25193345f814dfa046dcff3a9ddc05b0010b42951",
-      "what": "All24 fresh frames personally inspected. In every low/high WebGL2/WebGPU gameplayzoom0.5/1.5 actual-follow view at tick3519 exactly0.5s after doors3489, bent-forward yellow-top infected with health bar visible at lower-left white fence left of engine. Separate camera-only controls excluded. Native24 distinct IDs from3 actual refuge doors x8; angular gaps83.137/94.384/177.522degrees, so not one source pack. Conservative body-box overlap alone not treated as visibility."
+      "file": "docs/reports/sweep-a3/L2-06-current-images.json",
+      "sha256": "29b9d1383c9e7db8cc4895341b7abc416f81bff3e8eb87bceb39bcae1ad9f0b4",
+      "what": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
     }
   ],
-  "notes": "No game changes, ordinary no-axe native input, no teleport/protection. Missing old diagnostic visibility qualification remains attributed; fresh exact review supplies pixel clause."
+  "notes": "Ordinary no-axe InputFrame route to doorsOpen; no relocation for opening/half-second shots. Separate control-normal image is an inspection pose and does not qualify route visibility."
 }

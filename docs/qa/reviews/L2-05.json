@@ -1,87 +1,37 @@
 {
   "row": "L2-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "bf481c0f8a010d48a871a83647f2159a883b9fb6",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
-      "clause": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out \u2264 1.0 s after doorsOpen.",
+      "clause": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen.",
       "verdict": "PASS",
-      "note": "Both qualities keep all20/30 actual trapped IDs admitted/nonhidden inside throughout240 closed-door ticks. Native first whole-body exit on doorsOpen(0s). All36 fresh WebGPU/WebGL2 frames inspected: front figures behind actual glazing, roof cutaway exposes rear groups, varied bang/press/plead/hug/cower/glance poses visibly progress across three samples. Camera-only close/wide inspection disclosed; no gameplay zoom-unlock claim. Seven independent rejection controls pass. Before receipt proves required stale review ignored; exact-clause mapping restored."
+      "note": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L2-05-native.json.gz",
-      "sha256": "cf73c310671aa7e8185c57a7c9ae261b25e778c4a357b2c571c79a4c3641eef6",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
+      "file": "docs/reports/sweep-a3/L2-05-native.json.gz",
+      "sha256": "2d94b53f3b75b14e9e98e19932eb94c8795b34c40810725ee053ed520de601e1",
+      "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-05-browser-ledger.json.gz",
-      "sha256": "b65590468b41753f15f1f9458299632455d0169860335be3bc1cbadf59b78844",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
+      "file": "docs/reports/sweep-a3/L2-05-browser-ledger.json.gz",
+      "sha256": "ba057aac791e6dde5d90c41345309408a4d5faf72979adf7dbc755bda2457e29",
+      "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-05-current-proof.json",
-      "sha256": "1006ce78faf39cdbdde00889ce3538d7126130a78161e3192c7af613bbfe41b7",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
+      "file": "docs/reports/sweep-a3/L2-05-measurements.json",
+      "sha256": "38dd8117e381c94fd422ad89c46294bbf10b176a40c7a2a6a6f1682d444c43ac",
+      "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-05-image-review.json",
-      "sha256": "39bfc7103c7a67c2f12ad0e5ab4f14a48d1b7cfe4ffa020d1f4007ed749b66da",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/market-panic-photos.json",
-      "sha256": "17f576185ef42c4e7e61678108cd0a449a9cde23e9cda05c009019ad6808b98e",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-01.jpg",
-      "sha256": "c61241f620c4e4cfae2d365a2b1c1b5dd6f5ddc9f53cf29af81cd5a6aa47c62c",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-02.jpg",
-      "sha256": "8683df67018a5e3ced4f49ab18e498d251da5149cc800d32356e58388913829f",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-03.jpg",
-      "sha256": "e5e96277914b97f0e1b52547a41471ebb03c071804cfd7972c5cced62d471508",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-04.jpg",
-      "sha256": "0132790724d9eeaa7da177273e3a07d1a825ffcd3903ec1832c6a6ae8f618ef7",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-05.jpg",
-      "sha256": "6413d0dfa7de218f29108cc42e58c79de0dc40f900e17971690dd5bc0d001d30",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-06.jpg",
-      "sha256": "83faf0814c4fe4ca5c30309c780eef7a1f3eb0b7cf83934e55303752aa52c2dd",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-07.jpg",
-      "sha256": "d22c915e80fcbddd6c23cf64d1f48e6d7861dffc095333ecb855ab7c7aace79b",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-08.jpg",
-      "sha256": "76155896f8eb30c520751a8bb739f48620d4eab199868ea46757250e3b5087da",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/market-panic-09.jpg",
-      "sha256": "83ec55004fe6113e631f7ec98ab78bc87573dde24a3dac5cb9ef1b40ffe5d91c",
-      "what": "Current native all-ID containment/first-exit ledger, full renderer/quality same-tick camera matrix, all36 personally inspected cells and rejection controls."
+      "file": "docs/reports/sweep-a3/L2-05-images.json",
+      "sha256": "c384ae286df130d87ff0060758d4d594839052ced63a817c12087341266fe9fb",
+      "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     }
   ],
-  "notes": "No game/criterion changes. Native no-axe input, no protection or relocation. Existing L2-11 low/no-axe18<25 regression remains independent."
+  "notes": "Ordinary no-axe native input; paused only for same-tick photographs. Shared headless pool. No protection, relocation, actor injection or objective skips; no performance timing. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
 }

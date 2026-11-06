@@ -1,7 +1,7 @@
 """Independently qualify same-actor story traces, with broken-data controls."""
-import copy,gzip,json,sys
+import copy,gzip,json,os,sys
 from pathlib import Path
-stage=sys.argv[1];run=Path(sys.argv[2]);root=Path('docs/reports/sweep-a2');row='L1-03' if stage=='pickup' else 'L1-04'
+stage=sys.argv[1];run=Path(sys.argv[2]);root=Path(os.environ.get('STORY_PROOF_OUT','docs/reports/sweep-a2'));row='L1-03' if stage=='pickup' else 'L1-04'
 r=json.loads((run/'receipt.json').read_text())
 def measure(q):
  a=q['samples'];ids={s['actor'] for s in a if s.get('actor')};clips={s['entity'].get('story',{}).get('clip') for s in a if s.get('entity') and s['entity'].get('story')}

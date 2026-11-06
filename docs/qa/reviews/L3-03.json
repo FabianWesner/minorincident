@@ -1,42 +1,22 @@
 {
   "row": "L3-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "a41c35716f0d285baf2d7c59a52dd179ab7dae00",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "430f4bc493c6cac113093ed4d185734fb2dc592d",
   "clauses": [
     {
-      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 3.4 s); attacks on the player \u2265 4/min (tune).",
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune).",
       "verdict": "PASS",
-      "note": "All14 numeric clauses pass at current source. Every policy has actual player windups: low moving10/28.167s=21.302/min, stationary30/27.267s=66.015/min; high moving13/26.483s=29.452/min, stationary48/12.983s=221.823/min. All minimum bounded-path reachable shares100percent with nonzero samples. Passive first real attack5.717/4.267s meets10s. Original zero-low-moving-windup failure remains historical. Four independent numeric faults rejected. No upper attack-rate criterion invented."
+      "note": "Reviewed all14 exact-source numeric clauses: bounded-path reachable minimum100% for low complete/stationary and high complete;95% high stationary (required≥90%). Passive first actual player windup2.95s low,2.4167s high (required≤10s). Player attacks/min are23.4834/149.5611 low complete/stationary and31.5789/298.9474 high complete/stationary, all≥4 with positive player-target windups. Passive defend windows28.4833/14.25s extend beyond10s. High attack rate has no upper bound in this criterion; no target adjustment is made."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L3-03-current-proof.json",
-      "sha256": "06426d71b6b1a9f936a3e9cbcd884e4e14fd55960357aa998036007bd0a8d323",
-      "what": "Fresh native phase ledgers, independently recomputed rates/reach/first attack, all14 exact native checks and numeric fault controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-03-high-complete.json.gz",
-      "sha256": "b7670fd381eb548506f3dadc3525180dbd3a3f5e03cb22d2665850bc22178fac",
-      "what": "Fresh native phase ledgers, independently recomputed rates/reach/first attack, all14 exact native checks and numeric fault controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-03-low-complete.json.gz",
-      "sha256": "c26eead29c602872ee9d8cdfec7df98f45062b5d3bec7905c6297d5802cea326",
-      "what": "Fresh native phase ledgers, independently recomputed rates/reach/first attack, all14 exact native checks and numeric fault controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-03-high-stationary.json.gz",
-      "sha256": "8274f782e679d76cfaea5595884b3786ba638a85c43e0e43c2792a7f4014582b",
-      "what": "Fresh native phase ledgers, independently recomputed rates/reach/first attack, all14 exact native checks and numeric fault controls."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L3-03-low-stationary.json.gz",
-      "sha256": "26d4182cd6be1dbeba9bbc22a2df201ea2700e0893cc8737e20cc6ec99a2d519",
-      "what": "Fresh native phase ledgers, independently recomputed rates/reach/first attack, all14 exact native checks and numeric fault controls."
+      "file": "docs/reports/sweep-a3/L3-03-clauses.json",
+      "sha256": "67f7d48ad2f8b207119a7543bc76f19b3e14f6e17cb1ebfbde53e713c5eb26a7",
+      "what": "Reviewed all14 exact-source numeric clauses: bounded-path reachable minimum100% for low complete/stationary and high complete;95% high stationary (required≥90%). Passive first actual player windup2.95s low,2.4167s high (required≤10s). Player attacks/min are23.4834/149.5611 low complete/stationary and31.5789/298.9474 high complete/stationary, all≥4 with positive player-target windups. Passive defend windows28.4833/14.25s extend beyond10s. High attack rate has no upper bound in this criterion; no target adjustment is made."
     }
   ],
-  "notes": "No game or criterion changes. Moving policy mortal; stationary control survival protected as declared by existing native runner. Numeric row requires no pixel verdict."
+  "notes": "Current low/high complete and stationary native InputFrame route observations use actual infected.attack events, player targets and independently bounded nav-path queries. No visual or performance claim. Fresh exact-criterion PASS closes the historical rate failure. All14 native clauses rerun and requalified on the final constant-width-ring game source."
 }
