@@ -5,10 +5,13 @@ import type { NavGrid } from '../../sim/ai/NavGrid';
 import { infectedDef } from '../../data/infected';
 
 /** R1–R6 resident peaks and R7 console assault, authored independently of arsenal changes.
- * Low quality thins only ordinary humans. Dogs and regular Alpha encounters keep their mechanics/counts.
+ * Low quality thins ordinary humans and stages early corridor patrols at the horde approach.
+ * Dogs and regular Alpha encounters keep their mechanics/counts.
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
 export interface CureEncounter {
-  id: string; region: CureRegion; at: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; assault?: boolean;
+  id: string; region: CureRegion; at: Point;
+  /** Low-budget patrol station, after the corridor horde receives its slots. */
+  atLow?: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; assault?: boolean;
 }
 export const cureEncounters: readonly CureEncounter[] = [
   { id: 'crash-singletons', region: 'crash-outskirts', at: [592, -8], regular: [2, 2], dogs: 0, alphas: 0 },
@@ -51,9 +54,9 @@ export const cureEncounters: readonly CureEncounter[] = [
   // the road and parallel forecourt crossings through the existing director.
   // R5/R6 envelopes overlap by 50 m. Keep the first R6 packs past the R5 edge
   // so their chase cannot briefly inflate the research-campus local dog peak.
-  // Release at the first horde approach, after its regular rank gets slots.
-  ...([[3060, 20], [3060, 75], [3060, 95], [3080, 95], [3130, 95], [3180, 95], [3230, 95], [3280, 95], [3330, 95], [3380, 95], [3430, 95], [3480, 95], [3530, 95], [3577, 45]] as Point[]).map((at, i): CureEncounter => ({
-    id: `corridor-pack-${i}`, region: 'destroyed-corridor', at, regular: [0, 0], dogs: 2, alphas: 0,
+  // The low budget stages the first patrols at the horde; high keeps early pressure.
+  ...([[2990, 20], [2990, 75], [3030, 95], [3080, 95], [3130, 95], [3180, 95], [3230, 95], [3280, 95], [3330, 95], [3380, 95], [3430, 95], [3480, 95], [3530, 95], [3577, 45]] as Point[]).map((at, i): CureEncounter => ({
+    id: `corridor-pack-${i}`, ...(i < 3 ? { atLow: [3060, at[1]] as Point } : {}), region: 'destroyed-corridor', at, regular: [0, 0], dogs: 2, alphas: 0,
   })),
   ...([[3755, -25], [3820, -41], [3890, -41], [3920, -41], [3955, -25], [3970, -25]] as Point[]).map((at, i): CureEncounter => ({
     id: `complex-approach-${i}`, region: 'dispersal-complex', at, regular: [2, 2], dogs: 2, alphas: 0,
@@ -70,6 +73,7 @@ export const cureMedkits = [
 
 /** Stable slots allow a full cap/blocked cell to defer individual members without losing or duplicating a group. */
 export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
+  const at = tier === 'low' ? group.atLow ?? group.at : group.at;
   const regular = group.regular[tier === 'high' ? 0 : 1];
   const roles = [...Array.from({ length: regular }, (_, i) => i < (group.tough ?? 0) ? 'infected.firefighter' : 'infected.runner'),
     ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(tier === 'low' ? group.alphasLow ?? group.alphas : group.alphas).fill('infected.alpha')];
@@ -87,8 +91,8 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // while leaving the northern verge open for an eastbound escape.
     const militaryPatrol = group.id.startsWith('military-zone-direct-');
     return { key: `${group.id}:${archetype}:${index}`, archetype,
-      x: group.at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
-      z: group.at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
+      x: at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
+      z: at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });
 }
 

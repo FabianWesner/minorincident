@@ -54,11 +54,12 @@ export class LevelTenEncounters {
       // Sector prefetch alone must not send every later group down the road
       // as one distant firing line; placement and off-camera admission stay fixed.
       const released = this.state.released ??= [];
+      const at = low ? group.atLow ?? group.at : group.at;
       if (!assault && !released.includes(group.id)) {
-        const approach = corridorPatrol || corridorHorde ? Math.abs(player.transform.x - group.at[0]) : Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]);
+        const approach = corridorPatrol || corridorHorde ? Math.abs(player.transform.x - at[0]) : Math.hypot(player.transform.x - at[0], player.transform.z - at[1]);
         if (approach > 40) continue;
         released.push(group.id);
-        if (corridorPatrol || corridorHorde) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : group.at[1]);
+        if (corridorPatrol || corridorHorde) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : at[1]);
       }
       // At each fixed depth, intercept the road or parallel forecourt that
       // the courier actually enters. Save the lane once, retaining the three
@@ -76,11 +77,11 @@ export class LevelTenEncounters {
         if (lane) for (const slot of slots) slot.z += lane;
         if (wave) for (const slot of slots) slot.key += `:wave-${wave}`;
         // Boundary overlap can leave only a few slots: admit mixed threats first.
-        // Reserve the corridor Alpha's approach before the regular rank,
+        // At low tier, reserve the corridor Alpha's approach before the regular rank,
         // then defer dogs while that rank fills the shared regional budget.
         // An early patrol dog otherwise leaves only 19 regular slots; putting
         // every regular first instead loses the concurrent Alpha overlap.
-        const priority = (archetype: string) => corridorHorde
+        const priority = (archetype: string) => corridorHorde && low
           ? archetype === 'infected.alpha' ? 0 : archetype === 'infected.runner' ? 1 : 2
           : Number(archetype === 'infected.runner');
         slots.sort((a, b) => priority(a.archetype) - priority(b.archetype));
