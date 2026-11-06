@@ -282,6 +282,17 @@ test('every weapon category fires and hits; swept projectiles never tunnel; full
     walls(w).push({ x: 0.75, y: 1, z: 0, halfX: 0.1, halfY: 1, halfZ: 2 });
     fire(w); step(w, 30); expect(health(w, id), `${weapon} through cover`).toBe(100);
   }
+  // The subway floor is raised: rifle projectiles must use their muzzle
+  // height for every cover query, just as hitscan weapons do.
+  for (const top of [1.2, 3]) {
+    const w = await arena(); equip(w, ['weapon.army-mg']); const id = dummy(w, 5);
+    w.physics.world!.createCollider(ColliderDesc.cuboid(1, .3, 1).setTranslation(0, .3, 0));
+    w.physics.playerBody!.setTranslation({ x: 0, y: 1.32, z: 0 }, true);
+    Object.assign(w.entities.get(1)!.transform, { x: 0, y: 1.32, z: 0 });
+    walls(w).push({ x: 2, y: top / 2, z: 0, halfX: .1, halfY: top / 2, halfZ: 2 });
+    fire(w); step(w, 15);
+    expect(health(w, id), `raised-floor MG over ${top} m cover`).toBe(top === 1.2 ? 86 : 100);
+  }
 });
 
 test('attack lifetime: ids survive re-equipping, dead sources cannot attack, snapshots cannot mutate live attacks', async () => {

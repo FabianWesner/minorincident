@@ -33,7 +33,7 @@ export class Combat {
   runner: ActionRunner;
   readonly projectiles: Projectile[] = [];
   private readonly direction = { x: 1, z: 0 };
-  private readonly origin = { x: 0, z: 0 };
+  private readonly origin = { x: 0, y: 0, z: 0 };
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
     this.rng = new Rng(world.seed, 'combat');
     this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls);
@@ -174,7 +174,7 @@ export class Combat {
         const distance = Math.hypot(dx, dz), scale = distance > def.range ? def.range / distance : 1;
         landing = { x: source.transform.x + dx * scale, z: source.transform.z + dz * scale };
       }
-      this.projectiles.push({ attack, x: source.transform.x, y: 0.7, z: source.transform.z, from: { x: source.transform.x, z: source.transform.z }, landing, flightTicks: landing ? Math.max(1, ticks(Math.hypot(landing.x - source.transform.x, landing.z - source.transform.z) / (def.projectile?.speed ?? 12))) : 0, travelled: 0, landed: false });
+      this.projectiles.push({ attack, x: source.transform.x, y: def.category === 'ranged' ? source.transform.y + .45 : 0.7, z: source.transform.z, from: { x: source.transform.x, z: source.transform.z }, landing, flightTicks: landing ? Math.max(1, ticks(Math.hypot(landing.x - source.transform.x, landing.z - source.transform.z) / (def.projectile?.speed ?? 12))) : 0, travelled: 0, landed: false });
     } else if (def.splash) this.splash(attack, source.transform);
     else if (attack.style === 'roundhouse') this.sweep(attack, source);
     else if (def.category === 'melee' || def.category === 'ability') {
@@ -253,7 +253,7 @@ export class Combat {
         }
       } else if (age > 0) {
         const step = Math.min(def.range - p.travelled, def.projectile!.speed / 60);
-        this.origin.x = p.x; this.origin.z = p.z;
+        this.origin.x = p.x; this.origin.y = p.y; this.origin.z = p.z;
         let target = this.query.ray(p.attack.sourceId, this.origin, p.attack.aim, step, p.attack.hit);
         const wall = this.query.clearDistance(this.origin, p.attack.aim, step);
         if (def.splash && (target || wall < step || p.travelled + wall >= def.range)) {

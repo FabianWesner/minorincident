@@ -373,7 +373,8 @@ export class LevelSixSubway {
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
-    s.paused=atGate&&(rear||!!behind);
+    const uncovered=hot&&p.x<s.leaderX&&distance(p,{x:s.leaderX,z:s.leaderZ})>12;
+    s.paused=uncovered||atGate&&(rear||!!behind);
     // QA 10-21 #83: a paused group names its reason and the ring leads to it (an injured straggler to fetch, or the rear to cover).
     // QA 10-21 #88: the held-group reason flipped 3x in 3 s (rear cover as infected crossed the 20 m band). Like `strayed`
     // (#84) the shown reason changes only once the new one has held for strayDwellS. The first reason, and fetch -> bring
