@@ -1,0 +1,239 @@
+{
+  "at": "2026-11-06T19:48:22.853802+00:00",
+  "result": "PASS",
+  "nativeChecks": [
+    {
+      "capture": "release-native1",
+      "samples": 5389,
+      "durationMs": 90128.69999980927,
+      "p95Ms": 16.79999999998836,
+      "maxMs": 50.10000000000582,
+      "spikes66": 0,
+      "boundaries": 0,
+      "errors": 0,
+      "finalSave": {
+        "worldEntities": 1136,
+        "snapshotEntities": 1133,
+        "checkpointEntities": 1133,
+        "jsonLength": 5538715,
+        "encodedLength": 2769952,
+        "checkpoint": "cure-disperse-ready",
+        "charge": 3600
+      }
+    },
+    {
+      "capture": "release-native2",
+      "samples": 5393,
+      "durationMs": 90199.5,
+      "p95Ms": 16.79999999998836,
+      "maxMs": 50,
+      "spikes66": 0,
+      "boundaries": 0,
+      "errors": 0,
+      "finalSave": {
+        "worldEntities": 1136,
+        "snapshotEntities": 1133,
+        "checkpointEntities": 1133,
+        "jsonLength": 5538715,
+        "encodedLength": 2769952,
+        "checkpoint": "cure-disperse-ready",
+        "charge": 3600
+      }
+    }
+  ],
+  "publicPinProof": {
+    "coordinateAttributes": 0,
+    "pins": 518,
+    "quality": "high",
+    "backend": "webgpu"
+  },
+  "mirrorFiles": 2756,
+  "mirrorBytes": 536255921,
+  "mirrorMatchesPriorLedger": true,
+  "rehashFailures": [],
+  "requestPhases": [
+    {
+      "label": "before",
+      "rawSha256": "02496b111a5f486e1b06907513b7623e85cb24a8b33355fc8e88dbba3c4bea19",
+      "requests": 3102,
+      "statuses": {
+        "200": 2009,
+        "304": 1092,
+        "404": 1
+      },
+      "missingProdPaths": [],
+      "badResponses": [
+        {
+          "at": "2026-11-06T18:50:59.691Z",
+          "side": "candidate",
+          "path": "/build/index-BlC0HKyx.js",
+          "status": 404,
+          "instrumented": false
+        }
+      ],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-bdrvNehv.js",
+          "originalSha256": "2236bae6675350c9b421dd1bfd7539e9f19c1b7558904eefa050d785b0e2289d",
+          "patchedSha256": "31e5bdb3abf571ccdec6fc57ad0d498e1a3d3534c985427b0675d1ec6569beaf",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    },
+    {
+      "label": "shortcut",
+      "rawSha256": "0dfbb42420e62c7f2db127109bb098515b8fc1b0e1da66cc7970c5fbb209fc80",
+      "requests": 1534,
+      "statuses": {
+        "200": 1000,
+        "304": 534
+      },
+      "missingProdPaths": [],
+      "badResponses": [],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-BlC0HKyx.js",
+          "originalSha256": "6383b32b0067d73865218205bf20b65f8f7e8e650405a1c3d7a30ca9c4654e68",
+          "patchedSha256": "c1ebacb5071bb0118e2b1a7359c6d33ec8c77eb32b90f32cf83888f6e743313a",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    },
+    {
+      "label": "input",
+      "rawSha256": "f01367c3e68b502a05f0a9ea025947a8e72fe1bd81d0cd5bfd6f24597d662aa9",
+      "requests": 1542,
+      "statuses": {
+        "200": 1000,
+        "304": 542
+      },
+      "missingProdPaths": [],
+      "badResponses": [],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-DM_tpt8K.js",
+          "originalSha256": "82474893d50d3eb90a5becb0f6cab0ddac6da67a39f2122a981f5bde338ee917",
+          "patchedSha256": "b8880ae9e2297a88457764db153f4e671b2c6672795f2d3574910dd96de37fab",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    },
+    {
+      "label": "pruned",
+      "rawSha256": "b5da90d58c0ba2a4055784df3c0263f1cfb75cf2f1f68a4f888091974aa38d4d",
+      "requests": 6269,
+      "statuses": {
+        "200": 4012,
+        "304": 2257
+      },
+      "missingProdPaths": [],
+      "badResponses": [],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-B6yw0C2e.js",
+          "originalSha256": "bfc5ca97b1780c317c010a26ee9cfdf461a35c6063ca0ab88cac71ab589688f7",
+          "patchedSha256": "ec8a4cf1e7cef907f62c73565b54a055cf824b29a561838a36ffc30a0d8342b4",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    },
+    {
+      "label": "ui",
+      "rawSha256": "1e5d6ec2402163198147c0613b7b7e21670d6b8fd33af99b3b5a9701c5bd32c4",
+      "requests": 3037,
+      "statuses": {
+        "200": 1998,
+        "304": 1039
+      },
+      "missingProdPaths": [],
+      "badResponses": [],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-rauEx1rd.js",
+          "originalSha256": "daf75be3a925cbae3c8ed37ff1e4805d92f3b65d1254c76eb56eb3f457a59009",
+          "patchedSha256": "eed0209cb94c65fbd4fea9e04151f630a51183fc8192bb0793e8fe4cb1d8791a",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    },
+    {
+      "label": "final",
+      "rawSha256": "c56a103fccbc68c3f2cc05feba8d8e43a8262ffd519820c7a81b8f7025b895ab",
+      "requests": 2291,
+      "statuses": {
+        "200": 1498,
+        "304": 793
+      },
+      "missingProdPaths": [],
+      "badResponses": [],
+      "patchRows": [
+        {
+          "side": "candidate",
+          "main": "/build/index-CI0_a6tt.js",
+          "originalSha256": "be03134881c4eec0807a424f181ba25cb4eee269efbd88ce73bc84489e4431b4",
+          "patchedSha256": "69672f77c621f8f619c648ef1c8553774ae389c7eefceaca3885960c17e1f731",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        },
+        {
+          "side": "prod",
+          "main": "/build/index-DSZ-4VAt.js",
+          "originalSha256": "c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4",
+          "patchedSha256": "54bf7b1660aa35562278df52c1dee593e76188f8e8249fae468c0b2eccf7e716",
+          "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+        }
+      ]
+    }
+  ],
+  "cleanupPending": false,
+  "completedAt": "2026-11-06T20:00:07.116370+00:00",
+  "removedRawRoot": "test-results/perf7b",
+  "rawFilesRemoved": 3039,
+  "rawBytesRemoved": 817079959,
+  "ownedPreviewPortsStopped": [
+    4901,
+    4902
+  ],
+  "removedOwnedThreatOutput": true,
+  "remainingGlobalBrowserPool": "left running; not owned by this job",
+  "deployOrPush": false
+}

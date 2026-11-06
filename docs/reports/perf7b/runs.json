@@ -1,0 +1,422 @@
+{
+  "exclusiveJobs": [
+    {
+      "label": "target-before",
+      "started": "2026-11-06T18:42:32.864Z",
+      "revision": "9ab7ba7d0f5f6f1a105d24c630b1c4f92b3d6924",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7b/l10-target-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7b/diagnostic/target-before",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:44:06.456Z",
+      "seconds": 93.592,
+      "exitCode": 0,
+      "stdoutSha256": "f38a1979e8dd4c573cc4093490caac0b827b549836baf9cc7f1f37a0ffed0faa"
+    },
+    {
+      "label": "diagnostic-batch",
+      "started": "2026-11-06T18:45:15.962Z",
+      "revision": "9ab7ba7d0f5f6f1a105d24c630b1c4f92b3d6924",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/diagnostic-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T18:49:41.871Z",
+      "seconds": 265.909,
+      "exitCode": 0,
+      "stdoutSha256": "c61bfd0a2642a63c9d8eedfe14094f49c8c04dfc8184ca596b2e0c0d9b21a804"
+    },
+    {
+      "label": "shortcut-batch",
+      "started": "2026-11-06T18:50:48.682Z",
+      "revision": "f399faf460b8a528d11fafe8ed21cb95848e7c8e",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/shortcut-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T18:52:59.817Z",
+      "seconds": 131.135,
+      "exitCode": 1,
+      "stdoutSha256": "4af2d2d0a597c742e28f09cf58847cb1ebd26cd573cc789309436b4d642949c4"
+    },
+    {
+      "label": "shortcut-batch-restarted",
+      "started": "2026-11-06T18:53:59.182Z",
+      "revision": "f399faf460b8a528d11fafe8ed21cb95848e7c8e",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/shortcut-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T18:57:26.398Z",
+      "seconds": 207.216,
+      "exitCode": 0,
+      "stdoutSha256": "b45ab968166b2b9973990adeaadf87dd9e764865156f36e4d68cab3e6bfc986a"
+    },
+    {
+      "label": "input-batch",
+      "started": "2026-11-06T18:59:19.619Z",
+      "revision": "33606a1cbec433bb4d5b082f441428dac7f9c7b1",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/input-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T19:02:47.428Z",
+      "seconds": 207.809,
+      "exitCode": 0,
+      "stdoutSha256": "92b56315c213462affd39724f3b26ce6cb627922281d231bc21ad3bb8b6051af"
+    },
+    {
+      "label": "pruned-batch",
+      "started": "2026-11-06T19:06:42.781Z",
+      "revision": "703506b7186869099fbbe5f79df5ac85845b5ae3",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/pruned-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T19:08:32.953Z",
+      "seconds": 110.172,
+      "exitCode": 1,
+      "stdoutSha256": "2bce9076da4925ce940e7f93bf20a3732368a60a93725c234480ae621c41d1d0"
+    },
+    {
+      "label": "final-batch",
+      "started": "2026-11-06T19:10:09.154Z",
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/final-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T19:17:23.465Z",
+      "seconds": 434.311,
+      "exitCode": 0,
+      "stdoutSha256": "ee09d3e5b4eed44afc43b53c657d1011c31b2c94a397e1b397f1a3f4d9ae9f3e"
+    },
+    {
+      "label": "detailed-gc",
+      "started": "2026-11-06T19:17:54.245Z",
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7b/l10-detailed-gc.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7b/detailed-gc",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate,prod"
+      },
+      "signal": null,
+      "finished": "2026-11-06T19:21:30.717Z",
+      "seconds": 216.472,
+      "exitCode": 0,
+      "stdoutSha256": "1b6e6516ac69ccbb2f3181d22f65813f23bec049ad152a4281c30975dc9ff703"
+    },
+    {
+      "label": "native-sample",
+      "started": "2026-11-06T19:26:15.968Z",
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7b/l10-native-sample.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7b/native-sample",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T19:27:55.052Z",
+      "seconds": 99.084,
+      "exitCode": 0,
+      "stdoutSha256": "0e8399c0fd255927bd1ee3ec36e83a8050c33c934ebe015c7008b5e4cc01a6ea"
+    },
+    {
+      "label": "resource-diagnostic",
+      "started": "2026-11-06T19:29:07.039Z",
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7b/l10-resource-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7b/resource-diagnostic",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T19:29:18.340Z",
+      "seconds": 11.301,
+      "exitCode": 1,
+      "stdoutSha256": "c735e0fff666bdf131540ca74d76d7742c35ef6aa3d81f9dfa26d1e4e83ef9ff"
+    },
+    {
+      "label": "gpu-resources",
+      "started": "2026-11-06T19:30:42.666Z",
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7b/l10-gpu-resource-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7b/gpu-resources",
+        "RELEASE_SECONDS": "20",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T19:31:35.177Z",
+      "seconds": 52.511,
+      "exitCode": 0,
+      "stdoutSha256": "82fc559fbf38cdc8f16e2d9e07e3f8daf7b3ffb13bff076b3ea5041ddf4d8d64"
+    },
+    {
+      "label": "ui-batch",
+      "started": "2026-11-06T19:34:21.399Z",
+      "revision": "dd2aabe825adcc793609f7d0fd36bb006028771f",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/ui-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T19:40:09.232Z",
+      "seconds": 347.833,
+      "exitCode": 143,
+      "stdoutSha256": "38c7db1cc4b0cc23e172110a201b8e1da52f8766fc39fce75f4bec66cb5bd3d9"
+    },
+    {
+      "label": "release-batch",
+      "started": "2026-11-06T19:42:05.322Z",
+      "revision": "9af4c3ac69d8cab80bbae2822b1551a8cafd1c46",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7b/release-batch.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T19:46:45.063Z",
+      "seconds": 279.741,
+      "exitCode": 0,
+      "stdoutSha256": "d7259134fc82e55694f1a711266deb18cf16b404db905292d9f8bfd806d09d30"
+    }
+  ],
+  "sourceRuns": [
+    {
+      "label": "final-native1",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/final-native1"
+      },
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "started": "2026-11-06T19:10:20.736Z",
+      "finished": "2026-11-06T19:12:13.966Z",
+      "exitCode": 0
+    },
+    {
+      "label": "final-native2",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/final-native2"
+      },
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "started": "2026-11-06T19:12:13.974Z",
+      "finished": "2026-11-06T19:14:07.015Z",
+      "exitCode": 0
+    },
+    {
+      "label": "final-allocation",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/final-allocation"
+      },
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "started": "2026-11-06T19:14:07.022Z",
+      "finished": "2026-11-06T19:15:31.257Z",
+      "exitCode": 0
+    },
+    {
+      "label": "final-prod",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "prod",
+        "RELEASE_OUT": "test-results/perf7b/final-prod"
+      },
+      "revision": "420e559f5b17c4c15322c46e4dd6503ab92e080d",
+      "started": "2026-11-06T19:15:31.271Z",
+      "finished": "2026-11-06T19:17:23.371Z",
+      "exitCode": 0
+    },
+    {
+      "label": "ui-native1",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/ui-native1"
+      },
+      "revision": "dd2aabe825adcc793609f7d0fd36bb006028771f",
+      "started": "2026-11-06T19:34:32.550Z",
+      "finished": "2026-11-06T19:36:25.186Z",
+      "exitCode": 0
+    },
+    {
+      "label": "ui-native2",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/ui-native2"
+      },
+      "revision": "dd2aabe825adcc793609f7d0fd36bb006028771f",
+      "started": "2026-11-06T19:36:25.201Z",
+      "finished": "2026-11-06T19:38:18.126Z",
+      "exitCode": 0
+    },
+    {
+      "label": "ui-resources",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "20",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/ui-resources"
+      },
+      "revision": "dd2aabe825adcc793609f7d0fd36bb006028771f",
+      "started": "2026-11-06T19:38:18.134Z",
+      "finished": "2026-11-06T19:39:00.864Z",
+      "exitCode": 0
+    },
+    {
+      "label": "release-native1",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/release-native1"
+      },
+      "revision": "9af4c3ac69d8cab80bbae2822b1551a8cafd1c46",
+      "started": "2026-11-06T19:42:16.488Z",
+      "finished": "2026-11-06T19:44:09.383Z",
+      "exitCode": 0
+    },
+    {
+      "label": "release-native2",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/release-native2"
+      },
+      "revision": "9af4c3ac69d8cab80bbae2822b1551a8cafd1c46",
+      "started": "2026-11-06T19:44:09.388Z",
+      "finished": "2026-11-06T19:46:02.264Z",
+      "exitCode": 0
+    },
+    {
+      "label": "release-resources",
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_SECONDS": "20",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate",
+        "RELEASE_OUT": "test-results/perf7b/release-resources"
+      },
+      "revision": "9af4c3ac69d8cab80bbae2822b1551a8cafd1c46",
+      "started": "2026-11-06T19:46:02.277Z",
+      "finished": "2026-11-06T19:46:44.981Z",
+      "exitCode": 0
+    }
+  ]
+}
