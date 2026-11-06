@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "0dccac032bc397e34d4fe30c891eddb98e1a5bca",
+  "commit": "310b3aedddf0ae86c23d9830453db07f360d1ae7",
   "clauses": [
     {
       "clause": "Finite courier focus must permit nearby escort attacks in L3/L4/L6/L8 at both tiers",
@@ -21,6 +21,21 @@
       "file": "docs/reports/fix68-g/G-18-after.json.gz",
       "sha256": "b5d280ae7ced88d62a1569e08d952ce4df6fc1d3732110d5e2770b7b0472e287",
       "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-18-all-focus.json.gz",
+      "sha256": "c47d61a1d21244e813da3d75e2d01e8f70190b7469e539e3763a60f856aa9d39",
+      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-18-contact.json.gz",
+      "sha256": "04af51585e3d10d03c6e32dd99809ccd6c22e611cb2c189fec2d2b14746d85bb",
+      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-18-expanded-summary.json",
+      "sha256": "f9e5699de72cbfd4e8975562aa844919d02568bab8ba8d7256c823ef61fed334",
+      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
     }
   ],
   "notes": "Requested defect fixed; complete scripted-role and naturally played route qualification remains separate. L9/L10 generic finite-focus fixtures still do not contact in 120 ticks and are not presented as passing."
