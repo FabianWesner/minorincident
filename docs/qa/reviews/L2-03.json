@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "4acfba61d9e4c6327b7f1909a8ae2a6d4d54c636",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
       "clause": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
@@ -14,19 +14,19 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L2-03-clauses.json",
-      "sha256": "e93369df72c2342e47203c04f8250d01690a675be124af17140b1d895d99bff4",
+      "sha256": "5d7f0a0de335f033a8c3a7ea6b93f602a1a148b83a90191bb902572fdd612638",
       "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     },
     {
       "file": "docs/reports/sweep-a3/L2-03-images.json",
-      "sha256": "ef0a244f9aab4d30eb012ae953473aed288445d1851e637326bc08259a4fdc20",
+      "sha256": "633e666de434ac6a9d2c20436221b8631f6ebd0e49ff3275598af35a4c49f973",
       "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     },
     {
       "file": "docs/reports/sweep-a3/L2-03-ledger.json.gz",
-      "sha256": "83d213c751561e9d836338cf8bdb7aeec01674951413f128abbbe3b0391ef6a2",
+      "sha256": "861611e43a246d2dea4a34c65750d399edcb8bc95936ed8aa8a7745dfbbe0b8a",
       "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     }
   ],
-  "notes": "Pooled headless real level and ordinary no-axe InputFrame route; full HUD/production follow camera. No relocation, actor injection, protection or objective skips. Controlled on-foot hull-occlusion poses belong to G-07 and are not inferred from the seated ride frames."
+  "notes": "Pooled headless real level and ordinary no-axe InputFrame route; full HUD/production follow camera. No relocation, actor injection, protection or objective skips. Controlled on-foot hull-occlusion poses belong to G-07 and are not inferred from the seated ride frames. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
 }
