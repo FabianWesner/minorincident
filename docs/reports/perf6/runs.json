@@ -1,0 +1,247 @@
+{
+  "matrix": {
+    "started": "2026-11-06T14:31:59.332Z",
+    "jobs": [
+      {
+        "tier": "low",
+        "selection": "L1,L2",
+        "started": "2026-11-06T14:31:59.338Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-browser.mjs strips L1,L2 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T14:37:38.155Z"
+      },
+      {
+        "tier": "low",
+        "selection": "L3,L4",
+        "started": "2026-11-06T14:37:38.156Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L3,L4 && node --import tsx tools/qa/release-ab-browser.mjs strips L3,L4 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T14:43:48.264Z"
+      },
+      {
+        "tier": "low",
+        "selection": "L5,L6",
+        "started": "2026-11-06T14:43:48.264Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L5,L6 && node --import tsx tools/qa/release-ab-browser.mjs strips L5,L6 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T14:49:59.200Z"
+      },
+      {
+        "tier": "low",
+        "selection": "L7,L8",
+        "started": "2026-11-06T14:49:59.201Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L7,L8 && node --import tsx tools/qa/release-ab-browser.mjs strips L7,L8 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T14:56:51.724Z"
+      },
+      {
+        "tier": "low",
+        "selection": "L9,L10",
+        "started": "2026-11-06T14:56:51.725Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L9,L10 && node --import tsx tools/qa/release-ab-browser.mjs strips L9,L10 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:03:55.690Z"
+      },
+      {
+        "tier": "high",
+        "selection": "L1,L2",
+        "started": "2026-11-06T15:03:55.691Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L1,L2 && node --import tsx tools/qa/release-ab-browser.mjs strips L1,L2 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:10:04.517Z"
+      },
+      {
+        "tier": "high",
+        "selection": "L3,L4",
+        "started": "2026-11-06T15:10:04.518Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L3,L4 && node --import tsx tools/qa/release-ab-browser.mjs strips L3,L4 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:16:17.282Z"
+      },
+      {
+        "tier": "high",
+        "selection": "L5,L6",
+        "started": "2026-11-06T15:16:17.283Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L5,L6 && node --import tsx tools/qa/release-ab-browser.mjs strips L5,L6 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:22:19.750Z"
+      },
+      {
+        "tier": "high",
+        "selection": "L7,L8",
+        "started": "2026-11-06T15:22:19.751Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L7,L8 && node --import tsx tools/qa/release-ab-browser.mjs strips L7,L8 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:29:06.337Z"
+      },
+      {
+        "tier": "high",
+        "selection": "L9,L10",
+        "started": "2026-11-06T15:29:06.338Z",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "-c",
+          "node --import tsx tools/qa/release-ab-load.mjs L9,L10 && node --import tsx tools/qa/release-ab-browser.mjs strips L9,L10 webgpu"
+        ],
+        "exitCode": 0,
+        "finished": "2026-11-06T15:36:17.005Z"
+      }
+    ]
+  },
+  "extras": {
+    "started": "2026-11-06T15:36:17.877Z",
+    "jobs": [
+      {
+        "kind": "webgl2-loads",
+        "tier": "low",
+        "env": {
+          "RELEASE_QUALITY": "low",
+          "RELEASE_OUT": "test-results/perf6/webgl2/low"
+        },
+        "args": [
+          "node",
+          "--import",
+          "tsx",
+          "tools/qa/release-ab-load.mjs",
+          "L4,L5,L6,L10",
+          "webgl2"
+        ],
+        "started": "2026-11-06T15:36:17.877Z",
+        "exitCode": 0,
+        "finished": "2026-11-06T15:39:11.918Z"
+      },
+      {
+        "kind": "webgl2-loads",
+        "tier": "high",
+        "env": {
+          "RELEASE_QUALITY": "high",
+          "RELEASE_OUT": "test-results/perf6/webgl2/high"
+        },
+        "args": [
+          "node",
+          "--import",
+          "tsx",
+          "tools/qa/release-ab-load.mjs",
+          "L4,L5,L6,L10",
+          "webgl2"
+        ],
+        "started": "2026-11-06T15:39:11.919Z",
+        "exitCode": 0,
+        "finished": "2026-11-06T15:42:41.503Z"
+      },
+      {
+        "kind": "named-moments",
+        "tier": "low",
+        "env": {
+          "FIX51_MOMENTS_OUT": "test-results/perf6/moments"
+        },
+        "args": [
+          "node",
+          "--import",
+          "tsx",
+          "tools/perf/fix51-moments.ts",
+          "low",
+          "L1,L3",
+          "accident"
+        ],
+        "started": "2026-11-06T15:42:41.503Z",
+        "exitCode": 0,
+        "finished": "2026-11-06T15:48:02.348Z"
+      },
+      {
+        "kind": "named-moments",
+        "tier": "high",
+        "env": {
+          "FIX51_MOMENTS_OUT": "test-results/perf6/moments"
+        },
+        "args": [
+          "node",
+          "--import",
+          "tsx",
+          "tools/perf/fix51-moments.ts",
+          "high",
+          "L1,L3",
+          "accident"
+        ],
+        "started": "2026-11-06T15:48:02.348Z",
+        "exitCode": 0,
+        "finished": "2026-11-06T15:53:33.828Z"
+      }
+    ]
+  },
+  "poolAfterMeasurement": {
+    "protocol": 1,
+    "pid": 91433,
+    "playwright": "1.63.0",
+    "limit": 4,
+    "configuredLimit": 4,
+    "windowServerCpu": 1.613362437178796,
+    "idleMs": 60000,
+    "endpoints": {
+      "gpu": "ws://127.0.0.1:4329/ws/gpu",
+      "swiftshader": "ws://127.0.0.1:4329/ws/swiftshader"
+    },
+    "starting": [],
+    "browsers": [],
+    "leases": [],
+    "waiting": 0,
+    "waiters": [],
+    "exclusive": []
+  }
+}
