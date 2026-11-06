@@ -207,8 +207,11 @@ export class LevelSixSubway {
       const hatchFront = wave === 4 && !this.s.spawnLog.some(entry=>entry.wave===4&&entry.door===requested);
       const armored = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
         || hatchFront;
+      // The first breach's existing front member must survive the now-correct
+      // elevated MG fire long enough to engage the courier. Reuse the armored
+      // hatch archetype without adding a member, cap slot or special stat.
       let id:number;
-      try { id=armored?ai.spawn(hatchFront?'infected.armored':'infected.riot',at,hatchFront?{variant:'inf.riot-cop'}:{}):o.spawnPedestrian(at,{model}); const e=w.entities.get(id)!; if(!armored)o.turnNow(e); }
+      try { id=armored?ai.spawn(hatchFront||wave===1?'infected.armored':'infected.riot',at,hatchFront?{variant:'inf.riot-cop'}:{}):o.spawnPedestrian(at,{model}); const e=w.entities.get(id)!; if(!armored)o.turnNow(e); }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later
