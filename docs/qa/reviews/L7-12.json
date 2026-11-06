@@ -1,0 +1,77 @@
+{
+  "row": "L7-12",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c6",
+  "date": "2026-11-06",
+  "commit": "eb38285882d726e24d61656f8d3466957264802c",
+  "clauses": [
+    {
+      "clause": "Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1.",
+      "verdict": "PASS",
+      "note": "Fresh real-input progressed-save low/high, actual userzoom0.5/1.5. Twenty-eight same-tick lossless native/hidden-courier/production-depth-ID samples cover actual rocket pickup, original live Alpha at horde0/6/12 physical ticks, and active city-fire/destruction0/6/12 poses. Courier-maskP90 against its projected2m native ring passes all cells: minimum 4.768627 with .02 offset and 3.879115 with stricter .05 offset. ID geometry excludes corgi/crowd/fire/shadows; actual body counts and64ring-point patches retained. All84raw frames personally inspected in14full-size sheets; paired game zooms are visibly distinct. Enlarged brown Alpha has human head/torso/twoarms/twolegs and continuous run stance, with head partly cropped at closest zoom; wide frames establish silhouette. Actual wrecked military convoy, broken road barriers/fence, smoke/ash and orange fire scenes are retained. Several city poses show only bright upper courier/gear fragments through foreground fence; contrast is explicitly a visible-geometry measurement. Courier protection only, normal threats/followers, no actor pose/HP/objective/cap changes.27semantic faults reject, inclusive3.0passes, and differing offset verdicts remain NOT CHECKED rather than false FAIL. P: PO must judge whether the current destruction reads as worst so far relative to earlier levels and whether the enlarged Alpha designs read human; derived low/high PO sheets remain in test-results. This is agent frame/quantitative qualification, not PO taste approval."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c6/L7-12/contrast-proof.json",
+      "sha256": "f1e02d813d1f32d816bca21f5f48f5cca23f4fc69ed46e6bcf2efe5e5cb24c95",
+      "what": "Current-source mask/ring measurements or actual-consumer semantic boundary controls."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/coverage-proof.json",
+      "sha256": "ecdace20c4f31321d7238474ad0427dd01ace158f9f6d1e64cc7309d243cdfaa",
+      "what": "Current-source mask/ring measurements or actual-consumer semantic boundary controls."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/low-physical.json.gz",
+      "sha256": "2b1919a457eef7286745a2e3ae3eff5e8c73eaf787fae5ef3de016bd8f1c3cbb",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/high-physical.json.gz",
+      "sha256": "c4ec77975989becf676edf68aea9fe7ac0af11c3c7692cf349bfdcdedc0ead02",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/low-city-physical.json.gz",
+      "sha256": "6296f3b54b3f32916c4c6b0b8c8d447759bfc7fe712469ea261ca4918dec3acb",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/high-city-physical.json.gz",
+      "sha256": "2d1374cbdd3ea8fd0bce4013341d2b2c15ba9467bb1883217f343217f46c2bad",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/low-review.json",
+      "sha256": "5648dff0095ce3d212e4824e9374e48982ba8b863229f1766e18e62e2c2b2f04",
+      "what": "All42 tier frames personally reviewed; raw digests verified/deleted, derived PO sheets retained."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/high-review.json",
+      "sha256": "30e9a27bc3ebcb35e68cf1ebf70edbe0ef3141e712efa37bda314ab881812648",
+      "what": "All42 tier frames personally reviewed; raw digests verified/deleted, derived PO sheets retained."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/readability-producer.mjs",
+      "sha256": "0140171f8d728c8f8f946499ed75b534a65526494a58fbb19844a28dfa43544b",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/contrast-analyzer.py",
+      "sha256": "f11474687f556d95cd502510df4a3fc52cf0e60708be0ee364aa44d0627bdad2",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/low-city-producer.mjs",
+      "sha256": "b0c01b2ce52ec9710051cbb9b14d8ed24baefdaff3d6668f40f1f6d05b17a1cc",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-12/high-city-producer.mjs",
+      "sha256": "b0c01b2ce52ec9710051cbb9b14d8ed24baefdaff3d6668f40f1f6d05b17a1cc",
+      "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+    }
+  ],
+  "notes": "P remains explicit: worst-destruction taste and sampled Alpha human reading need PO judgment. No new game code or performance measurement."
+}

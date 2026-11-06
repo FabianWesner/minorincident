@@ -47,7 +47,7 @@ const subjectiveReview: Record<string, string> = {
   'L5-05': 'PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only; reachability, route density, attack rate and first-attack clock retain numeric checks.',
   'L4-18': 'PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection.',
   'L5-14': 'PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause.',
-  'L7-12': 'PO: does L7 read as the worst destruction so far, and do Alpha silhouettes read as human? The player contrast≥3:1 clause remains quantitative and open.',
+  'L7-12': 'PO: does L7 read as the worst destruction so far, and do Alpha silhouettes read as human? Use the separately listed quantitative matrix result for player contrast≥3:1.',
 };
 function concise(value: unknown): string {
   const rendered = typeof value === 'string' ? value : JSON.stringify(value);

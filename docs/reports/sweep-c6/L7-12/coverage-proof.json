@@ -1,0 +1,150 @@
+{
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "eb38285882d726e24d61656f8d3466957264802c",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "toolSha256": "f6137085a34b4abe7c76d2d987a21cfc79c2b32db0e65ba4883ebf9b239559d0",
+  "method": "Actual dedicated consumer; semantic faults, inclusive3.0boundary and explicit offset-ambiguity control. Mutated input/review links are rehashed. Exact original input/city/review/analysis bytes restored after every case; no game change.",
+  "cases": [
+    {
+      "fault": "stale-source",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "wrong-browser",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "wrong-producer",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "wrong-quality",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "native-driver",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "input-gap",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "no-device-commands",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "missing-zoom",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "wrong-actual-zoom",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "stepped-between-masks",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "missing-mask-link",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "empty-body-mask",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "missing-ring",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "invented-ratio",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "contrast-2.999",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "contrast-both-2.999",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "dead-alpha",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "replaced-alpha",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "motion-gap",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "missing-city-frame",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "wrong-city-zoom",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "unreviewed",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "blank-seen-note",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "alpha-not-human",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "no-destruction-review",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "stale-analyzer",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "console-error",
+      "expected": "reject",
+      "passed": false
+    },
+    {
+      "fault": "contrast-exactly-3",
+      "expected": "PASS",
+      "passed": true
+    }
+  ]
+}
