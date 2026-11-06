@@ -26,7 +26,10 @@ for (const tier of ['low', 'high'] as const) for (const policy of ['complete', '
     assert.equal(canonical.sourceHash, identity.sourceHash);
     if (policy === 'complete') assert.equal(finalHash, canonical.nativeStateHash, 'complete result must match current canonical L6 receipt');
     const result = m.state.result, roster = m.state.l6!.survivors;
-    if (result) assert.equal(result.survivorsIn, result.rescued + result.survivorsLost, 'L6-11 roster must balance');
+    if (result) {
+      assert.notEqual(result.survivorsLost, undefined, 'L6-11 result must account for losses');
+      assert.equal(result.survivorsIn, result.rescued + result.survivorsLost!, 'L6-11 roster must balance');
+    }
     rows.push({ tier, policy, completed: !!result, time: m.state.stats.time, deaths: m.state.stats.deaths,
       result: result ? { rescued: result.rescued, survivorsIn: result.survivorsIn, survivorsLost: result.survivorsLost, survivors: result.survivors } : null,
       roster: structuredClone(roster), events, finalHash, canonicalHash: policy === 'complete' ? canonical.nativeStateHash : null });

@@ -5,9 +5,10 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { provenance } from './accept/probe';
 
 const identity = provenance(), ledgerPath = 'docs/reports/sweep-b/L4-riot-duels.json';
-const ledger = JSON.parse(readFileSync(ledgerPath, 'utf8'));
+interface Duel { tier: string; startDistance: number; seconds: number; hits: { tick: number }[]; riotHp: number; playerHp: number }
+const ledger = JSON.parse(readFileSync(ledgerPath, 'utf8')) as { sourceHash: string; rows: Duel[] };
 assert.equal(ledger.sourceHash, identity.sourceHash, 'duel ledger must match current source');
-const rows = ledger.rows.map((row: any) => {
+const rows = ledger.rows.map(row => {
   const firstHit = row.hits[0]?.tick, killTick = Math.round(row.seconds * 60);
   const firstHitToKill = firstHit === undefined ? null : (killTick - firstHit) / 60;
   assert.equal(row.riotHp, 0, `${row.tier} ${row.startDistance}m riot is incapacitated`);
