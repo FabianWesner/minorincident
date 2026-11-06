@@ -1,0 +1,992 @@
+{
+  "row": "G-17",
+  "verdict": "FAIL",
+  "method": "Low WebGL2 wander/chase, eight15-tick-spaced game-camera captures per cell; original-scale crops. Every saved frame inspected and deleted; full pose tracks compressed.",
+  "cells": [
+    {
+      "receipt": "docs/reports/sweep-g/G-17-0.json.gz",
+      "model": "inf.common-worker",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-0.json.gz",
+      "model": "inf.common-worker",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-0.json.gz",
+      "model": "inf.crawler",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-0.json.gz",
+      "model": "inf.crawler",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": 64.31100225027195
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.alpha",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.alpha",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.jogger",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.jogger",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.cashier",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.cashier",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.delivery-driver",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-12.json.gz",
+      "model": "inf.delivery-driver",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.suburban-mom",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.suburban-mom",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.bbq-dad",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.bbq-dad",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.bathrobe-neighbor",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.bathrobe-neighbor",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.alpha-worker",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-16.json.gz",
+      "model": "inf.alpha-worker",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-hoodie",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-hoodie",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-fire",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-fire",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-suit",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.alpha-suit",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.mega-alpha",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-20.json.gz",
+      "model": "inf.mega-alpha",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "inf.mega-alpha-ashen",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "inf.mega-alpha-ashen",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "inf.mega-alpha-ember",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "inf.mega-alpha-ember",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "npc.civilian-adult-m",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415749946446
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "npc.civilian-adult-m",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "npc.civilian-adult-f",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 50.561837065338985
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-24.json.gz",
+      "model": "npc.civilian-adult-f",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.civilian-elderly",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.83897959080648
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.civilian-elderly",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.police-officer",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 55.33293464097336
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.police-officer",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.firefighter-alive",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 50.41568864094859
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.firefighter-alive",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.national-guard",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 55.332941774603356
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-28.json.gz",
+      "model": "npc.national-guard",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-man-a",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415749946446
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-man-a",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-man-b",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 46.89327175510693
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-man-b",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-woman-a",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 50.561837065338985
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-woman-a",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-woman-b",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-32.json.gz",
+      "model": "npc.civilian-woman-b",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-tech-a",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.909720549252896
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-tech-a",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-tech-b",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.90971978382094
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-tech-b",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-guard",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.90972374788656
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.lab-guard",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.depot-clerk",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.90972033647134
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-36.json.gz",
+      "model": "npc.depot-clerk",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-4.json.gz",
+      "model": "inf.riot-cop",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-4.json.gz",
+      "model": "inf.riot-cop",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": 27.548923882098208
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-4.json.gz",
+      "model": "inf.firefighter",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-4.json.gz",
+      "model": "inf.firefighter",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": 16.184622943887916
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.dale.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 55.36847656400189
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.dale.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.rosa.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 55.25885654894542
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.rosa.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.mr-okafor.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.83897791719614
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.mr-okafor.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.mia.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 50.56183716761949
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-40.json.gz",
+      "model": "npc.mia.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.sam.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 55.36847641335126
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.sam.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-man-a.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415514236574
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-man-a.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-man-b.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 46.89327362597082
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-man-b.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-woman-b.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371299463113075
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-44.json.gz",
+      "model": "npc.civilian-woman-b.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.marcus.aftermath",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415518968082
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.marcus.aftermath",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.bandaged",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415514236574
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.bandaged",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.lying",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415514236574
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.lying",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.sitting",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 54.68415514236574
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-48.json.gz",
+      "model": "npc.shelter-survivor.sitting",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-8.json.gz",
+      "model": "inf.hazmat",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-8.json.gz",
+      "model": "inf.hazmat",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": 28.41829561361884
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-8.json.gz",
+      "model": "inf.nurse",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-8.json.gz",
+      "model": "inf.nurse",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": -2.1541708678556613
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-initial.json.gz",
+      "model": "inf.common-worker",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 53.371306609684865
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-initial.json.gz",
+      "model": "inf.common-worker",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-initial.json.gz",
+      "model": "inf.crawler",
+      "mode": "wander",
+      "identityMatched": false,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-initial.json.gz",
+      "model": "inf.crawler",
+      "mode": "chase",
+      "identityMatched": false,
+      "movingCapturedFrames": 4,
+      "maxCapturedMovingLeanDeg": 64.31100225027195
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.common-worker",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 10.354378897348607
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.common-worker",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.jogger",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 4.8764802487628
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.jogger",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.cashier",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 14.738252652080108
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.cashier",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.delivery-driver",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 1.301408648050935
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.delivery-driver",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.suburban-mom",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 47.37467193358287
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.suburban-mom",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.bbq-dad",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": 17.398276193926403
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.bbq-dad",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.bathrobe-neighbor",
+      "mode": "wander",
+      "identityMatched": true,
+      "movingCapturedFrames": 3,
+      "maxCapturedMovingLeanDeg": -11.162849677352973
+    },
+    {
+      "receipt": "docs/reports/sweep-g/G-17-runners.json.gz",
+      "model": "inf.bathrobe-neighbor",
+      "mode": "chase",
+      "identityMatched": true,
+      "movingCapturedFrames": 0,
+      "maxCapturedMovingLeanDeg": null
+    }
+  ],
+  "errors": [
+    {
+      "entry": {
+        "model": "inf.brute",
+        "archetype": "infected.brute"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.brute; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.brute",
+        "archetype": "infected.brute"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.brute; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.screamer",
+        "archetype": "infected.screamer"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.screamer; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.screamer",
+        "archetype": "infected.screamer"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.screamer; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.sprinter",
+        "archetype": "infected.sprinter"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.sprinter; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.sprinter",
+        "archetype": "infected.sprinter"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.sprinter; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.bloated",
+        "archetype": "infected.bloated"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.bloated; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.bloated",
+        "archetype": "infected.bloated"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.bloated; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.armored-football",
+        "archetype": "infected.armored"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.armored-football; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.armored-football",
+        "archetype": "infected.armored"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.armored-football; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.butcher",
+        "archetype": "infected.butcher"
+      },
+      "mode": "wander",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.butcher; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "entry": {
+        "model": "inf.butcher",
+        "archetype": "infected.butcher"
+      },
+      "mode": "chase",
+      "error": "Error: page.evaluate: Error: Invalid scene spec:\nactors[1]: retired rigid figure inf.butcher; choose an accepted v2 crowd asset\n    at Ge.load (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:22901)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    }
+  ],
+  "rawCapturesReviewedDeleted": 880,
+  "limitations": [
+    "Retired rigid role names rejected by current SceneLab; errors retained.",
+    "Original runner attempts dressed as civilian woman b excluded from requested identity coverage. Separate L4-scenario renderer fixtures match all14 runner cells.",
+    "No game animation or criterion changes."
+  ],
+  "finding": "Identity-matched npc.civilian-woman-b.aftermath wander has splayed near-horizontal leg extension (G-17-44 strip, frames0-7). Crawler chase exceeds42deg by design; PO review of exemption remains separate."
+}

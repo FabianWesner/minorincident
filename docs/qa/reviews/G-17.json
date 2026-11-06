@@ -1,0 +1,27 @@
+{
+  "row": "G-17",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "56836fe26e56c4b538e8667f02831c10152870a0",
+  "clauses": [
+    {
+      "clause": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42\u00b0, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
+      "verdict": "FAIL",
+      "note": "Identity-matched npc.civilian-woman-b.aftermath wander has splayed near-horizontal leg extension (G-17-44 strip, frames0-7). Crawler chase exceeds42deg by design; PO review of exemption remains separate."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-17-summary.json",
+      "sha256": "03d0f5065d10586f6c7347c1fa38017ee4028def12d4cecf8d65a2461b9d5c2f",
+      "what": "Actual identities, moving-frame lean and rejected setup errors; measured visual failure."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-17-44-captures.json",
+      "sha256": "4a68e704bfd5f76e7c6a9196f4286fb5741423ce919291ff23de79ab5739fdd9",
+      "what": "All frames inspected; converted civilian woman b visibly splays legs; derived sheet retained only in test-results."
+    }
+  ],
+  "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained."
+}
