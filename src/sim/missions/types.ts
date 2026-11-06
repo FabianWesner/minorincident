@@ -195,6 +195,8 @@ export interface L4State {
   /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
   alphaIds: number[]; alphaAnchors: string[];
   wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number; collapseEdgeCursor?: number;
+  /** Scheduled collapse quotas awaiting actual admission, also included in pend. */
+  collapsePend?: number[];
   /**
    * PO 10-13 spread arrivals: per street edge the tick of its next small group and its next emergence point (cursor into its `l4Emergence`
    * points); queued exterior breach pressure (tick/cursor/count); `origin` identifies the street or wire source for each arrived id.

@@ -1,26 +1,26 @@
 {
   "row": "L4-13",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "d8c230011cd7e3fe3a9567753a61097c89eaa059",
+  "commit": "d5147ae80b9c5c0387d81c62355962e52aec081d",
   "clauses": [
     {
       "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets \u2265 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "verdict": "FAIL",
-      "note": "Current-source mortal complete routes match both canonical final hashes. First nine-second collapse windows: low {'0': 3, '1': 0, '2': 0} actual admissions vs 2 per edge; final hash 146891dc; high {'0': 0, '1': 0, '2': 0} actual admissions vs 3 per edge; final hash a8e9c87d. Every-tick pending/admitted-ID conservation proves real admissions. Both tiers retain exact2400-tick escape windows. The scheduled quotas remain queued while existing infected, reserved street ambushes and perimeter demand compete for the shared cap; changing their admission priority requires broader capacity and route validation, so no population/cap/timer/criterion was changed. This fresh numeric counterexample retains FAIL. Other corridor occupancy and pursuit clauses are recorded without blanket qualification."
+      "note": "First 9-second collapse admissions now meet every edge quota: low 2/2/2; high 3/3/3. Both complete routes preserve the 80/120 caps and every 40-second escape window. All nine low windows admit their scheduled quota. Later high windows still starve: at tick 14509 edge 5 admits 2/3; subsequent waves also miss counts despite preserved scheduled demand. Whole row remains FAIL; no cap, actor quota or timer was reduced."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-13-proof.json",
-      "sha256": "3751c8a90353d07385921d024032b6de20e740e9ba47e12baaccc87f426a4375",
-      "what": "Current-source mortal complete routes match both canonical final hashes. First nine-second collapse windows: low {'0': 3, '1': 0, '2': 0} actual admissions vs 2 per edge; final hash 146891dc; high {'0': 0, '1': 0, '2': 0} actual admissions vs 3 per edge; final hash a8e9c87d. Every-tick pending/admitted-ID conservation proves real admissions. Both tiers retain exact2400-tick escape windows. The scheduled quotas remain queued while existing infected, reserved street ambushes and perimeter demand compete for the shared cap; changing their admission priority requires broader capacity and route validation, so no population/cap/timer/criterion was changed. This fresh numeric counterexample retains FAIL. Other corridor occupancy and pursuit clauses are recorded without blanket qualification."
+      "file": "docs/reports/fix71-b/L4-13-native.json",
+      "sha256": "b13f7fc9a26c6ab4d0eca4ea93fb90fe1c450c11bc87474d8a409bf9ead112ff",
+      "what": "First 9-second collapse admissions now meet every edge quota: low 2/2/2; high 3/3/3. Both complete routes preserve the 80/120 caps and every 40-second escape window. All nine low windows admit their scheduled quota. Later high windows still starve: at tick 14509 edge 5 admits 2/3; subsequent waves also miss counts despite preserved scheduled demand. Whole row remains FAIL; no cap, actor quota or timer was reduced."
     },
     {
-      "file": "docs/reports/sweep-b/L4-escape.json.gz",
-      "sha256": "c7d7d17c4a1f2630b9b3fae6600f7981aeecc20d06850c45f31412c5e960a984",
-      "what": "Current-source mortal complete routes match both canonical final hashes. First nine-second collapse windows: low {'0': 3, '1': 0, '2': 0} actual admissions vs 2 per edge; final hash 146891dc; high {'0': 0, '1': 0, '2': 0} actual admissions vs 3 per edge; final hash a8e9c87d. Every-tick pending/admitted-ID conservation proves real admissions. Both tiers retain exact2400-tick escape windows. The scheduled quotas remain queued while existing infected, reserved street ambushes and perimeter demand compete for the shared cap; changing their admission priority requires broader capacity and route validation, so no population/cap/timer/criterion was changed. This fresh numeric counterexample retains FAIL. Other corridor occupancy and pursuit clauses are recorded without blanket qualification."
+      "file": "docs/reports/fix71-b/L4-13-native.json.gz",
+      "sha256": "415f0ed8034f777b16f19215661be149594093ccd66c77c61a94c623be31c35a",
+      "what": "Read-only per-tick admission conservation and per-edge membership ledger, ordinary mortal input routes at both tiers; includes actual scheduled windows, emitted actor IDs/positions, full look census and final state hashes."
     }
   ]
 }
