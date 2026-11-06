@@ -3,7 +3,7 @@
   "status": "FAIL",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "ec78438c3c0c66e3b0901cb3272038090501a3b3",
+  "commit": "ffb04621df18f7f4b09b5cd6277fa78a31a9f3b1",
   "clauses": [
     {
       "clause": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
@@ -13,14 +13,14 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-18-party-perception.json.gz",
-      "sha256": "4d5f27e8d4a4f93b8ce3a1164dac63fe9603036da0f3ba7d7086901cbb905141",
-      "what": "All300 controlled production-world party/finite-focus samples, both qualities, exact targets and120tick trajectories with actual attack-windup observer. No AI edits."
+      "file": "docs/reports/sweep-g/G-18-final-party-perception.json.gz",
+      "sha256": "93e7178a01166ecd14a7b6e599479f628f79acd03651dfb3b8e226c283c35c56",
+      "what": "Fresh final-source rerun of all300 actual production-world party/finite-focus cells; all measured values identical to prior proof; zero setup errors."
     },
     {
-      "file": "docs/reports/sweep-g/G-18-party-summary.json",
-      "sha256": "271fbca4705ddadf25bf760b9319ea7fae88f34769b40fbeb096987383adbfb1",
-      "what": "Eight paired low/high finite-focus counterexamples with ordinary-rush attack controls; all300cells and four unresolved Alpha companion cases retained."
+      "file": "docs/reports/sweep-g/G-18-final-party-summary.json",
+      "sha256": "01619f4bfa55c4ee05111e9a72d77dccd02417751aeda56c87a0bc2d3571c146",
+      "what": "Final-source exact counterexample and parity summary. Prior full evidence remains immutable."
     }
   ],
   "notes": "No criteria, AI, target count, focus duration or caps changed. Companion detection redirects to courier without targeting corgi. Full-role coverage is not claimed."
