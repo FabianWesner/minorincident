@@ -1,0 +1,9 @@
+# L9-09 current-source qualification
+
+All172 shared boundaries of the actual96 terrain-cell GLBs were measured using their runtime transforms and production GroundField. Partition points include triangle/boundary intersections and affine upper-envelope switches, plus endpoints/midpoints/epsilon samples:43140positions, max1.000000024cm mismatch, zero missing detailed support. Nonflat bevel faces are handled; the first flat-only probe assumption was rejected by actual geometry before qualification. Same assets serve both qualities.
+
+Six ordinary physical-WASD drives follow all three authored detours to the mandatory bridge approach. Road7615, countryside7324 and dry-shortcut5325 driving ticks per tier each match the actual held-key throttle/steer values without gaps. Detailed residency peaks9low/25high, including pending allocation slots, with54–73different actual render residency sets and47–64unloads/case. Input remains accepted through those changes. These are functional input/simulation observations, not frame-time or performance measurements. No photos were taken in these numeric runs; the preceding six complete current-source L9-03 drives retain their37personally reviewed panels.
+
+The auxiliary whole-horizon GroundField diagnostic includes permanent structural/curb faces and absent detail paint. Its maximum difference0.373m is not a difference between neighboring terrain cells: the same always-present horizon geometry exists on both sides. It is retained as a separate diagnostic, not interpreted as a terrain-cell seam counterexample. This row establishes the exact paired-cell seams and live streamed input/residency; it makes no visual LOD-pop or performance claim.
+
+Twenty-one semantic faults in the actual acceptance consumer are rejected; exact original evidence bytes restored. All eight clauses pass. No game/asset/target changes.

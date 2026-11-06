@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "ce2570e6614696e7ef2cd35c10efbd73fe99945b568da56d3fa86f269a7ef405",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c5/L9-09"
+  },
+  "checks": [
+    {
+      "id": "L9-09",
+      "clause": "actual terrain GLB shared-edge heights",
+      "tier": "high",
+      "policy": "streaming-physical",
+      "status": "PASS",
+      "value": {
+        "assets": true,
+        "sharedEdges": 172,
+        "samples": 43140,
+        "maxMismatch": 0.01000000024214387,
+        "missing": 0
+      },
+      "target": "all172adjacent100m terrain boundaries, actual96GLBs transformed to world space; exhaustive affine segment partitions using production GroundField; ≤0.02m gap, no missing detail supports. Auxiliary horizon includes permanent structural faces, not paired terrain cells.",
+      "receipt": "docs/reports/sweep-c5/L9-09/seams.json"
+    },
+    {
+      "id": "L9-09",
+      "clause": "road physical streaming residency and continuous input",
+      "tier": "high",
+      "policy": "streaming-physical",
+      "status": "PASS",
+      "value": {
+        "complete": true,
+        "detailed": true,
+        "input": true,
+        "streamingSets": 73,
+        "unloaded": 62,
+        "inputTicks": 7615,
+        "peakDetailed": 25,
+        "peakSim": 25,
+        "errors": []
+      },
+      "target": "actual WASD authored route to bridge, ≤25/9 resident+loading detail slots, input accepted every simulation tick matching held keys across actual streaming changes, no scripted driving lock. No frame/performance claim.",
+      "receipt": "docs/reports/sweep-c5/L9-09/high-road-physical.json.gz"
+    },
+    {
+      "id": "L9-09",
+      "clause": "countryside physical streaming residency and continuous input",
+      "tier": "high",
+      "policy": "streaming-physical",
+      "status": "PASS",
+      "value": {
+        "complete": true,
+        "detailed": true,
+        "input": true,
+        "streamingSets": 67,
+        "unloaded": 58,
+        "inputTicks": 7324,
+        "peakDetailed": 25,
+        "peakSim": 25,
+        "errors": []
+      },
+      "target": "actual WASD authored route to bridge, ≤25/9 resident+loading detail slots, input accepted every simulation tick matching held keys across actual streaming changes, no scripted driving lock. No frame/performance claim.",
+      "receipt": "docs/reports/sweep-c5/L9-09/high-countryside-physical.json.gz"
+    },
+    {
+      "id": "L9-09",
+      "clause": "dry-shortcut physical streaming residency and continuous input",
+      "tier": "high",
+      "policy": "streaming-physical",
+      "status": "PASS",
+      "value": {
+        "complete": true,
+        "detailed": true,
+        "input": true,
+        "streamingSets": 69,
+        "unloaded": 64,
+        "inputTicks": 5325,
+        "peakDetailed": 25,
+        "peakSim": 25,
+        "errors": []
+      },
+      "target": "actual WASD authored route to bridge, ≤25/9 resident+loading detail slots, input accepted every simulation tick matching held keys across actual streaming changes, no scripted driving lock. No frame/performance claim.",
+      "receipt": "docs/reports/sweep-c5/L9-09/high-dry-shortcut-physical.json.gz"
+    }
+  ]
+}

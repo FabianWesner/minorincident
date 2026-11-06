@@ -1,3 +1,4 @@
+import { l9StreamReceipts } from './accept/l9-stream-receipts';
 import { l9ArrivalReceipts } from './accept/l9-arrival-receipts';
 import { l8AnimalReceipts } from './accept/l8-animal-receipts';
 import { l8BreachReceipts } from './accept/l8-breach-receipts';
@@ -83,7 +84,7 @@ for (const level of selected) {
   }
   if (level === 'L8') fixtures.push(...l8AnimalReceipts(identity.sourceHash, browserHash()), ...l8BreachReceipts(identity.sourceHash, browserHash()), ...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...fix55RocketReceipts(identity.sourceHash, browserHash()));
-  if (level === 'L9') fixtures.push(...l9ArrivalReceipts(identity.sourceHash, browserHash()), ...l9DetourReceipts(identity.sourceHash, browserHash()), ...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/sweep-c5/L9-04'));
+  if (level === 'L9') fixtures.push(...l9StreamReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l9ArrivalReceipts(identity.sourceHash, browserHash()), ...l9DetourReceipts(identity.sourceHash, browserHash()), ...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/sweep-c5/L9-04'));
   if (level === 'L10') fixtures.push(...l10PresentationReceipts(identity.sourceHash, browserHash()), ...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
   const report = buildLevelReport(level, receipts, fixtures, checkpointHash());
   atomicJson(join(reportRoot, `${level}.json`), report);
