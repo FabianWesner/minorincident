@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:13:28.955Z",
+  "generatedAt": "2026-11-06T04:14:42.680Z",
   "policies": [
     {
       "tier": "low",
@@ -68,7 +68,21 @@
       "policy": "real-input-browser",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-arrival-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-arrival-browser.json"
     },
     {
       "tier": "high",
@@ -2687,15 +2701,17 @@
   "rows": [
     {
       "id": "L8-01",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); low/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/complete observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); high/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); low/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/complete observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); high/complete new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary observed route weapon pickup transactions: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary new weapon pickup census: 0 (target 0 ≤ value ≤ 0; PASS); low/real-input-webgl2 actual carried L7 roster full health racks and selected weapon: {\"completed\":true,\"expected\":[289],\"actual\":[{\"id\":289,\"speed\":2.672600000000265,\"boarded\":false,\"x\":-1.4895763674384528,\"z\":67.55021626066161,\"distance\":2.867102740391056,\"hp\":100,\"route\":{\"goal\":-1,\"index\":5,\"length\":0,\"next\":[],\"target\":null,\"flowCell\":225297,\"flowDistance\":-1,\"flowNext\":225297},\"calm\":true}],\"humansFull\":true,\"arsenalMatch\":true,\"racksMatch\":true,\"expectedRacks\":{\"LEFT\":[\"weap… (full values in JSON) (target same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control; PASS); high/real-input-webgl2 actual carried L7 roster full health racks and selected weapon: {\"completed\":true,\"expected\":[30,31,32,389],\"actual\":[{\"id\":32,\"speed\":2.672600000000265,\"boarded\":false,\"x\":-1.4895763674384528,\"z\":67.55021626066161,\"distance\":2.867102740391056,\"hp\":60,\"route\":{\"goal\":-1,\"index\":1,\"length\":0,\"next\":[],\"target\":null,\"flowCell\":225297,\"flowDistance\":-1,\"flowNext\":225297},\"calm\":true},{\"id\":31,\"speed\":2.672599999999952,\"boarded\":false,\"x\":-0.31436522047797955,\"z\":… (full values in JSON) (target same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L8-low-arrival-browser.json",
+        "docs/reports/fix51-verify/receipts/L8-high-arrival-browser.json"
       ],
       "expected": "L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat).",
       "checks": [
@@ -2786,6 +2802,187 @@
           "value": 0,
           "target": "0 ≤ value ≤ 0",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        },
+        {
+          "id": "L8-01",
+          "clause": "actual carried L7 roster full health racks and selected weapon",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "completed": true,
+            "expected": [
+              289
+            ],
+            "actual": [
+              {
+                "id": 289,
+                "speed": 2.672600000000265,
+                "boarded": false,
+                "x": -1.4895763674384528,
+                "z": 67.55021626066161,
+                "distance": 2.867102740391056,
+                "hp": 100,
+                "route": {
+                  "goal": -1,
+                  "index": 5,
+                  "length": 0,
+                  "next": [],
+                  "target": null,
+                  "flowCell": 225297,
+                  "flowDistance": -1,
+                  "flowNext": 225297
+                },
+                "calm": true
+              }
+            ],
+            "humansFull": true,
+            "arsenalMatch": true,
+            "racksMatch": true,
+            "expectedRacks": {
+              "LEFT": [
+                "weapon.fire-axe",
+                "weapon.bat"
+              ],
+              "RIGHT": [
+                "weapon.army-mg",
+                "weapon.handgun",
+                "weapon.kick",
+                "weapon.shotgun",
+                "weapon.rocket-launcher"
+              ]
+            },
+            "nativeFull": true,
+            "before": "weapon.rocket-launcher",
+            "after": "weapon.rocket-launcher",
+            "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+            "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
+          },
+          "target": "same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-arrival-browser.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-01",
+          "clause": "actual carried L7 roster full health racks and selected weapon",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "completed": true,
+            "expected": [
+              30,
+              31,
+              32,
+              389
+            ],
+            "actual": [
+              {
+                "id": 32,
+                "speed": 2.672600000000265,
+                "boarded": false,
+                "x": -1.4895763674384528,
+                "z": 67.55021626066161,
+                "distance": 2.867102740391056,
+                "hp": 60,
+                "route": {
+                  "goal": -1,
+                  "index": 1,
+                  "length": 0,
+                  "next": [],
+                  "target": null,
+                  "flowCell": 225297,
+                  "flowDistance": -1,
+                  "flowNext": 225297
+                },
+                "calm": true
+              },
+              {
+                "id": 31,
+                "speed": 2.672599999999952,
+                "boarded": false,
+                "x": -0.31436522047797955,
+                "z": 67.53643910579784,
+                "distance": 2.4835373504918983,
+                "hp": 60,
+                "route": {
+                  "goal": -1,
+                  "index": 5,
+                  "length": 0,
+                  "next": [],
+                  "target": null,
+                  "flowCell": 225299,
+                  "flowDistance": -1,
+                  "flowNext": 225299
+                },
+                "calm": true
+              },
+              {
+                "id": 389,
+                "speed": 2.6733333333332894,
+                "boarded": false,
+                "x": 0.8732100645069827,
+                "z": 67.5289763161038,
+                "distance": 2.6207735238154912,
+                "hp": 100,
+                "route": {
+                  "goal": -1,
+                  "index": 1,
+                  "length": 0,
+                  "next": [],
+                  "target": null,
+                  "flowCell": 225301,
+                  "flowDistance": -1,
+                  "flowNext": 225301
+                },
+                "calm": true
+              },
+              {
+                "id": 30,
+                "speed": 2.673333333333035,
+                "boarded": false,
+                "x": -1.520031104793056,
+                "z": 66.33309257817307,
+                "distance": 3.9694715768963325,
+                "hp": 60,
+                "route": {
+                  "goal": -1,
+                  "index": 1,
+                  "length": 0,
+                  "next": [],
+                  "target": null,
+                  "flowCell": 223496,
+                  "flowDistance": -1,
+                  "flowNext": 223496
+                },
+                "calm": true
+              }
+            ],
+            "humansFull": true,
+            "arsenalMatch": true,
+            "racksMatch": true,
+            "expectedRacks": {
+              "LEFT": [
+                "weapon.fire-axe",
+                "weapon.bat"
+              ],
+              "RIGHT": [
+                "weapon.army-mg",
+                "weapon.handgun",
+                "weapon.kick",
+                "weapon.shotgun",
+                "weapon.rocket-launcher"
+              ]
+            },
+            "nativeFull": true,
+            "before": "weapon.rocket-launcher",
+            "after": "weapon.rocket-launcher",
+            "proofPath": "docs/reports/fix51-r10c/L8-arrival-proof.json",
+            "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json"
+          },
+          "target": "same explicit L7 roster (0–35 allowed) at full HP; exact carried racks and selected rocket; native production constructor confirms full-HP humans/corgi with identical read-only control",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-arrival-browser.json",
+          "level": "L8"
         }
       ],
       "historical": {
@@ -2796,7 +2993,7 @@
         "evidence": [],
         "method": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups."
       },
-      "remaining": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L8-02",

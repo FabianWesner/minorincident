@@ -1,0 +1,108 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "84057cb3b98e6fc1f714db181be307bb7ff469ca",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "toolSha256": "02d719aa73169fea60359a1f90f843a59791cc3635808e9dde46ee66bcfeae5f",
+  "method": "Read-only production L8 construction from each physical run’s saved actual L7 result; compare humans/corgi HP, racks and selection. Archived physical ledger/logs independently qualify the live handover. No save/actor mutations; constructor control has identical state hash.",
+  "rows": [
+    {
+      "tier": "low",
+      "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
+      "inputSha256": "d6043317e7f3a4ced3834c1162f3b085fa3a25d980bcf4eb2f22c4e603e99795",
+      "completionArchive": "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
+      "completionArchiveSha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
+      "expectedIds": [
+        289
+      ],
+      "humans": [
+        {
+          "id": 289,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "companions": [
+        {
+          "id": 308,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ]
+      },
+      "selected": "weapon.rocket-launcher",
+      "readOnlyStateHash": "3a50818d",
+      "controlHash": "3a50818d"
+    },
+    {
+      "tier": "high",
+      "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-high-input.json",
+      "inputSha256": "3789cffa04734470586927e9a41831b9e554f28676de8ea904bc9446f49cf118",
+      "completionArchive": "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
+      "completionArchiveSha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
+      "expectedIds": [
+        32,
+        31,
+        389,
+        30
+      ],
+      "humans": [
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60
+        },
+        {
+          "id": 31,
+          "hp": 60,
+          "max": 60
+        },
+        {
+          "id": 389,
+          "hp": 100,
+          "max": 100
+        },
+        {
+          "id": 30,
+          "hp": 60,
+          "max": 60
+        }
+      ],
+      "companions": [
+        {
+          "id": 408,
+          "hp": 100,
+          "max": 100
+        }
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ]
+      },
+      "selected": "weapon.rocket-launcher",
+      "readOnlyStateHash": "7de0b093",
+      "controlHash": "7de0b093"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "84057cb3b98e6fc1f714db181be307bb7ff469ca",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "toolSha256": "7f883cd3c0c604337dbeeafd4c0fe5e3d67d4452e2820067b3ab0458ba1f2d6e",
+  "baseline": [
+    {
+      "tier": "low",
+      "status": "PASS"
+    },
+    {
+      "tier": "high",
+      "status": "PASS"
+    }
+  ],
+  "rosterCounts": [
+    {
+      "tier": "low",
+      "count": 1
+    },
+    {
+      "tier": "high",
+      "count": 4
+    }
+  ],
+  "method": "Exercise actual production receipt consumer with11 temporary faults against the retained physical roster counts (legal0–35). Missing arrays, invented identities, HP loss, rack/selection errors, missing coverage, stale source, bad producer hash and unfinished L7 must reject. Altered archives have matching temporary transport hashes so semantic faults, not checksum failures, are tested. Counterfactual mutations are never qualifying game evidence. Exact original bytes restored in finally.",
+  "cases": [
+    {
+      "fault": "missing-low-roster",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "invented-low-roster",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "wrong-high-native-id",
+      "results": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "damaged-high-arrival",
+      "results": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "damaged-corgi",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "wrong-racks",
+      "results": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "wrong-selection",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "missing-high",
+      "results": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "bad-producer-hash",
+      "results": [
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unfinished-L7",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "stale-source",
+      "results": []
+    }
+  ],
+  "originalBytesRestored": true
+}
