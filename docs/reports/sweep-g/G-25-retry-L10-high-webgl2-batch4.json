@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "checks": [],
+  "errors": [
+    "Error: browser.newContext: Error setting storage state:\nQuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'minor-incident.campaign' exceeded the quota.\n    at StorageScript.restore (eval at evaluate (:311:30), <anonymous>:507:33)\n    at async <anonymous>:337:30\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4981\", waiting until \"load\"\u001b[22m\n"
+  ],
+  "run": [],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

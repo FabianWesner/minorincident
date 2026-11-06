@@ -11,14 +11,22 @@ const [level, tier, backend = 'webgl2'] = process.argv.slice(2);
 if (existsSync('test-results/sweep-g/pause-browser-matrix')) { console.log(`Paused before ${level}/${tier}; no browser context opened.`); process.exit(0); }
 if (!/^L([1-9]|10)$/.test(level) || !['low', 'high'].includes(tier) || !['webgl2', 'webgpu'].includes(backend)) throw new Error('Usage: sweep-g-browser.mjs L<N> low|high [webgl2|webgpu]');
 const suffix = backend === 'webgl2' ? '-webgl2' : '';
-const out = resolve(`test-results/sweep-g/G-25-${level}-${tier}${suffix}`);
+const phase = process.env.SWEEP_G_PHASE ? `${process.env.SWEEP_G_PHASE}-` : '';
+const out = resolve(`test-results/sweep-g/G-25-${phase}${level}-${tier}${suffix}`);
 mkdirSync(out, { recursive: true });
 const options = { level, tier, origin: process.env.SWEEP_G_ORIGIN ?? 'http://127.0.0.1:4981', out,
-  path: `docs/reports/sweep-g/G-25-${level}-${tier}${suffix}.json`, sourceHash: provenance().sourceHash,
+  path: `docs/reports/sweep-g/G-25-${phase}${level}-${tier}${suffix}.json`, sourceHash: provenance().sourceHash,
   browserHash: browserHash(), backend, zoom: 1.5 };
 const batches = [];
 let resumeFrom;
-for (let batchIndex = 1; batchIndex <= (level === 'L10' ? 8 : 1); batchIndex++) {
+const retainedFirst = process.env.SWEEP_G_RESUME_FIRST;
+if (retainedFirst) {
+  const first = JSON.parse(readFileSync(retainedFirst, 'utf8'));
+  if (level !== 'L10' || first.sourceHash !== options.sourceHash || first.browserHash !== options.browserHash || first.tier !== tier || first.backend !== backend || first.batch?.index !== 1 || first.batch.startSaveHash !== null || !first.batch.yielded || !first.batch.savePath || first.errors.length) throw new Error('Retry needs the matching successful first production-save interval');
+  batches.push({ path: retainedFirst, receipt: first });
+  resumeFrom = first.batch.savePath;
+}
+for (let batchIndex = retainedFirst ? 2 : 1; batchIndex <= (level === 'L10' ? 8 : 1); batchIndex++) {
 const batchOptions = level === 'L10' ? { ...options, batchIndex, resumeFrom,
   out: resolve(out, `batch${batchIndex}`), path: options.path.replace(/\.json$/, `-batch${batchIndex}.json`) } : options;
 mkdirSync(batchOptions.out, { recursive: true });
@@ -38,4 +46,4 @@ batches.push({ path: batchOptions.path, receipt });
 if (run.status !== 0 || receipt.errors.length || !receipt.batch?.yielded || !receipt.batch.savePath || receipt.issues.some(issue => ['console-error', 'page-error', 'cannot-finish'].includes(issue.kind))) break;
 resumeFrom = receipt.batch.savePath;
 }
-if (level === 'L10') atomicJson(options.path, mergeBrowserBatches(batches, options.path));
+if (level === 'L10') atomicJson(options.path, { ...mergeBrowserBatches(batches, options.path), ...(retainedFirst ? { retry: { retainedFirst, reason: 'One unchanged-driver retry after research-campus no-progress stop; failed branch retained separately.' } } : {}) });

@@ -1,0 +1,31 @@
+{
+  "row": "G-25",
+  "status": "NOT CHECKED",
+  "save": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3-save.json.gz",
+  "saveSha256": "fb9704176dafae5caad6c06ec2a2f0660ea16e31069a64e617889e745af7da07",
+  "uncompressedSaveBytes": 6152854,
+  "errorStage": "browser.newContext setting storage state before page ordinary Resume",
+  "error": "QuotaExceededError setting minor-incident.campaign",
+  "observation": "Batch3 cure release reached; epilogue last observation136/150s, game simulation/render active, zero console/page errors in completed intervals. Browser batch4 cannot start. This does not establish a reproduced L4 shadow crash or a complete L10 console playthrough.",
+  "limits": [
+    "Production save bytes retained unmodified; no save compaction, entity deletion or quota override.",
+    "Browser context restore failure is not falsely classified as a page-console error. Production persistence capacity deserves a separate diagnosis."
+  ],
+  "sizeBreakdown": {
+    "current": {
+      "totalBytes": 3064491,
+      "entitiesBytes": 2078895,
+      "seamsBytes": 973411
+    },
+    "checkpoint": {
+      "totalBytes": 3086929,
+      "entitiesBytes": 2113951,
+      "seamsBytes": 964175
+    }
+  },
+  "sourceDiagnosis": [
+    "Game.ts SaveStore adapter uses native localStorage; Game.save returns SaveStore.write.",
+    "Save.ts:162 serializes complete campaign JSON and catches storage failure, returning false. Browser worker imports exactly that production campaign JSON as storage state.",
+    "cureResume keeps both current and checkpoint snapshots. Together entities and seams dominate the 6152854-byte campaign. This is a preservation/storage-capacity issue, not evidence supporting removal of corpses, lower populations or a timer change."
+  ]
+}
