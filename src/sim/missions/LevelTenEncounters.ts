@@ -57,7 +57,11 @@ export class LevelTenEncounters {
       const at = low ? group.atLow ?? group.at : group.at;
       if (!assault && !released.includes(group.id)) {
         const approach = corridorPatrol || corridorHorde ? Math.abs(player.transform.x - at[0]) : Math.hypot(player.transform.x - at[0], player.transform.z - at[1]);
-        if (group.releaseWith ? !released.includes(group.releaseWith) : approach > 40) continue;
+        // The wide approach camera already sees a station at 40 m. Release
+        // these fixed R7 groups while they are still ahead and offscreen;
+        // otherwise they are only admitted after the courier passes them.
+        const releaseM = group.id.startsWith('complex-approach-') ? 120 : 40;
+        if (group.releaseWith ? !released.includes(group.releaseWith) : approach > releaseM) continue;
         released.push(group.id);
         if (corridorPatrol || corridorHorde) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : at[1]);
       }
@@ -138,7 +142,10 @@ export class LevelTenEncounters {
     // A distant visible straggler cannot engage a running courier and must
     // not suppress the next patrol. Keep the wait while combat is close.
     if (ai.active.some(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 12 && ai.director.inFrame(e.transform))) return;
-    for (const distance of [30, 40, 50]) for (const offset of [.25, -.25, .6, -.6, 1, -1, Math.PI]) {
+    // Wide road framing can include every old 30–50 m candidate. Search
+    // farther ahead too, so safe off-camera arrivals can intercept the real
+    // route at either zoom instead of silently refusing every patrol.
+    for (const distance of [30, 40, 50, 65, 80, 100]) for (const offset of [.25, -.25, .6, -.6, 1, -1, Math.PI]) {
       const at = { x: player.transform.x + Math.cos(offset) * distance, z: player.transform.z + Math.sin(offset) * distance };
       if (!chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at)) continue;
       const id = ai.spawn('infected.runner', at, { state: 'chase', cureRegion: current.id });

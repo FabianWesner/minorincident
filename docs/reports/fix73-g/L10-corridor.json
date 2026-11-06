@@ -1,0 +1,254 @@
+{
+  "observations": {
+    "finding": "5: patrols must meet actual L10 traversal",
+    "status": "PASS for bounded tracked R6-to-R7 physical traversal at both qualities; not full seven-region acceptance",
+    "method": "Shared headless Metal WebGL2, wide zoom1.5, ordinary unpaused WASD/mouse, no skip/entity writes. Versioned tracked save starts R6 entrance before normal launcher pickup. Courier protection enabled after load; saved initial92HP low /70HP high is visible. Save-on-yield pauses only after input window finishes.",
+    "change": "Extend offscreen/resident/nav-safe fallback candidates through100m, preserving one wanderer per12seconds and every existing cap/count. Release fixed complex-approach groups at120m instead of40m so wide camera does not reveal the slot before admission.",
+    "results": [
+      {
+        "label": "fix73-L10-corridor-low",
+        "source": {
+          "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+          "input": {
+            "level": "L10",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "tracked",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "seed": {
+          "path": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+          "sha256": "a203c6b62a8f8bb2bd3962e76450eec8b17a636bc912ea7bc0d5afff9c978d64"
+        },
+        "ticks": 16230,
+        "endStep": "install",
+        "endPlayer": {
+          "x": 3972.261962890625,
+          "y": 0.7099999785423279,
+          "z": -33.94908142089844,
+          "yaw": -7.850462293418876e-17
+        },
+        "patrols": {
+          "corridor-wanderer-0": 308,
+          "corridor-wanderer-1": 384,
+          "corridor-wanderer-2": 388,
+          "corridor-wanderer-3": 391,
+          "corridor-wanderer-4": 394,
+          "corridor-wanderer-5": 397,
+          "corridor-wanderer-6": 400,
+          "corridor-wanderer-7": 401,
+          "corridor-wanderer-8": 404,
+          "corridor-wanderer-9": 407,
+          "corridor-wanderer-10": 410,
+          "corridor-wanderer-11": 413,
+          "corridor-wanderer-12": 416,
+          "corridor-wanderer-13": 417,
+          "corridor-wanderer-14": 418,
+          "corridor-wanderer-15": 419,
+          "corridor-wanderer-16": 428
+        },
+        "metPatrolMembers": [
+          308,
+          384,
+          388,
+          391,
+          394,
+          397,
+          400,
+          401,
+          404,
+          407,
+          410,
+          413,
+          416,
+          417,
+          418,
+          419,
+          428
+        ],
+        "maximumCapExcess": -6,
+        "r6CameraWithin40ConservativeMaximumGapSeconds": 26.5,
+        "r6SampleSeconds": 0.5,
+        "regionalAttackStarts": 57
+      },
+      {
+        "label": "fix73-L10-corridor-high",
+        "source": {
+          "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "4778a00988a606e9346eb3d86030c8ab5d60ba2f",
+          "input": {
+            "level": "L10",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "tracked",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "seed": {
+          "path": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+          "sha256": "eca0abb02bf33e3d422d25a60eda4e4fa7f7d7a427545b6545b0048114a1363b"
+        },
+        "ticks": 16560,
+        "endStep": "install",
+        "endPlayer": {
+          "x": 3954.2705078125,
+          "y": 0.7099999785423279,
+          "z": -30.181007385253906,
+          "yaw": 0.7853981633974483
+        },
+        "patrols": {
+          "corridor-wanderer-0": 373,
+          "corridor-wanderer-1": 480,
+          "corridor-wanderer-2": 483,
+          "corridor-wanderer-3": 486,
+          "corridor-wanderer-4": 489,
+          "corridor-wanderer-5": 492,
+          "corridor-wanderer-6": 495,
+          "corridor-wanderer-7": 496,
+          "corridor-wanderer-8": 499,
+          "corridor-wanderer-9": 502,
+          "corridor-wanderer-10": 505,
+          "corridor-wanderer-11": 508,
+          "corridor-wanderer-12": 511,
+          "corridor-wanderer-13": 512,
+          "corridor-wanderer-14": 513,
+          "corridor-wanderer-15": 514,
+          "corridor-wanderer-16": 519
+        },
+        "metPatrolMembers": [
+          373,
+          480,
+          483,
+          486,
+          489,
+          492,
+          495,
+          496,
+          499,
+          502,
+          505,
+          508,
+          511,
+          512,
+          513,
+          514,
+          519
+        ],
+        "maximumCapExcess": 0,
+        "r6CameraWithin40ConservativeMaximumGapSeconds": 15.0,
+        "r6SampleSeconds": 0.5,
+        "regionalAttackStarts": 59
+      }
+    ],
+    "limitation": "Sampled screenshots often show a clear forecourt after rockets; stills alone do not prove continuous threat. Actual patrol identity overlap and conservative0.5second fixed-tick intervals establish repeated encounters. No full L10 ending or all-region physical qualification.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-checkpoint-yield.jpg",
+      "sha256": "72c7273664db97262458487e7b767b0075b01968e60e7e86a0a9d8d8176ab02f",
+      "what": "Yield: courier and corgi near installation objective; pause overlay is the save-on-yield action after ordinary input run."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t0.jpg",
+      "sha256": "ad1e8c288f66519f95aed27449533793cad0c328204feda749914a479b0b5b85",
+      "what": "Tracked start: courier 92 HP and corgi at rocket-launcher pickup ring, 3 m away."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t10572.jpg",
+      "sha256": "8651701afe569fc045e7d959d10ebefb25af09f07b420c8d6ce52a0ac8b8f8bf",
+      "what": "Courier and corgi crossing dark forecourt, blast mark and body behind; 88 m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t12677.jpg",
+      "sha256": "9bf3cf5183e29441b8196a13314033da0bb7734eb1fde039302948c19ac4cafc",
+      "what": "At complex entrance, living red-bar infected and Alpha telegraph beside courier, blast debris and body nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t14791.jpg",
+      "sha256": "2734692671821f6d5238bed436bf5b8e2367082dd7f87c71cbfa08cbc564b9c3",
+      "what": "Courier and corgi beside lit complex props; 128 m to installation, distant enemy pips on minimap."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t2121.jpg",
+      "sha256": "1bdb0a1409b9505b918222cdc3863ef5d442d4c5440aa1a04d6af327f6b08c35",
+      "what": "Courier and corgi running through open forecourt, no living infected in this sampled still; 612 m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t4242.jpg",
+      "sha256": "59e9ef330f872884beec5bfeb6e68717bed0b3d979dde79075e9c4a3469586f7",
+      "what": "Courier and corgi running through open forecourt, no living infected in this sampled still; 455 m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t6350.jpg",
+      "sha256": "a7e96357936672a2715ced9b4a1aceed510b058e6c019d94e85f043ae033888f",
+      "what": "Courier crossing forecourt; infected body in blast scorch behind, 366 m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-low/captures/fix73-L10-corridor-low-L10-t8469.jpg",
+      "sha256": "da7a24e6ba5625755c0137dc757a8c8d51302875bdc364de022f0d61be0c5d25",
+      "what": "Courier and corgi crossing forecourt; blasted infected body at left, 217 m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-checkpoint-yield.jpg",
+      "sha256": "9a5e7a61a3084ae973dea5331cf37c86af6376ac9f382e246076c007f44b1f25",
+      "what": "Yield: courier and corgi 53 m from installation; pause overlay appears during save-on-yield after input window."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t0.jpg",
+      "sha256": "80383660e9679b641c19521909b8609dc4836f7d09d0b875a20aedfd5fcf817b",
+      "what": "Tracked start: courier70HP and corgi at rocket pickup ring,3m away."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t10546.jpg",
+      "sha256": "37bda2c588488ea93d0fc891336cd49e6eaa1e99602852989a6026ea77161548",
+      "what": "Courier fires rocket; large blast, fragments and scorched forecourt,92m from complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t12664.jpg",
+      "sha256": "0be070488ff47058915f01af14e24fc99c87c2269ccf74bee1c0ad678d3c05ca",
+      "what": "Living red-bar infected below courier on complex road,285m to installation; enemy pips beyond."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t14767.jpg",
+      "sha256": "928da6784eaf84b3d2c265d94499c2f110d89249929eb249ee1a5dca40465c61",
+      "what": "Courier fires near complex forecourt; rocket blast, body and debris alongside,162m to installation."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t2109.jpg",
+      "sha256": "d8d91c6e9c2323e78f468f9f5cb596c951c673543c9ef5a25eb6230ddfdc1b1f",
+      "what": "Courier and corgi crossing open forecourt with no living body in this still,616m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t4214.jpg",
+      "sha256": "abfb120ec25ec40b6c1a43bcbeb8589468169d4d083bc1d4634892aef288899f",
+      "what": "Blue infected body in blast scorch at left behind running courier,459m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t6334.jpg",
+      "sha256": "0fdc94937957357ce93a5ad43819df481c2a3cc65719c74d405076c291574b8d",
+      "what": "Rocket blast and debris behind running courier,368m to complex."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L10-corridor-high/captures/fix73-L10-corridor-high-L10-t8437.jpg",
+      "sha256": "05a867c4605bc8ff73073478d70db65c6349c5798a3753d94a2dc24b486300e5",
+      "what": "Rocket explosion and scorch beside running courier,219m to complex."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L10-corridor-input.json.gz",
+    "sha256": "6311c2ad34a44ec761acd6b05f017bf42a01513863d3a3ef45dc27b29a9b6004"
+  }
+}
