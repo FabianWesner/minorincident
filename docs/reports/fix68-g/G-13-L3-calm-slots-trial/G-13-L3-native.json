@@ -1,0 +1,180 @@
+{
+  "sourceHash": "8460d769eb9a2ad966396d03520241941e467c236ec8cc919ea8d49afb075300",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "49d44dcc4829fa724cec7e54afc4277bbd870aec",
+  "generatedAt": "2026-11-06T05:34:02.545Z",
+  "row": "G-13",
+  "level": "L3",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "dd834d508604397ebbb433471fef9213233effeb31166208956ffae06fb24154",
+      "outcome": "complete",
+      "nativeStateHash": "3ce6de95",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 23,
+              "median": 4.4901615192863975,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9953970760110403
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 203,
+              "median": 4.511584052402963,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.000146109366163
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 203,
+              "median": 4.51661443419605,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.001261264646558
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 202,
+              "median": 4.510265875628361,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9998538906338371
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11457,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8728288382648163,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11457,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1557,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9285,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9358,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "4ab79e976c80394ed56206caad011faab50df81c6b8097773f92db7413be1962",
+      "outcome": "complete",
+      "nativeStateHash": "4cd74d11",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 10,
+              "median": 4.926288360902988,
+              "groupMedian": 4.926288360902988,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14251,
+            "stationaryFarTicks": 505,
+            "upperBoundPercent": 3.5436109746684443,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14251,
+                "stationaryFarTicks": 499
+              },
+              {
+                "id": 30,
+                "escortTicks": 283,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 133,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 204,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 287,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

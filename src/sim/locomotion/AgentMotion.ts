@@ -12,14 +12,18 @@ import { Status } from '../combat/Status';
 import { followerInCombat } from '../outbreak/Survivors';
 
 /** Navigation/behaviour supplies intent; static sweeps remain authoritative. */
-/** L5 calm followers track the courier's own (already limited) pace closely (L5-08). */
+/** Calm followers track the courier's own (already limited) pace closely. */
 export const followerTracking = { acceleration: 12, jerk: 300, omega: 20 } as const;
 export const l5FollowerTracking = { ...followerTracking, omega: 28 } as const;
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
-  else { const speed = Status.speed(e); respond(state, vx * speed, vz * speed, tracking ?? (e.civilian?.survivor?.briskAt === tick ? followerTracking : undefined)); }
+  else {
+    const speed = Status.speed(e), ally = e.civilian?.ally;
+    const following = e.civilian?.survivor?.briskAt === tick || ally?.follow && !ally.targetId && !ally.strikeAt;
+    respond(state, vx * speed, vz * speed, tracking ?? (following ? followerTracking : undefined));
+  }
   state.updatedAt = tick;
   const x = e.transform.x, z = e.transform.z;
   if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius);

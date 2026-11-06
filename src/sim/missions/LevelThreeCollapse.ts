@@ -372,7 +372,13 @@ export class LevelThreeCollapse {
     // Replacements fill casualties without turning the whole station into an escort.
     squad.push(...others.slice(0, Math.max(0, l3.officers.squad.size - squad.length)));
     const f = l3.officers.squad;
-    for (const [slot, id] of squad.entries()) {
+    // Keep the same squad and slots, assigning the nearest officer first.
+    // Fixed ID order crossed their breakout paths around the alarm truck.
+    const available = new Set(squad);
+    for (const slot of squad.keys()) {
+      const goal = { x: player.transform.x - 4 - Math.floor(slot / 2), z: player.transform.z + (slot % 2 ? 1 : -1) * 1.8 };
+      const id = [...available].sort((a, b) => dist(world.entities.get(a)!.transform, goal) - dist(world.entities.get(b)!.transform, goal))[0];
+      available.delete(id);
       const a = world.entities.get(id)!.civilian!.ally!;
       a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = weak(f.gun);
       // Shared allied follower/navigation keeps the assigned squad with the courier.

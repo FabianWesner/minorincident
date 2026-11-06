@@ -3,12 +3,17 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "14a5587e15ad2235f833a290610890c725138723",
+  "commit": "49d44dcc4829fa724cec7e54afc4277bbd870aec",
   "clauses": [
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
       "verdict": "PASS",
       "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+    },
+    {
+      "clause": "L3 observed human follower medians >=0.95 of the phase group median; waiting upper bound<=10%, both tiers.",
+      "verdict": "PASS",
+      "note": "Low all four officers min99.54%, high one officer with10 qualifying samples; other high officers overwhelmed before qualification. Original counts/speed limits retained. Both three-seed army-line rules and competent3-25/min attack-rate limits pass."
     }
   ],
   "evidence": [
@@ -31,7 +36,22 @@
       "file": "docs/reports/fix68-g/G-13-trials.json",
       "sha256": "a468229f22527de669eab639c3232765e2ef516dd4e229a5ca3e8388f9431193",
       "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-fix.json",
+      "sha256": "f3788fd7a413bb0b59668450c9877af711171504289ceef230be39b594de1f0a",
+      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-trials.json",
+      "sha256": "1f72a2f979ce07d95643ba1dd22ee4d1b1767e5efd70ee839227bbaf6950e2a0",
+      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-regression.json",
+      "sha256": "ccab33aaf59705b565288429c37a71a08145e33e9620802b2c90c988f63d81e6",
+      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
     }
   ],
-  "notes": "Scoped L5 correction; global all-level qualification and independent L5-08 distance failures are not hidden by this decision."
+  "notes": "Scoped L5 correction and measured L3 follow-up. All-level full-row qualification, high-tier officers without enough walking samples, and independent L5-08 distance failures remain unclaimed."
 }

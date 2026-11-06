@@ -1,0 +1,91 @@
+diff --git a/src/sim/npc/Npcs.ts b/src/sim/npc/Npcs.ts
+index 3eb9ecb..a4b675a 100644
+--- a/src/sim/npc/Npcs.ts
++++ b/src/sim/npc/Npcs.ts
+@@ -26,7 +26,7 @@ export class Npcs {
+   constructor(readonly world: SimWorld) {
+     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
+   /** False only when the target is unreachable (no route within the steering budget). */
+-  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): boolean {
++  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav, movingTargetVelocity?: Point): boolean {
+     const follow = e.civilian?.ally?.follow;
+     const leader = follow && this.world.missions?.def.l3 ? this.world.entities.get(follow.targetId) : null;
+     if (follow && leader) {
+@@ -35,14 +35,15 @@ export class Npcs {
+       // fix67-a (L3-06): a calm officer behind his slot gets headroom over her pace in proportion to the slot error;
+       // capped at exactly her pace he could never close a gap once it opened.
+       const leaderSpeed = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0);
+-      const catchUp = e.civilian!.ally!.targetId ? 0 : Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
++      const catchUp = Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
+       if (leaderSpeed > .5 && Math.hypot(e.transform.x - leader.transform.x, e.transform.z - leader.transform.z) <= follow.maxM + 2)
+         speed = Math.min(speed, leaderSpeed + catchUp);
+     }
+     const footprint = actorRadius(e);
++    const drift = movingTargetVelocity && nav.visible(e.transform, target, footprint) ? movingTargetVelocity : undefined;
+     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
+     const distance = Math.hypot(dx, dz);
+-    if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
++    if (distance <= stop && !drift) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
+     // L7's whole party crosses the same narrow, body-clear ruined-city passages.
+     // Extra routing padding and full-speed tiny waypoints made it circle
+     // beside the final corridor until the departure hid it far behind.
+@@ -85,10 +86,11 @@ export class Npcs {
+       if (failed) this.unreachable.delete(e.id);
+     }
+     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
+-    const routed = Math.hypot(dx, dz); if (routed < .01) return true;
++    const routed = Math.hypot(dx, dz); if (routed < .01 && !drift) return true;
+     const velocity = Math.min(speed, Math.max(0, distance - stop) * 4, routeFollower ? routed * 4 : Infinity);
+-    const vx = dx / routed * velocity, vz = dz / routed * velocity;
+-    this.moveStep(e, vx / 60, vz / 60, nav);
++    const vx = (routed > .001 ? dx / routed * velocity : 0) + (drift?.x ?? 0), vz = (routed > .001 ? dz / routed * velocity : 0) + (drift?.z ?? 0);
++    const scale = Math.min(1, speed / (Math.hypot(vx, vz) || 1));
++    this.moveStep(e, vx * scale / 60, vz * scale / 60, nav);
+     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
+   }
+   moveStep(e: EntitySnapshot, dx: number, dz: number, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): void {
+diff --git a/src/sim/outbreak/Allies.ts b/src/sim/outbreak/Allies.ts
+index bd26e76..999cf39 100644
+--- a/src/sim/outbreak/Allies.ts
++++ b/src/sim/outbreak/Allies.ts
+@@ -317,6 +317,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+   const leader = world.entities.get(f.targetId)!;
+   const spread = rampPullback(world, leader);
+   const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
++  const drift = moving && world.missions?.def.l3 ? leader.survivor!.velocity : undefined;
+   // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
+   if (d < f.minM && !spread) {
+     const nav = world.infected!.nav, angle = Math.atan2(e.transform.z - p.z, e.transform.x - p.x);
+@@ -325,7 +326,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+       if (!nav.clear(goal.x, goal.z, .4) || !nav.visible(e.transform, goal, .4)) continue;
+       // A moving L3 formation clears the courier's lane at its normal pace;
+       // a 60% sidestep stranded whichever officer began inside the band.
+-      world.npcs!.move(e, goal, moving && world.missions?.def.l3 ? f.moveMs : f.moveMs * .6, e.civilian!, .15); break;
++      world.npcs!.move(e, goal, moving && world.missions?.def.l3 ? f.moveMs : f.moveMs * .6, e.civilian!, .15, 1600, nav, drift); break;
+     }
+     return true;
+   }
+@@ -352,12 +353,6 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+     // fix67-a (L3-06): a calm officer walking to a moving slot settles where the arrival ramp ((distance - stop) * 4) matches
+     // her pace, i.e. stop + pace / 4 behind it (1.2 m at the street pace). Aim that far ahead of the slot so the officer
+     // stands on it; Npcs.move grants the matching catch-up headroom. Fights keep the old movement.
+-    const calm = !a.targetId && !a.strikeAt;
+-    if (calm && moving && world.missions?.def.l3 && velocity && goal !== p) {
+-      const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(2, .5 + v / 4);
+-      const ahead = { x: goal.x + velocity.x / v * lead, z: goal.z + velocity.z / v * lead };
+-      if (nav.clear(ahead.x, ahead.z, .4) && nav.visible(e.transform, ahead, .4)) goal = ahead;
+-    }
+     if (spread) {
+       // The van divides the deck: a clear resting spot need not have a
+       // straight sight line to the courier. Shared navigation routes around it;
+@@ -371,8 +366,8 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+       const index = squad.findIndex(other => other.id === e.id);
+       goal = spots[index] ?? e.transform;
+     }
+-    if (!world.npcs!.move(e, goal, d > f.maxM + 2 || moving && world.missions?.def.l3 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : spread ? .15 : .5) && !spread)
+-      world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
++    if (!world.npcs!.move(e, goal, d > f.maxM + 2 || moving && world.missions?.def.l3 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : spread ? .15 : .5, 1600, nav, drift) && !spread)
++      world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM, 1600, nav, drift);
+   }
+   return true;
+ }
