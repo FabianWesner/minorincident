@@ -618,6 +618,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return true;
     }
     if (ranged.test(e.player?.current ?? '')) {
+      const l10Travel = e.level === 'L10' && !['hold', 'mega', 'epilogue'].includes(e.step ?? '');
+      if (l10Travel && e.player && ring && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) > 1.2) {
+        if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: now };
+        // A nearby crowd must not monopolize this loop and starve ordinary
+        // WASD route recovery. Reuse that recovery when covering fire stalls.
+        if (now - navPos.wall > 3000) { await releaseAim(); return false; }
+      }
       const defending = e.step === 'mega' || e.step === 'hold' && /Charge \d+\/60/.test(e.objective);
       const dodge = e.player && finaleDodgeGoal(e.level, defending ? e.step : null, e.player, cureConsole, threat);
       if (dodge && e.player) {
@@ -645,7 +652,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       let retreatKeys: string[] = [];
       const coverGoal = e.level === 'L5' && e.player ? visibleGroupTarget(e.level, e.player, e.allies, 5, e.step) ?? ring : ring;
       const l7EscortRoute = process.env.PLAYTEST_L7_ESCORT_ROUTE === '1' && e.level === 'L7';
-      if ((l7EscortRoute || e.level === 'L3' && e.step === 'checkpoint' || e.level === 'L5' && (e.step === 'look' || e.step === 'metro')) && e.player && coverGoal && Math.hypot(coverGoal.x - e.player.x, coverGoal.z - e.player.z) > (l7EscortRoute ? 1.2 : e.level === 'L5' ? 2 : 12)) {
+      if ((l10Travel || l7EscortRoute || e.level === 'L3' && e.step === 'checkpoint' || e.level === 'L5' && (e.step === 'look' || e.step === 'metro')) && e.player && coverGoal && Math.hypot(coverGoal.x - e.player.x, coverGoal.z - e.player.z) > (l10Travel || l7EscortRoute ? 1.2 : e.level === 'L5' ? 2 : 12)) {
         const points = await page.evaluate(({ p, goal }) => {
           const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;
