@@ -1,31 +1,36 @@
 {
   "row": "L4-17",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "c8cb782abd81e61a671f064fdd5c1292564d3e31",
+  "commit": "d9b6764ad5f766d7ae43e121cc219cb0e3ea592b",
   "clauses": [
     {
       "clause": "Corpse piles \u2264 ~1 m, no stretched limbs; player never drawn under a corpse.",
       "verdict": "FAIL",
-      "note": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout."
+      "note": "Current settled frozen-geometry top reaches1.921m high (alpha-suit death-back), while layout root lift peaks0.71m. Thus spreading improves root piles but does not establish visible <=~1m height. Low explicit early witness: seated riot geometry including shield1.264m with zero root lift;47s sample is not a whole-route bound. High600s mortal renderer run does not reach cellar (16deaths); this is a measured height counterexample, not a route PASS. Airborne blast flights excluded. Reviewed12frames; no universal limb/stretch or player-depth PASS inferred."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-17-proof.json",
-      "sha256": "ff7a4d0d3829399fa92bccc42a57d146c02c92d44dbe2ca835c15b881a32c066",
-      "what": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout."
+      "file": "docs/reports/fix71-b/L4-17-measurement.json",
+      "sha256": "0081a7bf42d68000bf2aa4a19e61408c96c83addd6577ada23f8f73c9ab203db",
+      "what": "Current settled frozen-geometry top reaches1.921m high (alpha-suit death-back), while layout root lift peaks0.71m. Thus spreading improves root piles but does not establish visible <=~1m height. Low explicit early witness: seated riot geometry including shield1.264m with zero root lift;47s sample is not a whole-route bound. High600s mortal renderer run does not reach cellar (16deaths); this is a measured height counterexample, not a route PASS. Airborne blast flights excluded. Reviewed12frames; no universal limb/stretch or player-depth PASS inferred."
     },
     {
-      "file": "docs/reports/sweep-b/L4-render-ledger.json.gz",
-      "sha256": "c5a78a159a045fb81f5edce0941c595089c711887848613693a01a9b503a40df",
-      "what": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout."
+      "file": "docs/reports/fix71-b/L4-17-low.json.gz",
+      "sha256": "79450d0b119906d99d20ae0402b0181285a9f18681e6cbd6cef25cd90ae27b1a",
+      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
     },
     {
-      "file": "docs/reports/sweep-b/L4-render-capture-review.json",
-      "sha256": "ce05ab815de90e1e508ea3dfee534afd8ccd4c2713ed571492f4e71b237390e3",
-      "what": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout."
+      "file": "docs/reports/fix71-b/L4-17-high.json.gz",
+      "sha256": "2b8b56bd8110d1856810500c9f9357566e369218ac661161af50af247b170aa3",
+      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
+    },
+    {
+      "file": "docs/reports/fix71-b/L4-capture-review.json",
+      "sha256": "f31d6939ce984a5c16c6de628393aa1eb51fb6a544c6ad0afb2345244ae0ea83",
+      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
     }
   ]
 }
