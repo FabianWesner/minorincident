@@ -316,7 +316,12 @@ export class CorpseLayout {
           if (!best || candidate.y < best.y - .001) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; }
         }
         if (best && best.y <= feet + .05) break;
-        if (performance.now() >= this.searchDeadline) yield;
+        if (performance.now() >= this.searchDeadline) {
+          yield;
+          // The courier can move while a dense search is suspended. A best
+          // candidate from an earlier frame must still leave their capsule clear.
+          if (best && player && !(pointDistanceSquared(player.x, player.z, best.ax, best.az, best.bx, best.bz) >= .95 ** 2)) best = undefined;
+        }
       }
       if (best && best.y <= feet + .05) break;
     }
