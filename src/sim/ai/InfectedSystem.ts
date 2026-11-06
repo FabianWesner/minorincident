@@ -336,7 +336,8 @@ export class InfectedSystem {
    * interrupts a set-piece approach; distant camp defenders keep their authored battle. */
   private noticeDuringApproach(e: EntitySnapshot, courier: EntitySnapshot): void {
     const b = e.infected!, brain = b.l1;
-    if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted') ||
+    if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted' || !brain && b.heardTargetId ||
+        b.pressureTarget && this.world.tick < b.pressureTarget.until) ||
         e.emerging || b.specialAttack || b.state === 'attack' || b.grabUntil > this.world.tick || Status.stunned(e, this.world.tick)) return;
     if (this.world.scenario === 'L4' && b.breachApproach && b.scripted) {
       const assigned = this.world.entities.get(b.pressureTarget?.id ?? brain?.focusId ?? b.l4FlankTarget ?? 1) ?? courier;
@@ -356,6 +357,7 @@ export class InfectedSystem {
     }
     if (!target) return;
     b.heardTargetId = target.id; b.state = 'chase'; e.combat!.attacking = false;
+    if (b.pressureTarget && b.pressureTarget.id !== target.id) delete b.pressureTarget;
     delete b.scripted; delete b.breachApproach; delete b.investigate; delete e.noiseTarget;
     if (brain) {
       brain.mode = 'chase'; brain.targetId = target.id;

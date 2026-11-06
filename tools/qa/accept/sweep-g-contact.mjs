@@ -19,5 +19,5 @@ for(const tier of ['low','high'])for(let n=1;n<=10;n++){
    observing=false;result.cells.push({tier,level,archetype:def.id,target,targetId:target==='player'?1:follower,ticks:w.tick-begin,attacks,scriptInterrupted:!e.infected.scripted,state:e.infected.state,firstAttack:attacks.find(a=>a.targetId===(target==='player'?1:follower))??null});ai.release(e);
   }
  }catch(error){result.errors.push({level,tier,error:String(error)});}finally{w?.dispose();}
- writeFileSync('docs/reports/sweep-g/G-18-contact.json',JSON.stringify(result,null,2)+'\n');console.log(level,tier,result.cells.filter(c=>c.level===level&&c.tier===tier).length);
+ writeFileSync(process.env.SWEEP_G_RECEIPT_OUT ?? 'docs/reports/sweep-g/G-18-contact.json',JSON.stringify(result,null,2)+'\n');console.log(level,tier,result.cells.filter(c=>c.level===level&&c.tier===tier).length);
 }
