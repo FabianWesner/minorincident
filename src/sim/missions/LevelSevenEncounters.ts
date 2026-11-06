@@ -65,7 +65,8 @@ export class LevelSevenEncounters {
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const at = this.clearPoint(formationSlot(leader, heading, slot), .4);
+      // Leave the three-metre approach to the launcher clear of the party.
+      const at = this.clearPoint(formationSlot({ x: leader.x + 4, z: leader.z }, heading, slot), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -125,7 +126,7 @@ export class LevelSevenEncounters {
         // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
         // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
         const close = ai.director.tier === 'low' ? 4 : 5, j = i - close;
-        p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
+        p = j < 0 ? { x: centre.x + 4 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
           : { x: centre.x - Math.floor(j / 10) * 1.6, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 10 >> 1) * 1.8) };
       } else if (ai.director.tier === 'low' && group !== l7Encounters.finalGroup && centre.x > 90) {
         const row = Math.floor(i / 10);
@@ -216,7 +217,8 @@ export class LevelSevenEncounters {
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
-    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
+    const goal = this.state.started ? formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot)
+      : formationSlot({ x: p.transform.x + 4, z: p.transform.z }, { x: -1, z: 0 }, slot);
     // Reuse the L5 formation rule around cover: a clear slot across a wreck
     // can still send one follower around its far side at every corner.
     const nav = w.infected!.nav;
