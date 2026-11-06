@@ -209,8 +209,8 @@ export const l4 = {
     path: [[-70, 47], [-26, 47], [-20, 41], [-20, 27.5]] as readonly P[],
   },
   heli: { asset: 'veh.helicopter-military', alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
-  /** Fuel truck north of the plaza: the tank shell sets it off at the line break (mega chain). */
-  fuelTruck: { x: 16.3, z: -45, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
+  /** Fuel truck at the eastern street mouth: the tank shell sets it off at the line break (mega chain). */
+  fuelTruck: { x: 27, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
   /** Beat 5-6: live damage and the collapse; the cellar marker appears at the line break. */
   collapse: {
     fires: 4, burningCars: 3, pendingPerTick: 3,
