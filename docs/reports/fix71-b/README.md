@@ -1,5 +1,7 @@
 # fix71-b — L4/L6 acceptance repairs
 
+Historical fix71-b result below. The subsequent [fix71-b2 follow-up](../fix71-b2/README.md) repairs the L6-05 regression and refreshes L6 protection evidence after merging main. Its report records the new source and gate result.
+
 Timeboxed result: three scoped proofs pass; three L4 rows remain measured FAIL. A new L6-05 regression also remains open. **NO-GO for blanket acceptance.** No push or deployment. Final runtime source hash: `33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25` (last game change `b12a49c`). Criteria, counts, attack clocks, caps and performance targets were not relaxed.
 
 ## Requested rows

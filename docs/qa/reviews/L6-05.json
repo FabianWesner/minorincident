@@ -1,27 +1,26 @@
 {
   "row": "L6-05",
-  "status": "FAIL",
-  "reviewer": "Codex/fix71-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix71-b2",
   "date": "2026-11-06",
-  "commit": "c53bd4f0b6c20eef098b3ac880d054c828e9f9cb",
+  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
   "clauses": [
     {
-      "clause": "Breach combat: reachable>=95%; passive first player attack<=15s after each breach; player-targeted attacks>=4/min.",
-      "verdict": "FAIL",
-      "note": "New release regression on complete policy:0 player windups during21.017s stop phase, both tiers, despite10 real group windups. Base be99181 had4.998 player windups/min. The explicit player criterion is unchanged. A separate in-memory candidate walks to the existing defence anchor while firing; both tiers still save26/29 with0player windups, so it was not applied. Further opening-pressure design is needed without sacrificing follower rescue or changing counts/timers/caps."
+      "clause": "combat: **reachable \u2265 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack \u2264 15 s after each breach caption; attacks on player \u2265 4/min (tune).",
+      "verdict": "PASS",
+      "note": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L6-05-release-regression.json",
-      "sha256": "f50d34fe4b60d3a896f5969d39da541254b90d10f579c5f6e708fa646939cdf3",
-      "what": "Current canonical breach counters, and a separately labelled in-memory candidate experiment that leaves production source unchanged."
+      "file": "docs/reports/fix71-b2/merged-summary.json",
+      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
+      "what": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
     },
     {
-      "file": "docs/reports/fix71-b/L6-opening-candidate.json.gz",
-      "sha256": "a4cce77b8b3a311750d4a90216e635930a7ded10d6e088e161bd559e1102c95e",
-      "what": "Current canonical breach counters, and a separately labelled in-memory candidate experiment that leaves production source unchanged."
+      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
+      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
+      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
     }
-  ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  ]
 }

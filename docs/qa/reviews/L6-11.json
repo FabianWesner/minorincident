@@ -1,31 +1,26 @@
 {
   "row": "L6-11",
   "status": "PASS",
-  "reviewer": "Codex/fix71-b",
+  "reviewer": "Codex/fix71-b2",
   "date": "2026-11-06",
-  "commit": "060891ca4be42ef2fedff4e68e2050350ba1c0a8",
+  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
   "clauses": [
     {
       "clause": "Covering matters: `evade-only` \u2264 30 % out, `complete` \u2265 60 %.",
       "verdict": "PASS",
-      "note": "E24-AC09 explicitly specifies the native named bots, one seed. Both current-source mortal complete routes save26/29=89.66% with zero deaths; moving evade-only saves1/29=3.45% with nine ordinary deaths. Per-identity roster outcomes and mission result agree. Complete final world hashes match canonical acceptance: low4a1802d3/high10d0a475. Separate physical WASD controller fares poorly (low2/29,high1/29); this PASS qualifies the specified named policies and does not claim human usability."
+      "note": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L6-11-release-native.json",
-      "sha256": "9f1118832f407d43168c6ba512acbf1118d39186d9ef9ec20ce757f97dc79360",
-      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
+      "file": "docs/reports/fix71-b2/merged-summary.json",
+      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
+      "what": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
     },
     {
-      "file": "docs/reports/fix71-b/L6-11-release-native.json.gz",
-      "sha256": "fb725d73edc97c20c2d6ccd1f4fa13a83362501a461d4cc84be76e0f3d48cdfe",
-      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
-    },
-    {
-      "file": "docs/reports/fix71-b/L6-11-physical.json",
-      "sha256": "f4ccd2ac8d62eba2e2b85b35d82d027903ced402701e51d0c4f7efb05714cfd7",
-      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
+      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
+      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
+      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
     }
   ]
 }

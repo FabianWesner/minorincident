@@ -1,0 +1,31 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L6 --skip-browser
+
+[qa:accept] L6 low/complete: native global and level observation
+[qa:accept] L6 low/complete: complete
+[qa:accept] L6 low/stationary: native global and level observation
+[qa:accept] L6 low/stationary: tick-budget
+[qa:accept] L6 high/complete: native global and level observation
+[qa:accept] L6 high/complete: complete
+[qa:accept] L6 high/stationary: native global and level observation
+[qa:accept] L6 high/stationary: tick-budget
+[qa:accept] L6 low/fixtures: 8 clauses, 0 errors
+[qa:accept] L6 high/fixtures: 8 clauses, 0 errors
+[qa:accept:checkpoint] L6 low/shelter: PASS
+[qa:accept:checkpoint] L6 low/abandon: PASS
+[qa:accept:checkpoint] L6 low/gate-90: PASS
+[qa:accept:checkpoint] L6 low/mid-tunnel: PASS
+[qa:accept:checkpoint] L6 low/gate-150: PASS
+[qa:accept:checkpoint] L6 low/gate-210: PASS
+[qa:accept:checkpoint] L6 low/exit-platform: PASS
+[qa:accept] L6 low/checkpoints: 7 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L6 high/shelter: PASS
+[qa:accept:checkpoint] L6 high/abandon: PASS
+[qa:accept:checkpoint] L6 high/gate-90: PASS
+[qa:accept:checkpoint] L6 high/mid-tunnel: PASS
+[qa:accept:checkpoint] L6 high/gate-150: PASS
+[qa:accept:checkpoint] L6 high/gate-210: PASS
+[qa:accept:checkpoint] L6 high/exit-platform: PASS
+[qa:accept] L6 high/checkpoints: 7 clauses; control identical; 0 errors
+[qa:accept] L6: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L6.json
