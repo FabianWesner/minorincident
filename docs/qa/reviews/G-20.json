@@ -3,7 +3,7 @@
   "status": "FAIL",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "4b7b48aee485fb75eb65d33ce901b5d5a36498a5",
+  "commit": "4ec2699068306bbf58cccf265aba25dd3a3516d1",
   "clauses": [
     {
       "clause": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
@@ -13,10 +13,15 @@
   ],
   "evidence": [
     {
+      "file": "docs/reports/sweep-g/G-20-final-runout.json",
+      "sha256": "2adc1d3cadfa0858fc2fdee1b87767b1db4e3712d5c813f45451d3f673c97b95",
+      "what": "Fresh final-source run of every arranged terminal predicate, both qualities. All18 measured cells and both explicit L5 fixture rejections identical to prior proof; L7/L9 still transition immediately with live chaser."
+    },
+    {
       "file": "docs/reports/sweep-g/G-20-runout.json",
       "sha256": "7baee8979188050947f855a6fbab585f5e874e590aedae13ffbbd504fe043a23",
       "what": "18 controlled native terminal receipts, exact0/300tick transition and protection values; L5 cap errors retained, not passed."
     }
   ],
-  "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage."
+  "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage. Final-source refresh preserves all original setup errors and counterexamples; no shortened clocks or caps."
 }
