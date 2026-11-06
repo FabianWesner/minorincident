@@ -12,7 +12,7 @@ export function frameInterval(previous: FrameState, current: FrameState, playabl
 }
 
 /** Serialized into the browser by the playtest driver; no imported runtime state. */
-export function installFrameProbe(interval: typeof frameInterval): void {
+export function installFrameProbe(interval: typeof frameInterval, minimumMs = 200): void {
   const root = window as unknown as { __name: (f: unknown) => unknown; __playtestFrames: LongFrame[]; __SCENE__?: { game: { loading: boolean; clock: { paused: boolean }; world: { scenario: string | null; tick: number; missions?: { state: { phase: string } }; entities: { get(id: number): { transform: { x: number; z: number } } | undefined } } } } };
   root.__name = f => f; root.__playtestFrames = [];
   const state = (at: number): FrameState => {
@@ -31,7 +31,7 @@ export function installFrameProbe(interval: typeof frameInterval): void {
   new MutationObserver(() => boundary(state(performance.now()))).observe(document, { subtree: true, attributes: true, attributeFilter: ['hidden'], childList: true });
   const frame = (now: number) => {
     const current = state(now); boundary(current);
-    if (previous && now - previous.at > 200) root.__playtestFrames.push(interval(previous, current, playableSince));
+    if (previous && now - previous.at > minimumMs) root.__playtestFrames.push(interval(previous, current, playableSince));
     previous = current; requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);

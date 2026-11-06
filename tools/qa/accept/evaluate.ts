@@ -719,6 +719,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['l6.breach1', 'l6.breach2'].map(name => ({ clause: `stationary first attack after ${name}`, policy: 'stationary' })),
   ]],
   ['L6-07', ['ordinary retreat route completion', 'retreat player/group windups per minute', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L7-01', [
+    { clause: 'native launcher horizontal distance from night-exit checkpoint', policy: 'complete' },
+    ...['physical launcher approach pickup and first rocket frame gate', 'reviewed actual launcher first-rocket captures'].map(clause => ({ clause, policy: 'physical-pickup' })),
+  ]],
   ['L7-05', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },

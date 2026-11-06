@@ -1,0 +1,41 @@
+{
+  "row": "L7-01",
+  "status": "FAIL",
+  "reviewer": "Codex fix72-c",
+  "date": "2026-11-06",
+  "commit": "65591f560f941723828035ca104b8b4985351bed",
+  "clauses": [
+    {
+      "clause": "Launcher \u2264 5 m from the exit, taken on approach, no hitch (max frame \u2264 50 ms at pickup and first shot).",
+      "verdict": "FAIL",
+      "note": "Measured quiet-context FAIL. Actual moving auto-pickup3m from authentic carried exit, no E, no god/driver/actor manipulation; first physical rocket fired. Low event maxima pickup749.9ms / first-shot233.3ms; high33.4ms /100ms against unchanged50ms gate. Four images personally reviewed: green launcher beside wrecked truck, Corgi/followers, visible orange blast in wide views. No safe small game cause isolated; retain failure, do not close row. Twenty-two synthetic fault controls reject invalid receipts and50.01ms, while50ms boundary passes."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix72-c/L7-01/low.json",
+      "sha256": "5c3586ad2dc2bdda1e9b25a027eff9db93e3433144e813fce7a788996b01b479",
+      "what": "Authentic low quiet physical pickup/first-rocket raw RAF intervals and retained measured FAIL."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/high.json",
+      "sha256": "f5ce915da0c28a07c3f4f43fdfb55a19ced027297dfe5dd1d7fe2a77c98193e0",
+      "what": "Authentic high quiet physical pickup/first-rocket raw RAF intervals and retained measured FAIL."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/review.json",
+      "sha256": "47180692b21a7036c9feb10df5b0d85fd59297e5343953a0657be0cf3aebea9e",
+      "what": "All4 exact image digests and personal observations; raw captures deleted."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
+      "sha256": "beb91371ab5121631e69ed8e1de40c173318940fcd2801b73b6592ef1a6fb333",
+      "what": "Quiet-run admission/load and exclusive interval conditions."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/fault-proof.json",
+      "sha256": "fe1222e1381b258cd03f8d8d0d2e50324f792d1a091f7a473fcbd544fa78cd98",
+      "what": "22 synthetic mechanical/timing/provenance fault controls; original measured failures unchanged."
+    }
+  ]
+}

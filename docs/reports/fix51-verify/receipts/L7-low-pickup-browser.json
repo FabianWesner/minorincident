@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "low",
+  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "fixtureHash": "5538445d7cec72bcc6a2065b7649668cb85127f42b4e30c1b5c09355bbc86953",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L7-01",
+      "clause": "physical launcher approach pickup and first rocket frame gate",
+      "tier": "low",
+      "policy": "physical-pickup",
+      "status": "FAIL",
+      "value": {
+        "valid": true,
+        "mechanics": true,
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 12,
+            "valid": true,
+            "maxMs": 749.9000000000015
+          },
+          {
+            "event": "combat.attack",
+            "tick": 38,
+            "samples": 7,
+            "valid": true,
+            "maxMs": 233.29999999999927
+          }
+        ],
+        "frameGate": false
+      },
+      "target": "Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.",
+      "receipt": "docs/reports/fix72-c/L7-01/low.json"
+    },
+    {
+      "id": "L7-01",
+      "clause": "reviewed actual launcher first-rocket captures",
+      "tier": "low",
+      "policy": "physical-pickup",
+      "status": "PASS",
+      "value": {
+        "seen": true
+      },
+      "target": "Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.",
+      "receipt": "docs/reports/fix72-c/L7-01/review.json"
+    }
+  ]
+}
