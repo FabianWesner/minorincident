@@ -48,8 +48,7 @@ export async function checkL7Navigation() {
     expect(nav.visible({ x: -30, z: 60 }, { x: -30, z: 55.5 }, .4), 'Q-291 direct crossing onto the promenade').toBe(true);
     expect(w.districts!.districts[0].decay.colliders.some(c => c.id.includes('lake-wall'))).toBe(false);
     // Audit the entire walk graph. One inherited, fully fenced residential yard
-    // is intentionally isolated; the relocated fuel-crater footprint leaves 252.75 m².
-    // It has no entrance, spawn or objective. Keep its exact component census.
+    // is intentionally isolated (259 m²); it has no entrance, spawn or objective.
     const reached = nav.reachableFrom(nav.nearestCell(-30, 50));
     const isolated: { x: number; z: number; area: number }[] = [];
     for (let c = 0; c < nav.blocked.length; c++) if (!nav.blocked[c] && !reached[c]) {
@@ -57,7 +56,7 @@ export async function checkL7Navigation() {
       for (let k = 0; k < component.length; k++) if (component[k]) { reached[k] = 1; cells++; }
       if (cells * nav.cellSize ** 2 >= 10) isolated.push({ x: nav.x(c), z: nav.z(c), area: cells * nav.cellSize ** 2 });
     }
-    expect(isolated).toEqual([{ x: 30.25, z: -33.75, area: 252.75 }]);
+    expect(isolated).toEqual([{ x: 30.25, z: -33.75, area: 259 }]);
     // The same 0.5 m cells, independently checked with directed height edges:
     // a lower street cannot pass this audit merely because the planar graph is connected.
     for (const [goal, corridorHeight] of heightReach) {

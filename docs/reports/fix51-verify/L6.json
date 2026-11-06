@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L6",
-  "sourceHash": "df8ffdf25365a76fc19237460626a704a2f02ded98addef44508d1aae51d6b1c",
+  "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:13:45.312Z",
+  "generatedAt": "2026-11-06T05:40:11.279Z",
   "policies": [
     {
       "tier": "low",
@@ -1245,7 +1245,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -1374,7 +1374,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -4288,7 +4288,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -4420,7 +4420,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     }
   ],
@@ -4429,18 +4429,13 @@
       "id": "L6-01",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); low/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions.",
+      "value": "low/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); low/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); low/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/complete initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS); high/stationary initial shelter occupant identities: 29 (target 24 ≤ value ≤ 29; PASS); high/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxH… (full values in JSON) (target every resident starts full health; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L6-low-complete.json",
         "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
-        "docs/reports/sweep-b/L6-01-proof.json",
-        "docs/reports/sweep-b/L6-carry-ledger.json.gz",
-        "docs/reports/sweep-b/L6-carry-capture-review.json",
-        "docs/reports/sweep-b/L6-carry-low-actual-L5-save.json.gz",
-        "docs/reports/sweep-b/L6-carry-high-actual-L5-save.json.gz"
+        "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
       ],
       "expected": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
       "checks": [
@@ -5127,50 +5122,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
-      "reviewDecision": {
-        "row": "L6-01",
-        "status": "FAIL",
-        "reviewer": "Codex/sweep-b",
-        "date": "2026-11-06",
-        "commit": "6e755c87e1325ba2f89a37ffe9a3692b73f0128d",
-        "clauses": [
-          {
-            "clause": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
-            "verdict": "FAIL",
-            "note": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-b/L6-01-proof.json",
-            "sha256": "4433c0a90443ecef43939645122a1a5b300b060a9e108708ed0b7ebb55d54e3c",
-            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          },
-          {
-            "file": "docs/reports/sweep-b/L6-carry-ledger.json.gz",
-            "sha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701",
-            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          },
-          {
-            "file": "docs/reports/sweep-b/L6-carry-capture-review.json",
-            "sha256": "4c0c881df399a12fd586249eb1823f85c04025c83e21b1383d6f4ecce64b7e06",
-            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          },
-          {
-            "file": "docs/reports/sweep-b/L6-carry-low-actual-L5-save.json.gz",
-            "sha256": "080da8c294fabf4e8a740448f217f3fe36cfa45e3f7d30e43a6c38de684212ee",
-            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          },
-          {
-            "file": "docs/reports/sweep-b/L6-carry-high-actual-L5-save.json.gz",
-            "sha256": "4cb8ada0245bf67823621836a3da03d029add4a4704f51c469de9c9948d404de",
-            "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
-          }
-        ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
-      }
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L6 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: 24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people."
     },
     {
       "id": "L6-02",
@@ -7801,7 +7753,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -8084,17 +8036,17 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
       "id": "L6-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex/sweep-b): Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL. Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-b/L6-trajectory-proof.json"
+        "docs/reports/fix67-b/L6-06-final-recheck.json"
       ],
       "expected": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
       "checks": [],
@@ -8110,25 +8062,25 @@
       "reviewDecision": {
         "row": "L6-06",
         "status": "FAIL",
-        "reviewer": "Codex/sweep-b",
+        "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+        "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
         "clauses": [
           {
             "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
             "verdict": "FAIL",
-            "note": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+            "note": "Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
-            "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
-            "what": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+            "file": "docs/reports/fix67-b/L6-06-final-recheck.json",
+            "sha256": "c6ffe6898c71bd379fd2722375dcaac30047a85bbc4c3eaa9435000a466c389e",
+            "what": "Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "freshness": "FRESH",
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -8267,7 +8219,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -8703,7 +8655,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -8755,7 +8707,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -9199,12 +9151,12 @@
     },
     {
       "id": "L6-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex/fix67-b): Fresh current-source ordinary mortal runs: complete finishes at both tiers with1 out of29 (3.448%), below60%; each ledger balances29=1 out+28 lost and final hashes match canonical controls. Evade-only times out at600 sim seconds with13 courier deaths at both tiers, so no evade result percentage is assigned. The complete-policy counterexample is sufficient to retain FAIL. Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-b/L6-11-protection.json"
+        "docs/reports/fix67-b/L6-11-final-recheck.json"
       ],
       "expected": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
       "checks": [],
@@ -9222,23 +9174,23 @@
         "status": "FAIL",
         "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215",
+        "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
         "clauses": [
           {
             "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
             "verdict": "FAIL",
-            "note": "Fresh current-source ordinary mortal runs: complete finishes at both tiers with1 out of29 (3.448%), below60%; each ledger balances29=1 out+28 lost and final hashes match canonical controls. Evade-only times out at600 sim seconds with13 courier deaths at both tiers, so no evade result percentage is assigned. The complete-policy counterexample is sufficient to retain FAIL."
+            "note": "Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-b/L6-11-protection.json",
-            "sha256": "f8b89de70a3ae90dd24f91d827647228238b02fc2cc8b5a49c6bf4a77a651258",
-            "what": "Fresh source-hashed low/high mortal policies with balanced result and survivor ledgers; complete saves1/29 at both tiers and matches canonical hashes, evade-only is incomplete at the600-second limit."
+            "file": "docs/reports/fix67-b/L6-11-final-recheck.json",
+            "sha256": "ca3c5ebac00c5762a7de882ee418111f814c8c273e21a97edeba3704ff15de44",
+            "what": "Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "freshness": "FRESH",
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     },
     {
@@ -9787,9 +9739,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "df8ffdf25365a76fc19237460626a704a2f02ded98addef44508d1aae51d6b1c",
+              "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
               "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-              "revision": "dd0857ade2dea6b807c0a8b2f046986946cd0cbb",
+              "revision": "4081152a7fb5e9041bae7cd5ca159369770043ef",
               "tier": "low",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
@@ -13460,9 +13412,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "df8ffdf25365a76fc19237460626a704a2f02ded98addef44508d1aae51d6b1c",
+              "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
               "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-              "revision": "dd0857ade2dea6b807c0a8b2f046986946cd0cbb",
+              "revision": "4081152a7fb5e9041bae7cd5ca159369770043ef",
               "tier": "high",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
@@ -16728,7 +16680,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
+        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
       }
     }
   ]

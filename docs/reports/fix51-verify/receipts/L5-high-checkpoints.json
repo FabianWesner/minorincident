@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L5",
   "tier": "high",
-  "sourceHash": "4037c7440d3e6094f446910b5c16e2fbefa51476a0c3dd65f2dcd31c253ca39a",
+  "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "outside",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "167b65ffa984daf2da7e2b4c4dce4bceb7b698fad6b03b0d76fb6cda9f7a33ab",
+        "snapshotSha256": "ed8823872b2c97399b0d2d7abbf0bba1fa3562ab5da372026267b40af1e34984",
         "damage": 100,
         "expected": {
           "id": "outside",
@@ -105,15 +105,15 @@
       "value": {
         "checkpoint": "survivor-1",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "361ca27b4a2ae16807ccfb3e697b7103ad0a873e6ee3eb873a78771fe8914921",
+        "snapshotSha256": "1bbe6121d320e5f331f333d39eb8279bbb2c9d13ac618f36ac69c2ab8fdd01b3",
         "damage": 100,
         "expected": {
           "id": "survivor-1",
           "anchor": {
-            "x": -30.76688575744629,
+            "x": -32.4442138671875,
             "y": 0.8500000238418579,
-            "z": -44.564491271972656,
-            "yaw": -0.3928087749481607
+            "z": -44.74871826171875,
+            "yaw": -0.47750526185666176
           },
           "gates": {
             "l5-metro-shutter": true
@@ -156,8 +156,8 @@
         "observed": {
           "id": "survivor-1",
           "position": {
-            "x": -30.76688575744629,
-            "z": -44.564491271972656
+            "x": -32.4442138671875,
+            "z": -44.74871826171875
           },
           "gates": {
             "l5-metro-shutter": true
@@ -197,15 +197,15 @@
       "value": {
         "checkpoint": "survivor-2",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "ee1a4764654747419e92ee1f32f169448b17583ec9935d7d5818fb5030e86c33",
+        "snapshotSha256": "21d5d2755ffb404069752dea35b9b86c4647da786f1f2ec152c743a163c9e110",
         "damage": 100,
         "expected": {
           "id": "survivor-2",
           "anchor": {
-            "x": -33.17970275878906,
+            "x": -33.179264068603516,
             "y": 0.7089999914169312,
-            "z": -2.9619991779327393,
-            "yaw": -2.4559769382484546
+            "z": -2.9627861976623535,
+            "yaw": -2.4551792532569774
           },
           "gates": {
             "l5-metro-shutter": true
@@ -249,8 +249,8 @@
         "observed": {
           "id": "survivor-2",
           "position": {
-            "x": -33.17970275878906,
-            "z": -2.9619991779327393
+            "x": -33.179264068603516,
+            "z": -2.9627861976623535
           },
           "gates": {
             "l5-metro-shutter": true
@@ -290,15 +290,15 @@
       "value": {
         "checkpoint": "survivor-3",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "7b2a5548e7b7003a8a90999677aa4ba4b8b4f05c8caa0cab8a6ab4872288a933",
+        "snapshotSha256": "7f15406fd4474a40b62b02504bf358b71b04e61b482d8a5403cfc0b1eb7868ee",
         "damage": 100,
         "expected": {
           "id": "survivor-3",
           "anchor": {
-            "x": -45.388912200927734,
+            "x": -45.39374923706055,
             "y": 0.8500000238418579,
-            "z": 49.8572883605957,
-            "yaw": -0.3516993595647764
+            "z": 49.85401916503906,
+            "yaw": -0.35503516496682397
           },
           "gates": {
             "l5-metro-shutter": true
@@ -343,8 +343,8 @@
         "observed": {
           "id": "survivor-3",
           "position": {
-            "x": -45.388912200927734,
-            "z": 49.8572883605957
+            "x": -45.39374923706055,
+            "z": 49.85401916503906
           },
           "gates": {
             "l5-metro-shutter": true
@@ -384,15 +384,15 @@
       "value": {
         "checkpoint": "survivor-4",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "d03959e04628eae9c3b69029230d86095e71643386a6339597c54680e839f8cf",
+        "snapshotSha256": "e17bce05b9b4854802345604aa7eb0a82d9a7f0c83b794dfbbe4b4bbc31c2f14",
         "damage": 100,
         "expected": {
           "id": "survivor-4",
           "anchor": {
-            "x": -6.583186149597168,
+            "x": -5.3479766845703125,
             "y": 0.7049999833106995,
-            "z": 3.1181640625,
-            "yaw": 0.9394394669666968
+            "z": 2.8238208293914795,
+            "yaw": 1.416482245936527
           },
           "gates": {
             "l5-metro-shutter": true
@@ -437,8 +437,8 @@
         "observed": {
           "id": "survivor-4",
           "position": {
-            "x": -6.583186149597168,
-            "z": 3.1181640625
+            "x": -5.3479766845703125,
+            "z": 2.8238208293914795
           },
           "gates": {
             "l5-metro-shutter": true
@@ -478,15 +478,15 @@
       "value": {
         "checkpoint": "survivor-5",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "a36bdb88b51d81a238a1a526d73f36bdd8e936a5e51e34dc678b289956401e76",
+        "snapshotSha256": "f17e3aeabd2a301ea5bc7e5030e5c0f701adf791c6ba705e92b0ad78392534c0",
         "damage": 100,
         "expected": {
           "id": "survivor-5",
           "anchor": {
-            "x": 57.57801818847656,
+            "x": 57.58626174926758,
             "y": 0.8500000238418579,
-            "z": 41.30235290527344,
-            "yaw": 0.005575363790083858
+            "z": 41.297088623046875,
+            "yaw": -0.0070416301529731
           },
           "gates": {
             "l5-metro-shutter": true
@@ -507,6 +507,7 @@
             28,
             29,
             30,
+            31,
             32
           ],
           "pickups": [
@@ -531,8 +532,8 @@
         "observed": {
           "id": "survivor-5",
           "position": {
-            "x": 57.57801818847656,
-            "z": 41.30235290527344
+            "x": 57.58626174926758,
+            "z": 41.297088623046875
           },
           "gates": {
             "l5-metro-shutter": true
@@ -566,8 +567,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "ad2b4339",
-    "control": "ad2b4339",
+    "observed": "f14b9e54",
+    "control": "f14b9e54",
     "identical": true
   }
 }
