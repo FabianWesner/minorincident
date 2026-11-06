@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, Quaternion, Vector3, Shape, ShapeGeometry } from 'three/webgpu';
+import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, Quaternion, Vector3, Shape, ShapeGeometry } from 'three/webgpu';
 import { l3Dressing } from '../levels/L3/layout';
 import { L3_GATES } from '../sim/missions/LevelThreeCollapse';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -14,7 +14,6 @@ export class L3Props extends Group {
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly red = new MeshBasicNodeMaterial({ color: '#ff2a1a' });
   private readonly blue = new MeshBasicNodeMaterial({ color: '#2f6bff' });
-  private readonly detourMaterial = new MeshBasicNodeMaterial({ color: '#ffcf77', depthWrite: false, toneMapped: false });
   private readonly detourGeometry: ShapeGeometry;
   private readonly m4 = new Matrix4();
   private readonly at = new Vector3();
@@ -35,19 +34,24 @@ export class L3Props extends Group {
       for (const [side, list] of [[-1, red], [1, blue]] as const) list.push({ x: d.x - az * side * .35 + ax * .2, y, z: d.z + ax * side * .35 + az * .2, sx: .3, sy: .14, sz: .3 });
     }
     this.bars.push(instanced(this.red, red), instanced(this.blue, blue));
-    // Fixed road paint identifies the open cross-links before the sealed wreck
-    // lines. The checkpoint ring and its real destination distance stay fixed.
-    const arrow = new Shape();
-    arrow.moveTo(1.1, 0); arrow.lineTo(.2, .75); arrow.lineTo(.2, .28);
-    arrow.lineTo(-1.1, .28); arrow.lineTo(-1.1, -.28); arrow.lineTo(.2, -.28); arrow.lineTo(.2, -.75); arrow.closePath();
-    this.detourGeometry = new ShapeGeometry(arrow); this.detourGeometry.rotateX(-Math.PI / 2);
+    // Old turn-lane paint at the open cross-links: part of the street, not navigation UI (vqa-3 #5, G-08 no route
+    // steering). Lit like the asphalt, faded and low contrast, and worn through in two cracks; it never glows.
+    const piece = (points: [number, number][]) => { const shape = new Shape(); shape.moveTo(...points[0]); for (const p of points.slice(1)) shape.lineTo(...p); shape.closePath(); return shape; };
+    this.detourGeometry = new ShapeGeometry([
+      piece([[1.1, 0], [.2, .75], [.2, .28], [.05, .28], [.05, -.28], [.2, -.28], [.2, -.75]]),
+      piece([[-.08, .28], [-.5, .24], [-.48, -.28], [-.08, -.28]]),
+      piece([[-.62, .26], [-1.1, .28], [-1.1, -.22], [-.6, -.28]]),
+    ]);
+    this.detourGeometry.rotateX(-Math.PI / 2);
     const detours = [
       [-96, -28, 0], [-90, -28, Math.PI / 2], [-90, -14, Math.PI / 2],
       [-96, 0, 0], [-90, 0, Math.PI / 2], [-90, 14, Math.PI / 2], [-90, 28, 0],
       [-22, 28, 0], [-13.75, 28, -Math.PI / 2], [-13.75, 14, -Math.PI / 2],
       [-22, 0, 0], [-13.75, 0, -Math.PI / 2], [-13.75, -14, -Math.PI / 2], [-13.75, -28, 0],
     ];
-    const paint = new InstancedMesh(this.detourGeometry, this.detourMaterial, detours.length);
+    const worn = materials.fromColor('l3-worn-turn-paint', new Color('#77736a'));
+    const paint = new InstancedMesh(this.detourGeometry, worn, detours.length);
+    paint.receiveShadow = true;
     for (const [i, [x, z, direction]] of detours.entries()) {
       this.m4.compose(this.at.set(x, .12, z), this.turn.setFromAxisAngle(this.scaleV.set(0, 1, 0), -direction), this.scaleV.set(1, 1, 1));
       paint.setMatrixAt(i, this.m4);
@@ -72,5 +76,5 @@ export class L3Props extends Group {
     this.bars[0].visible = phase === 0; this.bars[1].visible = phase === 1;
     for (const g of this.gates) g.visible = !!s?.gatesClosedAt;
   }
-  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.detourGeometry.dispose(); this.detourMaterial.dispose(); }
+  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.detourGeometry.dispose(); }
 }
