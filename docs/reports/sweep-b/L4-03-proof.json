@@ -1,0 +1,885 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "9771a75d22b0351a4a2c5cb76ada6c62535c8548",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "producerSha256": "0662781c20ccde1a6ee7d8de6c4a55b65033e0f1d90c62cfeda935ddac6b3fcc",
+  "rows": [
+    {
+      "tier": "low",
+      "zoom": 1.5,
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2176
+        ],
+        "gunTicks": [
+          2176
+        ],
+        "turnTicks": [
+          2176
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2176,
+            "observedWorldTick": 2176,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 50.90133333333333,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 50.90133333333333,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 50.90133333333333,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 50.90133333333333,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 311,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 312,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 313,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 314,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2176,
+          "ids": [
+            {
+              "id": 162,
+              "x": -39.513124999999995,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 163,
+              "x": -38.59375,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 164,
+              "x": -37.7,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 165,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 166,
+              "x": -24,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -16,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -15.1,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "controls": [
+        {
+          "fault": "l4.gun delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "l4.firstTurn delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-klaxon-start delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-l4-admissions delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ],
+      "input": "docs/reports/sweep-b/L4-low-z1.5-ledger.json.gz",
+      "sha256": "ca337b9dc30084f7254b751ddecf5f82ab33fbb9a018fc42e859286565ad3528"
+    },
+    {
+      "tier": "high",
+      "zoom": 1.5,
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2179
+        ],
+        "gunTicks": [
+          2179
+        ],
+        "turnTicks": [
+          2179
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2179,
+            "observedWorldTick": 2179,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 64.89066666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 64.89066666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 64.89066666666666,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 64.89066666666666,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 221,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 222,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 223,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 224,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2179,
+          "ids": [
+            {
+              "id": 205,
+              "x": -39.513124999999995,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 206,
+              "x": -38.59375,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 207,
+              "x": -37.7,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 208,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 209,
+              "x": -24,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -16,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -15.1,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -32.9,
+              "z": 25.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -32,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -31.1,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": 1.1,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": 2,
+              "z": -9,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": 2.9,
+              "z": -9,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": 0,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "controls": [
+        {
+          "fault": "l4.gun delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "l4.firstTurn delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-klaxon-start delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-l4-admissions delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ],
+      "input": "docs/reports/sweep-b/L4-high-z1.5-ledger.json.gz",
+      "sha256": "e755953d65635a8b895508227f3b9077b46ff5165159e9be9209ad9969192790"
+    },
+    {
+      "tier": "low",
+      "zoom": 0.5,
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2294
+        ],
+        "gunTicks": [
+          2294
+        ],
+        "turnTicks": [
+          2294
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2294,
+            "observedWorldTick": 2294,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 43.472,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 43.472,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 43.472,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 43.472,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 318,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 319,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 320,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 321,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2294,
+          "ids": [
+            {
+              "id": 162,
+              "x": -39.513124999999995,
+              "z": 8,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 163,
+              "x": -38.59375,
+              "z": 8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 164,
+              "x": -37.7,
+              "z": 8,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 165,
+              "x": -42.699999999999996,
+              "z": 10.2,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 166,
+              "x": -41.8,
+              "z": 10.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -40.9,
+              "z": 10.2,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -16.9,
+              "z": -20.4,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -16,
+              "z": -20.4,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -15.1,
+              "z": -20.4,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "controls": [
+        {
+          "fault": "l4.gun delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "l4.firstTurn delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-klaxon-start delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-l4-admissions delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ],
+      "input": "docs/reports/sweep-b/L4-low-z0.5-ledger.json.gz",
+      "sha256": "55bbec00142f26445bbb5e6f792deb67f10e70792813b86ad54f8f91b66c0a1c"
+    },
+    {
+      "tier": "high",
+      "zoom": 0.5,
+      "status": "PASS",
+      "value": {
+        "pickupTicks": [
+          2172
+        ],
+        "gunTicks": [
+          2172
+        ],
+        "turnTicks": [
+          2172
+        ],
+        "alarms": [
+          {
+            "type": "actual-klaxon-start",
+            "tick": 2172,
+            "observedWorldTick": 2172,
+            "handled": true,
+            "active": true,
+            "scheduled": [
+              {
+                "cue": "l4.klaxon",
+                "time": 53.09866666666667,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 53.09866666666667,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 53.09866666666667,
+                "positional": true
+              },
+              {
+                "cue": "l4.klaxon",
+                "time": 53.09866666666667,
+                "positional": false
+              }
+            ],
+            "voices": [
+              {
+                "id": 217,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 218,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 219,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
+              {
+                "id": 220,
+                "cue": "l4.klaxon",
+                "gain": 0.06599999964237213,
+                "loop": true
+              }
+            ]
+          }
+        ],
+        "firstAdmission": {
+          "type": "actual-l4-admissions",
+          "tick": 2172,
+          "ids": [
+            {
+              "id": 205,
+              "x": -39.513124999999995,
+              "z": 8,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 206,
+              "x": -38.59375,
+              "z": 8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 207,
+              "x": -37.7,
+              "z": 8,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 208,
+              "x": -16.9,
+              "z": -20.4,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 209,
+              "x": -16,
+              "z": -20.4,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -15.1,
+              "z": -20.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -42.699999999999996,
+              "z": 10.2,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -41.8,
+              "z": 10.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -40.9,
+              "z": 10.2,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -39.5,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -38.6,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -37.7,
+              "z": 16,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": -13.91522124869383,
+              "z": -21.855376801379265,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": -24,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "controls": [
+        {
+          "fault": "l4.gun delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "l4.firstTurn delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-klaxon-start delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "actual-l4-admissions delayed one tick",
+          "status": "FAIL"
+        },
+        {
+          "fault": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "fault": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ],
+      "input": "docs/reports/sweep-b/L4-high-z0.5-ledger.json.gz",
+      "sha256": "795f32c1ac5860ff9fd6649ba6fd6c364d57c1e79df584cd2c8fa676532391b8"
+    }
+  ]
+}

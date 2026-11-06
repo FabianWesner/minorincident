@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "18d75597489d3d442d0501f9daf8d576847107c6dd008b75f661379d054deb1b",
-  "fixtureHash": "f46f97d7dfd6775eb8f136fe60d75fa4deccb7e2e314775cdd0446f1f0056916",
-  "browserHash": "4d66b85d78be7ce4b6381e3fe16b85c932f184fa102d0afe4a773aefa9d002f9",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "fixtureHash": "0662781c20ccde1a6ee7d8de6c4a55b65033e0f1d90c62cfeda935ddac6b3fcc",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
   "errors": [],
   "checks": [
     {
@@ -15,44 +15,50 @@
       "status": "PASS",
       "value": {
         "pickupTicks": [
-          2172
+          2176
         ],
         "gunTicks": [
-          2172
+          2176
         ],
         "turnTicks": [
-          2172
+          2176
         ],
         "alarms": [
           {
             "type": "actual-klaxon-start",
-            "tick": 2172,
-            "observedWorldTick": 2172,
+            "tick": 2176,
+            "observedWorldTick": 2176,
             "handled": true,
             "active": true,
             "scheduled": [
               {
                 "cue": "l4.klaxon",
-                "time": 42.650666666666666,
+                "time": 50.90133333333333,
                 "positional": true
               },
               {
                 "cue": "l4.klaxon",
-                "time": 42.650666666666666,
+                "time": 50.90133333333333,
                 "positional": true
               },
               {
                 "cue": "l4.klaxon",
-                "time": 42.650666666666666,
+                "time": 50.90133333333333,
                 "positional": true
               },
               {
                 "cue": "l4.klaxon",
-                "time": 42.650666666666666,
+                "time": 50.90133333333333,
                 "positional": false
               }
             ],
             "voices": [
+              {
+                "id": 311,
+                "cue": "l4.klaxon",
+                "gain": 0.33000001311302185,
+                "loop": true
+              },
               {
                 "id": 312,
                 "cue": "l4.klaxon",
@@ -68,12 +74,6 @@
               {
                 "id": 314,
                 "cue": "l4.klaxon",
-                "gain": 0.33000001311302185,
-                "loop": true
-              },
-              {
-                "id": 315,
-                "cue": "l4.klaxon",
                 "gain": 0.06599999964237213,
                 "loop": true
               }
@@ -82,7 +82,7 @@
         ],
         "firstAdmission": {
           "type": "actual-l4-admissions",
-          "tick": 2172,
+          "tick": 2176,
           "ids": [
             {
               "id": 162,
@@ -158,36 +158,85 @@
             }
           ]
         },
-        "routeZoom": 1.5,
-        "proofPath": "docs/reports/fix53-b/L4-03.json",
-        "proofSha256": "3984528fc88d37b0303f844073be3c15c74e217c3e22a1f493f98b47a7d42612"
+        "zoom": 1.5,
+        "controls": [
+          {
+            "fault": "l4.gun delayed one tick",
+            "status": "FAIL"
+          },
+          {
+            "fault": "l4.firstTurn delayed one tick",
+            "status": "FAIL"
+          },
+          {
+            "fault": "actual-klaxon-start delayed one tick",
+            "status": "FAIL"
+          },
+          {
+            "fault": "actual-l4-admissions delayed one tick",
+            "status": "FAIL"
+          },
+          {
+            "fault": "observed tick delayed",
+            "status": "FAIL"
+          },
+          {
+            "fault": "missing voices",
+            "status": "FAIL"
+          },
+          {
+            "fault": "missing admissions",
+            "status": "NOT CHECKED"
+          }
+        ],
+        "archived": "docs/reports/sweep-b/L4-low-z1.5-ledger.json.gz",
+        "sha256": "ca337b9dc30084f7254b751ddecf5f82ab33fbb9a018fc42e859286565ad3528"
       },
-      "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-02",
-      "clause": "actual pre-pickup reception civilian census excluding soldiers",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "FAIL",
-      "value": {
-        "samples": 12,
-        "firstTick": 1830,
-        "lastTick": 2160,
-        "minimum": 32,
-        "maximum": 32,
-        "routeZoom": 1.5,
-        "input": "docs/reports/fix53-b/L4-opening/matrix.json.gz",
-        "sha256": "7940aebb2f506c8df94c567ac2cf7ac2a18435ec7b66eeb819e78a985a09a691"
-      },
-      "target": "at least40 civilians until pickup; routines/overlap still require separate qualification",
+      "target": "actual pickup, gun/turn, live positive-gain klaxon voices and first living admissions share one simulation tick",
       "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
     }
   ],
   "observations": {
-    "input": "docs/reports/fix53-b/L4-opening/matrix.json.gz",
-    "inputSha256": "7940aebb2f506c8df94c567ac2cf7ac2a18435ec7b66eeb819e78a985a09a691",
-    "scope": "90second opening only; no full-level completion or performance claim"
+    "source": {
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+      "revision": "4321c37573da59b9e1dcf7d1610f67ed370be0bd",
+      "method": "Physical WASD/mouse/E, progressed preset, protected courier, mortal followers; shared headless Metal WebGL2; no performance timing; L5 authored-map tour is not caption-only evidence.",
+      "results": [
+        {
+          "tag": "sweep-b-L4-low-z1.5",
+          "tier": "low",
+          "zoom": 1.5,
+          "started": "2026-11-05T23:46:15.595Z",
+          "ended": "2026-11-05T23:50:58.281Z",
+          "exit": 0
+        },
+        {
+          "tag": "sweep-b-L4-high-z1.5",
+          "tier": "high",
+          "zoom": 1.5,
+          "started": "2026-11-05T23:46:15.610Z",
+          "ended": "2026-11-05T23:51:17.422Z",
+          "exit": 0
+        },
+        {
+          "tag": "sweep-b-L4-low-z0.5",
+          "tier": "low",
+          "zoom": 0.5,
+          "started": "2026-11-05T23:51:17.423Z",
+          "ended": "2026-11-05T23:56:12.077Z",
+          "exit": 0
+        },
+        {
+          "tag": "sweep-b-L4-high-z0.5",
+          "tier": "high",
+          "zoom": 0.5,
+          "started": "2026-11-05T23:51:17.424Z",
+          "ended": "2026-11-05T23:57:01.641Z",
+          "exit": 0
+        }
+      ]
+    },
+    "scope": "Protected courier; actual physical full L4 route, no skips; no performance timing. The event/graph ledger establishes same-tick equality, not the stills."
   }
 }
