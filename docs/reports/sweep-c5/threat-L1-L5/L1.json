@@ -1,0 +1,1047 @@
+{
+  "level": "L1",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "pickup",
+      "text": "Pick up the package at the courier depot",
+      "type": "interact"
+    },
+    {
+      "id": "deliver",
+      "text": "Deliver the package to the Medical Annex",
+      "type": "interact"
+    },
+    {
+      "id": "escape",
+      "text": "Get away from the facility",
+      "type": "custom"
+    },
+    {
+      "id": "weapon",
+      "text": "Find something to defend yourself",
+      "type": "interact"
+    },
+    {
+      "id": "firestation",
+      "text": "Get inside the fire station",
+      "type": "reach"
+    }
+  ],
+  "run": {
+    "level": "L1",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 115.08333333333333,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 30,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "pickup",
+        "t": 15.466666666666667
+      },
+      {
+        "id": "deliver",
+        "t": 55.43333333333333
+      },
+      {
+        "id": "escape",
+        "t": 69.45
+      },
+      {
+        "id": "weapon",
+        "t": 85.53333333333333
+      },
+      {
+        "id": "firestation",
+        "t": 110.08333333333333
+      }
+    ],
+    "furthestObjective": "firestation",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 5027,
+      "deferred": 7,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 6905,
+    "followerWait": {
+      "escortTicks": 6090,
+      "stationaryFarTicks": 1023,
+      "upperBoundPercent": 16.798029556650246,
+      "followers": [
+        {
+          "id": 83,
+          "escortTicks": 6090,
+          "stationaryFarTicks": 1023
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/pickup",
+        "label": "pickup: Pick up the package at the courier depot",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 15.466666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 29,
+            "median": 4.498145897674122
+          }
+        ],
+        "followerMin": 4.498145897674122,
+        "followerMedian": 4.498145897674122,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 841,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -38.79008483886719,
+          "playerZ": -34.842987060546875,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/morning",
+        "label": "controller: morning",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 44.666666666666664,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 77,
+            "median": 0
+          }
+        ],
+        "followerMin": 0,
+        "followerMedian": 0,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2608,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 64.53189849853516,
+          "playerZ": -9.881336212158203,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/deliver",
+        "label": "deliver: Deliver the package to the Medical Annex",
+        "threat": false,
+        "startSeconds": 15.466666666666667,
+        "seconds": 39.96666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 48,
+            "median": 0
+          }
+        ],
+        "followerMin": 0,
+        "followerMedian": 0,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3280,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/handover",
+        "label": "controller: handover",
+        "threat": false,
+        "startSeconds": 44.666666666666664,
+        "seconds": 10.766666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3280,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/calm",
+        "label": "controller: calm",
+        "threat": false,
+        "startSeconds": 55.43333333333333,
+        "seconds": 4.733333333333333,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3566,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/accident",
+        "label": "controller: accident",
+        "threat": false,
+        "startSeconds": 60.166666666666664,
+        "seconds": 9.266666666666667,
+        "spawned": 5,
+        "initial": 0,
+        "observed": 5,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 1,
+            "median": 0.4119556753145347
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4090,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.30667877197266,
+          "playerZ": -9.539332389831543,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/escape",
+        "label": "escape: Get away from the facility",
+        "threat": false,
+        "startSeconds": 69.43333333333334,
+        "seconds": 0.016666666666666666,
+        "spawned": 0,
+        "initial": 5,
+        "observed": 5,
+        "reachableEver": 5,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 4166,
+          "nearby": 5,
+          "reachable": 5,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4166,
+          "alive": 5,
+          "reachable": 5,
+          "playerX": 65.30667877197266,
+          "playerZ": -9.539332389831543,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/spread",
+        "label": "controller: spread",
+        "threat": true,
+        "startSeconds": 69.43333333333334,
+        "seconds": 40.65,
+        "spawned": 23,
+        "initial": 5,
+        "observed": 28,
+        "reachableEver": 28,
+        "within2_5m": 8,
+        "attacks": 17,
+        "attacksPerMinute": 25.092250922509226,
+        "firstAttackSeconds": 12.666666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 77,
+            "median": 6.227285314063075
+          }
+        ],
+        "followerMin": 6.227285314063075,
+        "followerMedian": 6.227285314063075,
+        "boundedPaths": {
+          "samples": 23,
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6572,
+          "alive": 24,
+          "reachable": 24,
+          "playerX": -73.91126251220703,
+          "playerZ": 40.46430969238281,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/weapon",
+        "label": "weapon: Find something to defend yourself",
+        "threat": false,
+        "startSeconds": 69.45,
+        "seconds": 16.083333333333332,
+        "spawned": 15,
+        "initial": 5,
+        "observed": 20,
+        "reachableEver": 20,
+        "within2_5m": 4,
+        "attacks": 5,
+        "attacksPerMinute": 18.65284974093264,
+        "firstAttackSeconds": 12.65,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 32,
+            "median": 7.993294263507268
+          }
+        ],
+        "followerMin": 7.993294263507268,
+        "followerMedian": 7.993294263507268,
+        "boundedPaths": {
+          "samples": 9,
+          "minimumPercent": 100,
+          "worstTick": 5127,
+          "nearby": 9,
+          "reachable": 9,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5127,
+          "alive": 20,
+          "reachable": 20,
+          "playerX": 23.257389068603516,
+          "playerZ": 37.310020446777344,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/firestation",
+        "label": "firestation: Get inside the fire station",
+        "threat": false,
+        "startSeconds": 85.53333333333333,
+        "seconds": 24.55,
+        "spawned": 8,
+        "initial": 20,
+        "observed": 28,
+        "reachableEver": 28,
+        "within2_5m": 6,
+        "attacks": 12,
+        "attacksPerMinute": 29.327902240325866,
+        "firstAttackSeconds": 0.4166666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 45,
+            "median": 4.547830762033034
+          }
+        ],
+        "followerMin": 4.547830762033034,
+        "followerMedian": 4.547830762033034,
+        "boundedPaths": {
+          "samples": 13,
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6572,
+          "alive": 24,
+          "reachable": 24,
+          "playerX": -73.91126251220703,
+          "playerZ": 40.46430969238281,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/run-out",
+        "label": "level-end run-out",
+        "threat": false,
+        "startSeconds": 110.08333333333333,
+        "seconds": 5,
+        "spawned": 2,
+        "initial": 24,
+        "observed": 29,
+        "reachableEver": 28,
+        "within2_5m": 5,
+        "attacks": 12,
+        "attacksPerMinute": 144,
+        "firstAttackSeconds": 1.1333333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 3,
+          "minimumPercent": 0,
+          "worstTick": 6725,
+          "nearby": 4,
+          "reachable": 0,
+          "blockedIds": [
+            179,
+            189,
+            191,
+            211
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6845,
+          "alive": 28,
+          "reachable": 28,
+          "playerX": -76.03812408447266,
+          "playerZ": 41.14918899536133,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "flags": [],
+  "passiveRun": {
+    "level": "L1",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 115.08333333333333,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "pickup",
+        "t": 15.466666666666667
+      },
+      {
+        "id": "deliver",
+        "t": 55.43333333333333
+      },
+      {
+        "id": "escape",
+        "t": 69.45
+      },
+      {
+        "id": "weapon",
+        "t": 85.53333333333333
+      },
+      {
+        "id": "firestation",
+        "t": 110.08333333333333
+      }
+    ],
+    "furthestObjective": "firestation",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 5027,
+      "deferred": 7,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 6905,
+    "followerWait": {
+      "escortTicks": 6090,
+      "stationaryFarTicks": 1023,
+      "upperBoundPercent": 16.798029556650246,
+      "followers": [
+        {
+          "id": 83,
+          "escortTicks": 6090,
+          "stationaryFarTicks": 1023
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/pickup",
+        "label": "pickup: Pick up the package at the courier depot",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 15.466666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 29,
+            "median": 4.498145897674122
+          }
+        ],
+        "followerMin": 4.498145897674122,
+        "followerMedian": 4.498145897674122,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 841,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -38.79008483886719,
+          "playerZ": -34.842987060546875,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/morning",
+        "label": "controller: morning",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 44.666666666666664,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 77,
+            "median": 0
+          }
+        ],
+        "followerMin": 0,
+        "followerMedian": 0,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2608,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 64.53189849853516,
+          "playerZ": -9.881336212158203,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/deliver",
+        "label": "deliver: Deliver the package to the Medical Annex",
+        "threat": false,
+        "startSeconds": 15.466666666666667,
+        "seconds": 39.96666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 48,
+            "median": 0
+          }
+        ],
+        "followerMin": 0,
+        "followerMedian": 0,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3280,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/handover",
+        "label": "controller: handover",
+        "threat": false,
+        "startSeconds": 44.666666666666664,
+        "seconds": 10.766666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3280,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/calm",
+        "label": "controller: calm",
+        "threat": false,
+        "startSeconds": 55.43333333333333,
+        "seconds": 4.733333333333333,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3566,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.62980651855469,
+          "playerZ": -11.612318992614746,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/accident",
+        "label": "controller: accident",
+        "threat": false,
+        "startSeconds": 60.166666666666664,
+        "seconds": 9.266666666666667,
+        "spawned": 5,
+        "initial": 0,
+        "observed": 5,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 1,
+            "median": 0.4119556753145347
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4090,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 65.30667877197266,
+          "playerZ": -9.539332389831543,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/escape",
+        "label": "escape: Get away from the facility",
+        "threat": false,
+        "startSeconds": 69.43333333333334,
+        "seconds": 0.016666666666666666,
+        "spawned": 0,
+        "initial": 5,
+        "observed": 5,
+        "reachableEver": 5,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 4166,
+          "nearby": 5,
+          "reachable": 5,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4166,
+          "alive": 5,
+          "reachable": 5,
+          "playerX": 65.30667877197266,
+          "playerZ": -9.539332389831543,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/spread",
+        "label": "controller: spread",
+        "threat": true,
+        "startSeconds": 69.43333333333334,
+        "seconds": 40.65,
+        "spawned": 23,
+        "initial": 5,
+        "observed": 28,
+        "reachableEver": 28,
+        "within2_5m": 8,
+        "attacks": 17,
+        "attacksPerMinute": 25.092250922509226,
+        "firstAttackSeconds": 12.666666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 77,
+            "median": 6.227285314063075
+          }
+        ],
+        "followerMin": 6.227285314063075,
+        "followerMedian": 6.227285314063075,
+        "boundedPaths": {
+          "samples": 23,
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6572,
+          "alive": 24,
+          "reachable": 24,
+          "playerX": -73.91126251220703,
+          "playerZ": 40.46430969238281,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/weapon",
+        "label": "weapon: Find something to defend yourself",
+        "threat": false,
+        "startSeconds": 69.45,
+        "seconds": 16.083333333333332,
+        "spawned": 15,
+        "initial": 5,
+        "observed": 20,
+        "reachableEver": 20,
+        "within2_5m": 4,
+        "attacks": 5,
+        "attacksPerMinute": 18.65284974093264,
+        "firstAttackSeconds": 12.65,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 32,
+            "median": 7.993294263507268
+          }
+        ],
+        "followerMin": 7.993294263507268,
+        "followerMedian": 7.993294263507268,
+        "boundedPaths": {
+          "samples": 9,
+          "minimumPercent": 100,
+          "worstTick": 5127,
+          "nearby": 9,
+          "reachable": 9,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5127,
+          "alive": 20,
+          "reachable": 20,
+          "playerX": 23.257389068603516,
+          "playerZ": 37.310020446777344,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/firestation",
+        "label": "firestation: Get inside the fire station",
+        "threat": false,
+        "startSeconds": 85.53333333333333,
+        "seconds": 24.55,
+        "spawned": 8,
+        "initial": 20,
+        "observed": 28,
+        "reachableEver": 28,
+        "within2_5m": 6,
+        "attacks": 12,
+        "attacksPerMinute": 29.327902240325866,
+        "firstAttackSeconds": 0.4166666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 83,
+            "samples": 45,
+            "median": 4.547830762033034
+          }
+        ],
+        "followerMin": 4.547830762033034,
+        "followerMedian": 4.547830762033034,
+        "boundedPaths": {
+          "samples": 13,
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6572,
+          "alive": 24,
+          "reachable": 24,
+          "playerX": -73.91126251220703,
+          "playerZ": 40.46430969238281,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/run-out",
+        "label": "level-end run-out",
+        "threat": false,
+        "startSeconds": 110.08333333333333,
+        "seconds": 5,
+        "spawned": 2,
+        "initial": 24,
+        "observed": 29,
+        "reachableEver": 28,
+        "within2_5m": 5,
+        "attacks": 12,
+        "attacksPerMinute": 144,
+        "firstAttackSeconds": 1.1333333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 3,
+          "minimumPercent": 0,
+          "worstTick": 6725,
+          "nearby": 4,
+          "reachable": 0,
+          "blockedIds": [
+            179,
+            189,
+            191,
+            211
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6845,
+          "alive": 28,
+          "reachable": 28,
+          "playerX": -76.03812408447266,
+          "playerZ": 41.14918899536133,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "passiveFlags": [],
+  "wallSeconds": 10.488297957999999,
+  "nativeStateHash": "b5e6a3be"
+}

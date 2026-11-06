@@ -1,0 +1,6713 @@
+{
+  "level": "L4",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "ride",
+      "text": "Ride into Fairhaven with the convoy",
+      "type": "custom"
+    },
+    {
+      "id": "quartermaster",
+      "text": "Report to the quartermaster",
+      "type": "interact"
+    },
+    {
+      "id": "hold",
+      "text": "Hold the plaza with the army",
+      "type": "custom"
+    },
+    {
+      "id": "hide",
+      "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street",
+      "type": "interact"
+    },
+    {
+      "id": "bar",
+      "text": "Bar the cellar door",
+      "type": "interact"
+    },
+    {
+      "id": "wait",
+      "text": "Stay down",
+      "type": "custom"
+    }
+  ],
+  "run": {
+    "level": "L4",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 307.71666666666664,
+    "deaths": 8,
+    "kills": 39,
+    "damageTaken": 848.1666666666663,
+    "failures": {
+      "player-died": 8
+    },
+    "objectiveTimeline": [
+      {
+        "id": "ride",
+        "t": 30.483333333333334
+      },
+      {
+        "id": "quartermaster",
+        "t": 32.81666666666667
+      },
+      {
+        "id": "hold",
+        "t": 210.81666666666666
+      },
+      {
+        "id": "hide",
+        "t": 299.55
+      },
+      {
+        "id": "bar",
+        "t": 300.71666666666664
+      },
+      {
+        "id": "wait",
+        "t": 307.71666666666664
+      }
+    ],
+    "furthestObjective": "wait",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 445,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 18463,
+    "followerWait": {
+      "escortTicks": 13867,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 29,
+          "escortTicks": 13867,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/ride",
+        "label": "ride: Ride into Fairhaven with the convoy",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 30.483333333333334,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/convoy",
+        "label": "controller: convoy",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 30.483333333333334,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/quartermaster",
+        "label": "quartermaster: Report to the quartermaster",
+        "threat": false,
+        "startSeconds": 30.483333333333334,
+        "seconds": 2.3333333333333335,
+        "spawned": 9,
+        "initial": 0,
+        "observed": 9,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 4,
+            "median": 4.389468803892419
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/plaza",
+        "label": "controller: plaza",
+        "threat": false,
+        "startSeconds": 30.483333333333334,
+        "seconds": 2.3333333333333335,
+        "spawned": 9,
+        "initial": 0,
+        "observed": 9,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 4,
+            "median": 4.389468803892419
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/hold",
+        "label": "hold: Hold the plaza with the army",
+        "threat": true,
+        "startSeconds": 32.81666666666667,
+        "seconds": 178,
+        "spawned": 355,
+        "initial": 29,
+        "observed": 362,
+        "reachableEver": 353,
+        "within2_5m": 213,
+        "attacks": 591,
+        "attacksPerMinute": 199.2134831460674,
+        "firstAttackSeconds": 16.9,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 180,
+            "median": 2.853664405763973
+          }
+        ],
+        "followerMin": 2.853664405763973,
+        "followerMedian": 2.853664405763973,
+        "boundedPaths": {
+          "samples": 79,
+          "minimumPercent": 96,
+          "worstTick": 8449,
+          "nearby": 50,
+          "reachable": 48,
+          "blockedIds": [
+            211,
+            352
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 3169,
+          "lastTick": 12529,
+          "samples": 79,
+          "minimumPercent": 97.33333333333334,
+          "worstTick": 7609,
+          "blockedIds": [
+            211,
+            352
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 12529,
+          "alive": 79,
+          "reachable": 78,
+          "playerX": -11,
+          "playerZ": 16,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": -11,
+              "playerZ": 16
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/war",
+        "label": "controller: war",
+        "threat": false,
+        "startSeconds": 32.81666666666667,
+        "seconds": 178,
+        "spawned": 355,
+        "initial": 29,
+        "observed": 362,
+        "reachableEver": 353,
+        "within2_5m": 213,
+        "attacks": 591,
+        "attacksPerMinute": 199.2134831460674,
+        "firstAttackSeconds": 16.9,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 180,
+            "median": 2.853664405763973
+          }
+        ],
+        "followerMin": 2.853664405763973,
+        "followerMedian": 2.853664405763973,
+        "boundedPaths": {
+          "samples": 79,
+          "minimumPercent": 96,
+          "worstTick": 8449,
+          "nearby": 50,
+          "reachable": 48,
+          "blockedIds": [
+            211,
+            352
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 3169,
+          "lastTick": 12529,
+          "samples": 79,
+          "minimumPercent": 97.33333333333334,
+          "worstTick": 7609,
+          "blockedIds": [
+            211,
+            352
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 12529,
+          "alive": 79,
+          "reachable": 78,
+          "playerX": -11,
+          "playerZ": 16,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": -11,
+              "playerZ": 16
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/hide",
+        "label": "hide: Run to the cellar via Lakeshore, Metro Road and Harbor Street",
+        "threat": false,
+        "startSeconds": 210.81666666666666,
+        "seconds": 88.73333333333333,
+        "spawned": 19,
+        "initial": 80,
+        "observed": 123,
+        "reachableEver": 122,
+        "within2_5m": 43,
+        "attacks": 86,
+        "attacksPerMinute": 58.151765589782116,
+        "firstAttackSeconds": 1,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 135,
+            "median": 4.499932886294654
+          }
+        ],
+        "followerMin": 4.499932886294654,
+        "followerMedian": 4.499932886294654,
+        "boundedPaths": {
+          "samples": 37,
+          "minimumPercent": 50,
+          "worstTick": 17329,
+          "nearby": 2,
+          "reachable": 1,
+          "blockedIds": [
+            211
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 12649,
+          "lastTick": 17929,
+          "samples": 45,
+          "minimumPercent": 97.46835443037975,
+          "worstTick": 17329,
+          "blockedIds": [
+            211,
+            505
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 17929,
+          "alive": 79,
+          "reachable": 78,
+          "playerX": -77.649169921875,
+          "playerZ": -42.45159149169922,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": -77.649169921875,
+              "playerZ": -42.45159149169922
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/collapse",
+        "label": "controller: collapse",
+        "threat": false,
+        "startSeconds": 210.81666666666666,
+        "seconds": 88.73333333333333,
+        "spawned": 19,
+        "initial": 80,
+        "observed": 123,
+        "reachableEver": 122,
+        "within2_5m": 43,
+        "attacks": 86,
+        "attacksPerMinute": 58.151765589782116,
+        "firstAttackSeconds": 1,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 135,
+            "median": 4.499932886294654
+          }
+        ],
+        "followerMin": 4.499932886294654,
+        "followerMedian": 4.499932886294654,
+        "boundedPaths": {
+          "samples": 37,
+          "minimumPercent": 50,
+          "worstTick": 17329,
+          "nearby": 2,
+          "reachable": 1,
+          "blockedIds": [
+            211
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 12649,
+          "lastTick": 17929,
+          "samples": 45,
+          "minimumPercent": 97.46835443037975,
+          "worstTick": 17329,
+          "blockedIds": [
+            211,
+            505
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 17929,
+          "alive": 79,
+          "reachable": 78,
+          "playerX": -77.649169921875,
+          "playerZ": -42.45159149169922,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": -77.649169921875,
+              "playerZ": -42.45159149169922
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/bar",
+        "label": "bar: Bar the cellar door",
+        "threat": false,
+        "startSeconds": 299.55,
+        "seconds": 1.1666666666666667,
+        "spawned": 0,
+        "initial": 79,
+        "observed": 79,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 2,
+            "median": 2.158498736246562
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 0,
+          "worstTick": 17973,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            611
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 17973,
+          "lastTick": 17973,
+          "samples": 1,
+          "minimumPercent": 0,
+          "worstTick": 17973,
+          "blockedIds": [
+            211,
+            215,
+            217,
+            274,
+            311,
+            314,
+            374,
+            377,
+            393,
+            394,
+            406,
+            411,
+            414,
+            425,
+            428,
+            429,
+            430,
+            431,
+            433,
+            434,
+            436,
+            438,
+            442,
+            445,
+            454,
+            455,
+            458,
+            461,
+            465,
+            466,
+            471,
+            472,
+            475,
+            487,
+            489,
+            490,
+            493,
+            497,
+            499,
+            505,
+            511,
+            515,
+            520,
+            522,
+            524,
+            525,
+            526,
+            527,
+            529,
+            530,
+            531,
+            532,
+            533,
+            535,
+            536,
+            537,
+            538,
+            539,
+            542,
+            544,
+            545,
+            546,
+            547,
+            548,
+            552,
+            553,
+            554,
+            579,
+            580,
+            581,
+            602,
+            604,
+            605,
+            608,
+            610,
+            611,
+            612,
+            615,
+            617
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 17973,
+          "alive": 79,
+          "reachable": 0,
+          "playerX": 75.30000305175781,
+          "playerZ": -6.400000095367432,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.06869510129468,
+              "z": 44.12246765415189,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.37768621722688,
+              "z": 42.975679821117716,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -31.91367667978466,
+              "z": -8.42709772630881,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.64817649700495,
+              "z": 43.98130454712022,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.31749451179333,
+              "z": 43.57104504553457,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.6643209328743,
+              "z": 44.16358114253619,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -56.8927483192515,
+              "z": 48.34848719185077,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.02718445895391,
+              "z": 42.80418167350781,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 7.756565098788942,
+              "z": 53.71924291256484,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.95236911105398,
+              "z": 42.34790631227996,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "414@235",
+              "id": 414,
+              "x": 6.232823904939653,
+              "z": 51.405951531310336,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -68.91370916130751,
+              "z": 42.80187630907461,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.32703547225168,
+              "z": 43.36034434926763,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.6158511241737,
+              "z": 43.41426798258891,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.6598583473424,
+              "z": 42.96738657428541,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -69.99444699997788,
+              "z": 44.65745158417478,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.55147463838979,
+              "z": 44.006086185360424,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.21275477801024,
+              "z": 42.79387927610303,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.32971808963632,
+              "z": 44.026544156759314,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -67.9042407449196,
+              "z": 43.42333943479947,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.44310570325369,
+              "z": 42.82704781840455,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -67.91291898919556,
+              "z": 44.60200232756673,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 4.4237038341703006,
+              "z": -35.144766349602925,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.2680431272121,
+              "z": 44.01742365433733,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.90346372647976,
+              "z": 41.811361949445576,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.44614558926368,
+              "z": 43.44198272260084,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.31464340625521,
+              "z": 44.6296760713092,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -8.799940081938141,
+              "z": 39.47293747269843,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.01707469836683,
+              "z": 43.5714274844154,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.13600001127867,
+              "z": 42.79108094497397,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.62513827270031,
+              "z": 44.62065168507591,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.04833570357842,
+              "z": 43.40574081529333,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.52791235397722,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.74777857636052,
+              "z": 43.452438435300444,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -1.3347215116683437,
+              "z": 37.9653499004138,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.7319533207986,
+              "z": 42.79376974281924,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -19.46813581034428,
+              "z": -6.920357029769502,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 10.321858205968836,
+              "z": 2.9455037959917147,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -24.273293508639675,
+              "z": 24.431733173158577,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.676926368800974,
+              "z": -6.341384024870151,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -11.962005945194136,
+              "z": 19.307392351572236,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -17.6378005913367,
+              "z": -7.2596187030909425,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -68.96903912672501,
+              "z": 44.01979191675982,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.21191941417285,
+              "z": 44.60123043509762,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -31.24915772595006,
+              "z": -8.192597035680935,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.54660649627928,
+              "z": 42.441260710273845,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "532@341",
+              "id": 532,
+              "x": -19.20750154331493,
+              "z": -2.917439339759123,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -17.76058382627565,
+              "z": -5.420856562830436,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -18.49556234947011,
+              "z": -5.936708621896791,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "536@345",
+              "id": 536,
+              "x": -27.349009505592957,
+              "z": -2.654064217027937,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -47.72766370110678,
+              "z": -23.085427029021368,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -42.29815294302798,
+              "z": -21.03863427252439,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.8929708695822,
+              "z": 43.02704659982811,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "544@353",
+              "id": 544,
+              "x": -53.55561763990118,
+              "z": 40.967942238191085,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -18.898405867452546,
+              "z": -7.636861562458803,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -18.11425327900043,
+              "z": -3.1191787242196827,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -5.510483713857095,
+              "z": 30.65662829984638,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.452893617289416,
+              "z": -6.839881330644407,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "552@361",
+              "id": 552,
+              "x": 10.11097388236764,
+              "z": 1.5944278919326176,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.16187395651298,
+              "z": 41.87660938319016,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -26.90845511818634,
+              "z": -5.045363833618615,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.61010909304112,
+              "z": 41.74752804486217,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.24734779219537,
+              "z": 42.42221770111441,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 15.486964361408921,
+              "z": -23.87849020176865,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.32662134227375,
+              "z": 43.584652768619975,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.79342276900077,
+              "z": 44.28255840740423,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "605@372",
+              "id": 605,
+              "x": -54.66616851496388,
+              "z": 40.14678588098417,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 40.878925909026755,
+              "z": 47.704143492119144,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 47.95867951481394,
+              "z": 34.63744056004829,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 48.58491870963494,
+              "z": -15.359145210057957,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 5.844794964555321,
+              "z": -37.58774887211278,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "615@380",
+              "id": 615,
+              "x": 5.382984243285774,
+              "z": 51.0865935176303,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -81.01811131707268,
+              "z": -40.05568318830548,
+              "playerX": 75.30000305175781,
+              "playerZ": -6.400000095367432
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/cellar",
+        "label": "controller: cellar",
+        "threat": false,
+        "startSeconds": 299.55,
+        "seconds": 8.166666666666666,
+        "spawned": 0,
+        "initial": 79,
+        "observed": 82,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 2,
+            "median": 2.158498736246562
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 5,
+          "minimumPercent": 0,
+          "worstTick": 18403,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            611
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 17973,
+          "lastTick": 18403,
+          "samples": 5,
+          "minimumPercent": 0,
+          "worstTick": 18403,
+          "blockedIds": [
+            211,
+            215,
+            217,
+            274,
+            311,
+            314,
+            374,
+            377,
+            393,
+            394,
+            406,
+            411,
+            414,
+            425,
+            428,
+            429,
+            430,
+            431,
+            433,
+            434,
+            436,
+            438,
+            442,
+            445,
+            454,
+            455,
+            458,
+            461,
+            465,
+            466,
+            471,
+            472,
+            475,
+            487,
+            489,
+            490,
+            493,
+            497,
+            499,
+            505,
+            511,
+            515,
+            520,
+            522,
+            524,
+            525,
+            526,
+            527,
+            529,
+            530,
+            531,
+            532,
+            533,
+            535,
+            537,
+            538,
+            539,
+            541,
+            542,
+            545,
+            546,
+            547,
+            548,
+            553,
+            554,
+            555,
+            579,
+            580,
+            581,
+            602,
+            604,
+            608,
+            610,
+            611,
+            612,
+            614,
+            617
+          ]
+        },
+        "maxBlockedSeconds": 7.166666666666667,
+        "blockedEvidence": {
+          "tick": 18403,
+          "alive": 77,
+          "reachable": 0,
+          "playerX": 74.64954376220703,
+          "playerZ": -2.1256043910980225,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.17061766074026,
+              "z": 44.080707987445166,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.45481258015674,
+              "z": 43.00068335829673,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -18.637819976979586,
+              "z": -6.1236969259,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.76300161228893,
+              "z": 44.01200374240722,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.41084638207244,
+              "z": 43.669669049198106,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.72715736498498,
+              "z": 44.27194175411343,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -54.956461034136794,
+              "z": 49.64802538192665,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.0881495276106,
+              "z": 42.81368813925323,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 8.538764415944629,
+              "z": 50.43432993953871,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.9541439552847,
+              "z": 42.396407521642,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "414@235",
+              "id": 414,
+              "x": 7.829445787917164,
+              "z": 51.196194742980964,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -69.05706054430672,
+              "z": 42.79311188555838,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.4305403117056,
+              "z": 43.368397402741394,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.72315234847743,
+              "z": 43.409477294028086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.70381143054522,
+              "z": 43.05118582538881,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -70.12131165916908,
+              "z": 44.60414003738525,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.68072011243302,
+              "z": 43.996601914966874,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.35629426040835,
+              "z": 42.811212033382965,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.49077756387089,
+              "z": 44.0289444238011,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -68.01881950236456,
+              "z": 43.402548758929264,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.51547274812401,
+              "z": 42.8030470145119,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -68.00337959436914,
+              "z": 44.6015252818246,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 3.2422191723112745,
+              "z": -35.2535299064656,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.37332717874644,
+              "z": 44.00730102836389,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.9560346240561,
+              "z": 41.90796915887546,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.50780231251159,
+              "z": 43.46278491699406,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.41494566086244,
+              "z": 44.623871535476894,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -6.478013248522632,
+              "z": 40.714884554838754,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.10914572019814,
+              "z": 43.6081951980645,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.20787035628993,
+              "z": 42.82425068889328,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.71429538123786,
+              "z": 44.60173139857608,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.14095262722657,
+              "z": 43.42438711580031,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.5231113524674535,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.82719062291457,
+              "z": 43.42149309457981,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -0.029700630371051463,
+              "z": 37.96514098358935,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.81811614364234,
+              "z": 42.80279315562803,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -13.852763029615184,
+              "z": -9.21487800843491,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 10.450208135812195,
+              "z": 2.6513344931328713,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -26.811254801534453,
+              "z": 23.607378496012267,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.707729836301016,
+              "z": -4.872981945511674,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -12.853514526456268,
+              "z": 16.614866883314072,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -18.179674804882627,
+              "z": -6.631921764350868,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -69.06201545243705,
+              "z": 44.00759877973865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.30417976617801,
+              "z": 44.651730861768364,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -18.751242155332704,
+              "z": -7.058511306962292,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.52965247941238,
+              "z": 42.600882795248666,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "532@341",
+              "id": 532,
+              "x": -21.784458011404233,
+              "z": -2.0534640380735416,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -19.545920876098595,
+              "z": -3.041146002702228,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -17.85131093725313,
+              "z": -3.225387936761463,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -29.03390946257523,
+              "z": -20.12481195025604,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -25.724339387017945,
+              "z": -19.593222007039444,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "541@350",
+              "id": 541,
+              "x": 15.010599994464524,
+              "z": -21.19025932888594,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.95228214203298,
+              "z": 43.16015479371917,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -19.265095769303688,
+              "z": -6.559657375234439,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -17.633522160531598,
+              "z": -5.786308676973827,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -4.766576154298302,
+              "z": 28.833018961196636,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.401820098093157,
+              "z": -5.482347060684937,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.26658515206344,
+              "z": 41.97364251267181,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -19.408442972202884,
+              "z": -7.397700428730647,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "555@364",
+              "id": 555,
+              "x": -20.128114416082294,
+              "z": -3.723644334800102,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.6240272918718,
+              "z": 41.77800313247814,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.24731321536372,
+              "z": 42.53596495824696,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 16.134757296358877,
+              "z": -20.724683298762244,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.41279505901846,
+              "z": 43.60200204408206,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.95424218500662,
+              "z": 44.36206129718145,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 43.776862832619116,
+              "z": 48.8319121902086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 48.651037841651394,
+              "z": 37.33416655485257,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 50.60190295470779,
+              "z": -15.50953450341029,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 16.643880091496857,
+              "z": -21.563831439671738,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "614@379",
+              "id": 614,
+              "x": 1.100984052282462,
+              "z": 52.43993511883486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -75.3033055027867,
+              "z": -44.69147902342278,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            }
+          ]
+        },
+        "last": {
+          "tick": 18403,
+          "alive": 77,
+          "reachable": 0,
+          "playerX": 74.64954376220703,
+          "playerZ": -2.1256043910980225,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.17061766074026,
+              "z": 44.080707987445166,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.45481258015674,
+              "z": 43.00068335829673,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -18.637819976979586,
+              "z": -6.1236969259,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.76300161228893,
+              "z": 44.01200374240722,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.41084638207244,
+              "z": 43.669669049198106,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.72715736498498,
+              "z": 44.27194175411343,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -54.956461034136794,
+              "z": 49.64802538192665,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.0881495276106,
+              "z": 42.81368813925323,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 8.538764415944629,
+              "z": 50.43432993953871,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.9541439552847,
+              "z": 42.396407521642,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "414@235",
+              "id": 414,
+              "x": 7.829445787917164,
+              "z": 51.196194742980964,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -69.05706054430672,
+              "z": 42.79311188555838,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.4305403117056,
+              "z": 43.368397402741394,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.72315234847743,
+              "z": 43.409477294028086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.70381143054522,
+              "z": 43.05118582538881,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -70.12131165916908,
+              "z": 44.60414003738525,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.68072011243302,
+              "z": 43.996601914966874,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.35629426040835,
+              "z": 42.811212033382965,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.49077756387089,
+              "z": 44.0289444238011,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -68.01881950236456,
+              "z": 43.402548758929264,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.51547274812401,
+              "z": 42.8030470145119,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -68.00337959436914,
+              "z": 44.6015252818246,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 3.2422191723112745,
+              "z": -35.2535299064656,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.37332717874644,
+              "z": 44.00730102836389,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.9560346240561,
+              "z": 41.90796915887546,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.50780231251159,
+              "z": 43.46278491699406,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.41494566086244,
+              "z": 44.623871535476894,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -6.478013248522632,
+              "z": 40.714884554838754,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.10914572019814,
+              "z": 43.6081951980645,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.20787035628993,
+              "z": 42.82425068889328,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.71429538123786,
+              "z": 44.60173139857608,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.14095262722657,
+              "z": 43.42438711580031,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.5231113524674535,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.82719062291457,
+              "z": 43.42149309457981,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -0.029700630371051463,
+              "z": 37.96514098358935,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.81811614364234,
+              "z": 42.80279315562803,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -13.852763029615184,
+              "z": -9.21487800843491,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 10.450208135812195,
+              "z": 2.6513344931328713,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -26.811254801534453,
+              "z": 23.607378496012267,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.707729836301016,
+              "z": -4.872981945511674,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -12.853514526456268,
+              "z": 16.614866883314072,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -18.179674804882627,
+              "z": -6.631921764350868,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -69.06201545243705,
+              "z": 44.00759877973865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.30417976617801,
+              "z": 44.651730861768364,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -18.751242155332704,
+              "z": -7.058511306962292,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.52965247941238,
+              "z": 42.600882795248666,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "532@341",
+              "id": 532,
+              "x": -21.784458011404233,
+              "z": -2.0534640380735416,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -19.545920876098595,
+              "z": -3.041146002702228,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -17.85131093725313,
+              "z": -3.225387936761463,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -29.03390946257523,
+              "z": -20.12481195025604,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -25.724339387017945,
+              "z": -19.593222007039444,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "541@350",
+              "id": 541,
+              "x": 15.010599994464524,
+              "z": -21.19025932888594,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.95228214203298,
+              "z": 43.16015479371917,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -19.265095769303688,
+              "z": -6.559657375234439,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -17.633522160531598,
+              "z": -5.786308676973827,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -4.766576154298302,
+              "z": 28.833018961196636,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.401820098093157,
+              "z": -5.482347060684937,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.26658515206344,
+              "z": 41.97364251267181,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -19.408442972202884,
+              "z": -7.397700428730647,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "555@364",
+              "id": 555,
+              "x": -20.128114416082294,
+              "z": -3.723644334800102,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.6240272918718,
+              "z": 41.77800313247814,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.24731321536372,
+              "z": 42.53596495824696,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 16.134757296358877,
+              "z": -20.724683298762244,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.41279505901846,
+              "z": 43.60200204408206,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.95424218500662,
+              "z": 44.36206129718145,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 43.776862832619116,
+              "z": 48.8319121902086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 48.651037841651394,
+              "z": 37.33416655485257,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 50.60190295470779,
+              "z": -15.50953450341029,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 16.643880091496857,
+              "z": -21.563831439671738,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "614@379",
+              "id": 614,
+              "x": 1.100984052282462,
+              "z": 52.43993511883486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -75.3033055027867,
+              "z": -44.69147902342278,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/wait",
+        "label": "wait: Stay down",
+        "threat": false,
+        "startSeconds": 300.71666666666664,
+        "seconds": 7,
+        "spawned": 0,
+        "initial": 79,
+        "observed": 82,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 4,
+          "minimumPercent": 0,
+          "worstTick": 18403,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            611
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 18043,
+          "lastTick": 18403,
+          "samples": 4,
+          "minimumPercent": 0,
+          "worstTick": 18403,
+          "blockedIds": [
+            211,
+            215,
+            217,
+            274,
+            311,
+            314,
+            374,
+            377,
+            393,
+            394,
+            406,
+            411,
+            414,
+            425,
+            428,
+            429,
+            430,
+            431,
+            433,
+            434,
+            436,
+            438,
+            442,
+            445,
+            454,
+            455,
+            458,
+            461,
+            465,
+            466,
+            471,
+            472,
+            475,
+            487,
+            489,
+            490,
+            493,
+            497,
+            499,
+            505,
+            511,
+            515,
+            520,
+            522,
+            524,
+            525,
+            526,
+            527,
+            529,
+            530,
+            531,
+            532,
+            533,
+            535,
+            537,
+            538,
+            539,
+            541,
+            542,
+            545,
+            546,
+            547,
+            548,
+            553,
+            554,
+            555,
+            579,
+            580,
+            581,
+            602,
+            604,
+            608,
+            610,
+            611,
+            612,
+            614,
+            617
+          ]
+        },
+        "maxBlockedSeconds": 6,
+        "blockedEvidence": {
+          "tick": 18403,
+          "alive": 77,
+          "reachable": 0,
+          "playerX": 74.64954376220703,
+          "playerZ": -2.1256043910980225,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.17061766074026,
+              "z": 44.080707987445166,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.45481258015674,
+              "z": 43.00068335829673,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -18.637819976979586,
+              "z": -6.1236969259,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.76300161228893,
+              "z": 44.01200374240722,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.41084638207244,
+              "z": 43.669669049198106,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.72715736498498,
+              "z": 44.27194175411343,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -54.956461034136794,
+              "z": 49.64802538192665,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.0881495276106,
+              "z": 42.81368813925323,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 8.538764415944629,
+              "z": 50.43432993953871,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.9541439552847,
+              "z": 42.396407521642,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "414@235",
+              "id": 414,
+              "x": 7.829445787917164,
+              "z": 51.196194742980964,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -69.05706054430672,
+              "z": 42.79311188555838,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.4305403117056,
+              "z": 43.368397402741394,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.72315234847743,
+              "z": 43.409477294028086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.70381143054522,
+              "z": 43.05118582538881,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -70.12131165916908,
+              "z": 44.60414003738525,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.68072011243302,
+              "z": 43.996601914966874,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.35629426040835,
+              "z": 42.811212033382965,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.49077756387089,
+              "z": 44.0289444238011,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -68.01881950236456,
+              "z": 43.402548758929264,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.51547274812401,
+              "z": 42.8030470145119,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -68.00337959436914,
+              "z": 44.6015252818246,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 3.2422191723112745,
+              "z": -35.2535299064656,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.37332717874644,
+              "z": 44.00730102836389,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.9560346240561,
+              "z": 41.90796915887546,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.50780231251159,
+              "z": 43.46278491699406,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.41494566086244,
+              "z": 44.623871535476894,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -6.478013248522632,
+              "z": 40.714884554838754,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.10914572019814,
+              "z": 43.6081951980645,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.20787035628993,
+              "z": 42.82425068889328,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.71429538123786,
+              "z": 44.60173139857608,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.14095262722657,
+              "z": 43.42438711580031,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.5231113524674535,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.82719062291457,
+              "z": 43.42149309457981,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -0.029700630371051463,
+              "z": 37.96514098358935,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.81811614364234,
+              "z": 42.80279315562803,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -13.852763029615184,
+              "z": -9.21487800843491,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 10.450208135812195,
+              "z": 2.6513344931328713,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -26.811254801534453,
+              "z": 23.607378496012267,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.707729836301016,
+              "z": -4.872981945511674,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -12.853514526456268,
+              "z": 16.614866883314072,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -18.179674804882627,
+              "z": -6.631921764350868,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -69.06201545243705,
+              "z": 44.00759877973865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.30417976617801,
+              "z": 44.651730861768364,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -18.751242155332704,
+              "z": -7.058511306962292,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.52965247941238,
+              "z": 42.600882795248666,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "532@341",
+              "id": 532,
+              "x": -21.784458011404233,
+              "z": -2.0534640380735416,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -19.545920876098595,
+              "z": -3.041146002702228,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -17.85131093725313,
+              "z": -3.225387936761463,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -29.03390946257523,
+              "z": -20.12481195025604,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -25.724339387017945,
+              "z": -19.593222007039444,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "541@350",
+              "id": 541,
+              "x": 15.010599994464524,
+              "z": -21.19025932888594,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.95228214203298,
+              "z": 43.16015479371917,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -19.265095769303688,
+              "z": -6.559657375234439,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -17.633522160531598,
+              "z": -5.786308676973827,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -4.766576154298302,
+              "z": 28.833018961196636,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.401820098093157,
+              "z": -5.482347060684937,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.26658515206344,
+              "z": 41.97364251267181,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -19.408442972202884,
+              "z": -7.397700428730647,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "555@364",
+              "id": 555,
+              "x": -20.128114416082294,
+              "z": -3.723644334800102,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.6240272918718,
+              "z": 41.77800313247814,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.24731321536372,
+              "z": 42.53596495824696,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 16.134757296358877,
+              "z": -20.724683298762244,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.41279505901846,
+              "z": 43.60200204408206,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.95424218500662,
+              "z": 44.36206129718145,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 43.776862832619116,
+              "z": 48.8319121902086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 48.651037841651394,
+              "z": 37.33416655485257,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 50.60190295470779,
+              "z": -15.50953450341029,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 16.643880091496857,
+              "z": -21.563831439671738,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "614@379",
+              "id": 614,
+              "x": 1.100984052282462,
+              "z": 52.43993511883486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -75.3033055027867,
+              "z": -44.69147902342278,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            }
+          ]
+        },
+        "last": {
+          "tick": 18403,
+          "alive": 77,
+          "reachable": 0,
+          "playerX": 74.64954376220703,
+          "playerZ": -2.1256043910980225,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.17061766074026,
+              "z": 44.080707987445166,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.45481258015674,
+              "z": 43.00068335829673,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -18.637819976979586,
+              "z": -6.1236969259,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.76300161228893,
+              "z": 44.01200374240722,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.41084638207244,
+              "z": 43.669669049198106,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.72715736498498,
+              "z": 44.27194175411343,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -54.956461034136794,
+              "z": 49.64802538192665,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.0881495276106,
+              "z": 42.81368813925323,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 8.538764415944629,
+              "z": 50.43432993953871,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.9541439552847,
+              "z": 42.396407521642,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "414@235",
+              "id": 414,
+              "x": 7.829445787917164,
+              "z": 51.196194742980964,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -69.05706054430672,
+              "z": 42.79311188555838,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.4305403117056,
+              "z": 43.368397402741394,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.72315234847743,
+              "z": 43.409477294028086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.70381143054522,
+              "z": 43.05118582538881,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -70.12131165916908,
+              "z": 44.60414003738525,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.68072011243302,
+              "z": 43.996601914966874,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.35629426040835,
+              "z": 42.811212033382965,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.49077756387089,
+              "z": 44.0289444238011,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -68.01881950236456,
+              "z": 43.402548758929264,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.51547274812401,
+              "z": 42.8030470145119,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -68.00337959436914,
+              "z": 44.6015252818246,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 3.2422191723112745,
+              "z": -35.2535299064656,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.37332717874644,
+              "z": 44.00730102836389,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.9560346240561,
+              "z": 41.90796915887546,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.50780231251159,
+              "z": 43.46278491699406,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.41494566086244,
+              "z": 44.623871535476894,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -6.478013248522632,
+              "z": 40.714884554838754,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.10914572019814,
+              "z": 43.6081951980645,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.20787035628993,
+              "z": 42.82425068889328,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.71429538123786,
+              "z": 44.60173139857608,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.14095262722657,
+              "z": 43.42438711580031,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.5231113524674535,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.82719062291457,
+              "z": 43.42149309457981,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -0.029700630371051463,
+              "z": 37.96514098358935,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.81811614364234,
+              "z": 42.80279315562803,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -13.852763029615184,
+              "z": -9.21487800843491,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 10.450208135812195,
+              "z": 2.6513344931328713,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -26.811254801534453,
+              "z": 23.607378496012267,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.707729836301016,
+              "z": -4.872981945511674,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -12.853514526456268,
+              "z": 16.614866883314072,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -18.179674804882627,
+              "z": -6.631921764350868,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -69.06201545243705,
+              "z": 44.00759877973865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.30417976617801,
+              "z": 44.651730861768364,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -18.751242155332704,
+              "z": -7.058511306962292,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.52965247941238,
+              "z": 42.600882795248666,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "532@341",
+              "id": 532,
+              "x": -21.784458011404233,
+              "z": -2.0534640380735416,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -19.545920876098595,
+              "z": -3.041146002702228,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -17.85131093725313,
+              "z": -3.225387936761463,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -29.03390946257523,
+              "z": -20.12481195025604,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -25.724339387017945,
+              "z": -19.593222007039444,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "541@350",
+              "id": 541,
+              "x": 15.010599994464524,
+              "z": -21.19025932888594,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.95228214203298,
+              "z": 43.16015479371917,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -19.265095769303688,
+              "z": -6.559657375234439,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -17.633522160531598,
+              "z": -5.786308676973827,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -4.766576154298302,
+              "z": 28.833018961196636,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.401820098093157,
+              "z": -5.482347060684937,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.26658515206344,
+              "z": 41.97364251267181,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -19.408442972202884,
+              "z": -7.397700428730647,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "555@364",
+              "id": 555,
+              "x": -20.128114416082294,
+              "z": -3.723644334800102,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.6240272918718,
+              "z": 41.77800313247814,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.24731321536372,
+              "z": 42.53596495824696,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 16.134757296358877,
+              "z": -20.724683298762244,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.41279505901846,
+              "z": 43.60200204408206,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.95424218500662,
+              "z": 44.36206129718145,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 43.776862832619116,
+              "z": 48.8319121902086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 48.651037841651394,
+              "z": 37.33416655485257,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 50.60190295470779,
+              "z": -15.50953450341029,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 16.643880091496857,
+              "z": -21.563831439671738,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "614@379",
+              "id": 614,
+              "x": 1.100984052282462,
+              "z": 52.43993511883486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -75.3033055027867,
+              "z": -44.69147902342278,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/done",
+        "label": "controller: done",
+        "threat": false,
+        "startSeconds": 307.71666666666664,
+        "seconds": 0,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 0,
+          "worstTick": 18463,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            611
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 18463,
+          "lastTick": 18463,
+          "samples": 1,
+          "minimumPercent": 0,
+          "worstTick": 18463,
+          "blockedIds": [
+            211,
+            215,
+            217,
+            274,
+            311,
+            314,
+            374,
+            377,
+            393,
+            394,
+            406,
+            411,
+            425,
+            428,
+            429,
+            430,
+            431,
+            433,
+            434,
+            436,
+            438,
+            442,
+            445,
+            454,
+            455,
+            458,
+            461,
+            465,
+            466,
+            471,
+            472,
+            475,
+            487,
+            489,
+            490,
+            493,
+            497,
+            499,
+            505,
+            511,
+            515,
+            520,
+            522,
+            524,
+            525,
+            526,
+            527,
+            529,
+            530,
+            531,
+            533,
+            535,
+            537,
+            538,
+            539,
+            541,
+            542,
+            545,
+            546,
+            547,
+            548,
+            553,
+            554,
+            555,
+            579,
+            580,
+            581,
+            602,
+            604,
+            608,
+            610,
+            611,
+            612,
+            614,
+            617
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 18463,
+          "alive": 75,
+          "reachable": 0,
+          "playerX": 74.64954376220703,
+          "playerZ": -2.1256043910980225,
+          "positions": [
+            {
+              "identity": "211@42",
+              "id": 211,
+              "x": -27.752168811748707,
+              "z": -12.23226079401777,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "215@46",
+              "id": 215,
+              "x": -71.1956230773771,
+              "z": 44.05373180365427,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "217@48",
+              "id": 217,
+              "x": -67.44410372876618,
+              "z": 42.997793857993095,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "274@103",
+              "id": 274,
+              "x": -18.682687289168786,
+              "z": -6.155772211232134,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "311@138",
+              "id": 311,
+              "x": -69.79067970543274,
+              "z": 43.9866835252578,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "314@141",
+              "id": 314,
+              "x": -66.43297140824934,
+              "z": 43.676548263726254,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "374@197",
+              "id": 374,
+              "x": 2.167530771872248,
+              "z": 25.574366054821006,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "377@200",
+              "id": 377,
+              "x": -66.79532595933266,
+              "z": 44.25211663825326,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "393@215",
+              "id": 393,
+              "x": -55.44464628029149,
+              "z": 50.877880204462976,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "394@216",
+              "id": 394,
+              "x": -72.10350601559415,
+              "z": 42.79986016185331,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "406@227",
+              "id": 406,
+              "x": 7.9629405374421465,
+              "z": 48.34398729511114,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "411@232",
+              "id": 411,
+              "x": -66.95311173622541,
+              "z": 42.39695743489834,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "425@245",
+              "id": 425,
+              "x": -69.05706054430672,
+              "z": 42.79311188555838,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "428@247",
+              "id": 428,
+              "x": -69.43821428901316,
+              "z": 43.37490257294296,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "429@248",
+              "id": 429,
+              "x": -68.70698197647067,
+              "z": 43.377044114382606,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "430@249",
+              "id": 430,
+              "x": -66.75089361900065,
+              "z": 43.061778748427926,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "431@250",
+              "id": 431,
+              "x": -70.1367934373873,
+              "z": 44.60632133258143,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "433@252",
+              "id": 433,
+              "x": -67.69823212021194,
+              "z": 44.01791539463611,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "434@253",
+              "id": 434,
+              "x": -68.34490002407007,
+              "z": 42.79564223327072,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "436@255",
+              "id": 436,
+              "x": -70.49511820816414,
+              "z": 44.02738928652062,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "438@257",
+              "id": 438,
+              "x": -68.0063826318242,
+              "z": 43.40074133533638,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "442@261",
+              "id": 442,
+              "x": -70.52868682114125,
+              "z": 42.79304136687766,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "445@264",
+              "id": 445,
+              "x": -68.05342139887074,
+              "z": 44.6088185160528,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "454@272",
+              "id": 454,
+              "x": 3.2422191723112745,
+              "z": -35.2535299064656,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "455@273",
+              "id": 455,
+              "x": -68.40497346700599,
+              "z": 44.0023433365196,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "458@276",
+              "id": 458,
+              "x": -65.93358682887728,
+              "z": 41.90094298776874,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "461@279",
+              "id": 461,
+              "x": -71.52412550378834,
+              "z": 43.455741278777495,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "465@282",
+              "id": 465,
+              "x": -12.662245675652981,
+              "z": 25.541018435100263,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "466@283",
+              "id": 466,
+              "x": -69.44050184800624,
+              "z": 44.5712336808052,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "471@288",
+              "id": 471,
+              "x": -6.479404653896279,
+              "z": 40.724769824344115,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "472@289",
+              "id": 472,
+              "x": -67.13776860336066,
+              "z": 43.63213982771097,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "475@292",
+              "id": 475,
+              "x": -71.22472542964252,
+              "z": 42.81644473680607,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "487@302",
+              "id": 487,
+              "x": -68.74077194469623,
+              "z": 44.61341261409876,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "489@304",
+              "id": 489,
+              "x": -70.16392108997364,
+              "z": 43.4165381500613,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "490@305",
+              "id": 490,
+              "x": -19.70008504915329,
+              "z": -5.5231113524674535,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "493@308",
+              "id": 493,
+              "x": -70.8449428416639,
+              "z": 43.40623816014974,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "497@311",
+              "id": 497,
+              "x": -0.061184963876634,
+              "z": 37.96514098358935,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "499@313",
+              "id": 499,
+              "x": -69.8416715671053,
+              "z": 42.79894351553044,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "505@319",
+              "id": 505,
+              "x": -13.85272739949533,
+              "z": -9.402106202529888,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "511@325",
+              "id": 511,
+              "x": 9.955392729456786,
+              "z": -0.2935560487116778,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "515@329",
+              "id": 515,
+              "x": -26.887998039143877,
+              "z": 23.432225635520346,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "520@330",
+              "id": 520,
+              "x": -17.569976300182336,
+              "z": -3.947207883830658,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "522@332",
+              "id": 522,
+              "x": -12.853514526456268,
+              "z": 16.69624497393101,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "524@333",
+              "id": 524,
+              "x": -17.929259061856474,
+              "z": -6.195991870912273,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "525@334",
+              "id": 525,
+              "x": -37.206007033055634,
+              "z": 6.126271636487865,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "526@335",
+              "id": 526,
+              "x": -69.09004273076137,
+              "z": 43.964126270917994,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "527@336",
+              "id": 527,
+              "x": -67.35352477572283,
+              "z": 44.64813412244708,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "529@338",
+              "id": 529,
+              "x": -67.63206789324019,
+              "z": 42.322463958704176,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "530@339",
+              "id": 530,
+              "x": -18.32811273928609,
+              "z": -6.779244048370702,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "531@340",
+              "id": 531,
+              "x": -65.56164155404103,
+              "z": 42.57876499194905,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "533@342",
+              "id": 533,
+              "x": -19.662985998435047,
+              "z": -3.088147337424076,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "535@344",
+              "id": 535,
+              "x": -18.75841439998647,
+              "z": -2.8792293946913303,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "537@346",
+              "id": 537,
+              "x": -67.30576012849917,
+              "z": 41.717422692845936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "538@347",
+              "id": 538,
+              "x": -26.46735984192192,
+              "z": -19.718435452465133,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "539@348",
+              "id": 539,
+              "x": -25.570104270893708,
+              "z": -19.56757217145277,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "541@350",
+              "id": 541,
+              "x": 17.059503741461814,
+              "z": -19.49717147601267,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "542@351",
+              "id": 542,
+              "x": -65.9795651562752,
+              "z": 43.127215035421614,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "545@354",
+              "id": 545,
+              "x": -19.029067665376132,
+              "z": -6.787193362184073,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "546@355",
+              "id": 546,
+              "x": -17.731308842163905,
+              "z": -4.873327852842079,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "547@356",
+              "id": 547,
+              "x": -5.122885780984113,
+              "z": 28.257172137321486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "548@357",
+              "id": 548,
+              "x": -18.40836804337463,
+              "z": -5.48487943507324,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "553@362",
+              "id": 553,
+              "x": -65.22186132360441,
+              "z": 41.98418378797336,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "554@363",
+              "id": 554,
+              "x": -19.679729484364582,
+              "z": -7.237168161860327,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "555@364",
+              "id": 555,
+              "x": -20.128114416082294,
+              "z": -3.723644334800102,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "579@365",
+              "id": 579,
+              "x": -66.61402209601474,
+              "z": 41.7834273085787,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "580@366",
+              "id": 580,
+              "x": -66.27597144582406,
+              "z": 42.5126404408272,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "581@367",
+              "id": 581,
+              "x": 16.61403332049552,
+              "z": -20.654354420002885,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "602@369",
+              "id": 602,
+              "x": -72.42849453269923,
+              "z": 43.60499700472583,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "604@371",
+              "id": 604,
+              "x": -71.95671839528927,
+              "z": 44.36008279021238,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "608@373",
+              "id": 608,
+              "x": 43.776862832619116,
+              "z": 48.8319121902086,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "610@375",
+              "id": 610,
+              "x": 47.914886834016286,
+              "z": 36.23186760489025,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "611@376",
+              "id": 611,
+              "x": 51.048458102109834,
+              "z": -14.590173183769851,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "612@377",
+              "id": 612,
+              "x": 18.338343451953723,
+              "z": -20.188413960299936,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "614@379",
+              "id": 614,
+              "x": 1.100984052282462,
+              "z": 52.43993511883486,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            },
+            {
+              "identity": "617@382",
+              "id": 617,
+              "x": -74.62966489982291,
+              "z": -44.409121212661965,
+              "playerX": 74.64954376220703,
+              "playerZ": -2.1256043910980225
+            }
+          ]
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "war-0@1969",
+        "source": "l4.wave",
+        "startSeconds": 32.81666666666667,
+        "observedSeconds": 274.9,
+        "expected": 24,
+        "spawned": 24,
+        "firstAttackSeconds": 16.9,
+        "members": [
+          "162@1",
+          "163@2",
+          "164@3",
+          "177@10",
+          "181@14",
+          "182@15",
+          "183@16",
+          "184@17",
+          "185@18",
+          "186@19",
+          "187@20",
+          "188@21",
+          "189@22",
+          "190@23",
+          "191@24",
+          "192@25",
+          "193@26",
+          "194@27",
+          "195@28",
+          "196@29",
+          "197@30",
+          "198@31",
+          "199@32",
+          "200@33"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 24
+      },
+      {
+        "key": "war-1@2629",
+        "source": "l4.wave",
+        "startSeconds": 43.81666666666667,
+        "observedSeconds": 263.9,
+        "expected": 36,
+        "spawned": 36,
+        "firstAttackSeconds": 18.616666666666667,
+        "members": [
+          "205@36",
+          "206@37",
+          "207@38",
+          "208@39",
+          "209@40",
+          "210@41",
+          "211@42",
+          "212@43",
+          "213@44",
+          "214@45",
+          "215@46",
+          "216@47",
+          "217@48",
+          "218@49",
+          "219@50",
+          "220@51",
+          "221@52",
+          "222@53",
+          "223@54",
+          "224@55",
+          "225@56",
+          "226@57",
+          "227@58",
+          "228@59",
+          "229@60",
+          "230@61",
+          "231@62",
+          "232@63",
+          "233@64",
+          "234@65",
+          "235@66",
+          "236@67",
+          "237@68",
+          "238@69",
+          "239@70",
+          "241@71"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 36
+      },
+      {
+        "key": "breach-west",
+        "source": "L4 breach.openAt",
+        "startSeconds": 52.71666666666667,
+        "observedSeconds": 255,
+        "expected": null,
+        "spawned": 210,
+        "firstAttackSeconds": 9.716666666666667,
+        "members": [
+          "242@72",
+          "243@73",
+          "244@74",
+          "245@75",
+          "246@76",
+          "165@4",
+          "170@9",
+          "183@16",
+          "188@21",
+          "193@26",
+          "215@46",
+          "217@48",
+          "221@52",
+          "225@56",
+          "227@58",
+          "229@60",
+          "230@61",
+          "231@62",
+          "248@78",
+          "249@79",
+          "250@80",
+          "251@81",
+          "252@82",
+          "253@83",
+          "254@84",
+          "255@85",
+          "256@86",
+          "192@25",
+          "257@87",
+          "258@88",
+          "259@89",
+          "260@90",
+          "261@91",
+          "262@92",
+          "263@93",
+          "264@94",
+          "180@13",
+          "228@59",
+          "42@77",
+          "266@95",
+          "267@96",
+          "268@97",
+          "269@98",
+          "233@64",
+          "271@100",
+          "232@63",
+          "272@101",
+          "274@103",
+          "275@104",
+          "273@102",
+          "276@105",
+          "278@106",
+          "280@108",
+          "281@109",
+          "282@110",
+          "199@32",
+          "279@107",
+          "46@35",
+          "283@111",
+          "284@112",
+          "285@113",
+          "286@114",
+          "287@115",
+          "288@116",
+          "289@117",
+          "290@118",
+          "200@33",
+          "291@119",
+          "292@120",
+          "296@124",
+          "297@125",
+          "298@126",
+          "241@71",
+          "300@127",
+          "301@128",
+          "302@129",
+          "303@130",
+          "304@131",
+          "305@132",
+          "306@133",
+          "307@134",
+          "308@135",
+          "309@136",
+          "310@137",
+          "311@138",
+          "312@139",
+          "313@140",
+          "314@141",
+          "316@143",
+          "317@144",
+          "319@146",
+          "320@147",
+          "321@148",
+          "322@149",
+          "323@150",
+          "324@151",
+          "327@152",
+          "328@153",
+          "330@155",
+          "331@156",
+          "332@157",
+          "333@158",
+          "334@159",
+          "335@160",
+          "226@57",
+          "336@161",
+          "295@123",
+          "337@162",
+          "338@163",
+          "339@164",
+          "340@165",
+          "341@166",
+          "343@167",
+          "344@168",
+          "345@169",
+          "346@170",
+          "347@171",
+          "348@172",
+          "349@173",
+          "350@174",
+          "352@175",
+          "353@176",
+          "354@177",
+          "356@179",
+          "357@180",
+          "359@182",
+          "358@181",
+          "360@183",
+          "361@184",
+          "362@185",
+          "363@186",
+          "364@187",
+          "365@188",
+          "366@189",
+          "367@190",
+          "368@191",
+          "369@192",
+          "370@193",
+          "371@194",
+          "372@195",
+          "375@198",
+          "377@200",
+          "379@201",
+          "380@202",
+          "381@203",
+          "373@196",
+          "383@205",
+          "387@209",
+          "388@210",
+          "389@211",
+          "386@208",
+          "390@212",
+          "385@207",
+          "391@213",
+          "376@199",
+          "382@204",
+          "393@215",
+          "394@216",
+          "395@217",
+          "399@221",
+          "400@222",
+          "402@223",
+          "404@225",
+          "406@227",
+          "398@220",
+          "403@224",
+          "407@228",
+          "408@229",
+          "409@230",
+          "410@231",
+          "396@218",
+          "405@226",
+          "411@232",
+          "412@233",
+          "415@236",
+          "416@237",
+          "420@241",
+          "425@245",
+          "427@246",
+          "432@251",
+          "433@252",
+          "434@253",
+          "384@206",
+          "441@260",
+          "442@261",
+          "422@243",
+          "454@272",
+          "455@273",
+          "460@278",
+          "461@279",
+          "421@242",
+          "465@282",
+          "468@285",
+          "472@289",
+          "473@290",
+          "480@297",
+          "478@295",
+          "477@294",
+          "492@307",
+          "495@310",
+          "497@311",
+          "499@313",
+          "509@323",
+          "521@331",
+          "525@334",
+          "537@346",
+          "538@347",
+          "539@348",
+          "553@362",
+          "555@364"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 63
+      },
+      {
+        "key": "war-2@3289",
+        "source": "l4.wave",
+        "startSeconds": 54.81666666666667,
+        "observedSeconds": 252.9,
+        "expected": 48,
+        "spawned": 48,
+        "firstAttackSeconds": 46.06666666666667,
+        "members": [
+          "273@102",
+          "274@103",
+          "279@107",
+          "293@121",
+          "294@122",
+          "295@123",
+          "310@137",
+          "311@138",
+          "314@141",
+          "336@161",
+          "337@162",
+          "354@177",
+          "356@179",
+          "357@180",
+          "358@181",
+          "375@198",
+          "376@199",
+          "377@200",
+          "382@204",
+          "383@205",
+          "384@206",
+          "393@215",
+          "394@216",
+          "395@217",
+          "396@218",
+          "398@220",
+          "402@223",
+          "403@224",
+          "404@225",
+          "411@232",
+          "413@234",
+          "414@235",
+          "415@236",
+          "417@238",
+          "421@242",
+          "422@243",
+          "424@244",
+          "425@245",
+          "430@249",
+          "432@251",
+          "433@252",
+          "435@254",
+          "436@255",
+          "441@260",
+          "460@278",
+          "461@279",
+          "543@352",
+          "544@353"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 6
+      },
+      {
+        "key": "war-3@3949",
+        "source": "l4.wave",
+        "startSeconds": 65.81666666666666,
+        "observedSeconds": 241.9,
+        "expected": 54,
+        "spawned": 31,
+        "firstAttackSeconds": 63.916666666666664,
+        "members": [
+          "355@178",
+          "373@196",
+          "385@207",
+          "386@208",
+          "392@214",
+          "405@226",
+          "406@227",
+          "412@233",
+          "416@237",
+          "418@239",
+          "419@240",
+          "420@241",
+          "428@247",
+          "429@248",
+          "431@250",
+          "438@257",
+          "439@258",
+          "440@259",
+          "444@263",
+          "445@264",
+          "447@265",
+          "448@266",
+          "449@267",
+          "457@275",
+          "458@276",
+          "459@277",
+          "462@280",
+          "466@283",
+          "479@296",
+          "500@314",
+          "542@351"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war--1@4009",
+        "source": "l4.wave",
+        "startSeconds": 66.81666666666666,
+        "observedSeconds": 240.9,
+        "expected": 15,
+        "spawned": 11,
+        "firstAttackSeconds": 114.25,
+        "members": [
+          "427@246",
+          "434@253",
+          "443@262",
+          "454@272",
+          "463@281",
+          "501@315",
+          "502@316",
+          "538@347",
+          "539@348",
+          "540@349",
+          "541@350"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-4@4609",
+        "source": "l4.wave",
+        "startSeconds": 76.81666666666666,
+        "observedSeconds": 230.9,
+        "expected": 54,
+        "spawned": 8,
+        "firstAttackSeconds": 106.76666666666667,
+        "members": [
+          "455@273",
+          "465@282",
+          "477@294",
+          "478@295",
+          "499@313",
+          "525@334",
+          "537@346",
+          "553@362"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-5@5269",
+        "source": "l4.wave",
+        "startSeconds": 87.81666666666666,
+        "observedSeconds": 219.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-6@5929",
+        "source": "l4.wave",
+        "startSeconds": 98.81666666666666,
+        "observedSeconds": 208.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-7@6589",
+        "source": "l4.wave",
+        "startSeconds": 109.81666666666666,
+        "observedSeconds": 197.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-8@7249",
+        "source": "l4.wave",
+        "startSeconds": 120.81666666666666,
+        "observedSeconds": 186.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-9@7909",
+        "source": "l4.wave",
+        "startSeconds": 131.81666666666666,
+        "observedSeconds": 175.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "breach-north",
+        "source": "L4 breach.openAt",
+        "startSeconds": 138.08333333333334,
+        "observedSeconds": 169.63333333333333,
+        "expected": null,
+        "spawned": 68,
+        "firstAttackSeconds": 42.916666666666664,
+        "members": [
+          "428@247",
+          "429@248",
+          "430@249",
+          "170@9",
+          "215@46",
+          "217@48",
+          "230@61",
+          "42@77",
+          "311@138",
+          "356@179",
+          "357@180",
+          "375@198",
+          "393@215",
+          "394@216",
+          "395@217",
+          "402@223",
+          "404@225",
+          "420@241",
+          "418@239",
+          "431@250",
+          "417@238",
+          "436@255",
+          "438@257",
+          "435@254",
+          "439@258",
+          "419@240",
+          "440@259",
+          "444@263",
+          "445@264",
+          "450@268",
+          "451@269",
+          "452@270",
+          "453@271",
+          "448@266",
+          "458@276",
+          "447@265",
+          "462@280",
+          "274@103",
+          "466@283",
+          "449@267",
+          "467@284",
+          "469@286",
+          "470@287",
+          "471@288",
+          "463@281",
+          "474@291",
+          "475@292",
+          "476@293",
+          "481@298",
+          "479@296",
+          "457@275",
+          "414@235",
+          "491@306",
+          "504@318",
+          "502@316",
+          "501@315",
+          "500@314",
+          "459@277",
+          "513@327",
+          "526@335",
+          "527@336",
+          "530@339",
+          "531@340",
+          "545@354",
+          "546@355",
+          "550@359",
+          "541@350",
+          "554@363"
+        ],
+        "flags": [
+          "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 37
+      },
+      {
+        "key": "war-10@8569",
+        "source": "l4.wave",
+        "startSeconds": 142.81666666666666,
+        "observedSeconds": 164.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-11@9229",
+        "source": "l4.wave",
+        "startSeconds": 153.81666666666666,
+        "observedSeconds": 153.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-12@9889",
+        "source": "l4.wave",
+        "startSeconds": 164.81666666666666,
+        "observedSeconds": 142.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "breach-south",
+        "source": "L4 breach.openAt",
+        "startSeconds": 166.43333333333334,
+        "observedSeconds": 141.28333333333333,
+        "expected": null,
+        "spawned": 51,
+        "firstAttackSeconds": 5.833333333333333,
+        "members": [
+          "415@236",
+          "425@245",
+          "432@251",
+          "460@278",
+          "482@299",
+          "483@300",
+          "486@301",
+          "487@302",
+          "488@303",
+          "489@304",
+          "493@308",
+          "494@309",
+          "498@312",
+          "503@317",
+          "506@320",
+          "507@321",
+          "508@322",
+          "510@324",
+          "511@325",
+          "512@326",
+          "514@328",
+          "515@329",
+          "520@330",
+          "522@332",
+          "215@46",
+          "317@144",
+          "375@198",
+          "434@253",
+          "438@257",
+          "468@285",
+          "475@292",
+          "479@296",
+          "467@284",
+          "524@333",
+          "492@307",
+          "474@291",
+          "480@297",
+          "528@337",
+          "529@338",
+          "532@341",
+          "533@342",
+          "542@351",
+          "413@234",
+          "544@353",
+          "534@343",
+          "535@344",
+          "547@356",
+          "548@357",
+          "549@358",
+          "551@360",
+          "552@361"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 10
+      },
+      {
+        "key": "war-13@10549",
+        "source": "l4.wave",
+        "startSeconds": 175.81666666666666,
+        "observedSeconds": 131.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-14@11209",
+        "source": "l4.wave",
+        "startSeconds": 186.81666666666666,
+        "observedSeconds": 120.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "opening-alarm",
+        "source": "L4 opening pending street cohorts",
+        "startSeconds": 32.81666666666667,
+        "observedSeconds": 274.9,
+        "expected": null,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-15@11869",
+        "source": "l4.wave",
+        "startSeconds": 197.81666666666666,
+        "observedSeconds": 109.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-16@12529",
+        "source": "l4.wave",
+        "startSeconds": 208.81666666666666,
+        "observedSeconds": 98.9,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-0@12889",
+        "source": "l4.wave",
+        "startSeconds": 214.81666666666666,
+        "observedSeconds": 92.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-1@13429",
+        "source": "l4.wave",
+        "startSeconds": 223.81666666666666,
+        "observedSeconds": 83.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-2@13969",
+        "source": "l4.wave",
+        "startSeconds": 232.81666666666666,
+        "observedSeconds": 74.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-3@14509",
+        "source": "l4.wave",
+        "startSeconds": 241.81666666666666,
+        "observedSeconds": 65.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-4@15049",
+        "source": "l4.wave",
+        "startSeconds": 250.81666666666666,
+        "observedSeconds": 56.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-5@15589",
+        "source": "l4.wave",
+        "startSeconds": 259.81666666666666,
+        "observedSeconds": 47.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-6@16129",
+        "source": "l4.wave",
+        "startSeconds": 268.81666666666666,
+        "observedSeconds": 38.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-7@16669",
+        "source": "l4.wave",
+        "startSeconds": 277.81666666666666,
+        "observedSeconds": 29.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-8@17209",
+        "source": "l4.wave",
+        "startSeconds": 286.81666666666666,
+        "observedSeconds": 20.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-9@17749",
+        "source": "l4.wave",
+        "startSeconds": 295.81666666666666,
+        "observedSeconds": 11.9,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "cellar-17@17974",
+        "source": "l4.wave",
+        "startSeconds": 299.56666666666666,
+        "observedSeconds": 8.15,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      }
+    ]
+  },
+  "flags": [
+    "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+  ],
+  "passiveRun": {
+    "level": "L4",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 248.5,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "ride",
+        "t": 30.483333333333334
+      },
+      {
+        "id": "quartermaster",
+        "t": 32.81666666666667
+      },
+      {
+        "id": "hold",
+        "t": 222.81666666666666
+      }
+    ],
+    "furthestObjective": "hide",
+    "activeObjectives": [
+      "hide"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "hide",
+      "detail": "tick-budget: Run to the cellar via Lakeshore, Metro Road and Harbor Street",
+      "player": {
+        "x": 42.12299728393555,
+        "z": 44.818870544433594
+      },
+      "distance": 151.19976442634203,
+      "actors": {}
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 456,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 14910,
+    "followerWait": {
+      "escortTicks": 10679,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 29,
+          "escortTicks": 10679,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/ride",
+        "label": "ride: Ride into Fairhaven with the convoy",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 30.483333333333334,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/convoy",
+        "label": "controller: convoy",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 30.483333333333334,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/quartermaster",
+        "label": "quartermaster: Report to the quartermaster",
+        "threat": false,
+        "startSeconds": 30.483333333333334,
+        "seconds": 2.3333333333333335,
+        "spawned": 9,
+        "initial": 0,
+        "observed": 9,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 4,
+            "median": 4.389468803892419
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/plaza",
+        "label": "controller: plaza",
+        "threat": false,
+        "startSeconds": 30.483333333333334,
+        "seconds": 2.3333333333333335,
+        "spawned": 9,
+        "initial": 0,
+        "observed": 9,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 4,
+            "median": 4.389468803892419
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/hold",
+        "label": "hold: Hold the plaza with the army",
+        "threat": true,
+        "startSeconds": 32.81666666666667,
+        "seconds": 190,
+        "spawned": 175,
+        "initial": 29,
+        "observed": 184,
+        "reachableEver": 184,
+        "within2_5m": 123,
+        "attacks": 3019,
+        "attacksPerMinute": 953.3684210526316,
+        "firstAttackSeconds": 9.333333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 85,
+          "minimumPercent": 98.63013698630137,
+          "worstTick": 4009,
+          "nearby": 73,
+          "reachable": 72,
+          "blockedIds": [
+            214
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 3169,
+          "lastTick": 13249,
+          "samples": 85,
+          "minimumPercent": 98.71794871794873,
+          "worstTick": 9649,
+          "blockedIds": [
+            327
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 13249,
+          "alive": 80,
+          "reachable": 80,
+          "playerX": -22.852705001831055,
+          "playerZ": 0.7364528179168701,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/war",
+        "label": "controller: war",
+        "threat": false,
+        "startSeconds": 32.81666666666667,
+        "seconds": 190,
+        "spawned": 175,
+        "initial": 29,
+        "observed": 184,
+        "reachableEver": 184,
+        "within2_5m": 123,
+        "attacks": 3019,
+        "attacksPerMinute": 953.3684210526316,
+        "firstAttackSeconds": 9.333333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 85,
+          "minimumPercent": 98.63013698630137,
+          "worstTick": 4009,
+          "nearby": 73,
+          "reachable": 72,
+          "blockedIds": [
+            214
+          ]
+        },
+        "legalPaths": {
+          "firstTick": 3169,
+          "lastTick": 13249,
+          "samples": 85,
+          "minimumPercent": 98.71794871794873,
+          "worstTick": 9649,
+          "blockedIds": [
+            327
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 13249,
+          "alive": 80,
+          "reachable": 80,
+          "playerX": -22.852705001831055,
+          "playerZ": 0.7364528179168701,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/hide",
+        "label": "hide: Run to the cellar via Lakeshore, Metro Road and Harbor Street",
+        "threat": false,
+        "startSeconds": 222.81666666666666,
+        "seconds": 25.683333333333334,
+        "spawned": 0,
+        "initial": 80,
+        "observed": 80,
+        "reachableEver": 80,
+        "within2_5m": 21,
+        "attacks": 91,
+        "attacksPerMinute": 212.58922777417263,
+        "firstAttackSeconds": 0.05,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 40,
+            "median": 4.497988384833031
+          }
+        ],
+        "followerMin": 4.497988384833031,
+        "followerMedian": 4.497988384833031,
+        "boundedPaths": {
+          "samples": 13,
+          "minimumPercent": 100,
+          "worstTick": 14809,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "legalPaths": {
+          "firstTick": 13369,
+          "lastTick": 14809,
+          "samples": 13,
+          "minimumPercent": 100,
+          "worstTick": 14809,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 14809,
+          "alive": 70,
+          "reachable": 70,
+          "playerX": 34.54830551147461,
+          "playerZ": 44.90401840209961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/collapse",
+        "label": "controller: collapse",
+        "threat": false,
+        "startSeconds": 222.81666666666666,
+        "seconds": 25.683333333333334,
+        "spawned": 0,
+        "initial": 80,
+        "observed": 80,
+        "reachableEver": 80,
+        "within2_5m": 21,
+        "attacks": 91,
+        "attacksPerMinute": 212.58922777417263,
+        "firstAttackSeconds": 0.05,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 29,
+            "samples": 40,
+            "median": 4.497988384833031
+          }
+        ],
+        "followerMin": 4.497988384833031,
+        "followerMedian": 4.497988384833031,
+        "boundedPaths": {
+          "samples": 13,
+          "minimumPercent": 100,
+          "worstTick": 14809,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "legalPaths": {
+          "firstTick": 13369,
+          "lastTick": 14809,
+          "samples": 13,
+          "minimumPercent": 100,
+          "worstTick": 14809,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 14809,
+          "alive": 70,
+          "reachable": 70,
+          "playerX": 34.54830551147461,
+          "playerZ": 44.90401840209961,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "war-0@1969",
+        "source": "l4.wave",
+        "startSeconds": 32.81666666666667,
+        "observedSeconds": 215.68333333333334,
+        "expected": 24,
+        "spawned": 24,
+        "firstAttackSeconds": 9.333333333333334,
+        "members": [
+          "162@1",
+          "163@2",
+          "164@3",
+          "177@10",
+          "181@14",
+          "182@15",
+          "183@16",
+          "184@17",
+          "185@18",
+          "186@19",
+          "187@20",
+          "188@21",
+          "189@22",
+          "190@23",
+          "191@24",
+          "192@25",
+          "193@26",
+          "194@27",
+          "195@28",
+          "196@29",
+          "197@30",
+          "198@31",
+          "199@32",
+          "200@33"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 24
+      },
+      {
+        "key": "war-1@2629",
+        "source": "l4.wave",
+        "startSeconds": 43.81666666666667,
+        "observedSeconds": 204.68333333333334,
+        "expected": 36,
+        "spawned": 36,
+        "firstAttackSeconds": 14.45,
+        "members": [
+          "205@36",
+          "206@37",
+          "207@38",
+          "208@39",
+          "209@40",
+          "210@41",
+          "211@42",
+          "212@43",
+          "213@44",
+          "214@45",
+          "215@46",
+          "216@47",
+          "217@48",
+          "218@49",
+          "219@50",
+          "220@51",
+          "221@52",
+          "222@53",
+          "223@54",
+          "224@55",
+          "225@56",
+          "226@57",
+          "227@58",
+          "228@59",
+          "229@60",
+          "230@61",
+          "231@62",
+          "232@63",
+          "233@64",
+          "234@65",
+          "235@66",
+          "236@67",
+          "237@68",
+          "238@69",
+          "239@70",
+          "240@71"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 36
+      },
+      {
+        "key": "breach-west",
+        "source": "L4 breach.openAt",
+        "startSeconds": 52.71666666666667,
+        "observedSeconds": 195.78333333333333,
+        "expected": null,
+        "spawned": 96,
+        "firstAttackSeconds": 8.816666666666666,
+        "members": [
+          "242@73",
+          "243@74",
+          "244@75",
+          "245@76",
+          "246@77",
+          "165@4",
+          "170@9",
+          "183@16",
+          "188@21",
+          "189@22",
+          "193@26",
+          "208@39",
+          "215@46",
+          "217@48",
+          "227@58",
+          "229@60",
+          "230@61",
+          "236@67",
+          "238@69",
+          "239@70",
+          "247@78",
+          "248@79",
+          "249@80",
+          "250@81",
+          "251@82",
+          "252@83",
+          "253@84",
+          "254@85",
+          "255@86",
+          "192@25",
+          "180@13",
+          "259@89",
+          "53@90",
+          "261@91",
+          "232@63",
+          "36@72",
+          "233@64",
+          "262@92",
+          "195@28",
+          "200@33",
+          "221@52",
+          "265@93",
+          "267@94",
+          "268@95",
+          "269@96",
+          "270@97",
+          "40@88",
+          "271@98",
+          "272@99",
+          "273@100",
+          "274@101",
+          "276@102",
+          "278@103",
+          "280@105",
+          "281@106",
+          "282@107",
+          "279@104",
+          "283@108",
+          "284@109",
+          "285@110",
+          "286@111",
+          "287@112",
+          "288@113",
+          "289@114",
+          "290@115",
+          "293@116",
+          "294@117",
+          "295@118",
+          "296@119",
+          "297@120",
+          "298@121",
+          "299@122",
+          "300@123",
+          "303@125",
+          "304@126",
+          "305@127",
+          "308@129",
+          "311@130",
+          "312@131",
+          "316@135",
+          "319@137",
+          "321@139",
+          "330@147",
+          "336@153",
+          "335@152",
+          "341@157",
+          "340@156",
+          "344@160",
+          "352@167",
+          "348@164",
+          "357@172",
+          "362@175",
+          "366@179",
+          "367@180",
+          "370@182",
+          "368@181"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 40
+      },
+      {
+        "key": "war-2@3289",
+        "source": "l4.wave",
+        "startSeconds": 54.81666666666667,
+        "observedSeconds": 193.68333333333334,
+        "expected": 48,
+        "spawned": 34,
+        "firstAttackSeconds": 52.78333333333333,
+        "members": [
+          "279@104",
+          "324@142",
+          "326@143",
+          "327@144",
+          "328@145",
+          "329@146",
+          "330@147",
+          "331@148",
+          "332@149",
+          "333@150",
+          "334@151",
+          "335@152",
+          "336@153",
+          "338@154",
+          "339@155",
+          "340@156",
+          "341@157",
+          "342@158",
+          "344@160",
+          "345@161",
+          "346@162",
+          "347@163",
+          "348@164",
+          "349@165",
+          "350@166",
+          "353@168",
+          "355@170",
+          "356@171",
+          "358@173",
+          "360@174",
+          "364@177",
+          "365@178",
+          "366@179",
+          "368@181"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-3@3949",
+        "source": "l4.wave",
+        "startSeconds": 65.81666666666666,
+        "observedSeconds": 182.68333333333334,
+        "expected": 54,
+        "spawned": 6,
+        "firstAttackSeconds": 143.38333333333333,
+        "members": [
+          "352@167",
+          "357@172",
+          "362@175",
+          "363@176",
+          "367@180",
+          "370@182"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war--1@4009",
+        "source": "l4.wave",
+        "startSeconds": 66.81666666666666,
+        "observedSeconds": 181.68333333333334,
+        "expected": 15,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-4@4609",
+        "source": "l4.wave",
+        "startSeconds": 76.81666666666666,
+        "observedSeconds": 171.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-5@5269",
+        "source": "l4.wave",
+        "startSeconds": 87.81666666666666,
+        "observedSeconds": 160.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-6@5929",
+        "source": "l4.wave",
+        "startSeconds": 98.81666666666666,
+        "observedSeconds": 149.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-7@6589",
+        "source": "l4.wave",
+        "startSeconds": 109.81666666666666,
+        "observedSeconds": 138.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-8@7249",
+        "source": "l4.wave",
+        "startSeconds": 120.81666666666666,
+        "observedSeconds": 127.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-9@7909",
+        "source": "l4.wave",
+        "startSeconds": 131.81666666666666,
+        "observedSeconds": 116.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "breach-north",
+        "source": "L4 breach.openAt",
+        "startSeconds": 138.08333333333334,
+        "observedSeconds": 110.41666666666667,
+        "expected": null,
+        "spawned": 27,
+        "firstAttackSeconds": 14.033333333333333,
+        "members": [
+          "313@132",
+          "314@133",
+          "315@134",
+          "317@136",
+          "320@138",
+          "322@140",
+          "326@143",
+          "329@146",
+          "331@148",
+          "333@150",
+          "334@151",
+          "338@154",
+          "332@149",
+          "342@158",
+          "347@163",
+          "345@161",
+          "339@155",
+          "328@145",
+          "350@166",
+          "356@171",
+          "346@162",
+          "360@174",
+          "355@170",
+          "364@177",
+          "365@178",
+          "363@176",
+          "371@183"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 6
+      },
+      {
+        "key": "war-10@8569",
+        "source": "l4.wave",
+        "startSeconds": 142.81666666666666,
+        "observedSeconds": 105.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-11@9229",
+        "source": "l4.wave",
+        "startSeconds": 153.81666666666666,
+        "observedSeconds": 94.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-12@9889",
+        "source": "l4.wave",
+        "startSeconds": 164.81666666666666,
+        "observedSeconds": 83.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-13@10549",
+        "source": "l4.wave",
+        "startSeconds": 175.81666666666666,
+        "observedSeconds": 72.68333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-14@11209",
+        "source": "l4.wave",
+        "startSeconds": 186.81666666666666,
+        "observedSeconds": 61.68333333333333,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "opening-alarm",
+        "source": "L4 opening pending street cohorts",
+        "startSeconds": 32.81666666666667,
+        "observedSeconds": 215.68333333333334,
+        "expected": null,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-15@11869",
+        "source": "l4.wave",
+        "startSeconds": 197.81666666666666,
+        "observedSeconds": 50.68333333333333,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "breach-south",
+        "source": "L4 breach.openAt",
+        "startSeconds": 208.7,
+        "observedSeconds": 39.8,
+        "expected": null,
+        "spawned": 1,
+        "firstAttackSeconds": 15.016666666666667,
+        "members": [
+          "372@184"
+        ],
+        "flags": [
+          "WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
+        ],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 1
+      },
+      {
+        "key": "war-16@12529",
+        "source": "l4.wave",
+        "startSeconds": 208.81666666666666,
+        "observedSeconds": 39.68333333333333,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "war-17@13189",
+        "source": "l4.wave",
+        "startSeconds": 219.81666666666666,
+        "observedSeconds": 28.683333333333334,
+        "expected": 54,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-0@13609",
+        "source": "l4.wave",
+        "startSeconds": 226.81666666666666,
+        "observedSeconds": 21.683333333333334,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-1@14149",
+        "source": "l4.wave",
+        "startSeconds": 235.81666666666666,
+        "observedSeconds": 12.683333333333334,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "collapse-2@14689",
+        "source": "l4.wave",
+        "startSeconds": 244.81666666666666,
+        "observedSeconds": 3.683333333333333,
+        "expected": 6,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      }
+    ]
+  },
+  "passiveFlags": [
+    "wave/breach-south:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
+  ],
+  "wallSeconds": 131.31529533300002,
+  "nativeStateHash": "1a99e716",
+  "highHold": {
+    "tier": "high",
+    "holdComplete": true,
+    "firstBreachLevelSeconds": 52.71666666666667,
+    "firstBreachAfterTurnSeconds": 19.9,
+    "aliveAtFirstBreach": 65,
+    "peakAlive": 97,
+    "peakPlazaAlive": 95,
+    "minPlazaAliveAfter45Seconds": 72,
+    "samplesAfter45Seconds": 8760,
+    "arrivalEdges": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "threeDirectionsAtLeast60Degrees": true,
+    "maxGroupAtOneSourcePerTick": 5,
+    "firstAttackSeconds": 7.716666666666667,
+    "lineBreakAfterTurnSeconds": 190
+  }
+}

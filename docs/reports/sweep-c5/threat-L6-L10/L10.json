@@ -1,0 +1,2616 @@
+{
+  "level": "L10",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "crash",
+      "text": "Leave the wreck on foot",
+      "type": "custom"
+    },
+    {
+      "id": "residential-fringe",
+      "text": "Recover the handgun at the checkpoint",
+      "type": "interact"
+    },
+    {
+      "id": "industrial-area",
+      "text": "Recover the shotgun at the checkpoint",
+      "type": "interact"
+    },
+    {
+      "id": "military-zone",
+      "text": "Recover the machine gun at the checkpoint",
+      "type": "interact"
+    },
+    {
+      "id": "research-campus",
+      "text": "Reach the research campus",
+      "type": "reach"
+    },
+    {
+      "id": "research",
+      "text": "Play the research recording",
+      "type": "interact"
+    },
+    {
+      "id": "cure",
+      "text": "Pack the cure canister",
+      "type": "interact"
+    },
+    {
+      "id": "research-exit",
+      "text": "Get the cure out of the laboratory",
+      "type": "reach"
+    },
+    {
+      "id": "destroyed-corridor",
+      "text": "Carry the cure down the corridor and grab the rocket launcher",
+      "type": "interact"
+    },
+    {
+      "id": "dispersal-complex",
+      "text": "Bring the cure to the dispersal complex",
+      "type": "reach"
+    },
+    {
+      "id": "install",
+      "text": "Install the cure in the dispersal device",
+      "type": "interact"
+    },
+    {
+      "id": "hold",
+      "text": "Charge the dispersal system",
+      "type": "custom"
+    },
+    {
+      "id": "mega",
+      "text": "Kill the Mega Alpha",
+      "type": "custom"
+    },
+    {
+      "id": "release",
+      "text": "Release the cure at the console",
+      "type": "interact"
+    },
+    {
+      "id": "epilogue",
+      "text": "Watch the cure spread",
+      "type": "custom"
+    },
+    {
+      "id": "credits",
+      "text": "Minor Incident",
+      "type": "custom"
+    }
+  ],
+  "run": {
+    "level": "L10",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 1168.5333333333333,
+    "deaths": 0,
+    "kills": 738,
+    "damageTaken": 385,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "crash",
+        "t": 0.016666666666666666
+      },
+      {
+        "id": "residential-fringe",
+        "t": 58.28333333333333
+      },
+      {
+        "id": "industrial-area",
+        "t": 191.01666666666668
+      },
+      {
+        "id": "military-zone",
+        "t": 356.15
+      },
+      {
+        "id": "research-campus",
+        "t": 528.7666666666667
+      },
+      {
+        "id": "research",
+        "t": 592.5666666666667
+      },
+      {
+        "id": "cure",
+        "t": 594.0166666666667
+      },
+      {
+        "id": "research-exit",
+        "t": 614.7833333333333
+      },
+      {
+        "id": "destroyed-corridor",
+        "t": 654.1166666666667
+      },
+      {
+        "id": "dispersal-complex",
+        "t": 870.5666666666667
+      },
+      {
+        "id": "install",
+        "t": 946.0166666666667
+      },
+      {
+        "id": "hold",
+        "t": 1008.3833333333333
+      },
+      {
+        "id": "mega",
+        "t": 1015.8
+      },
+      {
+        "id": "release",
+        "t": 1018.5333333333333
+      },
+      {
+        "id": "epilogue",
+        "t": 1168.5333333333333
+      },
+      {
+        "id": "credits",
+        "t": 1185.5333333333333
+      }
+    ],
+    "furthestObjective": "credits",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "cureReleases": 1,
+    "regions": [
+      {
+        "id": "crash-outskirts",
+        "seconds": 66.04999999999754,
+        "travelSeconds": 62.799999999997716,
+        "combatSeconds": 3.21666666666666,
+        "interactionSeconds": 0.03333333333333333,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 296.44077342764035
+      },
+      {
+        "id": "residential-fringe",
+        "seconds": 121.36666666666106,
+        "travelSeconds": 93.88333333332929,
+        "combatSeconds": 27.483333333333054,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 543.0703822284006
+      },
+      {
+        "id": "industrial-area",
+        "seconds": 164.7000000000232,
+        "travelSeconds": 45.4999999999987,
+        "combatSeconds": 119.18333333332785,
+        "interactionSeconds": 0.016666666666666666,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 740.1545552636434
+      },
+      {
+        "id": "military-zone",
+        "seconds": 181.53333333336994,
+        "travelSeconds": 129.73333333332872,
+        "combatSeconds": 51.783333333331676,
+        "interactionSeconds": 0.016666666666666666,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 813.0622066026029
+      },
+      {
+        "id": "research-campus",
+        "seconds": 127.56666666666071,
+        "travelSeconds": 74.09999999999708,
+        "combatSeconds": 53.416666666664916,
+        "interactionSeconds": 0.05,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 573.2859988630142
+      },
+      {
+        "id": "destroyed-corridor",
+        "seconds": 214.23333333339596,
+        "travelSeconds": 187.050000000041,
+        "combatSeconds": 27.18333333333307,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 963.0005682536012
+      },
+      {
+        "id": "dispersal-complex",
+        "seconds": 293.08333333339544,
+        "travelSeconds": 59.766666666664555,
+        "combatSeconds": 13.50000000000025,
+        "interactionSeconds": 0.03333333333333333,
+        "holdSeconds": 69.78333333333066,
+        "epilogueSeconds": 150.0000000000115,
+        "otherSeconds": 0,
+        "metres": 1225.4833648316776
+      }
+    ],
+    "maxConcurrentInfected": 95,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 909,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 71132,
+    "followerWait": {
+      "escortTicks": 71131,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 99,
+          "escortTicks": 71131,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/crash",
+        "label": "crash: Leave the wreck on foot",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.016666666666666666,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/residential-fringe",
+        "label": "residential-fringe: Recover the handgun at the checkpoint",
+        "threat": false,
+        "startSeconds": 0.016666666666666666,
+        "seconds": 58.266666666666666,
+        "spawned": 8,
+        "initial": 0,
+        "observed": 8,
+        "reachableEver": 8,
+        "within2_5m": 7,
+        "attacks": 8,
+        "attacksPerMinute": 8.237986270022883,
+        "firstAttackSeconds": 5.316666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 116,
+            "median": 4.501302271168514
+          }
+        ],
+        "followerMin": 4.501302271168514,
+        "followerMedian": 4.501302271168514,
+        "boundedPaths": {
+          "samples": 14,
+          "minimumPercent": 100,
+          "worstTick": 3481,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3481,
+          "alive": 5,
+          "reachable": 5,
+          "playerX": 763.9017944335938,
+          "playerZ": 24.995635986328125,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/industrial-area",
+        "label": "industrial-area: Recover the shotgun at the checkpoint",
+        "threat": false,
+        "startSeconds": 58.28333333333333,
+        "seconds": 132.73333333333332,
+        "spawned": 23,
+        "initial": 5,
+        "observed": 29,
+        "reachableEver": 29,
+        "within2_5m": 12,
+        "attacks": 17,
+        "attacksPerMinute": 7.684580612757409,
+        "firstAttackSeconds": 28.433333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 265,
+            "median": 4.499980069817107
+          }
+        ],
+        "followerMin": 4.499980069817107,
+        "followerMedian": 4.499980069817107,
+        "boundedPaths": {
+          "samples": 20,
+          "minimumPercent": 100,
+          "worstTick": 10337,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 8,
+        "blockedEvidence": {
+          "tick": 7937,
+          "alive": 3,
+          "reachable": 2,
+          "playerX": 1043.8994140625,
+          "playerZ": 79.91937255859375,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 828.3555325607648,
+              "z": 80,
+              "playerX": 1043.8994140625,
+              "playerZ": 79.91937255859375
+            }
+          ]
+        },
+        "last": {
+          "tick": 11417,
+          "alive": 8,
+          "reachable": 7,
+          "playerX": 1252.89697265625,
+          "playerZ": 25.003183364868164,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1029.7958468839486,
+              "z": 80.00232966734626,
+              "playerX": 1252.89697265625,
+              "playerZ": 25.003183364868164
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/military-zone",
+        "label": "military-zone: Recover the machine gun at the checkpoint",
+        "threat": false,
+        "startSeconds": 191.01666666666668,
+        "seconds": 165.13333333333333,
+        "spawned": 40,
+        "initial": 8,
+        "observed": 49,
+        "reachableEver": 48,
+        "within2_5m": 15,
+        "attacks": 23,
+        "attacksPerMinute": 8.356883326604764,
+        "firstAttackSeconds": 36.516666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 330,
+            "median": 4.497167165828314
+          }
+        ],
+        "followerMin": 4.497167165828314,
+        "followerMedian": 4.497167165828314,
+        "boundedPaths": {
+          "samples": 64,
+          "minimumPercent": 100,
+          "worstTick": 19981,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 8,
+        "blockedEvidence": {
+          "tick": 19501,
+          "alive": 3,
+          "reachable": 2,
+          "playerX": 1746.280029296875,
+          "playerZ": 58.440467834472656,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1387.8673467842852,
+              "z": 100,
+              "playerX": 1746.280029296875,
+              "playerZ": 58.440467834472656
+            }
+          ]
+        },
+        "last": {
+          "tick": 21301,
+          "alive": 5,
+          "reachable": 4,
+          "playerX": 1850.0450439453125,
+          "playerZ": 25.01087760925293,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1496.5423467843245,
+              "z": 100,
+              "playerX": 1850.0450439453125,
+              "playerZ": 25.01087760925293
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-campus",
+        "label": "research-campus: Reach the research campus",
+        "threat": false,
+        "startSeconds": 356.15,
+        "seconds": 172.61666666666667,
+        "spawned": 53,
+        "initial": 5,
+        "observed": 58,
+        "reachableEver": 57,
+        "within2_5m": 27,
+        "attacks": 41,
+        "attacksPerMinute": 14.25123105146278,
+        "firstAttackSeconds": 11.45,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 344,
+            "median": 4.4971652316734865
+          }
+        ],
+        "followerMin": 4.4971652316734865,
+        "followerMedian": 4.4971652316734865,
+        "boundedPaths": {
+          "samples": 31,
+          "minimumPercent": 100,
+          "worstTick": 30369,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 31689,
+          "alive": 5,
+          "reachable": 4,
+          "playerX": 2462.266845703125,
+          "playerZ": -5.1095476150512695,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1948.7178467844838,
+              "z": -75,
+              "playerX": 2462.266845703125,
+              "playerZ": -5.1095476150512695
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research",
+        "label": "research: Play the research recording",
+        "threat": false,
+        "startSeconds": 528.7666666666667,
+        "seconds": 63.8,
+        "spawned": 55,
+        "initial": 5,
+        "observed": 60,
+        "reachableEver": 58,
+        "within2_5m": 33,
+        "attacks": 49,
+        "attacksPerMinute": 46.08150470219436,
+        "firstAttackSeconds": 9.75,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 128,
+            "median": 4.497274450608285
+          }
+        ],
+        "followerMin": 4.497274450608285,
+        "followerMedian": 4.497274450608285,
+        "boundedPaths": {
+          "samples": 16,
+          "minimumPercent": 100,
+          "worstTick": 35326,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 12,
+        "blockedEvidence": {
+          "tick": 33166,
+          "alive": 3,
+          "reachable": 2,
+          "playerX": 2526.91845703125,
+          "playerZ": 42.61829376220703,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2037.891721784516,
+              "z": -75,
+              "playerX": 2526.91845703125,
+              "playerZ": 42.61829376220703
+            }
+          ]
+        },
+        "last": {
+          "tick": 35446,
+          "alive": 29,
+          "reachable": 28,
+          "playerX": 2697.03076171875,
+          "playerZ": 41.5627555847168,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2175.5467217845658,
+              "z": -75,
+              "playerX": 2697.03076171875,
+              "playerZ": 41.5627555847168
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/cure",
+        "label": "cure: Pack the cure canister",
+        "threat": false,
+        "startSeconds": 592.5666666666667,
+        "seconds": 1.45,
+        "spawned": 0,
+        "initial": 16,
+        "observed": 20,
+        "reachableEver": 15,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 3,
+            "median": 4.501511859563111
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 35554,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 35554,
+          "alive": 16,
+          "reachable": 15,
+          "playerX": 2705.12548828125,
+          "playerZ": 41.308807373046875,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2182.067221784568,
+              "z": -75,
+              "playerX": 2705.12548828125,
+              "playerZ": 41.308807373046875
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-exit",
+        "label": "research-exit: Get the cure out of the laboratory",
+        "threat": false,
+        "startSeconds": 594.0166666666667,
+        "seconds": 20.766666666666666,
+        "spawned": 0,
+        "initial": 20,
+        "observed": 40,
+        "reachableEver": 39,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 41,
+            "median": 4.500482876915305
+          }
+        ],
+        "followerMin": 4.500482876915305,
+        "followerMedian": 4.500482876915305,
+        "boundedPaths": {
+          "samples": 2,
+          "minimumPercent": 100,
+          "worstTick": 35761,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 36841,
+          "alive": 2,
+          "reachable": 1,
+          "playerX": 2801.587646484375,
+          "playerZ": 44.78910827636719,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2259.769846784596,
+              "z": -75,
+              "playerX": 2801.587646484375,
+              "playerZ": 44.78910827636719
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/destroyed-corridor",
+        "label": "destroyed-corridor: Carry the cure down the corridor and grab the rocket launcher",
+        "threat": false,
+        "startSeconds": 614.7833333333333,
+        "seconds": 39.333333333333336,
+        "spawned": 21,
+        "initial": 2,
+        "observed": 24,
+        "reachableEver": 23,
+        "within2_5m": 12,
+        "attacks": 14,
+        "attacksPerMinute": 21.35593220338983,
+        "firstAttackSeconds": 9.5,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 79,
+            "median": 4.497542360714173
+          }
+        ],
+        "followerMin": 4.497542360714173,
+        "followerMedian": 4.497542360714173,
+        "boundedPaths": {
+          "samples": 17,
+          "minimumPercent": 100,
+          "worstTick": 39167,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 4,
+        "blockedEvidence": {
+          "tick": 37127,
+          "alive": 3,
+          "reachable": 2,
+          "playerX": 2805.97216796875,
+          "playerZ": 27.30826187133789,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2277.0370967846025,
+              "z": -75,
+              "playerX": 2805.97216796875,
+              "playerZ": 27.30826187133789
+            }
+          ]
+        },
+        "last": {
+          "tick": 39167,
+          "alive": 20,
+          "reachable": 19,
+          "playerX": 2929.14453125,
+          "playerZ": -4.989936351776123,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2527,
+              "z": 24.0544717846587,
+              "playerX": 2929.14453125,
+              "playerZ": -4.989936351776123
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/dispersal-complex",
+        "label": "dispersal-complex: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 654.1166666666667,
+        "seconds": 216.45,
+        "spawned": 114,
+        "initial": 20,
+        "observed": 137,
+        "reachableEver": 134,
+        "within2_5m": 0,
+        "attacks": 20,
+        "attacksPerMinute": 5.544005544005544,
+        "firstAttackSeconds": 43.53333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 433,
+            "median": 4.4971154175223464
+          }
+        ],
+        "followerMin": 4.4971154175223464,
+        "followerMedian": 4.4971154175223464,
+        "boundedPaths": {
+          "samples": 47,
+          "minimumPercent": 100,
+          "worstTick": 51607,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 28,
+        "blockedEvidence": {
+          "tick": 47167,
+          "alive": 1,
+          "reachable": 0,
+          "playerX": 3432.021728515625,
+          "playerZ": 94.89958190917969,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 3233.7304982962887,
+              "z": 70.50897008709734,
+              "playerX": 3432.021728515625,
+              "playerZ": 94.89958190917969
+            }
+          ]
+        },
+        "last": {
+          "tick": 52207,
+          "alive": 1,
+          "reachable": 1,
+          "playerX": 3693.020263671875,
+          "playerZ": -24.947418212890625,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/install",
+        "label": "install: Install the cure in the dispersal device",
+        "threat": false,
+        "startSeconds": 870.5666666666667,
+        "seconds": 75.45,
+        "spawned": 24,
+        "initial": 2,
+        "observed": 26,
+        "reachableEver": 26,
+        "within2_5m": 0,
+        "attacks": 9,
+        "attacksPerMinute": 7.157057654075547,
+        "firstAttackSeconds": 8.6,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 151,
+            "median": 4.4970712425177695
+          }
+        ],
+        "followerMin": 4.4970712425177695,
+        "followerMedian": 4.4970712425177695,
+        "boundedPaths": {
+          "samples": 14,
+          "minimumPercent": 100,
+          "worstTick": 55954,
+          "nearby": 3,
+          "reachable": 3,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 10,
+        "blockedEvidence": {
+          "tick": 56674,
+          "alive": 1,
+          "reachable": 0,
+          "playerX": 3999.203857421875,
+          "playerZ": -35.55614471435547,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 3797,
+              "z": -36.296068849644215,
+              "playerX": 3999.203857421875,
+              "playerZ": -35.55614471435547
+            }
+          ]
+        },
+        "last": {
+          "tick": 56674,
+          "alive": 1,
+          "reachable": 0,
+          "playerX": 3999.203857421875,
+          "playerZ": -35.55614471435547,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 3797,
+              "z": -36.296068849644215,
+              "playerX": 3999.203857421875,
+              "playerZ": -35.55614471435547
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/hold",
+        "label": "hold: Charge the dispersal system",
+        "threat": true,
+        "startSeconds": 946.0166666666667,
+        "seconds": 62.36666666666667,
+        "spawned": 564,
+        "initial": 1,
+        "observed": 565,
+        "reachableEver": 560,
+        "within2_5m": 10,
+        "attacks": 73,
+        "attacksPerMinute": 70.22982362373062,
+        "firstAttackSeconds": 6.766666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 106,
+            "median": 4.314041586385787
+          }
+        ],
+        "followerMin": 4.314041586385787,
+        "followerMedian": 4.314041586385787,
+        "boundedPaths": {
+          "samples": 29,
+          "minimumPercent": 100,
+          "worstTick": 60481,
+          "nearby": 35,
+          "reachable": 35,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 2,
+        "blockedEvidence": {
+          "tick": 56881,
+          "alive": 1,
+          "reachable": 0,
+          "playerX": 4003.04736328125,
+          "playerZ": -30.39713478088379,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 3811.563568849607,
+              "z": -41,
+              "playerX": 4003.04736328125,
+              "playerZ": -30.39713478088379
+            }
+          ]
+        },
+        "last": {
+          "tick": 60481,
+          "alive": 36,
+          "reachable": 36,
+          "playerX": 4007.313232421875,
+          "playerZ": -16.481826782226562,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/mega",
+        "label": "mega: Kill the Mega Alpha",
+        "threat": false,
+        "startSeconds": 1008.3833333333333,
+        "seconds": 7.416666666666667,
+        "spawned": 0,
+        "initial": 27,
+        "observed": 27,
+        "reachableEver": 27,
+        "within2_5m": 3,
+        "attacks": 10,
+        "attacksPerMinute": 80.89887640449439,
+        "firstAttackSeconds": 1.5666666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 13,
+            "median": 4.494499015777428
+          }
+        ],
+        "followerMin": 4.494499015777428,
+        "followerMedian": 4.494499015777428,
+        "boundedPaths": {
+          "samples": 4,
+          "minimumPercent": 100,
+          "worstTick": 60863,
+          "nearby": 10,
+          "reachable": 10,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 60863,
+          "alive": 10,
+          "reachable": 10,
+          "playerX": 3989.569091796875,
+          "playerZ": -25.58380699157715,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/release",
+        "label": "release: Release the cure at the console",
+        "threat": false,
+        "startSeconds": 1015.8,
+        "seconds": 2.7333333333333334,
+        "spawned": 0,
+        "initial": 5,
+        "observed": 5,
+        "reachableEver": 5,
+        "within2_5m": 0,
+        "attacks": 1,
+        "attacksPerMinute": 21.951219512195124,
+        "firstAttackSeconds": 1.3,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 6,
+            "median": 4.073286213532963
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 60948,
+          "nearby": 5,
+          "reachable": 5,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 61068,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 3998.785400390625,
+          "playerZ": -29.84014892578125,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/epilogue",
+        "label": "epilogue: Watch the cure spread",
+        "threat": false,
+        "startSeconds": 1018.5333333333333,
+        "seconds": 150,
+        "spawned": 3,
+        "initial": 0,
+        "observed": 3,
+        "reachableEver": 3,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 296,
+            "median": 4.435878272743677
+          }
+        ],
+        "followerMin": 4.435878272743677,
+        "followerMedian": 4.435878272743677,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 69992,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 4007.02392578125,
+          "playerZ": -28.14160919189453,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/credits",
+        "label": "credits: Minor Incident",
+        "threat": false,
+        "startSeconds": 1168.5333333333333,
+        "seconds": 17,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 34,
+            "median": 4.4525248121055405
+          }
+        ],
+        "followerMin": 4.4525248121055405,
+        "followerMedian": 4.4525248121055405,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 71072,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 4011.303955078125,
+          "playerZ": -27.438404083251953,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "dispersal-assault",
+        "source": "L10 charge-active (not first spawn)",
+        "startSeconds": 948.3833333333333,
+        "observedSeconds": 237.15,
+        "expected": null,
+        "spawned": 564,
+        "firstAttackSeconds": 4.4,
+        "members": [
+          "446@339",
+          "447@340",
+          "448@341",
+          "449@342",
+          "450@343",
+          "451@344",
+          "452@345",
+          "453@346",
+          "454@347",
+          "455@348",
+          "456@349",
+          "457@350",
+          "458@351",
+          "459@352",
+          "460@353",
+          "461@354",
+          "462@355",
+          "463@356",
+          "464@357",
+          "465@358",
+          "466@359",
+          "467@360",
+          "468@361",
+          "469@362",
+          "470@363",
+          "471@364",
+          "472@365",
+          "473@366",
+          "474@367",
+          "475@368",
+          "476@369",
+          "477@370",
+          "478@371",
+          "479@372",
+          "480@373",
+          "481@374",
+          "482@375",
+          "483@376",
+          "484@377",
+          "485@378",
+          "486@379",
+          "487@380",
+          "488@381",
+          "489@382",
+          "490@383",
+          "491@384",
+          "492@385",
+          "493@386",
+          "494@387",
+          "495@388",
+          "496@389",
+          "497@390",
+          "498@391",
+          "499@392",
+          "500@393",
+          "501@394",
+          "502@395",
+          "503@396",
+          "504@397",
+          "505@398",
+          "506@399",
+          "507@400",
+          "508@401",
+          "509@402",
+          "510@403",
+          "511@404",
+          "512@405",
+          "513@406",
+          "514@407",
+          "515@408",
+          "516@409",
+          "517@410",
+          "518@411",
+          "519@412",
+          "520@413",
+          "521@414",
+          "522@415",
+          "523@416",
+          "524@417",
+          "525@418",
+          "526@419",
+          "527@420",
+          "528@421",
+          "529@422",
+          "530@423",
+          "531@424",
+          "532@425",
+          "533@426",
+          "534@427",
+          "535@428",
+          "536@429",
+          "537@430",
+          "538@431",
+          "539@432",
+          "540@433",
+          "541@434",
+          "542@435",
+          "543@436",
+          "544@437",
+          "545@438",
+          "546@439",
+          "547@440",
+          "548@441",
+          "549@442",
+          "550@443",
+          "551@444",
+          "552@445",
+          "553@446",
+          "554@447",
+          "555@448",
+          "556@449",
+          "557@450",
+          "558@451",
+          "559@452",
+          "560@453",
+          "561@454",
+          "562@455",
+          "563@456",
+          "564@457",
+          "565@458",
+          "566@459",
+          "567@460",
+          "568@461",
+          "569@462",
+          "570@463",
+          "571@464",
+          "572@465",
+          "573@466",
+          "574@467",
+          "575@468",
+          "576@469",
+          "577@470",
+          "578@471",
+          "579@472",
+          "580@473",
+          "581@474",
+          "582@475",
+          "583@476",
+          "584@477",
+          "585@478",
+          "586@479",
+          "587@480",
+          "588@481",
+          "589@482",
+          "590@483",
+          "591@484",
+          "592@485",
+          "593@486",
+          "594@487",
+          "595@488",
+          "596@489",
+          "597@490",
+          "598@491",
+          "599@492",
+          "600@493",
+          "601@494",
+          "602@495",
+          "603@496",
+          "604@497",
+          "605@498",
+          "606@499",
+          "607@500",
+          "608@501",
+          "609@502",
+          "610@503",
+          "611@504",
+          "612@505",
+          "613@506",
+          "614@507",
+          "615@508",
+          "616@509",
+          "617@510",
+          "618@511",
+          "619@512",
+          "620@513",
+          "621@514",
+          "622@515",
+          "623@516",
+          "624@517",
+          "625@518",
+          "626@519",
+          "627@520",
+          "628@521",
+          "629@522",
+          "630@523",
+          "631@524",
+          "632@525",
+          "633@526",
+          "634@527",
+          "635@528",
+          "636@529",
+          "637@530",
+          "638@531",
+          "639@532",
+          "640@533",
+          "641@534",
+          "642@535",
+          "643@536",
+          "644@537",
+          "645@538",
+          "646@539",
+          "647@540",
+          "648@541",
+          "649@542",
+          "650@543",
+          "651@544",
+          "652@545",
+          "653@546",
+          "654@547",
+          "655@548",
+          "656@549",
+          "657@550",
+          "658@551",
+          "659@552",
+          "660@553",
+          "661@554",
+          "662@555",
+          "663@556",
+          "664@557",
+          "665@558",
+          "666@559",
+          "667@560",
+          "668@561",
+          "669@562",
+          "670@563",
+          "671@564",
+          "672@565",
+          "673@566",
+          "674@567",
+          "675@568",
+          "676@569",
+          "677@570",
+          "678@571",
+          "679@572",
+          "680@573",
+          "681@574",
+          "682@575",
+          "683@576",
+          "684@577",
+          "685@578",
+          "686@579",
+          "687@580",
+          "688@581",
+          "689@582",
+          "690@583",
+          "691@584",
+          "692@585",
+          "693@586",
+          "694@587",
+          "695@588",
+          "696@589",
+          "697@590",
+          "698@591",
+          "699@592",
+          "700@593",
+          "701@594",
+          "702@595",
+          "703@596",
+          "704@597",
+          "705@598",
+          "706@599",
+          "707@600",
+          "708@601",
+          "709@602",
+          "710@603",
+          "711@604",
+          "712@605",
+          "713@606",
+          "714@607",
+          "715@608",
+          "716@609",
+          "717@610",
+          "718@611",
+          "719@612",
+          "720@613",
+          "721@614",
+          "722@615",
+          "723@616",
+          "724@617",
+          "725@618",
+          "726@619",
+          "727@620",
+          "728@621",
+          "729@622",
+          "730@623",
+          "731@624",
+          "732@625",
+          "733@626",
+          "734@627",
+          "735@628",
+          "736@629",
+          "737@630",
+          "738@631",
+          "739@632",
+          "740@633",
+          "741@634",
+          "742@635",
+          "743@636",
+          "744@637",
+          "745@638",
+          "746@639",
+          "747@640",
+          "748@641",
+          "749@642",
+          "750@643",
+          "751@644",
+          "752@645",
+          "753@646",
+          "754@647",
+          "755@648",
+          "756@649",
+          "757@650",
+          "758@651",
+          "759@652",
+          "760@653",
+          "761@654",
+          "762@655",
+          "763@656",
+          "764@657",
+          "765@658",
+          "766@659",
+          "767@660",
+          "768@661",
+          "769@662",
+          "770@663",
+          "771@664",
+          "772@665",
+          "773@666",
+          "774@667",
+          "775@668",
+          "776@669",
+          "777@670",
+          "778@671",
+          "779@672",
+          "780@673",
+          "781@674",
+          "782@675",
+          "783@676",
+          "784@677",
+          "785@678",
+          "786@679",
+          "787@680",
+          "788@681",
+          "789@682",
+          "790@683",
+          "791@684",
+          "792@685",
+          "793@686",
+          "794@687",
+          "795@688",
+          "796@689",
+          "797@690",
+          "798@691",
+          "799@692",
+          "800@693",
+          "801@694",
+          "802@695",
+          "803@696",
+          "804@697",
+          "805@698",
+          "806@699",
+          "807@700",
+          "808@701",
+          "809@702",
+          "810@703",
+          "811@704",
+          "812@705",
+          "813@706",
+          "814@707",
+          "815@708",
+          "816@709",
+          "817@710",
+          "818@711",
+          "819@712",
+          "820@713",
+          "821@714",
+          "822@715",
+          "823@716",
+          "824@717",
+          "825@718",
+          "826@719",
+          "827@720",
+          "828@721",
+          "829@722",
+          "830@723",
+          "831@724",
+          "832@725",
+          "833@726",
+          "834@727",
+          "835@728",
+          "836@729",
+          "837@730",
+          "838@731",
+          "839@732",
+          "840@733",
+          "841@734",
+          "842@735",
+          "843@736",
+          "844@737",
+          "845@738",
+          "846@739",
+          "847@740",
+          "848@741",
+          "849@742",
+          "850@743",
+          "851@744",
+          "852@745",
+          "853@746",
+          "854@747",
+          "855@748",
+          "856@749",
+          "857@750",
+          "858@751",
+          "859@752",
+          "860@753",
+          "861@754",
+          "862@755",
+          "863@756",
+          "864@757",
+          "865@758",
+          "866@759",
+          "867@760",
+          "868@761",
+          "869@762",
+          "870@763",
+          "871@764",
+          "872@765",
+          "873@766",
+          "874@767",
+          "875@768",
+          "876@769",
+          "877@770",
+          "878@771",
+          "879@772",
+          "880@773",
+          "881@774",
+          "882@775",
+          "883@776",
+          "884@777",
+          "885@778",
+          "886@779",
+          "887@780",
+          "888@781",
+          "889@782",
+          "890@783",
+          "891@784",
+          "892@785",
+          "893@786",
+          "894@787",
+          "895@788",
+          "896@789",
+          "897@790",
+          "898@791",
+          "899@792",
+          "900@793",
+          "901@794",
+          "902@795",
+          "903@796",
+          "904@797",
+          "905@798",
+          "906@799",
+          "907@800",
+          "908@801",
+          "909@802",
+          "910@803",
+          "911@804",
+          "912@805",
+          "913@806",
+          "914@807",
+          "915@808",
+          "916@809",
+          "917@810",
+          "918@811",
+          "919@812",
+          "920@813",
+          "921@814",
+          "922@815",
+          "923@816",
+          "924@817",
+          "925@818",
+          "926@819",
+          "927@820",
+          "928@821",
+          "929@822",
+          "930@823",
+          "931@824",
+          "932@825",
+          "933@826",
+          "934@827",
+          "935@828",
+          "936@829",
+          "937@830",
+          "938@831",
+          "939@832",
+          "940@833",
+          "941@834",
+          "942@835",
+          "943@836",
+          "944@837",
+          "945@838",
+          "946@839",
+          "947@840",
+          "948@841",
+          "949@842",
+          "950@843",
+          "951@844",
+          "952@845",
+          "953@846",
+          "954@847",
+          "955@848",
+          "956@849",
+          "957@850",
+          "958@851",
+          "959@852",
+          "960@853",
+          "961@854",
+          "962@855",
+          "963@856",
+          "964@857",
+          "965@858",
+          "966@859",
+          "967@860",
+          "968@861",
+          "969@862",
+          "970@863",
+          "971@864",
+          "972@865",
+          "973@866",
+          "974@867",
+          "975@868",
+          "976@869",
+          "977@870",
+          "978@871",
+          "979@872",
+          "980@873",
+          "981@874",
+          "982@875",
+          "983@876",
+          "984@877",
+          "985@878",
+          "986@879",
+          "987@880",
+          "988@881",
+          "989@882",
+          "990@883",
+          "991@884",
+          "992@885",
+          "993@886",
+          "994@887",
+          "995@888",
+          "996@889",
+          "997@890",
+          "998@891",
+          "999@892",
+          "1000@893",
+          "1001@894",
+          "1002@895",
+          "1003@896",
+          "1004@897",
+          "1005@898",
+          "1006@899",
+          "1007@900",
+          "1008@901",
+          "1009@902"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 188
+      }
+    ]
+  },
+  "flags": [],
+  "passiveRun": {
+    "level": "L10",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 1062.7,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "crash",
+        "t": 0.016666666666666666
+      },
+      {
+        "id": "residential-fringe",
+        "t": 58.28333333333333
+      },
+      {
+        "id": "industrial-area",
+        "t": 194.7
+      },
+      {
+        "id": "military-zone",
+        "t": 366.01666666666665
+      },
+      {
+        "id": "research-campus",
+        "t": 556.9166666666666
+      },
+      {
+        "id": "research",
+        "t": 621.3666666666667
+      },
+      {
+        "id": "cure",
+        "t": 622.7
+      },
+      {
+        "id": "research-exit",
+        "t": 647.7333333333333
+      },
+      {
+        "id": "destroyed-corridor",
+        "t": 689.0166666666667
+      },
+      {
+        "id": "dispersal-complex",
+        "t": 921.8333333333334
+      },
+      {
+        "id": "install",
+        "t": 1000.4
+      }
+    ],
+    "furthestObjective": "hold",
+    "activeObjectives": [
+      "hold"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "hold",
+      "detail": "tick-budget: Charge the dispersal system",
+      "player": {
+        "x": 4003.23681640625,
+        "z": -28.89991569519043
+      },
+      "distance": 2.2670232622538524,
+      "actors": {}
+    },
+    "cureReleases": 0,
+    "regions": [
+      {
+        "id": "crash-outskirts",
+        "seconds": 66.04999999999754,
+        "travelSeconds": 8.483333333333334,
+        "combatSeconds": 57.549999999998015,
+        "interactionSeconds": 0.016666666666666666,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 296.44077342764035
+      },
+      {
+        "id": "residential-fringe",
+        "seconds": 125.29999999999417,
+        "travelSeconds": 0,
+        "combatSeconds": 125.29999999999417,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 543.1016731806161
+      },
+      {
+        "id": "industrial-area",
+        "seconds": 170.53333333336118,
+        "travelSeconds": 0,
+        "combatSeconds": 170.53333333336118,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 740.1290438866814
+      },
+      {
+        "id": "military-zone",
+        "seconds": 199.9166666667179,
+        "travelSeconds": 0.35,
+        "combatSeconds": 199.56666666671762,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 813.4215954095678
+      },
+      {
+        "id": "research-campus",
+        "seconds": 134.13333333333222,
+        "travelSeconds": 0,
+        "combatSeconds": 134.13333333333222,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 573.8706063996063
+      },
+      {
+        "id": "destroyed-corridor",
+        "seconds": 230.78333333340913,
+        "travelSeconds": 0,
+        "combatSeconds": 230.78333333340913,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 963.1456201068855
+      },
+      {
+        "id": "dispersal-complex",
+        "seconds": 135.966666666667,
+        "travelSeconds": 0,
+        "combatSeconds": 73.68333333333044,
+        "interactionSeconds": 0,
+        "holdSeconds": 62.28333333333108,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 331.0689285677504
+      }
+    ],
+    "maxConcurrentInfected": 95,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 269,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 63762,
+    "followerWait": {
+      "escortTicks": 63762,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 99,
+          "escortTicks": 63762,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/crash",
+        "label": "crash: Leave the wreck on foot",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.016666666666666666,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/residential-fringe",
+        "label": "residential-fringe: Recover the handgun at the checkpoint",
+        "threat": false,
+        "startSeconds": 0.016666666666666666,
+        "seconds": 58.266666666666666,
+        "spawned": 7,
+        "initial": 0,
+        "observed": 7,
+        "reachableEver": 7,
+        "within2_5m": 7,
+        "attacks": 152,
+        "attacksPerMinute": 156.52173913043478,
+        "firstAttackSeconds": 5.316666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 116,
+            "median": 4.550834913852786
+          }
+        ],
+        "followerMin": 4.550834913852786,
+        "followerMedian": 4.550834913852786,
+        "boundedPaths": {
+          "samples": 28,
+          "minimumPercent": 100,
+          "worstTick": 3481,
+          "nearby": 7,
+          "reachable": 7,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3481,
+          "alive": 7,
+          "reachable": 7,
+          "playerX": 763.9017944335938,
+          "playerZ": 24.995635986328125,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/industrial-area",
+        "label": "industrial-area: Recover the shotgun at the checkpoint",
+        "threat": false,
+        "startSeconds": 58.28333333333333,
+        "seconds": 136.41666666666666,
+        "spawned": 12,
+        "initial": 7,
+        "observed": 19,
+        "reachableEver": 19,
+        "within2_5m": 17,
+        "attacks": 870,
+        "attacksPerMinute": 382.65119120342086,
+        "firstAttackSeconds": 0.18333333333333332,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 266,
+            "median": 4.527111208597166
+          }
+        ],
+        "followerMin": 4.527111208597166,
+        "followerMedian": 4.527111208597166,
+        "boundedPaths": {
+          "samples": 69,
+          "minimumPercent": 100,
+          "worstTick": 11657,
+          "nearby": 14,
+          "reachable": 14,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 11657,
+          "alive": 19,
+          "reachable": 18,
+          "playerX": 1253.2520751953125,
+          "playerZ": 25.002906799316406,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1038.8444312493493,
+              "z": 79.78804416559817,
+              "playerX": 1253.2520751953125,
+              "playerZ": 25.002906799316406
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/military-zone",
+        "label": "military-zone: Recover the machine gun at the checkpoint",
+        "threat": false,
+        "startSeconds": 194.7,
+        "seconds": 171.31666666666666,
+        "spawned": 24,
+        "initial": 19,
+        "observed": 43,
+        "reachableEver": 42,
+        "within2_5m": 25,
+        "attacks": 1510,
+        "attacksPerMinute": 528.8452184064598,
+        "firstAttackSeconds": 0.1,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 332,
+            "median": 4.591734390421996
+          }
+        ],
+        "followerMin": 4.591734390421996,
+        "followerMedian": 4.591734390421996,
+        "boundedPaths": {
+          "samples": 86,
+          "minimumPercent": 100,
+          "worstTick": 21882,
+          "nearby": 23,
+          "reachable": 23,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 21882,
+          "alive": 34,
+          "reachable": 33,
+          "playerX": 1849.672119140625,
+          "playerZ": 25.011648178100586,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 1526.1775690603843,
+              "z": 100,
+              "playerX": 1849.672119140625,
+              "playerZ": 25.011648178100586
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-campus",
+        "label": "research-campus: Reach the research campus",
+        "threat": false,
+        "startSeconds": 366.01666666666665,
+        "seconds": 190.9,
+        "spawned": 48,
+        "initial": 34,
+        "observed": 82,
+        "reachableEver": 81,
+        "within2_5m": 58,
+        "attacks": 968,
+        "attacksPerMinute": 304.2430591932949,
+        "firstAttackSeconds": 0.13333333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 343,
+            "median": 4.5324942279685505
+          }
+        ],
+        "followerMin": 4.5324942279685505,
+        "followerMedian": 4.5324942279685505,
+        "boundedPaths": {
+          "samples": 96,
+          "minimumPercent": 100,
+          "worstTick": 33361,
+          "nearby": 4,
+          "reachable": 4,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 33361,
+          "alive": 8,
+          "reachable": 7,
+          "playerX": 2460.997802734375,
+          "playerZ": -5.139276027679443,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2044.2221940605673,
+              "z": -75,
+              "playerX": 2460.997802734375,
+              "playerZ": -5.139276027679443
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research",
+        "label": "research: Play the research recording",
+        "threat": false,
+        "startSeconds": 556.9166666666666,
+        "seconds": 64.45,
+        "spawned": 50,
+        "initial": 8,
+        "observed": 58,
+        "reachableEver": 57,
+        "within2_5m": 47,
+        "attacks": 364,
+        "attacksPerMinute": 338.8673390224981,
+        "firstAttackSeconds": 2.6666666666666665,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 128,
+            "median": 4.49744496727353
+          }
+        ],
+        "followerMin": 4.49744496727353,
+        "followerMedian": 4.49744496727353,
+        "boundedPaths": {
+          "samples": 33,
+          "minimumPercent": 100,
+          "worstTick": 37255,
+          "nearby": 50,
+          "reachable": 50,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 37255,
+          "alive": 55,
+          "reachable": 54,
+          "playerX": 2703.106689453125,
+          "playerZ": 41.37214279174805,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2279.3224440606523,
+              "z": -75,
+              "playerX": 2703.106689453125,
+              "playerZ": 41.37214279174805
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/cure",
+        "label": "cure: Pack the cure canister",
+        "threat": false,
+        "startSeconds": 621.3666666666667,
+        "seconds": 1.3333333333333333,
+        "spawned": 0,
+        "initial": 55,
+        "observed": 55,
+        "reachableEver": 54,
+        "within2_5m": 9,
+        "attacks": 13,
+        "attacksPerMinute": 585,
+        "firstAttackSeconds": 0.016666666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 3,
+            "median": 5.551365931369021
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 37282,
+          "nearby": 50,
+          "reachable": 50,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 37282,
+          "alive": 55,
+          "reachable": 54,
+          "playerX": 2705.13037109375,
+          "playerZ": 41.30865478515625,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2280.952569060653,
+              "z": -75,
+              "playerX": 2705.13037109375,
+              "playerZ": 41.30865478515625
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-exit",
+        "label": "research-exit: Get the cure out of the laboratory",
+        "threat": false,
+        "startSeconds": 622.7,
+        "seconds": 25.033333333333335,
+        "spawned": 0,
+        "initial": 55,
+        "observed": 55,
+        "reachableEver": 54,
+        "within2_5m": 44,
+        "attacks": 359,
+        "attacksPerMinute": 860.4527296937417,
+        "firstAttackSeconds": 0.016666666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 41,
+            "median": 4.093975479615999
+          }
+        ],
+        "followerMin": 4.093975479615999,
+        "followerMedian": 4.093975479615999,
+        "boundedPaths": {
+          "samples": 13,
+          "minimumPercent": 100,
+          "worstTick": 38802,
+          "nearby": 50,
+          "reachable": 50,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 38802,
+          "alive": 53,
+          "reachable": 52,
+          "playerX": 2800.415771484375,
+          "playerZ": 44.739234924316406,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2372.722569060686,
+              "z": -75,
+              "playerX": 2800.415771484375,
+              "playerZ": 44.739234924316406
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/destroyed-corridor",
+        "label": "destroyed-corridor: Carry the cure down the corridor and grab the rocket launcher",
+        "threat": false,
+        "startSeconds": 647.7333333333333,
+        "seconds": 41.28333333333333,
+        "spawned": 4,
+        "initial": 53,
+        "observed": 57,
+        "reachableEver": 56,
+        "within2_5m": 49,
+        "attacks": 643,
+        "attacksPerMinute": 934.517561566411,
+        "firstAttackSeconds": 0.06666666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 80,
+            "median": 4.379272026629549
+          }
+        ],
+        "followerMin": 4.379272026629549,
+        "followerMedian": 4.379272026629549,
+        "boundedPaths": {
+          "samples": 21,
+          "minimumPercent": 100,
+          "worstTick": 41264,
+          "nearby": 52,
+          "reachable": 52,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 41264,
+          "alive": 55,
+          "reachable": 54,
+          "playerX": 2930.175048828125,
+          "playerZ": -4.991083145141602,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 2626.454319060734,
+              "z": 45,
+              "playerX": 2930.175048828125,
+              "playerZ": -4.991083145141602
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/dispersal-complex",
+        "label": "dispersal-complex: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 689.0166666666667,
+        "seconds": 232.81666666666666,
+        "spawned": 36,
+        "initial": 55,
+        "observed": 91,
+        "reachableEver": 91,
+        "within2_5m": 60,
+        "attacks": 835,
+        "attacksPerMinute": 215.19077958336317,
+        "firstAttackSeconds": 0.18333333333333332,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 432,
+            "median": 4.497088750576349
+          }
+        ],
+        "followerMin": 4.497088750576349,
+        "followerMedian": 4.497088750576349,
+        "boundedPaths": {
+          "samples": 117,
+          "minimumPercent": 100,
+          "worstTick": 55261,
+          "nearby": 6,
+          "reachable": 6,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 55261,
+          "alive": 8,
+          "reachable": 8,
+          "playerX": 3691.37158203125,
+          "playerZ": -24.926206588745117,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/install",
+        "label": "install: Install the cure in the dispersal device",
+        "threat": false,
+        "startSeconds": 921.8333333333334,
+        "seconds": 78.56666666666666,
+        "spawned": 12,
+        "initial": 8,
+        "observed": 20,
+        "reachableEver": 20,
+        "within2_5m": 18,
+        "attacks": 319,
+        "attacksPerMinute": 243.6147645311837,
+        "firstAttackSeconds": 0.9,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 149,
+            "median": 4.744495623974213
+          }
+        ],
+        "followerMin": 4.744495623974213,
+        "followerMedian": 4.744495623974213,
+        "boundedPaths": {
+          "samples": 40,
+          "minimumPercent": 100,
+          "worstTick": 59990,
+          "nearby": 18,
+          "reachable": 18,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 59990,
+          "alive": 20,
+          "reachable": 19,
+          "playerX": 4002.50927734375,
+          "playerZ": -37.1153678894043,
+          "positions": [
+            {
+              "identity": "119@17",
+              "id": 119,
+              "x": 3802.6559161256337,
+              "z": -41,
+              "playerX": 4002.50927734375,
+              "playerZ": -37.1153678894043
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/hold",
+        "label": "hold: Charge the dispersal system",
+        "threat": true,
+        "startSeconds": 1000.4,
+        "seconds": 62.3,
+        "spawned": 75,
+        "initial": 20,
+        "observed": 95,
+        "reachableEver": 95,
+        "within2_5m": 64,
+        "attacks": 1263,
+        "attacksPerMinute": 1216.3723916532906,
+        "firstAttackSeconds": 0.1,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 5,
+            "median": 3.9340287200607187
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 32,
+          "minimumPercent": 100,
+          "worstTick": 63744,
+          "nearby": 95,
+          "reachable": 95,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 63744,
+          "alive": 95,
+          "reachable": 95,
+          "playerX": 4003.23974609375,
+          "playerZ": -28.891843795776367,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "dispersal-assault",
+        "source": "L10 charge-active (not first spawn)",
+        "startSeconds": 1002.7166666666667,
+        "observedSeconds": 59.983333333333334,
+        "expected": null,
+        "spawned": 75,
+        "firstAttackSeconds": 4.65,
+        "members": [
+          "301@194",
+          "302@195",
+          "303@196",
+          "304@197",
+          "305@198",
+          "306@199",
+          "307@200",
+          "308@201",
+          "309@202",
+          "310@203",
+          "311@204",
+          "312@205",
+          "313@206",
+          "314@207",
+          "315@208",
+          "316@209",
+          "317@210",
+          "318@211",
+          "319@212",
+          "320@213",
+          "321@214",
+          "322@215",
+          "323@216",
+          "324@217",
+          "325@218",
+          "326@219",
+          "327@220",
+          "328@221",
+          "329@222",
+          "330@223",
+          "331@224",
+          "332@225",
+          "333@226",
+          "334@227",
+          "335@228",
+          "336@229",
+          "337@230",
+          "338@231",
+          "339@232",
+          "340@233",
+          "341@234",
+          "342@235",
+          "343@236",
+          "344@237",
+          "345@238",
+          "346@239",
+          "347@240",
+          "348@241",
+          "349@242",
+          "350@243",
+          "351@244",
+          "352@245",
+          "353@246",
+          "354@247",
+          "355@248",
+          "356@249",
+          "357@250",
+          "358@251",
+          "359@252",
+          "360@253",
+          "361@254",
+          "362@255",
+          "363@256",
+          "364@257",
+          "365@258",
+          "366@259",
+          "367@260",
+          "368@261",
+          "369@262",
+          "370@263",
+          "371@264",
+          "372@265",
+          "373@266",
+          "374@267",
+          "375@268"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 75
+      }
+    ]
+  },
+  "passiveFlags": [],
+  "wallSeconds": 30.582490957999994,
+  "nativeStateHash": "14a5235c"
+}

@@ -1,0 +1,1725 @@
+{
+  "level": "L7",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "rocket",
+      "text": "Recover the rocket launcher beside the exit",
+      "type": "custom"
+    },
+    {
+      "id": "corridor",
+      "text": "Bring the group to the evacuation corridor",
+      "type": "reach"
+    },
+    {
+      "id": "departure",
+      "text": "Get everyone aboard the bus",
+      "type": "custom"
+    }
+  ],
+  "run": {
+    "level": "L7",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 104.45,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [],
+    "furthestObjective": "bus-departure",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 254,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 6267,
+    "followerWait": {
+      "escortTicks": 5726,
+      "stationaryFarTicks": 110,
+      "upperBoundPercent": 1.9210618232623122,
+      "followers": [
+        {
+          "id": 20,
+          "escortTicks": 4526,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 51,
+          "escortTicks": 5375,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 52,
+          "escortTicks": 5360,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 53,
+          "escortTicks": 5330,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 54,
+          "escortTicks": 5345,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 55,
+          "escortTicks": 5390,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 56,
+          "escortTicks": 5405,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 57,
+          "escortTicks": 5285,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 58,
+          "escortTicks": 5420,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 59,
+          "escortTicks": 5300,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 60,
+          "escortTicks": 5435,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 61,
+          "escortTicks": 5450,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 62,
+          "escortTicks": 5465,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 63,
+          "escortTicks": 5525,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 64,
+          "escortTicks": 5480,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 65,
+          "escortTicks": 5495,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 66,
+          "escortTicks": 5510,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 67,
+          "escortTicks": 5540,
+          "stationaryFarTicks": 103
+        },
+        {
+          "id": 68,
+          "escortTicks": 5315,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 69,
+          "escortTicks": 5555,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 70,
+          "escortTicks": 5570,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 71,
+          "escortTicks": 5585,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 72,
+          "escortTicks": 5600,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 73,
+          "escortTicks": 5615,
+          "stationaryFarTicks": 110
+        },
+        {
+          "id": 74,
+          "escortTicks": 5630,
+          "stationaryFarTicks": 110
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/rocket",
+        "label": "rocket: Recover the rocket launcher beside the exit",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 98,
+        "within2_5m": 1,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 1,
+          "nearby": 36,
+          "reachable": 36,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 273.010009765625,
+          "playerZ": 15,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/pickup",
+        "label": "controller: pickup",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 98,
+        "within2_5m": 1,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 1,
+          "nearby": 36,
+          "reachable": 36,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 273.010009765625,
+          "playerZ": 15,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/corridor",
+        "label": "corridor: Bring the group to the evacuation corridor",
+        "threat": true,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 75.13333333333334,
+        "spawned": 107,
+        "initial": 99,
+        "observed": 204,
+        "reachableEver": 204,
+        "within2_5m": 2,
+        "attacks": 14,
+        "attacksPerMinute": 11.180124223602485,
+        "firstAttackSeconds": 0.6833333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 130,
+            "median": 4.500043109221763
+          },
+          {
+            "id": 51,
+            "samples": 142,
+            "median": 4.500045979863874
+          },
+          {
+            "id": 52,
+            "samples": 140,
+            "median": 4.500045671995769
+          },
+          {
+            "id": 53,
+            "samples": 142,
+            "median": 4.500044990965942
+          },
+          {
+            "id": 54,
+            "samples": 142,
+            "median": 4.500045983179801
+          },
+          {
+            "id": 55,
+            "samples": 142,
+            "median": 4.500044702389624
+          },
+          {
+            "id": 56,
+            "samples": 142,
+            "median": 4.50004472674974
+          },
+          {
+            "id": 57,
+            "samples": 143,
+            "median": 4.500046041615604
+          },
+          {
+            "id": 58,
+            "samples": 144,
+            "median": 4.500043789929702
+          },
+          {
+            "id": 59,
+            "samples": 144,
+            "median": 4.500044721472843
+          },
+          {
+            "id": 60,
+            "samples": 144,
+            "median": 4.500044735103245
+          },
+          {
+            "id": 61,
+            "samples": 144,
+            "median": 4.500045863095375
+          },
+          {
+            "id": 62,
+            "samples": 144,
+            "median": 4.500047816071472
+          },
+          {
+            "id": 63,
+            "samples": 146,
+            "median": 4.50004490333581
+          },
+          {
+            "id": 64,
+            "samples": 146,
+            "median": 4.500045586629861
+          },
+          {
+            "id": 65,
+            "samples": 146,
+            "median": 4.500045017030974
+          },
+          {
+            "id": 66,
+            "samples": 146,
+            "median": 4.50004547370639
+          },
+          {
+            "id": 67,
+            "samples": 146,
+            "median": 4.500045671966419
+          },
+          {
+            "id": 68,
+            "samples": 146,
+            "median": 4.500045938239383
+          },
+          {
+            "id": 69,
+            "samples": 146,
+            "median": 4.500044903335915
+          },
+          {
+            "id": 70,
+            "samples": 146,
+            "median": 4.5000451661757825
+          },
+          {
+            "id": 71,
+            "samples": 146,
+            "median": 4.500045947362824
+          },
+          {
+            "id": 72,
+            "samples": 146,
+            "median": 4.5000448356651095
+          },
+          {
+            "id": 73,
+            "samples": 146,
+            "median": 4.500045234089804
+          },
+          {
+            "id": 74,
+            "samples": 146,
+            "median": 4.50004591404189
+          }
+        ],
+        "followerMin": 4.500043109221763,
+        "followerMedian": 4.500045234089804,
+        "boundedPaths": {
+          "samples": 12,
+          "minimumPercent": 100,
+          "worstTick": 3494,
+          "nearby": 10,
+          "reachable": 10,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4454,
+          "alive": 61,
+          "reachable": 61,
+          "playerX": -19.46344757080078,
+          "playerZ": 47.921424865722656,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/encounters",
+        "label": "controller: encounters",
+        "threat": false,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 86.61666666666666,
+        "spawned": 107,
+        "initial": 99,
+        "observed": 204,
+        "reachableEver": 204,
+        "within2_5m": 2,
+        "attacks": 14,
+        "attacksPerMinute": 9.697902636136233,
+        "firstAttackSeconds": 0.6833333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 136,
+            "median": 4.50004269142428
+          },
+          {
+            "id": 51,
+            "samples": 164,
+            "median": 4.500045983180025
+          },
+          {
+            "id": 52,
+            "samples": 159,
+            "median": 4.500045671968651
+          },
+          {
+            "id": 53,
+            "samples": 165,
+            "median": 4.500045131035598
+          },
+          {
+            "id": 54,
+            "samples": 164,
+            "median": 4.500046004947743
+          },
+          {
+            "id": 55,
+            "samples": 160,
+            "median": 4.500044820406771
+          },
+          {
+            "id": 56,
+            "samples": 160,
+            "median": 4.500045852593965
+          },
+          {
+            "id": 57,
+            "samples": 164,
+            "median": 4.500046174109431
+          },
+          {
+            "id": 58,
+            "samples": 167,
+            "median": 4.500044690249806
+          },
+          {
+            "id": 59,
+            "samples": 167,
+            "median": 4.500045752498938
+          },
+          {
+            "id": 60,
+            "samples": 166,
+            "median": 4.50004533926827
+          },
+          {
+            "id": 61,
+            "samples": 167,
+            "median": 4.500045900528456
+          },
+          {
+            "id": 62,
+            "samples": 167,
+            "median": 4.500231558751848
+          },
+          {
+            "id": 63,
+            "samples": 169,
+            "median": 4.500044915640269
+          },
+          {
+            "id": 64,
+            "samples": 169,
+            "median": 4.500045671971091
+          },
+          {
+            "id": 65,
+            "samples": 169,
+            "median": 4.50004583609129
+          },
+          {
+            "id": 66,
+            "samples": 169,
+            "median": 4.500045904358025
+          },
+          {
+            "id": 67,
+            "samples": 169,
+            "median": 4.500045671973748
+          },
+          {
+            "id": 68,
+            "samples": 169,
+            "median": 4.500046042682811
+          },
+          {
+            "id": 69,
+            "samples": 169,
+            "median": 4.50004590418097
+          },
+          {
+            "id": 70,
+            "samples": 169,
+            "median": 4.500045671972601
+          },
+          {
+            "id": 71,
+            "samples": 169,
+            "median": 4.5001447998981785
+          },
+          {
+            "id": 72,
+            "samples": 169,
+            "median": 4.500044967582779
+          },
+          {
+            "id": 73,
+            "samples": 169,
+            "median": 4.50004567197227
+          },
+          {
+            "id": 74,
+            "samples": 169,
+            "median": 4.500045995474486
+          }
+        ],
+        "followerMin": 4.50004269142428,
+        "followerMedian": 4.500045752498938,
+        "boundedPaths": {
+          "samples": 17,
+          "minimumPercent": 100,
+          "worstTick": 5002,
+          "nearby": 7,
+          "reachable": 7,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5122,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -57.88358688354492,
+          "playerZ": 47.25642776489258,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/departure",
+        "label": "departure: Get everyone aboard the bus",
+        "threat": false,
+        "startSeconds": 75.36666666666666,
+        "seconds": 29.083333333333332,
+        "spawned": 0,
+        "initial": 61,
+        "observed": 62,
+        "reachableEver": 62,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 12,
+            "median": 3.7208495189512245
+          },
+          {
+            "id": 51,
+            "samples": 27,
+            "median": 4.50046189125729
+          },
+          {
+            "id": 52,
+            "samples": 23,
+            "median": 4.50003012940545
+          },
+          {
+            "id": 53,
+            "samples": 27,
+            "median": 4.599999999999985
+          },
+          {
+            "id": 54,
+            "samples": 26,
+            "median": 4.554306802000931
+          },
+          {
+            "id": 55,
+            "samples": 22,
+            "median": 4.599999999999881
+          },
+          {
+            "id": 56,
+            "samples": 21,
+            "median": 4.600000000000074
+          },
+          {
+            "id": 57,
+            "samples": 23,
+            "median": 4.59999999999995
+          },
+          {
+            "id": 58,
+            "samples": 28,
+            "median": 4.497974656576659
+          },
+          {
+            "id": 59,
+            "samples": 26,
+            "median": 4.606708387689553
+          },
+          {
+            "id": 60,
+            "samples": 29,
+            "median": 4.599999999999866
+          },
+          {
+            "id": 61,
+            "samples": 28,
+            "median": 4.5930228330716325
+          },
+          {
+            "id": 62,
+            "samples": 30,
+            "median": 4.599999999999957
+          },
+          {
+            "id": 63,
+            "samples": 32,
+            "median": 4.500250899463067
+          },
+          {
+            "id": 64,
+            "samples": 28,
+            "median": 4.60000000000003
+          },
+          {
+            "id": 65,
+            "samples": 30,
+            "median": 4.600000000000094
+          },
+          {
+            "id": 66,
+            "samples": 32,
+            "median": 4.5090354088687405
+          },
+          {
+            "id": 67,
+            "samples": 28,
+            "median": 4.59819645987806
+          },
+          {
+            "id": 68,
+            "samples": 27,
+            "median": 4.600000000000014
+          },
+          {
+            "id": 69,
+            "samples": 30,
+            "median": 4.586379191053256
+          },
+          {
+            "id": 70,
+            "samples": 30,
+            "median": 4.599999999999991
+          },
+          {
+            "id": 71,
+            "samples": 28,
+            "median": 4.6000000000001275
+          },
+          {
+            "id": 72,
+            "samples": 32,
+            "median": 4.499591290189091
+          },
+          {
+            "id": 73,
+            "samples": 31,
+            "median": 4.577303380442438
+          },
+          {
+            "id": 74,
+            "samples": 31,
+            "median": 4.600000000000007
+          }
+        ],
+        "followerMin": 3.7208495189512245,
+        "followerMedian": 4.599999999999866,
+        "boundedPaths": {
+          "samples": 5,
+          "minimumPercent": 100,
+          "worstTick": 5002,
+          "nearby": 7,
+          "reachable": 7,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6207,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 35.936214447021484,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": [
+          "SLOW_FOLLOWER:20"
+        ]
+      },
+      {
+        "key": "phase/boarding",
+        "label": "controller: boarding",
+        "threat": false,
+        "startSeconds": 86.85,
+        "seconds": 8.6,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 51,
+            "samples": 5,
+            "median": 4.475377586819754
+          },
+          {
+            "id": 52,
+            "samples": 4,
+            "median": 4.469357517481129
+          },
+          {
+            "id": 53,
+            "samples": 4,
+            "median": 4.6025207654457665
+          },
+          {
+            "id": 54,
+            "samples": 4,
+            "median": 4.491931401819772
+          },
+          {
+            "id": 58,
+            "samples": 5,
+            "median": 4.398321785314727
+          },
+          {
+            "id": 59,
+            "samples": 3,
+            "median": 4.724825533372613
+          },
+          {
+            "id": 60,
+            "samples": 7,
+            "median": 4.415727927430884
+          },
+          {
+            "id": 61,
+            "samples": 5,
+            "median": 4.5843707331575985
+          },
+          {
+            "id": 62,
+            "samples": 7,
+            "median": 4.373985018738853
+          },
+          {
+            "id": 63,
+            "samples": 9,
+            "median": 2.698407990574198
+          },
+          {
+            "id": 64,
+            "samples": 5,
+            "median": 4.5027733635826745
+          },
+          {
+            "id": 65,
+            "samples": 7,
+            "median": 4.597380489105074
+          },
+          {
+            "id": 66,
+            "samples": 9,
+            "median": 1.6739077260270132
+          },
+          {
+            "id": 67,
+            "samples": 5,
+            "median": 4.276597918865548
+          },
+          {
+            "id": 68,
+            "samples": 4,
+            "median": 4.6624999999999615
+          },
+          {
+            "id": 69,
+            "samples": 7,
+            "median": 4.380376872269822
+          },
+          {
+            "id": 70,
+            "samples": 7,
+            "median": 4.4789634115094135
+          },
+          {
+            "id": 71,
+            "samples": 5,
+            "median": 4.724999999999906
+          },
+          {
+            "id": 72,
+            "samples": 9,
+            "median": 2.825266032825504
+          },
+          {
+            "id": 73,
+            "samples": 8,
+            "median": 4.299148344546909
+          },
+          {
+            "id": 74,
+            "samples": 8,
+            "median": 3.108453332481914
+          },
+          {
+            "id": 55,
+            "samples": 4,
+            "median": 4.600777254896851
+          },
+          {
+            "id": 56,
+            "samples": 3,
+            "median": 4.578761570301883
+          },
+          {
+            "id": 57,
+            "samples": 2,
+            "median": 4.724999999999882
+          },
+          {
+            "id": 20,
+            "samples": 6,
+            "median": 1.382512831455635
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5691,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -70.69117736816406,
+          "playerZ": 47.525779724121094,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/departing",
+        "label": "controller: departing",
+        "threat": false,
+        "startSeconds": 95.45,
+        "seconds": 9,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6207,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 35.936214447021484,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/done",
+        "label": "controller: done",
+        "threat": false,
+        "startSeconds": 104.45,
+        "seconds": 0,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6267,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 40,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "flags": [
+    "step/departure:SLOW_FOLLOWER:20"
+  ],
+  "passiveRun": {
+    "level": "L7",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 101.65,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [],
+    "furthestObjective": "bus-departure",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 149,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 6099,
+    "followerWait": {
+      "escortTicks": 5558,
+      "stationaryFarTicks": 329,
+      "upperBoundPercent": 5.919395465994962,
+      "followers": [
+        {
+          "id": 20,
+          "escortTicks": 5558,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 51,
+          "escortTicks": 2297,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 52,
+          "escortTicks": 2789,
+          "stationaryFarTicks": 41
+        },
+        {
+          "id": 53,
+          "escortTicks": 3192,
+          "stationaryFarTicks": 133
+        },
+        {
+          "id": 54,
+          "escortTicks": 1531,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 55,
+          "escortTicks": 1442,
+          "stationaryFarTicks": 31
+        },
+        {
+          "id": 56,
+          "escortTicks": 602,
+          "stationaryFarTicks": 184
+        },
+        {
+          "id": 57,
+          "escortTicks": 132,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 58,
+          "escortTicks": 1286,
+          "stationaryFarTicks": 10
+        },
+        {
+          "id": 59,
+          "escortTicks": 513,
+          "stationaryFarTicks": 114
+        },
+        {
+          "id": 60,
+          "escortTicks": 1117,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 61,
+          "escortTicks": 1059,
+          "stationaryFarTicks": 39
+        },
+        {
+          "id": 62,
+          "escortTicks": 522,
+          "stationaryFarTicks": 123
+        },
+        {
+          "id": 63,
+          "escortTicks": 962,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 64,
+          "escortTicks": 936,
+          "stationaryFarTicks": 135
+        },
+        {
+          "id": 65,
+          "escortTicks": 645,
+          "stationaryFarTicks": 117
+        },
+        {
+          "id": 66,
+          "escortTicks": 898,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 67,
+          "escortTicks": 541,
+          "stationaryFarTicks": 142
+        },
+        {
+          "id": 68,
+          "escortTicks": 588,
+          "stationaryFarTicks": 184
+        },
+        {
+          "id": 69,
+          "escortTicks": 830,
+          "stationaryFarTicks": 44
+        },
+        {
+          "id": 70,
+          "escortTicks": 732,
+          "stationaryFarTicks": 139
+        },
+        {
+          "id": 71,
+          "escortTicks": 517,
+          "stationaryFarTicks": 118
+        },
+        {
+          "id": 72,
+          "escortTicks": 781,
+          "stationaryFarTicks": 278
+        },
+        {
+          "id": 73,
+          "escortTicks": 564,
+          "stationaryFarTicks": 165
+        },
+        {
+          "id": 74,
+          "escortTicks": 616,
+          "stationaryFarTicks": 190
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/rocket",
+        "label": "rocket: Recover the rocket launcher beside the exit",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 98,
+        "within2_5m": 1,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 1,
+          "nearby": 36,
+          "reachable": 36,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 273.010009765625,
+          "playerZ": 15,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/pickup",
+        "label": "controller: pickup",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 98,
+        "within2_5m": 1,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 1,
+          "nearby": 36,
+          "reachable": 36,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 273.010009765625,
+          "playerZ": 15,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/corridor",
+        "label": "corridor: Bring the group to the evacuation corridor",
+        "threat": true,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 80.01666666666667,
+        "spawned": 2,
+        "initial": 100,
+        "observed": 100,
+        "reachableEver": 100,
+        "within2_5m": 17,
+        "attacks": 14,
+        "attacksPerMinute": 10.497812955634243,
+        "firstAttackSeconds": 0.06666666666666667,
+        "groupAttacks": 29,
+        "groupAttacksPerMinute": 21.74546969381379,
+        "firstGroupAttackSeconds": 1.9833333333333334,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 149,
+            "median": 4.499862361590369
+          },
+          {
+            "id": 51,
+            "samples": 64,
+            "median": 4.499828233423747
+          },
+          {
+            "id": 52,
+            "samples": 76,
+            "median": 4.499829268857233
+          },
+          {
+            "id": 53,
+            "samples": 88,
+            "median": 4.499865557709765
+          },
+          {
+            "id": 54,
+            "samples": 41,
+            "median": 4.499828212944291
+          },
+          {
+            "id": 55,
+            "samples": 35,
+            "median": 4.499828163956561
+          },
+          {
+            "id": 56,
+            "samples": 11,
+            "median": 3.3879856839916687
+          },
+          {
+            "id": 57,
+            "samples": 4,
+            "median": 3.9430300154061855
+          },
+          {
+            "id": 58,
+            "samples": 29,
+            "median": 4.49982816389417
+          },
+          {
+            "id": 59,
+            "samples": 10,
+            "median": 4.500274247934328
+          },
+          {
+            "id": 60,
+            "samples": 27,
+            "median": 4.493442058873106
+          },
+          {
+            "id": 61,
+            "samples": 25,
+            "median": 3.809777556553714
+          },
+          {
+            "id": 62,
+            "samples": 10,
+            "median": 4.502430756109645
+          },
+          {
+            "id": 63,
+            "samples": 22,
+            "median": 4.332766930237715
+          },
+          {
+            "id": 64,
+            "samples": 21,
+            "median": 3.635971183369259
+          },
+          {
+            "id": 65,
+            "samples": 14,
+            "median": 4.101667517967822
+          },
+          {
+            "id": 66,
+            "samples": 19,
+            "median": 4.358837845143445
+          },
+          {
+            "id": 67,
+            "samples": 13,
+            "median": 4.234934151486117
+          },
+          {
+            "id": 68,
+            "samples": 13,
+            "median": 4.232650886422163
+          },
+          {
+            "id": 69,
+            "samples": 18,
+            "median": 4.475552982052966
+          },
+          {
+            "id": 70,
+            "samples": 16,
+            "median": 4.228888065496859
+          },
+          {
+            "id": 71,
+            "samples": 13,
+            "median": 4.138582015034944
+          },
+          {
+            "id": 72,
+            "samples": 17,
+            "median": 4.422358987838594
+          },
+          {
+            "id": 73,
+            "samples": 13,
+            "median": 4.423747180736929
+          },
+          {
+            "id": 74,
+            "samples": 14,
+            "median": 4.18611606156607
+          }
+        ],
+        "followerMin": 3.3879856839916687,
+        "followerMedian": 4.423053084287762,
+        "boundedPaths": {
+          "samples": 34,
+          "minimumPercent": 0,
+          "worstTick": 4694,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            76
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4814,
+          "alive": 96,
+          "reachable": 95,
+          "playerX": -24.467559814453125,
+          "playerZ": 47.5169563293457,
+          "positions": [
+            {
+              "identity": "76@2",
+              "id": 76,
+              "x": -39.9665471013068,
+              "z": 41.60599765183602,
+              "playerX": -24.467559814453125,
+              "playerZ": 47.5169563293457
+            }
+          ]
+        },
+        "flags": [
+          "SLOW_FOLLOWER:56",
+          "SLOW_FOLLOWER:61",
+          "SLOW_FOLLOWER:64",
+          "SLOW_FOLLOWER:65",
+          "SLOW_FOLLOWER:71",
+          "SLOW_FOLLOWER:74"
+        ]
+      },
+      {
+        "key": "phase/encounters",
+        "label": "controller: encounters",
+        "threat": false,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 92.41666666666667,
+        "spawned": 2,
+        "initial": 100,
+        "observed": 100,
+        "reachableEver": 100,
+        "within2_5m": 40,
+        "attacks": 38,
+        "attacksPerMinute": 24.67087466185753,
+        "firstAttackSeconds": 0.06666666666666667,
+        "groupAttacks": 29,
+        "groupAttacksPerMinute": 18.827772768259692,
+        "firstGroupAttackSeconds": 1.9833333333333334,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 172,
+            "median": 4.499861611078467
+          },
+          {
+            "id": 51,
+            "samples": 64,
+            "median": 4.499828233423747
+          },
+          {
+            "id": 52,
+            "samples": 76,
+            "median": 4.499829268857233
+          },
+          {
+            "id": 53,
+            "samples": 88,
+            "median": 4.499865557709765
+          },
+          {
+            "id": 54,
+            "samples": 41,
+            "median": 4.499828212944291
+          },
+          {
+            "id": 55,
+            "samples": 35,
+            "median": 4.499828163956561
+          },
+          {
+            "id": 56,
+            "samples": 11,
+            "median": 3.3879856839916687
+          },
+          {
+            "id": 57,
+            "samples": 4,
+            "median": 3.9430300154061855
+          },
+          {
+            "id": 58,
+            "samples": 29,
+            "median": 4.49982816389417
+          },
+          {
+            "id": 59,
+            "samples": 10,
+            "median": 4.500274247934328
+          },
+          {
+            "id": 60,
+            "samples": 27,
+            "median": 4.493442058873106
+          },
+          {
+            "id": 61,
+            "samples": 25,
+            "median": 3.809777556553714
+          },
+          {
+            "id": 62,
+            "samples": 10,
+            "median": 4.502430756109645
+          },
+          {
+            "id": 63,
+            "samples": 22,
+            "median": 4.332766930237715
+          },
+          {
+            "id": 64,
+            "samples": 21,
+            "median": 3.635971183369259
+          },
+          {
+            "id": 65,
+            "samples": 14,
+            "median": 4.101667517967822
+          },
+          {
+            "id": 66,
+            "samples": 19,
+            "median": 4.358837845143445
+          },
+          {
+            "id": 67,
+            "samples": 13,
+            "median": 4.234934151486117
+          },
+          {
+            "id": 68,
+            "samples": 13,
+            "median": 4.232650886422163
+          },
+          {
+            "id": 69,
+            "samples": 18,
+            "median": 4.475552982052966
+          },
+          {
+            "id": 70,
+            "samples": 16,
+            "median": 4.228888065496859
+          },
+          {
+            "id": 71,
+            "samples": 13,
+            "median": 4.138582015034944
+          },
+          {
+            "id": 72,
+            "samples": 17,
+            "median": 4.422358987838594
+          },
+          {
+            "id": 73,
+            "samples": 13,
+            "median": 4.423747180736929
+          },
+          {
+            "id": 74,
+            "samples": 14,
+            "median": 4.18611606156607
+          }
+        ],
+        "followerMin": 3.3879856839916687,
+        "followerMedian": 4.423053084287762,
+        "boundedPaths": {
+          "samples": 41,
+          "minimumPercent": 0,
+          "worstTick": 4694,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            76
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5535,
+          "alive": 100,
+          "reachable": 100,
+          "playerX": -62.75673294067383,
+          "playerZ": 47.339351654052734,
+          "positions": []
+        },
+        "flags": [
+          "SLOW_FOLLOWER:56",
+          "SLOW_FOLLOWER:61",
+          "SLOW_FOLLOWER:64",
+          "SLOW_FOLLOWER:65",
+          "SLOW_FOLLOWER:71",
+          "SLOW_FOLLOWER:74"
+        ]
+      },
+      {
+        "key": "step/departure",
+        "label": "departure: Get everyone aboard the bus",
+        "threat": false,
+        "startSeconds": 80.25,
+        "seconds": 21.4,
+        "spawned": 0,
+        "initial": 96,
+        "observed": 100,
+        "reachableEver": 100,
+        "within2_5m": 29,
+        "attacks": 26,
+        "attacksPerMinute": 72.89719626168224,
+        "firstAttackSeconds": 4.933333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 23,
+            "median": 3.732842568666031
+          }
+        ],
+        "followerMin": 3.732842568666031,
+        "followerMedian": 3.732842568666031,
+        "boundedPaths": {
+          "samples": 10,
+          "minimumPercent": 90,
+          "worstTick": 4815,
+          "nearby": 10,
+          "reachable": 9,
+          "blockedIds": [
+            76
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6039,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 35.936214447021484,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/departing",
+        "label": "controller: departing",
+        "threat": false,
+        "startSeconds": 92.65,
+        "seconds": 9,
+        "spawned": 0,
+        "initial": 100,
+        "observed": 100,
+        "reachableEver": 100,
+        "within2_5m": 20,
+        "attacks": 2,
+        "attacksPerMinute": 13.333333333333334,
+        "firstAttackSeconds": 1.6833333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 3,
+          "minimumPercent": 100,
+          "worstTick": 5799,
+          "nearby": 12,
+          "reachable": 12,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6039,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 35.936214447021484,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/done",
+        "label": "controller: done",
+        "threat": false,
+        "startSeconds": 101.65,
+        "seconds": 0,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 98,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 6099,
+          "alive": 98,
+          "reachable": 98,
+          "playerX": 40,
+          "playerZ": 47,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "passiveFlags": [
+    "step/corridor:SLOW_FOLLOWER:56",
+    "step/corridor:SLOW_FOLLOWER:61",
+    "step/corridor:SLOW_FOLLOWER:64",
+    "step/corridor:SLOW_FOLLOWER:65",
+    "step/corridor:SLOW_FOLLOWER:71",
+    "step/corridor:SLOW_FOLLOWER:74",
+    "phase/encounters:SLOW_FOLLOWER:56",
+    "phase/encounters:SLOW_FOLLOWER:61",
+    "phase/encounters:SLOW_FOLLOWER:64",
+    "phase/encounters:SLOW_FOLLOWER:65",
+    "phase/encounters:SLOW_FOLLOWER:71",
+    "phase/encounters:SLOW_FOLLOWER:74"
+  ],
+  "wallSeconds": 15.636497457999997,
+  "nativeStateHash": "7037718c"
+}

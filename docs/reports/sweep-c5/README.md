@@ -1,0 +1,81 @@
+# sweep-c5 — L7–L10 acceptance sweep
+
+Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c`. Worktree base was `e1f1e8d`; row evidence was recorded against this fingerprint.
+
+## Closed / current PASS rows
+
+| Row | Result |
+|---|---|
+| L7-04 | existing current PASS |
+| L7-10 | existing current PASS |
+| L8-06 | requalified current source; breach attacks 5.24/min, first attack 1.97 s, 100% reachability |
+| L9-08 | existing current PASS |
+| L10-01 | existing current PASS |
+| L10-02 | requalified current source; opening at tick 5400, Mega separation ~119 m, matched low/high cues |
+| L10-04 | requalified current source; seven regions, low/high reachability and combat rates meet thresholds |
+| L10-10 | existing current PASS |
+| L10-13 | existing current PASS |
+| L10-15 | existing current PASS |
+
+## Still open rows
+
+These are the current `qa:accept` row statuses. `FAIL` rows remain open; passing a native subcheck does not override an outstanding PO or full criterion clause.
+
+| Row | Status | Required next work / current finding |
+|---|---|---|
+| L7-01 | NOT CHECKED | Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured. |
+| L7-02 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier). |
+| L7-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance. |
+| L7-05 | FAIL | Native combat rate passes; PO findings/signoff remain open. |
+| L7-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep. |
+| L7-07 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter "Group n/n" correct. |
+| L7-08 | NOT CHECKED | NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it. |
+| L7-09 | FAIL | Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks. |
+| L7-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge. |
+| L7-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1. |
+| L8-01 | NOT CHECKED | NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups. |
+| L8-02 | NOT CHECKED | NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack. |
+| L8-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. |
+| L8-04 | NOT CHECKED | Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses. |
+| L8-05 | NOT CHECKED | NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak. |
+| L8-07 | NOT CHECKED | NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review. |
+| L8-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents). |
+| L8-09 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure. |
+| L8-10 | NOT CHECKED | NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds. |
+| L8-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus "is it stunning?" pass. |
+| L9-01 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. |
+| L9-02 | NOT CHECKED | NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas. |
+| L9-03 | FAIL | Current report remains FAIL. Compare on-camera/drawn infected body samples against player x/z intervals on all prescribed routes at both tiers; resolve road-presence finding. |
+| L9-04 | NOT CHECKED | NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers. |
+| L9-05 | NOT CHECKED | NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash. |
+| L9-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. |
+| L9-07 | NOT CHECKED | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. |
+| L9-09 | NOT CHECKED | NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries. |
+| L10-03 | NOT CHECKED | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95. |
+| L10-05 | NOT CHECKED | NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route. |
+| L10-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi. |
+| L10-07 | NOT CHECKED | Native pursuit mechanics pass on current source; still needs minimap and audible gain review with real-input capture. |
+| L10-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. |
+| L10-09 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state. |
+| L10-11 | FAIL | Fresh 240 s hold: Mega arena entry was 57.78 s low / 56.45 s high, outside the 120–160 s criterion. Continue full assault census and arrival timing; do not close. |
+| L10-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres. |
+| L10-14 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits. |
+
+## Evidence and gates
+
+Row-specific commits:
+
+- `69daf11` — L7-05 current-source requalification
+- `7b49bef` — L8-06 current-source requalification
+- `7314277` — L10-02
+- `ef01b8b` — L10-04
+- `bf36764` — L10-11 measured failure
+- `6fcc2d2` — L10-07 pursuit checker correction and controls
+
+- Fresh `qa:accept --reuse --skip-browser` reports were run for L7, L8, L9 and L10 at both tiers. They show L7 and L10 failures and the remaining incomplete criteria; logs are in `gates/`.
+- `npx tsc --noEmit`, `npm run lint`, and `npm test` passed (107 tests, 27 files). Logs are in `gates/`.
+- The full `npm run qa:threat` run exceeded its 598 s browser reservation/test budget. Reran in bounded batches covering L1–L5 and L6–L10. Combined measured findings: 12 L7 flags and one L4 flag; the batch receipts are explicitly diagnostic partial selections. The required zero-flag gate is not met.
+- Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
+- `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
+
+Open rows: 37. Current PASS rows listed above: 10. No game code was changed. Perf work was not performed.
