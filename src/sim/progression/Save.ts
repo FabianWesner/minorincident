@@ -152,6 +152,17 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   }return true;
 }
 const compressedPrefix = 'minor-incident.gzip1:';
+const checkpointPrefix = 'minor-incident.checkpoint1:';
+/** A checkpoint event captures the same live and retry snapshot. Persist one
+ * copy synchronously, without deflating both copies in the gameplay frame. */
+function checkpointRecord(save: CampaignSave): string | undefined {
+  if (!save.cureResume) return;
+  const { cureResume, ...campaign } = save;
+  const { current, checkpoint, ...view } = cureResume;
+  const snapshot = JSON.stringify(current);
+  if (snapshot.length < 32768 || snapshot !== JSON.stringify(checkpoint)) return;
+  return `${checkpointPrefix}[${JSON.stringify(campaign)},${JSON.stringify(view)},${snapshot}]`;
+}
 /** Keep small/legacy saves readable; full finale snapshots need lossless storage compression.
  * Binary strings are valid localStorage values and avoid base64's extra size. */
 export function encodeSave(save: CampaignSave): string {
@@ -162,7 +173,14 @@ export function decodeSave(text:string|null):SaveResult {
   if(text===null)return {status:'empty'};
   try {
     if (text.startsWith(compressedPrefix)) text = strFromU8(gunzipSync(strToU8(text.slice(compressedPrefix.length), true)));
-    const save=migrate(JSON.parse(text));return validateSave(save)?{status:'ok',save:structuredClone(save)}:{status:'error',message:SAVE_ERROR};
+    let raw: unknown;
+    if (text.startsWith(checkpointPrefix)) {
+      const parts: unknown = JSON.parse(text.slice(checkpointPrefix.length));
+      if (!Array.isArray(parts) || parts.length !== 3 || !parts.every(record)) throw new Error('Invalid checkpoint record');
+      const [campaign, view, current] = parts;
+      raw = { ...campaign, cureResume: { ...view, current, checkpoint: structuredClone(current) } };
+    } else raw = JSON.parse(text);
+    const save=migrate(raw);return validateSave(save)?{status:'ok',save:structuredClone(save)}:{status:'error',message:SAVE_ERROR};
   }catch{return {status:'error',message:SAVE_ERROR};}
 }
 /** Options.js delegates persistence to Audio.js (Bruno Simon, MIT): restore/store at the browser boundary.
@@ -170,6 +188,16 @@ export function decodeSave(text:string|null):SaveResult {
 export class SaveStore {
   constructor(private readonly storage:{getItem(key:string):string|null;setItem(key:string,value:string):void;removeItem(key:string):void}){}
   load():SaveResult {try{return decodeSave(this.storage.getItem(SAVE_KEY));}catch{return {status:'error',message:SAVE_ERROR};}}
-  write(save:CampaignSave):boolean {if(!validateSave(save))throw new Error('Invalid campaign save');try{this.storage.setItem(SAVE_KEY,encodeSave(save));return true;}catch{return false;}}
+  write(save:CampaignSave):boolean {
+    if(!validateSave(save))throw new Error('Invalid campaign save');
+    try {
+      const checkpoint = checkpointRecord(save);
+      if (checkpoint) {
+        try { this.storage.setItem(SAVE_KEY, checkpoint); return true; }
+        catch { /* A smaller storage quota still gets the lossless gzip record. */ }
+      }
+      this.storage.setItem(SAVE_KEY,encodeSave(save)); return true;
+    } catch { return false; }
+  }
   clear():boolean {try{this.storage.removeItem(SAVE_KEY);return true;}catch{return false;}}
 }
