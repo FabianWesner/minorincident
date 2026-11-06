@@ -1,77 +1,32 @@
 {
   "row": "L1-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "c814135b307ae0c84e09ed61bd26f97af6b18a49",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "7248826255c34ab9f2adedc37cf6fa46d59663d4",
   "clauses": [
     {
       "clause": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
       "verdict": "PASS",
-      "note": "All20 fresh low/high frames inspected: clerk148/155 hands parcel to courier, waves, walks back through shop door, then settled panel closes. Both94-tick giving/waving windows have zero hidden ticks, and no clerk hidden while outdoors(z>\u221238.5). Same actor throughout, no new identity substitute; final clerkId0/closed-door state. Toast partly overlaps lower bodies but hands/parcel remain visible. Seven story controls pass; independent one-second tail confirms visual door closure. No game change."
+      "note": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L1-03-story-proof.json",
-      "sha256": "6811516ef00cefd0eeb26d94018922999bb03162f43aa7a6df20c0b2a0602d04",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+      "file": "docs/reports/sweep-a3/L1-03-current-ledger.json.gz",
+      "sha256": "ada8126d16cae482cffde053251ba5eab18c5ece492bab79d1c7cbfa85ff73f6",
+      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-03-image-review.json",
-      "sha256": "c75a24fbb364de26f8bbca261ce1f64e402501a93262785ddde6e83b5ae02e1f",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+      "file": "docs/reports/sweep-a3/L1-03-current-images.json",
+      "sha256": "26ef01b46d7ed4d0074f7126e300d5e86a9db28f874c94620240c95462f5ad13",
+      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
     },
     {
-      "file": "docs/reports/sweep-a2/clerk-final-ledger.json.gz",
-      "sha256": "3cbbdc82667f5348d013cdf535e629a8b98f3fcf6ac0a2592e3433cf51310d36",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/clerk-final-photos.json",
-      "sha256": "9ee2760abcc273f0b1751973e7f9aecabb135929173408f4619a0eb8ad498729",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/clerk-door-tail-ledger.json.gz",
-      "sha256": "73d2d8636111c232415a8888c346e95fd58421e882dd49591f5f91e96be64127",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/clerk-door-tail-photos.json",
-      "sha256": "e122eacacab773406eaeaef27154e3ada99a8459a270a46a0230a951516205c1",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-door-tail-01.jpg",
-      "sha256": "d2cedc571bee0378488e60c422c23218ef547b90e653b587b7b60dd21b93bca3",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-final-01.jpg",
-      "sha256": "d3dedf10cd3d9035a4a1fe8fc426f5c90306a22ecdcc084bc2e7de46640c76a6",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-final-02.jpg",
-      "sha256": "b5e1a06d682e088a6b20c778a0868c592bebdd5cacbe3ef57b5d5a29ee6be806",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-final-03.jpg",
-      "sha256": "e26c39f007192a0f377bbce04d152e778eb04551813d88fee61bb3194ed7c281",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-final-04.jpg",
-      "sha256": "02ce8761b53acd71115ca2fede6521a8a1b55d034deffc7505668156c0165594",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/clerk-final-05.jpg",
-      "sha256": "f84af995d52a807abc4c0f59ff7b44ab41c6c8712b9a3ab8ad2210bf50814842",
-      "what": "Fresh continuous clerk/parcel/door state, all20 personally inspected frames and repeat settled-door tail; between-render drawn flags do not supply pixel verdicts."
+      "file": "docs/reports/sweep-a3/L1-03-story-proof.json",
+      "sha256": "0616c2f869c23cf64ec0e5173fa031452d60f35188e62df97269e75f64a8a58a",
+      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
     }
   ],
-  "notes": "Native complete InputFrames only reach pickup, then no injected input. Current scene does not qualify unassisted navigation. No performance timing."
+  "notes": "Ordinary native InputFrames from fresh game; no relocation, protection, skips or actor substitution."
 }
