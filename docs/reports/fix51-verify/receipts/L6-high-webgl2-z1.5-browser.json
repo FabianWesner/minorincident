@@ -1103,6 +1103,37 @@
       },
       "target": "No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim",
       "receipt": "docs/reports/sweep-b/L6-02-proof.json"
+    },
+    {
+      "id": "L6-01",
+      "clause": "actual carried L5 residents lose L6 shelter routine presentation",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "carriedCount": 24,
+        "identicalIds": true,
+        "allFullHealth": true,
+        "assignedRoutines": {
+          "sit": 5,
+          "talk": 5,
+          "treat": 5,
+          "rest": 4,
+          "share": 4
+        },
+        "actualStoryClips": {
+          "idle": 8,
+          "npc-gesture": 16,
+          "npc-sit": 0,
+          "death-side": 0,
+          "npc-cower": 0,
+          "npc-give": 0
+        },
+        "throughTick": 240
+      },
+      "target": "Actual24residents+0\u20135 rescued; sameIDs/fullHP; sit/talk/treat/rest/share routines and no idle>3s",
+      "receipt": "docs/reports/sweep-b/L6-01-proof.json"
     }
   ],
   "observations": {

@@ -1,0 +1,41 @@
+{
+  "row": "L6-01",
+  "status": "FAIL",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "6e755c87e1325ba2f89a37ffe9a3692b73f0128d",
+  "clauses": [
+    {
+      "clause": "24 occupants + 0\u20135 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
+      "verdict": "FAIL",
+      "note": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L6-01-proof.json",
+      "sha256": "4433c0a90443ecef43939645122a1a5b300b060a9e108708ed0b7ebb55d54e3c",
+      "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-carry-ledger.json.gz",
+      "sha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701",
+      "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-carry-capture-review.json",
+      "sha256": "4c0c881df399a12fd586249eb1823f85c04025c83e21b1383d6f4ecce64b7e06",
+      "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-carry-low-actual-L5-save.json.gz",
+      "sha256": "080da8c294fabf4e8a740448f217f3fe36cfa45e3f7d30e43a6c38de684212ee",
+      "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-carry-high-actual-L5-save.json.gz",
+      "sha256": "4cb8ada0245bf67823621836a3da03d029add4a4704f51c469de9c9948d404de",
+      "what": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions."
+    }
+  ]
+}
