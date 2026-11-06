@@ -1,0 +1,13 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L10 --reuse --skip-browser --tier both --policy both
+
+[qa:accept] L10 low/complete: reuse matching receipt
+[qa:accept] L10 low/stationary: reuse matching receipt
+[qa:accept] L10 high/complete: reuse matching receipt
+[qa:accept] L10 high/stationary: reuse matching receipt
+[qa:accept] L10 low/fixtures: 16 clauses, 0 errors
+[qa:accept] L10 high/fixtures: 16 clauses, 0 errors
+[qa:accept] L10 low/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept] L10 high/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept] L10: 2 fresh failing rows; 6 incomplete rows; docs/reports/fix51-verify/L10.json

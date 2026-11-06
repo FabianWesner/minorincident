@@ -1,0 +1,26 @@
+{
+ "name": "seethrough-engine-on-foot",
+ "note": "vqa-3 P1 (L2 doors): the courier on foot behind a parked fire engine. The hull is never cut (no hard-edged disc, cut pixels inside her disc 0); she reads through the foreground slice and gold contour instead (courier visible share). A sedan beside her stays whole.",
+ "ground": "asphalt",
+ "size": 60,
+ "time": "L2",
+ "dof": false,
+ "actors": [{ "id": "courier", "kind": "courier", "at": [0, 0], "state": "idle" }],
+ "vehicles": [
+  { "id": "engine", "asset": "vehicle.fire-engine", "at": [2.4, 2.4], "yaw": 45 },
+  { "id": "sedan", "asset": "vehicle.sedan", "at": [-4, 4] }
+ ],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1.5 },
+ "frames": 30,
+ "sheet": 15,
+ "vehicleSilhouettes": ["engine", "sedan"],
+ "expect": {
+  "consoleErrors": 0,
+  "courierVisibleShareMin": 0.6,
+  "seeThroughCutInsideMax": 0,
+  "seeThroughCutPixelsMax": 0,
+  "courierForegroundFramesMax": 1000,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

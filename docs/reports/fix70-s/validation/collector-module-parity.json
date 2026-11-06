@@ -1,0 +1,203 @@
+{
+  "finding": "Only presentation text in report.ts changes the observer fingerprint. Every simulation, phase discovery and pace collection module is byte-identical to the historical collector controls. Threat audit scheduling is outside the observer fingerprint.",
+  "modules": [
+    {
+      "path": "tools/qa/accept/l5-formation.ts",
+      "beforeSha256": "6c5b80ebb338b1ac892149a6e300c3fdf146a07425ff578d5624402a52655eb6",
+      "afterSha256": "6c5b80ebb338b1ac892149a6e300c3fdf146a07425ff578d5624402a52655eb6",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/accept/observer.ts",
+      "beforeSha256": "84846052635d1ed35b35de3c9fc2d30c1f407d048b598039d69cb1ad548695e9",
+      "afterSha256": "84846052635d1ed35b35de3c9fc2d30c1f407d048b598039d69cb1ad548695e9",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/accept/probe.ts",
+      "beforeSha256": "34341802d8743c79283505f4413391df2013c78ec5444f2942f5afc994224068",
+      "afterSha256": "34341802d8743c79283505f4413391df2013c78ec5444f2942f5afc994224068",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/attackStarts.ts",
+      "beforeSha256": "983fe5369f04145421f1077a4d9267fecfbf6a3cdb5ae1c593be5a7507fb1691",
+      "afterSha256": "983fe5369f04145421f1077a4d9267fecfbf6a3cdb5ae1c593be5a7507fb1691",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/criteria.ts",
+      "beforeSha256": "0b6321589197f165a6ad4ab5eed5db9b4d0c37ae278fac9ce5189fa0c7246579",
+      "afterSha256": "0b6321589197f165a6ad4ab5eed5db9b4d0c37ae278fac9ce5189fa0c7246579",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/followerPace.ts",
+      "beforeSha256": "37d34e4fee7bac1fdbc1fb2b65d6e74039278cbe5b0ce820c2b64a02499f1461",
+      "afterSha256": "37d34e4fee7bac1fdbc1fb2b65d6e74039278cbe5b0ce820c2b64a02499f1461",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/followerPaceSeeds.ts",
+      "beforeSha256": "b0c823e64dcf2343cfb1a3af0719777a3437a0481cb9b1260374d6fea3fdd6a9",
+      "afterSha256": "b0c823e64dcf2343cfb1a3af0719777a3437a0481cb9b1260374d6fea3fdd6a9",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/l3ArmyLine.ts",
+      "beforeSha256": "3adebd7bc9836084011436b7c7a1dc9a9423b106c5a22aee6638a8953d10aeba",
+      "afterSha256": "3adebd7bc9836084011436b7c7a1dc9a9423b106c5a22aee6638a8953d10aeba",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/l3ArmySeeds.ts",
+      "beforeSha256": "1967e5e22a7828375667f37b7e948a16684480497c237506f2684f7e6e08ebb9",
+      "afterSha256": "1967e5e22a7828375667f37b7e948a16684480497c237506f2684f7e6e08ebb9",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/l4-hold.ts",
+      "beforeSha256": "dab78013f451cf0e64863145702d2435b644ccee828e14c3125890e1925e7dc8",
+      "afterSha256": "dab78013f451cf0e64863145702d2435b644ccee828e14c3125890e1925e7dc8",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/observer.ts",
+      "beforeSha256": "528ab04cb1f1f42d190c456f8d7e953f807b761312b297cbe3680358bdc827ec",
+      "afterSha256": "528ab04cb1f1f42d190c456f8d7e953f807b761312b297cbe3680358bdc827ec",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/phases.ts",
+      "beforeSha256": "47121609fb4912de31d1c4fbf7623641101c176238a1a81479ce42dad6fc3e44",
+      "afterSha256": "47121609fb4912de31d1c4fbf7623641101c176238a1a81479ce42dad6fc3e44",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/proof.ts",
+      "beforeSha256": "225523b4467dddb6744a3c4b87016ca8736bb67264fd24eb216a659bfcedbd80",
+      "afterSha256": "225523b4467dddb6744a3c4b87016ca8736bb67264fd24eb216a659bfcedbd80",
+      "identical": true
+    },
+    {
+      "path": "tools/qa/threat/report.ts",
+      "beforeSha256": "d4dec59c391cc19f0ee560898d406a8fff838d174c56b70f4f24fa12b9302d90",
+      "afterSha256": "13b632b62b51ad7e7c4daeaf3f227eb47d6cdac6d357aa4e23033d351e763309",
+      "identical": false
+    },
+    {
+      "path": "tools/qa/threat/waves.ts",
+      "beforeSha256": "7e712f09cae0a36f925d79e039d57ce4599c3847985522c8e839ed05c76f4370",
+      "afterSha256": "7e712f09cae0a36f925d79e039d57ce4599c3847985522c8e839ed05c76f4370",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/index.ts",
+      "beforeSha256": "ef7dc5022e285cce531f30f51a0e0e54ab30ab4d026e1ad6b0402822bc594bb7",
+      "afterSha256": "ef7dc5022e285cce531f30f51a0e0e54ab30ab4d026e1ad6b0402822bc594bb7",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l10-finale-calibration.ts",
+      "beforeSha256": "13d86e2be0d73353b872dd705f7a8be4d7d8546d7fea689e496d798c53cc16e5",
+      "afterSha256": "13d86e2be0d73353b872dd705f7a8be4d7d8546d7fea689e496d798c53cc16e5",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l10.ts",
+      "beforeSha256": "7ff175ebcd6c5c680324ce4e942af866e7893f25014a1403d6a478957b8e3f6a",
+      "afterSha256": "7ff175ebcd6c5c680324ce4e942af866e7893f25014a1403d6a478957b8e3f6a",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l1Bots.ts",
+      "beforeSha256": "5c7d0cc87268557848855ee7218e560a39b39a8905668cc49c9140e0525b7c33",
+      "afterSha256": "5c7d0cc87268557848855ee7218e560a39b39a8905668cc49c9140e0525b7c33",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l1Route.ts",
+      "beforeSha256": "9a21729f3aaeb9f72f7ef1c81d53940f39b4272ead9ee286cc053b3eae8b1acc",
+      "afterSha256": "9a21729f3aaeb9f72f7ef1c81d53940f39b4272ead9ee286cc053b3eae8b1acc",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l1StreetRoute.ts",
+      "beforeSha256": "52364444c154356a52be37f0002e31e389dcb96d5c255b8b70213959c0ccd17f",
+      "afterSha256": "52364444c154356a52be37f0002e31e389dcb96d5c255b8b70213959c0ccd17f",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l2Bots.ts",
+      "beforeSha256": "7fe71e4e594435f5618bb6e7097f7c50003707a0b280ba7713faca9ed068c366",
+      "afterSha256": "7fe71e4e594435f5618bb6e7097f7c50003707a0b280ba7713faca9ed068c366",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l2Route.ts",
+      "beforeSha256": "d233070e08a7a3ed089d4f795482ed574718efb86214524f4e60644fc33270a9",
+      "afterSha256": "d233070e08a7a3ed089d4f795482ed574718efb86214524f4e60644fc33270a9",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l3-follow-proof.ts",
+      "beforeSha256": "4f1fcf27fce66191ed868b87e7d558fd5547a994a6b570ba98e381f88ae1936f",
+      "afterSha256": "4f1fcf27fce66191ed868b87e7d558fd5547a994a6b570ba98e381f88ae1936f",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l3-towers-proof.ts",
+      "beforeSha256": "3d7659d78a62b7e91c61770f03a20828a016f65dd87cffb179622f6fa61641b3",
+      "afterSha256": "3d7659d78a62b7e91c61770f03a20828a016f65dd87cffb179622f6fa61641b3",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l3Bots.ts",
+      "beforeSha256": "371c395008c1c90cf348e8fa6d46303f64872d60a2578b8314d4299a9f254240",
+      "afterSha256": "371c395008c1c90cf348e8fa6d46303f64872d60a2578b8314d4299a9f254240",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l4-action-census.ts",
+      "beforeSha256": "b2a2afeb55919681b4a053fc979b2326e507faa6654a1a1f4cd3b192c5dd4459",
+      "afterSha256": "b2a2afeb55919681b4a053fc979b2326e507faa6654a1a1f4cd3b192c5dd4459",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l4-breach-probe.ts",
+      "beforeSha256": "c225bb9ba123129e2c4b460da0c0002d07f9714b93081270aef5ed9824e6193a",
+      "afterSha256": "c225bb9ba123129e2c4b460da0c0002d07f9714b93081270aef5ed9824e6193a",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l4Bots.ts",
+      "beforeSha256": "fddabcdf883874b147e66e132098dcdc0da2f6f0e96280020e5ef8878c3f2c82",
+      "afterSha256": "fddabcdf883874b147e66e132098dcdc0da2f6f0e96280020e5ef8878c3f2c82",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l5Bots.ts",
+      "beforeSha256": "373746bf410560a481f49e47fba1fb42d5b1eba5476917665d3ea5656eb143be",
+      "afterSha256": "373746bf410560a481f49e47fba1fb42d5b1eba5476917665d3ea5656eb143be",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/l6Bots.ts",
+      "beforeSha256": "2f0dc9485f8bc0bd527fe81df7f5deef3562bc602b906e91ecc88d11f2a4ef42",
+      "afterSha256": "2f0dc9485f8bc0bd527fe81df7f5deef3562bc602b906e91ecc88d11f2a4ef42",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/levels.ts",
+      "beforeSha256": "9f33fdbda949cf9ac63c0022979967e93a4e3d09050b71851d0fe3659a3c330b",
+      "afterSha256": "9f33fdbda949cf9ac63c0022979967e93a4e3d09050b71851d0fe3659a3c330b",
+      "identical": true
+    },
+    {
+      "path": "tools/sim-runner/propVariants.ts",
+      "beforeSha256": "9f61ad8cd13c55e943e046929fc04f44c8d6e0b708ad25afe23417375e8f9428",
+      "afterSha256": "9f61ad8cd13c55e943e046929fc04f44c8d6e0b708ad25afe23417375e8f9428",
+      "identical": true
+    }
+  ]
+}

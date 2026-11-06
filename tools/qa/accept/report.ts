@@ -47,7 +47,7 @@ const subjectiveReview: Record<string, string> = {
   'L5-05': 'PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only; reachability, route density, attack rate and first-attack clock retain numeric checks.',
   'L4-18': 'PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection.',
   'L5-14': 'PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause.',
-  'L7-12': 'PO: does L7 read as the worst destruction so far, and do Alpha silhouettes read as human? The player contrast≥3:1 clause remains quantitative and open.',
+  'L7-12': 'PO: does L7 read as the worst destruction so far, and do Alpha silhouettes read as human? Use the separately listed quantitative matrix result for player contrast≥3:1.',
 };
 function concise(value: unknown): string {
   const rendered = typeof value === 'string' ? value : JSON.stringify(value);
@@ -113,6 +113,11 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'G-12': source.expected,
     'G-24': source.expected,
     'L7-08': source.expected,
+    'L10-08': source.expected,
+    'L10-12': source.expected,
+    'L10-14': source.expected,
+    'L7-06': source.expected,
+    'L7-11': source.expected,
     'L8-04': source.expected,
     'L8-03': source.expected,
     'L8-10': source.expected,
@@ -160,7 +165,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'G-13': null,
     'G-15': null,
     'L6-07': null,
-    'L10-14': null,
+    'L10-14': source.expected,
     'G-27': 'For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately.',
     'L1-17': 'Review the morning depot/Annex frames for an inhabited suburb, then the outbreak frames for the feeling that there are too many infected to fight.',
     'L2-16': 'Compare L1 and L2 at matching zoom and quality: does L2 sunlight read higher/harder, and do the streets look wounded while buildings still stand?',

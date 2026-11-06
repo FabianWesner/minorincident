@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "high",
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "fixtureHash": "a83f2bc89d02dfa7932493ebde256f4ab2fc60b300fe751bd700b0a218426ed8",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c6/L7-12"
+  },
+  "checks": [
+    {
+      "id": "L7-12",
+      "clause": "physical rocket and horde player contrast matrix",
+      "tier": "high",
+      "policy": "physical-readability",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "matrix": true,
+        "minimumContrast02": 4.886927631064856,
+        "minimumContrast05": 4.0497590430091766,
+        "counterexamples": []
+      },
+      "target": "Actual physical progressed-save low/high; userzoom0.5/1.5 at rocket, live horde and active city fire. Courier ID-mask P90 versus actual2m ring ≥3:1. Report both .02/.05 offsets; require both to pass and call FAIL only when both are below3.",
+      "receipt": "docs/reports/sweep-c6/L7-12/contrast-proof.json"
+    },
+    {
+      "id": "L7-12",
+      "clause": "reviewed ruined-city and Alpha motion frames",
+      "tier": "high",
+      "policy": "physical-readability",
+      "status": "PASS",
+      "value": {
+        "motion": true,
+        "cityFrames": true,
+        "reviewed": true,
+        "captures": 42
+      },
+      "target": "Same original living Alpha through actual six/twelve-tick physical movement, both zooms; current-source physically reached ruined-city approach frames at both zooms; all source/mask frames personally reviewed. P: does this read as the worst destruction so far, and do the enlarged Alpha bodies still read as human?",
+      "receipt": "docs/reports/sweep-c6/L7-12/high-review.json"
+    }
+  ]
+}

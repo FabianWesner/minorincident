@@ -1,0 +1,235 @@
+{
+  "kind": "Numeric evidence only; no images produced and no visual PASS inferred.",
+  "artifacts": [
+    {
+      "path": "docs/reports/fix70-s/README.md",
+      "sha256": "fc62f5d759acc5891e19a6f6e58fbb89ce20690466f420c1667e88cf88a09f73",
+      "observed": "Report states the repaired L7 pace, rejected trials, retained L5 failure and BLOCKED full threat gate."
+    },
+    {
+      "path": "docs/reports/fix70-s/acceptance-summary.json",
+      "sha256": "733385a09c41aa74b149b01276eccd5683a873288b42cc5863f4dd86f0043268",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L5-high-full-observer.json.gz",
+      "sha256": "28a8e51e11a0e9bf3b54e304dc99100c7cf856cb59800e4b45df7dba2b4ed2ba",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L5-low-full-observer.json.gz",
+      "sha256": "17ab9cee784a82bd28e622114aafd8294eeb37ccfc6d2fcb00a827c8888b9620",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L7-high-complete.json.gz",
+      "sha256": "ce323bed4e27f423a43248026388cce576fac65672b1b8844d126303c2b8869c",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L7-high-full-observer.json.gz",
+      "sha256": "1d619efc85224341a796d181407cbdb2299ac7d48c0698567fa67e680b6cc010",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L7-low-complete.json.gz",
+      "sha256": "b6f94d899e601dc9b2487251e96e2710a4a4394d47c3097c74ce2e4263cc2122",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/L7-low-full-observer.json.gz",
+      "sha256": "aae5a70b02a114c63e8295bb492ebb399b332eb8f6b95dcf1b7be9cff660979b",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/trace-1-68.json.gz",
+      "sha256": "794e5a5a377bb7c529dbf167c65e14ffef98cd208d65d2ce77d2803c3512795e",
+      "observed": "Numeric contact trace reproduces canonical f06f7bb3; followers 68/71 request motion but physically block each other."
+    },
+    {
+      "path": "docs/reports/fix70-s/before/trace-1-71.json.gz",
+      "sha256": "a99c16ca123564ee301621f97f425bec1b3c3fe76d1b7ecfd631e6d7e03610b7",
+      "observed": "Numeric contact trace reproduces canonical f06f7bb3; followers 68/71 request motion but physically block each other."
+    },
+    {
+      "path": "docs/reports/fix70-s/pace-controls-serial.json",
+      "sha256": "05d1db87509c1ada8d2bc5fc5c4c1b30d218e1392c1870ccceeacc10dc7cb40c",
+      "observed": "Exact-equality or module-hash control; historical candidate and partial-run scope recorded inside."
+    },
+    {
+      "path": "docs/reports/fix70-s/pace-controls.json",
+      "sha256": "9f71f3284f8fecba4575286367ca894b4696de6d9aa4dc229aa5ab98042eb071",
+      "observed": "Exact-equality or module-hash control; historical candidate and partial-run scope recorded inside."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/departure-scope-high.json.gz",
+      "sha256": "9c864a4e0b452d44f9d2fd599b549b399b27ebfeeedb25833754a45841c1eee1",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/departure-scope-low.json.gz",
+      "sha256": "0c566535cb10de7be58634d48058f573acc5d08438ac19b06a17724f96016924",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/immediate-detour-audit.json.gz",
+      "sha256": "1b8443d2db4fa1685584161fc5c59a4c923a263ed6b4697703b4005527091d9d",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/parallel-levels-partial.json.gz",
+      "sha256": "be008ca77094458c2dd28fff7edb2b36371a89a262dfbfde4110cde57c602779",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/stall-guard-high.json.gz",
+      "sha256": "ff35dea62058f7e193a99274a51de5ef831240e17e75a27f224e87409ca7c676",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/trials/stall-guard-low.json.gz",
+      "sha256": "2bc0621129f6601f019ca3aba6420bff72658b2ba191ee5a75349ae7bbdf2c74",
+      "observed": "Numeric simulation evidence retains route validity, phase speed measurements and state hashes; scope includes rejected candidates or partial runs as named. No visual acceptance inferred."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/accept-exits.json",
+      "sha256": "b0277a9e86d47f7c54a7fcd94819e2cc07c1b87b297c3ae0f8eab6454f56b4a6",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/architecture-baseline.json",
+      "sha256": "38110aa8678c9cb44bbfe347a4d6a5a7ac03616e93d6b998453341c0342a2f8a",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/collector-module-parity.json",
+      "sha256": "cab084a5cca85a695d2eabb95c480c500da330946909100c64170021c6e2d544",
+      "observed": "Exact-equality or module-hash control; historical candidate and partial-run scope recorded inside."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/scheduling-controls.json",
+      "sha256": "b86060585cd87752db44e1bff20f5a5288d755df15d6ea81c5b8dbdf7e88a7aa",
+      "observed": "Exact-equality or module-hash control; historical candidate and partial-run scope recorded inside."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/threat-attempt-1-source.json",
+      "sha256": "d123aff66d7235fa61c1c431edfd97d513ceb17f0b9819743ed0a3e60d3b9abe",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/threat-attempt-1.json",
+      "sha256": "89450953cc8101fbe558e60b508c46d60be7aa176dfd05c1b2af4c50dfacf185",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/threat-attempt-2.json",
+      "sha256": "636f7abfa20577407f8a2fb16f162bd1be26eb2aea315fe58bb85996fbb2f826",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/threat-attempt-3.json",
+      "sha256": "fa90da2b174b19e4d7ab446c02c3a3c69d12220b11ac56e7ead28df75eb66a5f",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation/threat-attempt-4.json",
+      "sha256": "af7f30f6c700781ed59708bab7105e3d6a4e3b12c720d714a27c4bfe678887c8",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix70-s/validation.json",
+      "sha256": "e92265b9e938fc19ae7a13ab3e0d15296eab77e6d29fa2b129917cc04af4a87d",
+      "observed": "JSON receipt records measurements, provenance or command results; final threat gate is explicitly unverified after timeout."
+    },
+    {
+      "path": "docs/reports/fix51-verify/L5.json",
+      "sha256": "baf9df3f87a0d122408bd1fa808a9a21b37f4593b2ef3cdad76c7f2b1c53b9bc",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/L7.json",
+      "sha256": "4a3b76dd026d94bbd22916d3ab89355153fa51e61b71fb5b4b5ddc4ceb6ccac5",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json",
+      "sha256": "4feb17e406b2c713c415dcfce6fd941c45956a04cc61acccead74742e7dcd299",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "3c2ceb35987bf3436f3c70dfeb46f51e5712e56562d528f9a3a0e2c1ac35d2b1",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json",
+      "sha256": "dac671e8520dd4f44b9af033260786d9fa62cf0ee7c434fb35eab90dcbff7220",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "83d6a6829aa106a2816ec76f316ee7e056df5d92e3d8bb50c5d9df3cf6c210bc",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json",
+      "sha256": "cf6d69fe689f2390e26a2d6d6e28ddb9a01a3f9e4c1f6ce47595bafacf1153c0",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "c47f4077faee2f377a58d37c468b051185089b92621f9daf417d602c63bda958",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json",
+      "sha256": "d8b5aa0daab5dee7ae22f85dbabd9cf2077ce38f784995f06cc60bcd061a2d85",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "8f293b39bbcb7020cd3900e208a386399c0985d8dd01053a412020c945ca689e",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+      "sha256": "0498044bf34b685735c25ec75a44a199126c3cf75e58231301bf14abdcc3686c",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "6006847e32f5c1f72c1a9ea474207173308d02216e55b6e9843b0e3b317874db",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "sha256": "8e031ae71d11533ab57b88962e0b85e78dd8227f45c3ef466df932d8b78ab675",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+      "sha256": "59168aa7b4bbf9e6749b113b6b1fd9ca2020eb7359c40cf13be4d49e68d8d17d",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+      "sha256": "fe48357d139279c22e5066db2f7d6ab05d0be16db2c5e187c4448bb83a936723",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "8a2e0d93c01af00c9385fd892bab1e844ed918d68bdddf2a9a1f17f61fd8d861",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "sha256": "68d7c8eb5c6180f1979f6b8eaaef11c0bed9a0b08025c7efe6a96a0b60d3c8c4",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    },
+    {
+      "path": "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+      "sha256": "c6714f985767f240e958bed4321971d29dd699cfbe1719b6613955e0293ac746",
+      "observed": "Native checks retain L5 high pace failure, L7 pace passes and incomplete visual clauses; fixtures/checkpoint controls have zero errors."
+    }
+  ]
+}

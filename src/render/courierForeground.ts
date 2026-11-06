@@ -20,7 +20,7 @@ export function crowdSurroundsCourier(at: { x: number; z: number }, figures: Ite
  * (PO #9 L2 start, #26 L1 shutter: the slice drew her over firefighter "2", the closed bay leaf and the horde).
  */
 export function courierForegroundWanted(nearBodies: boolean, megaDistanceM: number, onFootBehindVehicle = false): boolean {
-  // The near-camera slice clears every hull too: never paint an on-foot actor onto a vehicle roof.
-  // Vehicle reveal retains its separate rider/driver hull cut.
-  return !onFootBehindVehicle && (nearBodies || megaDistanceM < megaForegroundM);
+  // vqa-3 P1 (L2 doors): on foot, vehicle hulls stay whole (no disc); a hull hiding her chest/head shows her through the
+  // slice + gold contour instead, as in the hordes. Riding/driving keeps the separate hull cut and seated cutaway.
+  return onFootBehindVehicle || nearBodies || megaDistanceM < megaForegroundM;
 }

@@ -10,8 +10,9 @@ function files(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? files(`${dir}/${entry.name}`) : entry.name.endsWith('.ts') ? [`${dir}/${entry.name}`] : []);
 }
 
-test('the sim import graph never reaches renderer, UI, debug or DOM code (only three math classes and Rapier)', () => {
+test('the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)', () => {
   const seen = new Set<string>();
+  const saveCodecs = new Set(['gzipSync', 'gunzipSync', 'strFromU8', 'strToU8']);
   const mathClasses = new Set(['Vector2', 'Vector3', 'Quaternion', 'Euler', 'Matrix3', 'Matrix4', 'Box3', 'Sphere', 'Ray', 'MathUtils']);
   function visit(file: string): void {
     file = resolve(file); if (seen.has(file)) return; seen.add(file);
@@ -28,10 +29,14 @@ test('the sim import graph never reaches renderer, UI, debug or DOM code (only t
           if (path.endsWith('.json')) JSON.parse(readFileSync(resolve(dirname(file), path), 'utf8'));
           else visit(resolve(dirname(file), path.endsWith('.ts') ? path : `${path}.ts`));
         }
-        else if (path === 'three') {
+        else if (path === 'three' || path === 'three/addons/libs/fflate.module.js') {
+          // The existing MIT save codec uses only synchronous bytes/string APIs
+          // (gzip mtime:0). No worker or asynchronous fflate exports enter sim.
+          const allowed = path === 'three' ? mathClasses : saveCodecs;
+          if (path !== 'three') expect(file).toBe(resolve('src/sim/progression/Save.ts'));
           expect(ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)).toBeTruthy();
           if (ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {
-            for (const item of node.importClause.namedBindings.elements) expect(mathClasses.has((item.propertyName ?? item.name).text)).toBe(true);
+            for (const item of node.importClause.namedBindings.elements) expect(allowed.has((item.propertyName ?? item.name).text)).toBe(true);
           }
         } else if (path === 'three/addons/libs/fflate.module.js') {
           // The accepted save codec uses deterministic synchronous compression;

@@ -1,0 +1,24 @@
+{
+  "baseline": "0991b9d",
+  "files": [
+    {
+      "file": "src/sim/progression/Save.ts",
+      "baselineSha256": "c56e8142ffc955e68c208333ff14bf00289439e04eb97c2874e57e3c39f907ef",
+      "currentSha256": "c56e8142ffc955e68c208333ff14bf00289439e04eb97c2874e57e3c39f907ef",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "tests/shared/architecture.test.ts",
+      "baselineSha256": "dc7708e428e3a07fde2dee7b8b69329f1ed745d8b879979b4e8f3b947205fc8e",
+      "currentSha256": "dc7708e428e3a07fde2dee7b8b69329f1ed745d8b879979b4e8f3b947205fc8e",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "tests/engine/l4-contact.test.ts",
+      "baselineSha256": "69f1e3697ec977e4296cbdc0dff5d96549e8e78d573875b6f55355aa70112fcc",
+      "currentSha256": "69f1e3697ec977e4296cbdc0dff5d96549e8e78d573875b6f55355aa70112fcc",
+      "unchangedFromBaseline": true
+    }
+  ],
+  "result": "105/107 current default tests pass. Architecture checker rejects the baseline Save.ts fflate import. L4 contact timeout at30s also occurred; test and L4 game source unchanged in this lane. Timeout may reflect shared-Mac contention, but no definitive cause is claimed. Earlier run106/107 passed L4 and failed only architecture. No test/checker weakening or unrelated game fix."
+}

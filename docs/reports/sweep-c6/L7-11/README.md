@@ -1,0 +1,11 @@
+# L7-11 — physical bus departure
+
+Fresh current-source low/high real WASD/E/Digit7/ShiftLMB runs from the actual native L5/L6 progressed saves. Native bot planner is detached before any tick; its recommendations become physical device events. Courier protection only; live threats, followers, collisions, HP, caps and timing remain native.
+
+Both shots last540consecutive ticks/9s and the same live1000HP bus moves118.5m. Original1/4carried humans board. Low finishes at6044, high at6394. Half-second photos cover0..8.5s. All48captures personally inspected in eight full-size sheets: city/fire zone shrinks into smoky ash distance; tower lamps and military truck cab/grille/body are readable; blood is red among corpses; final roads/buildings/fence remain populated without a bare map edge. Several mid/late frames crop the bus lower hull; no whole-hull-every-frame claim. Native cinematic overrides requested camera zoom, so these frames do not qualify an independent userzoom matrix.
+
+Dedicated `l7-departure-receipts.ts` consumer requires both physical continuity/duration/movement and reviewed complete visual strips. Its20semantic fault controls reject stale source/browser/producer, missing ticks/physical inputs, native driver, short/long shot, insufficient bus movement, replacement/hidden bus, missing/mistimed frames, unseen captures and each failed visual clause. Original evidence bytes are restored after every mutation. Every raw capture/sheet digest was verified before deletion.
+
+Three failed harness attempts are retained in `exploration/`: removing early camera refresh photos, original sign-only projected-axis steering, and high-tier intermediate-waypoint stall. The sign-only adapter could turn a nearly diagonal goal into an incorrect physical bearing; this producer uses existing `markerWalkKeys` to pulse the shorter axis. High additionally uses a logged authored-map assist along the south corridor road edge then bus entrance, through physical WASD and ordinary collisions. This is explicit route assistance, not screenshot-only exploration or unassisted route-clarity evidence.
+
+Immutable per-tier producer copies are linked by exact hashes to the physical ledgers. No game, criterion, cap or timer change.

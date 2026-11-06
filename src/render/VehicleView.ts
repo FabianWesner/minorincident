@@ -480,20 +480,20 @@ export class VehicleView extends Group {
       record.parent.updateWorldMatrix(true, false);
       const enabled = !!subject && id !== ridden && this.occlusion.blockedBy(record.bounds, record.parent.matrixWorld);
       const hidesHer = enabled && onFoot && this.occlusion.coreBlockedBy(record.bounds, record.parent.matrixWorld);
-      if (hidesHer) this.courierOccluded = true;
-      // Reveal the hull around an on-foot courier too. The separate foreground
-      // flag keeps the character behind the hull itself.
+      // vqa-3 P1 (L2 doors): an on-foot courier behind a hull no longer punches a disc through it (read as a hole in the
+      // truck). The hull stays whole; `courierOccluded` draws her in the foreground slice with the gold contour instead.
       const vehicle = record.model.userData.assetId?.startsWith('veh.');
       // The L2 fire-engine ride is a seated visibility subject even though its
       // scripted truck is not registered as the player's active vehicle. Reuse
-      // the same bounded hull cut used by the on-foot foreground reveal.
+      // the seated crew cutaway below.
       const l2Ride = this.world.missions?.state.l2;
       const carryingL2Crew = l2Ride?.truckId === id && l2Ride.seated && ['ride', 'arrived'].includes(l2Ride.phase);
       const reveal = this.reveal.get(id)!, full = this.silhouette?.id === id && this.silhouette.mode === 'full';
       // vqa-1 P2: the seated crew reads through a clean roof-off cutaway over their seats, not a dithered screen disc.
-      // vqa-1 P1: on foot, the hull only opens while it hides her own chest or head (not a padded subject corner beside the cab).
+      // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
       if (carryingL2Crew && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
-      else reveal.on.value = +(enabled && (!onFoot || vehicle && hidesHer) && !full);
+      else reveal.on.value = +(enabled && !onFoot && !full);
+      if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }
   }

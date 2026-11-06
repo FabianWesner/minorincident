@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
-import { courierForegroundOn } from './characters/courierDepth';
+import { courierForegroundOn, courierXray } from './characters/courierDepth';
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
 import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
@@ -266,7 +266,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Palette output bypasses three's emissiveNode. Apply the foreground
       // courier contour here as well so its full edge survives at distant zoom.
       If(this.heroFigure.mul(courierForegroundOn).greaterThan(0), () => {
-        const distant = cameraPosition.distance(positionWorld).smoothstep(14, 26);
+        // Behind a vehicle hull on foot she reads as seen through it: the wide-zoom x-ray contour at every distance.
+        const distant = cameraPosition.distance(positionWorld).smoothstep(14, 26).max(courierXray);
         const courierEdge = normalView.dot(positionViewDirection).abs().oneMinus().pow(mix(3, 1.5, distant));
         result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.25, 1.2, distant)));
       });

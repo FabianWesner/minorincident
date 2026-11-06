@@ -1,0 +1,70 @@
+{
+  "command": "npm run qa:threat -- --out test-results/fix70-s/threat-final",
+  "exit": 1,
+  "completeGate": false,
+  "sourceBefore": {
+    "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+    "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+    "revision": "544b523189e5ca450bbb586461acbdab62bc3317"
+  },
+  "sourceAfter": {
+    "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+    "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+    "revision": "544b523189e5ca450bbb586461acbdab62bc3317"
+  },
+  "admission": {
+    "at": "2026-11-06T09:51:08.737761+00:00",
+    "load": [
+      5.95263671875,
+      9.7783203125,
+      9.11181640625
+    ],
+    "otherHeavyNodePids": [
+      77013,
+      81302
+    ],
+    "ready": true
+  },
+  "otherOwnedChecksRunning": false,
+  "completedLevels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L6"
+  ],
+  "completedLevelGateFlags": 0,
+  "budget": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--out",
+      "test-results/fix70-s/threat-final"
+    ],
+    "seconds": 601.0292360000001,
+    "exitCode": 124,
+    "signal": null,
+    "failures": [
+      "qa-threat failed (exit 124)",
+      "qa-threat took 601.0 s, over the 600 s budget"
+    ],
+    "at": "2026-11-06T10:01:10.093Z"
+  },
+  "rawLogSha256": "d01194a4c7849ba1fbff5e0ccd8fae55b2eb2227ba80ba421de464cb48f3210a",
+  "finding": "Watchdog timeout at 601 seconds; no full gate result. Foreign browser/QA work raised host load to 16\u201325 after admission. Raw non-gating skilled diagnostic flags are retained in the partial archive."
+}

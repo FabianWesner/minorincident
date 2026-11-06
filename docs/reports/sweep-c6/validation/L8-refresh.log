@@ -1,0 +1,23 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L8 --skip-browser --tier both --policy both
+
+[qa:accept] L8 low/complete: native global and level observation
+[qa:accept] L8 low/complete: complete
+[qa:accept] L8 low/stationary: native global and level observation
+[qa:accept] L8 low/stationary: tick-budget
+[qa:accept] L8 high/complete: native global and level observation
+[qa:accept] L8 high/complete: complete
+[qa:accept] L8 high/stationary: native global and level observation
+[qa:accept] L8 high/stationary: tick-budget
+[qa:accept] L8 low/fixtures: 4 clauses, 0 errors
+[qa:accept] L8 high/fixtures: 4 clauses, 0 errors
+[qa:accept:checkpoint] L8 low/sanctuary: PASS
+[qa:accept:checkpoint] L8 low/breach: PASS
+[qa:accept:checkpoint] L8 low/escape-route: PASS
+[qa:accept] L8 low/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L8 high/sanctuary: PASS
+[qa:accept:checkpoint] L8 high/breach: PASS
+[qa:accept:checkpoint] L8 high/escape-route: PASS
+[qa:accept] L8 high/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept] L8: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L8.json

@@ -225,7 +225,7 @@ export class ThreatObserver {
   readonly waves: WaveObserver;
   readonly definitions: { id: string; text: string; type: string }[];
   readonly quality: string;
-  constructor(readonly world: SimWorld, readonly level: RunnerLevel) {
+  constructor(readonly world: SimWorld, readonly level: RunnerLevel, options: { paths?: boolean } = {}) {
     this.definitions = world.missions!.def.steps.map(s => ({ id: s.id, text: s.text, type: s.type }));
     this.quality = world.infected!.director.tier;
     this.waves = new WaveObserver(world, level, e => this.identity(e));
@@ -275,7 +275,13 @@ export class ThreatObserver {
       this.observe(Math.hypot(leaderAfter.x - leaderX, leaderAfter.z - leaderZ) * 60 / (world.tick - before));
       this.waves.afterTick();
       const changed = phases(world, level).map(p => p.key).join('|') !== descriptors.map(p => p.key).join('|');
-      if (world.tick >= this.nextPathAt || changed) { this.observePaths(); this.nextPathAt = world.tick + 120; }
+      // Extra follower-only seed routes retain every tick and pace sample;
+      // their unused independent path diagnostics can be omitted.
+      if (world.tick >= this.nextPathAt || changed) {
+        if (options.paths === false) for (const phase of phases(world, level)) this.row(phase);
+        else this.observePaths();
+        this.nextPathAt = world.tick + 120;
+      }
       this.lastTick = world.tick;
     };
   }
