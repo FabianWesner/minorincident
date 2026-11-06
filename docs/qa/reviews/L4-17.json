@@ -3,34 +3,34 @@
   "status": "FAIL",
   "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "d9b6764ad5f766d7ae43e121cc219cb0e3ea592b",
+  "commit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5",
   "clauses": [
     {
       "clause": "Corpse piles \u2264 ~1 m, no stretched limbs; player never drawn under a corpse.",
       "verdict": "FAIL",
-      "note": "Current settled frozen-geometry top reaches1.921m high (alpha-suit death-back), while layout root lift peaks0.71m. Thus spreading improves root piles but does not establish visible <=~1m height. Low explicit early witness: seated riot geometry including shield1.264m with zero root lift;47s sample is not a whole-route bound. High600s mortal renderer run does not reach cellar (16deaths); this is a measured height counterexample, not a route PASS. Airborne blast flights excluded. Reviewed12frames; no universal limb/stretch or player-depth PASS inferred."
+      "note": "Final six-role source: actual settled frozen geometry reaches1.746m low (alpha-worker death-back) and1.920m high (alpha death-back) in the first150s of war. Root lift peaks0.66m, so the thinner layout envelope cannot establish visible <=~1m height. Airborne blast flights excluded. All16frames personally reviewed with SHA256; raw images deleted. No whole-route maximum, universal limb-stretch or continuous player-depth PASS is claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L4-17-measurement.json",
-      "sha256": "0081a7bf42d68000bf2aa4a19e61408c96c83addd6577ada23f8f73c9ab203db",
-      "what": "Current settled frozen-geometry top reaches1.921m high (alpha-suit death-back), while layout root lift peaks0.71m. Thus spreading improves root piles but does not establish visible <=~1m height. Low explicit early witness: seated riot geometry including shield1.264m with zero root lift;47s sample is not a whole-route bound. High600s mortal renderer run does not reach cellar (16deaths); this is a measured height counterexample, not a route PASS. Airborne blast flights excluded. Reviewed12frames; no universal limb/stretch or player-depth PASS inferred."
+      "file": "docs/reports/fix71-b/L4-17-release-measurement.json",
+      "sha256": "b4153958a69e778231c5a8532097ff152a05b1eb264ae3f40a7b27e28d74a31e",
+      "what": "Final six-role source: actual settled frozen geometry reaches1.746m low (alpha-worker death-back) and1.920m high (alpha death-back) in the first150s of war. Root lift peaks0.66m, so the thinner layout envelope cannot establish visible <=~1m height. Airborne blast flights excluded. All16frames personally reviewed with SHA256; raw images deleted. No whole-route maximum, universal limb-stretch or continuous player-depth PASS is claimed."
     },
     {
-      "file": "docs/reports/fix71-b/L4-17-low.json.gz",
-      "sha256": "79450d0b119906d99d20ae0402b0181285a9f18681e6cbd6cef25cd90ae27b1a",
-      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
+      "file": "docs/reports/fix71-b/L4-17-release-low.json.gz",
+      "sha256": "608b2abc9e6838444da8f802fb4ed0bc38fb2c1e85b3ba0226b47f1eaea781a2",
+      "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
     },
     {
-      "file": "docs/reports/fix71-b/L4-17-high.json.gz",
-      "sha256": "2b8b56bd8110d1856810500c9f9357566e369218ac661161af50af247b170aa3",
-      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
+      "file": "docs/reports/fix71-b/L4-17-release-high.json.gz",
+      "sha256": "f2c40783a810fdec9801e8e45c3564546a19f432abcef54b2f564d6f9b59a624",
+      "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
     },
     {
-      "file": "docs/reports/fix71-b/L4-capture-review.json",
-      "sha256": "f31d6939ce984a5c16c6de628393aa1eb51fb6a544c6ad0afb2345244ae0ea83",
-      "what": "Actual vertex/audit timeline and personally reviewed frame SHA256/observations; raw images deleted after review."
+      "file": "docs/reports/fix71-b/L4-release-capture-review.json",
+      "sha256": "86757acf1f1404b6067a5fddb58a00063d564bf990e066d8b8adba65a43b0c6d",
+      "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
     }
   ]
 }
