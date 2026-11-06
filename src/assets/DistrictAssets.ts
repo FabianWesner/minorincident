@@ -248,6 +248,12 @@ export class DistrictAssets {
   }
   /** One uncut twin per shared batch material, so every low prop of a role still shares one node build. */
   private readonly uncutMaterials = new Map<Material, PaletteMaterial>();
+  private readonly deckMaterials = new Map<Material, PaletteMaterial>();
+  private deckCut(material: PaletteMaterial): PaletteMaterial {
+    let twin = this.deckMaterials.get(material);
+    if (!twin) { twin = material.frozenCopy().seeThrough(); twin.userData.seeThroughDeck = true; twin.name = `${material.name}:deck`; this.deckMaterials.set(material, twin); this.batchMaterials.add(twin); }
+    return twin;
+  }
   private uncut(material: PaletteMaterial): PaletteMaterial {
     let twin = this.uncutMaterials.get(material);
     if (!twin) { twin = material.frozenCopy().seeThrough(false); twin.name = `${material.name}:uncut`; this.uncutMaterials.set(material, twin); this.batchMaterials.add(twin); }
@@ -264,11 +270,16 @@ export class DistrictAssets {
     // Furniture lower than an occluder (benches, hydrants, beds) is never cut by the courier hole: it cannot hide her,
     // and the group-sized hole at close zoom otherwise dissolved everything above 0.3 m (PO 10-13 bench without planks).
     const solid = isUncutProp(id, new Box3().setFromObject(root).getSize(new Vector3()).y);
+    // fix68-a (L3-13): the raised ramp is a deck the courier walks ON: the full courier hole dissolved the near jersey rail into a sawtooth
+    // fan, cut the inner edge away and left a lighter slab beside her. Its materials keep everything within 1.6 m of her feet; only the
+    // gantry sign above her head still dissolves (it did hide her at x 150).
+    const deck = id === 'kit.highway-onramp';
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
       if (node.material instanceof PaletteMaterial) {
         if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
         else if (solid) node.material = this.uncut(node.material);
+        else if (deck) node.material = this.deckCut(node.material);
         else node.material.seeThrough();
       }
       this.batchMaterials.add(node.material as Material);
@@ -327,7 +338,7 @@ export class DistrictAssets {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
     for (const material of new Set([...this.batchMaterials, ...this.batchMaterialCache.values()])) material.dispose();
-    this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear(); this.batchMaterialCache.clear();
+    this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear(); this.deckMaterials.clear(); this.batchMaterialCache.clear();
     this.dinerArtwork?.texture.dispose(); this.dinerArtwork = undefined;
     this.cache.clear();
     this.glbLeases.clear();

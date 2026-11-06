@@ -309,7 +309,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     let output = this._outputs.get(key);
     if (!output) {
       const base = this.outputFor(mode);
-      output = reveal ? Fn(() => { Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not()); return base; })() : base;
+      output = reveal ? Fn(() => { Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' || reveal === 'deck' ? attribute('_occluder', 'float') : undefined, reveal === 'deck')).not()); return base; })() : base;
       this._outputs.set(key, output);
     }
     this.outputNode = output; this.needsUpdate = true;
@@ -318,12 +318,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   probeMaskOutput(rgb: Node<'vec3'>): Node {
     const reveal = this.userData.seeThrough ?? false;
     return Fn(() => {
-      if (reveal) Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+      if (reveal) Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' || reveal === 'deck' ? attribute('_occluder', 'float') : undefined, reveal === 'deck')).not());
       return vec4(rgb, this.fade);
     })();
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
-  seeThrough(enabled: boolean | 'boss' | 'placement' | 'hull' = true): this {
+  seeThrough(enabled: boolean | 'boss' | 'placement' | 'deck' | 'hull' = true): this {
     if ((this.userData.seeThrough ?? false) === enabled) return this;
     this.userData.seeThrough = enabled;
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
