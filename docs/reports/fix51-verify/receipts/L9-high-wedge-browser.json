@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "aef3ab3cfe2da593b8fe26f244b7f39a5aa1c837be7b460158b290054dd766e2",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c5/L9-06"
+  },
+  "checks": [
+    {
+      "id": "L9-06",
+      "clause": "six authored physical routes remain driveable",
+      "tier": "high",
+      "policy": "physical-wedge",
+      "status": "PASS",
+      "value": [
+        {
+          "clause": "road physical streaming residency and continuous input",
+          "status": "PASS"
+        },
+        {
+          "clause": "countryside physical streaming residency and continuous input",
+          "status": "PASS"
+        },
+        {
+          "clause": "dry-shortcut physical streaming residency and continuous input",
+          "status": "PASS"
+        }
+      ],
+      "target": "All three current physical authored detours per tier reach bridge, normal AI/physics, no actor writes or skips",
+      "receipt": "docs/reports/sweep-c5/L9-09/coverage-proof.json"
+    },
+    {
+      "id": "L9-06",
+      "clause": "three physical offroad stall and reverse recoveries",
+      "tier": "high",
+      "policy": "physical-wedge",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "recoveries": true,
+        "cases": [
+          {
+            "id": "prop.tent:2455",
+            "escaped": true,
+            "reverseTicks": 90
+          },
+          {
+            "id": "veh.school-bus:2427",
+            "escaped": true,
+            "reverseTicks": 114
+          },
+          {
+            "id": "kit.army-checkpoint:2454",
+            "escaped": true,
+            "reverseTicks": 108
+          }
+        ]
+      },
+      "target": "Physical offroad approaches to existing tent/bus/checkpoint corners, ≥20six-tick stalled samples<0.5m/s, foursecond forward press, ordinary reverse clears≥8m within5s; no placement/teleport",
+      "receipt": "docs/reports/sweep-c5/L9-06/high-physical.json.gz"
+    },
+    {
+      "id": "L9-06",
+      "clause": "reviewed world arrow absence and exact durability HUD",
+      "tier": "high",
+      "policy": "physical-wedge",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "seen": true,
+        "hud": true
+      },
+      "target": "All12pairedPOzoom panels inspected, no giant flat world arrow above APC; live HUD text and bar match exact health; exact O-review supplies visible judgement",
+      "receipt": "docs/reports/sweep-c5/L9-06/high-review.json"
+    }
+  ]
+}

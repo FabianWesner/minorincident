@@ -1,0 +1,108 @@
+{
+  "method": "Actual production consumer; temporary source-bound evidence faults with updated artifact SHA must reject. Exact original manifest/artifact bytes restored in finally; no game changes.",
+  "cases": [
+    {
+      "fault": "duplicate-impact",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "early-objective",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "early-hud",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "missing-hull",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "missing-wheel",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unfinished-drive",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unseen-image",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "stale-source",
+      "rejected": true,
+      "checks": []
+    }
+  ]
+}

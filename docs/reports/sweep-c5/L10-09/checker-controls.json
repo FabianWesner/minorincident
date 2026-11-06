@@ -1,0 +1,87 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "63753924083b70d7eef936e97413017385b29af1",
+  "cases": [
+    {
+      "tier": "low",
+      "fault": "original",
+      "observed": "PASS"
+    },
+    {
+      "tier": "low",
+      "fault": "truncated subtitle",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "missing close recording",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "extra weapon slot",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "lost carried checkpoint",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "no interaction",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "no physical movement",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "unreviewed capture",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "original",
+      "observed": "PASS"
+    },
+    {
+      "tier": "high",
+      "fault": "truncated subtitle",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "missing close recording",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "extra weapon slot",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "lost carried checkpoint",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "no interaction",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "no physical movement",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "unreviewed capture",
+      "observed": "FAIL"
+    }
+  ]
+}

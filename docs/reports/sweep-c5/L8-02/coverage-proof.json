@@ -1,0 +1,121 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "4a87ab2105e73e3839c16d96d923a21ab4e66b68",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "toolSha256": "3675d7b3d6ca8c94c3c9d3ea109a1858867f74aae284b9db3d2afbad544d3f3b",
+  "baseline": [
+    {
+      "tier": "low",
+      "status": "PASS"
+    },
+    {
+      "tier": "high",
+      "status": "PASS"
+    }
+  ],
+  "cases": [
+    {
+      "fault": "missing-tick-zero",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "calm-objective",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "calm-pin",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "calm-world-marker",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "early-breach",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "late-breach",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "sampling-gap",
+      "results": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "missing-high",
+      "results": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "originalBytesRestored": true,
+  "method": "Actual production calm receipt consumer, eight temporary counterexamples with transport hashes rebound only for these declared negative controls. Missing tick0, early objective/pin/world-marker, breach3599/3601, >60tick observation gap and missing high coverage must reject. Exact original physical run artifacts and metadata restored in finally. Native everytick combat/marker coverage remains a separate required clause."
+}

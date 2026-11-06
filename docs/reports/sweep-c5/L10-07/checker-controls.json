@@ -1,0 +1,89 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "7c8b754d41c063c453a0e02bc09809e04ba23704",
+  "cases": [
+    {
+      "tier": "low",
+      "fault": "unaltered current observation",
+      "ring": true,
+      "audio": true
+    },
+    {
+      "tier": "low",
+      "fault": "Mega pin",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "off-center ring",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "stopped pulse",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "flat gain",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "missing impact",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "muted graph",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "insufficient duration",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "unaltered current observation",
+      "ring": true,
+      "audio": true
+    },
+    {
+      "tier": "high",
+      "fault": "Mega pin",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "off-center ring",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "stopped pulse",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "flat gain",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "missing impact",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "muted graph",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "insufficient duration",
+      "rejected": true
+    }
+  ]
+}

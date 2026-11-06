@@ -1,0 +1,3023 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "31aadbc2b64d18866469d5bc402956cbf2eb11f5",
+  "toolSha256": "d3ffb85142bec9ff5becd5cd469d0476bfbbd7cf90f90abb8adba543698437b3",
+  "method": "Native simulation, seed1 both tiers. Canonical exact state control; explicitly separate zero-durability and risky-shortcut capability runs. No rendered pose/smoke/HUD/seam or frame-time claim.",
+  "groups": [
+    {
+      "id": "road-1",
+      "route": "road",
+      "at": [
+        -300,
+        -330
+      ],
+      "runners": 6,
+      "alphas": 0,
+      "detourClearance": 25
+    },
+    {
+      "id": "road-2",
+      "route": "road",
+      "at": [
+        240,
+        -330
+      ],
+      "runners": 6,
+      "alphas": 0,
+      "detourClearance": 25
+    },
+    {
+      "id": "countryside-1",
+      "route": "countryside",
+      "at": [
+        -250,
+        240
+      ],
+      "runners": 6,
+      "alphas": 0,
+      "detourClearance": 25
+    },
+    {
+      "id": "countryside-2",
+      "route": "countryside",
+      "at": [
+        0,
+        240
+      ],
+      "runners": 6,
+      "alphas": 0,
+      "detourClearance": 25
+    },
+    {
+      "id": "countryside-3",
+      "route": "countryside",
+      "at": [
+        200,
+        240
+      ],
+      "runners": 6,
+      "alphas": 0,
+      "detourClearance": 25
+    },
+    {
+      "id": "dry-shortcut-1",
+      "route": "dry-shortcut",
+      "at": [
+        -300,
+        -22.5
+      ],
+      "runners": 8,
+      "alphas": 0,
+      "detourClearance": 29.962570166335343
+    },
+    {
+      "id": "dry-shortcut-2",
+      "route": "dry-shortcut",
+      "at": [
+        -150,
+        -30
+      ],
+      "runners": 8,
+      "alphas": 0,
+      "detourClearance": 40
+    },
+    {
+      "id": "dry-shortcut-3",
+      "route": "dry-shortcut",
+      "at": [
+        -60,
+        -30
+      ],
+      "runners": 7,
+      "alphas": 1,
+      "detourClearance": 40
+    },
+    {
+      "id": "dry-shortcut-4",
+      "route": "dry-shortcut",
+      "at": [
+        60,
+        -30
+      ],
+      "runners": 8,
+      "alphas": 0,
+      "detourClearance": 40
+    },
+    {
+      "id": "dry-shortcut-5",
+      "route": "dry-shortcut",
+      "at": [
+        150,
+        -30
+      ],
+      "runners": 8,
+      "alphas": 0,
+      "detourClearance": 40
+    },
+    {
+      "id": "dry-shortcut-6",
+      "route": "dry-shortcut",
+      "at": [
+        240,
+        -30
+      ],
+      "runners": 7,
+      "alphas": 1,
+      "detourClearance": 40
+    },
+    {
+      "id": "road-wanderer-0",
+      "route": "road",
+      "at": [
+        -410,
+        -132
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 11.105770702224527
+    },
+    {
+      "id": "road-wanderer-1",
+      "route": "road",
+      "at": [
+        -170,
+        -326
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 21
+    },
+    {
+      "id": "road-wanderer-2",
+      "route": "road",
+      "at": [
+        10,
+        -334
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 29
+    },
+    {
+      "id": "road-wanderer-3",
+      "route": "road",
+      "at": [
+        125,
+        -346
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 41
+    },
+    {
+      "id": "road-wanderer-4",
+      "route": "road",
+      "at": [
+        410,
+        -132
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 3.1155066917163876
+    },
+    {
+      "id": "road-wanderer-5",
+      "route": "road",
+      "at": [
+        -390,
+        -198
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 16.658656053336788
+    },
+    {
+      "id": "road-wanderer-6",
+      "route": "road",
+      "at": [
+        -370,
+        -264
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 22.211541404449054
+    },
+    {
+      "id": "countryside-wanderer-0",
+      "route": "countryside",
+      "at": [
+        380,
+        152
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 13.956949562466809
+    },
+    {
+      "id": "countryside-wanderer-1",
+      "route": "countryside",
+      "at": [
+        410,
+        104
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 16.41994066172566
+    },
+    {
+      "id": "shortcut-wanderer-0",
+      "route": "dry-shortcut",
+      "at": [
+        -380,
+        -18
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 21.473175285873662
+    },
+    {
+      "id": "shortcut-wanderer-1",
+      "route": "dry-shortcut",
+      "at": [
+        -180,
+        -12
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 22
+    },
+    {
+      "id": "shortcut-wanderer-2",
+      "route": "dry-shortcut",
+      "at": [
+        0,
+        -12
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 22
+    },
+    {
+      "id": "shortcut-wanderer-3",
+      "route": "dry-shortcut",
+      "at": [
+        180,
+        -12
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 22
+    },
+    {
+      "id": "shortcut-wanderer-4",
+      "route": "dry-shortcut",
+      "at": [
+        380,
+        -18
+      ],
+      "runners": 1,
+      "alphas": 0,
+      "detourClearance": 21.473175285873666
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "mode": "canonical",
+      "setup": "Exact canonical road detour, read-only observer; final state equals independent control.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "970c818b",
+      "controlIdentical": true,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1433.8503315741164,
+      "zero": {
+        "ticks": 0,
+        "movingTicks": 0,
+        "minCap": null,
+        "maxCap": 0,
+        "smokingTicks": 0
+      },
+      "peakChunks": 9,
+      "preCrashDurability": 1000,
+      "hits": [],
+      "signals": [
+        {
+          "tick": 6848,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 7028,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 7148,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 7688,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 7148,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 1000,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 6848,
+          "phase": "approach",
+          "hp": 1000,
+          "position": {
+            "x": 468.2260437011719,
+            "y": 0.9954323768615723,
+            "z": 3.419754981994629,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7028,
+          "phase": "fall",
+          "hp": 1000,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7148,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7328,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7688,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "shortcut-wanderer-0",
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "road-wanderer-6",
+          "dry-shortcut-1",
+          "road-1",
+          "road-wanderer-1",
+          "road-wanderer-2",
+          "road-wanderer-3",
+          "road-2",
+          "road-wanderer-4",
+          "dry-shortcut-6",
+          "shortcut-wanderer-4",
+          "countryside-wanderer-0",
+          "countryside-wanderer-1"
+        ],
+        "ids": {
+          "shortcut-wanderer-0": [
+            711
+          ],
+          "crossing-patrol-0": [
+            712
+          ],
+          "road-wanderer-0": [
+            713
+          ],
+          "road-wanderer-5": [
+            714
+          ],
+          "road-wanderer-6": [
+            715
+          ],
+          "dry-shortcut-1": [
+            716,
+            717,
+            718,
+            719,
+            720,
+            721,
+            722,
+            723
+          ],
+          "crossing-patrol-1": [
+            750
+          ],
+          "road-1": [
+            751,
+            752,
+            753,
+            754,
+            755,
+            756
+          ],
+          "crossing-patrol-2": [
+            772
+          ],
+          "road-wanderer-1": [
+            806
+          ],
+          "crossing-patrol-3": [
+            807
+          ],
+          "road-wanderer-2": [
+            836
+          ],
+          "crossing-patrol-4": [
+            871
+          ],
+          "road-wanderer-3": [
+            872
+          ],
+          "crossing-patrol-5": [
+            898
+          ],
+          "road-2": [
+            899,
+            900,
+            901,
+            902,
+            903,
+            904
+          ],
+          "crossing-patrol-6": [
+            965
+          ],
+          "crossing-patrol-7": [
+            1003
+          ],
+          "road-wanderer-4": [
+            1004
+          ],
+          "dry-shortcut-6": [
+            1005,
+            1006,
+            1007,
+            1008,
+            1009,
+            1010,
+            1011,
+            1012
+          ],
+          "shortcut-wanderer-4": [
+            1013
+          ],
+          "crossing-patrol-8": [
+            1056
+          ],
+          "countryside-wanderer-0": [
+            1118
+          ],
+          "countryside-wanderer-1": [
+            1119
+          ],
+          "crossing-patrol-9": [
+            1162
+          ]
+        },
+        "patrol": {
+          "nextAt": 7510,
+          "serial": 10
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "mode": "zero",
+      "setup": "One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "b995316f",
+      "controlIdentical": null,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1498.1217216954765,
+      "zero": {
+        "ticks": 15880,
+        "movingTicks": 11836,
+        "minCap": 0.39999999999999997,
+        "maxCap": 0.6,
+        "smokingTicks": 15880
+      },
+      "peakChunks": 9,
+      "preCrashDurability": 0,
+      "hits": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1392,
+          "sourceId": 667,
+          "targetId": 713,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9745,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9763,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 2,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9859,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 4,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9973,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 5,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10069,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 6,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10165,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 7,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10261,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 8,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10357,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 9,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10453,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 10,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10549,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 11,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10598,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10630,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 12,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10632,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "contact",
+          "contactId": 15,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10645,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 14,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10726,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 16,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10741,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 17,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10822,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 18,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10837,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 19,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10918,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 20,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 10933,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 21,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11014,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 22,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11193,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "contact",
+          "contactId": 24,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11582,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "contact",
+          "contactId": 25,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11904,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "contact",
+          "contactId": 27,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11920,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 26,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12016,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 28,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12112,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 29,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12208,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 30,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12304,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 31,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12400,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 32,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12496,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 33,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12609,
+          "sourceId": 667,
+          "targetId": 1013,
+          "source": "contact",
+          "contactId": 35,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12661,
+          "sourceId": 667,
+          "targetId": 1015,
+          "source": "contact",
+          "contactId": 37,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 15026,
+          "sourceId": 667,
+          "targetId": 1014,
+          "source": "contact",
+          "contactId": 38,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        }
+      ],
+      "signals": [
+        {
+          "tick": 15881,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 16061,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 16181,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 16721,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 16181,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 0,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 15881,
+          "phase": "approach",
+          "hp": 0,
+          "position": {
+            "x": 468.07666015625,
+            "y": 0.9954344034194946,
+            "z": -2.636437177658081,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16061,
+          "phase": "fall",
+          "hp": 0,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16181,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16361,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16721,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "shortcut-wanderer-0",
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "road-wanderer-6",
+          "dry-shortcut-1",
+          "road-1",
+          "road-wanderer-1",
+          "road-wanderer-2",
+          "road-wanderer-3",
+          "road-2",
+          "road-wanderer-4",
+          "dry-shortcut-6",
+          "shortcut-wanderer-4",
+          "countryside-wanderer-0",
+          "countryside-wanderer-1"
+        ],
+        "ids": {
+          "shortcut-wanderer-0": [
+            711
+          ],
+          "crossing-patrol-0": [
+            712
+          ],
+          "road-wanderer-0": [
+            713
+          ],
+          "road-wanderer-5": [
+            714
+          ],
+          "road-wanderer-6": [
+            715
+          ],
+          "crossing-patrol-1": [
+            716
+          ],
+          "dry-shortcut-1": [
+            717,
+            718,
+            719,
+            720,
+            721,
+            722,
+            723,
+            724
+          ],
+          "crossing-patrol-2": [
+            750
+          ],
+          "road-1": [
+            751,
+            752,
+            753,
+            754,
+            755,
+            756
+          ],
+          "crossing-patrol-3": [
+            775
+          ],
+          "road-wanderer-1": [
+            776
+          ],
+          "crossing-patrol-4": [
+            812
+          ],
+          "crossing-patrol-5": [
+            840
+          ],
+          "crossing-patrol-6": [
+            841
+          ],
+          "road-wanderer-2": [
+            842
+          ],
+          "crossing-patrol-7": [
+            878
+          ],
+          "road-wanderer-3": [
+            879
+          ],
+          "crossing-patrol-8": [
+            905
+          ],
+          "road-2": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911
+          ],
+          "crossing-patrol-9": [
+            949
+          ],
+          "crossing-patrol-10": [
+            975
+          ],
+          "crossing-patrol-11": [
+            1013
+          ],
+          "road-wanderer-4": [
+            1014
+          ],
+          "crossing-patrol-12": [
+            1015
+          ],
+          "dry-shortcut-6": [
+            1016,
+            1017,
+            1018,
+            1019,
+            1020,
+            1021,
+            1022,
+            1023
+          ],
+          "shortcut-wanderer-4": [
+            1024
+          ],
+          "crossing-patrol-13": [
+            1087
+          ],
+          "crossing-patrol-14": [
+            1088
+          ],
+          "crossing-patrol-15": [
+            1089
+          ],
+          "crossing-patrol-16": [
+            1090
+          ],
+          "crossing-patrol-17": [
+            1091
+          ],
+          "crossing-patrol-18": [
+            1093
+          ],
+          "crossing-patrol-19": [
+            1094
+          ],
+          "crossing-patrol-20": [
+            1095
+          ],
+          "crossing-patrol-21": [
+            1138
+          ],
+          "countryside-wanderer-0": [
+            1139
+          ],
+          "countryside-wanderer-1": [
+            1140
+          ]
+        },
+        "patrol": {
+          "nextAt": 16150,
+          "serial": 22
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "mode": "shortcut",
+      "setup": "Ordinary physical-input native dry-shortcut route, no actor writes.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "58e3d188",
+      "controlIdentical": null,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1022.3648510760495,
+      "zero": {
+        "ticks": 0,
+        "movingTicks": 0,
+        "minCap": null,
+        "maxCap": 0,
+        "smokingTicks": 0
+      },
+      "peakChunks": 9,
+      "preCrashDurability": 830,
+      "hits": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1191,
+          "sourceId": 667,
+          "targetId": 716,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1241,
+          "sourceId": 667,
+          "targetId": 717,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1988,
+          "sourceId": 667,
+          "targetId": 756,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 980,
+          "after": 970
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2398,
+          "sourceId": 667,
+          "targetId": 791,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 970,
+          "after": 960
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2438,
+          "sourceId": 667,
+          "targetId": 797,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 960,
+          "after": 950
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2439,
+          "sourceId": 667,
+          "targetId": 796,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 950,
+          "after": 940
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2446,
+          "sourceId": 667,
+          "targetId": 795,
+          "source": "contact",
+          "contactId": 7,
+          "attackId": null,
+          "before": 940,
+          "after": 930
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3015,
+          "sourceId": 667,
+          "targetId": 827,
+          "source": "contact",
+          "contactId": 8,
+          "attackId": null,
+          "before": 930,
+          "after": 920
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3037,
+          "sourceId": 667,
+          "targetId": 831,
+          "source": "contact",
+          "contactId": 9,
+          "attackId": null,
+          "before": 920,
+          "after": 910
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3464,
+          "sourceId": 667,
+          "targetId": 871,
+          "source": "contact",
+          "contactId": 10,
+          "attackId": null,
+          "before": 910,
+          "after": 900
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3471,
+          "sourceId": 667,
+          "targetId": 877,
+          "source": "contact",
+          "contactId": 11,
+          "attackId": null,
+          "before": 900,
+          "after": 890
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3474,
+          "sourceId": 667,
+          "targetId": 875,
+          "source": "contact",
+          "contactId": 12,
+          "attackId": null,
+          "before": 890,
+          "after": 880
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3904,
+          "sourceId": 667,
+          "targetId": 912,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 880,
+          "after": 870
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3908,
+          "sourceId": 667,
+          "targetId": 907,
+          "source": "contact",
+          "contactId": 14,
+          "attackId": null,
+          "before": 870,
+          "after": 860
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3949,
+          "sourceId": 667,
+          "targetId": 913,
+          "source": "contact",
+          "contactId": 15,
+          "attackId": null,
+          "before": 860,
+          "after": 850
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3999,
+          "sourceId": 667,
+          "targetId": 909,
+          "source": "contact",
+          "contactId": 16,
+          "attackId": null,
+          "before": 850,
+          "after": 840
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 4589,
+          "sourceId": 667,
+          "targetId": 950,
+          "source": "contact",
+          "contactId": 17,
+          "attackId": null,
+          "before": 840,
+          "after": 830
+        }
+      ],
+      "signals": [
+        {
+          "tick": 5108,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 5288,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 5408,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 5948,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 5408,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 1000,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5108,
+          "phase": "approach",
+          "hp": 830,
+          "position": {
+            "x": 468.2391357421875,
+            "y": 0.9954321384429932,
+            "z": -0.052755989134311676,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5288,
+          "phase": "fall",
+          "hp": 830,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5408,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5588,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5948,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "shortcut-wanderer-0",
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "dry-shortcut-1",
+          "dry-shortcut-2",
+          "shortcut-wanderer-1",
+          "dry-shortcut-3",
+          "dry-shortcut-4",
+          "shortcut-wanderer-2",
+          "dry-shortcut-5",
+          "shortcut-wanderer-3",
+          "dry-shortcut-6",
+          "shortcut-wanderer-4",
+          "road-wanderer-4",
+          "countryside-wanderer-0",
+          "countryside-wanderer-1"
+        ],
+        "ids": {
+          "shortcut-wanderer-0": [
+            711
+          ],
+          "crossing-patrol-0": [
+            712
+          ],
+          "road-wanderer-0": [
+            713
+          ],
+          "road-wanderer-5": [
+            714
+          ],
+          "dry-shortcut-1": [
+            715,
+            716,
+            717,
+            718,
+            719,
+            720,
+            721,
+            722
+          ],
+          "crossing-patrol-1": [
+            749
+          ],
+          "dry-shortcut-2": [
+            750,
+            751,
+            752,
+            753,
+            754,
+            755,
+            756,
+            757
+          ],
+          "shortcut-wanderer-1": [
+            758
+          ],
+          "dry-shortcut-3": [
+            791,
+            792,
+            793,
+            794,
+            795,
+            796,
+            797,
+            798
+          ],
+          "crossing-patrol-2": [
+            825
+          ],
+          "dry-shortcut-4": [
+            826,
+            827,
+            828,
+            829,
+            830,
+            831,
+            832,
+            833
+          ],
+          "shortcut-wanderer-2": [
+            834
+          ],
+          "crossing-patrol-3": [
+            870
+          ],
+          "dry-shortcut-5": [
+            871,
+            872,
+            873,
+            874,
+            875,
+            876,
+            877,
+            878
+          ],
+          "shortcut-wanderer-3": [
+            879
+          ],
+          "dry-shortcut-6": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911,
+            912,
+            913
+          ],
+          "crossing-patrol-4": [
+            949
+          ],
+          "shortcut-wanderer-4": [
+            950
+          ],
+          "crossing-patrol-5": [
+            976
+          ],
+          "road-wanderer-4": [
+            1013
+          ],
+          "crossing-patrol-6": [
+            1040
+          ],
+          "countryside-wanderer-0": [
+            1041
+          ],
+          "countryside-wanderer-1": [
+            1042
+          ]
+        },
+        "patrol": {
+          "nextAt": 5350,
+          "serial": 7
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "mode": "canonical",
+      "setup": "Exact canonical road detour, read-only observer; final state equals independent control.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "42d0758b",
+      "controlIdentical": true,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1433.8503315741164,
+      "zero": {
+        "ticks": 0,
+        "movingTicks": 0,
+        "minCap": null,
+        "maxCap": 0,
+        "smokingTicks": 0
+      },
+      "peakChunks": 25,
+      "preCrashDurability": 1000,
+      "hits": [],
+      "signals": [
+        {
+          "tick": 6848,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 7028,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 7148,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 7688,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 7148,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 1000,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 6848,
+          "phase": "approach",
+          "hp": 1000,
+          "position": {
+            "x": 468.2260437011719,
+            "y": 0.9954323768615723,
+            "z": 3.419754981994629,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7028,
+          "phase": "fall",
+          "hp": 1000,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7148,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7328,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 7688,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "shortcut-wanderer-0",
+          "countryside-1",
+          "dry-shortcut-1",
+          "road-wanderer-6",
+          "road-1",
+          "dry-shortcut-2",
+          "road-wanderer-1",
+          "shortcut-wanderer-1",
+          "road-wanderer-2",
+          "road-wanderer-3",
+          "road-2",
+          "road-wanderer-4",
+          "dry-shortcut-5",
+          "dry-shortcut-6",
+          "shortcut-wanderer-3",
+          "shortcut-wanderer-4",
+          "countryside-wanderer-0",
+          "countryside-wanderer-1",
+          "countryside-3"
+        ],
+        "ids": {
+          "road-wanderer-0": [
+            669
+          ],
+          "road-wanderer-5": [
+            670
+          ],
+          "shortcut-wanderer-0": [
+            671
+          ],
+          "countryside-1": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "dry-shortcut-1": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "crossing-patrol-0": [
+            756
+          ],
+          "road-wanderer-6": [
+            757
+          ],
+          "road-1": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "dry-shortcut-2": [
+            764,
+            765,
+            766,
+            767,
+            768,
+            769,
+            770,
+            771
+          ],
+          "road-wanderer-1": [
+            772
+          ],
+          "shortcut-wanderer-1": [
+            773
+          ],
+          "crossing-patrol-1": [
+            774
+          ],
+          "crossing-patrol-2": [
+            775
+          ],
+          "crossing-patrol-3": [
+            813
+          ],
+          "road-wanderer-2": [
+            853
+          ],
+          "road-wanderer-3": [
+            854
+          ],
+          "crossing-patrol-4": [
+            905
+          ],
+          "road-2": [
+            906,
+            907,
+            908,
+            909,
+            910,
+            911
+          ],
+          "crossing-patrol-5": [
+            951
+          ],
+          "road-wanderer-4": [
+            985
+          ],
+          "crossing-patrol-6": [
+            1040
+          ],
+          "crossing-patrol-7": [
+            1076
+          ],
+          "dry-shortcut-5": [
+            1077,
+            1078,
+            1079,
+            1080,
+            1081,
+            1082,
+            1083,
+            1084
+          ],
+          "dry-shortcut-6": [
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091,
+            1092
+          ],
+          "shortcut-wanderer-3": [
+            1093
+          ],
+          "shortcut-wanderer-4": [
+            1094
+          ],
+          "crossing-patrol-8": [
+            1095
+          ],
+          "countryside-wanderer-0": [
+            1135
+          ],
+          "countryside-wanderer-1": [
+            1136
+          ],
+          "countryside-3": [
+            1207,
+            1208,
+            1209,
+            1210,
+            1211,
+            1212
+          ],
+          "crossing-patrol-9": [
+            1283
+          ]
+        },
+        "patrol": {
+          "nextAt": 7510,
+          "serial": 10
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "mode": "zero",
+      "setup": "One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "19a9dc85",
+      "controlIdentical": null,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1498.1048004211953,
+      "zero": {
+        "ticks": 15868,
+        "movingTicks": 11834,
+        "minCap": 0.39999999999999997,
+        "maxCap": 0.6,
+        "smokingTicks": 15868
+      },
+      "peakChunks": 25,
+      "preCrashDurability": 0,
+      "hits": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1487,
+          "sourceId": 667,
+          "targetId": 669,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11394,
+          "sourceId": 667,
+          "targetId": 1045,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 2,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11488,
+          "sourceId": 667,
+          "targetId": 1045,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11562,
+          "sourceId": 667,
+          "targetId": 1045,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11663,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 5,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11665,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11759,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 7,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11855,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 8,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11951,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 9,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12047,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 10,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12143,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 11,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12239,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 12,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12335,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 13,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12431,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 14,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12527,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 15,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12603,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "contact",
+          "contactId": 16,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12726,
+          "sourceId": 667,
+          "targetId": 1045,
+          "source": "contact",
+          "contactId": 17,
+          "attackId": null,
+          "before": 0,
+          "after": 0
+        }
+      ],
+      "signals": [
+        {
+          "tick": 15869,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 16049,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 16169,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 16709,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 16169,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 0,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 15869,
+          "phase": "approach",
+          "hp": 0,
+          "position": {
+            "x": 468.0792541503906,
+            "y": 0.9954344034194946,
+            "z": -2.6258931159973145,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16049,
+          "phase": "fall",
+          "hp": 0,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16169,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16349,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 16709,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "shortcut-wanderer-0",
+          "countryside-1",
+          "dry-shortcut-1",
+          "road-wanderer-6",
+          "road-1",
+          "dry-shortcut-2",
+          "road-wanderer-1",
+          "shortcut-wanderer-1",
+          "road-wanderer-2",
+          "road-wanderer-3",
+          "road-2",
+          "road-wanderer-4",
+          "dry-shortcut-5",
+          "dry-shortcut-6",
+          "shortcut-wanderer-3",
+          "shortcut-wanderer-4",
+          "countryside-wanderer-0",
+          "countryside-wanderer-1",
+          "countryside-3"
+        ],
+        "ids": {
+          "road-wanderer-0": [
+            669
+          ],
+          "road-wanderer-5": [
+            670
+          ],
+          "shortcut-wanderer-0": [
+            671
+          ],
+          "countryside-1": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "dry-shortcut-1": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "crossing-patrol-0": [
+            756
+          ],
+          "road-wanderer-6": [
+            757
+          ],
+          "road-1": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "crossing-patrol-1": [
+            764
+          ],
+          "dry-shortcut-2": [
+            765,
+            766,
+            767,
+            768,
+            769,
+            770,
+            771,
+            772
+          ],
+          "road-wanderer-1": [
+            773
+          ],
+          "shortcut-wanderer-1": [
+            774
+          ],
+          "crossing-patrol-2": [
+            775
+          ],
+          "crossing-patrol-3": [
+            776
+          ],
+          "crossing-patrol-4": [
+            814
+          ],
+          "road-wanderer-2": [
+            815
+          ],
+          "crossing-patrol-5": [
+            856
+          ],
+          "crossing-patrol-6": [
+            857
+          ],
+          "road-wanderer-3": [
+            858
+          ],
+          "crossing-patrol-7": [
+            908
+          ],
+          "road-2": [
+            909,
+            910,
+            911,
+            912,
+            913,
+            914
+          ],
+          "crossing-patrol-8": [
+            955
+          ],
+          "crossing-patrol-9": [
+            990
+          ],
+          "road-wanderer-4": [
+            991
+          ],
+          "crossing-patrol-10": [
+            1045
+          ],
+          "crossing-patrol-11": [
+            1083
+          ],
+          "dry-shortcut-5": [
+            1084,
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091
+          ],
+          "dry-shortcut-6": [
+            1092,
+            1093,
+            1094,
+            1095,
+            1096,
+            1097,
+            1098,
+            1099
+          ],
+          "shortcut-wanderer-3": [
+            1100
+          ],
+          "shortcut-wanderer-4": [
+            1101
+          ],
+          "crossing-patrol-12": [
+            1102
+          ],
+          "crossing-patrol-13": [
+            1142
+          ],
+          "crossing-patrol-14": [
+            1143
+          ],
+          "crossing-patrol-15": [
+            1144
+          ],
+          "crossing-patrol-16": [
+            1145
+          ],
+          "crossing-patrol-17": [
+            1146
+          ],
+          "crossing-patrol-18": [
+            1147
+          ],
+          "crossing-patrol-19": [
+            1148
+          ],
+          "crossing-patrol-20": [
+            1149
+          ],
+          "countryside-wanderer-0": [
+            1150
+          ],
+          "countryside-wanderer-1": [
+            1151
+          ],
+          "crossing-patrol-21": [
+            1222
+          ],
+          "countryside-3": [
+            1293,
+            1294,
+            1295,
+            1296,
+            1297,
+            1298
+          ]
+        },
+        "patrol": {
+          "nextAt": 16150,
+          "serial": 22
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "mode": "shortcut",
+      "setup": "Ordinary physical-input native dry-shortcut route, no actor writes.",
+      "initial": {
+        "tick": 0,
+        "carId": 667,
+        "hp": 1000,
+        "position": {
+          "x": -550,
+          "y": 1.0499999999999998,
+          "z": 0,
+          "yaw": 0
+        },
+        "driver": 1,
+        "passengers": [
+          {
+            "id": 668,
+            "seat": 0,
+            "phase": "seated",
+            "started": 0,
+            "from": {
+              "x": -553.35,
+              "z": 0,
+              "y": 0.3,
+              "yaw": 0
+            },
+            "pauseUntil": 0
+          }
+        ]
+      },
+      "finished": true,
+      "finalHash": "2a74edf2",
+      "controlIdentical": null,
+      "firstDrive": 0,
+      "firstMotion": 2,
+      "drivenMetres": 1022.3648510760495,
+      "zero": {
+        "ticks": 0,
+        "movingTicks": 0,
+        "minCap": null,
+        "maxCap": 0,
+        "smokingTicks": 0
+      },
+      "peakChunks": 25,
+      "preCrashDurability": 940,
+      "hits": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1162,
+          "sourceId": 667,
+          "targetId": 753,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1943,
+          "sourceId": 667,
+          "targetId": 760,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1954,
+          "sourceId": 667,
+          "targetId": 758,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 980,
+          "after": 970
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2370,
+          "sourceId": 667,
+          "targetId": 769,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 970,
+          "after": 960
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2386,
+          "sourceId": 667,
+          "targetId": 773,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 960,
+          "after": 950
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3941,
+          "sourceId": 667,
+          "targetId": 918,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 950,
+          "after": 940
+        }
+      ],
+      "signals": [
+        {
+          "tick": 5108,
+          "name": "l9.crash-approach"
+        },
+        {
+          "tick": 5288,
+          "name": "l9.bridge-collapse"
+        },
+        {
+          "tick": 5408,
+          "name": "l9.crash-impact"
+        },
+        {
+          "tick": 5948,
+          "name": "l9.crawl-finished"
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 5408,
+          "id": "reach-outskirts"
+        }
+      ],
+      "states": [
+        {
+          "tick": 1,
+          "phase": "driving",
+          "hp": 1000,
+          "position": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5108,
+          "phase": "approach",
+          "hp": 940,
+          "position": {
+            "x": 468.2391357421875,
+            "y": 0.9954321384429932,
+            "z": -0.052755989134311676,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5288,
+          "phase": "fall",
+          "hp": 940,
+          "position": {
+            "x": 508,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          },
+          "driver": 1,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5408,
+          "phase": "impact",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5588,
+          "phase": "crawl",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        },
+        {
+          "tick": 5948,
+          "phase": "done",
+          "hp": 0,
+          "position": {
+            "x": 517.7,
+            "y": -4.45,
+            "z": 0,
+            "yaw": 1.5707963267948966
+          },
+          "driver": null,
+          "wheels": 4,
+          "entityPresent": true
+        }
+      ],
+      "encounters": {
+        "spawned": [
+          "road-wanderer-0",
+          "road-wanderer-5",
+          "shortcut-wanderer-0",
+          "countryside-1",
+          "dry-shortcut-1",
+          "road-wanderer-6",
+          "dry-shortcut-2",
+          "shortcut-wanderer-1",
+          "dry-shortcut-3",
+          "dry-shortcut-4",
+          "shortcut-wanderer-2",
+          "dry-shortcut-5",
+          "shortcut-wanderer-3",
+          "dry-shortcut-6",
+          "countryside-wanderer-0",
+          "shortcut-wanderer-4",
+          "road-wanderer-4",
+          "countryside-wanderer-1",
+          "countryside-3"
+        ],
+        "ids": {
+          "road-wanderer-0": [
+            669
+          ],
+          "road-wanderer-5": [
+            670
+          ],
+          "shortcut-wanderer-0": [
+            671
+          ],
+          "countryside-1": [
+            742,
+            743,
+            744,
+            745,
+            746,
+            747
+          ],
+          "dry-shortcut-1": [
+            748,
+            749,
+            750,
+            751,
+            752,
+            753,
+            754,
+            755
+          ],
+          "crossing-patrol-0": [
+            756
+          ],
+          "road-wanderer-6": [
+            757
+          ],
+          "dry-shortcut-2": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763,
+            764,
+            765
+          ],
+          "shortcut-wanderer-1": [
+            766
+          ],
+          "crossing-patrol-1": [
+            767
+          ],
+          "dry-shortcut-3": [
+            768,
+            769,
+            770,
+            771,
+            772,
+            773,
+            774,
+            775
+          ],
+          "dry-shortcut-4": [
+            813,
+            814,
+            815,
+            816,
+            817,
+            818,
+            819,
+            820
+          ],
+          "shortcut-wanderer-2": [
+            821
+          ],
+          "crossing-patrol-2": [
+            858
+          ],
+          "dry-shortcut-5": [
+            859,
+            860,
+            861,
+            862,
+            863,
+            864,
+            865,
+            866
+          ],
+          "shortcut-wanderer-3": [
+            867
+          ],
+          "crossing-patrol-3": [
+            917
+          ],
+          "dry-shortcut-6": [
+            918,
+            919,
+            920,
+            921,
+            922,
+            923,
+            924,
+            925
+          ],
+          "countryside-wanderer-0": [
+            966
+          ],
+          "shortcut-wanderer-4": [
+            967
+          ],
+          "crossing-patrol-4": [
+            1004
+          ],
+          "road-wanderer-4": [
+            1005
+          ],
+          "countryside-wanderer-1": [
+            1006
+          ],
+          "crossing-patrol-5": [
+            1056
+          ],
+          "crossing-patrol-6": [
+            1131
+          ],
+          "countryside-3": [
+            1132,
+            1133,
+            1134,
+            1135,
+            1136,
+            1137
+          ]
+        },
+        "patrol": {
+          "nextAt": 5350,
+          "serial": 7
+        }
+      }
+    }
+  ]
+}

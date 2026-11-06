@@ -1,37 +1,41 @@
 {
   "row": "L7-05",
   "status": "PASS",
-  "reviewer": "Codex fix65-c",
+  "reviewer": "Codex sweep-c5",
   "date": "2026-11-06",
-  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
+  "commit": "bedb6bdcaf661a957f7c36bc6eded4381a548f99",
   "clauses": [
     {
       "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
       "verdict": "PASS",
-      "note": "All14 clauses pass on fresh low/high complete/stationary receipts. Skilled14/8 player windups yield11.1801/6.5188 per minute; both passive first windups0.0667s; minimum bounded-path reachability100% in every policy. The isolated x239\u2192259 opening anchor reverses the failures while preserving current regroup/alarm/boarding/protection code. Initial living follower clearance\u22653m."
+      "note": "Fresh exact-criterion review of all14 current-source native checks. Competent low/high rates11.1801/6.5188 player windups per minute; both passive policies first player windup0.0667s and positive group/player rates. Minimum bounded-path reachability100% in every policy. The prior zero-contact failure is contradicted by these unchanged-criterion current-source measurements. Native receipts are immutable SHA256 archives; no subjective or visual clause exists in this row."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/L7-98ba7f93-low-complete.json.gz",
-      "sha256": "7a56adf601a36d2264bca4178359469991ecbf7415ddd18e63fd9af17a488262",
-      "what": "Final-source native low/complete; reviewed opening pressure, passive first windup and bounded-path reach measurements."
+      "file": "docs/reports/sweep-c5/L7-05/L7-low-complete.json.gz",
+      "sha256": "2773dfb029e5eb31814ce6544a68718229d4ec30256a6a58dc601681f1d020a5",
+      "what": "Current-source low/complete native route, read-only attack and independent bounded-path reachability observation."
     },
     {
-      "file": "docs/reports/fix65-c/L7-98ba7f93-low-stationary.json.gz",
-      "sha256": "05f0c75d64d6291764dac2fdd97b2bfd141a916a7812b9336d0f4b51d4a192b8",
-      "what": "Final-source native low/stationary; reviewed opening pressure, passive first windup and bounded-path reach measurements."
+      "file": "docs/reports/sweep-c5/L7-05/L7-low-stationary.json.gz",
+      "sha256": "efa6dfa4425e931f16480d340ca6e1b02855f1678c834d7d3af85ceb4964cbe0",
+      "what": "Current-source low/stationary native route, read-only attack and independent bounded-path reachability observation."
     },
     {
-      "file": "docs/reports/fix65-c/L7-98ba7f93-high-complete.json.gz",
-      "sha256": "6b450b8f8c6bb06cacf4d4d15fc9287d382925ecd1144b1dd45eb3ce72bca23b",
-      "what": "Final-source native high/complete; reviewed opening pressure, passive first windup and bounded-path reach measurements."
+      "file": "docs/reports/sweep-c5/L7-05/L7-high-complete.json.gz",
+      "sha256": "3bf3923c135592dbaeb813f10fed22114096f558e98ee87f3152f24264a99e3d",
+      "what": "Current-source high/complete native route, read-only attack and independent bounded-path reachability observation."
     },
     {
-      "file": "docs/reports/fix65-c/L7-98ba7f93-high-stationary.json.gz",
-      "sha256": "b4d77643431102bddfd8d3fa688607c31fc6bd4f1d47a39ec193fca68950b944",
-      "what": "Final-source native high/stationary; reviewed opening pressure, passive first windup and bounded-path reach measurements."
+      "file": "docs/reports/sweep-c5/L7-05/L7-high-stationary.json.gz",
+      "sha256": "e76fbb056abd5c866a310cea5e84361a424fccd71ecad98be562b107398b7aa3",
+      "what": "Current-source high/stationary native route, read-only attack and independent bounded-path reachability observation."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-05/clauses.json",
+      "sha256": "7d6f9abce70ea0b1d394b98254031678c616b3c9d4a305b841510a66621667cd",
+      "what": "All14 required native checks pass on both complete/stationary policies and tiers."
     }
-  ],
-  "notes": "Prior measured regression retained in historical review and one-factor bisect receipts; no targets, timers, caps or newer shared escort behavior changed."
+  ]
 }

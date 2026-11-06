@@ -1,32 +1,42 @@
 {
   "row": "L10-04",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "1abbb0e54627a41f5a8c984d2dd494f56725fdad",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "7314277ffc656d91d38dcaa5e8a0581aeade8bbc",
   "clauses": [
     {
       "clause": "combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks.",
       "verdict": "PASS",
-      "note": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1\u2013R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+      "note": "Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27\u201339.00/min; high 7.27\u2013114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5\u00d7 direct distance. No actor/input/RNG changes."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L10-04/l10-region-reach-proof.json.gz",
-      "sha256": "db904986e7d7fe86516f828e0cda7e7d538c818e8598a769eaf6e6363868016f",
-      "what": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1\u2013R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+      "file": "docs/reports/fix51-verify/receipts/L10-regional-reach.json",
+      "sha256": "e0c07f3f77780ad5c7d683b6690eb387fa38f88ab74b2598f386ebd6b3b81827",
+      "what": "Exact-source both-tier regional reach and player-rate proof with unchanged canonical controls."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-      "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
-      "what": "Immutable current original native complete route; exact source/observer hashes."
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "ba12b2682ccd3073e9c46f3e11d451e66fe91f13b1300f7df4cb1c850bedc180",
+      "what": "Current-source low complete campaign control."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
-      "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
-      "what": "Immutable current original native complete route; exact source/observer hashes."
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
+      "what": "Current-source low stationary campaign control."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "e8598f59d5bf0319a1c9f510e65ca7746849fc2c72a190c689d0e00e3305454d",
+      "what": "Current-source high complete campaign control."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
+      "what": "Current-source high stationary campaign control."
     }
   ],
-  "notes": "Original current-source producer, measured unchanged criterion."
+  "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim."
 }

@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "low",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "8039a9f135f76dcff8ea713da4f19e027388c9e32d496036f50cdd34dd8a656a",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-10",
+      "clause": "production L8 to L9 handover first frame within6s",
+      "tier": "low",
+      "policy": "production-handover",
+      "status": "PASS",
+      "value": {
+        "ms": 3833.699999809265,
+        "valid": true
+      },
+      "target": "continueCampaign through first frame≤6000ms with outgoing scene resident; same method as existing handover probe, no frame profiler",
+      "receipt": "docs/reports/sweep-c5/L8-10/low-handover.json"
+    },
+    {
+      "id": "L8-10",
+      "clause": "actual physical departure APC identity durability and seats retained",
+      "tier": "low",
+      "policy": "production-handover",
+      "status": "PASS",
+      "value": {
+        "before": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": 96.34906005859375,
+            "z": 73.97715759277344,
+            "y": 0.9954347014427185,
+            "yaw": -0.025296535515021562
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 980,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 7.555822843766349e-10,
+            "forwardSpeed": -4.0160935283768313e-10,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 2,
+              "infected": {}
+            },
+            "passengers": [
+              {
+                "id": 308,
+                "seat": 0,
+                "phase": "seated",
+                "started": 5780,
+                "from": {
+                  "x": 91.9649453741161,
+                  "z": 74.030573299561,
+                  "y": 0.42,
+                  "yaw": 0.07200453699792168
+                },
+                "pauseUntil": 0
+              },
+              {
+                "id": 289,
+                "seat": 1,
+                "phase": "seated",
+                "started": 6172,
+                "from": {
+                  "x": 92.33729838596754,
+                  "z": 74.0267567218915,
+                  "y": 0.82,
+                  "yaw": 0.17759791536993796
+                },
+                "pauseUntil": 0,
+                "story": null
+              }
+            ]
+          },
+          "id": 700
+        },
+        "after": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -550,
+            "z": 0,
+            "y": 0.9954347014427185,
+            "yaw": 0
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 980,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 7.555822843766349e-10,
+            "forwardSpeed": -4.0160935283768313e-10,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 2,
+              "infected": {}
+            },
+            "passengers": [
+              {
+                "id": 308,
+                "seat": 0,
+                "phase": "seated",
+                "started": -588,
+                "from": {
+                  "x": 91.9649453741161,
+                  "z": 74.030573299561,
+                  "y": 0.42,
+                  "yaw": 0.07200453699792168
+                },
+                "pauseUntil": -6368
+              },
+              {
+                "id": 289,
+                "seat": 1,
+                "phase": "seated",
+                "started": -196,
+                "from": {
+                  "x": 92.33729838596754,
+                  "z": 74.0267567218915,
+                  "y": 0.82,
+                  "yaw": 0.17759791536993796
+                },
+                "pauseUntil": -6368,
+                "story": null
+              }
+            ],
+            "floor": true,
+            "stage": 0
+          },
+          "id": 700
+        },
+        "active": 700
+      },
+      "target": "incoming live APC matches actual qualified physical departure ID/HP/seated identities; driver1 retained",
+      "receipt": "docs/reports/sweep-c5/L8-10/low-handover.json"
+    }
+  ]
+}

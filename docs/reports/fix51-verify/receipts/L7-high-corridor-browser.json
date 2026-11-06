@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "dc0857da55d8aca1ef8f2f1261e810f0d310abee933a68ff3f75720c9cf4b0b4",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c5/L7-08"
+  },
+  "checks": [
+    {
+      "id": "L7-08",
+      "clause": "initial admitted final horde census with canonical control",
+      "tier": "high",
+      "policy": "physical-corridor",
+      "status": "PASS",
+      "value": {
+        "census": true,
+        "regulars": 120,
+        "alphas": 2,
+        "namedCoreRegulars": 78,
+        "namedCoreAlphas": 1,
+        "canonicalControl": true
+      },
+      "target": "At least60/120full-health admitted regulars and2Alphas in initial finalgroup; physical and independent unchanged canonical controls. Exact O-review judges initial crowded corridor view.",
+      "receipt": "docs/reports/sweep-c5/L7-08/native-current.json.gz"
+    },
+    {
+      "id": "L7-08",
+      "clause": "physical rocket-cleared disc used by living carried human",
+      "tier": "high",
+      "policy": "physical-corridor",
+      "status": "PASS",
+      "value": {
+        "input": true,
+        "rocketCohortKills": 121,
+        "qualifyingBlasts": 11,
+        "uses": [
+          {
+            "id": 32,
+            "blastTick": 4693,
+            "passageTick": 5091,
+            "crossingTick": 5377,
+            "nearestLivingFinal": 5.7591157290480846
+          },
+          {
+            "id": 389,
+            "blastTick": 4693,
+            "passageTick": 5106,
+            "crossingTick": 5387,
+            "nearestLivingFinal": 9.43585840056586
+          },
+          {
+            "id": 30,
+            "blastTick": 4693,
+            "passageTick": 5076,
+            "crossingTick": 5433,
+            "nearestLivingFinal": 5.618033413508628
+          },
+          {
+            "id": 31,
+            "blastTick": 4693,
+            "passageTick": 5064,
+            "crossingTick": 5503,
+            "nearestLivingFinal": 5.707530110450013
+          }
+        ]
+      },
+      "target": "Inside authored corridor bounds, actual ShiftLMB rocket kills original finalgroup actor inside blast; same actual carried healthy human walks through body-clear interior of that blast disc then crosses west beyondx-68. Missing actors never assumed dead; every input is physical, no native driver ticks.",
+      "receipt": "docs/reports/sweep-c5/L7-08/high-physical.json.gz"
+    },
+    {
+      "id": "L7-08",
+      "clause": "reviewed physical corridor strips",
+      "tier": "high",
+      "policy": "physical-corridor",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "seen": true,
+        "reviewed": true
+      },
+      "target": "Every capture digest/seen note checked; paired actual approach, confirmed rocket-kill and survivor-crossing strips. Remote census and cinematic camera override limitations explicit in exact O-review.",
+      "receipt": "docs/reports/sweep-c5/L7-08/high-review.json"
+    }
+  ]
+}

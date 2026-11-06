@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L9",
   "tier": "low",
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "fixtureHash": "a7393a15db6ed4431899d31e1e7704f73292e7d6d31c8f21e539737ff3ade6d8",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "dd8ae263383a322df0a49c1ae8a352e5d1f5380e666c59db6e51f53b33901753",
   "errors": [],
   "checks": [
     {
@@ -14,73 +14,444 @@
       "status": "PASS",
       "value": {
         "completed": true,
-        "observations": 91,
+        "observations": 155,
         "positiveTicks": [
-          399,
-          888,
-          946,
+          434,
+          950,
+          999,
           1134,
-          1196,
-          1382,
-          1444,
-          1817,
-          1881,
-          1944,
-          2258,
-          2571,
-          2633,
-          2882,
-          2945,
-          3315,
-          3377,
-          3690,
-          3752,
-          3814,
-          4007,
-          4069,
-          4748
+          1201,
+          1454,
+          1849,
+          1915,
+          2306,
+          2370,
+          2431,
+          2495,
+          3452,
+          3521,
+          3585,
+          3645,
+          3711,
+          3774,
+          3838,
+          3900,
+          3962,
+          4021,
+          4215,
+          4275,
+          4337,
+          5254,
+          5321,
+          5388,
+          5449,
+          5516,
+          5587,
+          5653,
+          5719,
+          5782,
+          5851,
+          5919,
+          5983,
+          6048,
+          6113,
+          6178,
+          6243,
+          6306,
+          6425,
+          6613,
+          6646,
+          6674,
+          6685,
+          6721,
+          6800,
+          6865,
+          6929,
+          7125,
+          7190,
+          7253,
+          7755,
+          7817,
+          7883,
+          7947,
+          8010,
+          8518,
+          8957,
+          9021,
+          9208,
+          9272
         ],
-        "firstInactiveTick": 5705,
-        "maximumSamplingSeconds": 1.4,
-        "largestOccupiedGapSeconds": 15.950000000000003,
-        "largestMovingGapSeconds": 15.950000000000003,
-        "excludedSlowSeconds": 0,
-        "excludedIntervals": [],
-        "conservativeGapSeconds": 17.35,
+        "firstInactiveTick": 9820,
+        "maximumSamplingSeconds": 1.6,
+        "largestOccupiedGapSeconds": 15.950000000000001,
+        "largestMovingGapSeconds": 9.133333333333335,
+        "excludedSlowSeconds": 51.85000000000001,
+        "excludedIntervals": [
+          {
+            "from": 2370,
+            "to": 2431,
+            "seconds": 1.0166666666666666,
+            "metres": 0.3883655829250966
+          },
+          {
+            "from": 2431,
+            "to": 2495,
+            "seconds": 1.0666666666666667,
+            "metres": 0.43672101458677187
+          },
+          {
+            "from": 2495,
+            "to": 2558,
+            "seconds": 1.05,
+            "metres": 0.4350420298992792
+          },
+          {
+            "from": 2558,
+            "to": 2620,
+            "seconds": 1.0333333333333334,
+            "metres": 0.42974350846001036
+          },
+          {
+            "from": 2620,
+            "to": 2685,
+            "seconds": 1.0833333333333333,
+            "metres": 0.4519252166872619
+          },
+          {
+            "from": 2685,
+            "to": 2753,
+            "seconds": 1.1333333333333333,
+            "metres": 0.4743869109509367
+          },
+          {
+            "from": 2753,
+            "to": 2817,
+            "seconds": 1.0666666666666667,
+            "metres": 0.44816519298292856
+          },
+          {
+            "from": 2817,
+            "to": 2881,
+            "seconds": 1.0666666666666667,
+            "metres": 0.44947643870873694
+          },
+          {
+            "from": 2881,
+            "to": 2941,
+            "seconds": 1,
+            "metres": 0.40366657999132566
+          },
+          {
+            "from": 2941,
+            "to": 3004,
+            "seconds": 1.05,
+            "metres": 0.2828116654678804
+          },
+          {
+            "from": 3004,
+            "to": 3071,
+            "seconds": 1.1166666666666667,
+            "metres": 0.29307924412208985
+          },
+          {
+            "from": 3071,
+            "to": 3136,
+            "seconds": 1.0833333333333333,
+            "metres": 0.2876866924143043
+          },
+          {
+            "from": 3136,
+            "to": 3201,
+            "seconds": 1.0833333333333333,
+            "metres": 0.29124966113844386
+          },
+          {
+            "from": 3201,
+            "to": 3265,
+            "seconds": 1.0666666666666667,
+            "metres": 0.28978108001020286
+          },
+          {
+            "from": 3265,
+            "to": 3329,
+            "seconds": 1.0666666666666667,
+            "metres": 0.2926357303775314
+          },
+          {
+            "from": 3329,
+            "to": 3390,
+            "seconds": 1.0166666666666666,
+            "metres": 0.28193945165097456
+          },
+          {
+            "from": 3390,
+            "to": 3452,
+            "seconds": 1.0333333333333334,
+            "metres": 0.29091263115011334
+          },
+          {
+            "from": 3452,
+            "to": 3521,
+            "seconds": 1.15,
+            "metres": 0.32588074198929684
+          },
+          {
+            "from": 3521,
+            "to": 3585,
+            "seconds": 1.0666666666666667,
+            "metres": 0.30525546788296953
+          },
+          {
+            "from": 3585,
+            "to": 3645,
+            "seconds": 1,
+            "metres": 0.28897036754708333
+          },
+          {
+            "from": 4733,
+            "to": 4800,
+            "seconds": 1.1166666666666667,
+            "metres": 0.40552608255734
+          },
+          {
+            "from": 4800,
+            "to": 4862,
+            "seconds": 1.0333333333333334,
+            "metres": 0.41662000250749015
+          },
+          {
+            "from": 4862,
+            "to": 4933,
+            "seconds": 1.1833333333333333,
+            "metres": 0.4866690891650472
+          },
+          {
+            "from": 4933,
+            "to": 4997,
+            "seconds": 1.0666666666666667,
+            "metres": 0.44448896493834356
+          },
+          {
+            "from": 4997,
+            "to": 5062,
+            "seconds": 1.0833333333333333,
+            "metres": 0.4569498503162156
+          },
+          {
+            "from": 5062,
+            "to": 5127,
+            "seconds": 1.0833333333333333,
+            "metres": 0.4602968873770189
+          },
+          {
+            "from": 5127,
+            "to": 5192,
+            "seconds": 1.0833333333333333,
+            "metres": 0.4659775551001601
+          },
+          {
+            "from": 5192,
+            "to": 5254,
+            "seconds": 1.0333333333333334,
+            "metres": 0.4490022075232842
+          },
+          {
+            "from": 5254,
+            "to": 5321,
+            "seconds": 1.1166666666666667,
+            "metres": 0.4901251826585217
+          },
+          {
+            "from": 5321,
+            "to": 5388,
+            "seconds": 1.1166666666666667,
+            "metres": 0.47929612953088035
+          },
+          {
+            "from": 5388,
+            "to": 5449,
+            "seconds": 1.0166666666666666,
+            "metres": 0.2967273753576088
+          },
+          {
+            "from": 5449,
+            "to": 5516,
+            "seconds": 1.1166666666666667,
+            "metres": 0.3194968495499295
+          },
+          {
+            "from": 5516,
+            "to": 5587,
+            "seconds": 1.1833333333333333,
+            "metres": 0.34609850435941697
+          },
+          {
+            "from": 5587,
+            "to": 5653,
+            "seconds": 1.1,
+            "metres": 0.32823330228317465
+          },
+          {
+            "from": 5653,
+            "to": 5719,
+            "seconds": 1.1,
+            "metres": 0.33458312607243884
+          },
+          {
+            "from": 5719,
+            "to": 5782,
+            "seconds": 1.05,
+            "metres": 0.3246068313295971
+          },
+          {
+            "from": 5782,
+            "to": 5851,
+            "seconds": 1.15,
+            "metres": 0.362919633494214
+          },
+          {
+            "from": 5851,
+            "to": 5919,
+            "seconds": 1.1333333333333333,
+            "metres": 0.3642596312373635
+          },
+          {
+            "from": 5919,
+            "to": 5983,
+            "seconds": 1.0666666666666667,
+            "metres": 0.34774639042834915
+          },
+          {
+            "from": 5983,
+            "to": 6048,
+            "seconds": 1.0833333333333333,
+            "metres": 0.35792731530972904
+          },
+          {
+            "from": 6048,
+            "to": 6113,
+            "seconds": 1.0833333333333333,
+            "metres": 0.35711437573152394
+          },
+          {
+            "from": 6113,
+            "to": 6178,
+            "seconds": 1.0833333333333333,
+            "metres": 0.3658762824551461
+          },
+          {
+            "from": 6178,
+            "to": 6243,
+            "seconds": 1.0833333333333333,
+            "metres": 0.37427821479913026
+          },
+          {
+            "from": 6243,
+            "to": 6306,
+            "seconds": 1.05,
+            "metres": 0.34720912621108585
+          },
+          {
+            "from": 6306,
+            "to": 6370,
+            "seconds": 1.0666666666666667,
+            "metres": 0.03326257607041374
+          },
+          {
+            "from": 6370,
+            "to": 6425,
+            "seconds": 0.9166666666666666,
+            "metres": 0.4538925520549298
+          },
+          {
+            "from": 6721,
+            "to": 6800,
+            "seconds": 1.3166666666666667,
+            "metres": 0.2074900517746842
+          },
+          {
+            "from": 6800,
+            "to": 6865,
+            "seconds": 1.0833333333333333,
+            "metres": 0.17583062697231042
+          }
+        ],
+        "conservativeGapSeconds": 10.733333333333334,
         "targetSeconds": 60,
         "pass": true,
         "method": "Actual occupied APC/courier x/z intervals; existing fix51-road >=0.5m/s moving threshold. Exclude slow intervals only when same vehicle and sampling<=1.5s; unknown/long intervals and exit boundary count fully. Add maximum sampling interval to the largest moving-clock gap. Raw occupancy gap is retained.",
         "occupiedClockDiagnostic": {
-          "observations": 91,
+          "observations": 155,
           "positiveTicks": [
-            399,
-            888,
-            946,
+            434,
+            950,
+            999,
             1134,
-            1196,
-            1382,
-            1444,
-            1817,
-            1881,
-            1944,
-            2258,
-            2571,
-            2633,
-            2882,
-            2945,
-            3315,
-            3377,
-            3690,
-            3752,
-            3814,
-            4007,
-            4069,
-            4748
+            1201,
+            1454,
+            1849,
+            1915,
+            2306,
+            2370,
+            2431,
+            2495,
+            3452,
+            3521,
+            3585,
+            3645,
+            3711,
+            3774,
+            3838,
+            3900,
+            3962,
+            4021,
+            4215,
+            4275,
+            4337,
+            5254,
+            5321,
+            5388,
+            5449,
+            5516,
+            5587,
+            5653,
+            5719,
+            5782,
+            5851,
+            5919,
+            5983,
+            6048,
+            6113,
+            6178,
+            6243,
+            6306,
+            6425,
+            6613,
+            6646,
+            6674,
+            6685,
+            6721,
+            6800,
+            6865,
+            6929,
+            7125,
+            7190,
+            7253,
+            7755,
+            7817,
+            7883,
+            7947,
+            8010,
+            8518,
+            8957,
+            9021,
+            9208,
+            9272
           ],
-          "firstInactiveTick": 5705,
-          "maximumSamplingSeconds": 1.4,
+          "firstInactiveTick": 9820,
+          "maximumSamplingSeconds": 1.6,
           "largestGapSeconds": 15.95,
-          "conservativeGapSeconds": 17.349999999999998,
+          "conservativeGapSeconds": 17.55,
           "targetSeconds": 60,
           "pass": true
         },
@@ -94,15 +465,15 @@
     }
   ],
   "observations": {
-    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
     "toolSha256": "a523fbbc28a7db491d3294d85c724ca6b58dfd5c6627fa3c1a8f625dab3c91bb",
     "motionEvaluatorSha256": "e20fdeb8295730d026d2707290d16e750f4d7c5ff70db92dea1c3cdeac9d6a32",
     "inputPath": "docs/reports/fix51-r10c/L9-low-webgl2-z1.5-road.json",
     "reviewPath": "docs/reports/fix51-r10c/L9-low-road-reviewed.json",
     "sheet": {
-      "file": "docs/reports/sweep-c3/L9-03/sheets/L9-low-webgl2-z1.5-road-1793860475951/sheet-01.jpg",
-      "sha256": "ed6c90f5b83b16526278f8e715b1d66fe529070cf22d8a0661b724f646b3cde4"
+      "file": "test-results/fix55-c/L9-low-webgl2-z1.5-road-1793944015651/sheet.jpg",
+      "sha256": "9a5fdafa3d1547ddf8735f3b295c3c09cfc8036d75180dd7ce2689c280761507"
     },
-    "logArchive": "docs/reports/sweep-c3/L9-03/low-road/log-l9-route.jsonl.gz"
+    "logArchive": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/log.jsonl.gz"
   }
 }

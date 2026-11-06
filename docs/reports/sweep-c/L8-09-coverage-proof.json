@@ -1,0 +1,231 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "5fd61b3df717036c627c87253d2f9512867dc39f",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "toolSha256": "117c02384bac3257e2ced127c32fea7562e7b1539942b881696b18cde78a223c",
+  "baseline": [
+    {
+      "tier": "low",
+      "checks": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    },
+    {
+      "tier": "high",
+      "checks": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "fault": "unseated-native-member",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "FAIL",
+            "PASS",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "departure-with-waiter",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "FAIL",
+            "PASS",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "unassigned-hidden-member",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "FAIL",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "invented-internal-accounting",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "FAIL",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "unseated-physical-corgi",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "FAIL",
+            "PASS",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "invented-physical-gun",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "PASS",
+            "FAIL"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "missing-pin",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "FAIL",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "missing-tick",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "FAIL",
+            "PASS"
+          ]
+        },
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "missing-high",
+      "results": [
+        {
+          "tier": "low",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "fault": "stale-source",
+      "results": []
+    },
+    {
+      "fault": "changed-observer",
+      "results": []
+    },
+    {
+      "fault": "unreviewed-image",
+      "results": [
+        {
+          "tier": "high",
+          "checks": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      ]
+    }
+  ],
+  "originalBytesRestored": true,
+  "method": "Twelve counterfactual mutations through actual receipt consumer. Matching transport/proof hashes refreshed to test semantics. Hidden actor without assigned APC and invented internal accounting both reject. Every tier must retain all three passing clauses. Native state, qualified archives and manual reviews restored byte-for-byte; no counterfactual is game evidence."
+}

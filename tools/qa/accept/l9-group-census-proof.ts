@@ -17,7 +17,7 @@ const fault = (name: string, mutate: (value: typeof actual) => void) => {
 };
 try {
   assert(check()); results.push({ name: 'actual eight-member groups and all driven detours qualify', qualifies: true });
-  fault('nine bodies rejected', value => { const g = value.rows[0].groups[0]; g.ids.push(-1); g.actors.push({ id: -1, archetype: 'infected.runner' }); });
+  fault('extra body rejected', value => { const g = value.rows[0].groups[0]; g.ids.push(-1); g.actors.push({ id: -1, archetype: 'infected.runner' }); });
   fault('missing Alpha rejected', value => { value.rows[0].groups.flatMap((g: { actors: { archetype: string }[] }) => g.actors).find((a: { archetype: string }) => a.archetype === 'infected.alpha').archetype = 'infected.runner'; });
   fault('duplicate IDs rejected', value => { const g = value.rows[0].groups[0]; g.ids[1] = g.ids[0]; });
   fault('actor IDs must match census IDs', value => { value.rows[0].groups[0].actors[0].id = -1; });

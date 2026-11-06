@@ -1,0 +1,34 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "checkerSha256": "4e4245872b0df3c4603c923c29858b3b87ab05cea3e171a500ba786a0d187f7e",
+  "pursuitSha256": "ffbf90b9d8c3e0da871998c1b0f3cf859737d9567d218950aaf34aae215a61ba",
+  "contactCorrections": "Only special.swept-contact moves are treated as physical contact resolution; >1m still fails.",
+  "cases": [
+    {
+      "tier": "low",
+      "fault": "current exact-source receipt",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "low",
+      "fault": "injected scheduled 999m relocation",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "current exact-source receipt",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "high",
+      "fault": "injected scheduled 999m relocation",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    }
+  ],
+  "restoredSha256": "ffbf90b9d8c3e0da871998c1b0f3cf859737d9567d218950aaf34aae215a61ba"
+}

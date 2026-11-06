@@ -1,47 +1,86 @@
 {
   "row": "L10-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
+  "reviewer": "Codex sweep-c5",
   "date": "2026-11-06",
-  "commit": "9d6c6d5be84d8755c4f2a58352c9fff7548e8b45",
+  "commit": "ad4a41f860c93cb63fef6b06b5eab3acc2725b49",
   "clauses": [
     {
       "clause": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
       "verdict": "PASS",
-      "note": "Both full ordinary native routes preserve canonical final states and collect all four weapons at named anchors, with same-tick checkpoint arsenals. At each naturally reached pre-pickup state, four-second inventory-only comparisons(named/all weapons versus unchanged) produce zero births and identical infected censuses. Eight current physical WASD approach slices then independently collect handgun/shotgun/MG/rocket within authored radius with no E input; snapshot tick equals actual collection tick51/52 and stores new weapon/checkpoint. Zero spawn calls on each collection tick. Rocket approaches admit one dog at tick50 before pickup51/52, retained as normal positional admission rather than an inventory trigger. All16 before/after captures personally inspected,hashed and deleted: ring3m ahead before, new held weapon and advanced objective after; Security booth,medkits,Corgi and canister readable."
+      "note": "Both current full native routes preserve canonical control hashes and collect the four expected weapons at named anchors; checkpoint snapshots include each new weapon on the exact collection tick.24 four-second inventory-only comparisons(named/all weapons versus unchanged baseline at each approach and tier) have zero births and identical every-tick infected censuses. Eight physical WASD approach slices from those production Resume snapshots collect the intended weapon without E input; snapshot ticks51/52 equal the actual collection tick, with zero spawn calls. All16 before/after captures personally inspected: named ring3m ahead before, equipped weapon and next objective after, with Security booth/medkits/corgi and corridor canister visible. No page errors. Focused regional capability, not a continuous physical finale; no actor/objective/arsenal writes in physical slices."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10c/L10-pickups-proof.json",
-      "sha256": "4faa464da6a7a6071e9033b9584d81c98edba3182e5644812419471b3e072ca2",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/native-pickups.json.gz",
+      "sha256": "a53d531cced335c873255cfad091e4d77aee76289d652c164fb0f929e58892dd",
+      "what": "Full competent native routes and24 inventory-only controlled comparisons from actual pre-pickup snapshots; unchanged final states and every-tick infected censuses."
     },
     {
-      "file": "docs/reports/sweep-c4/L10-05-review.json",
-      "sha256": "a72b741d91dd3949a10d51bcb938f52a77f9aa684d2d34acddf7a587ca8093b1",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-residential-save.json.gz",
+      "sha256": "e744f58cf05e460bd8e5d50c5e136e4734cdd21ed7622c80e207d51a8686255d",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
     },
     {
-      "file": "docs/reports/sweep-c4/L10-05-summary.json",
-      "sha256": "1d75baf5fd0170b986c7accf04e680a66f49e661517e7ce1fcb63abf56c5ac88",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-industrial-save.json.gz",
+      "sha256": "46c251ae24cc7b06c02a4caaf1c5282a83cb84f0364f5e8405e4529df27e228a",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
     },
     {
-      "file": "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
-      "sha256": "0f6dc8f04e2093e02523a8ea981d457a100fbdb05bf5563723d06a4516a9b7d5",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-military-save.json.gz",
+      "sha256": "3ac0d532f3c5c3cf87fcab263a5bdec7e6e60bc034362e4a21827f8234e0699e",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
     },
     {
-      "file": "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
-      "sha256": "96983e55c2823908f64593de83c49c2a87849f5dbc7789fda9b42dfc6c8b3e50",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+      "sha256": "a203c6b62a8f8bb2bd3962e76450eec8b17a636bc912ea7bc0d5afff9c978d64",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
     },
     {
-      "file": "tools/qa/accept/sweep-c4-l10-pickups.mjs",
-      "sha256": "19aef51aa006232cecd65c3279ecb9c2d8dfb1bdcdc483b1850ca9b2025dbb22",
-      "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+      "file": "docs/reports/sweep-c5/L10-05/low-review.json",
+      "sha256": "f613d8d5811187a9855f43bf2a28626a3dc7403620478c8f02aaac052b7f66eb",
+      "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/low-physical.json.gz",
+      "sha256": "d4b6635185bd3babf5094d104b7071acef332fd12a6f858e6f395bf4c5fce9e1",
+      "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-residential-save.json.gz",
+      "sha256": "aa89db86b55e353fe5291c2204518c2126ea7bc9153b1cd78a9d9583d72c4d44",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-industrial-save.json.gz",
+      "sha256": "b9d8e13ce40095bdc7ca7e2751f830ed16f1edde06d17e9d9d865d6b876888bd",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-military-save.json.gz",
+      "sha256": "03d7ec195dcce8b8f1c862025317ae113d8824175ff7f2579c73f22c42ec0f2f",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+      "sha256": "eca0abb02bf33e3d422d25a60eda4e4fa7f7d7a427545b6545b0048114a1363b",
+      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/high-review.json",
+      "sha256": "c684256c7bbcf136bca036f61a5daec5251a92c77797ce4e0ac9386496c19c1e",
+      "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/high-physical.json.gz",
+      "sha256": "93b1d4c18702fdc336d282c85f4d6471ef9b37df0e8af20b4a082256a380ef8c",
+      "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-05/summary.json",
+      "sha256": "19dc059db87962afdbf61f3984c9578cd9f67903e0bf98500f0d6f6b013dfe4a",
+      "what": "Eight collected weapons at named checkpoints, same-tick snapshots, no interaction input, zero spawn calls and actual runtime metadata."
     }
-  ],
-  "notes": "Focused regional approach capability from native-generated snapshots, not a continuous physical finale. Save validation rejected initial mismatched export; exporter now copies exact snapshot arsenal and retains the validation guard. Added exact-criterion review requirement so native-only measurements cannot silently replace the tracker physical NEXT. No game/criteria/count/timer/cap changes."
+  ]
 }

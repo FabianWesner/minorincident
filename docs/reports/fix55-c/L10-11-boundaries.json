@@ -1,0 +1,68 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "criterion": "docs/qa/level-acceptance.md L10-11: 120–160 seconds inclusive, by walking, no relocation",
+  "cases": [
+    {
+      "tier": "low",
+      "seconds": 119.99,
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "seconds": 120,
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "low",
+      "seconds": 160,
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "low",
+      "seconds": 160.01,
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "seconds": null,
+      "expected": "NOT CHECKED",
+      "observed": "NOT CHECKED"
+    },
+    {
+      "tier": "high",
+      "seconds": 119.99,
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "seconds": 120,
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "high",
+      "seconds": 160,
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "tier": "high",
+      "seconds": 160.01,
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "seconds": null,
+      "expected": "NOT CHECKED",
+      "observed": "NOT CHECKED"
+    }
+  ],
+  "restoredSha256": "30547f83b2c3957f2a17a43be6fd21b96c8c862a0d8f7b994aabd0445093b76e"
+}

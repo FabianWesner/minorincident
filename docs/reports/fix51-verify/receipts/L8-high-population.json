@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "9f8835affd47749b24f06fda4c8bc1ac384489204e088d248949ef7582853bff",
+  "errors": [],
+  "observations": {
+    "reviewPath": "docs/reports/sweep-c5/L8-03/review.json"
+  },
+  "checks": [
+    {
+      "id": "L8-03",
+      "clause": "actual calm local census and purposeful routines",
+      "tier": "high",
+      "policy": "calm-population",
+      "status": "PASS",
+      "value": {
+        "civilians": 20,
+        "soldiers": 6,
+        "staff": 4,
+        "animals": [
+          "lion",
+          "gorilla",
+          "elephant",
+          "zebra",
+          "zebra",
+          "flamingo",
+          "flamingo",
+          "flamingo"
+        ],
+        "maximumIdleSeconds": 0.6,
+        "controlIdentical": true
+      },
+      "target": "20local civilians,6soldiers,4staff,8animals/5species/2zebras/3flamingos; no hostile or idle-facing-nowhere>3s; exact independent natural control",
+      "receipt": "docs/reports/sweep-c5/L8-03/review.json"
+    },
+    {
+      "id": "L8-03",
+      "clause": "outside wall pursuit cannot cross or damage occupants",
+      "tier": "high",
+      "policy": "calm-population",
+      "status": "PASS",
+      "value": {
+        "crossed": 0,
+        "missing": 0,
+        "dead": 0,
+        "hits": 0
+      },
+      "target": "four live admitted production runners outside four walls, normal pursuit3599ticks; none crosses/damages inside; no missing/dead actor masking",
+      "receipt": "docs/reports/sweep-c5/L8-03/review.json"
+    },
+    {
+      "id": "L8-03",
+      "clause": "reviewed physical calm activity clips",
+      "tier": "high",
+      "policy": "real-input-calm",
+      "status": "PASS",
+      "value": {
+        "seen": true,
+        "drawnIds": 24,
+        "drawnClasses": [
+          "npc.cashier",
+          "npc.soldier",
+          "npc.zookeeper",
+          "npc.groundskeeper",
+          "animal.elephant",
+          "animal.lion"
+        ],
+        "maxObservedIdleSeconds": 0.8,
+        "clips": [
+          "npc-walk",
+          "npc-walk-relaxed",
+          "run",
+          "npc-look-around",
+          "npc-carry",
+          "civ-flee",
+          "walk",
+          "idle"
+        ]
+      },
+      "target": "actual WASD before breach,6006tick samples; rendered civilian/soldier/staff/lion/elephant; idleclip<=3s; all20pairedzoom frames reviewed",
+      "receipt": "docs/reports/sweep-c5/L8-03/review.json"
+    }
+  ]
+}

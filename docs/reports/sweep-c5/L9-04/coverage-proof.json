@@ -1,0 +1,274 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "78e80beb45ee2c68381e3cd147c8b9b238d6b070",
+  "method": "Actual unchanged consumer; each semantic fault rehashed to prevent digest rejection masking semantic failures. All original evidence bytes restored.",
+  "cases": [
+    {
+      "fault": "stale-source",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unseen-image",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "missing-high",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unfinished",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "changed-start",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "missing-input",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "wrong-quality",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "console-error",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "NOT CHECKED"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "fault": "safe-lower",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "wrong-contact-damage",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "duplicate-contact",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "low",
+          "clause": "physical route contact and attack billing",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "status": "PASS"
+        },
+        {
+          "tier": "high",
+          "clause": "physical route contact and attack billing",
+          "status": "FAIL"
+        }
+      ]
+    }
+  ]
+}

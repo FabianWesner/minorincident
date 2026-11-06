@@ -427,11 +427,12 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       }
       const pursuitPath='docs/reports/fix56-c/L10-pursuit.json';
       if(competent&&existsSync(pursuitPath)){
-        const proof=JSON.parse(readFileSync(pursuitPath,'utf8')) as {sourceHash:string;observerHash:string;toolSha256:string;rows:{tier:string;controlIdentical:boolean;nativeStateHash:string;persistentIds:number[];maxStepMetres:number;longestFarStallSeconds:number;cruiseMedianRunRatio:number|null;cruiseSamples:number;movingWithoutLosSamples:number;relocations:unknown[];cues:{tick:number;kind:string;sourceId:number;distance:number|null}[]}[]};
+        const proof=JSON.parse(readFileSync(pursuitPath,'utf8')) as {sourceHash:string;observerHash:string;toolSha256:string;rows:{tier:string;controlIdentical:boolean;nativeStateHash:string;persistentIds:number[];maxStepMetres:number;longestFarStallSeconds:number;cruiseMedianRunRatio:number|null;cruiseSamples:number;movingWithoutLosSamples:number;relocations:{writer:string;metres:number}[];cues:{tick:number;kind:string;sourceId:number;distance:number|null}[]}[]};
         const row=proof.rows.find(row=>row.tier===receipt.tier);
         if(proof.sourceHash===receipt.sourceHash&&proof.observerHash===receipt.observerHash&&proof.toolSha256===createHash('sha256').update(readFileSync('tools/qa/accept/fix55-l10-pursuit.ts')).digest('hex')&&row&&row.nativeStateHash===receipt.nativeStateHash){
           add('L10-07','observed ordinary cruise ratio to nominal player run',{ratio:row.cruiseMedianRunRatio,samples:row.cruiseSamples},'0.7× run ±2%; ordinary moving far-pursuit samples exclude specials',row.cruiseMedianRunRatio!==null&&Math.abs(row.cruiseMedianRunRatio-.7)<=.7*.02,pursuitPath);
-          add('L10-07','continuous same-ID pursuit without LOS or teleport',{ids:row.persistentIds,maxStepMetres:row.maxStepMetres,longestFarStallSeconds:row.longestFarStallSeconds,blindMovingSamples:row.movingWithoutLosSamples,relocations:row.relocations},'one persistent actor; no>1m tick or relocation; nonzero movement without LOS; no far stall>20s',row.persistentIds.length===1&&row.maxStepMetres<=1&&!row.relocations.length&&row.movingWithoutLosSamples>0&&row.longestFarStallSeconds<=20,pursuitPath);
+          const nonContactRelocations=row.relocations.filter(event=>event.writer!=='special.swept-contact'||event.metres>1);
+          add('L10-07','continuous same-ID pursuit without LOS or teleport',{ids:row.persistentIds,maxStepMetres:row.maxStepMetres,longestFarStallSeconds:row.longestFarStallSeconds,blindMovingSamples:row.movingWithoutLosSamples,relocations:row.relocations,nonContactRelocations},'one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s',row.persistentIds.length===1&&row.maxStepMetres<=1&&!nonContactRelocations.length&&row.movingWithoutLosSamples>0&&row.longestFarStallSeconds<=20,pursuitPath);
           const roars=row.cues.filter(cue=>cue.kind==='roar'),gaps=roars.slice(1).map((cue,i)=>(cue.tick-roars[i].tick)/60);
           add('L10-07','actual paired roar/impact intervals',{gaps,events:row.cues.filter(cue=>cue.kind!=='step')},'nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate',gaps.length>0&&gaps.every(gap=>gap>=20&&gap<=35)&&roars.every(roar=>row.cues.some(cue=>cue.kind==='impact'&&cue.tick===roar.tick&&cue.sourceId===roar.sourceId)),pursuitPath);
         }
@@ -716,14 +717,18 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
   ]],
+  ['L7-08', ['initial admitted final horde census with canonical control','physical rocket-cleared disc used by living carried human','reviewed physical corridor strips'].map(clause=>({clause,policy:'physical-corridor'}))],
   ['L7-03', ['physical rocket cadence and overlapping flight','clicked empty-ground impact','one physical rocket kills24-body three-metre cohort','three-metre movement gap in controlled cohort','reviewed night rockets blood and pointblank impact peak','physical rocket first-hit detonation','physical rocket catalog max-range detonation'].map(clause=>({clause,policy:'real-input-webgl2'}))],
   ['L7-04', ['actual resident and later regular admissions', 'actual resident and later Alpha admissions', 'concurrent cap'].map(clause => ({ clause, policy: 'complete' }))],
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],
   ['L6-08', [{ clause: 'observed human follower pace versus phase group median', policy: 'complete' }, { clause: 'all original follower settled speed and per-ID visible bars', policy: 'controlled-fixture' }]],
   ['L6-09', [{ clause: 'actual gates width collision endurance refusal and persistent prompt', policy: 'controlled-fixture' }]],
+  ['L9-06', ['six authored physical routes remain driveable','three physical offroad stall and reverse recoveries','reviewed world arrow absence and exact durability HUD'].map(clause=>({clause,policy:'physical-wedge'}))],
+  ['L9-09', ['actual terrain GLB shared-edge heights',...['road','countryside','dry-shortcut'].map(r=>`${r} physical streaming residency and continuous input`)].map(clause=>({clause,policy:'streaming-physical'}))],
+  ['L9-01', [{clause:'physical carried start control and reviewed occupants',policy:'real-input-webgl2'}]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],
-  ['L9-02', [{ clause: 'actual admitted route group census and driven detour clearance', policy: 'controlled-physical' }]],
+  ['L9-02', [{ clause: 'actual admitted route group census and driven detour clearance', policy: 'controlled-physical' }, ...['road', 'countryside', 'dry-shortcut'].map(route => ({ clause: `${route} actual WASD detour around every group`, policy: 'real-input-detour' }))]],
   ['L9-04', [
     ...['shortcut durability billing per unique contact onset', 'stopped-surround attacks deal10 damage after at least0.6s windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...['physical matched safe route retains more durability than shortcut', 'physical route contact and attack billing'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
@@ -752,6 +757,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['full active assault hold duration', 'capped active infected peak', 'hold player windups per minute', 'hold bounded-path reachable share', 'Mega arena arrival after charge activation', 'persistent Mega identity without scheduled replacement or teleport'].map(clause => ({ clause, policy: 'stationary' })),
   ]],
   ['L10-05', ['all four named checkpoint pickup and snapshot transactions', 'inventory changes alone spawn zero enemies at every weapon approach'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L10-07', [
+    ...['observed ordinary cruise ratio to nominal player run', 'continuous same-ID pursuit without LOS or teleport', 'actual paired roar/impact intervals'].map(clause => ({ clause, policy: 'complete' })),
+    ...['actual centered pulsing band ring without Mega pin', 'actual paired audio gains increase at closer distance'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
+  ]],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),
@@ -770,7 +779,15 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     { clause: 'every living roster identity boarded', policy: 'complete' },
     ...['actual passenger door-entry spacing', 'living infected remaining when boarding has finished', 'offscreen stalled boarding recovery after20s'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
+  ['L8-04', [...['breach active-sim clock','distinct tunnel outlets','actual first packet per tunnel outlet','first ordinary visible actor outlet start window','actual tunnel outlet separation'].map(clause=>({clause,policy:'complete'})),...[0,1,2,3].map(n=>({clause:`tunnel${n} physical timed emergence and reviewed strip`,policy:'physical-breach'}))]],
+  ['L8-03', [{clause:'actual calm local census and purposeful routines',policy:'calm-population'},{clause:'outside wall pursuit cannot cross or damage occupants',policy:'calm-population'},{clause:'reviewed physical calm activity clips',policy:'real-input-calm'}]],
   ['L8-05', ['actual admitted Alphas over observed route','concurrent cap','unprotected local-threat victim class coverage','all five same-ID species convert after actual bites'].map(clause=>({clause,policy:'complete'}))],
+  ['L8-10', ['production L8 to L9 handover first frame within6s', 'actual physical departure APC identity durability and seats retained'].map(clause => ({ clause, policy: 'production-handover' }))],
+  ['L8-09', [
+    { clause: 'every living native group identity seated', policy: 'complete' },
+    ...['actual complete passenger identity boarding and wait gate', 'every outside waiting healthy survivor has production radar guidance', 'actual departure APC is unarmed'].map(clause => ({ clause, policy: 'boarding-sweep' })),
+  ]],
+  ['L8-08', [...['lion','gorilla','elephant','zebra','flamingo'].map(species=>`reviewed original ${species} conversion and moving paired views`), 'reviewed physical canopy night readability','reviewed physical postbreach-canopy night readability'].map(clause=>({clause,policy:'physical-animal'}))],
   ['L8-07', ['native escape marker remains fixed at APC','two independent body-clear enclosure exits at2.5m width'].map(clause=>({clause,policy:'complete'}))],
   ['L8-06', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),

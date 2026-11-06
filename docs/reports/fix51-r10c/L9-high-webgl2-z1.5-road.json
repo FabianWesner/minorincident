@@ -1,16 +1,16 @@
 {
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
-  "revision": "a7265a9d83148185361cb37f3201a6f804d309ac",
-  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "3f5f294daf8264b98c0d70e3746cfc5497e9b48b",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
   "toolSha256": "a523fbbc28a7db491d3294d85c724ca6b58dfd5c6627fa3c1a8f625dab3c91bb",
   "cell": "L9-high-webgl2-z1.5-road",
   "tier": "high",
   "zoom": 1.5,
   "route": "road",
   "artifacts": {
-    "directory": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c3/test-results/fix51-r10c/L9-high-webgl2-z1.5-road-1793860476885",
-    "logSha256": "367ea6ed653f27a7d1715162f9ac06e52f8bf90fde23fc33fda4f77ffdf83035"
+    "directory": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L9-high-webgl2-z1.5-road-1793944016596",
+    "logSha256": "d0e17af446e6fd2bd92fead36e339259ce5c7da3cf2c73562841f75c8347bafd"
   },
   "method": "Full physical WASD route using the authored map assist; protected courier, no objective skips, no actor writes or frame timing. eyes.ts counts living submitted bodies with LOS and on-screen chest, not minimap dots. Photos pause simulation and restore camera/quality.",
   "result": {
@@ -21,9 +21,9 @@
         "heroine": "female",
         "finished": true,
         "skipped": [],
-        "wallSeconds": 110,
+        "wallSeconds": 111,
         "simSeconds": 0,
-        "maxNoProgressSeconds": 4.762,
+        "maxNoProgressSeconds": 4.933333333333334,
         "deaths": 0,
         "assists": 1,
         "attacks": {},
@@ -43,7 +43,7 @@
           {
             "id": "approach",
             "text": "Drive toward the city · 1020 m",
-            "tick": 9,
+            "tick": 0,
             "marker": {
               "anchor": "crash-approach",
               "ring": {
@@ -56,14 +56,14 @@
                 0,
                 0
               ],
-              "playerY": 1.0100750923156738,
+              "playerY": 0.705,
               "pinVisible": true
             }
           },
           {
             "id": "reach-outskirts",
             "text": "Get clear of the wreck · 20 m",
-            "tick": 5649,
+            "tick": 5737,
             "marker": {
               "anchor": "crawl-end",
               "ring": {
@@ -72,7 +72,7 @@
                 "z": 0
               },
               "drawn": null,
-              "playerY": 0.7200000286102295,
+              "playerY": 0.7049999833106995,
               "pinVisible": true
             }
           }
@@ -86,33 +86,35 @@
   "runtimeMatches": true,
   "fullRouteConsolePass": true,
   "visibility": {
-    "observations": 88,
+    "observations": 89,
     "positiveTicks": [
-      422,
-      926,
-      969,
-      1102,
-      1166,
-      1422,
-      1806,
-      1872,
+      432,
+      950,
+      972,
+      1041,
+      1168,
+      1489,
+      1809,
+      1874,
       1936,
-      2582,
-      2903,
-      2971,
-      3035,
-      3290,
-      3740,
-      3804,
-      3868,
-      3997,
-      4704,
-      4768
+      2321,
+      2585,
+      2646,
+      2912,
+      3348,
+      3408,
+      3472,
+      3801,
+      3870,
+      4057,
+      4777,
+      4914,
+      4982
     ],
-    "firstInactiveTick": 5649,
-    "maximumSamplingSeconds": 1.4666666666666666,
-    "largestGapSeconds": 14.683333333333334,
-    "conservativeGapSeconds": 16.15,
+    "firstInactiveTick": 5802,
+    "maximumSamplingSeconds": 1.8,
+    "largestGapSeconds": 13.666666666666666,
+    "conservativeGapSeconds": 15.466666666666667,
     "targetSeconds": 60,
     "pass": true
   },

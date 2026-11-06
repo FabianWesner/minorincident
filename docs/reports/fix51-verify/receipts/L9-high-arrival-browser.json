@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "4c924247f2be1c172e01839792b41ea7d39ac740eefab3b2c03f72dbd6f687c9",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c5/L9-01"
+  },
+  "checks": [
+    {
+      "id": "L9-01",
+      "clause": "physical carried start control and reviewed occupants",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "exactPayload": true,
+        "carry": true,
+        "control": true,
+        "firstInputTick": 0,
+        "firstMotionTick": 1,
+        "hidden": true,
+        "seated": true,
+        "seen": true,
+        "carId": 800,
+        "hp": 930,
+        "passengerIds": [
+          30,
+          31,
+          32,
+          389,
+          408
+        ],
+        "errors": []
+      },
+      "target": "exact physical L8 payload; throttle available tick0 and firstmotion≤30ticks; normal seated driver/corgi lifecycle and14 reviewed paired-zoom cab frames, exact O-review supplies visible no-clipping judgement",
+      "receipt": "docs/reports/sweep-c5/L9-01/high-review.json"
+    }
+  ]
+}

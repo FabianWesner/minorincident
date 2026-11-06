@@ -31,10 +31,10 @@ try {
     });
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(), errors = [], samples = [], commands = [], reached = [], captures = [];
-    page.on('pageerror', e => errors.push(e.message));
+    page.on('pageerror', e => errors.push(e.message)); page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
     try {
       await page.addInitScript('window.__name=f=>f');
-      await page.goto(`http://127.0.0.1:${port}/?test=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);
+      await page.goto(`http://127.0.0.1:${port}/?test=1&ui=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);
       await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
       const setup = await page.evaluate(async ({ campaign, tier }) => {
         const a = window.__SS__, g = window.__SCENE__.game;

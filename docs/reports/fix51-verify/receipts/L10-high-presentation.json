@@ -1,0 +1,424 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "4d2085f1fea456b2b39dc5c123f80d9c6ec68a512d7e7ed30ac56f99b6ddfcc4",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-07",
+      "clause": "actual centered pulsing band ring without Mega pin",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "ring": true,
+        "audio": true,
+        "bands": [
+          "approaching",
+          "near"
+        ],
+        "pairs": [
+          {
+            "type": "mega.cue",
+            "tick": 290,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "approaching",
+            "distance": 102.4619183382505,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 5.6,
+              "tick": 290,
+              "sourceId": 122,
+              "gain": 0.1679999977350235,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 36
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 5.6,
+              "tick": 290,
+              "sourceId": 122,
+              "gain": 0.1679999977350235,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 37
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 1974,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 32.99753210110877,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 33.664,
+              "tick": 1974,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 423
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 33.664,
+              "tick": 1974,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 424
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 3174,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.19352678293752,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 53.664,
+              "tick": 3174,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 716
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 53.664,
+              "tick": 3174,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 717
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 4718,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.311703631357483,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 79.39733333333334,
+              "tick": 4718,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1092
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 79.39733333333334,
+              "tick": 4718,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1093
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 6094,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.202992387184771,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 102.33066666666667,
+              "tick": 6094,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1419
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 102.33066666666667,
+              "tick": 6094,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1420
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 7368,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.2300025869843814,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 123.56266666666667,
+              "tick": 7368,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1720
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 123.56266666666667,
+              "tick": 7368,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1721
+            }
+          }
+        ],
+        "gaps": [
+          28.066666666666666,
+          20,
+          25.733333333333334,
+          22.933333333333334,
+          21.233333333333334
+        ],
+        "samples": 101
+      },
+      "target": "both distance bands, centered animated ring, no Mega entity pin or bearing",
+      "receipt": "docs/reports/sweep-c5/L10-07/high-presentation.json.gz"
+    },
+    {
+      "id": "L10-07",
+      "clause": "actual paired audio gains increase at closer distance",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "ring": true,
+        "audio": true,
+        "bands": [
+          "approaching",
+          "near"
+        ],
+        "pairs": [
+          {
+            "type": "mega.cue",
+            "tick": 290,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "approaching",
+            "distance": 102.4619183382505,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 5.6,
+              "tick": 290,
+              "sourceId": 122,
+              "gain": 0.1679999977350235,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 36
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 5.6,
+              "tick": 290,
+              "sourceId": 122,
+              "gain": 0.1679999977350235,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 37
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 1974,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 32.99753210110877,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 33.664,
+              "tick": 1974,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 423
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 33.664,
+              "tick": 1974,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 424
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 3174,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.19352678293752,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 53.664,
+              "tick": 3174,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 716
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 53.664,
+              "tick": 3174,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 717
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 4718,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.311703631357483,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 79.39733333333334,
+              "tick": 4718,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1092
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 79.39733333333334,
+              "tick": 4718,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1093
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 6094,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.202992387184771,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 102.33066666666667,
+              "tick": 6094,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1419
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 102.33066666666667,
+              "tick": 6094,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1420
+            }
+          },
+          {
+            "type": "mega.cue",
+            "tick": 7368,
+            "sourceId": 122,
+            "kind": "roar",
+            "band": "near",
+            "distance": 2.2300025869843814,
+            "roar": {
+              "cue": "mega.roar",
+              "variant": "mega.roar",
+              "time": 123.56266666666667,
+              "tick": 7368,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.47999998927116394,
+              "lowpass": 900,
+              "voice": 1720
+            },
+            "impact": {
+              "cue": "mega.impact",
+              "variant": "mega.impact",
+              "time": 123.56266666666667,
+              "tick": 7368,
+              "sourceId": 122,
+              "gain": 0.3779999911785126,
+              "rate": 0.550000011920929,
+              "lowpass": 900,
+              "voice": 1721
+            }
+          }
+        ],
+        "gaps": [
+          28.066666666666666,
+          20,
+          25.733333333333334,
+          22.933333333333334,
+          21.233333333333334
+        ],
+        "samples": 101
+      },
+      "target": "normal-clock unlocked unmuted graph; >=3 paired20–35s cues, closer roar and impact gains both greater",
+      "receipt": "docs/reports/sweep-c5/L10-07/high-presentation.json.gz"
+    }
+  ]
+}

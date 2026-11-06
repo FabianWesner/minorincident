@@ -1,7 +1,7 @@
 {
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "observerHash": "5da4960cc75967f239e7316e202902680d3c17286fb64321037a8550932bc320",
-  "revision": "54bd31f1ade72e4552c8aa0180c0e348ca434251",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "6fcc2d21e545db722516c481ef8d242c05e276c2",
   "toolSha256": "bb70a0e55a78b69c5d1a5f0e0b086b26731635b6381188802d118324c5020dc2",
   "method": "Start at the authored L5-default boundary, complete mortal L5 and L6 with ordinary native policies, and call production completeCampaignLevel on each actual result. No invented roster or actor relocation. These are native-generated progressed saves, not a physical L1–L6 campaign claim.",
   "rows": [
@@ -13,10 +13,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 212.25,
+          "time": 206.58333333333334,
           "deaths": 0,
-          "kills": 79,
-          "damageTaken": 75,
+          "kills": 78,
+          "damageTaken": 62.5,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -25,11 +25,11 @@
             },
             {
               "id": "look",
-              "t": 168.95
+              "t": 163.28333333333333
             },
             {
               "id": "metro",
-              "t": 212.25
+              "t": 206.58333333333334
             }
           ],
           "furthestObjective": "metro",
@@ -50,10 +50,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 289.7,
+          "time": 276.53333333333336,
           "deaths": 0,
-          "kills": 13,
-          "damageTaken": 70,
+          "kills": 31,
+          "damageTaken": 150,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -66,11 +66,11 @@
             },
             {
               "id": "retreat",
-              "t": 280.1333333333333
+              "t": 271.4166666666667
             },
             {
               "id": "exit",
-              "t": 289.7
+              "t": 276.53333333333336
             }
           ],
           "furthestObjective": "exit",
@@ -80,7 +80,7 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 100,
+            "admitted": 116,
             "deferred": 0,
             "requests": [],
             "offenders": []
@@ -88,8 +88,8 @@
         }
       ],
       "path": "docs/reports/fix51-r10c/L7-low-carried-save.json.gz",
-      "saveSha256": "dac361575804d612f8d8ae0f4c3c6441f16b21037ea1b96b46ff49caefb9ebef",
-      "archiveSha256": "24a93dfb66ee83a416a92ef44657102e30c732a17885569468eb3fd61376ed2e",
+      "saveSha256": "323fae680e49476d06c7e48cb1fef63143e351a95d9c449e51d7ec15ea172dba",
+      "archiveSha256": "77bb676c7dd072d667c2aaf54477d09a6fa778f47bfb74e7ad1337d6d3bf19b9",
       "roster": [
         {
           "id": 289,
@@ -119,10 +119,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 221.61666666666667,
+          "time": 217.45,
           "deaths": 0,
-          "kills": 108,
-          "damageTaken": 37.5,
+          "kills": 99,
+          "damageTaken": 12.5,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -131,11 +131,11 @@
             },
             {
               "id": "look",
-              "t": 173.5
+              "t": 169.23333333333332
             },
             {
               "id": "metro",
-              "t": 221.61666666666667
+              "t": 212.45
             }
           ],
           "furthestObjective": "metro",
@@ -156,10 +156,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 255.3,
+          "time": 296.46666666666664,
           "deaths": 0,
-          "kills": 19,
-          "damageTaken": 110,
+          "kills": 21,
+          "damageTaken": 50,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -172,11 +172,11 @@
             },
             {
               "id": "retreat",
-              "t": 250.18333333333334
+              "t": 287.0833333333333
             },
             {
               "id": "exit",
-              "t": 255.3
+              "t": 296.46666666666664
             }
           ],
           "furthestObjective": "exit",
@@ -186,7 +186,7 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 106,
+            "admitted": 113,
             "deferred": 0,
             "requests": [],
             "offenders": []
@@ -194,8 +194,8 @@
         }
       ],
       "path": "docs/reports/fix51-r10c/L7-high-carried-save.json.gz",
-      "saveSha256": "d8b8357dbcfcf6dc4fee3ee5abe27fb255ff82b49b7499d5b6e39f54c41c4a2b",
-      "archiveSha256": "c83bab2d70c75b41bc2dabd092fc9f3971d65cf57687ed087ff790f31f0724ef",
+      "saveSha256": "5cc785087d3e7c54f56e5ca5eb17dedf48224927930e5e0867a6ded7d1009cab",
+      "archiveSha256": "d272c8e417a3998eacaa5e8a155e280d166072a38f98f85362e564614ca69390",
       "roster": [
         {
           "id": 389,
@@ -203,59 +203,14 @@
           "max": 100
         },
         {
-          "id": 390,
-          "hp": 100,
-          "max": 100
+          "id": 30,
+          "hp": 60,
+          "max": 60
         },
         {
-          "id": 391,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 393,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 394,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 395,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 396,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 397,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 398,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 400,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 401,
-          "hp": 100,
-          "max": 100
-        },
-        {
-          "id": 402,
-          "hp": 100,
-          "max": 100
+          "id": 31,
+          "hp": 60,
+          "max": 60
         },
         {
           "id": 32,

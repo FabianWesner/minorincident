@@ -1,108 +1,142 @@
 {
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
-  "toolSha256": "38fe778534921bd9b914a78836d07cd14cf8e80bfeb4742347a54c08fcb0a87d",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "toolSha256": "9111b3049e10c0a3656c01be56ec99ee559d4bbfa8ffea876ad0b5a5158595da",
   "tier": "low",
   "zoom": 1.5,
+  "input": "docs/reports/fix51-r10c/L10-low-dog-z1.5-input.json",
+  "inputSha256": "7ef0d23eddb279e299871742cdb1d427f5dd5b997317b433719fa736498fd555",
+  "run": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976",
+  "method": "Four labelled original-size1280x720 frames per sheet; no scaling or crop. Each capture requires a manual seen note before admission.",
   "captures": [
     {
       "file": "dog-look-L10-checkpoint-yield.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-L10-checkpoint-yield.jpg",
-      "sha256": "f289362c005195e86ce6c44fd92c8b04abddd34a31eeedd2221d9530539952ae",
-      "seen": "low zoom1.5: Checkpoint yield after short encounter: courier and Corgi on road,corpses/blood nearby, Mega distance ring visible;not selected living-dog proof."
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-L10-checkpoint-yield.jpg",
+      "sha256": "8fe4e7c34e95fa8385d621da0660cd9237b94fe6b84ca36dbd5d8c3908d703cf",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-01.jpg",
+      "cell": 1,
+      "seen": "End of bounded slice shows courier and orange backpack corgi on road, with incoming infected or bodies behind. Not used as the living-dog silhouette witness."
     },
     {
       "file": "dog-look-L10-step-industrial-area.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-L10-step-industrial-area.jpg",
-      "sha256": "3d9b8ff2ca96632a828407ada37e957cff469a373e2ec32d7997f355809068f1",
-      "seen": "low zoom1.5: Courier and Corgi with living cream dog at feet,shotgun objective and readable red enemy bar."
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-L10-step-industrial-area.jpg",
+      "sha256": "1b7acedc7c310fe9aaa35195962976d8840d350c1402759ad612444736b0abce",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-01.jpg",
+      "cell": 2,
+      "seen": "Industrial-area encounter shows courier/corgi and red-bar dog, with approaching human infected and telegraph rings. Low canine body is distinct from the backpack corgi."
     },
     {
-      "file": "dog-look-L10-t207.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-L10-t207.jpg",
-      "sha256": "1c5a7eb2c182f052ef0c7654699f6a4e4aec2bc12cf55a94d99018b331f5979d",
-      "seen": "low zoom1.5: Courier and Corgi with living cream dog at feet,shotgun objective and readable red enemy bar."
+      "file": "dog-look-L10-t103.jpg",
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-L10-t103.jpg",
+      "sha256": "58651238d1db3113bb6b484943b45482331af2bf11a1f3c6e1e975b7ec4fcd7c",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-01.jpg",
+      "cell": 3,
+      "seen": "Industrial-area encounter shows courier/corgi and red-bar dog, with approaching human infected and telegraph rings. Low canine body is distinct from the backpack corgi."
     },
     {
       "file": "dog-look-living-dog-0.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-living-dog-0.jpg",
-      "sha256": "04dacad99a8233aaf71ee6ef498d4d4eb87cd3274ce6882e2dfca8ef0cac5865",
-      "seen": "low zoom1.5: Living lean cream quadruped by courier feet with red health bar,visibly different from orange round Corgi and green backpack at left."
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-living-dog-0.jpg",
+      "sha256": "3a06ccd72bc2d468b39eb3b77be005e4ea4d5dc62af65152686c98f96fe417fa",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-01.jpg",
+      "cell": 4,
+      "seen": "Cream slender red-bar dog approaching on the road, separate from the human group; low four-legged canine torso, muzzle and tail differ from orange/white round-headed backpack corgi. Both dog types are visible. Close high frames have partial human occlusion; wide approach frames retain a separate silhouette."
     },
     {
       "file": "dog-look-living-dog-1.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-living-dog-1.jpg",
-      "sha256": "fe8a9c4f17349bf171882a14b85aea03c86a4e96250be9d8c78097275ac05595",
-      "seen": "low zoom1.5: Living lean cream quadruped by courier feet with red health bar,visibly different from orange round Corgi and green backpack at left."
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-living-dog-1.jpg",
+      "sha256": "b4a40793a2da3979e0345205f031411e8c05b17aa922b911f4d4166100068e4b",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-02.jpg",
+      "cell": 1,
+      "seen": "Cream slender red-bar dog approaching on the road, separate from the human group; low four-legged canine torso, muzzle and tail differ from orange/white round-headed backpack corgi. Both dog types are visible. Close high frames have partial human occlusion; wide approach frames retain a separate silhouette."
     },
     {
       "file": "dog-look-living-dog-2.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/dog-look-living-dog-2.jpg",
-      "sha256": "63d21800210573ff2eb6f7434abced79f478382e62b5e7b5a6f6a702db7a2fa6",
-      "seen": "low zoom1.5: Living lean cream quadruped by courier feet with red health bar,visibly different from orange round Corgi and green backpack at left."
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/dog-look-living-dog-2.jpg",
+      "sha256": "4fcd9a0b46a696048088c5ad33b25697c63b492bce8fb5b9fb93c4922e0be476",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-02.jpg",
+      "cell": 2,
+      "seen": "Cream slender red-bar dog approaching on the road, separate from the human group; low four-legged canine torso, muzzle and tail differ from orange/white round-headed backpack corgi. Both dog types are visible. Close high frames have partial human occlusion; wide approach frames retain a separate silhouette."
     },
     {
-      "file": "live-1793918997758.246.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/live-1793918997758.246.jpg",
-      "sha256": "dbe7845278e64ea2a32aba118ebcd32117ae313e40935705a5f9abf4fe615e28",
-      "seen": "low zoom1.5: L10 loading card,Loading assets."
+      "file": "live-1793940138269.207.jpg",
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/live-1793940138269.207.jpg",
+      "sha256": "35e8b74ebbdf00c650f3d3852b83fb6471aedabf9d95454233b30b44bc13aae4",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-02.jpg",
+      "cell": 3,
+      "seen": "L10 loading/preparing card, not appearance evidence."
     },
     {
-      "file": "live-1793919000371.9255.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/live-1793919000371.9255.jpg",
-      "sha256": "f51a9da70a169d01f4da7232dab481559446accc0ae03561cf62040c56cbbf5c",
-      "seen": "low zoom1.5: L10 loading card,Preparing scene."
+      "file": "live-1793940141500.1152.jpg",
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/live-1793940141500.1152.jpg",
+      "sha256": "54634295826d89b7fed8b6e3abb4e9469e37f3d92ad38500661bc794b6d7e883",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-02.jpg",
+      "cell": 4,
+      "seen": "L10 preparing-scene card, not appearance evidence."
     },
     {
-      "file": "live-1793919002585.3464.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/live-1793919002585.3464.jpg",
-      "sha256": "bf973cb97d8766a104ab06c5501423e4a4ea9d25a81e531e9da1b9c4eb27347a",
-      "seen": "low zoom1.5: Wide road with courier/Corgi and approaching regular in red circle;no close dog yet."
+      "file": "live-1793940143756.5466.jpg",
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/live-1793940143756.5466.jpg",
+      "sha256": "6114397da36f775e64cb4edff6fde0fcd948d1299602d1a5bd5e071e10a042d4",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-03.jpg",
+      "cell": 1,
+      "seen": "Gameplay copy shows courier and orange backpack corgi on road before close contact; wide framing also shows the approaching red-bar canine."
     },
     {
-      "file": "live-1793919012735.1304.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/captures/live-1793919012735.1304.jpg",
-      "sha256": "1b06bb9bf894e7499bcfb23c3e10e55ae4f3109462b710e8e812db3eca87fcb1",
-      "seen": "low zoom1.5: Later wide combat cluster,blood and fallen enemies;Corgi visible,not selected living-dog evidence."
-    },
-    {
-      "file": "latest.jpg",
-      "rawFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c4/test-results/fix51-r10c/L10-low-dog-z1.5-1793918994868/latest.jpg",
-      "sha256": "1b06bb9bf894e7499bcfb23c3e10e55ae4f3109462b710e8e812db3eca87fcb1",
-      "seen": "low zoom1.5: Final preview after automatic combat continuation: courier,Corgi,crowd/blood on road and Mega distance ring;not selected living-dog proof."
+      "file": "live-1793940154297.8765.jpg",
+      "original": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L10-low-dog-z1.5-1793940134976/captures/live-1793940154297.8765.jpg",
+      "sha256": "125e92e2fb0451a0dba619ba2c6b1a37062736743e68a68f44a88c2afa62e097",
+      "sheet": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-03.jpg",
+      "cell": 2,
+      "seen": "Later gameplay copy shows courier/corgi, incoming human infected or defeated bodies. Living-dog qualification uses the three named appearance captures, not corpse or crowd-only frames."
     }
   ],
   "sheets": [
     {
-      "file": "test-results/sweep-c4/L10-06-low-z1.5/sheet-01.jpg",
-      "sha256": "5ba77d877a43396d6af61d859b3bdcc3be8ae2aef1036e8d51c45928898e8226"
+      "file": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-01.jpg",
+      "sha256": "c6ceb06498af220c4e306824b4bd3d05f05748a97f3f06309cfcfb7db2ffeb1a"
     },
     {
-      "file": "test-results/sweep-c4/L10-06-low-z1.5/sheet-02.jpg",
-      "sha256": "1a0d8f08b9d9773bc6ed2f957ca4e80dee9d39fd4d6f8ab5b057ccd66df992d2"
+      "file": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-02.jpg",
+      "sha256": "2b96536b3e3eaf9a208b37ae709fc5e7d7f19dcaa8888c1cbd34b40e6ce2e2a9"
     },
     {
-      "file": "test-results/sweep-c4/L10-06-low-z1.5/sheet-03.jpg",
-      "sha256": "24221382d4061c359322c289da1f4338721ad301174a66798e8e68b822613dd8"
+      "file": "test-results/sweep-c5/L10-06-final/L10-low-dog-z1.5-1793940134976/sheet-03.jpg",
+      "sha256": "29bc366388e7b88ca69c57e9617ce7d8aa7f0a47bc3298fd95e3c1a25dfcbed7"
     }
   ],
   "artifacts": [
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/dog-look-completion.json.gz",
-      "sha256": "c8708520cbe3a44721836d172fd173833494b9afea9120971e02ba0980126466",
-      "uncompressedSha256": "04c2ae99e57807abd06a2c308acae9e7534917480c4c9aeba8d58525c36a77f9"
+      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/log-dog-look.jsonl.gz",
+      "sha256": "bbde7c069622b1200f23e48d144bf6a92a0e0e724b6a065a9d3cf06f9de90cb3",
+      "uncompressedSha256": "943a3493a00b15e61de0f3b18939ad040b9c4c05d0987a266f795957c4fc0edf"
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/log-dog-look.jsonl.gz",
-      "sha256": "5b09b15ee99bce9f57244bb780ce141cfd41c9722ee727291fbd4167d55f1387",
-      "uncompressedSha256": "808a5517be8719f8bb4870774bc11d41837621c4a4232b1a969f0ef7d3271617"
+      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/dog-look-completion.json.gz",
+      "sha256": "0ef2b63398d4d37abc0c6b0bc0f5a2782df7cc39fdd59b2c307f9d363ba130ea",
+      "uncompressedSha256": "4f11e0d73368a5c59e335f383c49b3cb08da566bbc5fc0de6debb3dc75d650c2"
     },
     {
       "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/dog-look-acceptance-ledger.json.gz",
-      "sha256": "f9d9478cdf95246bc40254afd740d0360b3423e3ddad19a39c09c3bbaa2cc694",
-      "uncompressedSha256": "125028756d7eba394369b254e4fcdcee188dd74a519a7192333764ac76aa5721"
+      "sha256": "a680a902953008b31111bcacb601e1f505f144db8f2cc9a1ecebef5bfcfa5647",
+      "uncompressedSha256": "537489b6aae65f077c46190d68e9284281a449a9f167ba38687ff7008fa56efd"
+    },
+    {
+      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/dog-look-audio.json.gz",
+      "sha256": "6841416f83cf59daae9d0b3539b2aaaefc7bb57a92ffff4b795cc27d8208c658",
+      "uncompressedSha256": "533aa909d80862155961af4879dcc1c7619804f9345c34ae4a6696586ca64429"
+    },
+    {
+      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/issues-dog-look.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "uncompressedSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/runs-dog-look.json.gz",
+      "sha256": "6c95f85b91aeb2d48043295c1bcb9cf2a6046defa85537ba1dde4bbcfe7329ff",
+      "uncompressedSha256": "2b027d5e1a311cefbbdd61835adc8d0876da7f3a313fe01ad1d9623f2c765e11"
     }
   ],
+  "unreadableCaptures": [],
   "dogReview": {
     "row": "L10-06",
     "visibleLivingDog": true,
@@ -112,21 +146,16 @@
     "evidence": [
       {
         "file": "dog-look-living-dog-0.jpg",
-        "sha256": "04dacad99a8233aaf71ee6ef498d4d4eb87cd3274ce6882e2dfca8ef0cac5865"
+        "sha256": "3a06ccd72bc2d468b39eb3b77be005e4ea4d5dc62af65152686c98f96fe417fa"
       },
       {
         "file": "dog-look-living-dog-1.jpg",
-        "sha256": "fe8a9c4f17349bf171882a14b85aea03c86a4e96250be9d8c78097275ac05595"
+        "sha256": "b4a40793a2da3979e0345205f031411e8c05b17aa922b911f4d4166100068e4b"
       },
       {
         "file": "dog-look-living-dog-2.jpg",
-        "sha256": "63d21800210573ff2eb6f7434abced79f478382e62b5e7b5a6f6a702db7a2fa6"
+        "sha256": "4fcd9a0b46a696048088c5ad33b25697c63b492bce8fb5b9fb93c4922e0be476"
       }
     ]
-  },
-  "rawCleanup": {
-    "verifiedAndDeleted": 11,
-    "allPersonallyReviewed": true
-  },
-  "scope": "Naturally progressed native Resume and actual physical sidestep. Three living-dog captures qualify appearance; loading and later combat/dead-body frames inspected but excluded from living evidence. All final previews retained until personal review. No full physical campaign claim."
+  }
 }
