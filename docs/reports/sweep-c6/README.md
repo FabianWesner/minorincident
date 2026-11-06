@@ -15,9 +15,9 @@ Base: `0991b9da04a4ef65e1d0e5d889776c32b461a6ae`. Work list: `docs/reports/sweep
 | L8-11 | P: Opus verdict pending | Fresh actual-input sanctuary and natural elephant/human mixed battle, low/high at actualzoom0.5/1.5,56frames personally reviewed. Exact Opus stunning≥7 question and sheets sent by scheduler NOTE. Dark sparse enclosure and HP-bar overlap are explicit concerns; no taste approval claimed. |
 | L10-08 | PASS, qualified | All5roadregions physically sampled at bothtiers/zooms,base1.3; finale1.0; actualView maxcombined2.0.82frames reviewed including natural same-ID groundslam strip and nightclothing;27semantic controls reject. |
 | L10-12 | NOT CHECKED | Native HP threshold fixtures pass; real-input motion/death captures, frame probe and visual corpse review remain. |
-| L10-14 | NOT CHECKED | Native cure measurements pass; complete physical epilogue, mist/event ledger, camera/title/credits review remain. |
+| L10-14 | PASS, qualified; P ending taste | Full150s physical epilogue, god off,10m/s front, same-tick deaths, healthy immunity, current eight-species fixture. Last36s pullback, mist/title/readable credits/menu.68qualification+66exploration frames reviewed;27semantic faults reject. |
 
-L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. L7-11 and L7-12 are also qualified current PASS, with the explicit L7-12 taste question tagged P. Six of the ten in-scope rows have current decisions, with four unchecked rows open.
+L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. L7-11 and L7-12 are also qualified current PASS, with the explicit L7-12 taste question tagged P. Seven of the ten in-scope rows have current decisions, with three unchecked rows open.
 
 ## Validation
 

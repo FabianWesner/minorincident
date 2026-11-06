@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "fixtureHash": "0cbe5d0e5ea70562f1476816bf448d21084c84b7006c94696006ae62136d18c3",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-14",
+      "clause": "continuous physical epilogue control and final camera pullback",
+      "tier": "low",
+      "policy": "physical-epilogue",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "continuous": true,
+        "control": true,
+        "pull": true,
+        "duration": 150
+      },
+      "target": "Consecutive native ticks, physical input, no god after release,120–180s control, last30–45s camera pullout.",
+      "receipt": "docs/reports/sweep-c6/L10-14/low-physical.json.gz"
+    },
+    {
+      "id": "L10-14",
+      "clause": "actual cure front mortality immunity and all species fixture",
+      "tier": "low",
+      "policy": "physical-epilogue",
+      "status": "PASS",
+      "value": {
+        "mortality": true,
+        "allSpecies": true,
+        "touched": 3,
+        "immune": 5
+      },
+      "target": "10m/s, every touched infected dead≤1tick; actual healthy/player/corgi unharmed, independent native eight-species fixture.",
+      "receipt": "docs/reports/sweep-c6/L10-14/low-physical.json.gz"
+    },
+    {
+      "id": "L10-14",
+      "clause": "reviewed actual mist title credits and menu sequence",
+      "tier": "low",
+      "policy": "physical-epilogue",
+      "status": "PASS",
+      "value": {
+        "seen": true,
+        "visual": true
+      },
+      "target": "Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.",
+      "receipt": "docs/reports/sweep-c6/L10-14/review.json"
+    }
+  ]
+}

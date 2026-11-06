@@ -1,3 +1,4 @@
+import { l10EpilogueReceipts } from './accept/l10-epilogue-receipts';
 import { l10FramingReceipts } from './accept/l10-framing-receipts';
 import { l7RouteReceipts } from './accept/l7-route-receipts';
 import { l7CorridorReceipts } from './accept/l7-corridor-receipts';
@@ -88,7 +89,7 @@ for (const level of selected) {
     const receipt = JSON.parse(readFileSync(path, 'utf8')) as FixtureReceipt & { browserHash: string };
     if (receipt.sourceHash === identity.sourceHash && receipt.browserHash === browserHash()) fixtures.push({ path, receipt });
   }
-  if (level === 'L10') fixtures.push(...l10FramingReceipts(identity.sourceHash, browserHash()));
+  if (level === 'L10') fixtures.push(...l10FramingReceipts(identity.sourceHash, browserHash()), ...l10EpilogueReceipts(identity.sourceHash, browserHash()));
   if (level === 'L8') fixtures.push(...l8AnimalReceipts(identity.sourceHash, browserHash()), ...l8BreachReceipts(identity.sourceHash, browserHash()), ...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...l7CorridorReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l7DepartureReceipts(identity.sourceHash, browserHash()), ...l7RouteReceipts(identity.sourceHash, browserHash()), ...l7ReadabilityReceipts(identity.sourceHash, browserHash()), ...fix55RocketReceipts(identity.sourceHash, browserHash()));
   if (level === 'L9') fixtures.push(...l9WedgeReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l9StreamReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l9ArrivalReceipts(identity.sourceHash, browserHash()), ...l9DetourReceipts(identity.sourceHash, browserHash()), ...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/sweep-c5/L9-04'));

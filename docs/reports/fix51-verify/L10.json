@@ -5,7 +5,7 @@
   "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T10:50:06.966Z",
+  "generatedAt": "2026-11-06T11:07:32.440Z",
   "policies": [
     {
       "tier": "low",
@@ -68,7 +68,21 @@
       "policy": "real-input-browser",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-epilogue-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-low-framing-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-epilogue-browser.json"
     },
     {
       "tier": "high",
@@ -7992,17 +8006,26 @@
     },
     {
       "id": "L10-14",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete native cure radius speed: {\"elapsed\":10020,\"radius\":1670} (target 10 m/s; PASS); low/complete playable epilogue counter duration: 150 (target 120 ≤ value ≤ 180; PASS); low/stationary native cure radius speed: null (target 10 m/s; NOT CHECKED); low/stationary playable epilogue counter duration: null (target 120 ≤ value ≤ 180; NOT CHECKED); high/complete native cure radius speed: {\"elapsed\":10020,\"radius\":1670} (target 10 m/s; PASS); high/complete playable epilogue counter duration: 150 (target 120 ≤ value ≤ 180; PASS); high/stationary native cure radius speed: null (target 10 m/s; NOT CHECKED); high/stationary playable epilogue counter duration: null (target 120 ≤ value ≤ 180; NOT CHECKED); low/controlled-fixture cure native species mortality and healthy immunity: {\"species\":[{\"role\":\"runner\",\"id\":38,\"reached\":24,\"dead\":24,\"hp\":0},{\"role\":\"dog\",\"id\":39,\"reached\":48,\"dead\":48,\"hp\":0},{\"role\":\"alpha\",\"id\":40,\"reached\":72,\"dead\":72,\"hp\":0},{\"role\":\"lion\",\"id\":41,\"reached\":96,\"dead\":96,\"hp\":0},{\"role\":\"gorilla\",\"id\":42,\"reached\":120,\"dead\":120,\"hp\":0},{\"role\":\"elephant\",\"id\":43,\"reached\":144,\"dead\":144,\"hp\":0},{\"role\":\"zebra\",\"id\":44,\"reached\":168,\"dead\":168,\"h… (full values in JSON) (target regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged; PASS); high/controlled-fixture cure native species mortality and healthy immunity: {\"species\":[{\"role\":\"runner\",\"id\":38,\"reached\":24,\"dead\":24,\"hp\":0},{\"role\":\"dog\",\"id\":39,\"reached\":48,\"dead\":48,\"hp\":0},{\"role\":\"alpha\",\"id\":40,\"reached\":72,\"dead\":72,\"hp\":0},{\"role\":\"lion\",\"id\":41,\"reached\":96,\"dead\":96,\"hp\":0},{\"role\":\"gorilla\",\"id\":42,\"reached\":120,\"dead\":120,\"hp\":0},{\"role\":\"elephant\",\"id\":43,\"reached\":144,\"dead\":144,\"hp\":0},{\"role\":\"zebra\",\"id\":44,\"reached\":168,\"dead\":168,\"h… (full values in JSON) (target regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete native cure radius speed: {\"elapsed\":10020,\"radius\":1670} (target 10 m/s; PASS); low/complete playable epilogue counter duration: 150 (target 120 ≤ value ≤ 180; PASS); low/stationary native cure radius speed: null (target 10 m/s; NOT CHECKED); low/stationary playable epilogue counter duration: null (target 120 ≤ value ≤ 180; NOT CHECKED); high/complete native cure radius speed: {\"elapsed\":10020,\"radius\":1670} (target 10 m/s; PASS); high/complete playable epilogue counter duration: 150 (target 120 ≤ value ≤ 180; PASS); high/stationary native cure radius speed: null (target 10 m/s; NOT CHECKED); high/stationary playable epilogue counter duration: null (target 120 ≤ value ≤ 180; NOT CHECKED); low/controlled-fixture cure native species mortality and healthy immunity: {\"species\":[{\"role\":\"runner\",\"id\":38,\"reached\":24,\"dead\":24,\"hp\":0},{\"role\":\"dog\",\"id\":39,\"reached\":48,\"dead\":48,\"hp\":0},{\"role\":\"alpha\",\"id\":40,\"reached\":72,\"dead\":72,\"hp\":0},{\"role\":\"lion\",\"id\":41,\"reached\":96,\"dead\":96,\"hp\":0},{\"role\":\"gorilla\",\"id\":42,\"reached\":120,\"dead\":120,\"hp\":0},{\"role\":\"elephant\",\"id\":43,\"reached\":144,\"dead\":144,\"hp\":0},{\"role\":\"zebra\",\"id\":44,\"reached\":168,\"dead\":168,\"h… (full values in JSON) (target regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged; PASS); high/controlled-fixture cure native species mortality and healthy immunity: {\"species\":[{\"role\":\"runner\",\"id\":38,\"reached\":24,\"dead\":24,\"hp\":0},{\"role\":\"dog\",\"id\":39,\"reached\":48,\"dead\":48,\"hp\":0},{\"role\":\"alpha\",\"id\":40,\"reached\":72,\"dead\":72,\"hp\":0},{\"role\":\"lion\",\"id\":41,\"reached\":96,\"dead\":96,\"hp\":0},{\"role\":\"gorilla\",\"id\":42,\"reached\":120,\"dead\":120,\"hp\":0},{\"role\":\"elephant\",\"id\":43,\"reached\":144,\"dead\":144,\"hp\":0},{\"role\":\"zebra\",\"id\":44,\"reached\":168,\"dead\":168,\"h… (full values in JSON) (target regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged; PASS); low/physical-epilogue continuous physical epilogue control and final camera pullback: {\"valid\":true,\"continuous\":true,\"control\":true,\"pull\":true,\"duration\":150} (target Consecutive native ticks, physical input, no god after release,120–180s control, last30–45s camera pullout.; PASS); low/physical-epilogue actual cure front mortality immunity and all species fixture: {\"mortality\":true,\"allSpecies\":true,\"touched\":3,\"immune\":5} (target 10m/s, every touched infected dead≤1tick; actual healthy/player/corgi unharmed, independent native eight-species fixture.; PASS); low/physical-epilogue reviewed actual mist title credits and menu sequence: {\"seen\":true,\"visual\":true} (target Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.; PASS); high/physical-epilogue continuous physical epilogue control and final camera pullback: {\"valid\":true,\"continuous\":true,\"control\":true,\"pull\":true,\"duration\":150} (target Consecutive native ticks, physical input, no god after release,120–180s control, last30–45s camera pullout.; PASS); high/physical-epilogue actual cure front mortality immunity and all species fixture: {\"mortality\":true,\"allSpecies\":true,\"touched\":7,\"immune\":8} (target 10m/s, every touched infected dead≤1tick; actual healthy/player/corgi unharmed, independent native eight-species fixture.; PASS); high/physical-epilogue reviewed actual mist title credits and menu sequence: {\"seen\":true,\"visual\":true} (target Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.; PASS) Manual review PASS (FRESH, Codex sweep-c6): Current native completed-Mega production Resume matches canonical native control; post-load inputs physical WASD/E, driver detached. God disabled before release through ending. Both tiers150s control,10m/s cure, runner/dog/Alpha contacts dead same tick, healthy/player/corgi100HP unchanged. Current independent native eight-species fixture proves zoo mortality and37healthy immunity witnesses; zoo actors not claimed in actual L10. Camera normal through114s, widening by115s, wide by149s. All68qualification plus66exploration frames personally reviewed, raw SHA verified/deleted. Pale mist visible in late pullback/title/credits; sparse playable mist weak against gray ground and dense corpses overlap. Actual Minor Incident title, readable mid-roll credits and illustrated menu, no skip. Explicit production render clock advances once per one-second simulation batch: no live frame-rate/performance claim.27semantic faults reject. P: judge whether sparse mist and wide ending feel satisfying; no taste approval claimed.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+        "docs/reports/sweep-c6/L10-14/low-physical.json.gz",
+        "docs/reports/sweep-c6/L10-14/review.json",
+        "docs/reports/sweep-c6/L10-14/high-physical.json.gz",
+        "docs/reports/sweep-c6/L10-14/producer.mjs",
+        "docs/reports/sweep-c6/L10-14/coverage-proof.json",
+        "docs/reports/sweep-c6/L10-14/raw-cleanup.json",
+        "docs/reports/sweep-c6/L10-14/low-species-fixture.json",
+        "docs/reports/sweep-c6/L10-14/high-species-fixture.json",
+        "docs/reports/sweep-c6/L10-14/exploration/review.json"
       ],
       "expected": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits.",
       "checks": [
@@ -8243,6 +8266,100 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
           "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "continuous physical epilogue control and final camera pullback",
+          "tier": "low",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "continuous": true,
+            "control": true,
+            "pull": true,
+            "duration": 150
+          },
+          "target": "Consecutive native ticks, physical input, no god after release,120–180s control, last30–45s camera pullout.",
+          "receipt": "docs/reports/sweep-c6/L10-14/low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "actual cure front mortality immunity and all species fixture",
+          "tier": "low",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "mortality": true,
+            "allSpecies": true,
+            "touched": 3,
+            "immune": 5
+          },
+          "target": "10m/s, every touched infected dead≤1tick; actual healthy/player/corgi unharmed, independent native eight-species fixture.",
+          "receipt": "docs/reports/sweep-c6/L10-14/low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "reviewed actual mist title credits and menu sequence",
+          "tier": "low",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "seen": true,
+            "visual": true
+          },
+          "target": "Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.",
+          "receipt": "docs/reports/sweep-c6/L10-14/review.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "continuous physical epilogue control and final camera pullback",
+          "tier": "high",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "continuous": true,
+            "control": true,
+            "pull": true,
+            "duration": 150
+          },
+          "target": "Consecutive native ticks, physical input, no god after release,120–180s control, last30–45s camera pullout.",
+          "receipt": "docs/reports/sweep-c6/L10-14/high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "actual cure front mortality immunity and all species fixture",
+          "tier": "high",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "mortality": true,
+            "allSpecies": true,
+            "touched": 7,
+            "immune": 8
+          },
+          "target": "10m/s, every touched infected dead≤1tick; actual healthy/player/corgi unharmed, independent native eight-species fixture.",
+          "receipt": "docs/reports/sweep-c6/L10-14/high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-14",
+          "clause": "reviewed actual mist title credits and menu sequence",
+          "tier": "high",
+          "policy": "physical-epilogue",
+          "status": "PASS",
+          "value": {
+            "seen": true,
+            "visual": true
+          },
+          "target": "Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.",
+          "receipt": "docs/reports/sweep-c6/L10-14/review.json",
+          "level": "L10"
         }
       ],
       "historical": {
@@ -8256,7 +8373,74 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "P",
+        "instruction": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits."
+      },
+      "reviewDecision": {
+        "row": "L10-14",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c6",
+        "date": "2026-11-06",
+        "commit": "d668fc31efe86de5f8e31be2a4500c7783ab4369",
+        "clauses": [
+          {
+            "clause": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits.",
+            "verdict": "PASS",
+            "note": "Current native completed-Mega production Resume matches canonical native control; post-load inputs physical WASD/E, driver detached. God disabled before release through ending. Both tiers150s control,10m/s cure, runner/dog/Alpha contacts dead same tick, healthy/player/corgi100HP unchanged. Current independent native eight-species fixture proves zoo mortality and37healthy immunity witnesses; zoo actors not claimed in actual L10. Camera normal through114s, widening by115s, wide by149s. All68qualification plus66exploration frames personally reviewed, raw SHA verified/deleted. Pale mist visible in late pullback/title/credits; sparse playable mist weak against gray ground and dense corpses overlap. Actual Minor Incident title, readable mid-roll credits and illustrated menu, no skip. Explicit production render clock advances once per one-second simulation batch: no live frame-rate/performance claim.27semantic faults reject. P: judge whether sparse mist and wide ending feel satisfying; no taste approval claimed."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c6/L10-14/review.json",
+            "sha256": "b7691f7b7315e230c4fa6636c3a668686d0e51f66b17d2c78b872bf2acc8c646",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/producer.mjs",
+            "sha256": "75df33aa52786050b7c9f7b99c8134ea49744b25b8683bd95276238128ad1b5c",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/coverage-proof.json",
+            "sha256": "2155de6fd4ee9e80d5332fdbd609fb905e900d195a8bb30f6f2774f5d3b8c8aa",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/raw-cleanup.json",
+            "sha256": "8c607185c01e2720b29dae0d10e2a91782f6c05a73b93e5b965088028fa5574f",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/low-physical.json.gz",
+            "sha256": "c4a09beead603667dbb3c4619687e2a16b36b4ef7f5f804dac238956f5b80076",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/high-physical.json.gz",
+            "sha256": "acc968ca4662f34c0337428f267dfb2a4cd598520bd7823232bbe74d2ac515e0",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/low-species-fixture.json",
+            "sha256": "ff9de9446622e6d5c10679e1f060d0820ffa79ef9491f42f22d8bd42d3cd0816",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/high-species-fixture.json",
+            "sha256": "45763e6e9e5418d940f2f948e0e91bed06de596cbd55c2b63f0f490a6d94b1c0",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-14/exploration/review.json",
+            "sha256": "ee40e708cfd4bb31a65171ab1237d62a9109d95af5a5238ad70731337dae1aa6",
+            "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+      }
     },
     {
       "id": "L10-15",

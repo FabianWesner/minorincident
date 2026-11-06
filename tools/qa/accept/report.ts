@@ -163,7 +163,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'G-13': null,
     'G-15': null,
     'L6-07': null,
-    'L10-14': null,
+    'L10-14': source.expected,
     'G-27': 'For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately.',
     'L1-17': 'Review the morning depot/Annex frames for an inhabited suburb, then the outbreak frames for the feeling that there are too many infected to fight.',
     'L2-16': 'Compare L1 and L2 at matching zoom and quality: does L2 sunlight read higher/harder, and do the streets look wounded while buildings still stand?',
