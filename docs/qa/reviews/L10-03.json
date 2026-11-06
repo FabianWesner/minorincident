@@ -3,23 +3,23 @@
   "status": "PASS",
   "reviewer": "Codex fix72-c",
   "date": "2026-11-06",
-  "commit": "65591f560f941723828035ca104b8b4985351bed",
+  "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
       "verdict": "PASS",
-      "note": "All12 current-source same-tick local count/species witnesses pass, zero upper-bound violations, all74 boundary/separated-peak controls rejected. Both complete policies finish with final hashes matching the independent census. All54 checkpoint replay checks pass. Canonical military regular groups10\u201318 and corridor groups20\u201332 pass unchanged bounds. Both actual handgun pickups tick3497 precede first admitted fringe dog tick4950; zero premature ticks. Stationary policies retain normal Mega-hold tick-budget outcome and no fresh failing clauses."
+      "note": "All12 current-source same-tick local count/species witnesses pass, zero upper-bound violations, all74 boundary/separated-peak controls rejected. Both complete policies finish with final hashes matching the independent census. All54 checkpoint replay checks pass. Canonical military regular groups10\u201318 and corridor groups20\u201332 pass unchanged bounds. Both actual handgun pickups tick3497 precede first admitted fringe dog tick4950; zero premature ticks. Stationary policies retain normal Mega-hold tick-budget outcome and no fresh failing clauses. Repeated on final source6bd47c715412 after the carried-quality loading correction; all12 witnesses,74 controls and both final native hashes remain identical."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
-      "sha256": "598eed09534d526d797d7e30af310ba91c408bcf64b6ed4451dd5b74a5b5c2c0",
+      "sha256": "8d247b5a064b56367cd941b8ad77b7e34d1598c14b950e76931db3057ff46f18",
       "what": "Every admitted-local tick represented, all12 joint witnesses, no upper violations; independent native final hashes match."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json",
-      "sha256": "137a7f4d0099c7c5fb6a325225e824a1de3c410a94eb0132d8887ebe5b1dd525",
+      "sha256": "c0bab7f0000c1de3106fc339fc67c848cd2ff494cbf286f957f97d74d6c6d54f",
       "what": "Actual handgun pickup before every admitted fringe dog, both tiers, zero premature ticks."
     }
   ]
