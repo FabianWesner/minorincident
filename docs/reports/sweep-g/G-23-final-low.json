@@ -1,0 +1,22 @@
+{
+  "source": {
+    "sourceHash": "f7c6992a57ac3d3bcf07ec6da0e20466a1cc28eb2b2fc3f4db4585b6660ed657",
+    "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+    "revision": "d2b31a7e23be9c3690e0e6d2d97a87a5ca375192"
+  },
+  "tier": "low",
+  "status": "NOT CHECKED",
+  "scopedResult": "PASS",
+  "method": "production loadLevel, real character controller and sedan, three probes on every boundary run; AI paused, physics runs",
+  "receipt": {
+    "file": "docs/reports/sweep-g/G-23-final-low-bounds.json.gz",
+    "sha256": "7d4b8b667dca4f9229da2e3f64b27b95a9f7db468b0b402ed4d91b2bde57e6f4"
+  },
+  "totals": {
+    "runs": 423,
+    "walked": 1269,
+    "driven": 990
+  },
+  "failures": 0,
+  "remaining": "Physical wrong-way traversal and screenshot-only route clarity plus every critical map-edge view remain unqualified. This unchanged full perimeter collision matrix does not close visual route clarity."
+}
