@@ -3,19 +3,19 @@
   "status": "FAIL",
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "58a3280f03cff4548e69791f10058555561f6609",
+  "commit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
   "clauses": [
     {
       "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "verdict": "FAIL",
-      "note": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL."
+      "note": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL. Census immediately before the first miss is79/80 living low and120/120 high; existing cap saturation is part of the sustained admission problem."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/fix73-b/L4-native-summary.json",
-      "sha256": "b7247e0d39d696d83f0f64d74a93c989eb58ecde767c810f6ff5bd755ebdb555",
-      "what": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL."
+      "sha256": "8b664c0055b7288d431106849120c8f0da865acf0f90dc641566c7f30f80e79a",
+      "what": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL. Census immediately before the first miss is79/80 living low and120/120 high; existing cap saturation is part of the sustained admission problem."
     }
   ]
 }
