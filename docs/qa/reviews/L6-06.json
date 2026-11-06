@@ -1,21 +1,31 @@
 {
   "row": "L6-06",
-  "status": "FAIL",
-  "reviewer": "Codex/fix67-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "commit": "be991818d6ae4cf5e31ce6c64780d62eb8a9da8a",
   "clauses": [
     {
-      "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable \u2265 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
-      "verdict": "FAIL",
-      "note": "Final-source actual birth identities:3 at each of6 entries at both tiers,18 total, versus unchanged2 per entry. Count establishes FAIL. Floor/visual clauses are not inferred and no count reduction or redistribution was made."
+      "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable \u2265 95%; none stand harmless behind the platform/gate line.",
+      "verdict": "PASS",
+      "note": "Fresh low/high mortal native complete routes log exactly 2 wave-4 arrivals at each authored door 2, 5, 3, 6, 4, 7 (12 total); all six entry quotas reach zero. Spawn coordinates are 2.4 m from track center z=15. In the low-tier passive retreat sample, all 30 active infected are reachable and max sustained blocked time is 0 s."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/final-qualification.json",
-      "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
-      "what": "Final-source actual birth identities:3 at each of6 entries at both tiers,18 total, versus unchanged2 per entry. Count establishes FAIL. Floor/visual clauses are not inferred and no count reduction or redistribution was made."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "0c87ec0784b1bb652fe17e673abddb93afdc8b6d4a019b204486f08e5c1e26d9",
+      "what": "Fresh low mortal native complete route; wave-4 spawnLog grouped by all six authored side entries. Each door has exactly two actual infected identities at the track-side entry coordinates; all entry quotas are exhausted."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "3bb497966d1c82ac296b6114bac6fbc90026a45c23dc93ee32260c8b093b2637",
+      "what": "Fresh high mortal native complete route; wave-4 spawnLog grouped by all six authored side entries. Each door has exactly two actual infected identities at the track-side entry coordinates; all entry quotas are exhausted."
+    },
+    {
+      "file": "docs/reports/fix71-b/baseline.json",
+      "sha256": "9bf044c520a399349de0cacf1eabe657cd9af634b6ccd400857946e55477d5de",
+      "what": "Fresh isolated low native L6 threat audit: the sampled retreat population is 30/30 reachable; maximum sustained blocked time is 0 s. The two flags are diagnostic partial-level and main-source provenance flags, not L6 acceptance failures."
     }
   ]
 }
