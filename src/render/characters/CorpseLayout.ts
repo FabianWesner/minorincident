@@ -35,7 +35,6 @@ function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, 
   return Math.min(pointDistanceSquared(ax, az, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(bx, bz, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(p.ax, p.az, ax, az, bx, bz), pointDistanceSquared(p.bx, p.bz, ax, az, bx, bz));
 }
 const yawDistance = (a: number, b: number) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
-const byHeight = (a: RestingPose, b: RestingPose) => a.y - b.y;
 export class CorpseLayout {
   readonly bodies = new Map<number, RestingPose>();
   private readonly spatial = new SpatialHash();
@@ -48,8 +47,8 @@ export class CorpseLayout {
   private readonly nearbyHulls: VehicleFootprint[] = [];
   private readonly hullScratch: VehicleFootprint[] = [];
   private readonly carFootprints = new WeakMap<object, VehicleFootprint>();
-  private readonly neighborPoses: RestingPose[] = [];
-  private readonly layerPoses: RestingPose[] = [];
+  private readonly neighborPoses: (RestingPose | undefined)[] = [];
+  private readonly layerPoses: (RestingPose | undefined)[] = [];
   private readonly bestScratch = {} as RestingPose;
   private readonly swept = { x: 0, z: 0 };
   private readonly deferred = new Map<number, DeferredPose>();
@@ -91,6 +90,7 @@ export class CorpseLayout {
       this.epilogue = epilogue;
       for (const [id, pose] of this.bodies) this.deferred.set(id, pose);
       this.bodies.clear(); this.spatial.reset();
+      this.neighborPoses.fill(undefined); this.layerPoses.fill(undefined);
     }
     if (this.revision !== this.world.entities.revision) {
       for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }
@@ -126,6 +126,7 @@ export class CorpseLayout {
     const support = this.world.districts, nav = this.world.infected?.nav;
     if (this.vehicleDistrict !== support) {
       this.vehicleDistrict = support; this.parkedVehicles.length = 0;
+      this.neighborPoses.fill(undefined); this.layerPoses.fill(undefined);
       for (const district of support?.districts ?? []) for (const p of district.decay.placements) {
         const shape = p.assetId.startsWith('veh.') && staticCollision[p.assetId]; if (!shape) continue;
         this.parkedVehicles.push({ x: p.position[0] + district.origin[0], z: p.position[2] + district.origin[1], c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: p.scale[0] || 1, sz: p.scale[2] || 1, floor: p.position[1], boxes: shape.boxes });
@@ -189,8 +190,12 @@ export class CorpseLayout {
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
     let queriedX = NaN, queriedZ = NaN;
-    const neighbors = this.neighborPoses; neighbors.length = 0;
-    const layers = this.layerPoses; layers.length = 0;
+    const neighbors = this.neighborPoses, layers = this.layerPoses;
+    let neighborCount = 0, layerCount = 0;
+    // Clearing an array's length to zero also discards its V8 backing store.
+    // Thousands of dense-pile roots must reuse capacity, not just the array
+    // objects. The visitor avoids a second growing/truncated ID buffer.
+    const collectNeighbor = (id: number): void => { if (id !== e.id) neighbors[neighborCount++] = this.bodies.get(id)!; };
     const ownPose = corpsePose(e.id);
     // The four orientations at one root share its hull, sweep and support.
     // Dense piles search hundreds of roots; repeating these queries per yaw
@@ -223,13 +228,13 @@ export class CorpseLayout {
       }
       if (x !== queriedX || z !== queriedZ) {
         this.query.x = queriedX = x; this.query.z = queriedZ = z;
-        this.spatial.query(this.query, this.neighbors, false);
-        neighbors.length = 0;
-        for (const id of this.neighbors) if (id !== e.id) neighbors.push(this.bodies.get(id)!);
+        neighborCount = 0;
+        this.spatial.query(this.query, this.neighbors, false, collectNeighbor);
       }
       const minX = Math.min(pose.ax, pose.bx), maxX = Math.max(pose.ax, pose.bx), minZ = Math.min(pose.az, pose.bz), maxZ = Math.max(pose.az, pose.bz);
-      layers.length = 0;
-      for (const other of neighbors) {
+      layerCount = 0;
+      for (let n = 0; n < neighborCount; n++) {
+        const other = neighbors[n]!;
         // A separated capsule AABB cannot overlap. Keep a small margin so this
         // only skips definite misses; surviving pairs use the exact old distance.
         const reach = radius + other.radius + 1e-6;
@@ -237,11 +242,16 @@ export class CorpseLayout {
           || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
         if (segmentDistanceSquared(pose.ax, pose.az, pose.bx, pose.bz, other) >= (radius + other.radius) ** 2) continue;
         if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
-        layers.push(other);
+        // Stable insertion into the used prefix retains the old height sort
+        // and bucket tie order without resizing the scratch backing store.
+        let at = layerCount++;
+        while (at > 0 && layers[at - 1]!.y > other.y) { layers[at] = layers[at - 1]; at--; }
+        layers[at] = other;
       }
       // Fill the lowest free layer. Always going above the highest neighbour
       // made a chain of touching feet climb into an artificial body tower.
-      for (const other of layers.sort(byHeight)) {
+      for (let i = 0; i < layerCount; i++) {
+        const other = layers[i]!;
         if (pose.y + height > other.y + .001 && pose.y < other.y + other.height - .001) pose.y = other.y + other.height;
       }
       // Reuse search scratch; only the winning pose needs an owned record.
