@@ -32,6 +32,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
+import { corpseLayout } from './characters/CorpseLayout';
 import { Box3, BoxGeometry, Color, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
@@ -966,6 +967,7 @@ export class GameView implements Lifecycle {
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
+    corpseLayout(this.world).beginFrame();
     this.militaryPerimeter?.update();
     if (this.destination) {
       const blocked = this.world.controls.blockedMove, active = blocked && blocked.until > this.world.tick;
@@ -1233,6 +1235,7 @@ export class GameView implements Lifecycle {
     if (__QA_HOOKS__ && this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]);
+    corpseLayout(this.world).settleAll();
     // Tier loads chain (LOD1 stand-in, then LOD0) and each step is requested by the next partition: settle them, so a snapshot
     // never shows a building drawn from a stand-in mesh (lod-pop: the first Scene Lab frame showed crude LOD2 shapes).
     for (let i = 0; i < 6 && this.districts?.placeholderDraws().length; i++) { this.districts.updateLods(this.view); await this.districts.ready(); }

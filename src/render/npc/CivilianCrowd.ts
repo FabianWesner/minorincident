@@ -222,7 +222,7 @@ class CivilianBatch extends Group {
     this.add(this.mesh); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
-    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => e.civilian?.state === 'finished' && !e.infected ? finishedPose(e) : corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform, this.world.missions?.state.cureFront);
+    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => e.civilian?.state === 'finished' && !e.infected ? finishedPose(e) : corpseLayout(this.world).place(e));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);

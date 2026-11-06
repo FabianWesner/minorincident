@@ -9,8 +9,9 @@ export const corpsePose = (id: number) => corpsePoses[Math.abs(Math.imul(id ^ (i
 export const corpseYaw = (id: number) => (id * 2.399963229728653) % (Math.PI * 2);
 interface RestingPose {
   x: number; y: number; z: number; yaw: number; sourceX: number; sourceZ: number; deadAt: number;
-  ax: number; az: number; bx: number; bz: number; radius: number; height: number; body: EntitySnapshot;
+  ax: number; az: number; bx: number; bz: number; radius: number; height: number; body: EntitySnapshot; prone?: number;
 }
+type DeferredPose = EntitySnapshot['transform'] & { body: EntitySnapshot; deadAt: number; prone?: number };
 interface VehicleFootprint { x: number; z: number; c: number; s: number; sx: number; sz: number; floor: number; boxes: readonly Aabb[] }
 const layouts = new WeakMap<SimWorld, CorpseLayout>();
 /** Native and pedestrian-look bodies share one layout, without movement colliders. */
@@ -23,8 +24,8 @@ const pointDistanceSquared = (x: number, z: number, ax: number, az: number, bx: 
   const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz || 1)));
   return (x - ax - t * dx) ** 2 + (z - az - t * dz) ** 2;
 };
+const cross = (x: number, z: number, u: number, v: number) => x * v - z * u;
 function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, p: RestingPose): number {
-  const cross = (x: number, z: number, u: number, v: number) => x * v - z * u;
   const d = cross(bx - ax, bz - az, p.bx - p.ax, p.bz - p.az);
   if (Math.abs(d) > 1e-8) {
     const t = cross(p.ax - ax, p.az - az, p.bx - p.ax, p.bz - p.az) / d;
@@ -50,12 +51,24 @@ export class CorpseLayout {
   private readonly neighborPoses: RestingPose[] = [];
   private readonly layerPoses: RestingPose[] = [];
   private readonly bestScratch = {} as RestingPose;
+  private readonly swept = { x: 0, z: 0 };
+  private readonly deferred = new Map<number, DeferredPose>();
+  private remainingMs = Infinity;
   private revision = -1;
   private epilogue = false;
   private readonly scriptedVehicles: EntitySnapshot[] = [];
   private vehicleDistrict: SimWorld['districts'] | undefined;
   private readonly parkedVehicles: VehicleFootprint[] = [];
   constructor(private readonly world: SimWorld) {}
+  /** Keep a landing wave or cure reflow out of one render update. A search
+   * finishes atomically; later bodies retain their last pose until next frame. */
+  beginFrame(budgetMs = 2): void { this.remainingMs = budgetMs; }
+  /** Explicit asset/screenshot readiness also waits for presentation settling. */
+  settleAll(): void {
+    const remaining = this.remainingMs; this.remainingMs = Infinity;
+    try { for (const p of this.deferred.values()) this.place(p.body, p.deadAt, p.prone); }
+    finally { this.remainingMs = remaining; }
+  }
   audit() {
     const bodies = [...this.bodies.values()], player = this.world.entities.get(1)?.transform;
     let sunkPairs = 0, heapPairs = 0, repeatedPairs = 0;
@@ -75,10 +88,13 @@ export class CorpseLayout {
   place(e: EntitySnapshot, deadAt = e.infected?.deadAt ?? 0, prone?: number): RestingPose | EntitySnapshot['transform'] {
     const epilogue = this.world.missions?.def.id === 'L10' && !!this.world.missions.state.cureFront;
     if (epilogue !== this.epilogue) {
-      this.epilogue = epilogue; this.bodies.clear(); this.spatial.reset();
+      this.epilogue = epilogue;
+      for (const [id, pose] of this.bodies) this.deferred.set(id, pose);
+      this.bodies.clear(); this.spatial.reset();
     }
     if (this.revision !== this.world.entities.revision) {
       for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }
+      for (const [id, pose] of this.deferred) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) this.deferred.delete(id);
       this.revision = this.world.entities.revision;
       this.scriptedVehicles.length = 0;
       for (const entity of this.world.entities.iterate()) if ((entity.kind === 'setpiece' || entity.traffic || entity.convoy) && entity.archetype.startsWith('veh.') && staticCollision[entity.archetype]) this.scriptedVehicles.push(entity);
@@ -89,8 +105,23 @@ export class CorpseLayout {
     // The simulation clears corpseBlast on landing; settle exactly once then.
     if (e.corpseThrown && e.corpseBlast) return { ...e.transform, y: e.transform.y - .7 };
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
+    if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z
+      && (!player || pointDistanceSquared(player.x, player.z, previous.ax, previous.az, previous.bx, previous.bz) >= .95 ** 2)) { this.deferred.delete(e.id); return previous; }
+    if (this.remainingMs <= 0) {
+      let pending = this.deferred.get(e.id);
+      if (!pending || pending.body !== e || pending.deadAt !== deadAt) {
+        pending = { ...(previous ?? e.transform), y: previous?.y ?? e.transform.y - .7, yaw: previous?.yaw ?? e.transform.yaw + corpseYaw(e.id), body: e, deadAt, prone };
+        this.deferred.set(e.id, pending);
+      }
+      return pending;
+    }
+    const start = performance.now();
+    try { return this.settle(e, deadAt, prone, epilogue); }
+    finally { this.remainingMs -= performance.now() - start; }
+  }
+  private settle(e: EntitySnapshot, deadAt: number, prone: number | undefined, epilogue: boolean): RestingPose | EntitySnapshot['transform'] {
+    const player = this.world.entities.get(1)?.transform;
     const safePlayer = (p: RestingPose) => !player || pointDistanceSquared(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .95 ** 2;
-    if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && safePlayer(previous)) return previous;
     let feet = e.transform.y - .7;
     const support = this.world.districts, nav = this.world.infected?.nav;
     if (this.vehicleDistrict !== support) {
@@ -154,7 +185,7 @@ export class CorpseLayout {
     const initialYaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
     const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
-      ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e };
+      ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e, prone };
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
     let queriedX = NaN, queriedZ = NaN;
@@ -170,7 +201,7 @@ export class CorpseLayout {
         rootX = x; rootZ = z; rootClear = vehicleClear(x, z);
         // A body falling off a hull does not need a route from its roof.
         if (rootClear && nav && !startsOnVehicle) {
-          const swept = { x: e.transform.x, z: e.transform.z };
+          const swept = this.swept; swept.x = e.transform.x; swept.z = e.transform.z;
           nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
           rootClear = Math.hypot(swept.x - x, swept.z - z) <= .01;
         }
@@ -249,6 +280,7 @@ export class CorpseLayout {
     // Retain one stable result for this body; candidate exploration above
     // reuses bestScratch instead of allocating on every improving root.
     const placed = { ...best };
+    this.deferred.delete(e.id);
     this.bodies.set(e.id, placed); this.spatial.set(e.id, placed.x, placed.z); return placed;
   }
 }
