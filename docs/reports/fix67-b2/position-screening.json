@@ -1,0 +1,1319 @@
+{
+  "method": "Unchanged ThreatObserver on ordinary mortal seed-1 complete policies. Candidates must preserve >=90% bounded paths, >=3 player/group attacks/min, and prior follower pace at both tiers. Tank candidates additionally require >=15m actual impact clearance and 8-12s war cadence. Canceled truck screens (24,-7)/(28,-10) already failed L5. Holding tank aim was rejected for worse high clearance/cadence; all three sim files restored. Shared Alpha(-42,-41.5) failed high follower pace, so its threat audit was deliberately stopped. Final choice retains the safe northern truck and changes only the low-tier Alpha approach; high retains its original point and exact incoming world hash. All trial receipts are historical; final acceptance/tank/audit separately bind the final commit.",
+  "trials": [
+    {
+      "log": "test-results/fix67-b2/screen-16-40.log",
+      "summary": {
+        "sourceHash": "b8395fe2114c4bdaaa64259016792b071287e4bb94adeb9aa7fe053819c2e1c1",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 218.58333333333334,
+          "deaths": 1,
+          "kills": 78,
+          "damageTaken": 125,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 171.41666666666666
+            },
+            {
+              "id": "metro",
+              "t": 218.58333333333334
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 76,
+              "minimumPercent": 87.5,
+              "worstTick": 2237,
+              "nearby": 8,
+              "reachable": 7,
+              "blockedIds": [
+                97
+              ]
+            },
+            "rate": 3.2049855330514134
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-22-7.log",
+      "summary": {
+        "sourceHash": "ee5e400809854a3e2e8cb373ddd653a5a93e1c13a16e684d9e0bbc1861dc9ead",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 204.65,
+          "deaths": 1,
+          "kills": 77,
+          "damageTaken": 150,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 163.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 204.65
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 71,
+              "minimumPercent": 100,
+              "worstTick": 9677,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 2.9654036243822075
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-24-7.log",
+      "summary": {
+        "sourceHash": "a6b943e8b24aaab437edca1771d99967ef04e7f8b1758f60b3e41727496b3d5d",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 204.65,
+          "deaths": 1,
+          "kills": 77,
+          "damageTaken": 150,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 163.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 204.65
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 71,
+              "minimumPercent": 100,
+              "worstTick": 9677,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 2.9654036243822075
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-24-9.log",
+      "summary": {
+        "sourceHash": "8c0348db3281e5b040854d0e303d21f50dffc92bdbfe7e8902a58fa518b4eb64",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 206.58333333333334,
+          "deaths": 0,
+          "kills": 78,
+          "damageTaken": 62.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 163.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 206.58333333333334
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 76,
+              "minimumPercent": 100,
+              "worstTick": 9699,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 3.165530885908991
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-27-9-high.log",
+      "summary": {
+        "sourceHash": "c125168660046e1ee86345b4a7a90b78b12bf8e851ebe4d3650f0abc73b23948",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 215.06666666666666,
+          "deaths": 0,
+          "kills": 103,
+          "damageTaken": 12.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 172.78333333333333
+            },
+            {
+              "id": "metro",
+              "t": 215.06666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 81,
+              "minimumPercent": 100,
+              "worstTick": 10299,
+              "nearby": 11,
+              "reachable": 11,
+              "blockedIds": []
+            },
+            "rate": 4.095986760446835
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-27-9.log",
+      "summary": {
+        "sourceHash": "c125168660046e1ee86345b4a7a90b78b12bf8e851ebe4d3650f0abc73b23948",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 206.58333333333334,
+          "deaths": 0,
+          "kills": 78,
+          "damageTaken": 62.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 163.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 206.58333333333334
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 76,
+              "minimumPercent": 100,
+              "worstTick": 9699,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 3.165530885908991
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-27-9p0.log",
+      "summary": {
+        "sourceHash": "db249b976710e92b904f8e2f04e5d1ee5fa9ec09e28452691e554efaf347a40a",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 202.01666666666668,
+          "deaths": 0,
+          "kills": 75,
+          "damageTaken": 62.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 160.33333333333334
+            },
+            {
+              "id": "metro",
+              "t": 202.01666666666668
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 75,
+              "minimumPercent": 100,
+              "worstTick": 9579,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 3.6318798340993164
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-27p5-9.log",
+      "summary": {
+        "sourceHash": "fd602c61ab66b927ec31feb021f1d423e89fa63a799a3c0a2f48e152c33b3242",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 206.58333333333334,
+          "deaths": 0,
+          "kills": 78,
+          "damageTaken": 62.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 163.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 206.58333333333334
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 76,
+              "minimumPercent": 100,
+              "worstTick": 9699,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 3.165530885908991
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-28-10.log",
+      "summary": {
+        "sourceHash": "6a5651d07fc576b66398089a34071d1879d94be13cd7fdd7975b4dda2541a8be",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 202.13333333333333,
+          "deaths": 0,
+          "kills": 74,
+          "damageTaken": 87.5,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 158.15
+            },
+            {
+              "id": "metro",
+              "t": 202.13333333333333
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 276,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 74,
+              "minimumPercent": 100,
+              "worstTick": 9459,
+              "nearby": 11,
+              "reachable": 11,
+              "blockedIds": []
+            },
+            "rate": 1.2286689419795223
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-34-30.log",
+      "summary": {
+        "sourceHash": "cd56a9332709cce0d8746825fa89e5c8157811bc165da0bebde4f3379d1e793f",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 213.06666666666666,
+          "deaths": 1,
+          "kills": 77,
+          "damageTaken": 150,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 158.08333333333334
+            },
+            {
+              "id": "metro",
+              "t": 213.06666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 276,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 69,
+              "minimumPercent": 87.5,
+              "worstTick": 2357,
+              "nearby": 8,
+              "reachable": 7,
+              "blockedIds": [
+                97
+              ]
+            },
+            "rate": 3.078426581969216
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-alpha38z41-high.log",
+      "summary": {
+        "sourceHash": "5ba32c485d834f0d01a7f525a4e4f5642102b3ec75b7da3d2669b5351ec28c2d",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 254.35,
+          "deaths": 0,
+          "kills": 113,
+          "damageTaken": 75,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 194.61666666666667
+            },
+            {
+              "id": "metro",
+              "t": 254.35
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 376,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 92,
+              "minimumPercent": 88.88888888888889,
+              "worstTick": 1659,
+              "nearby": 9,
+              "reachable": 8,
+              "blockedIds": [
+                97
+              ]
+            },
+            "rate": 4.918928766624157
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-alpha38z41-low.log",
+      "summary": {
+        "sourceHash": "5ba32c485d834f0d01a7f525a4e4f5642102b3ec75b7da3d2669b5351ec28c2d",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 186.56666666666666,
+          "deaths": 0,
+          "kills": 77,
+          "damageTaken": 75,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 141.88333333333333
+            },
+            {
+              "id": "metro",
+              "t": 186.56666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 66,
+              "minimumPercent": 100,
+              "worstTick": 8499,
+              "nearby": 9,
+              "reachable": 9,
+              "blockedIds": []
+            },
+            "rate": 2.764269260302022
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-alpha42z40-high.log",
+      "summary": {
+        "sourceHash": "032cf332a68782d86e6dd4773aea342781e6f9ed9411241738fd2ff5dafac538",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 242.41666666666666,
+          "deaths": 1,
+          "kills": 109,
+          "damageTaken": 212.5,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 189.95
+            },
+            {
+              "id": "metro",
+              "t": 242.41666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 85,
+              "minimumPercent": 85.71428571428571,
+              "worstTick": 6318,
+              "nearby": 7,
+              "reachable": 6,
+              "blockedIds": [
+                318
+              ]
+            },
+            "rate": 7.1301247771836005
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-alpha42z40-low.log",
+      "summary": {
+        "sourceHash": "032cf332a68782d86e6dd4773aea342781e6f9ed9411241738fd2ff5dafac538",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 211.78333333333333,
+          "deaths": 1,
+          "kills": 83,
+          "damageTaken": 100,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 167.38333333333333
+            },
+            {
+              "id": "metro",
+              "t": 211.78333333333333
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 276,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 74,
+              "minimumPercent": 100,
+              "worstTick": 10037,
+              "nearby": 3,
+              "reachable": 3,
+              "blockedIds": []
+            },
+            "rate": 2.4702653247941444
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-low-only-high.log",
+      "summary": {
+        "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 237.65,
+          "deaths": 1,
+          "kills": 116,
+          "damageTaken": 175,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 186.98333333333332
+            },
+            {
+              "id": "metro",
+              "t": 237.65
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 83,
+              "minimumPercent": 100,
+              "worstTick": 11118,
+              "nearby": 15,
+              "reachable": 15,
+              "blockedIds": []
+            },
+            "rate": 4.354838709677419
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-low-only-low.log",
+      "summary": {
+        "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 208.85,
+          "deaths": 1,
+          "kills": 61,
+          "damageTaken": 125,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 168.73333333333332
+            },
+            {
+              "id": "metro",
+              "t": 208.85
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 74,
+              "minimumPercent": 100,
+              "worstTick": 10037,
+              "nearby": 6,
+              "reachable": 6,
+              "blockedIds": []
+            },
+            "rate": 6.526912181303116
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha40.log",
+      "summary": {
+        "sourceHash": "16003377ddf30bca658a37a87e749c97b0256e675525ba21784932476129630f",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 220.11666666666667,
+          "deaths": 1,
+          "kills": 78,
+          "damageTaken": 100,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 182.38333333333333
+            },
+            {
+              "id": "metro",
+              "t": 220.11666666666667
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 81,
+              "minimumPercent": 83.33333333333334,
+              "worstTick": 2477,
+              "nearby": 6,
+              "reachable": 5,
+              "blockedIds": [
+                97
+              ]
+            },
+            "rate": 4.479469099958523
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha42-high.log",
+      "summary": {
+        "sourceHash": "c3b0b093afb6f05fb651b37f65054d1ba6afafb9d47d1c0122e3e48314fb5c70",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 244.05,
+          "deaths": 1,
+          "kills": 113,
+          "damageTaken": 175,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 198.11666666666667
+            },
+            {
+              "id": "metro",
+              "t": 244.05
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 89,
+              "minimumPercent": 100,
+              "worstTick": 11838,
+              "nearby": 6,
+              "reachable": 6,
+              "blockedIds": []
+            },
+            "rate": 4.760105780128447
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha42.log",
+      "summary": {
+        "sourceHash": "c3b0b093afb6f05fb651b37f65054d1ba6afafb9d47d1c0122e3e48314fb5c70",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 208.85,
+          "deaths": 1,
+          "kills": 61,
+          "damageTaken": 125,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 168.73333333333332
+            },
+            {
+              "id": "metro",
+              "t": 208.85
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 74,
+              "minimumPercent": 100,
+              "worstTick": 10037,
+              "nearby": 6,
+              "reachable": 6,
+              "blockedIds": []
+            },
+            "rate": 6.526912181303116
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha42z42-high.log",
+      "summary": {
+        "sourceHash": "649a559b59fdf7c94cd77d505b8d610a72250b6405e846aad08774988dff9341",
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 297.81666666666666,
+          "deaths": 1,
+          "kills": 109,
+          "damageTaken": 225,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 207.91666666666666
+            },
+            {
+              "id": "metro",
+              "t": 297.81666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 377,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 94,
+              "minimumPercent": 93.33333333333333,
+              "worstTick": 11958,
+              "nearby": 15,
+              "reachable": 14,
+              "blockedIds": [
+                220
+              ]
+            },
+            "rate": 6.764495347172512
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha42z42.log",
+      "summary": {
+        "sourceHash": "649a559b59fdf7c94cd77d505b8d610a72250b6405e846aad08774988dff9341",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 211.45,
+          "deaths": 1,
+          "kills": 73,
+          "damageTaken": 180,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 171.21666666666667
+            },
+            {
+              "id": "metro",
+              "t": 211.45
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 75,
+              "minimumPercent": 100,
+              "worstTick": 10157,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 6.017383552484956
+          }
+        ]
+      }
+    },
+    {
+      "log": "test-results/fix67-b2/screen-north-alpha44.log",
+      "summary": {
+        "sourceHash": "18bfdbbe231850975f8e074f244ee5d6e649d0d842c2bd6fc045dc5d409fb5c0",
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 196.86666666666667,
+          "deaths": 0,
+          "kills": 77,
+          "damageTaken": 100,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 154.28333333333333
+            },
+            {
+              "id": "metro",
+              "t": 196.86666666666667
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 277,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "phases": [
+          {
+            "key": "step/look",
+            "bounded": {
+              "samples": 72,
+              "minimumPercent": 100,
+              "worstTick": 9219,
+              "nearby": 7,
+              "reachable": 7,
+              "blockedIds": []
+            },
+            "rate": 2.1032951624211265
+          }
+        ]
+      }
+    }
+  ]
+}
