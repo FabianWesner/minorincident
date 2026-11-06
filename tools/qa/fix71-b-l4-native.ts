@@ -32,7 +32,7 @@ for(const tier of ['low','high'] as const){
    if(previous&&previous.tick+1===w.tick){
     const demand=[...previous.pend];for(const wave of waves.filter(wave=>wave.tick===w.tick))for(const edge of wave.edges)demand[edge]+=wave.count/wave.edges.length;
     const released=demand.map((n,i)=>n-s.pend[i]),added=s.collapseIds.slice(previous.ids);assert.equal(released.reduce((a,b)=>a+b,0),added.length);
-    let cursor=0;for(let offset=0;offset<released.length;offset++){const edge=(previous.cursor+offset)%released.length,ids=added.slice(cursor,cursor+released[edge]);cursor+=released[edge];if(ids.length)admissions.push({tick:w.tick,edge,count:ids.length,actors:ids.map(id=>({id,...w.entities.get(id)!.transform}))});}
+    let cursor=0;for(let offset=0;offset<released.length;offset++){const edge=(previous.cursor+offset)%released.length,ids=added.slice(cursor,cursor+released[edge]);cursor+=released[edge];if(ids.length)admissions.push({tick:w.tick,edge,count:ids.length,actors:ids.map(id=>({id,archetype:w.entities.get(id)!.archetype,...w.entities.get(id)!.transform}))});}
    }
    previous={pend:[...s.pend],cursor:s.collapseEdgeCursor??0,ids:s.collapseIds.length,tick:w.tick};
   },8);
@@ -42,6 +42,6 @@ for(const tier of ['low','high'] as const){
  const control=existsSync(path)?JSON.parse(gunzipSync(readFileSync(path)).toString()):null;
  const canonicalHash=control?.sourceHash===identity.sourceHash?control.rows.find((r:{tier:string})=>r.tier===tier)?.finalHash:null;
  if(canonicalHash)assert.equal(finalHash,canonicalHash,'full-rate observer must preserve the canonical final state');
- const row={tier,run,finalHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix,population};rows.push(row);console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
+ const row={tier,run,finalHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix,population};rows.push(row);mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/l4-native-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,rows:[row]})));console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
 }
 assert.equal(provenance().sourceHash,identity.sourceHash,'sources must remain fixed during observation');mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync('test-results/fix71-b/l4-native.json.gz',gzipSync(JSON.stringify({...identity,rows})));

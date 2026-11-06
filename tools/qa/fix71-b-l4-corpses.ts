@@ -9,7 +9,7 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { provenance } from './accept/probe';
 const tier=(process.argv[2]==='high'?'high':'low') as 'low'|'high',out=`test-results/fix71-b/corpses-final-${tier}`;mkdirSync(`${out}/captures`,{recursive:true});
-const counterexample=process.argv.includes('--counterexample');
+const counterexample=process.argv.includes('--counterexample'),warOnly=process.argv.includes('--war-only');
 const identity=provenance(),session=new SceneSession({tier,backend:'webgl2',query:{profile:'0',ui:'1'}}),samples:unknown[]=[],captures:unknown[]=[];
 try{
  await session.open();await session.page.evaluate('window.__name = f => f');const save=preset('L4-default');save.settings.quality=tier;
@@ -62,10 +62,10 @@ try{
    }
    await session.page.evaluate(async()=>{const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;a.camera.follow();a.camera.zoom(1);g.view.view.update(g.world.entities.get(1)!.transform,1);await a.screenshotReady();});
   }
-  writeFileSync(`${out}/receipt.json.gz`,gzipSync(JSON.stringify({...identity,tier,method:'Actual production complete-bot InputFrames and mortal courier from progressed L4 start, no objective advance or actor repositioning. Production renderer/corpseLayout audit after every rendered sim second. Airborne corpseBlast flights are excluded. Frozen instance geometry vertices are projected through actual instance/world matrices and compared to source feet; the layout envelope height is reported separately. Heap details move only the paused camera; the follow blend is completed before the next sim tick. courierClear is footprint telemetry, not a pixel-ordering assertion.',counterexample,samples,captures,errors:session.errors})));
+  writeFileSync(`${out}/receipt.json.gz`,gzipSync(JSON.stringify({...identity,tier,method:'Actual production complete-bot InputFrames and mortal courier from progressed L4 start, no objective advance or actor repositioning. Production renderer/corpseLayout audit after every rendered sim second. Airborne corpseBlast flights are excluded. Frozen instance geometry vertices are projected through actual instance/world matrices and compared to source feet; the layout envelope height is reported separately. Heap details move only the paused camera; the follow blend is completed before the next sim tick. courierClear is footprint telemetry, not a pixel-ordering assertion.',counterexample,warOnly,samples,captures,errors:session.errors})));
   if(sample.descendAt){entry=true;break;}
-  if(counterexample&&failPhoto)break;
+  if(counterexample&&failPhoto||warOnly&&sample.warSeconds>=150)break;
  }
  console.log(JSON.stringify({tier,entry,samples:samples.length,captures:captures.length,errors:session.errors}));
- assert(entry||counterexample&&failPhoto,'full route must reach cellar; counterexample mode must measure a >1.05m settled frozen body');assert(!session.errors.length);
+ assert(entry||(counterexample||warOnly)&&failPhoto,'full route must reach cellar; counterexample mode must measure a >1.05m settled frozen body');assert(!session.errors.length);
 }finally{await session.close();stopServer();}
