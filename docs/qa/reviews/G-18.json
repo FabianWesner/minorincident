@@ -1,27 +1,27 @@
 {
   "row": "G-18",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
+  "status": "NOT CHECKED",
+  "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "ffb04621df18f7f4b09b5cd6277fa78a31a9f3b1",
+  "commit": "be6af292eb22b7cd9d4a57ddefeef1f568a62778",
   "clauses": [
     {
-      "clause": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
-      "verdict": "FAIL",
-      "note": "In L3/L4/L6/L8, both qualities, a visible escort2m from a runner interrupts ordinary complete-rush and receives real attack windups. With the authored finite courier focus, the same escort is never selected over120ticks; runner remains attracted and walks7.5\u201310m away toward courier30m away. This violates the unchanged normal-perception requirement for a nearby survivor, even though the preference is deliberate code."
+      "clause": "Finite courier focus must permit nearby escort attacks in L3/L4/L6/L8 at both tiers",
+      "verdict": "PASS",
+      "note": "All eight former counterexamples now select the escort and begin real attacks within 120 ticks. Ordinary rush and companion controls retained."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-18-final-party-perception.json.gz",
-      "sha256": "93e7178a01166ecd14a7b6e599479f628f79acd03651dfb3b8e226c283c35c56",
-      "what": "Fresh final-source rerun of all300 actual production-world party/finite-focus cells; all measured values identical to prior proof; zero setup errors."
+      "file": "docs/reports/fix68-g/G-18-before.json.gz",
+      "sha256": "3ea2fc31e6d1942ebb27a74ec939ba4e42901a5f75732e1571f531f9cfe83838",
+      "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
     },
     {
-      "file": "docs/reports/sweep-g/G-18-final-party-summary.json",
-      "sha256": "01619f4bfa55c4ee05111e9a72d77dccd02417751aeda56c87a0bc2d3571c146",
-      "what": "Final-source exact counterexample and parity summary. Prior full evidence remains immutable."
+      "file": "docs/reports/fix68-g/G-18-after.json.gz",
+      "sha256": "b5d280ae7ced88d62a1569e08d952ce4df6fc1d3732110d5e2770b7b0472e287",
+      "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
     }
   ],
-  "notes": "No criteria, AI, target count, focus duration or caps changed. Companion detection redirects to courier without targeting corgi. Full-role coverage is not claimed."
+  "notes": "Requested defect fixed; complete scripted-role and naturally played route qualification remains separate. L9/L10 generic finite-focus fixtures still do not contact in 120 ticks and are not presented as passing."
 }

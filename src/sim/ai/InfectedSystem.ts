@@ -347,9 +347,6 @@ export class InfectedSystem {
     }
     let target: EntitySnapshot | undefined, nearest = Infinity;
     for (const candidate of this.approachParty) {
-      // A metro arrival's finite courier assignment must survive the column
-      // crossing its entrance; the corgi can still alert it to the courier.
-      if (['L3', 'L4', 'L6', 'L8'].includes(this.world.scenario ?? '') && brain?.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0) && candidate.id !== 1 && !isCorgi(candidate)) continue;
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
       if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
@@ -1167,8 +1164,6 @@ export class InfectedSystem {
     this.goTo(e.id, { x: e.transform.x + fx * run, z: e.transform.z + fz * run }, tick + l1Ticks(2 + rng.next()), 0);
   }
   private sight(e: EntitySnapshot, b: InfectedState, brain: L1Brain, seen: HumanTarget): boolean {
-    // Both direct perception and herd turns select through this same rule.
-    if (['L3', 'L4', 'L6', 'L8'].includes(this.world.scenario ?? '') && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0) && seen.id !== 1) return false;
     const tick = this.world.tick, heard = !this.l1!.sees(e, seen.position);
     if (brain.mode === 'chase' && brain.targetId === seen.id) {
       const dx = seen.position.x - brain.seenX, dz = seen.position.z - brain.seenZ, d = Math.hypot(dx, dz);
