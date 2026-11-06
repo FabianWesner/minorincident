@@ -1,0 +1,2830 @@
+{
+  "sourceHash": "f7c6992a57ac3d3bcf07ec6da0e20466a1cc28eb2b2fc3f4db4585b6660ed657",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "63f31827afeb2c73eea5d7b5fe902dd1d3460cc0",
+  "method": "Existing fence/gate, complete L7 horde and30 permanent-corpse fixtures. Original actors, scripts, counts/caps retained. Explicit game-camera0.5/1.5 matrix; corpse fixture courier walks into the existing pile as setup. Established same-frame production-depth ID-mask observer; no simulation step between normal/unobstructed redraws. Preserve each original visibility minimum; zero reference pixels is never PASS.",
+  "cells": [
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 1,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "target": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.134583334088324
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999567932124,
+            0.30749907876275256
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 14391,
+        "reference": 14436,
+        "share": 0.9968827930174564,
+        "megaPixels": 3883,
+        "megaShare": 0.004213324652777778
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f1-z0.5.png",
+      "sha256": "742f3d35e378a428f84e345b715b2b58087e90bde1e147abca84b7f5f719cca4",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 1,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "target": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.003749987624326
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999867757117,
+            0.43788141199250363
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1432,
+        "reference": 1437,
+        "share": 0.9965205288796103,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f1-z1.5.png",
+      "sha256": "4ec5731ea07b0dfb1a14215c196faa4b6809fd90bce9e9e516b78c1e41cdd116",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 60,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "target": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.134583374449553
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999999976863,
+            0.30749907502082713
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 14461,
+        "reference": 14514,
+        "share": 0.9963483533140416,
+        "megaPixels": 18,
+        "megaShare": 0.00001953125
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f60-z0.5.png",
+      "sha256": "89b9880b4eba6d268b680f777be3e6ca9013b891acbaa696ec75c23aa7cc3ca8",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 60,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "target": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.003750027985555
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.499999999999929,
+            0.4378814106894417
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1427,
+        "reference": 1433,
+        "share": 0.9958129797627355,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f60-z1.5.png",
+      "sha256": "43a8b7594ad969edeb8e2e67f9d8fe4ce8b5e25a94d7e05e0d067ff191041440",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 120,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "target": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.652103919188972
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.4931032975414259,
+            0.3134706905303088
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13178,
+        "reference": 13186,
+        "share": 0.9993932959199151,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f120-z0.5.png",
+      "sha256": "256b8cf799f7ab9036fcfa7ebcc49c1fd381fe7997ba35eb57cfe6b9e474b458",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 120,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "target": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.521270572724976
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.4978955514386793,
+            0.4399550958757607
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1307,
+        "reference": 1308,
+        "share": 0.9992354740061162,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f120-z1.5.png",
+      "sha256": "1702f71aa0ee014b9121203d05b550c5f0f332810c03ddb1505432b0141881a9",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 180,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "target": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.716247259615873
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.499999688261179,
+            0.3074993450166043
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13451,
+        "reference": 13769,
+        "share": 0.9769046408599027,
+        "megaPixels": 26,
+        "megaShare": 0.000028211805555555554
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f180-z0.5.png",
+      "sha256": "2d25dca43f15c806d0be90325da1358fb4950e0c6cfe5e663754cab46cd474a4",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 180,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "target": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.585413913151875
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999990458622434,
+            0.4378815047108646
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1337,
+        "reference": 1373,
+        "share": 0.9737800436999272,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f180-z1.5.png",
+      "sha256": "9426381b670527741a1cddbd12776ed98dfdc953d7ac7ef845034520d656b4ff",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 240,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 240,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.000000238418579,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "target": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.467474411121028
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5035129475130486,
+            0.3044561083007303
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12461,
+        "reference": 12461,
+        "share": 1,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f240-z0.5.png",
+      "sha256": "8839723620791769b1ef0e26ded8c42de80b19ee909af1c3479ccd792a5f2f95",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 240,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 240,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.000000238418579,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "target": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.33664106465703
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5010768806573742,
+            0.4368202294880079
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1258,
+        "reference": 1258,
+        "share": 1,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-seethrough-door-gate-f240-z1.5.png",
+      "sha256": "6ec6dad9b4d8c4fb277f8321faf9b2e83bb18e21326a460471593f56f9694dcf",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 1,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 3.990000009536743,
+          "yaw": 0.20943951023931953
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "target": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            9.433048145480972
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5009059054453193,
+            0.3056315027532942
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 14379,
+        "reference": 14379,
+        "share": 1,
+        "megaPixels": 96396,
+        "megaShare": 0.10459635416666667
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f1-z0.5.png",
+      "sha256": "6e51bb1669d48017124faa410c0305b3059ddfae5555758e7a914922de1742b9",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 1,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 3.990000009536743,
+          "yaw": 0.20943951023931953
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "target": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            20.302214799016976
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.50027731385288,
+            0.43727511559593973
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1437,
+        "reference": 1437,
+        "share": 1,
+        "megaPixels": 34087,
+        "megaShare": 0.036986762152777776
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f1-z1.5.png",
+      "sha256": "827d00506e91b9114186c536e8f72fe338923caf69fc23cb715255d09f30fec5",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 60,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 2.04000186920166,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "target": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            7.658370772822163
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5194362086339058,
+            0.28958214991318565
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 11919,
+        "reference": 11919,
+        "share": 1,
+        "megaPixels": 176256,
+        "megaShare": 0.19125
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f60-z0.5.png",
+      "sha256": "297bc83215e17e217a21354d3e0b21a175f70f29ec342ef5a79984b6ef5083d4",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 60,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 2.04000186920166,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "target": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            18.527537426358165
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.505998988222746,
+            0.43163768795130947
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1219,
+        "reference": 1219,
+        "share": 1,
+        "megaPixels": 33641,
+        "megaShare": 0.036502821180555554
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f60-z1.5.png",
+      "sha256": "9634252bedcd5d0e5afae43a24094a157f9598547dc840c1a0acb94f4810b3a0",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 120,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "target": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.798898936609038
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5049064884167171,
+            0.30324877312996934
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12311,
+        "reference": 12311,
+        "share": 1,
+        "megaPixels": 283756,
+        "megaShare": 0.30789496527777777
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f120-z0.5.png",
+      "sha256": "93731b58ffca70e3614ee836481338bd33621277332b0bea7e3f7be01df3b500",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 120,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "target": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.66806559014504
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5015049948415955,
+            0.4363983486022751
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1232,
+        "reference": 1232,
+        "share": 1,
+        "megaPixels": 31543,
+        "megaShare": 0.03422634548611111
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f120-z1.5.png",
+      "sha256": "14b30f9a806416390ca852170636baca716853d9a5e78d011ca4238d50d78a91",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 180,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "target": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.7529211858100995
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5000002234533604,
+            0.30749888148839516
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12557,
+        "reference": 12557,
+        "share": 1,
+        "megaPixels": 288064,
+        "megaShare": 0.31256944444444446
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f180-z0.5.png",
+      "sha256": "896aa841bade6da3b9f5c90953d7e79751f304cccd0dd9b3c6ca114be398853e",
+      "reviewed": false
+    },
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 180,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "target": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.6220878393461
+          ],
+          "spot": null
+        },
+        "quality": "low",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.500000068392296,
+            0.43788134329505957
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1244,
+        "reference": 1244,
+        "share": 1,
+        "megaPixels": 31684,
+        "megaShare": 0.03437934027777778
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/low-corpse-placement-pile-f180-z1.5.png",
+      "sha256": "880a35b7e4f553f9f9eebb1d955d12447c613301200cc674e6fa0883db366329",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 1,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "target": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.134583334088324
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999567932124,
+            0.30749907876275256
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13871,
+        "reference": 14436,
+        "share": 0.9608617345525077,
+        "megaPixels": 4181,
+        "megaShare": 0.004536675347222222
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f1-z0.5.png",
+      "sha256": "2c8a5281cf05d1f381b041c12e5e755101a39915de1549ddae1711b1a7ca6538",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 1,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "target": [
+            0,
+            0,
+            -1.2999999926796781
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.003749987624326
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999867757117,
+            0.43788141199250363
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1373,
+        "reference": 1437,
+        "share": 0.9554627696590118,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f1-z1.5.png",
+      "sha256": "52effea8bf0cb4ed1e2096680f2fd024b6e9c1bc4b8196453963593eabec4100",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 60,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "target": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.134583374449553
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999999999976863,
+            0.30749907502082713
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13959,
+        "reference": 14514,
+        "share": 0.961761058288549,
+        "megaPixels": 11,
+        "megaShare": 0.00001193576388888889
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f60-z0.5.png",
+      "sha256": "39e6e8485b6bc66d5fe623dc1fc3128d22a9eca8c2f41fe22ec0af1cd15a959d",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 60,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.2999999523162842,
+          "yaw": 0
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "target": [
+            0,
+            0,
+            -1.299999952318449
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.003750027985555
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.499999999999929,
+            0.4378814106894417
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1367,
+        "reference": 1433,
+        "share": 0.9539427773900907,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f60-z1.5.png",
+      "sha256": "25de7f0a3810d445c445dbe070c551f53405e02ef0759d57e535277b7a79b8b7",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 120,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "target": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.652103919188972
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.4931032975414259,
+            0.3134706905303088
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13140,
+        "reference": 13186,
+        "share": 0.9965114515395116,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f120-z0.5.png",
+      "sha256": "ec6e7ce7784b23e3c26f13e7c2000ae266ac9f731189c8a6a55b2eff508c0a56",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 120,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "target": [
+            0,
+            0,
+            0.2175205924209703
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.521270572724976
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.4978955514386793,
+            0.4399550958757607
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1304,
+        "reference": 1308,
+        "share": 0.9969418960244648,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f120-z1.5.png",
+      "sha256": "c9c3821a8f88d4ebecd88d385fdce4975b1e393746b504b7101b1015802dd7d1",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 180,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "target": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.716247259615873
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.499999688261179,
+            0.3074993450166043
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 13358,
+        "reference": 13769,
+        "share": 0.9701503377151572,
+        "megaPixels": 14,
+        "megaShare": 0.000015190972222222222
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f180-z0.5.png",
+      "sha256": "9247a009a52fbba9f95c07521b38f86fd90d5daf2943dbc5b77360ac786e8b78",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 180,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.2816668450832367,
+          "yaw": -1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "target": [
+            0,
+            0,
+            0.28166393284787133
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.585413913151875
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.49999990458622434,
+            0.4378815047108646
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1322,
+        "reference": 1373,
+        "share": 0.9628550619082301,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f180-z1.5.png",
+      "sha256": "343c932fe0ca9279a03232717275e8ad4b4b69bd9b048f72e97527e31d9b9ab2",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 240,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 240,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.000000238418579,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "target": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            4.467474411121028
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5035129475130486,
+            0.3044561083007303
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12179,
+        "reference": 12461,
+        "share": 0.9773693925046144,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f240-z0.5.png",
+      "sha256": "5c1d42f73379070e1a514ece30280c8886190c24ab4330e65485450a7dbf8bbd",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/seethrough-door-gate.json",
+      "case": "seethrough-door-gate",
+      "frame": 240,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 240,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": -1.000000238418579,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "target": [
+            0,
+            0,
+            -0.9671089156469742
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            15.33664106465703
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 0
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5010768806573742,
+            0.4368202294880079
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1227,
+        "reference": 1258,
+        "share": 0.9753577106518283,
+        "megaPixels": 0,
+        "megaShare": 0
+      },
+      "originalMinimum": 0.6,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-seethrough-door-gate-f240-z1.5.png",
+      "sha256": "b5b6f80ada270b816734e93af75aaded564d68211d5bccd85c0ac58049d2f1ea",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 1,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 3.990000009536743,
+          "yaw": 0.20943951023931953
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "target": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            9.433048145480972
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5009059054453193,
+            0.3056315027532942
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 14379,
+        "reference": 14379,
+        "share": 1,
+        "megaPixels": 97733,
+        "megaShare": 0.10604709201388889
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f1-z0.5.png",
+      "sha256": "0e12d0ee3c2430f52724fd093196f39fc93c7748b9873cf048c51b7142626ce5",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 1,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 1,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 3.990000009536743,
+          "yaw": 0.20943951023931953
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "target": [
+            0,
+            0,
+            3.9984648187129705
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            20.302214799016976
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.50027731385288,
+            0.43727511559593973
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1437,
+        "reference": 1437,
+        "share": 1,
+        "megaPixels": 34458,
+        "megaShare": 0.03738932291666667
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f1-z1.5.png",
+      "sha256": "1e3ab6c7dfa02fa9c0d38a8c132baeb77761722a76fe1d748ddf32d0c548765c",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 60,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 2.04000186920166,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "target": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            7.658370772822163
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5194362086339058,
+            0.28958214991318565
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 11919,
+        "reference": 11919,
+        "share": 1,
+        "megaPixels": 178318,
+        "megaShare": 0.19348741319444446
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f60-z0.5.png",
+      "sha256": "3bea9bcad941a8a37ed9a03f44abcd36297c95f219cc0e95f99e0b41772ddb38",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 60,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 60,
+        "player": {
+          "x": 0,
+          "y": 0.7099999785423279,
+          "z": 2.04000186920166,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "target": [
+            0,
+            0,
+            2.223787446054161
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            18.527537426358165
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.505998988222746,
+            0.43163768795130947
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1219,
+        "reference": 1219,
+        "share": 1,
+        "megaPixels": 33967,
+        "megaShare": 0.03685655381944444
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f60-z1.5.png",
+      "sha256": "23d48c713860a839d4c4a0e2b4b7d81e686386cea7f75c2b42ecc05836427765",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 120,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "target": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.798898936609038
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5049064884167171,
+            0.30324877312996934
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12311,
+        "reference": 12311,
+        "share": 1,
+        "megaPixels": 282162,
+        "megaShare": 0.3061653645833333
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f120-z0.5.png",
+      "sha256": "945c19245a90b8e63eac3766bcf1774358c4854564993844078157d9904e5565",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 120,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 120,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "target": [
+            0,
+            0,
+            0.3643156098410362
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.66806559014504
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5015049948415955,
+            0.4363983486022751
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1232,
+        "reference": 1232,
+        "share": 1,
+        "megaPixels": 31475,
+        "megaShare": 0.03415256076388889
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f120-z1.5.png",
+      "sha256": "072df32cf12364b60a98ded6651571bf786a4857a1f6270ad4d34d0247626679",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 180,
+      "requestedZoom": 0.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "target": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "position": [
+            5.434583326768001,
+            5.583959896778495,
+            5.7529211858100995
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.5000002234533604,
+            0.30749888148839516
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 12557,
+        "reference": 12557,
+        "share": 1,
+        "megaPixels": 284253,
+        "megaShare": 0.30843424479166665
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f180-z0.5.png",
+      "sha256": "3c0e760caf0ade0121fc385f787577a001b8dbc1004cd21023ae1ae5fdde2eed",
+      "reviewed": false
+    },
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/catalog/corpse-placement-pile.json",
+      "case": "corpse-placement-pile",
+      "frame": 180,
+      "requestedZoom": 1.5,
+      "observation": {
+        "tick": 180,
+        "player": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0.31833577156066895,
+          "yaw": 1.5707963267948966
+        },
+        "playerHealth": {
+          "current": 100,
+          "max": 100
+        },
+        "hidden": false,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "target": [
+            0,
+            0,
+            0.3183378590420974
+          ],
+          "position": [
+            16.303749980304,
+            16.751879690335485,
+            16.6220878393461
+          ],
+          "spot": null
+        },
+        "quality": "high",
+        "backend": "webgl",
+        "livingInfected": 0,
+        "corpses": 30
+      },
+      "visibility": {
+        "alphaPixels": 0,
+        "alphaBodyPixels": 0,
+        "bossReveal": {
+          "center": [
+            0.500000068392296,
+            0.43788134329505957
+          ],
+          "radius": 0.12,
+          "strength": 0
+        },
+        "megaAlphaRatio": 0,
+        "megaM": null,
+        "visible": 1244,
+        "reference": 1244,
+        "share": 1,
+        "megaPixels": 31542,
+        "megaShare": 0.03422526041666667
+      },
+      "originalMinimum": null,
+      "scopedPass": true,
+      "file": "test-results/sweep-g/G-07-final-occlusion/high-corpse-placement-pile-f180-z1.5.png",
+      "sha256": "934cc1114b7725432be16479edf106efddfe506eb405bd6651d394c6d6b7524c",
+      "reviewed": false
+    }
+  ],
+  "errors": [
+    {
+      "tier": "low",
+      "fixture": "tests/scenes/l7-encounters/qa-l7-horde-passage.json",
+      "error": "Error: page.evaluate: Error: Infected concurrency cap reached\n    at X5.spawn (http://127.0.0.1:4981/build/install-CNv1ulvY.js:1:205636)\n    at Ge.spawn (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:18849)\n    at http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:7335\n    at Array.forEach (<anonymous>)\n    at Ge.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:7033)\n    at Object.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:2264)\n    at http://127.0.0.1:4981/build/index-BFPASgD9.js:11:41306"
+    },
+    "console.error: Level load failed Error: Infected concurrency cap reached\n    at X5.spawn (http://127.0.0.1:4981/build/install-CNv1ulvY.js:1:205636)\n    at Ge.spawn (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:18849)\n    at http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:7335\n    at Array.forEach (<anonymous>)\n    at Ge.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:7033)\n    at Object.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:2264)\n    at http://127.0.0.1:4981/build/index-BFPASgD9.js:11:41306",
+    {
+      "tier": "high",
+      "fixture": "tests/scenes/l7-encounters/qa-l7-horde-passage.json",
+      "error": "Error: page.evaluate: Error: No clear L7 encounter point at -64,50\n    at _a (http://127.0.0.1:4981/build/l6-DkBcO67M.js:1:246363)\n    at ii.clearPoint (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87178)\n    at ii.group (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87441)\n    at ii.prepare (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87056)\n    at Ie (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:5840)\n    at Ge.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:15376)\n    at Object.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:2264)\n    at http://127.0.0.1:4981/build/index-BFPASgD9.js:11:41306"
+    },
+    "console.error: Level load failed Error: No clear L7 encounter point at -64,50\n    at _a (http://127.0.0.1:4981/build/l6-DkBcO67M.js:1:246363)\n    at ii.clearPoint (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87178)\n    at ii.group (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87441)\n    at ii.prepare (http://127.0.0.1:4981/build/PropSystem-CLAdLGG7.js:1:87056)\n    at Ie (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:1:5840)\n    at Ge.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:15376)\n    at Object.setup (http://127.0.0.1:4981/build/SceneLab-DW3Q67WI.js:3:2264)\n    at http://127.0.0.1:4981/build/index-BFPASgD9.js:11:41306"
+  ]
+}
