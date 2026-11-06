@@ -1,0 +1,27 @@
+{
+  "row": "G-14",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "5668a7eb7c7419e1d2203b0afc7c68fb94a59841",
+  "clauses": [
+    {
+      "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height \u2264 ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
+      "verdict": "FAIL",
+      "note": "Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-14-scenes-captures.json",
+      "sha256": "f6f0e0ecdf0703f6978621c2b0e3dd5ffcdab493e33c23e80c0ec3e0069f7d09",
+      "what": "All16 corpse frames inspected/hash/deleted; floating bodies and detached boot confirmed in original-size views."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-14-scenes.json",
+      "sha256": "cbce58d747e9aa61674d4dadd5da870cc57b8a1dcd05fcafb9606b975223590d",
+      "what": "Authored30-body pile and ten-body122-second native fixture; exact identities/layout/grounding metrics, no errors."
+    }
+  ],
+  "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry."
+}
