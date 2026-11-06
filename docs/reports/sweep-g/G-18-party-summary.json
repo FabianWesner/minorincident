@@ -1,0 +1,992 @@
+{
+  "row": "G-18",
+  "status": "FAIL",
+  "sourceHash": "8e400302a231cae93f92785b2d9d2a214cc7c458de05aff25045141f4aa3740e",
+  "method": "Controlled actual production worlds/nav; director paused and ambient actors hidden. Production companion/escort constructors and rush/press APIs. Read-only perception/attack samples. No AI, path, clock or population target edits.",
+  "controlledCells": 300,
+  "errors": [],
+  "finding": "In L3/L4/L6/L8, both qualities, a visible escort2m from a runner interrupts ordinary complete-rush and receives real attack windups. With the authored finite courier focus, the same escort is never selected over120ticks; runner remains attracted and walks7.5\u201310m away toward courier30m away. This violates the unchanged normal-perception requirement for a nearby survivor, even though the preference is deliberate code.",
+  "pairedControls": [
+    {
+      "level": "L3",
+      "tier": "low",
+      "rush-complete": {
+        "escortId": 105,
+        "escortAt": {
+          "x": -155.75,
+          "z": 1.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -125.75,
+          "y": 0.705,
+          "z": 1.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -153.75022222222222,
+            "z": 1.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 105,
+          "targetId": 105,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.9997777777777799
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -154.76586825795815,
+            "z": 1.75
+          },
+          "script": null,
+          "state": "bite",
+          "heardTargetId": 105,
+          "targetId": 105,
+          "brainMode": "bite",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9841317420418534
+        },
+        "attackWindups": 2,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 105,
+        "escortAt": {
+          "x": -155.75,
+          "z": 1.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -125.75,
+          "y": 0.705,
+          "z": 1.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -153.74977844728144,
+            "z": 1.7500172368486548
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000221552792826
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": -148.2659993341271,
+            "z": 2.176656418924662
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 7.496152457534185
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "rush-complete": {
+        "escortId": 105,
+        "escortAt": {
+          "x": -155.75,
+          "z": 1.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -125.75,
+          "y": 0.705,
+          "z": 1.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -153.75022222222222,
+            "z": 1.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 105,
+          "targetId": 105,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.9997777777777799
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -154.76586825795815,
+            "z": 1.75
+          },
+          "script": null,
+          "state": "bite",
+          "heardTargetId": 105,
+          "targetId": 105,
+          "brainMode": "bite",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9841317420418534
+        },
+        "attackWindups": 2,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 105,
+        "escortAt": {
+          "x": -155.75,
+          "z": 1.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -125.75,
+          "y": 0.705,
+          "z": 1.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -153.74977844728144,
+            "z": 1.7500172368486548
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000221552792826
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": -148.2659993341271,
+            "z": 2.176656418924662
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 7.496152457534185
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "rush-complete": {
+        "escortId": 99,
+        "escortAt": {
+          "x": -57.75,
+          "z": 43.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -27.75,
+          "y": 0.705,
+          "z": 43.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -54.50022222222222,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 99,
+          "targetId": 99,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.24977777777778
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -56.77732111111111,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 99,
+          "targetId": 99,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9726788888888933
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 99,
+        "escortAt": {
+          "x": -57.75,
+          "z": 43.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -27.75,
+          "y": 0.705,
+          "z": 43.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -54.49977855597922,
+            "z": 43.7500185812193
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 3.250221444073894
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": -47.72631262169137,
+            "z": 44.31837556608691
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 10.039788814620971
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "rush-complete": {
+        "escortId": 142,
+        "escortAt": {
+          "x": -57.75,
+          "z": 43.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -27.75,
+          "y": 0.705,
+          "z": 43.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -54.50022222222222,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 142,
+          "targetId": 142,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.24977777777778
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -56.77732111111111,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 142,
+          "targetId": 142,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9726788888888933
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 142,
+        "escortAt": {
+          "x": -57.75,
+          "z": 43.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": -27.75,
+          "y": 0.705,
+          "z": 43.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -54.49977855597922,
+            "z": 43.7500185812193
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 3.250221444073894
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": -47.72631262169137,
+            "z": 44.31837556608691
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 10.039788814620971
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L6",
+      "tier": "low",
+      "rush-complete": {
+        "escortId": 57,
+        "escortAt": {
+          "x": 2.75,
+          "z": -0.25,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 32.75,
+          "y": 1.3049999999999997,
+          "z": -0.25,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": 4.749777777777778,
+            "z": -0.25
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 57,
+          "targetId": 57,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.999777777777778
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": 3.7117777777777774,
+            "z": -0.25
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 57,
+          "targetId": 57,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9617777777777774
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 57,
+        "escortAt": {
+          "x": 2.75,
+          "z": -0.25,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 32.75,
+          "y": 1.3049999999999997,
+          "z": -0.25,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": 4.7502218363886195,
+            "z": -0.24998691058696396
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000221836431448
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": 11.535689405197322,
+            "z": 0.1503882857618045
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 8.794808076585399
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "rush-complete": {
+        "escortId": 57,
+        "escortAt": {
+          "x": 2.75,
+          "z": -0.25,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 32.75,
+          "y": 1.3049999999999997,
+          "z": -0.25,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": 4.749777777777778,
+            "z": -0.25
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 57,
+          "targetId": 57,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.999777777777778
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": 3.7117777777777774,
+            "z": -0.25
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 57,
+          "targetId": 57,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9617777777777774
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 57,
+        "escortAt": {
+          "x": 2.75,
+          "z": -0.25,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 32.75,
+          "y": 1.3049999999999997,
+          "z": -0.25,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": 4.7502218363886195,
+            "z": -0.24998691058696396
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000221836431448
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": 11.535689405197322,
+            "z": 0.1503882857618045
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 8.794808076585399
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L8",
+      "tier": "low",
+      "rush-complete": {
+        "escortId": 407,
+        "escortAt": {
+          "x": -3.25,
+          "z": 69.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 26.75,
+          "y": 0.705,
+          "z": 69.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -1.2502222222222221,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 407,
+          "targetId": 407,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.9997777777777779
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -2.2882222222222226,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 407,
+          "targetId": 407,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9617777777777774
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 407,
+        "escortAt": {
+          "x": -3.25,
+          "z": 69.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 26.75,
+          "y": 0.705,
+          "z": 69.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -1.2497777777777779,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000222222222222
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": 5.479248385114976,
+            "z": 70.63371520187881
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 8.773866304375973
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    },
+    {
+      "level": "L8",
+      "tier": "high",
+      "rush-complete": {
+        "escortId": 407,
+        "escortAt": {
+          "x": -3.25,
+          "z": 69.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 26.75,
+          "y": 0.705,
+          "z": 69.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1561,
+          "enemy": {
+            "x": -1.2502222222222221,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 407,
+          "targetId": 407,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 1.9997777777777779
+        },
+        "last": {
+          "tick": 1680,
+          "enemy": {
+            "x": -2.2882222222222226,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "chase",
+          "heardTargetId": 407,
+          "targetId": 407,
+          "brainMode": "chase",
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 0.9617777777777774
+        },
+        "attackWindups": 1,
+        "everSelectedEscort": true
+      },
+      "focus-complete": {
+        "escortId": 407,
+        "escortAt": {
+          "x": -3.25,
+          "z": 69.75,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "courierAt": {
+          "x": 26.75,
+          "y": 0.705,
+          "z": 69.75,
+          "yaw": 0.3205919885488634
+        },
+        "first": {
+          "tick": 1681,
+          "enemy": {
+            "x": -1.2497777777777779,
+            "z": 69.75
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 2.000222222222222
+        },
+        "last": {
+          "tick": 1800,
+          "enemy": {
+            "x": 5.479248385114976,
+            "z": 70.63371520187881
+          },
+          "script": null,
+          "state": "attracted",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": "attracted",
+          "focusId": 1,
+          "focusUntil": 2280,
+          "completeApproach": true,
+          "escortDistance": 8.773866304375973
+        },
+        "attackWindups": 0,
+        "everSelectedEscort": false
+      }
+    }
+  ],
+  "companionNotice": {
+    "cells": 260,
+    "courierSelected": 256,
+    "dogTargeted": 0,
+    "unselectedCases": [
+      {
+        "level": "L4",
+        "tier": "low",
+        "archetype": "infected.alpha",
+        "first": {
+          "tick": 1441,
+          "enemy": {
+            "x": -54.5,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.25
+        },
+        "last": {
+          "tick": 1560,
+          "enemy": {
+            "x": -54.5,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.25
+        }
+      },
+      {
+        "level": "L5",
+        "tier": "low",
+        "archetype": "infected.alpha",
+        "first": {
+          "tick": 1441,
+          "enemy": {
+            "x": 73.25,
+            "z": -10.25
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 2
+        },
+        "last": {
+          "tick": 1560,
+          "enemy": {
+            "x": 73.25,
+            "z": -10.25
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 2
+        }
+      },
+      {
+        "level": "L4",
+        "tier": "high",
+        "archetype": "infected.alpha",
+        "first": {
+          "tick": 1441,
+          "enemy": {
+            "x": -54.5,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.25
+        },
+        "last": {
+          "tick": 1560,
+          "enemy": {
+            "x": -54.5,
+            "z": 43.75
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 3.25
+        }
+      },
+      {
+        "level": "L5",
+        "tier": "high",
+        "archetype": "infected.alpha",
+        "first": {
+          "tick": 1441,
+          "enemy": {
+            "x": 73.25,
+            "z": -10.25
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 2
+        },
+        "last": {
+          "tick": 1560,
+          "enemy": {
+            "x": 73.25,
+            "z": -10.25
+          },
+          "script": null,
+          "state": "idle",
+          "heardTargetId": 0,
+          "targetId": 0,
+          "brainMode": null,
+          "focusId": null,
+          "focusUntil": null,
+          "completeApproach": false,
+          "escortDistance": 2
+        }
+      }
+    ],
+    "interpretation": "Production code notices corgi and redirects to courier, retaining immunity; four Alpha cases are retained, not silently counted as passes. Companion notice need not imply biting the dog."
+  },
+  "limits": [
+    "Explicit arranged targets and production rush/press APIs; no claim of a complete ordinary-input campaign perception matrix.",
+    "A concrete paired finite-focus counterexample suffices for FAIL; every archetype/actual armed-ally state remains incomplete.",
+    "No AI edits: finite-focus policies have existing encounter/test contracts and need reconciliation against global normal-perception rule."
+  ],
+  "evidence": {
+    "file": "docs/reports/sweep-g/G-18-party-perception.json.gz",
+    "sha256": "4d5f27e8d4a4f93b8ce3a1164dac63fe9603036da0f3ba7d7086901cbb905141"
+  }
+}
