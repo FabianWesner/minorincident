@@ -76,7 +76,10 @@ export class LevelTenEncounters {
         if (lane) for (const slot of slots) slot.z += lane;
         if (wave) for (const slot of slots) slot.key += `:wave-${wave}`;
         // Boundary overlap can leave only a few slots: admit mixed threats first.
-        slots.sort((a, b) => Number(a.archetype === 'infected.runner') - Number(b.archetype === 'infected.runner'));
+        // Corridor hordes need their full regular rank before patrol specials
+        // consume the last slots beside the pursuing previous-region crowd.
+        // Their specials remain deferred slots with the same counts/caps.
+        slots.sort((a, b) => (corridorHorde ? -1 : 1) * (Number(a.archetype === 'infected.runner') - Number(b.archetype === 'infected.runner')));
         // Per-tick admission must not allocate and sort a whole wave every tick.
         if (assault) this.assaultSlots = { key: slotKey, slots };
       }
