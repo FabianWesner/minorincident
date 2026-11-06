@@ -712,6 +712,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L7-04', ['actual resident and later regular admissions', 'actual resident and later Alpha admissions', 'concurrent cap'].map(clause => ({ clause, policy: 'complete' }))],
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],
+  ['L6-09', [{ clause: 'actual gates width collision endurance refusal and persistent prompt', policy: 'controlled-fixture' }]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],
   ['L10-10', [
     { clause: 'actual eligible charge ticks and increments', policy: 'complete' },
