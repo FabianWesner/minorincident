@@ -1,0 +1,463 @@
+{
+  "beforeSourceHash": "75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6",
+  "afterSourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "method": "Production full-rate native complete routes, both tiers. gameplayHash uses production stateHash after structuredClone(getState()) with only e.infected.model deleted from each entity. All other canonical gameplay fields remain. Deep equality independently checks all listed traces, including every recorded nearest20 actor position. Both existing registered body assets have distinct GLB bytes.",
+  "datasets": [
+    {
+      "file": "docs/reports/fix73-b/L4-look-before-native.json.gz",
+      "sha256": "e9f7ab8c7445066cea937f9db10d664a3dcbfc2657575a632f7cff782d7ba382"
+    },
+    {
+      "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
+      "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c"
+    }
+  ],
+  "assets": [
+    {
+      "id": "inf.firefighter",
+      "glb": "public/assets/models/skinned/inf.firefighter.lod0.glb",
+      "sha256": "5010db8b1342ef45ef73e00ce8020db8352559c172560888c8a2c164dfedf886"
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "glb": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+      "sha256": "d6ddc7cab5fe9a28dbf808c03a73cad3c06c96ac79c1f433bbc4d8f2b094ea6c"
+    }
+  ],
+  "tiers": [
+    {
+      "tier": "low",
+      "beforeFinalHash": "c3184e26",
+      "afterFinalHash": "18e71cbb",
+      "beforeGameplayHash": "17026cfd",
+      "afterGameplayHash": "17026cfd",
+      "identicalFields": [
+        "run",
+        "waves",
+        "counts",
+        "windows",
+        "admissions",
+        "population",
+        "all recorded nearest20 actor IDs/archetypes/positions"
+      ],
+      "run": {
+        "level": "L4",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 719.45,
+        "deaths": 24,
+        "kills": 57,
+        "damageTaken": 2802.233333333329,
+        "failures": {
+          "player-died": 24
+        },
+        "objectiveTimeline": [
+          {
+            "id": "ride",
+            "t": 30.483333333333334
+          },
+          {
+            "id": "quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "id": "hold",
+            "t": 210.81666666666666
+          },
+          {
+            "id": "hide",
+            "t": 711.2833333333333
+          },
+          {
+            "id": "bar",
+            "t": 712.45
+          },
+          {
+            "id": "wait",
+            "t": 719.45
+          }
+        ],
+        "furthestObjective": "wait",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 1797,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "peak": 80,
+      "mixChecks": 10679,
+      "beforeMinimumLooks": 3,
+      "afterMinimumLooks": 4,
+      "firstFourLookSample": {
+        "tick": 4328,
+        "looks": 4,
+        "actors": [
+          {
+            "id": 253,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.464881335070682,
+            "z": 0.24400016727079565
+          },
+          {
+            "id": 164,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -20.60717819580209,
+            "z": -0.8528835563238527
+          },
+          {
+            "id": 191,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -18.72425849211199,
+            "z": 0.7616175471294372
+          },
+          {
+            "id": 209,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -18.187976171041214,
+            "z": 1.455538953730752
+          },
+          {
+            "id": 178,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.744534515342334,
+            "z": -0.6079219221603
+          },
+          {
+            "id": 188,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.723762567973488,
+            "z": 5.108987115372524
+          },
+          {
+            "id": 175,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.042342765482292,
+            "z": -1.6511294075290341
+          },
+          {
+            "id": 221,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.48548673191338,
+            "z": 1.906713295366483
+          },
+          {
+            "id": 268,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -18.435735688764606,
+            "z": -0.35857935182607015
+          },
+          {
+            "id": 260,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.040868514047848,
+            "z": 3.5422344824819736
+          },
+          {
+            "id": 272,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -16.97374889981463,
+            "z": 2.6372382412722377
+          },
+          {
+            "id": 255,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.284769047206208,
+            "z": -1.3903849672208688
+          },
+          {
+            "id": 165,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.144656869900363,
+            "z": 5.906651740579372
+          },
+          {
+            "id": 205,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.715529108541595,
+            "z": 4.777001202789812
+          },
+          {
+            "id": 186,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.17185234561269,
+            "z": 0.5183205301870052
+          },
+          {
+            "id": 226,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.802486188101437,
+            "z": 1.3501208715504014
+          },
+          {
+            "id": 229,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.520069968391137,
+            "z": -0.3229228060604815
+          },
+          {
+            "id": 174,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.345919656502666,
+            "z": -2.3856680624054394
+          },
+          {
+            "id": 267,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -15.941042754847292,
+            "z": 3.4430270676695343
+          },
+          {
+            "id": 282,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.88903832088548,
+            "z": 6.796031127664626
+          }
+        ]
+      }
+    },
+    {
+      "tier": "high",
+      "beforeFinalHash": "0bef7d9f",
+      "afterFinalHash": "86ab19e8",
+      "beforeGameplayHash": "1995724f",
+      "afterGameplayHash": "1995724f",
+      "identicalFields": [
+        "run",
+        "waves",
+        "counts",
+        "windows",
+        "admissions",
+        "population",
+        "all recorded nearest20 actor IDs/archetypes/positions"
+      ],
+      "run": {
+        "level": "L4",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 301.95,
+        "deaths": 6,
+        "kills": 29,
+        "damageTaken": 714.6666666666654,
+        "failures": {
+          "player-died": 6
+        },
+        "objectiveTimeline": [
+          {
+            "id": "ride",
+            "t": 30.483333333333334
+          },
+          {
+            "id": "quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "id": "hold",
+            "t": 211.41666666666666
+          },
+          {
+            "id": "hide",
+            "t": 293.78333333333336
+          },
+          {
+            "id": "bar",
+            "t": 294.95
+          },
+          {
+            "id": "wait",
+            "t": 301.95
+          }
+        ],
+        "furthestObjective": "wait",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 567,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "peak": 120,
+      "mixChecks": 10715,
+      "beforeMinimumLooks": 3,
+      "afterMinimumLooks": 4,
+      "firstFourLookSample": {
+        "tick": 7580,
+        "looks": 4,
+        "actors": [
+          {
+            "id": 430,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.618710500328007,
+            "z": -3.2154361804710674
+          },
+          {
+            "id": 441,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -18.219986091139617,
+            "z": -2.421013928342845
+          },
+          {
+            "id": 440,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.131487016775708,
+            "z": -2.4204301822434715
+          },
+          {
+            "id": 443,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.607328550696803,
+            "z": -1.8321326321255949
+          },
+          {
+            "id": 436,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -18.4676290218934,
+            "z": -1.4829644438353375
+          },
+          {
+            "id": 361,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -20.025943411450605,
+            "z": -1.9509913137799706
+          },
+          {
+            "id": 442,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -18.670080611541955,
+            "z": -0.39603549200127375
+          },
+          {
+            "id": 435,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -20.71278953488517,
+            "z": -1.2368703508462247
+          },
+          {
+            "id": 372,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -17.431545857018143,
+            "z": -0.35366840202187166
+          },
+          {
+            "id": 392,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.599210475499667,
+            "z": -6.773196376835639
+          },
+          {
+            "id": 343,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -15.601127459068062,
+            "z": -5.635158765900102
+          },
+          {
+            "id": 432,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -21.03138202408108,
+            "z": -0.377667419236506
+          },
+          {
+            "id": 438,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.307192274079057,
+            "z": 0.573241785296591
+          },
+          {
+            "id": 434,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -19.253637161053124,
+            "z": -7.617553282820976
+          },
+          {
+            "id": 387,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.441633997370676,
+            "z": 0.28632957233695855
+          },
+          {
+            "id": 360,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -15.654720995283478,
+            "z": -0.17791347724989076
+          },
+          {
+            "id": 410,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -16.357983008396815,
+            "z": -7.520891768856445
+          },
+          {
+            "id": 453,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.889535377745897,
+            "z": -0.05701797851740203
+          },
+          {
+            "id": 409,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -18.570635730298694,
+            "z": -8.215119712568029
+          },
+          {
+            "id": 337,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -14.381805908005068,
+            "z": -6.173423992474115
+          }
+        ]
+      }
+    }
+  ]
+}

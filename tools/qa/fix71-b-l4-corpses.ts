@@ -45,7 +45,10 @@ try{
      if(!worstRendered||top>worstRendered.top)worstRendered={id:body.id,x:mw[0]*im[o+12]+mw[4]*im[o+13]+mw[8]*im[o+14]+mw[12],y:ty,z:mw[2]*im[o+12]+mw[6]*im[o+13]+mw[10]*im[o+14]+mw[14],top,mesh:mesh.name,vertices:positions.count};
     }
    }
-   return{tick:w.tick,phase:s.phase,warSeconds:s.warAt?(w.tick-s.warAt)/60:0,actualTier:w.infected!.director.tier,renderTier:g.view.getState().quality,backend:g.view.getState().backend,audit,layoutEnvelopeTopM:worstLayout?.top??0,maxRenderedTopM:worstRendered?.top??0,frozenBodies:frozenIds.size,worst:worstRendered??worstLayout,player:{...w.entities.get(1)!.transform},deaths:w.missions!.state.stats.deaths,descendAt:s.descendAt};
+   const player=w.entities.get(1)!.transform,near=w.infected!.active.filter(e=>e.health.current>0&&!e.hidden&&!e.pendingAdmission&&!e.corpse).sort((a,b)=>Math.hypot(a.transform.x-player.x,a.transform.z-player.z)-Math.hypot(b.transform.x-player.x,b.transform.z-player.z)).slice(0,20);
+   const models=new Map<string,number>();for(const e of near){const model=e.infected!.model??e.appearance?.asset??e.infected!.variant;models.set(model,(models.get(model)??0)+1);}
+   const renderedLookBatches=g.view.getState().crowd?.batches.filter(b=>b.instances>0).map(b=>({id:b.id,lod:b.lod,instances:b.instances}))??[];
+   return{tick:w.tick,phase:s.phase,warSeconds:s.warAt?(w.tick-s.warAt)/60:0,actualTier:w.infected!.director.tier,renderTier:g.view.getState().quality,backend:g.view.getState().backend,audit,layoutEnvelopeTopM:worstLayout?.top??0,maxRenderedTopM:worstRendered?.top??0,frozenBodies:frozenIds.size,worst:worstRendered??worstLayout,nearest20Looks:{count:near.length,models:Object.fromEntries(models)},renderedLookBatches,player:{...player},deaths:w.missions!.state.stats.deaths,descendAt:s.descendAt};
   });samples.push(sample);
   assert.equal(sample.actualTier,tier);assert.equal(sample.renderTier,tier);
   if(sample.audit.count>20)assert(sample.frozenBodies>0&&sample.maxRenderedTopM>0,'retained frozen vertices must be measured');

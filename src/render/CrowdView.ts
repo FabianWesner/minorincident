@@ -7,7 +7,7 @@ import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { isMega } from '../data/megaPresentation';
 import { regularInfectedModels } from '../data/crowdAppearance';
-import { l4InfectedArchetypes, l4InfectedLooks } from '../data/l4';
+import { l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks } from '../data/l4';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
@@ -148,7 +148,7 @@ export class CrowdView extends Group {
     const nativeAssets = new Set(infectedDefinitions.map(d => d.asset));
     const variants = manifest.filter(a => isCrowdVariant(a, nativeAssets));
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && !e.civilian.pet && e.civilian.model ? [e.civilian.model] : []));
-    if (this.world.scenario === 'L4') for (const model of l4InfectedLooks) if (model.startsWith('npc.')) models.add(model);
+    if (this.world.scenario === 'L4') for (const model of [...l4InfectedLooks, ...l4FirefighterLooks]) if (model.startsWith('npc.')) models.add(model);
     const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];
     const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
     // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
@@ -165,7 +165,7 @@ export class CrowdView extends Group {
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     // L4 sprinters always wear a shared soldier/civilian/suit skin.
     // Their unused default batch need not delay the level's loading card.
-    if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter'), ...l4InfectedLooks]) l1Roles.add(model);
+    if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter'), ...l4InfectedLooks, ...l4FirefighterLooks]) l1Roles.add(model);
     // Register the later shielded subway responder in the streamed cast plan.
     if (this.world.scenario === 'L6') l1Roles.add('infected.riot');
     // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook

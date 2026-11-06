@@ -3,7 +3,7 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4InfectedArchetypes, l4InfectedLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
@@ -923,8 +923,11 @@ export class LevelFourWar {
     // before it is drawn, and retain the caller's quota if that shift exposed it.
     if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
     if (!this.outsidePerimeter(e.transform)) { ai.release(e); return 0; }
-    if (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter') {
-      e.infected!.model = balancedCrowdModel(l4InfectedLooks, neighbours.map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), at, e.id);
+    // Responder survivors otherwise reduce the late crowd to three uniform bodies.
+    // Vary the firefighter body without changing its archetype or combat properties.
+    const looks = e.archetype === 'infected.firefighter' ? l4FirefighterLooks : e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter' ? l4InfectedLooks : null;
+    if (looks) {
+      e.infected!.model = balancedCrowdModel(looks, neighbours.map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), at, e.id);
     }
     if (e.combat) { e.combat.staggerUntil = world.tick; e.combat.allyResist = l4.war.arrivalAllyResist; }
     return id;

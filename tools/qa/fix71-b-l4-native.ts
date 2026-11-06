@@ -10,7 +10,7 @@ const identity=provenance(),rows=[];
 for(const tier of ['low','high'] as const){
  const campaign=preset('L4-default');campaign.settings.quality=tier;
  const waves:{tick:number;count:number;edges:number[]}[]=[],admissions:unknown[]=[],mix:unknown[]=[],windows:unknown[]=[],population:unknown[]=[];
- let previous:{pend:number[];cursor:number;ids:number;tick:number}|undefined,finalHash='',gap=0,peak=0,lastMix='',mixChecks=0,savedCellar=false;
+ let previous:{pend:number[];cursor:number;ids:number;tick:number}|undefined,finalHash='',gameplayHash='',gap=0,peak=0,lastMix='',mixChecks=0,savedCellar=false;
  const run=await runLevel('L4','complete',1,process.argv.includes('--war-only')?211:undefined,'auto',campaign,undefined,0,{quality:tier,beforeBegin:w=>{
   w.events.on('l4.wave',e=>{if(e.type==='l4.wave'&&w.missions!.state.l4!.phase==='collapse')waves.push({tick:e.tick,count:e.count,edges:[...e.edges]});});
   w.events.on('sim.tick',()=>{
@@ -36,12 +36,12 @@ for(const tier of ['low','high'] as const){
    }
    previous={pend:[...s.pend],cursor:s.collapseEdgeCursor??0,ids:s.collapseIds.length,tick:w.tick};
   },8);
- },beforeDispose:w=>{finalHash=stateHash(w.getState());}});
+ },beforeDispose:w=>{finalHash=stateHash(w.getState());const gameplay=structuredClone(w.getState());for(const e of gameplay.entities)if(e.infected)delete e.infected.model;gameplayHash=stateHash(gameplay);}});
  const counts=waves.map(wave=>({tick:wave.tick,expectedPerEdge:wave.count/wave.edges.length,actual:Object.fromEntries(wave.edges.map(edge=>[edge,(admissions as {tick:number;edge:number;count:number}[]).filter(a=>a.edge===edge&&a.tick>=wave.tick&&a.tick<wave.tick+540).reduce((n,a)=>n+a.count,0)]))}));
  const path='docs/reports/fix71-b/L4-13-native.json.gz';
  const control=existsSync(path)?JSON.parse(gunzipSync(readFileSync(path)).toString()):null;
  const canonicalHash=control?.sourceHash===identity.sourceHash?control.rows.find((r:{tier:string})=>r.tier===tier)?.finalHash:null;
  if(canonicalHash)assert.equal(finalHash,canonicalHash,'full-rate observer must preserve the canonical final state');
- const row={tier,run,finalHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix,population};rows.push(row);mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/l4-native-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,rows:[row]})));console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
+ const row={tier,run,finalHash,gameplayHash,canonicalHash,peak,waves,counts,windows,admissions,mixChecks,mix,population};rows.push(row);mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/l4-native-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,rows:[row]})));console.log(JSON.stringify({tier,completed:run.completed,hash:finalHash,gameplayHash,canonicalHash,peak,firstWindow:counts[0],minimumLooks:Math.min(...(mix as {looks:number}[]).map(r=>r.looks)),mixChecks}));
 }
 assert.equal(provenance().sourceHash,identity.sourceHash,'sources must remain fixed during observation');mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync('test-results/fix71-b/l4-native.json.gz',gzipSync(JSON.stringify({...identity,rows})));
