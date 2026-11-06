@@ -1,0 +1,499 @@
+{
+  "row": "L6-12",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "37a2370e99e647a801c3688bd9f049007ec405b561063868ea94cb686c109397",
+  "ledger": "docs/reports/sweep-b/L6-northgate.json",
+  "ledgerSha256": "e97b825ff46792700514a05254c6fe6fb8e0191c6196a5b9d262dd9bbd0fede6",
+  "observation": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
+  "rows": [
+    {
+      "tier": "low",
+      "gateAt": 2,
+      "gate": {
+        "kind": "barricade",
+        "archetype": "l6.service-gate",
+        "faction": "environment",
+        "transform": {
+          "x": 258,
+          "z": 15.9,
+          "y": 3.9,
+          "yaw": 0
+        },
+        "health": {
+          "current": 10000,
+          "max": 10000
+        },
+        "interactable": {
+          "kind": "barricade",
+          "radius": 1.6,
+          "holdTime": 2,
+          "instant": false,
+          "interruptOnDamage": true,
+          "progress": 0,
+          "completed": false,
+          "enabled": false,
+          "hint": "",
+          "label": "Repair",
+          "key": null,
+          "requires": [],
+          "open": false,
+          "barricaded": false,
+          "fuel": 0,
+          "powered": false,
+          "interruptedAt": -1,
+          "cycle": 0
+        },
+        "id": 73,
+        "barricade": {
+          "slot": {
+            "id": "l6-night-exit",
+            "groupId": "l6-exit",
+            "a": {
+              "x": 258,
+              "z": 13.75
+            },
+            "b": {
+              "x": 258,
+              "z": 18.05
+            },
+            "height": 2.5,
+            "initialHp": 10000
+          },
+          "coverage": 1,
+          "props": [],
+          "intact": true,
+          "hitTick": -60,
+          "breaks": 0
+        },
+        "combat": {
+          "radius": 2.1500000000000004,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        }
+      },
+      "gateWalls": [
+        {
+          "type": "world.blocker.changed",
+          "tick": 2,
+          "id": 73,
+          "blocked": true,
+          "wall": {
+            "x": 258,
+            "z": 15.9,
+            "y": 1.25,
+            "halfY": 1.25,
+            "halfX": 0.35,
+            "halfZ": 2.5000000000000004,
+            "entityId": 73
+          }
+        }
+      ],
+      "open": {
+        "before": {
+          "x": 255.5,
+          "y": 4.62,
+          "z": 15.9,
+          "yaw": 0.3205919885488634
+        },
+        "requested": {
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        "movement": {
+          "x": 6,
+          "y": -0.01500188559293747,
+          "z": 0
+        },
+        "crossed": true
+      },
+      "closed": {
+        "before": {
+          "x": 255.5,
+          "y": 4.62,
+          "z": 15.9,
+          "yaw": 0.3205919885488634
+        },
+        "requested": {
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        "movement": {
+          "x": 6,
+          "y": -0.01500188559293747,
+          "z": 0
+        },
+        "crossed": true
+      },
+      "roster": [
+        {
+          "id": 16,
+          "status": "out"
+        },
+        {
+          "id": 17,
+          "status": "out"
+        },
+        {
+          "id": 18,
+          "status": "out"
+        },
+        {
+          "id": 19,
+          "status": "out"
+        },
+        {
+          "id": 20,
+          "status": "out"
+        },
+        {
+          "id": 21,
+          "status": "out"
+        },
+        {
+          "id": 22,
+          "status": "out"
+        },
+        {
+          "id": 23,
+          "status": "out"
+        },
+        {
+          "id": 24,
+          "status": "out"
+        },
+        {
+          "id": 25,
+          "status": "out"
+        },
+        {
+          "id": 26,
+          "status": "out"
+        },
+        {
+          "id": 27,
+          "status": "out"
+        },
+        {
+          "id": 28,
+          "status": "out"
+        },
+        {
+          "id": 29,
+          "status": "out"
+        },
+        {
+          "id": 30,
+          "status": "out"
+        },
+        {
+          "id": 31,
+          "status": "out"
+        },
+        {
+          "id": 32,
+          "status": "out"
+        },
+        {
+          "id": 33,
+          "status": "out"
+        },
+        {
+          "id": 34,
+          "status": "out"
+        },
+        {
+          "id": 35,
+          "status": "out"
+        },
+        {
+          "id": 36,
+          "status": "out"
+        },
+        {
+          "id": 37,
+          "status": "out"
+        },
+        {
+          "id": 38,
+          "status": "out"
+        },
+        {
+          "id": 39,
+          "status": "out"
+        },
+        {
+          "id": 40,
+          "status": "out"
+        },
+        {
+          "id": 41,
+          "status": "out"
+        },
+        {
+          "id": 42,
+          "status": "out"
+        },
+        {
+          "id": 43,
+          "status": "out"
+        },
+        {
+          "id": 44,
+          "status": "out"
+        }
+      ],
+      "result": null
+    },
+    {
+      "tier": "high",
+      "gateAt": 2,
+      "gate": {
+        "kind": "barricade",
+        "archetype": "l6.service-gate",
+        "faction": "environment",
+        "transform": {
+          "x": 258,
+          "z": 15.9,
+          "y": 3.9,
+          "yaw": 0
+        },
+        "health": {
+          "current": 10000,
+          "max": 10000
+        },
+        "interactable": {
+          "kind": "barricade",
+          "radius": 1.6,
+          "holdTime": 2,
+          "instant": false,
+          "interruptOnDamage": true,
+          "progress": 0,
+          "completed": false,
+          "enabled": false,
+          "hint": "",
+          "label": "Repair",
+          "key": null,
+          "requires": [],
+          "open": false,
+          "barricaded": false,
+          "fuel": 0,
+          "powered": false,
+          "interruptedAt": -1,
+          "cycle": 0
+        },
+        "id": 73,
+        "barricade": {
+          "slot": {
+            "id": "l6-night-exit",
+            "groupId": "l6-exit",
+            "a": {
+              "x": 258,
+              "z": 13.75
+            },
+            "b": {
+              "x": 258,
+              "z": 18.05
+            },
+            "height": 2.5,
+            "initialHp": 10000
+          },
+          "coverage": 1,
+          "props": [],
+          "intact": true,
+          "hitTick": -60,
+          "breaks": 0
+        },
+        "combat": {
+          "radius": 2.1500000000000004,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        }
+      },
+      "gateWalls": [
+        {
+          "type": "world.blocker.changed",
+          "tick": 2,
+          "id": 73,
+          "blocked": true,
+          "wall": {
+            "x": 258,
+            "z": 15.9,
+            "y": 1.25,
+            "halfY": 1.25,
+            "halfX": 0.35,
+            "halfZ": 2.5000000000000004,
+            "entityId": 73
+          }
+        }
+      ],
+      "open": {
+        "before": {
+          "x": 255.5,
+          "y": 4.62,
+          "z": 15.9,
+          "yaw": 0.3205919885488634
+        },
+        "requested": {
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        "movement": {
+          "x": 6,
+          "y": -0.01500188559293747,
+          "z": 0
+        },
+        "crossed": true
+      },
+      "closed": {
+        "before": {
+          "x": 255.5,
+          "y": 4.62,
+          "z": 15.9,
+          "yaw": 0.3205919885488634
+        },
+        "requested": {
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        "movement": {
+          "x": 6,
+          "y": -0.01500188559293747,
+          "z": 0
+        },
+        "crossed": true
+      },
+      "roster": [
+        {
+          "id": 16,
+          "status": "out"
+        },
+        {
+          "id": 17,
+          "status": "out"
+        },
+        {
+          "id": 18,
+          "status": "out"
+        },
+        {
+          "id": 19,
+          "status": "out"
+        },
+        {
+          "id": 20,
+          "status": "out"
+        },
+        {
+          "id": 21,
+          "status": "out"
+        },
+        {
+          "id": 22,
+          "status": "out"
+        },
+        {
+          "id": 23,
+          "status": "out"
+        },
+        {
+          "id": 24,
+          "status": "out"
+        },
+        {
+          "id": 25,
+          "status": "out"
+        },
+        {
+          "id": 26,
+          "status": "out"
+        },
+        {
+          "id": 27,
+          "status": "out"
+        },
+        {
+          "id": 28,
+          "status": "out"
+        },
+        {
+          "id": 29,
+          "status": "out"
+        },
+        {
+          "id": 30,
+          "status": "out"
+        },
+        {
+          "id": 31,
+          "status": "out"
+        },
+        {
+          "id": 32,
+          "status": "out"
+        },
+        {
+          "id": 33,
+          "status": "out"
+        },
+        {
+          "id": 34,
+          "status": "out"
+        },
+        {
+          "id": 35,
+          "status": "out"
+        },
+        {
+          "id": 36,
+          "status": "out"
+        },
+        {
+          "id": 37,
+          "status": "out"
+        },
+        {
+          "id": 38,
+          "status": "out"
+        },
+        {
+          "id": 39,
+          "status": "out"
+        },
+        {
+          "id": 40,
+          "status": "out"
+        },
+        {
+          "id": 41,
+          "status": "out"
+        },
+        {
+          "id": 42,
+          "status": "out"
+        },
+        {
+          "id": 43,
+          "status": "out"
+        },
+        {
+          "id": 44,
+          "status": "out"
+        }
+      ],
+      "result": null
+    }
+  ]
+}
