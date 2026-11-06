@@ -84,7 +84,7 @@ export class LevelFourWar {
     // Low's opening needs living pressure now. Keep the later street quotas
     // pending, reserving their capacity once the collapse actually starts.
     const streets = this.low && s.phase !== 'collapse' ? 0 : this.streetReserve();
-    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets;
+    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets + this.spearheadNeed();
     // A bitten human already owns a future slot; scripted emergence must count
     // it just as the ordinary spawn director does (otherwise streets deadlock).
     let turning = 0; for (const e of this.world.entities.iterate()) if (e.infection && !e.infected) turning++;
@@ -92,6 +92,33 @@ export class LevelFourWar {
     // Pending authored cohorts keep their quotas; only free living capacity can
     // be reserved. A recovering body never creates extra low-tier capacity.
     ai.director.reserved = this.low ? Math.min(wanted, Math.max(0, ai.director.cap - ai.director.count - turning)) : wanted;
+  }
+  /** fix69-r: slots still owed to the first three bodies of a freshly opened breach while its perimeter group is queued.
+   * Like L6's announced cohorts, this spearhead outranks other emergence for the next free slots (the cap is unchanged). */
+  private spearheadNeed(): number {
+    const s = this.s;
+    if (!s.perimeterPending || !(s.phase === 'war' || s.phase === 'collapse' && !this.low)) return 0;
+    let need = 0;
+    for (const side of ['west', 'north', 'south'] as const) { const b = s.breaches?.[side]; if (b?.openAt) need += Math.max(0, 3 - (b.arrivals ?? 0)); }
+    return need;
+  }
+  /** fix69-r: a breach still without its spearhead two seconds after opening at a full cap retires distant, off-screen,
+   * idle infected (never Alphas or scripted/authored arrivals) for it, as L6 does for its announced cohorts. */
+  private retireIdleForSpearhead(fresh: readonly ('west' | 'north' | 'south')[]): void {
+    const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
+    if (!fresh.some(side => world.tick - s.breaches![side]!.openAt >= ticks(2))) return;
+    const capacity = ai.director.cap - this.spearheadNeed();
+    if (ai.director.count + ai.director.pendingTurns <= capacity) return;
+    const authored = new Set<number>([...s.alphaIds, ...s.emergedIds, ...s.collapseIds]);
+    for (const e of [...ai.active]) {
+      if (ai.director.count + ai.director.pendingTurns <= capacity) break;
+      const b = e.infected;
+      if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach ||
+        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
+        e.archetype === 'infected.alpha' || dist(e.transform, player) <= 25 || !ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
+      ai.release(e);
+    }
+    this.reserveSlots();
   }
   private get low(): boolean { return this.infected.director.tier === 'low'; }
   /** Legacy convoy riders have an explicit owner in the existing seated/roster state. */
@@ -1024,6 +1051,7 @@ export class LevelFourWar {
     // A new breach gets its first small cohort even when an older gap has
     // saturated the courier's corpse field. It uses the existing pending quota.
     const fresh = (['west', 'north', 'south'] as const).filter(side => s.breaches?.[side]?.openAt && (s.breaches[side]!.arrivals ?? 0) < 3);
+    if (fresh.length && s.perimeterPending) this.retireIdleForSpearhead(fresh);
     // Supplemental pressure waits once this part of the plaza is saturated
     // with permanent bodies. Authored street waves still arrive; moving to a
     // fresh flank resumes the queued cohorts instead of building a new carpet.
@@ -1088,11 +1116,13 @@ export class LevelFourWar {
       // that press the courier (`l4.war.spearhead`).
       const breach = source.side ? s.breaches?.[source.side] : undefined, spearhead = !!breach && (breach.arrivals ?? 0) < 3
         && Object.values(s.breaches ?? {}).some(other => other && other !== breach && other.openAt && other.openAt < breach.openAt);
-      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, false, this.headroom(), false, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
+      // fix69-r: the first three bodies of an open breach use the slots reserveSlots() holds for them.
+      const owed = !!breach && (breach.arrivals ?? 0) < 3;
+      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, false, this.headroom(), owed, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
       if (!id) continue;
       released.set(source.k, (released.get(source.k) ?? 0) + 1);
       admitted++; s.perimeterPending--; s.emergedIds.push(id); s.origin[id] = l4Emergence.length + source.k;
-      if (breach) breach.arrivals = (breach.arrivals ?? 0) + 1;
+      if (breach) { breach.arrivals = (breach.arrivals ?? 0) + 1; if (owed) this.reserveSlots(); }
       // Breach cohorts press the courier; the street waves and Alphas engage
       // the army. A recycled entity ID must not decide a cohort's assignment.
       const target = world.entities.get(1)!;
