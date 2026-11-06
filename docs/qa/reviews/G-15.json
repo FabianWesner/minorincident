@@ -1,0 +1,32 @@
+{
+  "row": "G-15",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "af6e0748c4aa433a251b26f037efa18eb14421e9",
+  "clauses": [
+    {
+      "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
+      "verdict": "FAIL",
+      "note": "Physical WASD/mouse: no ground-click displacement, no moveTarget; all24 bat/handgun/rocket attack directions match pointer aim. Pointer grace ends at28th sampled tick (floating-point endpoint). Drawn body remains71.1degrees away from walking direction at46ticks/0.767s after release, independently in bat/handgun both qualities. This exceeds literal walking-facing exception, caused by separate6rad/s presentation turn."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-15-controls.json.gz",
+      "sha256": "9f490b4070d36ee16b11fa6afce7719c21d02922230be2150a6ad1116aef205b",
+      "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-15-summary.json",
+      "sha256": "8010fcfc8ab51b19631de1f329a21aaa8d6765b854f9eb2447376bc23c9687f0",
+      "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-15-captures.json",
+      "sha256": "4b09c35287b19b0dcea8e72c31576e46de9a7cd3a73076188a34e8ce0fa2c367",
+      "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
+    }
+  ],
+  "notes": "No criteria, input grace or presentation turn rates changed. Raw captures deleted after review. Discarded harness receipts are explicitly separate."
+}

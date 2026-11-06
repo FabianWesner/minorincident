@@ -27,3 +27,5 @@ G-24: fresh shared Alpha/zoo health-bar matrix PASS (four backend/quality cells;
 G-09: measured FAIL. Authored L4 hold suppresses the ring (`waypoint=false`), persisting beyond2s at both qualities and requested zooms1/1.5. Other objective starts remain open.
 
 G-07: named L7 perimeter/L2 fire-engine/L8 canopy fixtures rerun at low/high and zoom0.5/1.5: all12 cells show the heroine, visible share1.0. All captures reviewed. Full physical near-fence/horde/corpse occlusion coverage remains open.
+
+G-15: physical representative melee/handgun/rocket direction and no-click-to-move checks pass. Measured FAIL against literal facing rule: rendered return remains71.1° off travel at0.767s after release despite pointer grace ending.30 captures inspected; invalid harness iterations archived separately.
