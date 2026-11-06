@@ -15,3 +15,5 @@ G-25 evidence: [L4 low](G-25-L4-low.json), [L4 high](G-25-L4-high.json), [verifi
 Baseline console batch paused safely between routes before game fixes: nine complete level/tier cells (eight WebGPU, L3 high WebGL2), plus the mortal L4 high run and two settings probes, all with zero console/page errors. 193 generated raw images were inspected and deleted; see per-cell capture manifests. These are source `095bc361…` baseline receipts, not final-source G-25 closure. The final registered matrix still needs all 20 WebGL2 level/tier cells.
 
 G-13: current high Dale pace fails (93.59% search, 94.58% metro). Exact intentional far-follower waiting passes: 0.748% low, 0% high; both read-only traces match canonical state hashes and medians. One pace-floor trial was reverted after high pace regressed to88.43% and Mia turned in both tiers. See [diagnosis](G-13-diagnosis.json) and [rejected trial](G13-after/REJECTED.json).
+
+G-08: fixed active L4 minimap waypoint and routed distance; verified low/high show real cellar distance79m with no route pin. [Diagnosis](G-08-diagnosis.json). Whole-row destination trajectory coverage remains open.

@@ -1,0 +1,13 @@
+{
+  "row": "G-08",
+  "result": "L4 route-steering defect fixed; whole global row remains NOT CHECKED pending every action-point trajectory/HUD comparison.",
+  "cause": "Active Hud still called cellarDistance(nextTurn), unlike MissionUI which already disabled route steering. It rendered next-turn minimap point and summed path distance.",
+  "change": "Mirror destination-only behavior: suppress route pin and use Euclidean destination distance.",
+  "before": "High baseline315/317m; verified low316/318m vs real78\u201379m.",
+  "after": "Four physical movement poses, low/high WebGL2, route pin absent, displayed79m equals rounded real distance, destination ring remains at authored cellar. Zero errors.",
+  "limitations": [
+    "Controlled authored checkpoint setup includes objective skips; not full route proof.",
+    "A rebuild interrupted second baseline high setup; retained as harness error, excluded from game conclusions.",
+    "Native whole-group refresh and final physical routes running."
+  ]
+}
