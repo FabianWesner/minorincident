@@ -53,20 +53,12 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
     state.rootX = x; state.rootZ = z; state.rootClear = vehicleClear(x, z);
     // A body falling off a hull does not need a route from its roof.
     if (state.rootClear && nav && !startsOnVehicle) {
-      const clearance = Math.min(.3, e.combat?.radius ?? .3);
-      // A clear segment reaches the root without any sliding. Avoid dozens
-      // of movement substeps (and boxed coordinates) for open-floor roots.
-      // Require a clear start too: embedded bodies retain move's escape rules.
-      state.query.x = x; state.query.z = z;
-      if (nav.clear(e.transform.x, e.transform.z, clearance) && nav.visible(e.transform, state.query, clearance)) state.rootClear = true;
-      else {
-        const swept = state.swept; swept.x = e.transform.x; swept.z = e.transform.z;
-        nav.move(swept, x - swept.x, z - swept.z, clearance);
-        const errorX = Math.abs(swept.x - x), errorZ = Math.abs(swept.z - z);
-        // This inner square is strictly inside the legacy 1 cm circle.
-        // Preserve the exact hypot comparison along its boundary.
-        state.rootClear = errorX <= .005 && errorZ <= .005 || errorX <= .01 && errorZ <= .01 && Math.hypot(errorX, errorZ) <= .01;
-      }
+      const swept = state.swept; swept.x = e.transform.x; swept.z = e.transform.z;
+      nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
+      const errorX = Math.abs(swept.x - x), errorZ = Math.abs(swept.z - z);
+      // This inner square is strictly inside the legacy 1 cm circle.
+      // Preserve the exact hypot comparison along its boundary.
+      state.rootClear = errorX <= .005 && errorZ <= .005 || errorX <= .01 && errorZ <= .01 && Math.hypot(errorX, errorZ) <= .01;
     }
     state.rootFloor = NaN;
   }
