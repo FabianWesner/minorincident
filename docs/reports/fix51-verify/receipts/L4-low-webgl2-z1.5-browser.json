@@ -1085,6 +1085,28 @@
       },
       "target": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review.",
       "receipt": "docs/reports/sweep-b/L4-14-proof.json"
+    },
+    {
+      "id": "L4-17",
+      "clause": "actual renderer corpse pile lift counterexample",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "low",
+        "tick": 12300,
+        "audit": {
+          "count": 214,
+          "sunkPairs": 0,
+          "heapPairs": 609,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 1.0000000000000024,
+          "maxLiftM": 1.7599999999999998,
+          "courierClear": true
+        }
+      },
+      "target": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout.",
+      "receipt": "docs/reports/sweep-b/L4-17-proof.json"
     }
   ],
   "observations": {

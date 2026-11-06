@@ -1,0 +1,37 @@
+{
+  "row": "L4-17",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "37a2370e99e647a801c3688bd9f049007ec405b561063868ea94cb686c109397",
+  "ledger": "docs/reports/sweep-b/L4-render-ledger.json.gz",
+  "ledgerSha256": "c5a78a159a045fb81f5edce0941c595089c711887848613693a01a9b503a40df",
+  "observation": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout.",
+  "rows": [
+    {
+      "tier": "low",
+      "tick": 12300,
+      "audit": {
+        "count": 214,
+        "sunkPairs": 0,
+        "heapPairs": 609,
+        "repeatedPairs": 0,
+        "maxDisplacementM": 1.0000000000000024,
+        "maxLiftM": 1.7599999999999998,
+        "courierClear": true
+      }
+    },
+    {
+      "tier": "high",
+      "tick": 13290,
+      "audit": {
+        "count": 268,
+        "sunkPairs": 0,
+        "heapPairs": 825,
+        "repeatedPairs": 0,
+        "maxDisplacementM": 1.000000000000001,
+        "maxLiftM": 2.8600000000000003,
+        "courierClear": true
+      }
+    }
+  ]
+}
