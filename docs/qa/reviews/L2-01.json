@@ -1,52 +1,32 @@
 {
   "row": "L2-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "41fc13d0e539db4a7a65566c230fd087005ef381",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "9394cb0bf543f06155ed369ce96865dc35905ee8",
   "clauses": [
     {
-      "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20\u201330 s; crew at the truck \u2264 8 s later; 4 civilians on the 2 benches.",
+      "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
       "verdict": "PASS",
-      "note": "All12 fresh WebGL2/WebGPU low/high actualzoom0.5/1/1.5 opening frames personally inspected. Four distinct civilians visibly seated on two benches at zoom1 and1.5 in every renderer/tier; tight0.5 crops the bench row and is not used to assert a four-body pixel census. Independent current native calm/clock/bench-identity clauses all pass: zero infected/combat until alarm23.15s; crew at truck1.133s after; four bench identities."
+      "note": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L2-01-native-clauses.json",
-      "sha256": "41895402e12cae12543c276bc31964e9c1d69f5d75b0c84ddda99991cc687429",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
+      "file": "docs/reports/sweep-a3/L2-01-clauses.json",
+      "sha256": "b6ef1de823a77ba13704676284246cfc12326bb2e087da2129b48eb5f5d74ee1",
+      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-opening-ledger.json.gz",
-      "sha256": "7c88e07eaf961a682a8ed6d16892d6484d54b593f5de3574641958618e8d9d38",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
+      "file": "docs/reports/sweep-a3/L2-opening-images.json",
+      "sha256": "527133f5389c61ef51b2939825c75e79a4085e14d11740039e2239ea69dc9306",
+      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-opening-image-review.json",
-      "sha256": "46a88e90c0b2d1b31c9d812eefaf9857057251cbe762595889c6696a60514e2e",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L2-opening-photos.json",
-      "sha256": "9cfadd11e1c8bed77253207e576a6e9512be7eb71fc7be0be1c52353347b2d39",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L2-opening-01.jpg",
-      "sha256": "505495b9c5c81412f2a7f0df255e0ac241cafa2b5d44f6e6af9d018a3d9fdd7b",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L2-opening-02.jpg",
-      "sha256": "6f9e49b405254c301050bbc22da50ad9b025c130aa82a2021d6bbb37fbb25989",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/L2-opening-03.jpg",
-      "sha256": "182cf2b62c2f773fcf1af2a7829ecb460076f715e2d60ce473ae262c702f8e10",
-      "what": "Fresh untouched opening and actual camera zooms in both renderers/qualities, personally inspected four-seat geometry at default/wide framing; independent full native calm/alarm/crew/identity clauses retained."
+      "file": "docs/reports/sweep-a3/L2-opening-ledger.json.gz",
+      "sha256": "d409fc9bad400dca8e4fec9410d931c5b52e1fb57f8a9ee14d52035fc5518c11",
+      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
     }
   ],
-  "notes": "The cropped0.5 seat frames are explicitly scoped; actual four-civilian count is native and both default/wide views visibly confirm two seated pairs. No game change, injected actor, relocation, protection or performance timing."
+  "notes": "Untouched opening seed1, full HUD/follow camera. Shared headless browser pool, no relocation, actor injection, protection or performance timing. All capture hashes verified and each frame personally viewed."
 }

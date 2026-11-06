@@ -1,0 +1,246 @@
+{
+  "row": "L2-01",
+  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "checks": [
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "calm combat and alarm/crew clocks",
+      "value": {
+        "infectedMax": 0,
+        "combatEvents": 0,
+        "alarmS": 23.15,
+        "crewAtTruckS": 1.1333333333333333,
+        "axeActive": true
+      },
+      "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "initial bench civilian identity census (seat geometry unreviewed)",
+      "value": 4,
+      "target": "4 bench civilians",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "calm combat and alarm/crew clocks",
+      "value": {
+        "infectedMax": 0,
+        "combatEvents": 0,
+        "alarmS": 23.15,
+        "crewAtTruckS": 1.1333333333333333,
+        "axeActive": true
+      },
+      "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "initial bench civilian identity census (seat geometry unreviewed)",
+      "value": 4,
+      "target": "4 bench civilians",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "0a2cd1c41637a7f90279a318f1dcf033059831b18388fe613c90a3e082ee847a",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "902deb6029bbb9da3aa07ade5d1196aa6ec33f99a307a317cf373c6c72a7188d",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "1f014fa7692b7854c240277652f3ebd5aea6a8a8d68ab5fd5773f0c41035c327",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "b3c0a27b586175e05decdadc96b28bbbea22484379aec1c80556444b8fba02ba",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "90007362adef3ba98bec2dfced510d8b7af7bbd5f001d4a3cba327a8ce366fe0",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "7bd8032a73ed2bb3fcc6d4972a4844e0bea62860db2e15480a770407ee6ed6fa",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    }
+  ]
+}
