@@ -29,6 +29,6 @@ const receipt = await probeLevel('L10', 'low', 'stationary', identity);
 observer.observe = original;
 const control = JSON.parse(readFileSync('docs/reports/fix51-verify/receipts/L10-low-stationary.json', 'utf8'));
 atomicJson(`docs/reports/fix65-c/L10-03-corridor-${process.argv[2] ?? 'before'}.json`, { ...identity, samples,
-  peak: receipt.observation?.regions['destroyed-corridor']?.regularGroupPeaks, nativeStateHash: receipt.nativeStateHash,
+  peak: receipt.observation?.regions['destroyed-corridor']?.regularGroupPeaks, regions: receipt.observation?.regions, nativeStateHash: receipt.nativeStateHash,
   sameAsControl: control.sourceHash === identity.sourceHash && control.nativeStateHash === receipt.nativeStateHash });
 console.log(samples, receipt.observation?.regions['destroyed-corridor']?.regularGroupPeaks);
