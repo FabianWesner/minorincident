@@ -1,0 +1,284 @@
+{
+  "at": "2026-11-06T01:51:48.268428+00:00",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "goalComplete": false,
+  "closedRows": 29,
+  "passRows": 16,
+  "failRows": 13,
+  "openRows": 8,
+  "timeBox": "Brief requires commit/README/handoff at approximately three hours; eight rows remain automatable work.",
+  "runs": [
+    {
+      "command": "npx tsc --noEmit",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "test-results/sweep-b/tsc-final.log"
+    },
+    {
+      "command": "npm run lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "test-results/sweep-b/lint-final.log"
+    },
+    {
+      "command": "npm test -- --maxWorkers=1",
+      "status": "PASS",
+      "exitCode": 0,
+      "passed": 107,
+      "files": 27,
+      "budget": {
+        "name": "test",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 43,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "node",
+          "node_modules/vitest/vitest.mjs",
+          "run",
+          "--project",
+          "default",
+          "--configLoader",
+          "runner",
+          "--maxWorkers=1"
+        ],
+        "seconds": 135.516519417,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-11-06T01:18:38.654Z"
+      },
+      "log": "test-results/sweep-b/test-final.log"
+    },
+    {
+      "command": "npm run qa:accept -- --level L4 --reuse --skip-browser",
+      "status": "FAIL/NOT CHECKED retained",
+      "exitCode": 1,
+      "tiers": [
+        "low",
+        "high"
+      ],
+      "log": "test-results/sweep-b/L4-final.log",
+      "method": "Reuse source-matching fresh native/fixture/checkpoint receipts; all fixture/checkpoint errors zero; checkpoint controls identical."
+    },
+    {
+      "command": "npm run qa:accept -- --level L5 --reuse --skip-browser",
+      "status": "FAIL/NOT CHECKED retained",
+      "exitCode": 1,
+      "tiers": [
+        "low",
+        "high"
+      ],
+      "log": "test-results/sweep-b/L5-final.log",
+      "method": "Reuse source-matching fresh native/fixture/checkpoint receipts; all fixture/checkpoint errors zero; checkpoint controls identical."
+    },
+    {
+      "command": "npm run qa:accept -- --level L6 --reuse --skip-browser",
+      "status": "FAIL/NOT CHECKED retained",
+      "exitCode": 1,
+      "tiers": [
+        "low",
+        "high"
+      ],
+      "log": "test-results/sweep-b/L6-final.log",
+      "method": "Reuse source-matching fresh native/fixture/checkpoint receipts; all fixture/checkpoint errors zero; checkpoint controls identical."
+    }
+  ],
+  "threatAttempts": [
+    {
+      "command": "npm run qa:threat",
+      "attempt": 1,
+      "status": "FAIL",
+      "outerExitCode": 1,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 43,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts"
+        ],
+        "seconds": 601.577421125,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.6 s, over the 600 s budget"
+        ],
+        "at": "2026-11-06T01:38:46.101Z"
+      },
+      "log": "test-results/sweep-b/threat-attempt-1.log"
+    },
+    {
+      "command": "npm run qa:threat",
+      "attempt": 2,
+      "status": "FAIL",
+      "outerExitCode": 1,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 43,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts"
+        ],
+        "seconds": 600.992172959,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.0 s, over the 600 s budget"
+        ],
+        "at": "2026-11-06T01:51:29.466Z"
+      },
+      "log": "test-results/sweep-b/threat-attempt-2.log"
+    }
+  ],
+  "threatQualified": false,
+  "environment": "No other owned QA/browser work during either threat attempt. Other lanes had native acceptance/browser jobs; no globally quiet machine claim and no contention causality claim.",
+  "nativeControls": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "bb345403d53b9975b8791c5f1a4527cf1a1a485cac0e8f68930d9ec5a9c15cfa",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "1a99e716",
+      "generatedAt": "2026-11-05T23:28:01.909Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "c2111f410bad8133759677b4074820f49448359813769f4f78f3de46c31b4d3d",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "6f55579b",
+      "generatedAt": "2026-11-05T23:31:09.632Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "db7cf0854e3d5937c6c558a0a6649371601f8ea1b1f73d97f8424c6fbe58f40f",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "41e92b1f",
+      "generatedAt": "2026-11-05T23:41:08.647Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "f3e1e9abd297cd878561ac56000a12bf98aa4d9a31a6f8bd680bab1b4e25c0a9",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "5493dad2",
+      "generatedAt": "2026-11-05T23:41:38.652Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "755b7b22077441d6d7830670a4fafb6cd5c397feeb441331c9ba0667ad335b4b",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "9f2436f8",
+      "generatedAt": "2026-11-05T23:43:19.301Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "57be6f07d03eca45f8ee9961d92b52fe06a9fe22c85004378324ab1cc0034dea",
+      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+      "nativeStateHash": "fd135572",
+      "generatedAt": "2026-11-05T23:43:29.256Z"
+    }
+  ],
+  "evidenceAudit": {
+    "file": "docs/reports/sweep-b/review-evidence-audit.json",
+    "sha256": "62416d28e3a92498766d8b60d5f0d4634d2cf181df0528ff4255376d36811ee8",
+    "entries": 66,
+    "errors": []
+  },
+  "captureAudit": {
+    "generatedReviewedDeleted": 1011,
+    "remainingOwnRawCaptureJpegs": 0
+  },
+  "logs": [
+    {
+      "file": "test-results/sweep-b/tsc-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "test-results/sweep-b/lint-final.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "file": "test-results/sweep-b/test-final.log",
+      "sha256": "149d8b088cd3626a9a285ebfdce184294346fad8c5e367fa53e3ed35bdc3fdb9"
+    },
+    {
+      "file": "test-results/sweep-b/test-concurrent.log",
+      "sha256": "53517a06786f5e94cf3e59c60ce839a2e691c51cd73fc0897fefec943e387cff"
+    },
+    {
+      "file": "test-results/sweep-b/L4-final.log",
+      "sha256": "d0a699775ab404acdd30a5f25d831a8004989e36dd61647416834206d004c9cf"
+    },
+    {
+      "file": "test-results/sweep-b/L5-final.log",
+      "sha256": "3af32a76a88aa157a3e2b3c885f1b9ec14a7dc07b22502c2f7c4b12dcf061dfd"
+    },
+    {
+      "file": "test-results/sweep-b/L6-final.log",
+      "sha256": "fba077d6cfad12a306eb3ab3d306862d98dc0324a9e5c30b0d40b4d5720105aa"
+    },
+    {
+      "file": "test-results/sweep-b/threat-attempt-1.log",
+      "sha256": "6e845cc810660d369d64aa777d54ee7768b93d0f5ac3b0aa0058c937141c76bc"
+    },
+    {
+      "file": "test-results/sweep-b/threat-attempt-1-budget.json",
+      "sha256": "ffcb4291739ca401bbe251d803edd848969f72a1bac3074b4d5e74fe3f4277c5"
+    },
+    {
+      "file": "test-results/sweep-b/threat-attempt-2.log",
+      "sha256": "7114467ba14a7277e558ab3712249473314fc345fcfe8bfc762d6a19bda10762"
+    },
+    {
+      "file": "test-results/sweep-b/threat-attempt-2-budget.json",
+      "sha256": "37d1abd82c11d00224a33541350284611838f55dc67da8dc4369c7856a5d94d4"
+    },
+    {
+      "file": "test-results/sweep-b/threat-environment.log",
+      "sha256": "ed15fb0fa54765dc06a02bd8f3d9b0e60b1515a26d88e317b5119eb201a3430e"
+    },
+    {
+      "file": "test-results/timings/test.json",
+      "sha256": "ef5e8bbeb749b001222db68e63b277562f433d0e333aa72dadcbb7c38c4fd163"
+    }
+  ],
+  "logArchive": {
+    "file": "docs/reports/sweep-b/validation-logs.json.gz",
+    "sha256": "31eb604c379af1354f86e08201bc76882fa93c7a0f61452f04de7d15f222ec2b",
+    "format": "gzip JSON with original UTF-8 logs and per-file SHA-256"
+  }
+}
