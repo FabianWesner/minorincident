@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:11:53.324Z",
+  "generatedAt": "2026-11-06T04:13:28.955Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-calm-browser.json"
     }
   ],
   "globals": [
@@ -2786,15 +2800,17 @@
     },
     {
       "id": "L8-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); low/stationary native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); high/complete native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); high/stationary native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); low/stationary native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); high/complete native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); high/stationary native calm marker and infected attack event state (HUD text requires browser): {\"ticks\":3599,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target 3600 ticks ±1; no marker; zero combat events; PASS); low/real-input-webgl2 carried real-input 60-second objective-free DOM and marker audit: {\"completed\":true,\"consolePass\":true,\"samples\":120,\"firstTick\":0,\"lastCalmTick\":3573,\"maxGapTicks\":34,\"breach\":{\"elapsedMs\":65130.69999999998,\"tick\":3600,\"text\":\"Bring the survivors to the armored vehicle and board · 97 m\",\"pin\":true,\"marker\":true,\"breached\":true},\"inputPath\":\"docs/reports/fix51-r10c/L7-L8-carried-low-input.json\",\"reviewPath\":\"docs/reports/fix51-r10c/L7-L8-carried-low/review.json\"… (full values in JSON) (target physical L7→L8 campaign; sampled HUD text/pin/world-marker absent before tick3600 and appear at tick3600; native every-tick ledger separately requires zero scripted combat; PASS); high/real-input-webgl2 carried real-input 60-second objective-free DOM and marker audit: {\"completed\":true,\"consolePass\":true,\"samples\":121,\"firstTick\":0,\"lastCalmTick\":3589,\"maxGapTicks\":33,\"breach\":{\"elapsedMs\":64397.5,\"tick\":3600,\"text\":\"Bring the survivors to the armored vehicle and board · 97 m\",\"pin\":true,\"marker\":true,\"breached\":true},\"inputPath\":\"docs/reports/fix51-r10c/L7-L8-carried-high-input.json\",\"reviewPath\":\"docs/reports/fix51-r10c/L7-L8-carried-high/review.json\"} (target physical L7→L8 campaign; sampled HUD text/pin/world-marker absent before tick3600 and appear at tick3600; native every-tick ledger separately requires zero scripted combat; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json",
+        "docs/reports/fix51-verify/receipts/L8-high-calm-browser.json"
       ],
       "expected": "Exactly 60 active sim seconds without objective/waypoint/scripted attack.",
       "checks": [
@@ -2861,6 +2877,62 @@
           },
           "target": "3600 ticks ±1; no marker; zero combat events",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        },
+        {
+          "id": "L8-02",
+          "clause": "carried real-input 60-second objective-free DOM and marker audit",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "completed": true,
+            "consolePass": true,
+            "samples": 120,
+            "firstTick": 0,
+            "lastCalmTick": 3573,
+            "maxGapTicks": 34,
+            "breach": {
+              "elapsedMs": 65130.69999999998,
+              "tick": 3600,
+              "text": "Bring the survivors to the armored vehicle and board · 97 m",
+              "pin": true,
+              "marker": true,
+              "breached": true
+            },
+            "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
+          },
+          "target": "physical L7→L8 campaign; sampled HUD text/pin/world-marker absent before tick3600 and appear at tick3600; native every-tick ledger separately requires zero scripted combat",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-02",
+          "clause": "carried real-input 60-second objective-free DOM and marker audit",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "completed": true,
+            "consolePass": true,
+            "samples": 121,
+            "firstTick": 0,
+            "lastCalmTick": 3589,
+            "maxGapTicks": 33,
+            "breach": {
+              "elapsedMs": 64397.5,
+              "tick": 3600,
+              "text": "Bring the survivors to the armored vehicle and board · 97 m",
+              "pin": true,
+              "marker": true,
+              "breached": true
+            },
+            "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-high-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json"
+          },
+          "target": "physical L7→L8 campaign; sampled HUD text/pin/world-marker absent before tick3600 and appear at tick3600; native every-tick ledger separately requires zero scripted combat",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-calm-browser.json",
+          "level": "L8"
         }
       ],
       "historical": {
@@ -2871,7 +2943,7 @@
         "evidence": [],
         "method": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack."
       },
-      "remaining": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L8-03",

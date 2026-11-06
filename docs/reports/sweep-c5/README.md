@@ -8,6 +8,8 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 |---|---|
 | L7-04 | existing current PASS |
 | L7-10 | existing current PASS |
+| L7-05 | current native PASS; historical FAIL retained pending fresh exact-criterion review |
+| L8-02 | current PASS; fresh physical low/high handover, tick3600 breach, all75 captures reviewed; eight coverage controls reject faults |
 | L8-06 | requalified current source; breach attacks 5.24/min, first attack 1.97 s, 100% reachability |
 | L9-08 | existing current PASS |
 | L10-01 | existing current PASS |
@@ -19,14 +21,13 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 
 ## Still open rows
 
-These are the current `qa:accept` row statuses. `FAIL` rows remain open; passing a native subcheck does not override an outstanding PO or full criterion clause.
+These are the `qa:accept` currentStatus values. The separate status field preserves historical failures until fresh exact-criterion review; it must not be mistaken for a new measured failure.
 
 | Row | Status | Required next work / current finding |
 |---|---|---|
 | L7-01 | NOT CHECKED | Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured. |
 | L7-02 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier). |
 | L7-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance. |
-| L7-05 | FAIL | Native combat rate passes; PO findings/signoff remain open. |
 | L7-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep. |
 | L7-07 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter "Group n/n" correct. |
 | L7-08 | NOT CHECKED | NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it. |
@@ -34,7 +35,6 @@ These are the current `qa:accept` row statuses. `FAIL` rows remain open; passing
 | L7-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge. |
 | L7-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1. |
 | L8-01 | NOT CHECKED | NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups. |
-| L8-02 | NOT CHECKED | NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack. |
 | L8-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. |
 | L8-04 | NOT CHECKED | Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses. |
 | L8-05 | NOT CHECKED | NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak. |
@@ -45,7 +45,7 @@ These are the current `qa:accept` row statuses. `FAIL` rows remain open; passing
 | L8-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus "is it stunning?" pass. |
 | L9-01 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. |
 | L9-02 | NOT CHECKED | NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas. |
-| L9-03 | FAIL | Current report remains FAIL. Compare on-camera/drawn infected body samples against player x/z intervals on all prescribed routes at both tiers; resolve road-presence finding. |
+| L9-03 | NOT CHECKED | Historical road-presence FAIL is retained. Current source still needs all prescribed physical driving routes and camera-body interval evidence at both tiers. |
 | L9-04 | NOT CHECKED | NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers. |
 | L9-05 | NOT CHECKED | NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash. |
 | L9-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. |
@@ -78,4 +78,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open rows: 37. Current PASS rows listed above: 10. No game code was changed. Perf work was not performed.
+Open current rows: 35. Current PASS rows listed above: 12. Historical FAIL requalification for L7-05 is also outstanding. No game code was changed. Perf work was not performed.

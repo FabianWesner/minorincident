@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L8",
   "tier": "low",
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "fixtureHash": "1f2fad545ae014c52bf010d08894aa294bff902b1b1aaebdc33529fe9a585c77",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "3cb2bad133a94cfdee494279008723a8b6d7f704fa6c4245fd40dd1736ef432e",
   "errors": [],
   "checks": [
     {
@@ -15,12 +15,12 @@
       "value": {
         "completed": true,
         "consolePass": true,
-        "samples": 119,
+        "samples": 120,
         "firstTick": 0,
-        "lastCalmTick": 3583,
-        "maxGapTicks": 31,
+        "lastCalmTick": 3573,
+        "maxGapTicks": 34,
         "breach": {
-          "elapsedMs": 60780.899999999994,
+          "elapsedMs": 65130.69999999998,
           "tick": 3600,
           "text": "Bring the survivors to the armored vehicle and board · 97 m",
           "pin": true,
@@ -35,7 +35,7 @@
     }
   ],
   "observations": {
-    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+    "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
     "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-low-input.json",
     "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json"
   }
