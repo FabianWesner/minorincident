@@ -29,3 +29,5 @@ G-09: measured FAIL. Authored L4 hold suppresses the ring (`waypoint=false`), pe
 G-07: named L7 perimeter/L2 fire-engine/L8 canopy fixtures rerun at low/high and zoom0.5/1.5: all12 cells show the heroine, visible share1.0. All captures reviewed. Full physical near-fence/horde/corpse occlusion coverage remains open.
 
 G-15: physical representative melee/handgun/rocket direction and no-click-to-move checks pass. Measured FAIL against literal facing rule: rendered return remains71.1° off travel at0.767s after release despite pointer grace ending.30 captures inspected; invalid harness iterations archived separately.
+
+G-20: measured common-finish FAIL inL7/L9 both tiers: immediate transition with ongoing chase, no run-out/protection.14 other controlled cells show300ticks. L5 controlled spawn hits its cap; natural final-edge confirmation remains open.

@@ -1,0 +1,22 @@
+{
+  "row": "G-20",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "4b7b48aee485fb75eb65d33ce901b5d5a36498a5",
+  "clauses": [
+    {
+      "clause": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
+      "verdict": "FAIL",
+      "note": "Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-20-runout.json",
+      "sha256": "7baee8979188050947f855a6fbab585f5e874e590aedae13ffbbd504fe043a23",
+      "what": "18 controlled native terminal receipts, exact0/300tick transition and protection values; L5 cap errors retained, not passed."
+    }
+  ],
+  "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage."
+}
