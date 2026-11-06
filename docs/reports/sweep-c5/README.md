@@ -8,7 +8,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 |---|---|
 | L7-04 | existing current PASS |
 | L7-10 | existing current PASS |
-| L7-05 | current native PASS; historical FAIL retained pending fresh exact-criterion review |
+| L7-05 | current PASS; fresh exact-criterion review closes historical failure; all14 low/high complete/stationary checks pass |
 | L8-01 | current PASS; actual low1/high4 roster, full HP, unchanged arsenal and selected rocket; eleven semantic fault controls reject |
 | L8-02 | current PASS; fresh physical low/high handover, tick3600 breach, all75 captures reviewed; eight coverage controls reject faults |
 | L8-06 | requalified current source; breach attacks 5.24/min, first attack 1.97 s, 100% reachability |
@@ -78,4 +78,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 34. Current PASS rows listed above: 13. Historical FAIL requalification for L7-05 is also outstanding. No game code was changed. Perf work was not performed.
+Open current rows: 34. Current PASS rows listed above: 13. No game code was changed. Perf work was not performed.
