@@ -5,9 +5,9 @@
   "policy": "complete",
   "seed": 1,
   "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
-  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "revision": "198d6d4d7054e30a81b4beabbaeeb879abba97d5",
-  "generatedAt": "2026-11-06T02:45:52.588Z",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "4780957f82cf3039f08d0384d48578b143b66864",
+  "generatedAt": "2026-11-06T03:11:03.516Z",
   "run": {
     "level": "L3",
     "policy": "complete",
@@ -39902,5 +39902,27 @@
     ]
   },
   "nativeStateHash": "2dd047cd",
-  "error": null
+  "error": null,
+  "l3Army": {
+    "seeds": [
+      {
+        "seed": 1,
+        "valid": true,
+        "army": 3
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "army": 0
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "army": 0
+      }
+    ],
+    "measured": 3,
+    "within": 2,
+    "pass": true
+  }
 }

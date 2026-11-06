@@ -2,10 +2,10 @@
   "version": 2,
   "level": "L3",
   "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
-  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T02:51:30.839Z",
+  "generatedAt": "2026-11-06T03:17:04.649Z",
   "policies": [
     {
       "tier": "low",
@@ -5002,7 +5002,7 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete squad remaining at army arrival: 3 (target 0 ≤ value ≤ 2; FAIL); low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":61,\"within3to6\":52,\"minM\":3.3743159578041504,\"medianM\":4.641046439137541,\"maxM\":7.979372309970731},{\"id\":31,\"samples\":64,\"within3to6\":57,\"minM\":3.031278834127319,\"medianM\":4.602980653375515,\"maxM\":6.646062242187602},{\"id\":32,\"samples\":64,\"within3to6\":47,\"minM\":4.042283110234969,\"medianM\":5.522313377143898,\"maxM\":8.513094164480933},{\"id\":33,\"samples\":64,\"within3to6\":52,\"minM\":3.… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex fix64-a): Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":61,\"within3to6\":52,\"minM\":3.3743159578041504,\"medianM\":4.641046439137541,\"maxM\":7.979372309970731},{\"id\":31,\"samples\":64,\"within3to6\":57,\"minM\":3.031278834127319,\"medianM\":4.602980653375515,\"maxM\":6.646062242187602},{\"id\":32,\"samples\":64,\"within3to6\":47,\"minM\":4.042283110234969,\"medianM\":5.522313377143898,\"maxM\":8.513094164480933},{\"id\":33,\"samples\":64,\"within3to6\":52,\"minM\":3.… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex fix64-a): Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -5030,13 +5030,34 @@
         },
         {
           "id": "L3-06",
-          "clause": "squad remaining at army arrival",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
           "level": "L3",
           "tier": "low",
           "policy": "complete",
-          "status": "FAIL",
-          "value": 3,
-          "target": "0 ≤ value ≤ 2",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 3
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 2,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -5069,13 +5090,34 @@
         },
         {
           "id": "L3-06",
-          "clause": "squad remaining at army arrival",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
           "level": "L3",
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 0,
-          "target": "0 ≤ value ≤ 2",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
