@@ -1,0 +1,21 @@
+{
+  "row": "L5-03",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "f5a14d6086dee4368b2ad375a33acb95d36db113",
+  "clauses": [
+    {
+      "clause": "**Infected: \u2265 5\u00d7 the 11-01 count, as singles/pairs (no group > 3, no horde), spread over all streets** \u2192 target \u2265 90 placed (high) / \u2265 60 (low) (tune; measured 18 on low). PO: \"Nr can be 5x higher than it is. Like in L3. No hordes, just singles ones here and there, but many of them.\"",
+      "verdict": "PASS",
+      "note": "Both tiers: actual initial living infected100low/150high exceed unchanged row minimum60/90. Deterministic placement replay reconciles every admitted ID to its accepted authored cohort; every requested/admitted centre matches exactly (maximum shift0m), no authored cohort exceeds2 bodies. Every one of8 authored row bands and11 column bands contains admitted living infected; full transforms/IDs/cohorts retained. Bands use nearest authored centreline, avoiding an invented road width. This initial-placement verdict does not interpret the later pursuing crowd as an initial spawn group."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L5-census.json",
+      "sha256": "8661a7868bdf5beb884dfc932f189fd6772343f551ce6353496f7520c5a44d92",
+      "what": "Both tiers: actual initial living infected100low/150high exceed unchanged row minimum60/90. Deterministic placement replay reconciles every admitted ID to its accepted authored cohort; every requested/admitted centre matches exactly (maximum shift0m), no authored cohort exceeds2 bodies. Every one of8 authored row bands and11 column bands contains admitted living infected; full transforms/IDs/cohorts retained. Bands use nearest authored centreline, avoiding an invented road width. This initial-placement verdict does not interpret the later pursuing crowd as an initial spawn group."
+    }
+  ]
+}

@@ -677,6 +677,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     { clause: 'uninterrupted standing bar interaction with E continuously false', policy: 'controlled-fixture' },
     ...['actual cellar entrant roster', 'decoded low-pass battle audible after barring', 'actual same-basement L5 handover', 'reviewed visible companion in cellar'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
   ]],
+  ['L5-03', [{ clause: 'actual initial infected positions accepted cohorts and all street bands', policy: 'controlled-fixture' }]],
   ['L5-13', [{ clause: 'zero-survivor ordinary route and rescued result', policy: 'controlled-fixture' }]],
   ['L5-11', [{ clause: 'reviewed heroine colour in fog and bus hiding-place readability', policy: 'real-input-webgl2' }]],
   ['L5-05', [
