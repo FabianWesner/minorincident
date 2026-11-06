@@ -3,7 +3,7 @@
   "status": "FAIL",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "13a083168e523193b35a165e1a2f60931c9aea94",
+  "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
   "clauses": [
     {
       "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed \u2265 0.95\u00d7 the group median (tune); time the player stands waiting for one follower > 10 m behind \u2264 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -46,7 +46,17 @@
       "file": "docs/reports/sweep-g/G13-after/REJECTED.json",
       "sha256": "907d79ac7f2ac1d705d0ee9ac27cdf7a075fde10c5cdfc2eb0742e0058c2e9e4",
       "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
+      "sha256": "f211ff2a536f5f30dd65db270c6d01f5da7f84a8df299ad84b6102777a64b372",
+      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
+      "sha256": "7683795440e9b4c9db5ebb804c2337cf83ef66a609113b398e6bed19a8df5d6b",
+      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
     }
   ],
-  "notes": "Unchanged95% and10% thresholds. This establishes a current whole-row FAIL from L5; all-level follower coverage remains required for any eventual PASS."
+  "notes": "Unchanged95% and10% thresholds. This establishes a current whole-row FAIL from L5; all-level follower coverage remains required for any eventual PASS. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled."
 }
