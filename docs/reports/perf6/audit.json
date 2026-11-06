@@ -1,0 +1,96 @@
+{
+  "result": "PASS: complete coverage and independently recomputed verdicts (performance failures remain)",
+  "rows": 41,
+  "webgpuCells": 20,
+  "webgl2LoadCells": 8,
+  "moments": 13,
+  "nativeTraces": 40,
+  "loadMeasurements": 112,
+  "freshMomentRuns": 8,
+  "nativeMinDurationMs": 60103.20000076294,
+  "sourceUnchanged": true,
+  "initialClockOffsetSamples": [
+    {
+      "trace": "L1 high prod",
+      "index": 0,
+      "ms": -0.9000001907352271
+    },
+    {
+      "trace": "L2 high candidate",
+      "index": 0,
+      "ms": -0.7999992370605469
+    },
+    {
+      "trace": "fresh L1 high prod",
+      "index": 0,
+      "ms": -3.900000000000091
+    },
+    {
+      "trace": "fresh L1 high candidate",
+      "index": 0,
+      "ms": -0.5000001907346814
+    },
+    {
+      "trace": "fresh L1 low prod",
+      "index": 0,
+      "ms": -4.200000190734954
+    },
+    {
+      "trace": "fresh L3 low prod",
+      "index": 0,
+      "ms": -3.399999809264955
+    }
+  ],
+  "failedRows": [
+    {
+      "scope": "WebGPU",
+      "cell": "L5 low",
+      "issues": [
+        "cold load"
+      ]
+    },
+    {
+      "scope": "WebGPU",
+      "cell": "L7 low",
+      "issues": [
+        "warm load"
+      ]
+    },
+    {
+      "scope": "WebGPU",
+      "cell": "L7 high",
+      "issues": [
+        "cold load"
+      ]
+    },
+    {
+      "scope": "WebGPU",
+      "cell": "L10 high",
+      "issues": [
+        "max > PROD+1 frame",
+        "new >=66 ms spike"
+      ]
+    },
+    {
+      "scope": "WebGL2 load",
+      "cell": "L5 low",
+      "issues": [
+        "cold load"
+      ]
+    },
+    {
+      "scope": "WebGL2 load",
+      "cell": "L6 low",
+      "issues": [
+        "cold load"
+      ]
+    },
+    {
+      "scope": "WebGL2 load",
+      "cell": "L10 low",
+      "issues": [
+        "cold load"
+      ]
+    }
+  ]
+}
