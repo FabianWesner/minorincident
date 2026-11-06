@@ -105,7 +105,7 @@ export class DistrictWorld {
         if (!c.id.startsWith(`${p.id}/`) || c.walkable) continue;
         const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
         for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
-          const key = DistrictWorld.groundKey(x, z), bucket = this.wreckRoofs.get(key) ?? []; bucket.push({ bounds: a, placement: p, origin: d.origin }); this.wreckRoofs.set(key, bucket);
+          const key = DistrictWorld.groundKey(x, z), bucket = this.wreckRoofs.get(key) ?? none; bucket.push({ bounds: a, placement: p, origin: d.origin }); this.wreckRoofs.set(key, bucket);
         }
       }
     }
@@ -229,7 +229,7 @@ export class DistrictWorld {
     const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     let height = 0;
     for (const a of this.supports.get(key) ?? none) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
-    for (const roof of this.wreckRoofs.get(key) ?? []) {
+    for (const roof of this.wreckRoofs.get(key) ?? none) {
       const a = roof.bounds;
       if (x < a.min[0] || x > a.max[0] || z < a.min[2] || z > a.max[2]) continue;
       const top = wreckRoofHeight(roof.placement, x - roof.origin[0], z - roof.origin[1]) ?? a.max[1];

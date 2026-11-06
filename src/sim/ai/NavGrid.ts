@@ -172,7 +172,13 @@ export class NavGrid {
     const walls = this.routeBuckets.get(cellX)?.get(cellZ);
     if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
-    if (blockers) for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+    if (blockers) {
+      // Corpse sweeps and ordinary moves have no ignored blocker. Values avoid
+      // allocating an entry pair for every obstacle in every sampled substep.
+      if (ignoreBlocker === undefined) {
+        for (const w of blockers.values()) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+      } else for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+    }
     return true;
   }
   /** Deepest square-footprint overlap (the smaller axis overlap per wall) at a point; Infinity outside the navigation domain. */
@@ -182,7 +188,7 @@ export class NavGrid {
     let deepest = 0;
     const visit = (w: Wall) => { const ox = w.halfX + radius - Math.abs(x - w.x), oz = w.halfZ + radius - Math.abs(z - w.z); if (ox > 0 && oz > 0) deepest = Math.max(deepest, Math.min(ox, oz)); };
     for (const w of this.routeBuckets.get(cellX)?.get(cellZ) ?? []) visit(w);
-    for (const [, w] of this.blockerBuckets.get(cellX)?.get(cellZ) ?? []) visit(w);
+    for (const w of this.blockerBuckets.get(cellX)?.get(cellZ)?.values() ?? []) visit(w);
     return deepest;
   }
   private intersects(w: Wall, x: number, z: number, radius: number): boolean {
@@ -378,7 +384,10 @@ export class NavGrid {
           // Recover using its circular footprint first, retaining the full body radius;
           // shallow contact corrections still use the smallest bounded margin cut.
           rounded = capsule && this.clear(position.x, position.z, radius, true);
-          const fit = rounded ? undefined : marginSteps.find(cut => cut < radius && this.clear(position.x, position.z, radius - cut, capsule));
+          let fit: number | undefined;
+          if (!rounded) for (const cut of marginSteps) {
+            if (cut < radius && this.clear(position.x, position.z, radius - cut, capsule)) { fit = cut; break; }
+          }
           if (rounded || fit !== undefined) { if (fit !== undefined) radius -= fit; rounded = capsule; i--; continue; }
           // fix55-l3: a body shoved deeper than the largest margin cut (the L3 corgi pressed 0.12 m into a kerb blocker by
           // a crowd) refused every step, outward ones included, and stood wedged for good. Accept steps that do not push it

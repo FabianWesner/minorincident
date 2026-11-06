@@ -55,7 +55,10 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
     if (state.rootClear && nav && !startsOnVehicle) {
       const swept = state.swept; swept.x = e.transform.x; swept.z = e.transform.z;
       nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
-      state.rootClear = Math.hypot(swept.x - x, swept.z - z) <= .01;
+      const errorX = Math.abs(swept.x - x), errorZ = Math.abs(swept.z - z);
+      // This inner square is strictly inside the legacy 1 cm circle.
+      // Preserve the exact hypot comparison along its boundary.
+      state.rootClear = errorX <= .005 && errorZ <= .005 || errorX <= .01 && errorZ <= .01 && Math.hypot(errorX, errorZ) <= .01;
     }
     state.rootFloor = NaN;
   }
