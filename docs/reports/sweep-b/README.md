@@ -2,7 +2,7 @@
 
 Base: `1ae35ca575aa5c7a450695c99ccaf270eaffe91f`. Current game-source SHA-256: `aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d`.
 
-**P1 fixed and qualified. Of the 37 assigned acceptance rows, 32 have current verdicts: 17 PASS and 15 measured FAIL. Five remain open. The full sweep goal is incomplete.** The original [work list](work-list.json) and [current row summary](row-summary.json) preserve the exact scope. PASS rows with a P prompt still require the stated PO taste review.
+**P1 fixed and qualified. Of the 37 assigned acceptance rows, 33 have current verdicts: 17 PASS and 16 measured FAIL. Four remain open. The full sweep goal is incomplete.** The original [work list](work-list.json) and [current row summary](row-summary.json) preserve the exact scope. PASS rows with a P prompt still require the stated PO taste review.
 
 ## Corgi P1
 
@@ -39,6 +39,7 @@ Each row has its own verdict commit and exact-criterion review in `docs/qa/revie
 | L4-06 | FAIL | `c588315` | [Review](../../qa/reviews/L4-06.json): low first breach at52.72 s has58 living infected, below60. Sustained post45 s plaza count passes. |
 | L4-07 | FAIL | `e68096d` | [Review](../../qa/reviews/L4-07.json): high complete bounded-path minimum89.19%, below90%; passive pressure clocks pass. |
 | L4-08 | PASS | `eaf9203` | [Alphas](L4-08-proof.json): six/eight actual staggered offscreen admissions, ≥6 directions, three/six actual line attackers. |
+| L4-10 | FAIL | current L4-10 row commit | [Live ally clearance](L4-10-proof.json): forced fuel-truck shell is12.976m from an actual pistol ally low,13.447m high; both native hashes canonical. Actual renderer28-shot wall geometry ledger also retained. |
 | L4-11 | FAIL | `3c715f7` | [Live duels](L4-11-proof.json): courier survives all12 duels, but frontal first-damage→incapacitation takes9.4 s at20 m and12.7 s at26 m, above6 s. |
 | L4-12 | FAIL | `4836e53` | [Review](../../qa/reviews/L4-12.json): actual nearest20 high-tier sample at tick5820 has only three infected looks. |
 | L4-13 | FAIL | `1b2195c` | [Actual admissions](L4-13-proof.json): first nine-second collapse interval admits low0/0/0 against2/edge, high1/1/1 against3/edge; both canonical hashes unchanged. Escape-window and pursuer identities retained without blanket qualification. |
@@ -64,16 +65,15 @@ Each row has its own verdict commit and exact-criterion review in `docs/qa/revie
 | L6-09 | PASS | `bfbf482` | [Gates](L6-09-proof.json): all six tier/gate cells block closed movement/sight, hold five runners9.82 s; actual2 m refusal and persistent fixed ring/prompt boundaries exercised. |
 | L6-11 | FAIL | `0dbc9a9` | [Matched policies](protection.json): ordinary mortal complete saves1/29=3.45%, below60%; evade-only times out, not an invented result. |
 | L6-12 | FAIL | `7d5bce4` | [Northgate](L6-12-proof.json): actual closed blocker spans y0–2.5 below raised exit; production Rapier courier capsule crosses all6 m. Closed visual leaf/night caption separately inspected. |
-| L6-14 | FAIL | current L6-14 row commit | [Actual luminance masks](L6-14-proof.json): elderly infected62 forehead0.246630 exceeds eye peak0.244870 low /0.234644 high; stable repeated native body pixels. This is0.72%/5.11%, not a large subjective readability failure. |
+| L6-14 | FAIL | `d206479` | [Actual luminance masks](L6-14-proof.json): elderly infected62 forehead0.246630 exceeds eye peak0.244870 low /0.234644 high; stable repeated native body pixels. This is0.72%/5.11%, not a large subjective readability failure. |
 
 
 The `7f0a5c5` report fix has an actual [before/after receipt](review-fail-proof.json): fresh measured FAIL reviews on plain S rows were previously ignored. PASS still requires complete objective evidence; no blanket manual-PASS route was introduced. No specs or acceptance targets changed.
 
-## Five rows still open
+## Four rows still open
 
 | Row | What is established | Remaining NEXT |
 | --- | --- | --- |
-| L4-10 | Two actual HMG shooters; tank enters+22 s, actual intervals8–12 s; protected soldier/armed-ally impact clearance≥15 m; helicopter orbit/withdraw ledger. | Observe actual rendered tank muzzle/tracer endpoints against the current barrier wall, not a guessed 2D ray or a fallback muzzle. |
 | L5-06 | Physical caption/edge-call/radar examples; authored/native cue range≤25 m. | Complete no-hidden-ring/arrow/pin inspection and synchronize actual audible call windows with ♪ visibility at both tiers, including >30 m exclusion. |
 | L5-07 | Authored-map tours complete some routes. | Genuine muted screenshot-only discovery, recording every cue read; no coordinates, minimap targets or authored destinations. Existing tours explicitly do not qualify. |
 | L5-09 | Mortal native complete rescues5; [extended contact ledger](L5-09-contact-partial.json) records1,200 s per tier without a terminal evade result; observed uninterrupted bites fit1.5 s. | First actual reach→bite timestamps, a valid evade-only result, and a mortal human-like protection route. Timeouts are not rescue percentages. |
@@ -90,7 +90,7 @@ These gaps remain work, not a human-only blocker. The original ~3-hour handoff w
 
 ## Capture and method audit
 
-All1,181 captures generated by this lane were inspected, hashed and deleted after review. Numbered sheets remain only under ignored `test-results/`; no evidence images are committed. Digests and explicit observations are retained in the capture-review JSONs, including rejected setups. A final search finds zero own raw JPEGs under capture directories.
+All1,187 captures generated by this lane were inspected, hashed and deleted after review. Numbered sheets remain only under ignored `test-results/`; no evidence images are committed. Digests and explicit observations are retained in the capture-review JSONs, including rejected setups. A final search finds zero own raw JPEGs under capture directories.
 
 Physical sweep reviews: [L4:151](L4-capture-review.json), [L5:126](L5-capture-review.json), [L6:185](L6-capture-review.json). Supplements: [L4 current render](L4-render-capture-review.json), [L5 current render](L5-render-capture-review.json), [L6 current render](L6-render-capture-review.json), [actual carried L6 opening](L6-carry-capture-review.json), [matched city pairs](pairs-capture-review.json). Initial Scene Lab setups with unverified initial tier/inherited protection or suspended/muted audio were rejected, inspected and retained separately; corrected L5 opening assertions verify actual100/150 census, protection=false and running/unmuted/unlocked audio. Executed producer source archives preserve exact pre-type-annotation SHA-256 where later optional-field/type-only corrections were needed.
 
@@ -106,7 +106,7 @@ All browser work is headless through the shared pool, at most two owned contexts
 - `npm run qa:accept -- --level L4|L5|L6 --reuse --skip-browser`: whole group refreshed at both tiers on the current source, reusing the fresh canonical native/fixture/checkpoint receipts and current scoped browser evidence. Nonzero exits reflect the retained measured FAIL/NOT CHECKED rows; checkpoint controls agree and fixture errors are zero.
 - `npm run qa:threat`: **FAIL — full gate not qualified**. Two unchanged zero-flag attempts ran alone within this lane. Attempt1 returned watchdog exit124 at601.6 s during L4 high-tier hold; attempt2 returned exit124 at601.0 s. Unrelated lanes continued native acceptance/browser jobs; no quiet-machine or contention-causality claim is made. No flags, budgets or criteria were changed.
 
-All78 file references in the32 current verdict reviews match their recorded SHA-256: [evidence audit](review-evidence-audit.json). Final commands, outcomes, native control hashes and original log digests are retained in [validation manifest](validation.json) and its [compressed log archive](validation-logs.json.gz). No owned check remains running at handoff. The original gate receipts describe the time-box handoff; the continuation below records later work. The five open rows above remain unqualified.
+All84 file references in the33 current verdict reviews match their recorded SHA-256: [evidence audit](review-evidence-audit.json). Final commands, outcomes, native control hashes and original log digests are retained in [validation manifest](validation.json) and its [compressed log archive](validation-logs.json.gz). No owned check remains running at handoff. The original gate receipts describe the time-box handoff; the continuation below records later work. The four open rows above remain unqualified.
 
 ## Goal continuation
 
@@ -117,3 +117,5 @@ L5-09 continuation `4a3d892` retains48 matched contact→bite episodes within1.0
 L6-08 continuation qualifies all original29 identities per tier with unchanged HP/injury flags,58 positive body/pip images and58 individual settled walks, plus actual mortal native group pace. All58 final crops were inspected; all54 pixels in each18×3 pip are present. The58 rejected low-tier captures show staged actors beyond the production x263 evacuation threshold and do not count as missing-bar failures. Every new raw PNG was hashed and removed. [Final capture review](L6-bars-capture-review.json), [first rejection](L6-bars-rejected-review.json), [second rejection](L6-bars-rejected-retry-review.json). No game source changed; no full29-person mortal escape is claimed.
 
 L6-14 continuation closes FAIL through a repeated per-infected brightness counterexample at both actual render tiers. The comparison is against that infected’s own body, not other lamps or the courier. Original actor62 and semantic eye/body masks resolve ten eye pixels; forehead is9.055px from the nearest eye, beyond an excluded2px eye-edge margin. Every masked body pixel repeats bitwise after material restoration. Actual courier2m-ring contrast is21.78:1 low /21.52:1 high with the existing.02 offset; .05 ratios are also recorded. The shelter eye control remains occluded/inconclusive, and other looks are not blanket-qualified. All54 new PNGs (including22 rejected/initial diagnostics) were inspected, hashed and removed; the failed generic infected ID mask was not treated as a game defect. [Final review](L6-readability-capture-review.json), [initial diagnostic](L6-readability-diagnostic-review.json), [ID-mask diagnostic](L6-readability-mask-diagnostic-review.json). No game source changed.
+
+L4-10 continuation closes FAIL through the forced fuel-truck tank shell’s actual live-ally clearance at both tiers: low ally49 at12.97584m, high allies46/61 at14.45115/13.44663m, all visible calm gun-bearing actors with100HP at the event tick. Ordinary mortal complete routes retain both canonical hashes. The source criterion supplies no fuel-shot exemption to the15m rule. Independent protected-courier renderer runs retain28 actual VFX muzzle/tracer endpoints and current wall triangle tests; all26 deliberately crossing concrete controls intersect. No actual centre line intersects concrete/wire; one low line intersects a sign plane, retained without using it as the verdict. All6 camera-only tank frames inspected and deleted after hashing. Typecheck/lint pass; no game source changed. L4 and L6 now have zero incomplete rows.

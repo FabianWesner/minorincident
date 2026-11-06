@@ -1,0 +1,80 @@
+{
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "images": 6,
+  "sheet": "test-results/sweep-b/L4-tank-sheet.jpg",
+  "sheetSha256": "c516894fb992a2f0e5169537909e4a2d449d96a6c48fd566b55416c16b283336",
+  "records": [
+    {
+      "file": "test-results/sweep-b/L4-tank-low/captures/low-shot-1.png",
+      "sha256": "9574d3fcbf8381903554639bb74dca61cb26ce08029e3a4e92e3312a3c87e07b",
+      "tier": "low",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-low/captures/low-shot-2.png",
+      "sha256": "c2e629aad0c6e709f2fa437efebbfd92c2695b633844ae3e6d19892db88c527b",
+      "tier": "low",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-low/captures/low-shot-3.png",
+      "sha256": "d1123b75ab71ac7710d87d2b3c73c6c1f491ff25060725f82b8440991cc0bf7b",
+      "tier": "low",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-high/captures/high-shot-1.png",
+      "sha256": "bf2c884c377ebfb0209049bc2568b72f7875507da2d8a1f10945709089dd2dd8",
+      "tier": "high",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-high/captures/high-shot-2.png",
+      "sha256": "a8666976c8a997ac26ea899bee569fe47aa7493b00159f10e32eef14cb43634d",
+      "tier": "high",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-high/captures/high-shot-3.png",
+      "sha256": "2ecc84d4a7df2bc852fbcd122ad07f6be8155a2e992d05aacd983b15eb270878",
+      "tier": "high",
+      "observation": "Tank body, barrel and current military barrier visible from the camera-only photo. First three shot poses per tier inspected. Single-shot flash/tracer pixels are not claimed clearly visible in each still; actual VFX muzzle/tracer coordinates are recorded at the exact event tick."
+    }
+  ],
+  "ledgers": [
+    {
+      "tier": "low",
+      "file": "docs/reports/sweep-b/L4-tank-low-renderer-ledger.json.gz",
+      "sha256": "a6037f0a32ff1b7f0ebbccac75bbcae1ea9f4a85e3664cbde0ac9b6a7b480793",
+      "shots": 14,
+      "triangleIntersections": [
+        {
+          "tick": 11171,
+          "hits": [
+            {
+              "part": "sign",
+              "instance": 1,
+              "distance": 40.780456978457025,
+              "point": [
+                -22.6818995712704,
+                1.15,
+                -17.399999618530273
+              ],
+              "face": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "file": "docs/reports/sweep-b/L4-tank-high-renderer-ledger.json.gz",
+      "sha256": "053dfa4605bfe46dcf7a2680a129c6f93743853a115abf1eaafa941a35732397",
+      "shots": 14,
+      "triangleIntersections": []
+    }
+  ],
+  "observation": "All6 images inspected: L4 tank remains outside the barrier, cannon oriented over/toward the military line; soldiers, civilians and battle bodies at the line. Exact renderer records show28 tank shots across tiers, each actual VFX muzzle/end, with current triangle tests. No concrete/wire intersections; one low shot intersects the sign plane. This sign fact is retained without using it as the verdict counterexample. Deliberate across-concrete rays intersect in all visible-wall controls. Earlier module-load failure produced no captures/receipt.",
+  "cleanup": "Raw PNGs deleted after inspection and digest verification; ignored sheet retained."
+}

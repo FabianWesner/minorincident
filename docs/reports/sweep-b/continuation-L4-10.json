@@ -1,0 +1,80 @@
+{
+  "row": "L4-10",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "gameChanged": false,
+  "commands": [
+    {
+      "command": "SCENE_PORT=3368 node --import tsx/esm tools/qa/sweep-b-l4-tank.ts low",
+      "exitCode": 1,
+      "reason": "Module fetch failed before evidence; fresh private3389 port used for retry"
+    },
+    {
+      "command": "SCENE_PORT=3389 node --import tsx/esm tools/qa/sweep-b-l4-tank.ts low",
+      "exitCode": 0
+    },
+    {
+      "command": "SCENE_PORT=3389 node --import tsx/esm tools/qa/sweep-b-l4-tank.ts high",
+      "exitCode": 0
+    },
+    {
+      "command": "node --import tsx/esm tools/qa/sweep-b-l4-tank-clearance.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 tools/qa/sweep-b-l4-tank.py",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run qa:accept -- --level L4 --reuse --skip-browser",
+      "exitCode": 1,
+      "reason": "9 measured FAIL/0 NOT CHECKED retained"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    }
+  ],
+  "logs": [
+    {
+      "file": "test-results/sweep-b/L4-tank-low.log",
+      "sha256": "2756abd1a29b40dfcc160bff6bf06db103635a30d6cfdac51b33fa7435d2f5b8",
+      "text": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\npage.evaluate: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:3368/tools/qa/sweep-b-tank-probe.ts\n    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-b/tools/qa/sweep-b-l4-tank.ts:14:22) {\n  log: []\n}\n\nNode.js v26.0.0\n"
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-low-retry.log",
+      "sha256": "09d9645e0d0cec5fe460d5d4e28de3f7f9ce3b0b1cd80d37866cc194b4fd1698",
+      "text": "[scene] starting vite dev on http://127.0.0.1:3389\nlow 4508 war 1\nlow 5191 war 2\nlow 5831 war 3\nlow 6453 war 4\nlow 7046 war 5\nlow 7574 war 6\nlow 8160 war 7\nlow 8847 war 8\nlow 9533 war 9\nlow 10112 war 10\nlow 10599 war 11\nlow 11171 war 12\nlow 11652 war 13\nlow 12702 collapse 14\nlow done 14\n"
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-high.log",
+      "sha256": "172af64694fc453191392252867469226a815a8eb637f17e65a433d5488c7744",
+      "text": "[scene] starting vite dev on http://127.0.0.1:3389\nhigh 4508 war 1\nhigh 5191 war 2\nhigh 5831 war 3\nhigh 6453 war 4\nhigh 7115 war 5\nhigh 7643 war 6\nhigh 8161 war 7\nhigh 8688 war 8\nhigh 9286 war 9\nhigh 9870 war 10\nhigh 10413 war 11\nhigh 10965 war 12\nhigh 11562 war 13\nhigh 12672 collapse 14\nhigh done 14\n"
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-clearance.log",
+      "sha256": "0f5f136d07d5f427d2d811481c1fdc0b33dd7378108d44a2e7225c829cbdf0eb",
+      "text": "low 1a99e716 14\nhigh 6f55579b 16\n"
+    },
+    {
+      "file": "test-results/sweep-b/L4-tank-accept.log",
+      "sha256": "d0920020061f695ede770da0e8c067dfb620ce07301fb4f11247747606773aba",
+      "text": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L4 --reuse --skip-browser\n\n[qa:accept] L4 low/complete: reuse matching receipt\n[qa:accept] L4 low/stationary: reuse matching receipt\n[qa:accept] L4 high/complete: reuse matching receipt\n[qa:accept] L4 high/stationary: reuse matching receipt\n[qa:accept] L4 low/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 high/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4: 9 fresh failing rows; 0 incomplete rows; docs/reports/fix51-verify/L4.json\n"
+    },
+    {
+      "file": "test-results/sweep-b/tank-final-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    {
+      "file": "test-results/sweep-b/tank-final-lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "text": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    }
+  ],
+  "rawCaptureFilesRemaining": 0
+}
