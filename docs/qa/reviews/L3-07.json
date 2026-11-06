@@ -1,37 +1,27 @@
 {
   "row": "L3-07",
   "status": "PASS",
-  "reviewer": "Codex fix64-a",
-  "date": "2026-11-05",
-  "commit": "34fdbead3e54a8e23e401d4d586b53cfdabe1b19",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "6b157d741b8ea3d32eb4762ab1e6b7e06edeebc7",
   "clauses": [
     {
-      "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required \u2014 at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" \u2014 the \u2265 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
+      "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
       "verdict": "PASS",
-      "note": "Both tiers visibly fire during the squad retreat, and exact browser combat.hit events prove positive pistol damage while moving. The mortal full native routes record squad hits during formation-to-segment1-end and player damage0HP low/11HP high. The old zero-hit result discarded targets west ofx-126 even while the squad was retreating through the yard; the PO explicitly allows the squad to be overwhelmed there. No combat rule was weakened."
+      "note": "Personally inspected2 fresh full-size moving pistol-hit frames plus34 uninterrupted route frames. Officers visibly aim/fire at infected in yard and fallback; actual moving hits after fallback at ticks2117low and1959high, source31/30, speed1.4886/1.3208m/s. Exact-current whole-segment mortal fixture records122/31officer hits, damage22/0HP, zero deaths and completion. This combines whole-window damage ledger with visible squad combat; no kill-share target reintroduced."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix64-a/L3-officer-ledger.json",
-      "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
-      "what": "Read-only fresh mortal native shot/hit/loss ledger. High has37 successful squad gunshot rolls in the initial retreat window; excluded witnesses lie west ofx-126, proving the old spatial check missed valid squad combat."
+      "file": "docs/reports/sweep-a3/L3-07-current-ledger.json.gz",
+      "sha256": "c0d74c29aa4ea8801ce92ca52c5324c679b9fd53dfe70647345e512474749d86",
+      "what": "Personally inspected2 fresh full-size moving pistol-hit frames plus34 uninterrupted route frames. Officers visibly aim/fire at infected in yard and fallback; actual moving hits after fallback at ticks2117low and1959high, source31/30, speed1.4886/1.3208m/s. Exact-current whole-segment mortal fixture records122/31officer hits, damage22/0HP, zero deaths and completion. This combines whole-window damage ledger with visible squad combat; no kill-share target reintroduced."
     },
     {
-      "file": "docs/reports/fix64-a/L3-07-browser-review.json",
-      "sha256": "aa063fcbe43c0ad25abb170a34530f8b77481ce66058fc09b85844b917868e5a",
-      "what": "Personally inspected both exact moving-hit frames. Event damageType=bullet, amount12.5, source is active squad, actual production zoom1. The yard camera locks wheel zoom, recorded honestly."
-    },
-    {
-      "file": "docs/reports/fix64-a/L3-07-opening-review.json",
-      "sha256": "a6f71f6788de173a560f68cf8260b9bcabd1dab81e89ccc70a254f5667e044b9",
-      "what": "Personally inspected all7 opening/cover/retreat captures; guns rise and fire amid an increasingly overwhelming living crowd."
-    },
-    {
-      "file": "docs/reports/fix64-a/L3-07-checker-proof.json",
-      "sha256": "0caf1323118e199f1477703a4bd85094bbc6d5982052513f2308d15246d2e858",
-      "what": "Seven boundary/absence controls reject missing/incomplete segment observation, zero gun hits and100HP; kills and later deaths are not required by this row."
+      "file": "docs/reports/sweep-a3/L3-07-current-images.json",
+      "sha256": "7735ce4fcf3b06910736ceea2094c9876ecb39132f6e6d5a37e9eb91dd17faa8",
+      "what": "Personally inspected2 fresh full-size moving pistol-hit frames plus34 uninterrupted route frames. Officers visibly aim/fire at infected in yard and fallback; actual moving hits after fallback at ticks2117low and1959high, source31/30, speed1.4886/1.3208m/s. Exact-current whole-segment mortal fixture records122/31officer hits, damage22/0HP, zero deaths and completion. This combines whole-window damage ledger with visible squad combat; no kill-share target reintroduced."
     }
   ],
-  "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup. Fresh moving-hit browser replay after the L1 cue change retains the same pistol-hit frames and actual locked zoom1; its source hash is current."
+  "notes": "Moving-hit run is ordinary mortal native route; tour captures suppress courier damage and do not qualify damage limit. P: PO to inspect dense muzzle/impact sparkle in attack10s frame."
 }
