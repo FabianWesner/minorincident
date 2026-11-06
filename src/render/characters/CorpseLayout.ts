@@ -34,11 +34,22 @@ function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, 
   return Math.min(pointDistanceSquared(ax, az, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(bx, bz, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(p.ax, p.az, ax, az, bx, bz), pointDistanceSquared(p.bx, p.bz, ax, az, bx, bz));
 }
 const yawDistance = (a: number, b: number) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+const byHeight = (a: RestingPose, b: RestingPose) => a.y - b.y;
 export class CorpseLayout {
   readonly bodies = new Map<number, RestingPose>();
   private readonly spatial = new SpatialHash();
   private readonly neighbors: number[] = [];
   private readonly query = { x: 0, z: 0, r: 5 };
+  // place() can run for hundreds of newly settled bodies in one view update.
+  // Keep its broad-phase scratch storage on the layout instead of allocating
+  // several arrays (and one hull wrapper per vehicle) for every corpse.
+  private readonly hulls: VehicleFootprint[] = [];
+  private readonly nearbyHulls: VehicleFootprint[] = [];
+  private readonly hullScratch: VehicleFootprint[] = [];
+  private readonly carFootprints = new WeakMap<object, VehicleFootprint>();
+  private readonly neighborPoses: RestingPose[] = [];
+  private readonly layerPoses: RestingPose[] = [];
+  private readonly bestScratch = {} as RestingPose;
   private revision = -1;
   private epilogue = false;
   private readonly scriptedVehicles: EntitySnapshot[] = [];
@@ -89,28 +100,44 @@ export class CorpseLayout {
         this.parkedVehicles.push({ x: p.position[0] + district.origin[0], z: p.position[2] + district.origin[1], c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: p.scale[0] || 1, sz: p.scale[2] || 1, floor: p.position[1], boxes: shape.boxes });
       }
     }
-    const hulls = [...this.parkedVehicles];
+    const hulls = this.hulls; hulls.length = 0;
+    for (const parked of this.parkedVehicles) hulls.push(parked);
+    let dynamicIndex = 0;
+    const dynamicHull = (): VehicleFootprint => {
+      let hull = this.hullScratch[dynamicIndex];
+      if (!hull) this.hullScratch[dynamicIndex] = hull = { x: 0, z: 0, c: 1, s: 0, sx: 1, sz: 1, floor: 0, boxes: [] };
+      dynamicIndex++;
+      return hull;
+    };
     for (const entity of this.scriptedVehicles) if (!entity.hidden) {
       const p = entity.transform;
-      hulls.push({ x: p.x, z: p.z, c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: 1, sz: 1, floor: p.y - (entity.traffic || entity.convoy ? .5 : .7), boxes: staticCollision[entity.archetype].boxes });
+      const hull = dynamicHull();
+      hull.x = p.x; hull.z = p.z; hull.c = Math.cos(p.yaw); hull.s = Math.sin(p.yaw); hull.sx = hull.sz = 1;
+      hull.floor = p.y - (entity.traffic || entity.convoy ? .5 : .7); hull.boxes = staticCollision[entity.archetype].boxes; hulls.push(hull);
     }
     for (const car of this.world.vehicles?.cars.values() ?? []) {
       const p = car.entity.transform, def = car.physics.def;
-      hulls.push({ x: p.x, z: p.z, c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: 1, sz: 1, floor: p.y - .7, boxes: [{ min: [-def.length / 2, 0, -def.width / 2], max: [def.length / 2, 0, def.width / 2] }] });
+      let hull = this.carFootprints.get(car);
+      if (!hull) {
+        hull = { x: 0, z: 0, c: 1, s: 0, sx: 1, sz: 1, floor: 0, boxes: [{ min: [-def.length / 2, 0, -def.width / 2], max: [def.length / 2, 0, def.width / 2] }] };
+        this.carFootprints.set(car, hull);
+      }
+      hull.x = p.x; hull.z = p.z; hull.c = Math.cos(p.yaw); hull.s = Math.sin(p.yaw); hull.sx = hull.sz = 1; hull.floor = p.y - .7; hulls.push(hull);
     }
     // A search moves the root at most 6 m; include the whole body and its
     // largest padding too. Test distant hulls once, instead of scanning every
     // parked car in all seven L10 regions for every sampled foot/end point.
     // Preserve hull order: overlapping vehicles retain the same support floor.
     const reach = 6 + Math.max(.15, prone ?? 1.25) + .8 + 1e-6;
-    const nearbyHulls = hulls.filter(h => {
+    const nearbyHulls = this.nearbyHulls; nearbyHulls.length = 0;
+    for (const h of hulls) {
       const dx = e.transform.x - h.x, dz = e.transform.z - h.z;
       const along = dx * h.c - dz * h.s, across = dx * h.s + dz * h.c;
-      return h.boxes.some(b => along >= Math.min(b.min[0] * h.sx, b.max[0] * h.sx) - reach
+      for (const b of h.boxes) if (along >= Math.min(b.min[0] * h.sx, b.max[0] * h.sx) - reach
         && along <= Math.max(b.min[0] * h.sx, b.max[0] * h.sx) + reach
         && across >= Math.min(b.min[2] * h.sz, b.max[2] * h.sz) - reach
-        && across <= Math.max(b.min[2] * h.sz, b.max[2] * h.sz) + reach);
-    });
+        && across <= Math.max(b.min[2] * h.sz, b.max[2] * h.sz) + reach) { nearbyHulls.push(h); break; }
+    }
     const sourceFeet = feet;
     const vehicleFloor = (x: number, z: number, padding = .65): number | undefined => {
       for (const h of nearbyHulls) {
@@ -131,7 +158,9 @@ export class CorpseLayout {
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
     let queriedX = NaN, queriedZ = NaN;
-    const neighbors: RestingPose[] = [], layers: RestingPose[] = [], ownPose = corpsePose(e.id);
+    const neighbors = this.neighborPoses; neighbors.length = 0;
+    const layers = this.layerPoses; layers.length = 0;
+    const ownPose = corpsePose(e.id);
     // The four orientations at one root share its hull, sweep and support.
     // Dense piles search hundreds of roots; repeating these queries per yaw
     // made the zoo's settling waves block the view update.
@@ -181,7 +210,7 @@ export class CorpseLayout {
       }
       // Fill the lowest free layer. Always going above the highest neighbour
       // made a chain of touching feet climb into an artificial body tower.
-      for (const other of layers.sort((a, b) => a.y - b.y)) {
+      for (const other of layers.sort(byHeight)) {
         if (pose.y + height > other.y + .001 && pose.y < other.y + other.height - .001) pose.y = other.y + other.height;
       }
       // Reuse search scratch; only the winning pose needs an owned record.
@@ -203,8 +232,8 @@ export class CorpseLayout {
         for (let turn = 0; turn < 4; turn++) {
           const candidate = evaluate(x, z, initialYaw + turn * 2.399963229728653);
           if (!candidate) continue;
-          if (candidate.y <= feet + .05) { best = { ...candidate }; break; }
-          if (!best || candidate.y < best.y - .001) best = { ...candidate };
+          if (candidate.y <= feet + .05) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; break; }
+          if (!best || candidate.y < best.y - .001) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; }
         }
         if (best && best.y <= feet + .05) break;
       }
@@ -216,7 +245,10 @@ export class CorpseLayout {
       const angle = initialYaw + i * Math.PI * 2 / 80;
       best = evaluate(e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
     }
-    if (!best) best = evaluate(e.transform.x, e.transform.z, initialYaw + .7, false) ?? { ...pose };
-    this.bodies.set(e.id, best); this.spatial.set(e.id, best.x, best.z); return best;
+    if (!best) best = evaluate(e.transform.x, e.transform.z, initialYaw + .7, false) ?? pose;
+    // Retain one stable result for this body; candidate exploration above
+    // reuses bestScratch instead of allocating on every improving root.
+    const placed = { ...best };
+    this.bodies.set(e.id, placed); this.spatial.set(e.id, placed.x, placed.z); return placed;
   }
 }
