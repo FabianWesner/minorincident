@@ -1,35 +1,35 @@
 {
   "row": "L8-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985",
   "clauses": [
     {
-      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
+      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
       "verdict": "PASS",
-      "note": "Current-source low/high complete and stationary native receipts show all 14 clauses PASS. Skilled breach windows are 34.383 s low and 37.5 s high, each with three actual courier windups (5.235 and 4.8 per minute; target ≥4). Passive first attacks occur at 3.817 s in both tiers (target ≤20 s). All four bounded-path reachability samples are 100% (target ≥90%). No clause failed; targets and game source were unchanged."
+      "note": "Requalified against the fresh exact-source low/high complete and stationary native receipts generated 2026-11-06. Low/high complete breach-phase player attack rates are 5.2351/min and 4.8000/min (criterion \u22654/min); first breach attacks at 1.9667 s in both tiers. Stationary first attacks occur 3.8167 s after breach in both tiers. Bounded-path reachability is 100% in all four policies. Current-source clauses pass; no targets, game source, or checker changed."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
-      "sha256": "fc9e1b33d9d04066cc9397e82475062d2a826e88d7b0fdafb8d587974c5bb3b5",
+      "sha256": "560571bbe86b8065e56b29b2b4318a83d6bc85599527259737faa20ec4cfdebc",
       "what": "Current-source low-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
-      "sha256": "ead3e02ab7fb4d94c8240d9421b4fbdbcd20941a229b9b0aebd78f22eeb9e0a7",
+      "sha256": "dea8ba6ccd325080fa3956e7f9ba16c0bf6d9c3aa37056c0edd02090ddfd451e",
       "what": "Current-source low-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-      "sha256": "3108e6abed9ca7a64b786d5118e7c68c8df085074e3a814b88922d8b5089beb2",
+      "sha256": "ea8ac53aeb7540895b4147d67222d1ca42292f267921c2058c0c6ae982d25ca1",
       "what": "Current-source high-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
-      "sha256": "8387aa0a89b593aa3fdff2e04ed6863ae5a46a56682a5fed45afffad13571333",
+      "sha256": "952d354328c53f7fe4388cbf03cd3eb24764d5d6cfe5e896b7a4483a2799d3ee",
       "what": "Current-source high-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
     }
   ],
