@@ -1,0 +1,152 @@
+{
+  "base": "f807c966c610489eb1f8fb4182f164485bd5dc87",
+  "rows": [
+    {
+      "id": "G-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Zero visible defects on the player, the corgi and any vehicle the player uses (clipping, floating parts, detached limbs, pale/transparent heroine in fog, gear boxes). Any finding = **P1**.",
+      "remaining": "NEXT: Review real-input captures for every level at low/high and zoom 0.5/1.5, including every used vehicle and critical occluders; inspect full-size crops of suspected defects."
+    },
+    {
+      "id": "G-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "The player is never fully hidden: camera-side fences, walls, hordes and corpses cut/dither or draw a silhouette (Q-314 alley fence, Q-318 horde).",
+      "remaining": "tools/qa/visual-p1-captures.ts --phase after --backend webgpu --only bounds-l7,vehicle-l2,canopy-l8; full-size critical frame review plus final per-level sheets. NEXT: real-input near-camera fences, horde and corpse occlusion at every critical route pose."
+    },
+    {
+      "id": "G-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
+      "remaining": "Compare HUD arrow, distance and ring with each real destination; distinguish fixed-gate handoffs and Mega intro from player-following markers."
+    },
+    {
+      "id": "G-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+    },
+    {
+      "id": "G-10",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "expected": "Pickups (weapons, medkits, headlamp, rocket) are taken **on approach** (\u2264 1.5 m ground, \u2264 2.2 m shelf), no E/click/standing still. PO: \"You should just take it when I come close to it\".",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-13",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed \u2265 0.95\u00d7 the group median (tune); time the player stands waiting for one follower > 10 m behind \u2264 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "remaining": "Fix measured individual pace failures; measure exact player waiting with one follower>10m behind (current waiting value is only an upper bound)."
+    },
+    {
+      "id": "G-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height \u2264 ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
+      "remaining": "NEXT: Add a read-only permanent-corpse ID/lifetime ledger to the full real-input runs; revisit corpses at level end and review pile height, floating bodies and stretched limbs."
+    },
+    {
+      "id": "G-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+    },
+    {
+      "id": "G-16",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "expected": "The weapon rack at level start offers only the weapons the story has given by that level: L1 none (bat in L1), L2 +axe, L3 +handgun, L4 +MG, L5 +shotgun, L6 none new, L7 +rocket, L8 none, L9 driving, L10 axe only.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-17",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42\u00b0, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
+      "remaining": "Read-only moving-runner pose observer plus inspected final sheet. NEXT: moving low-quality frame strips for every body/variant in wander/chase, including all seven L10 runner variants; inspect feet/legs and require lean <=42 degrees."
+    },
+    {
+      "id": "G-18",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
+      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+    },
+    {
+      "id": "G-19",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Corgi: never damaged, no HP bar, never targeted, never inside geometry or a vehicle hull, inside with the player when a door/shutter closes.",
+      "remaining": "Inspect no corgi HP bar, geometry/hull clearance and inside-door/shutter placement; native target/damage/health samples are measured."
+    },
+    {
+      "id": "G-20",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
+    },
+    {
+      "id": "G-21",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists.",
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists."
+    },
+    {
+      "id": "G-22",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack \u2264 20 s after the announcement (tune).",
+      "remaining": "Fix cited no-contact/late attack cohorts; add bounded paths and validate every announced threat against its actual announcement clock."
+    },
+    {
+      "id": "G-23",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "No geometry that looks meaningful but is not: no walk-through walls/gates (Q-289, Q-307), no dead-end street that looks like the route (Q-291), no untextured placeholder props or black voids at the map edge (Q-282).",
+      "remaining": "NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run."
+    },
+    {
+      "id": "G-24",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or \u2264 15 m); dead ones show none; normal animals none.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-25",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Zero console errors over a full real-input play-through of the level.",
+      "remaining": "Complete physical WASD/mouse playthroughs at both qualities for all10 levels; native completion is not browser console qualification."
+    },
+    {
+      "id": "G-26",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expected": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
+      "remaining": "NEXT: Run current-source character/accessory/held-prop and live-seat Scene Lab matrices for every adult body and routine, comparing actual heights with the heroine; review full-size images."
+    }
+  ]
+}

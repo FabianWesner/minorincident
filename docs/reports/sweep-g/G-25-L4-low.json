@@ -1,0 +1,224 @@
+{
+  "version": 1,
+  "level": "L4",
+  "tier": "low",
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "fixtureHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgpu",
+      "status": "PASS",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-L4-low.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 286,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 9.716666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 1088
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy · 57 m",
+          "tick": 29,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1872,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:09 remaining",
+          "tick": 2287,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 322 m",
+          "tick": 13139,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door · 5 m",
+          "tick": 15272,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.7999999999999998
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.8
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down · 0:07 remaining",
+          "tick": 15416,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L4",
+      "tick": 8175,
+      "x": -22.4,
+      "z": -6.4,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #268 in state chase 5.1 m away has not moved for ~5 s",
+      "captures": [
+        "captures/accept-L4-8175-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach · 1:31 remaining · 15 m"
+    },
+    {
+      "level": "L4",
+      "tick": 8175,
+      "x": -22.4,
+      "z": -6.4,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #270 in state chase 5.1 m away has not moved for ~5 s",
+      "captures": [
+        "captures/accept-L4-8175-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach · 1:31 remaining · 15 m"
+    },
+    {
+      "level": "L4",
+      "tick": 8279,
+      "x": -22.4,
+      "z": -6.4,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #249 in state chase 4.5 m away has not moved for ~5 s",
+      "captures": [
+        "captures/accept-L4-8279-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach · 1:29 remaining · 15 m"
+    },
+    {
+      "level": "L4",
+      "tick": 8540,
+      "x": -20.7,
+      "z": -6.5,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #210 in state chase 5.9 m away has not moved for ~5 s",
+      "captures": [
+        "captures/accept-L4-8540-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach · 1:25 remaining · 16 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}

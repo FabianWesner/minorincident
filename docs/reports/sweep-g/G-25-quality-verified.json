@@ -1,0 +1,138 @@
+{
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "f807c966c610489eb1f8fb4182f164485bd5dc87",
+  "generatedAt": "2026-11-05T23:56:55.353Z",
+  "method": "Fresh isolated pooled WebGPU context; native L4 turn checkpoint; ordinary Escape > Settings quality > Back > Resume. No GPU timing.",
+  "errors": [],
+  "switches": [
+    {
+      "requestedQuality": "low",
+      "before": 88,
+      "tick": 176,
+      "backend": "webgpu",
+      "runtimeQuality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 16.7,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "shadowSize": [
+        1024,
+        1024
+      ],
+      "renderedFrames": 196,
+      "progress": true
+    },
+    {
+      "requestedQuality": "high",
+      "before": 177,
+      "tick": 267,
+      "backend": "webgpu",
+      "runtimeQuality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 16.7,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "shadowSize": [
+        2048,
+        2048
+      ],
+      "renderedFrames": 290,
+      "progress": true
+    },
+    {
+      "requestedQuality": "low",
+      "before": 267,
+      "tick": 355,
+      "backend": "webgpu",
+      "runtimeQuality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 16.7,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "shadowSize": [
+        1024,
+        1024
+      ],
+      "renderedFrames": 382,
+      "progress": true
+    },
+    {
+      "requestedQuality": "high",
+      "before": 355,
+      "tick": 443,
+      "backend": "webgpu",
+      "runtimeQuality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 16.7,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "shadowSize": [
+        2048,
+        2048
+      ],
+      "renderedFrames": 474,
+      "progress": true
+    }
+  ],
+  "captures": [
+    {
+      "path": "test-results/sweep-g/G-25-quality-verified/final.jpg",
+      "sha256": "ef6cf8bd6f77c599cc3866ab2d1f1261cc4229432dc52a65ed18b91948f0a1c2",
+      "observation": "L4 sunlit plaza: courier with teal backpack, packed orange corgi, walking civilians/infected and intact bus; HUD/caption and directional markers visible. No blank canvas in this final frame."
+    }
+  ],
+  "rawReceiptSha256": "1e2baeada92704c1953a8183b252f985952e77aff75920932b5e10e2711a126c"
+}
