@@ -4,7 +4,7 @@ import {readFileSync,writeFileSync,mkdirSync,rmSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {SAVE_KEY,validateSave} from '../../src/sim/progression/Save.ts';
+import {SAVE_KEY,encodeSave,validateSave} from '../../src/sim/progression/Save.ts';
 const [backend,tier,indexText]=process.argv.slice(2),index=Number(indexText);
 assert(['webgpu','webgl2'].includes(backend)&&['low','high'].includes(tier)&&Number.isInteger(index)&&index>0);
 const suffix=backend==='webgl2'?'':`-webgpu-z1.5`,cell=`L10-${tier}${suffix}`;
@@ -13,18 +13,19 @@ const previous=index===1?`test-results/fix51-browser/${cell}/accept-completion.j
 const save=JSON.parse(readFileSync(previous,'utf8')).campaign;
 assert(validateSave(save),'only an actual valid production save may seed Resume');assert(save.cureResume,'unfinished L10 must have a live Resume snapshot');
 mkdirSync(out,{recursive:true});const profile=resolve(out,'profile');mkdirSync(profile,{recursive:true});
-writeFileSync(`${profile}/pool-storage.json`,JSON.stringify({cookies:[],origins:[{origin,localStorage:[{name:SAVE_KEY,value:JSON.stringify(save)}]}]}));
+writeFileSync(`${profile}/pool-storage.json`,JSON.stringify({cookies:[],origins:[{origin,localStorage:[{name:SAVE_KEY,value:encodeSave(save)}]}]}));
 // The original input driver is unchanged. The only injected action at its
 // sample boundary is a normal paused Settings selection, which saves live L10.
 const inputPath=resolve('tools/playtest/session.ts'),source=readFileSync(inputPath,'utf8');
-let code=source.replace(/from '(\.[^']+)'/g,(_all,path)=>`from '${resolve(dirname(inputPath),path)}'`);
+let code=`import { decodeSave } from '${resolve('src/sim/progression/Save.ts')}';\n`+source.replace(/from '(\.[^']+)'/g,(_all,path)=>`from '${resolve(dirname(inputPath),path)}'`);
 const needle='      log({ checkpointYield: e.checkpoint, level: e.level, tick: e.tick, finished: run.finished });';
 assert(code.includes(needle));
 code=code.replace(needle,`      await page.keyboard.press('Escape');
       await page.getByTestId('pause-settings').click();
       await page.getByTestId('setting-quality').selectOption(o.quality);
       await page.getByTestId('settings-back').click();
-      log({ productionResumeSave: await page.evaluate(() => JSON.parse(localStorage.getItem('minor-incident.campaign') ?? '{}').cureResume?.current?.tick) });
+      const persisted = decodeSave(await page.evaluate(() => localStorage.getItem('minor-incident.campaign')));
+      log({ productionResumeSave: persisted.status === 'ok' ? persisted.save.cureResume?.current.tick : null });
 ${needle}`);
 const script=resolve(out,'session.ts');writeFileSync(script,code);
 const options={origin,out:resolve(out),levels:['L10'],quality:tier,zoom:1.5,heroine:'female',entry:'continue',profile,levelMinutes:9,sampleSeconds:480,stopAfterLevel:true,tag:'batch',noSkip:true};
