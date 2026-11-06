@@ -159,7 +159,10 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const required = completeNativeRows.get(source.id);
   const complete = !!required && ['low', 'high'].every(tier => required.every(requirement => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS'))) && checks.every(check => check.status !== 'FAIL');
   const decision = loadReviews(source.id);
-  const reviewCheck = review || source.baseline.status === 'FAIL' ? decision : undefined;
+  // An exact-criterion observed failure remains evidence even before a row has
+  // complete automated coverage. PASS still requires the existing coverage gates.
+  const exactFailure = decision?.status === 'FAIL' && decision.clauses.some(clause => clause.clause === source.expected && clause.verdict === 'FAIL');
+  const reviewCheck = review || source.baseline.status === 'FAIL' || exactFailure ? decision : undefined;
   const freshness = reviewCheck ? reviewFreshness(reviewCheck, source.level) : undefined;
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
   const allReviewPass = !reviewClause || (!!reviewCheck && !!matchingReview && freshness === 'FRESH' && reviewCheck.status === 'PASS' && matchingReview.verdict === 'PASS');
