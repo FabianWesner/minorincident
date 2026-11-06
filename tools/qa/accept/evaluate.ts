@@ -752,6 +752,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['full active assault hold duration', 'capped active infected peak', 'hold player windups per minute', 'hold bounded-path reachable share', 'Mega arena arrival after charge activation', 'persistent Mega identity without scheduled replacement or teleport'].map(clause => ({ clause, policy: 'stationary' })),
   ]],
   ['L10-05', ['all four named checkpoint pickup and snapshot transactions', 'inventory changes alone spawn zero enemies at every weapon approach'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L10-07', [
+    ...['observed ordinary cruise ratio to nominal player run', 'continuous same-ID pursuit without LOS or teleport', 'actual paired roar/impact intervals'].map(clause => ({ clause, policy: 'complete' })),
+    ...['actual centered pulsing band ring without Mega pin', 'actual paired audio gains increase at closer distance'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
+  ]],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),

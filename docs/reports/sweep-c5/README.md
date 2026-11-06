@@ -24,6 +24,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 | L10-10 | existing current PASS |
 | L10-13 | existing current PASS |
 | L10-15 | existing current PASS |
+| L10-07 | current PASS; canonical native pursuit plus actual normal-clock six audio pairs per tier,2.25x near gain, centered pulsing ring/no Mega pin;12 frames reviewed and14 fault controls |
 
 ## Still open rows
 
@@ -54,7 +55,7 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L9-07 | NOT CHECKED | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. |
 | L9-09 | NOT CHECKED | NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries. |
 | L10-03 | FAIL | Same-tick census: low industrial max9<16 and campus33<35 with required species; high industrial15<25; high corridor never has required dogs/Alphas together. Full ledgers and identical native controls retained. |
-| L10-07 | NOT CHECKED | Native pursuit mechanics pass on current source; still needs minimap and audible gain review with real-input capture. |
+
 | L10-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. |
 | L10-09 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state. |
 | L10-11 | FAIL | Fresh 240 s hold: Mega arena entry was 57.78 s low / 56.45 s high, outside the 120–160 s criterion. Continue full assault census and arrival timing; do not close. |
@@ -78,4 +79,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 29. Current PASS rows listed above: 18. No game code was changed. Perf work was not performed.
+Open current rows: 28. Current PASS rows listed above: 19. No game code was changed. Perf work was not performed.

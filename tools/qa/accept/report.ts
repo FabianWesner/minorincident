@@ -117,6 +117,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'L9-02': source.expected,
     'L9-05': source.expected,
     'L9-07': source.expected,
+    'L10-07': source.expected, // Personally reviewed minimap frames supplement pursuit and actual audio graph checks.
     'L10-05': source.expected, // Physical pickup approaches supplement native transaction controls.
     'L1-02': source.expected,
     'L1-04': source.expected,

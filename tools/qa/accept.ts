@@ -1,3 +1,4 @@
+import { l10PresentationReceipts } from './accept/l10-presentation-receipts';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -76,7 +77,7 @@ for (const level of selected) {
   if (level === 'L8') fixtures.push(...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...fix55RocketReceipts(identity.sourceHash, browserHash()));
   if (level === 'L9') fixtures.push(...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'));
-  if (level === 'L10') fixtures.push(...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
+  if (level === 'L10') fixtures.push(...l10PresentationReceipts(identity.sourceHash, browserHash()), ...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
   const report = buildLevelReport(level, receipts, fixtures, checkpointHash());
   atomicJson(join(reportRoot, `${level}.json`), report);
   failed ||= report.policies.some(policy => !!policy.error) || [...report.globals, ...report.rows].some(row => row.status === 'FAIL');
