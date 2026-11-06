@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L10",
-  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
-  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T13:54:15.177Z",
+  "generatedAt": "2026-11-06T20:57:48.858Z",
   "policies": [
     {
       "tier": "low",
@@ -799,15 +799,15 @@
                 "id": "cure-console",
                 "x": 4002,
                 "z": -27,
-                "samples": 3946,
+                "samples": 3876,
                 "maxDisplacement": 0
               },
               {
                 "id": "cure-mega",
                 "x": 4002,
                 "z": -27,
-                "samples": 6469,
-                "maxDisplacement": 353.23895629925937
+                "samples": 5839,
+                "maxDisplacement": 353.307496004972
               }
             ],
             "changes": [
@@ -889,31 +889,31 @@
                 "z": -27
               },
               {
-                "tick": 60725,
+                "tick": 60724,
                 "step": "mega",
                 "marker": "cure-mega",
                 "x": 4002,
                 "z": -27
               },
               {
-                "tick": 67194,
+                "tick": 66563,
                 "step": "release",
                 "marker": "cure-console",
                 "x": 4002,
                 "z": -27
               },
               {
-                "tick": 67301,
+                "tick": 66601,
                 "step": "epilogue",
                 "marker": null
               },
               {
-                "tick": 76301,
+                "tick": 75601,
                 "step": "credits",
                 "marker": null
               },
               {
-                "tick": 77321,
+                "tick": 76621,
                 "step": "",
                 "marker": null
               }
@@ -1143,7 +1143,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1474,7 +1474,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1615,14 +1615,14 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":79740,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":79740,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":77320,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":77320,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":79740,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":79740,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":76620,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":76620,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -1694,13 +1694,13 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 77320,
+            "escortTicks": 76620,
             "stationaryFarTicks": 0,
             "upperBoundPercent": 0,
             "followers": [
               {
                 "id": 99,
-                "escortTicks": 77320,
+                "escortTicks": 76620,
                 "stationaryFarTicks": 0
               }
             ]
@@ -1805,7 +1805,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1880,7 +1880,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2036,7 +2036,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2062,7 +2062,7 @@
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":79741} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":73880} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":77321} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":75210} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":79741} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":73880} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":76621} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":75210} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -2124,7 +2124,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 77321
+            "samples": 76621
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
@@ -2232,7 +2232,7 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1074948646244605},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":1.6121617656089517,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1076650246726945},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.5327114871886103,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
@@ -2528,7 +2528,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce",
+            "snapshotSha256": "581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -2601,7 +2601,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1",
+            "snapshotSha256": "e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -2674,7 +2674,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4",
+            "snapshotSha256": "88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -2747,7 +2747,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b",
+            "snapshotSha256": "86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -2818,7 +2818,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc",
+            "snapshotSha256": "a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -3170,7 +3170,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c",
+            "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -3243,7 +3243,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad",
+            "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -3251,7 +3251,7 @@
                 "x": 2805.040771484375,
                 "y": 0.7099999785423279,
                 "z": 44.92366027832031,
-                "yaw": 3.1074948646244605
+                "yaw": 3.1076650246726945
               },
               "gates": {},
               "racks": {
@@ -3316,7 +3316,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8",
+            "snapshotSha256": "6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -3389,7 +3389,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823",
+            "snapshotSha256": "3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -3460,7 +3460,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f",
+            "snapshotSha256": "a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -3468,7 +3468,7 @@
                 "x": 4002,
                 "y": 0,
                 "z": -27,
-                "yaw": 1.6121617656089517,
+                "yaw": 2.5327114871886103,
                 "radius": 2
               },
               "gates": {},
@@ -3538,7 +3538,7 @@
       "id": "G-22",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete announcement cohort dispersal-assault: {\"seconds\":380.6333333333333,\"spawned\":563,\"firstAttackSeconds\":4.4,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort dispersal-assault: {\"seconds\":239.98333333333332,\"spawned\":75,\"firstAttackSeconds\":4.65,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort dispersal-assault: {\"seconds\":338.26666666666665,\"spawned\":1095,\"firstAttackSeconds\":4.6,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort dispersal-assault: {\"seconds\":239.98333333333332,\"spawned\":166,\"firstAttackSeconds\":4.65,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS)",
+      "value": "low/complete announcement cohort dispersal-assault: {\"seconds\":380.6333333333333,\"spawned\":563,\"firstAttackSeconds\":4.4,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort dispersal-assault: {\"seconds\":239.98333333333332,\"spawned\":75,\"firstAttackSeconds\":4.65,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort dispersal-assault: {\"seconds\":326.6,\"spawned\":1095,\"firstAttackSeconds\":4.6,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort dispersal-assault: {\"seconds\":239.98333333333332,\"spawned\":166,\"firstAttackSeconds\":4.65,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -3588,7 +3588,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 338.26666666666665,
+            "seconds": 326.6,
             "spawned": 1095,
             "firstAttackSeconds": 4.6,
             "flags": []
@@ -3872,7 +3872,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3960,7 +3960,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4048,7 +4048,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
@@ -4545,10 +4545,10 @@
     },
     {
       "id": "L10-03",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7282,\"attacks\":17,\"groupAttacks\":0,\"peak\":13,\"normalPeak\":12,\"regularPeak\":11,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":4,\"residential-fringe-direct-3\":2,\"residential-fringe-direct-4\":2,\"fringe-exit\":4,\"residential-fringe-direct-5\":2}} (target regular human peak 8–16; species/group clauses remain open; PASS); low/complete industrial-area normal local concurrent peak bound: {\"ticks\":9882,\"attacks\":23,\"groupAttacks\":0,\"peak\":24,\"normalPeak\":24,\"regularPeak\":20,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":16,\"depot-alpha\":2,\"depot-exit\":3,\"industrial-area-direct-6\":6}} (target normal infected peak 16–28; species/group clauses remain open; PASS); low/complete military-zone normal local concurrent peak bound: {\"ticks\":10892,\"attacks\":35,\"groupAttacks\":0,\"peak\":36,\"normalPeak\":36,\"regularPeak\":31,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":16,\"military-column\":14,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; PASS); low/complete research-campus normal local concurrent peak bound: {\"ticks\":7654,\"attacks\":55,\"groupAttacks\":0,\"peak\":54,\"normalPeak\":54,\"regularPeak\":49,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":6,\"research-quarantine\":10}} (target normal infected peak 35–55; species/group clauses remain open; PASS); low/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12854,\"attacks\":20,\"groupAttacks\":0,\"peak\":69,\"normalPeak\":69,\"regularPeak\":61,\"dogPeak\":5,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":20,\"corridor-breach\":20,\"corridor-exit\":20}} (target normal infected peak 50–75; species/group clauses remain open; PASS); low/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":17194,\"attacks\":96,\"groupAttacks\":0,\"peak\":94,\"normalPeak\":94,\"regularPeak\":89,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":89}} (target normal infected peak 75–95; species/group clauses remain open; PASS); low/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete research-campus concurrent Alpha peak: 1 (target 1 ≤ value ≤ 2; PASS); low/complete destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); low/complete destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); low/complete military-breach regular group size: 16 (target 10 ≤ value ≤ 20; PASS); low/complete military-column regular group size: 14 (target 10 ≤ value ≤ 20; PASS); low/complete military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/complete corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-breach regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-exit regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7518,\"attacks\":813,\"groupAttacks\":0,\"peak\":18,\"normalPeak\":17,\"regularPeak\":15,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":1}} (target regular human peak 8–16; species/group clauses remain open; NOT CHECKED); low/stationary industrial-area normal local concurrent peak bound: {\"ticks\":10111,\"attacks\":1453,\"groupAttacks\":0,\"peak\":28,\"normalPeak\":27,\"regularPeak\":23,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":5,\"depot-alpha\":2,\"depot-exit\":2,\"industrial-area-direct-6\":1}} (target normal infected peak 16–28; species/group clauses remain open; NOT CHECKED); low/stationary military-zone normal local concurrent peak bound: {\"ticks\":11680,\"attacks\":943,\"groupAttacks\":0,\"peak\":44,\"normalPeak\":44,\"regularPeak\":39,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":16,\"military-column\":13,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; NOT CHECKED); low/stationary research-campus normal local concurrent peak bound: {\"ticks\":7845,\"attacks\":1294,\"groupAttacks\":0,\"peak\":54,\"normalPeak\":54,\"regularPeak\":50,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":1,\"research-quarantine\":2}} (target normal infected peak 35–55; species/group clauses remain open; NOT CHECKED); low/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":13805,\"attacks\":801,\"groupAttacks\":0,\"peak\":74,\"normalPeak\":74,\"regularPeak\":69,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":20}} (target normal infected peak 50–75; species/group clauses remain open; NOT CHECKED); low/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18959,\"attacks\":5137,\"groupAttacks\":0,\"peak\":95,\"normalPeak\":94,\"regularPeak\":87,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":74}} (target normal infected peak 75–95; species/group clauses remain open; NOT CHECKED); low/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); low/stationary destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); low/stationary military-breach regular group size: 16 (target 10 ≤ value ≤ 20; PASS); low/stationary military-column regular group size: 13 (target 10 ≤ value ≤ 20; PASS); low/stationary military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/stationary corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/stationary corridor-breach regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); low/stationary corridor-exit regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); high/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7288,\"attacks\":23,\"groupAttacks\":0,\"peak\":24,\"normalPeak\":23,\"regularPeak\":21,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"residential-fringe-direct-3\":3,\"residential-fringe-direct-4\":3,\"fringe-exit\":6,\"residential-fringe-direct-5\":3}} (target regular human peak 12–24; species/group clauses remain open; PASS); high/complete industrial-area normal local concurrent peak bound: {\"ticks\":9957,\"attacks\":27,\"groupAttacks\":0,\"peak\":32,\"normalPeak\":32,\"regularPeak\":27,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":21,\"depot-alpha\":4,\"depot-exit\":4,\"industrial-area-direct-6\":7}} (target normal infected peak 25–45; species/group clauses remain open; PASS); high/complete military-zone normal local concurrent peak bound: {\"ticks\":10854,\"attacks\":61,\"groupAttacks\":0,\"peak\":47,\"normalPeak\":47,\"regularPeak\":41,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; PASS); high/complete research-campus normal local concurrent peak bound: {\"ticks\":7730,\"attacks\":89,\"groupAttacks\":0,\"peak\":66,\"normalPeak\":66,\"regularPeak\":61,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":22}} (target normal infected peak 55–85; species/group clauses remain open; PASS); high/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12865,\"attacks\":23,\"groupAttacks\":0,\"peak\":98,\"normalPeak\":98,\"regularPeak\":91,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":30}} (target normal infected peak 80–130; species/group clauses remain open; PASS); high/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":14644,\"attacks\":335,\"groupAttacks\":0,\"peak\":189,\"normalPeak\":189,\"regularPeak\":182,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":182}} (target normal infected peak 140–190; species/group clauses remain open; PASS); high/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); high/complete destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); high/complete military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-exit regular group size: 30 (target 20 ≤ value ≤ 35; PASS); high/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7402,\"attacks\":1037,\"groupAttacks\":0,\"peak\":26,\"normalPeak\":25,\"regularPeak\":23,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"fringe-exit\":1}} (target regular human peak 12–24; species/group clauses remain open; NOT CHECKED); high/stationary industrial-area normal local concurrent peak bound: {\"ticks\":11039,\"attacks\":755,\"groupAttacks\":0,\"peak\":45,\"normalPeak\":44,\"regularPeak\":39,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":13,\"depot-alpha\":4,\"depot-exit\":4,\"industrial-area-direct-6\":7}} (target normal infected peak 25–45; species/group clauses remain open; NOT CHECKED); high/stationary military-zone normal local concurrent peak bound: {\"ticks\":11659,\"attacks\":968,\"groupAttacks\":0,\"peak\":63,\"normalPeak\":63,\"regularPeak\":57,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; NOT CHECKED); high/stationary research-campus normal local concurrent peak bound: {\"ticks\":7845,\"attacks\":1088,\"groupAttacks\":0,\"peak\":84,\"normalPeak\":84,\"regularPeak\":79,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":19}} (target normal infected peak 55–85; species/group clauses remain open; NOT CHECKED); high/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":14418,\"attacks\":368,\"groupAttacks\":0,\"peak\":105,\"normalPeak\":105,\"regularPeak\":97,\"dogPeak\":5,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":32}} (target normal infected peak 80–130; species/group clauses remain open; NOT CHECKED); high/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18885,\"attacks\":4424,\"groupAttacks\":0,\"peak\":190,\"normalPeak\":189,\"regularPeak\":179,\"dogPeak\":7,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":166}} (target normal infected peak 140–190; species/group clauses remain open; NOT CHECKED); high/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); high/stationary destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); high/stationary military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-exit regular group size: 32 (target 20 ≤ value ≤ 35; PASS); low/complete same-tick regional count and species composition: {\"fresh\":true,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6602,\"count\":8,\"regular\":8,\"dogs\":2,\"alphas\":0,\"ids\":[110,112,114,115,116,118,120,121,122,123],\"specialActors\":[{\"id\":115,\"archetype\":\"infected.dog\",\"x\":840.1366259766182,\"z\":73.30163809946414,\"cureRegion\":\"residential-fringe\",\"hidden\":false},{\"id\":116,\"archetype\":\"infected.… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; PASS); low/complete residential dogs follow actual handgun pickup: {\"tier\":\"low\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"99215cf9\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; PASS); high/complete same-tick regional count and species composition: {\"fresh\":true,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6590,\"count\":14,\"regular\":14,\"dogs\":1,\"alphas\":0,\"ids\":[110,111,112,113,116,118,119,120,121,123,124,125,126,127,128],\"specialActors\":[{\"id\":116,\"archetype\":\"infected.dog\",\"x\":860.533785946076,\"z\":77.64429300970967,\"cureRegion\":\"residential-fringe\",\"hidden\":false}]}},{\"region… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; PASS); high/complete residential dogs follow actual handgun pickup: {\"tier\":\"high\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"860b50df\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; PASS) Manual review PASS (FRESH, Codex fix72-c): All12 current-source same-tick local count/species witnesses pass, zero upper-bound violations, all74 boundary/separated-peak controls rejected. Both complete policies finish with final hashes matching the independent census. All54 checkpoint replay checks pass. Canonical military regular groups10–18 and corridor groups20–32 pass unchanged bounds. Both actual handgun pickups tick3497 precede first admitted fringe dog tick4950; zero premature ticks. Stationary policies retain normal Mega-hold tick-budget outcome and no fresh failing clauses. Repeated on final source6bd47c715412 after the carried-quality loading correction; all12 witnesses,74 controls and both final native hashes remain identical.",
-      "automatedComplete": true,
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete destroyed-corridor concurrent dog peak: 6 (target 3 ≤ value ≤ 5; FAIL); low/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6602,\"count\":8,\"regular\":8,\"dogs\":2,\"alphas\":0,\"ids\":[110,112,114,115,116,118,120,121,122,123],\"specialActors\":[{\"id\":115,\"archetype\":\"infected.dog\",\"x\":840.1366259766182,\"z\":73.30163809946414,\"cureRegion\":\"residential-fringe\",\"hidden\":false},{\"id\":116,\"archetype\":\"infected… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); low/complete residential dogs follow actual handgun pickup: {\"tier\":\"low\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"99215cf9\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL); high/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6590,\"count\":14,\"regular\":14,\"dogs\":1,\"alphas\":0,\"ids\":[110,111,112,113,116,118,119,120,121,123,124,125,126,127,128],\"specialActors\":[{\"id\":116,\"archetype\":\"infected.dog\",\"x\":860.533785946076,\"z\":77.64429300970967,\"cureRegion\":\"residential-fringe\",\"hidden\":false}]}},{\"regio… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); high/complete residential dogs follow actual handgun pickup: {\"tier\":\"high\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"860b50df\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL) Manual review PASS (STALE, Codex fix72-c): All12 current-source same-tick local count/species witnesses pass, zero upper-bound violations, all74 boundary/separated-peak controls rejected. Both complete policies finish with final hashes matching the independent census. All54 checkpoint replay checks pass. Canonical military regular groups10–18 and corridor groups20–32 pass unchanged bounds. Both actual handgun pickups tick3497 precede first admitted fringe dog tick4950; zero premature ticks. Stationary policies retain normal Mega-hold tick-budget outcome and no fresh failing clauses. Repeated on final source6bd47c715412 after the carried-quality loading correction; all12 witnesses,74 controls and both final native hashes remain identical.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
@@ -4650,7 +4650,7 @@
           "status": "PASS",
           "value": {
             "ticks": 7654,
-            "attacks": 55,
+            "attacks": 58,
             "groupAttacks": 0,
             "peak": 54,
             "normalPeak": 54,
@@ -4682,7 +4682,7 @@
             "peak": 69,
             "normalPeak": 69,
             "regularPeak": 61,
-            "dogPeak": 5,
+            "dogPeak": 6,
             "alphaPeak": 3,
             "regularGroupPeaks": {
               "corridor-line": 20,
@@ -4805,8 +4805,8 @@
           "level": "L10",
           "tier": "low",
           "policy": "complete",
-          "status": "PASS",
-          "value": 5,
+          "status": "FAIL",
+          "value": 6,
           "target": "3 ≤ value ≤ 5",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
         },
@@ -5274,7 +5274,7 @@
           "status": "PASS",
           "value": {
             "ticks": 10854,
-            "attacks": 61,
+            "attacks": 59,
             "groupAttacks": 0,
             "peak": 47,
             "normalPeak": 47,
@@ -5300,11 +5300,11 @@
           "status": "PASS",
           "value": {
             "ticks": 7730,
-            "attacks": 89,
+            "attacks": 87,
             "groupAttacks": 0,
-            "peak": 66,
-            "normalPeak": 66,
-            "regularPeak": 61,
+            "peak": 69,
+            "normalPeak": 69,
+            "regularPeak": 64,
             "dogPeak": 4,
             "alphaPeak": 2,
             "regularGroupPeaks": {
@@ -5329,9 +5329,9 @@
             "ticks": 12865,
             "attacks": 23,
             "groupAttacks": 0,
-            "peak": 98,
-            "normalPeak": 98,
-            "regularPeak": 91,
+            "peak": 97,
+            "normalPeak": 97,
+            "regularPeak": 90,
             "dogPeak": 5,
             "alphaPeak": 2,
             "regularGroupPeaks": {
@@ -5351,8 +5351,8 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "ticks": 14644,
-            "attacks": 335,
+            "ticks": 13944,
+            "attacks": 285,
             "groupAttacks": 0,
             "peak": 189,
             "normalPeak": 189,
@@ -5867,9 +5867,9 @@
           "clause": "same-tick regional count and species composition",
           "tier": "low",
           "policy": "complete",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
-            "fresh": true,
+            "fresh": false,
             "regions": [
               {
                 "region": "residential-fringe",
@@ -6494,7 +6494,7 @@
           "clause": "residential dogs follow actual handgun pickup",
           "tier": "low",
           "policy": "complete",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
             "tier": "low",
             "pickupTick": 3497,
@@ -6512,9 +6512,9 @@
           "clause": "same-tick regional count and species composition",
           "tier": "high",
           "policy": "complete",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
-            "fresh": true,
+            "fresh": false,
             "regions": [
               {
                 "region": "residential-fringe",
@@ -7249,7 +7249,7 @@
           "clause": "residential dogs follow actual handgun pickup",
           "tier": "high",
           "policy": "complete",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
             "tier": "high",
             "pickupTick": 3497,
@@ -7271,7 +7271,7 @@
         "evidence": [],
         "method": "NEXT: Run the native census through all seven regions at low/high, recording concurrent local counts and dogs/Alphas rather than total level spawn calls."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Fix measured regional peak bounds; qualify simultaneous species counts and group sizes. Peak bounds exclude at most one Mega.",
       "review": {
         "tag": "O",
         "instruction": "Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95.",
@@ -7302,15 +7302,15 @@
             "what": "Actual handgun pickup before every admitted fringe dog, both tiers, zero premature ticks."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L10-04",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); low/complete residential-fringe player windups per minute: 8.404284537215052 (target 2 ≤ value ≤ Infinity; PASS); low/complete industrial-area player windups per minute: 8.37887067395264 (target 4 ≤ value ≤ Infinity; PASS); low/complete military-zone player windups per minute: 11.568123393316196 (target 4 ≤ value ≤ Infinity; PASS); low/complete research-campus player windups per minute: 25.86882675725111 (target 4 ≤ value ≤ Infinity; PASS); low/complete destroyed-corridor player windups per minute: 5.601369223587988 (target 4 ≤ value ≤ Infinity; PASS); low/complete dispersal-complex player windups per minute: 20.100034895893916 (target 4 ≤ value ≤ Infinity; PASS); high/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); high/complete residential-fringe player windups per minute: 11.361141602634468 (target 2 ≤ value ≤ Infinity; PASS); high/complete industrial-area player windups per minute: 9.761976498945465 (target 4 ≤ value ≤ Infinity; PASS); high/complete military-zone player windups per minute: 20.23217247097844 (target 4 ≤ value ≤ Infinity; PASS); high/complete research-campus player windups per minute: 41.448900388098316 (target 4 ≤ value ≤ Infinity; PASS); high/complete destroyed-corridor player windups per minute: 6.436066848037311 (target 4 ≤ value ≤ Infinity; PASS); high/complete dispersal-complex player windups per minute: 82.35454793772193 (target 4 ≤ value ≤ Infinity; PASS) Manual review PASS (STALE, Codex sweep-c5): Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27–39.00/min; high 7.27–114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5× direct distance. No actor/input/RNG changes. Open prior FAIL: Low native complete: residential-fringe58.3 s with0 attacks; industrial-area131.9 s with0; military-zone0.36/min; research-campus1.73/min. R1/R2 are crossable with zero windups, contrary to the explicit criterion. Passive-route R1 also records0 and R2 1.36/min; the gate checks finale hold rather than this entire regional row.",
+      "value": "low/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); low/complete residential-fringe player windups per minute: 8.404284537215052 (target 2 ≤ value ≤ Infinity; PASS); low/complete industrial-area player windups per minute: 8.37887067395264 (target 4 ≤ value ≤ Infinity; PASS); low/complete military-zone player windups per minute: 11.568123393316196 (target 4 ≤ value ≤ Infinity; PASS); low/complete research-campus player windups per minute: 27.27985367128299 (target 4 ≤ value ≤ Infinity; PASS); low/complete destroyed-corridor player windups per minute: 5.601369223587988 (target 4 ≤ value ≤ Infinity; PASS); low/complete dispersal-complex player windups per minute: 20.100034895893916 (target 4 ≤ value ≤ Infinity; PASS); high/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); high/complete residential-fringe player windups per minute: 11.361141602634468 (target 2 ≤ value ≤ Infinity; PASS); high/complete industrial-area player windups per minute: 9.761976498945465 (target 4 ≤ value ≤ Infinity; PASS); high/complete military-zone player windups per minute: 19.56882255389718 (target 4 ≤ value ≤ Infinity; PASS); high/complete research-campus player windups per minute: 40.51746442432083 (target 4 ≤ value ≤ Infinity; PASS); high/complete destroyed-corridor player windups per minute: 6.436066848037311 (target 4 ≤ value ≤ Infinity; PASS); high/complete dispersal-complex player windups per minute: 73.58003442340792 (target 4 ≤ value ≤ Infinity; PASS) Manual review PASS (STALE, Codex sweep-c5): Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27–39.00/min; high 7.27–114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5× direct distance. No actor/input/RNG changes. Open prior FAIL: Low native complete: residential-fringe58.3 s with0 attacks; industrial-area131.9 s with0; military-zone0.36/min; research-campus1.73/min. R1/R2 are crossable with zero windups, contrary to the explicit criterion. Passive-route R1 also records0 and R2 1.36/min; the gate checks finale hold rather than this entire regional row.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -7375,7 +7375,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 25.86882675725111,
+          "value": 27.27985367128299,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
         },
@@ -7441,7 +7441,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 20.23217247097844,
+          "value": 19.56882255389718,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
         },
@@ -7452,7 +7452,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 41.448900388098316,
+          "value": 40.51746442432083,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
         },
@@ -7474,7 +7474,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 82.35454793772193,
+          "value": 73.58003442340792,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
         }
@@ -7532,7 +7532,7 @@
         ],
         "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7659,7 +7659,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -8003,7 +8003,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -8195,7 +8195,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -8223,7 +8223,7 @@
       "id": "L10-10",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); low/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); high/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":100,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3701} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); high/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); low/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); low/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); low/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); low/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS); high/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); high/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); high/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); high/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS)",
+      "value": "low/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); low/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); high/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":99,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3699} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); high/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target 3600 eligible ticks; 3600 increments; no invalid increment; PASS); low/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); low/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); low/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); low/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS); high/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); high/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); high/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); high/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -8284,10 +8284,10 @@
             "eligibleTicks": 3600,
             "incrementTicks": 3600,
             "invalidIncrements": 0,
-            "outsideTicks": 100,
+            "outsideTicks": 99,
             "deadTicks": 0,
             "maximum": 3600,
-            "activeTicks": 3701
+            "activeTicks": 3699
           },
           "target": "3600 eligible ticks; 3600 increments; no invalid increment",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
@@ -8450,7 +8450,7 @@
       "id": "L10-11",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":62.36666666666667,\"playerWindups\":83,\"groupWindups\":0,\"attacksPerMinute\":79.85034740780331} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent hold player windups per minute: 79.85034740780331 (target 8 ≤ value ≤ Infinity; PASS); low/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":62.95,\"playerWindups\":1201,\"groupWindups\":0,\"attacksPerMinute\":1144.7180301826847} (target nonzero player windups in each combat policy; PASS); low/stationary real player/group windups per minute: 1144.7180301826847 (target 8 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":63.983333333333334,\"playerWindups\":239,\"groupWindups\":0,\"attacksPerMinute\":224.1208648085439} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent hold player windups per minute: 224.1208648085439 (target 8 ≤ value ≤ Infinity; PASS); high/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":62.96666666666667,\"playerWindups\":1115,\"groupWindups\":0,\"attacksPerMinute\":1062.4669137109581} (target nonzero player windups in each combat policy; PASS); high/stationary real player/group windups per minute: 1062.4669137109581 (target 8 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (STALE, Codex sweep-c6): Fresh native four-minute holds at both tiers, following the final-approach speed correction. The Mega crosses the 25 m arena at +150.45 s low / +132.45 s high. Both holds reach their capped peaks (95/190), remain 100% bounded-path reachable, exceed 8 player attacks/min, retain one persistent Mega ID and record zero scheduled relocations. Full competent controls pass at both tiers; the code change adjusts only hidden far final-route movement speed. No teleport, timer, cap, or criterion change. Open prior FAIL: Native low complete step/hold: 62.32 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Low passive hold: 111.32 attacks/min, last reach 93/94 = 98.9%; high peak and ~140 s Mega arrival not covered by the 60 s passive window. Complete low hold records0 windups over62.3 s; the acceptance document hard-rule wording is stricter than the gate diagnostic and requires explicit competent-policy qualification.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":62.36666666666667,\"playerWindups\":83,\"groupWindups\":0,\"attacksPerMinute\":79.85034740780331} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent hold player windups per minute: 79.85034740780331 (target 8 ≤ value ≤ Infinity; PASS); low/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":62.95,\"playerWindups\":1201,\"groupWindups\":0,\"attacksPerMinute\":1144.7180301826847} (target nonzero player windups in each combat policy; PASS); low/stationary real player/group windups per minute: 1144.7180301826847 (target 8 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":63.96666666666667,\"playerWindups\":240,\"groupWindups\":0,\"attacksPerMinute\":225.11724856696196} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent hold player windups per minute: 225.11724856696196 (target 8 ≤ value ≤ Infinity; PASS); high/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":62.96666666666667,\"playerWindups\":1115,\"groupWindups\":0,\"attacksPerMinute\":1062.4669137109581} (target nonzero player windups in each combat policy; PASS); high/stationary real player/group windups per minute: 1062.4669137109581 (target 8 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (STALE, Codex sweep-c6): Fresh native four-minute holds at both tiers, following the final-approach speed correction. The Mega crosses the 25 m arena at +150.45 s low / +132.45 s high. Both holds reach their capped peaks (95/190), remain 100% bounded-path reachable, exceed 8 player attacks/min, retain one persistent Mega ID and record zero scheduled relocations. Full competent controls pass at both tiers; the code change adjusts only hidden far final-route movement speed. No teleport, timer, cap, or criterion change. Open prior FAIL: Native low complete step/hold: 62.32 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Low passive hold: 111.32 attacks/min, last reach 93/94 = 98.9%; high peak and ~140 s Mega arrival not covered by the 60 s passive window. Complete low hold records0 windups over62.3 s; the acceptance document hard-rule wording is stricter than the gate diagnostic and requires explicit competent-policy qualification.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -8560,10 +8560,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 63.983333333333334,
-            "playerWindups": 239,
+            "seconds": 63.96666666666667,
+            "playerWindups": 240,
             "groupWindups": 0,
-            "attacksPerMinute": 224.1208648085439
+            "attacksPerMinute": 225.11724856696196
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
@@ -8586,7 +8586,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 224.1208648085439,
+          "value": 225.11724856696196,
           "target": "8 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
         },
@@ -8688,14 +8688,14 @@
         ],
         "notes": "Fresh exact-criterion review supersedes the earlier arrival-time FAIL. Values are measured against the unchanged 120–160 s target.",
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L10-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); low/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS); high/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); high/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS) Manual review PASS (FRESH, Codex fix72-c): Scoped visual repair: both tiers retain the full recognizable Mega body in the wide approached gameplay view after actual physical rockets. Same authentic campaign seeds, identical physical command prefix and Mega death position, all non-render source bytes identical. Raw blast mask remains31; frozen indices increase16119→46338 after retaining head and all limbs. All62captures reviewed/hash verified/deleted; zoom0.5 can crop the large body. This does not qualify the separate fight/death frame gate or full grab/12m boundary matrix, and does not claim whole-row PASS. Final source cd41f284 confirmed in20 additional personally reviewed frames after fresh native stationary controls; all20 raw images deleted. Reconfirmed on final source6bd47c715412 after the carried-quality loading fix:20 additional personally reviewed/deleted frames, both settled bodies intact with18375vertices/46338indices, both physical probes error-free. Total raw captures reviewed/hash verified/deleted for L10-12:102.",
+      "value": "low/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); low/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS); high/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); high/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS) Manual review PASS (STALE, Codex fix72-c): Scoped visual repair: both tiers retain the full recognizable Mega body in the wide approached gameplay view after actual physical rockets. Same authentic campaign seeds, identical physical command prefix and Mega death position, all non-render source bytes identical. Raw blast mask remains31; frozen indices increase16119→46338 after retaining head and all limbs. All62captures reviewed/hash verified/deleted; zoom0.5 can crop the large body. This does not qualify the separate fight/death frame gate or full grab/12m boundary matrix, and does not claim whole-row PASS. Final source cd41f284 confirmed in20 additional personally reviewed frames after fresh native stationary controls; all20 raw images deleted. Reconfirmed on final source6bd47c715412 after the carried-quality loading fix:20 additional personally reviewed/deleted frames, both settled bodies intact with18375vertices/46338indices, both physical probes error-free. Total raw captures reviewed/hash verified/deleted for L10-12:102.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
@@ -8880,15 +8880,15 @@
             "what": "All20 final-source frames personally inspected and raw JPEGs deleted; approached wide views retain connected Mega silhouette. Both actual settled corpses have18375vertices/46338indices despite all5 raw severance bits; tight crops/dark scorch retained explicitly. Fresh native prefix controls and actual physical rockets."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L10-13",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete release transaction observed prerequisites: {\"tick\":69721,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.5925876075897638} (target charge3600 + installed + Mega dead + player at console; PASS); low/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); high/complete release transaction observed prerequisites: {\"tick\":67301,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.866866820687535} (target charge3600 + installed + Mega dead + player at console; PASS); high/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); low/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS); high/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS)",
+      "value": "low/complete release transaction observed prerequisites: {\"tick\":69721,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.5925876075897638} (target charge3600 + installed + Mega dead + player at console; PASS); low/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); high/complete release transaction observed prerequisites: {\"tick\":66601,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":0.7215286795076254} (target charge3600 + installed + Mega dead + player at console; PASS); high/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); low/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS); high/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -8936,11 +8936,11 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "tick": 67301,
+            "tick": 66601,
             "charge": 3600,
             "installed": true,
             "dead": true,
-            "distance": 1.866866820687535
+            "distance": 0.7215286795076254
           },
           "target": "charge3600 + installed + Mega dead + player at console",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
@@ -9499,14 +9499,14 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "65591f560f941723828035ca104b8b4985351bed"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L10-15",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/checkpoint-death-fixture mortal regional checkpoint cure-crash (cure/boss comparison still partial): {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-residential (cure/boss comparison still partial): {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-industrial (cure/boss comparison still partial): {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-military (cure/boss comparison still partial): {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-research-entry (cure/boss comparison still partial): {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-research (cure/boss comparison still partial): {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-corridor (cure/boss comparison still partial): {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-complex (cure/boss comparison still partial): {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-disperse-ready (cure/boss comparison still partial): {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-crash (cure/boss comparison still partial): {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-residential (cure/boss comparison still partial): {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-industrial (cure/boss comparison still partial): {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-military (cure/boss comparison still partial): {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-research-entry (cure/boss comparison still partial): {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-research (cure/boss comparison still partial): {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1074948646244605},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1074948646244605},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-corridor (cure/boss comparison still partial): {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-complex (cure/boss comparison still partial): {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-disperse-ready (cure/boss comparison still partial): {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":1.6121617656089517,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":1.6121617656089517,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS)",
+      "value": "low/checkpoint-death-fixture mortal regional checkpoint cure-crash (cure/boss comparison still partial): {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-residential (cure/boss comparison still partial): {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-industrial (cure/boss comparison still partial): {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-military (cure/boss comparison still partial): {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5d3b943205328a2a98645c53d49a91bc07f0810e06969d895b6af9900cb7e906\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-research-entry (cure/boss comparison still partial): {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-research (cure/boss comparison still partial): {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-corridor (cure/boss comparison still partial): {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-complex (cure/boss comparison still partial): {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); low/checkpoint-death-fixture mortal regional checkpoint cure-disperse-ready (cure/boss comparison still partial): {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-crash (cure/boss comparison still partial): {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-residential (cure/boss comparison still partial): {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-industrial (cure/boss comparison still partial): {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-military (cure/boss comparison still partial): {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-research-entry (cure/boss comparison still partial): {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-research (cure/boss comparison still partial): {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1076650246726945},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1076650246726945},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-corridor (cure/boss comparison still partial): {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-complex (cure/boss comparison still partial): {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/checkpoint-death-fixture mortal regional checkpoint cure-disperse-ready (cure/boss comparison still partial): {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.5327114871886103,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.5327114871886103,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
@@ -10081,7 +10081,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce",
+            "snapshotSha256": "581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -10154,7 +10154,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "cc0f29e51856e693212938d63f53b54b9ed26e1ff0b3d9eb6e622e0434b98bce",
+            "snapshotSha256": "581850eab97b1e44962b1283cf61fe4bc2e5a3690e1ba10ef7e3298200bf03a8",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -10227,7 +10227,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1",
+            "snapshotSha256": "e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -10300,7 +10300,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "58d42f81e37f19822de15dd4217a471daca8339f1b291e40bb00e48ba0728ac1",
+            "snapshotSha256": "e30d82c2c406ea7f6cfcb9d4e03c2411b3b920aa94be94e1855d796f332e3a40",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -10373,7 +10373,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4",
+            "snapshotSha256": "88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -10446,7 +10446,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "be86eda2049dbcf70672a63ba98ffc5848c113f6e66f5d2552543eb91467deb4",
+            "snapshotSha256": "88cf7a3d995ffbc872c92f389aa2c13ebae86c7e610c5776562c7d87fe315fe3",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -10519,7 +10519,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b",
+            "snapshotSha256": "86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -10590,7 +10590,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4b1152d5ddec92e666cf416f8413439193c6709854c7a306aea738d821e4413b",
+            "snapshotSha256": "86f096036d6cc28415467147c37996d5fc84316941ff71f57f484e2ce5414764",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -10661,7 +10661,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc",
+            "snapshotSha256": "a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -10733,7 +10733,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "f62f569edd1bd3b7eeafb5f9d81e0b21206fa1407aae4e13b4b5047f5d8ee1cc",
+            "snapshotSha256": "a174d58e16570680bf091f01bbba9ec02dca9d5ec2d978712f862acec49be7db",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -11365,7 +11365,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c",
+            "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -11438,7 +11438,7 @@
           "value": {
             "checkpoint": "cure-research-entry",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "665c6b960b54c419c5cc2fae808d079f221381cb4aa7ff9c3fc5281ec832f97c",
+            "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
             "damage": 100,
             "expected": {
               "id": "cure-research-entry",
@@ -11511,7 +11511,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad",
+            "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -11519,7 +11519,7 @@
                 "x": 2805.040771484375,
                 "y": 0.7099999785423279,
                 "z": 44.92366027832031,
-                "yaw": 3.1074948646244605
+                "yaw": 3.1076650246726945
               },
               "gates": {},
               "racks": {
@@ -11584,7 +11584,7 @@
           "value": {
             "checkpoint": "cure-research",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "ad1dee45d9a66c0a3a011368991012d38787f48f49072f2820c76d2e1e1e6aad",
+            "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
             "damage": 100,
             "expected": {
               "id": "cure-research",
@@ -11592,7 +11592,7 @@
                 "x": 2805.040771484375,
                 "y": 0.7099999785423279,
                 "z": 44.92366027832031,
-                "yaw": 3.1074948646244605
+                "yaw": 3.1076650246726945
               },
               "gates": {},
               "racks": {
@@ -11657,7 +11657,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8",
+            "snapshotSha256": "6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -11730,7 +11730,7 @@
           "value": {
             "checkpoint": "cure-corridor",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "c267f7efe2725be280aa8b42801b8d66a0ab70fb3e9556ecbde8023c4775bec8",
+            "snapshotSha256": "6a6e2151aab0e8632ea64200e0335d7a073d844bc393118aa9f29e556af0e666",
             "damage": 100,
             "expected": {
               "id": "cure-corridor",
@@ -11803,7 +11803,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823",
+            "snapshotSha256": "3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -11874,7 +11874,7 @@
           "value": {
             "checkpoint": "cure-complex",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "24dc00d0092ac6bf42e268a642a67aecd68aaffeaabe7f16d512a25e96d73823",
+            "snapshotSha256": "3eddf82d80c1cc340d1155024b3a26856024999e7bff43cd93370ff4dd73a96d",
             "damage": 100,
             "expected": {
               "id": "cure-complex",
@@ -11945,7 +11945,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f",
+            "snapshotSha256": "a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -11953,7 +11953,7 @@
                 "x": 4002,
                 "y": 0,
                 "z": -27,
-                "yaw": 1.6121617656089517,
+                "yaw": 2.5327114871886103,
                 "radius": 2
               },
               "gates": {},
@@ -12017,7 +12017,7 @@
           "value": {
             "checkpoint": "cure-disperse-ready",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "4d8a19c40913b246d60be1974d59c8a0f18c198c22a672dd0f8a15f1f2578d1f",
+            "snapshotSha256": "a3197814b1302a720246fd428280d70a3de4bea5e145f118b62b814071523af4",
             "damage": 100,
             "expected": {
               "id": "cure-disperse-ready",
@@ -12025,7 +12025,7 @@
                 "x": 4002,
                 "y": 0,
                 "z": -27,
-                "yaw": 1.6121617656089517,
+                "yaw": 2.5327114871886103,
                 "radius": 2
               },
               "gates": {},

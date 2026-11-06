@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
   "fixtureHash": "5538445d7cec72bcc6a2065b7649668cb85127f42b4e30c1b5c09355bbc86953",
   "errors": [],
   "checks": [
@@ -11,9 +11,9 @@
       "clause": "physical launcher approach pickup and first rocket frame gate",
       "tier": "low",
       "policy": "physical-pickup",
-      "status": "PASS",
+      "status": "FAIL",
       "value": {
-        "valid": true,
+        "valid": false,
         "mechanics": true,
         "distance": 3,
         "windows": [
@@ -42,9 +42,9 @@
       "clause": "reviewed actual launcher first-rocket captures",
       "tier": "low",
       "policy": "physical-pickup",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
-        "seen": true
+        "seen": false
       },
       "target": "Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.",
       "receipt": "docs/reports/fix72-c/L7-01/review.json"

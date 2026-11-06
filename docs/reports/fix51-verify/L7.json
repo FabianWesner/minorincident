@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L7",
-  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
-  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T13:50:08.694Z",
+  "generatedAt": "2026-11-06T20:50:35.253Z",
   "policies": [
     {
       "tier": "low",
@@ -66,7 +66,7 @@
     {
       "tier": "low",
       "policy": "real-input-browser",
-      "outcome": "complete",
+      "outcome": "incomplete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-low-pickup-browser.json"
     },
@@ -80,7 +80,7 @@
     {
       "tier": "high",
       "policy": "real-input-browser",
-      "outcome": "complete",
+      "outcome": "incomplete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-high-pickup-browser.json"
     },
@@ -563,7 +563,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -938,7 +938,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1079,7 +1079,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4687,7 +4687,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4762,7 +4762,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4934,7 +4934,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -5993,7 +5993,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -6081,7 +6081,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -6169,17 +6169,17 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
   "rows": [
     {
       "id": "L7-01",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); low/stationary native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); high/complete native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); high/stationary native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":20,\"valid\":true,\"maxMs\":49.899999999999636},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; PASS); low/physical-pickup reviewed actual launcher first-rocket captures: {\"seen\":true} (target Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.; PASS); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":50},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; PASS); high/physical-pickup reviewed actual launcher first-rocket captures: {\"seen\":true} (target Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.; PASS) Manual review PASS (FRESH, Codex fix72-c): Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured.",
-      "automatedComplete": true,
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":20,\"valid\":true,\"maxMs\":49.899999999999636},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":50},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL) Manual review PASS (STALE, Codex fix72-c): Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
@@ -6243,9 +6243,9 @@
           "clause": "physical launcher approach pickup and first rocket frame gate",
           "tier": "low",
           "policy": "physical-pickup",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
-            "valid": true,
+            "valid": false,
             "mechanics": true,
             "distance": 3,
             "windows": [
@@ -6275,9 +6275,9 @@
           "clause": "reviewed actual launcher first-rocket captures",
           "tier": "low",
           "policy": "physical-pickup",
-          "status": "PASS",
+          "status": "NOT CHECKED",
           "value": {
-            "seen": true
+            "seen": false
           },
           "target": "Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.",
           "receipt": "docs/reports/fix72-c/L7-01/review.json",
@@ -6288,9 +6288,9 @@
           "clause": "physical launcher approach pickup and first rocket frame gate",
           "tier": "high",
           "policy": "physical-pickup",
-          "status": "PASS",
+          "status": "FAIL",
           "value": {
-            "valid": true,
+            "valid": false,
             "mechanics": true,
             "distance": 3,
             "windows": [
@@ -6320,9 +6320,9 @@
           "clause": "reviewed actual launcher first-rocket captures",
           "tier": "high",
           "policy": "physical-pickup",
-          "status": "PASS",
+          "status": "NOT CHECKED",
           "value": {
-            "seen": true
+            "seen": false
           },
           "target": "Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.",
           "receipt": "docs/reports/fix72-c/L7-01/review.json",
@@ -6337,7 +6337,7 @@
         "evidence": [],
         "method": "NEXT: Record real launcher approach/auto-pickup and first physical mouse shot with frames.ts; measure pickup distance and actual frame intervals without prewarming via a photo."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured.",
       "review": {
         "tag": "O",
         "instruction": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
@@ -6388,8 +6388,8 @@
             "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -6848,7 +6848,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7005,7 +7005,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7145,7 +7145,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -12207,7 +12207,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -12324,7 +12324,7 @@
         ],
         "notes": "P remains explicit: worst-destruction taste and sampled Alpha human reading need PO judgment. No new game code or performance measurement.",
         "freshness": "STALE",
-        "latestRelevantCommit": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ]
