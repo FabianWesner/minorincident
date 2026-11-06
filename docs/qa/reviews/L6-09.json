@@ -16,6 +16,27 @@
       "file": "docs/reports/sweep-b/L6-09-proof.json",
       "sha256": "1102c17794e37aaa311574b12d7799cbfa9882ffa5bea828303f52a9af0cd5a5",
       "what": "All six native gate/tier trials pass: three2.2m openings; real input crosses open and stops at closed collider; sight blocked when closed; exactly five runners break each gate after9.817s. Original-roster production predicate refuses at-1.99,0,1.8,2.0m and accepts2.01m. Guide/ring anchor remains at the gate for three courier poses with Everyone through/E or click prompt; physical low/high frames show fixed ring/prompt and closed/brace state. No full-route completion claim."
+    },
+    {
+      "file": "docs/reports/fix73-g/L6-gate.json",
+      "sha256": "51eefc32c940519bc9c0aa0fd2a800612be22c04ed1f31df361180e6409ef5b6",
+      "what": "Production hatch fronts retain 600 HP but now carry actual riot shield counter. Unpaused aimed fire resolves both controlled fronts at each tier with 90-tick openings. Fresh high physical E closes gate90; fresh low completes. Only 1/29 escort survives default low route; full escort balance and compound-row criteria are not requalified. Per-capture SHA256 and personal visual observations archived in this receipt."
+    },
+    {
+      "file": "docs/reports/fix73-g/L6-final-counter.json",
+      "sha256": "12c6878cfeb0f523cd25a58bdf5510dfa3012012a6bf13dd14fbadf46abd570a",
+      "what": "Final follow-up0906e73: preserve original600HP,0.5m radius and4.5m/s speed while using actual riot shield. Final unpaused physical pair counter at both tiers demonstrates two90tick shield breaks and both fronts down. The native failure was reproduced and traced to the debug driver recognizing only armored archetype for shotgun use; ordinary-input policy now also recognizes shield bearers. Focused full native completes292.9s/0deaths/27of29saved; final acceptance group rerun recorded separately. No acceptance target or verdict criteria changed."
+    },
+    {
+      "file": "docs/reports/fix73-g/L6-policy-diagnostic.json",
+      "sha256": "e6901828b378820c51055fe3904e548b9bce0b2e900dfbe1a4eaf64a837aef6e",
+      "what": "Final follow-up0906e73: preserve original600HP,0.5m radius and4.5m/s speed while using actual riot shield. Final unpaused physical pair counter at both tiers demonstrates two90tick shield breaks and both fronts down. The native failure was reproduced and traced to the debug driver recognizing only armored archetype for shotgun use; ordinary-input policy now also recognizes shield bearers. Focused full native completes292.9s/0deaths/27of29saved; final acceptance group rerun recorded separately. No acceptance target or verdict criteria changed."
+    },
+    {
+      "file": "docs/reports/fix73-g/L6-final-fresh.json",
+      "sha256": "fa04306e920c5b8b5ef5b72da82070eec049113a75261f2b9d8f3bfed0bb4ef5",
+      "what": "Final fresh low ordinary-input repeat on body-preserving source: completes192.28s,0courierdeaths,4of29followerssaved,28shieldbreaks(25on observed600HP fronts), personally inspected readable shield strain/broken1.5s cues. Gate90 is passed but not closed by this default policy; earlier high human E close remains independently recorded. Poor follower survival remains open; no whole-row qualification inferred."
     }
-  ]
+  ],
+  "notes": "Scoped fix73-g observation 2026-11-06, b1ba0e3: Production hatch fronts retain 600 HP but now carry actual riot shield counter. Unpaused aimed fire resolves both controlled fronts at each tier with 90-tick openings. Fresh high physical E closes gate90; fresh low completes. Only 1/29 escort survives default low route; full escort balance and compound-row criteria are not requalified. Existing whole-row decision, clauses and source qualification retained.\nFinal follow-up0906e73: preserve original600HP,0.5m radius and4.5m/s speed while using actual riot shield. Final unpaused physical pair counter at both tiers demonstrates two90tick shield breaks and both fronts down. The native failure was reproduced and traced to the debug driver recognizing only armored archetype for shotgun use; ordinary-input policy now also recognizes shield bearers. Focused full native completes292.9s/0deaths/27of29saved; final acceptance group rerun recorded separately. No acceptance target or verdict criteria changed.\nFinal fresh low ordinary-input repeat on body-preserving source: completes192.28s,0courierdeaths,4of29followerssaved,28shieldbreaks(25on observed600HP fronts), personally inspected readable shield strain/broken1.5s cues. Gate90 is passed but not closed by this default policy; earlier high human E close remains independently recorded. Poor follower survival remains open; no whole-row qualification inferred."
 }

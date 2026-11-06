@@ -1,0 +1,59 @@
+{
+  "source": {
+    "sourceHash": "3672ac05f7405fcb7ccbdd6d041cd482ca9157dd9a2a8a45b07428af33ca1ac8",
+    "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+    "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+    "input": {
+      "level": "L7",
+      "tier": "high",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "source": "preset",
+      "courierGodMode": false,
+      "movingCoverRoute": false,
+      "noSkip": true,
+      "frameTiming": false
+    }
+  },
+  "coreExitCode": 0,
+  "unit": {
+    "files": 27,
+    "tests": 107,
+    "pass": true
+  },
+  "threat": {
+    "command": "npm run qa:threat",
+    "admission": {
+      "waiting": false,
+      "alone": "All owned browser, unit, compiler, lint and acceptance processes finished before starting.",
+      "admittedAt": "2026-11-06T23:01:19.693402+00:00",
+      "admittedLoad": [
+        3.26806640625,
+        3.53125,
+        3.8662109375
+      ],
+      "samples": [
+        {
+          "at": "2026-11-06T23:01:19.693402+00:00",
+          "load": [
+            3.26806640625,
+            3.53125,
+            3.8662109375
+          ]
+        }
+      ],
+      "exitCode": 0,
+      "finishedAt": "2026-11-06T23:06:23.373244+00:00"
+    },
+    "flags": [],
+    "flagCount": 0,
+    "seconds": 301.401386291,
+    "revision": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704",
+    "auditSha256": "10a0d86b690399367dbe4b92609788258db3c890a29e4a9b466b81e2a7653885",
+    "scope": "Final once-only all-level standalone run; earlier failed gate retained in threat-rejected.json."
+  },
+  "input": {
+    "file": "docs/reports/fix73-g/gates-input.json.gz",
+    "sha256": "fed7d71aebec3803169473bb1616d6bdafdbeec79196ac6621a2ba3760ecb98c"
+  }
+}

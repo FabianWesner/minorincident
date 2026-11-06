@@ -6,9 +6,9 @@
   "commit": "7314277ffc656d91d38dcaa5e8a0581aeade8bbc",
   "clauses": [
     {
-      "clause": "combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks.",
+      "clause": "combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks.",
       "verdict": "PASS",
-      "note": "Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27–39.00/min; high 7.27–114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5× direct distance. No actor/input/RNG changes."
+      "note": "Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27\u201339.00/min; high 7.27\u2013114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5\u00d7 direct distance. No actor/input/RNG changes."
     }
   ],
   "evidence": [
@@ -36,7 +36,12 @@
       "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-high-stationary.json",
       "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
       "what": "Current-source high stationary campaign control."
+    },
+    {
+      "file": "docs/reports/fix73-g/L10-corridor.json",
+      "sha256": "4a035349bc80b2527ab75c549558c91ea7d3c4c4cd51a12a3163e9f8cb1f54e2",
+      "what": "Scoped fix73-g observation, 739a504: real-input tracked traversal from R6 entrance through R7 meets all17 new patrol identities per tier, no regional cap excess. Conservative0.5second camera-visible-within40m R6 gaps26.5s low /15s high;57/59 actual attack starts over bounded runs. All18 captures personally inspected, hashes/seen and input archived. This does not requalify all seven regions or the whole compound row."
     }
   ],
-  "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim."
+  "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim.\nScoped fix73-g observation, 739a504: real-input tracked traversal from R6 entrance through R7 meets all17 new patrol identities per tier, no regional cap excess. Conservative0.5second camera-visible-within40m R6 gaps26.5s low /15s high;57/59 actual attack starts over bounded runs. All18 captures personally inspected, hashes/seen and input archived. This does not requalify all seven regions or the whole compound row."
 }

@@ -1,0 +1,112 @@
+{
+  "observations": {
+    "status": "PASS: normal launcher pickup before health loss, both tiers,24followers",
+    "method": "Ordinary unpaused physical keyboard/mouse, shared headless Metal WebGL2, high1.5/low0.5, test courier godOFF. Game provides bounded8second damage grace until normal pickup; enemy AI, bodies, health and counts remain active. No test writes to actors, pickup or HP.",
+    "results": [
+      {
+        "label": "fix73-L7-grace-open-high",
+        "source": {
+          "sourceHash": "50d00aebef29dbc381cde502baa2c985d8267ad355076bdb74ca64dfeba9e21c",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "armedTick": 270,
+        "firstArmedObservation": {
+          "tick": 335,
+          "hp": 100,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m"
+        },
+        "rocketPhaseDamage": 0,
+        "postPickupDamage": 0,
+        "deaths": 0
+      },
+      {
+        "label": "fix73-L7-grace-open-low",
+        "source": {
+          "sourceHash": "50d00aebef29dbc381cde502baa2c985d8267ad355076bdb74ca64dfeba9e21c",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 0.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "armedTick": 108,
+        "firstArmedObservation": {
+          "tick": 139,
+          "hp": 100,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 308\u00a0m"
+        },
+        "rocketPhaseDamage": 0,
+        "postPickupDamage": 120,
+        "deaths": 0
+      }
+    ],
+    "scope": "Bounded90second windows, not whole-route qualification. Low takes120damage after pickup, with no deaths; high takes0damage in this window. All8 captures personally inspected and deleted.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-high/captures/fix73-L7-grace-open-high-L7-checkpoint-yield.jpg",
+      "sha256": "8518d833c38f9ed21b032cf1a5a00b08c0230a392240ef4d1df9bdac99e245cc",
+      "what": "Final high yield: courier100HP and all24followers nearby,47m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-high/captures/fix73-L7-grace-open-high-L7-t1809.jpg",
+      "sha256": "7ebae075d6deb276081255d214aa4e9301ba1b4cddd9793570e90f3b6dd5f6bf",
+      "what": "High route: courier100HP carries launcher as rocket blast clears infected behind all24followers."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-high/captures/fix73-L7-grace-open-high-L7-t3.jpg",
+      "sha256": "8229084f7fab9170358d84c10f34ca1c8222dfe151fbc43b5913605acf271afe",
+      "what": "Initial high: courier100HP beside launcher3m, briefing text and group at truck."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-high/captures/fix73-L7-grace-open-high-L7-t3621.jpg",
+      "sha256": "e527e578e82ecd0b80b0f9f779f09b82f0765c97388b063ba5cab8945a64d423",
+      "what": "High later: courier100HP and24followers moving beside the fence,113m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-low/captures/fix73-L7-grace-open-low-L7-checkpoint-yield.jpg",
+      "sha256": "33db316fb59b68f13aa97a38c398aa8e81dfb2c2d9e8f5e3ca3783366f07dc51",
+      "what": "Final low yield: courier65HP and all24followers near burned vehicle,15m to corridor; protection has ended after pickup."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-low/captures/fix73-L7-grace-open-low-L7-t1820.jpg",
+      "sha256": "113f59471872deb4e1b709bb958909f310f5b70dd644e69dc4c6a5ecb7f03bbc",
+      "what": "Low route: courier70HP with launcher,24followers, Wait for us warning visible."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-low/captures/fix73-L7-grace-open-low-L7-t3634.jpg",
+      "sha256": "d938885b3861fbe03014ebb83256c95514c79db2aa7cec6c62b0afcf7ede6c0a",
+      "what": "Low later: courier43HP with launcher and24followers near fence,89m to corridor; ordinary damage active."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-grace-open-low/captures/fix73-L7-grace-open-low-L7-t5.jpg",
+      "sha256": "ea29491e214e0c7f9dd603aa20f7bbb876fcaa6b99edc3692641f9fad4fa12c3",
+      "what": "Initial low: courier100HP, launcher ring3m and group beside truck, briefing caption."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L7-final-opening-input.json.gz",
+    "sha256": "dd07ad527471ba62547fef2fa771be700004c4ebf0bb7cec5373ead8b1182694"
+  }
+}

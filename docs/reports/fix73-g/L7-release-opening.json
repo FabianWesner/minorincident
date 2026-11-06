@@ -1,0 +1,305 @@
+{
+  "observations": {
+    "status": "FAIL high-tier pickup; low-tier pickup PASS, later escort losses remain",
+    "method": "Exact committed35d5042 source. Ordinary unpaused input, courierGodOFF, highzoom1.5/lowzoom0.5. Eight-second game opening grace ends on pickup or expiry; ordinary damage thereafter. No actor/HP/pickup writes.",
+    "results": [
+      {
+        "label": "fix73-L7-release-open-high",
+        "source": {
+          "sourceHash": "3672ac05f7405fcb7ccbdd6d041cd482ca9157dd9a2a8a45b07428af33ca1ac8",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "armedTick": 1125,
+        "firstArmedObservation": {
+          "tick": 1158,
+          "step": "corridor",
+          "checkpoint": "rocket",
+          "menu": null,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 21/21 nearby \u00b7 306\u00a0m",
+          "player": {
+            "x": 273.82562255859375,
+            "z": 15.027203559875488,
+            "hp": 20,
+            "weapon": "weapon.rocket-launcher"
+          },
+          "driving": null,
+          "enemies": [
+            {
+              "id": 197,
+              "d": 4.792840466833522,
+              "hp": 182.32929293158764,
+              "max": 300,
+              "drawn": true,
+              "x": 269.0555448157126,
+              "z": 14.56064373800167
+            }
+          ],
+          "marker": {
+            "x": -30,
+            "y": 0,
+            "z": 50
+          },
+          "noProgressSeconds": 0
+        },
+        "stepDamage": {
+          "rocket": 80,
+          "corridor": 0
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 91,
+            "simSeconds": 87,
+            "maxNoProgressSeconds": 3.8666666666666667,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 178,
+              "weapon.rocket-launcher": 7
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 21/21 nearby \u00b7 306\u00a0m",
+                "tick": 1127,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "fix73-L7-release-open-low",
+        "source": {
+          "sourceHash": "3672ac05f7405fcb7ccbdd6d041cd482ca9157dd9a2a8a45b07428af33ca1ac8",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 0.5,
+            "source": "preset",
+            "courierGodMode": false,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "armedTick": 67,
+        "firstArmedObservation": {
+          "tick": 95,
+          "step": "corridor",
+          "checkpoint": "rocket",
+          "menu": null,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+          "player": {
+            "x": 275.3053283691406,
+            "z": 15,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          },
+          "driving": null,
+          "enemies": [],
+          "marker": {
+            "x": -30,
+            "y": 0,
+            "z": 50
+          },
+          "noProgressSeconds": 0
+        },
+        "stepDamage": {
+          "rocket": 0,
+          "corridor": 100
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 90,
+            "simSeconds": 88,
+            "maxNoProgressSeconds": 1.15,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.rocket-launcher": 19
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 8,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+                "tick": 95,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "scope": "Bounded90wallsecond windows. High armedtick1125 at20HP with21living, rocket-phase80damage; low armedtick67 at100HP and24followers, rocket-phase0damage. All8captures personally inspected and deleted.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-high/captures/fix73-L7-release-open-high-L7-checkpoint-yield.jpg",
+      "sha256": "b69aa66a7f4467fa9a2341882c00014f85b8b73619d704aa3aa4a053c36c309b",
+      "what": "High final yield: courier100HP after healing,21/21 followers nearby,242m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-high/captures/fix73-L7-release-open-high-L7-t1852.jpg",
+      "sha256": "3f55d0c261ae3adda3d6cc7d71425fa27e19be1011c73e4340083a57bbae141b",
+      "what": "High after delayed pickup: courier38HP and21/21followers amid dense infected near truck."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-high/captures/fix73-L7-release-open-high-L7-t3.jpg",
+      "sha256": "24ecbb6253a67c87b46f7dc988768d5effb68920ac7ec01cdc48ff5d2562b45a",
+      "what": "High initial: courier100HP, launcher3m away, survivors crowding pickup ring and briefing."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-high/captures/fix73-L7-release-open-high-L7-t3658.jpg",
+      "sha256": "c55b013afa66617e28f3f7e624273d09c712269659e8f7e573f0740fc340ac8a",
+      "what": "High later: courier98HP and21followers moving away from truck,269m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-low/captures/fix73-L7-release-open-low-L7-checkpoint-yield.jpg",
+      "sha256": "65437bb6a6623cf475bc6a58fe30d7b80a0c4b6798f7c6b4916da2b8d2534f9b",
+      "what": "Low final yield: courier99HP, Group7/8nearby, survivor86m away, Survivor lost behind you message; bus not reached."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-low/captures/fix73-L7-release-open-low-L7-t1826.jpg",
+      "sha256": "1e66302aed5745c12d0f93b8779052c17182989aad419f28f434024d5aeea1b5",
+      "what": "Low route: courier70HP carrying launcher,24/24nearby,198m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-low/captures/fix73-L7-release-open-low-L7-t3647.jpg",
+      "sha256": "ef33d98cc494f0ed73143a8ffa8040467fb4ca4dc45a57a9a395cb65e0fb9d43",
+      "what": "Low later: courier46HP,23/24nearby, survivor30m away,82m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-release-open-low/captures/fix73-L7-release-open-low-L7-t8.jpg",
+      "sha256": "465e08edf22781282f7c0f36a10cb24faa8d9962fc6134684966dfd465516463",
+      "what": "Low initial: courier100HP beside3m launcher ring and briefing."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L7-release-opening-input.json.gz",
+    "sha256": "c5f46782d7c957792d65ab045ff6a7491e28135fb77b043d2f9005e24a92b4c3"
+  }
+}

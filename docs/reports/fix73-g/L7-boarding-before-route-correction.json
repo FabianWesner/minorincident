@@ -1,0 +1,313 @@
+{
+  "observations": {
+    "status": "Partial mechanics PASS; survival/low route FAIL retained",
+    "method": "Unpaused physical input, headless MetalWebGL2, fresh wide1.5, courierprotected and followersnormal. High deliberate6second rearward movement initially has no firing; short stationary hold then ordinary driver return. No test actor edits.",
+    "results": [
+      {
+        "label": "fix73-L7-final-bus-high",
+        "source": {
+          "sourceHash": "50d00aebef29dbc381cde502baa2c985d8267ad355076bdb74ca64dfeba9e21c",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "fresh",
+            "courierGodMode": true,
+            "movingCoverRoute": true,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 136,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 8.783333333333333,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1,
+              "weapon.rocket-launcher": 65
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 9,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+                "tick": 93,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "departure",
+                "text": "Get everyone aboard the bus \u00b7 45\u00a0m",
+                "tick": 5718,
+                "marker": {
+                  "anchor": "l7-bus-boarding",
+                  "ring": {
+                    "x": -70.5,
+                    "y": 0,
+                    "z": 47.5
+                  },
+                  "drawn": [
+                    -70.5,
+                    0,
+                    47.5
+                  ],
+                  "playerY": 0.8500000238418579,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "firstBoardingLiving": 19,
+        "lastStatus": {
+          "count": "Aboard 17/17 \u00b7 Everyone aboard",
+          "waiting": ""
+        },
+        "lastBoarded": 17
+      },
+      {
+        "label": "fix73-L7-final-bus-low",
+        "source": {
+          "sourceHash": "50d00aebef29dbc381cde502baa2c985d8267ad355076bdb74ca64dfeba9e21c",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "840e0aaf696ad4d7b11cb1480e8257a71c5b0eb0",
+          "input": {
+            "level": "L7",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "fresh",
+            "courierGodMode": true,
+            "movingCoverRoute": true,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 241,
+            "simSeconds": 233,
+            "maxNoProgressSeconds": 2.2333333333333334,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1,
+              "weapon.rocket-launcher": 43
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+                "tick": 85,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "firstBoardingLiving": null,
+        "lastStatus": {
+          "count": "Aboard 0/24",
+          "waiting": "Waiting for a survivor \u00b7 2 m",
+          "target": {
+            "x": 47.94113336067502,
+            "z": 41.314010421415425,
+            "id": 71,
+            "name": "a survivor"
+          }
+        },
+        "lastBoarded": 0
+      }
+    ],
+    "observations": "High remains boarding beyond old16m recall boundary, completes17saved from19living at boarding;2stragglers lost. Low all24live, Group21of24nearby with3about19m away before bus at233s; no boarding claim. Earlier candidate prompted final local-route and cover-policy correction.",
+    "rawCapturesDeleted": true,
+    "scope": "Earlier candidate before final local-route correction: low retains24living but3survivors approximately19m behind before bus at233s; no boarding success claim. High saves17, including2losses after boarding starts."
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-L7-result.jpg",
+      "sha256": "6e5eeb117bb8b04c8e23cde9eb703e01ad867fa0c74ad220e512e9198911ab1d",
+      "what": "L8 loading handover after completed bus departure; not an L7 result score panel."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-L7-t2417.jpg",
+      "sha256": "6d5ea26ff858ae018b27f555af51fe1a49bafb45da20cd593b8cf8404c7c48e7",
+      "what": "High route: courier100HP and24followers by truck,167m to corridor; infected on upper road."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-L7-t4818.jpg",
+      "sha256": "c2b14cffa5a69c9a14251ce6db4bd8bd2d688fc9eb494a2a88f7e31db0b56f12",
+      "what": "High route: courier100HP with20followers,60m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-L7-t7239.jpg",
+      "sha256": "7a56f3e35c9e449807f3a7bc76817d011627c455e11d00ebe65a432623f8b34b",
+      "what": "High return: Aboard17/17 Everyone aboard, courier11m from bus and destroyed vehicles around."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-L7-t9.jpg",
+      "sha256": "578cee53443802c21dc327d2a2a6583a7f92795c011a4c84e95bd227597ff48f",
+      "what": "Initial high: launcher3m,100HPcourier and party beside military truck."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-bus-cover-away.jpg",
+      "sha256": "1797f6260ac41e20e5552e406497016aad3e075aefdb7f0067891c53e6d79778",
+      "what": "Retreat: courier among living red-bar infected21m from bus; HUD Aboard17/17Everyone aboard, corgi hiding."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-high/captures/fix73-L7-final-bus-high-bus-return-start.jpg",
+      "sha256": "ad181ccbefdb7b7a039e1f12fb4ba4d1fbde392e46adb0e04f8019ea96117b5f",
+      "what": "Return-start: courier and corgi still21m from bus, Aboard17/17 persists, living infected nearby."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-checkpoint-yield.jpg",
+      "sha256": "d6e63ae048bedb26eb93a553f5e4fb147f69d931b99ac1165fff2075d80eee1a",
+      "what": "Low yield: all24followers remain alive near corpse/vehicle clutter; Wait for us warning,80m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t10.jpg",
+      "sha256": "82428767084a62e9518e774db6e2cbe0d9e7d11a413497b8f38bb9af34e46b20",
+      "what": "Initial low:100HPcourier, launcher3m and party beside truck."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t12089.jpg",
+      "sha256": "8580d79177d04b0b2fed6befdbb46934ef8542a3b68df9fcda59a9fd8c4b9e10",
+      "what": "Low late: whole24group by wrecks,79m to corridor, Wait for us warning; bounded run has not reached bus."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t2421.jpg",
+      "sha256": "342baa8ff767a267e180e98c59bbcabae63c89eb69cd8233c77d9fece41e0ebe",
+      "what": "Low early: courier and24followers moving through open road,143m to corridor."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t4826.jpg",
+      "sha256": "7fca7b15c9e76f33654dbf31ec6f13ee4d8f70fd743bbb932b9b9c81f91c1325",
+      "what": "Low middle: all24followers near mass of bodies and wrecks,79m to corridor, wait warning."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t7269.jpg",
+      "sha256": "b3a95480ad8d5a3def03740e4b90d894d13156100da93007d488eee4f8a6139d",
+      "what": "Low middle: all24followers near body clutter and frontages,82m to corridor, wait warning."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L7-final-bus-low/captures/fix73-L7-final-bus-low-L7-t9672.jpg",
+      "sha256": "976f925ff0b4efe18f3706c4d05e323cc43997e851e985895e15e4c8b35d10e5",
+      "what": "Low later: Group22/24nearby, one survivor19m away,77m to corridor; waiting persists."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L7-boarding-before-route-correction-input.json.gz",
+    "sha256": "4366b8868ff8a8fe664c74656313ba1ec2d938f907766f109d003bca7c94e650"
+  }
+}

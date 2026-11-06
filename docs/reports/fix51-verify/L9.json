@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L9",
-  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
-  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "sourceHash": "3672ac05f7405fcb7ccbdd6d041cd482ca9157dd9a2a8a45b07428af33ca1ac8",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T11:31:36.655Z",
+  "generatedAt": "2026-11-06T22:57:30.750Z",
   "policies": [
     {
       "tier": "low",
@@ -163,7 +163,7 @@
       "id": "G-05",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS)",
+      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 16 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 16 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 35 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 35 (target 0 ≤ value ≤ 200; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
@@ -180,7 +180,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 14,
+          "value": 16,
           "target": "0 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
         },
@@ -191,7 +191,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 14,
+          "value": 16,
           "target": "0 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
         },
@@ -202,7 +202,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 31,
+          "value": 35,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
         },
@@ -213,7 +213,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 31,
+          "value": 35,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
         }
@@ -537,20 +537,16 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
       "id": "G-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, sweep-g/Codex): L4 hold/plaza ring stays invisible for180 observed simulation ticks at both requested zooms1/1.5 and low/high. waypoint=false explicitly suppresses it. Earlier full physical route also remained in hold fromtick2295 until13681 without a ring. Preserve the literal EVERY-step criterion; authored suppression needs reconciliation before changing survival-step guidance. Not measured by this batch run.",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-09-marker.json",
-        "docs/reports/sweep-g/G-25-L4-high.json",
-        "docs/reports/sweep-g/G-09-final-closeout.json"
-      ],
+      "receipt": [],
       "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283). Orchestrator 2026-11-06: steps without a spatial destination (hold/defend in place, e.g. the L4 hold) show no world ring by design; the HUD objective text is the marker there.",
       "checks": [],
       "historical": {
@@ -561,40 +557,7 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props.",
-      "reviewDecision": {
-        "row": "G-09",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "67385d24a66e61d6a272f61ff906236da58250ea",
-        "clauses": [
-          {
-            "clause": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
-            "verdict": "FAIL",
-            "note": "L4 hold/plaza ring stays invisible for180 observed simulation ticks at both requested zooms1/1.5 and low/high. waypoint=false explicitly suppresses it. Earlier full physical route also remained in hold fromtick2295 until13681 without a ring. Preserve the literal EVERY-step criterion; authored suppression needs reconciliation before changing survival-step guidance."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-09-marker.json",
-            "sha256": "b4afa196299301250bc4950f3acccedeef5d52db47d6c7a34fca3fbdb10f6c17",
-            "what": "Four inspected frame hashes and28 read-only marker samples; active hold step stays ring-invisible beyond2s."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-25-L4-high.json",
-            "sha256": "619378a34ca6a4d0dc9563fc6ebfe1817208376323c33fdf61b34e6903a871b9",
-            "what": "Independent full physical L4 high route: hold starts2295 with drawn=null; hide starts13681."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-09-final-closeout.json",
-            "sha256": "d618e909084dfe2ff423664af215df69c77d0644cd60ce0cf205db1fcad66dcb",
-            "what": "Four frames viewed. L4 hold ring absent beyond 180 ticks at both qualities and zooms 1/1.5; authored waypoint=false. Whole-row failure retained."
-          }
-        ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
-      }
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
     },
     {
       "id": "G-10",
@@ -905,7 +868,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -1046,27 +1009,29 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
         "docs/reports/fix51-verify/receipts/L9-high-complete.json",
-        "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
-        "docs/reports/sweep-g/G-13-L5-high-trace.json.gz",
-        "docs/reports/sweep-g/G-13-L5-low-complete.json.gz",
-        "docs/reports/sweep-g/G-13-L5-low-trace.json.gz",
-        "docs/reports/sweep-g/G-13-L5-native.json",
-        "docs/reports/sweep-g/G-13-diagnosis.json",
-        "docs/reports/sweep-g/G13-after/REJECTED.json",
-        "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
-        "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
+        "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
+        "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
+        "docs/reports/fix68-g/G-13-fix.json",
+        "docs/reports/fix68-g/G-13-trials.json",
+        "docs/reports/fix68-g/G-13-L3-fix.json",
+        "docs/reports/fix68-g/G-13-L3-trials.json",
+        "docs/reports/fix68-g/G-13-L3-regression.json",
+        "docs/reports/fix68-g/G-13-final-source.json",
+        "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
+        "docs/reports/fix68-g/threat-final/manifest.json",
+        "docs/reports/fix68-g/L3-retirement-fix.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -1139,67 +1104,90 @@
       "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: **No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "reviewDecision": {
         "row": "G-13",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
         "date": "2026-11-06",
-        "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
-            "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
-            "verdict": "FAIL",
-            "note": "Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed."
+            "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
+            "verdict": "PASS",
+            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+          },
+          {
+            "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
+            "verdict": "PASS",
+            "note": "Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification."
+          },
+          {
+            "clause": "Eligible L3 human follower waiting <=10% of human escort time, both tiers.",
+            "verdict": "PASS",
+            "note": "Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
-            "sha256": "59fb7fc319c25ac13b730041e6d616298a86e5bb14344f1b2cff50403c60038c",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
+            "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-high-trace.json.gz",
-            "sha256": "d2d5e74fc70901c3da81a652be4bd3053635ae14fdd7a35c575a37ade0f279d5",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
+            "sha256": "157c2c402a91a125647973af7a746b15eb021ccc23b4fc3a114c0120275b1546",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-low-complete.json.gz",
-            "sha256": "922e3d3adb6f88fecb09194b3ef9ecb8195ee43c207fc96262a5a1a3583b3a9e",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-fix.json",
+            "sha256": "f96258968825d34633b799bdca2366cd779b091f97877a96869286771fa8e4eb",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-low-trace.json.gz",
-            "sha256": "0d7250bfbf58b3d26d72e90422b2663193648b1e51e6006834161e26374b0e02",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-trials.json",
+            "sha256": "a468229f22527de669eab639c3232765e2ef516dd4e229a5ca3e8388f9431193",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-native.json",
-            "sha256": "5b4cf529437998593e85f869e53bde18a24559cad5a084a437e3fc33077d5c7e",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-fix.json",
+            "sha256": "f3788fd7a413bb0b59668450c9877af711171504289ceef230be39b594de1f0a",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-diagnosis.json",
-            "sha256": "69dc4af411a9ae73f04e111a68280b9f01b8155899c5705822a4369c41be4cb5",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-trials.json",
+            "sha256": "1f72a2f979ce07d95643ba1dd22ee4d1b1767e5efd70ee839227bbaf6950e2a0",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G13-after/REJECTED.json",
-            "sha256": "907d79ac7f2ac1d705d0ee9ac27cdf7a075fde10c5cdfc2eb0742e0058c2e9e4",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-regression.json",
+            "sha256": "f96f6f399b9c076f76233bcdcbca6b6c7d51fae7bbbdd2cd386acd450cd0fe8a",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
-            "sha256": "f211ff2a536f5f30dd65db270c6d01f5da7f84a8df299ad84b6102777a64b372",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+            "file": "docs/reports/fix68-g/G-13-final-source.json",
+            "sha256": "288c720cfb683f40371aa07e34c7404e8ef15aa982ea2f4843f1a4a24e1b31c5",
+            "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
-            "sha256": "7683795440e9b4c9db5ebb804c2337cf83ef66a609113b398e6bed19a8df5d6b",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+            "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
+            "sha256": "2074090064937eeb357bf9e167ac16cedf424dd902835343cb48efd45f04b4e1",
+            "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
+          },
+          {
+            "file": "docs/reports/fix68-g/threat-final/manifest.json",
+            "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
+            "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+            "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+            "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
           }
         ],
-        "notes": "Unchanged95% and10% thresholds. This establishes a current whole-row FAIL from L5; all-level follower coverage remains required for any eventual PASS. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled.",
+        "notes": [
+          "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -1274,21 +1262,16 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
       "id": "G-15",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, sweep-g/Codex): Physical WASD/mouse: no ground-click displacement, no moveTarget; all24 bat/handgun/rocket attack directions match pointer aim. Pointer grace ends at28th sampled tick (floating-point endpoint). Drawn body remains71.1degrees away from walking direction at46ticks/0.767s after release, independently in bat/handgun both qualities. This exceeds literal walking-facing exception, caused by separate6rad/s presentation turn. Not measured by this batch run.",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-15-controls.json.gz",
-        "docs/reports/sweep-g/G-15-summary.json",
-        "docs/reports/sweep-g/G-15-captures.json",
-        "docs/reports/sweep-g/G-15-final-closeout.json"
-      ],
+      "receipt": [],
       "expected": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
       "checks": [],
       "historical": {
@@ -1299,46 +1282,7 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys.",
-      "reviewDecision": {
-        "row": "G-15",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "af6e0748c4aa433a251b26f037efa18eb14421e9",
-        "clauses": [
-          {
-            "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
-            "verdict": "FAIL",
-            "note": "Physical WASD/mouse: no ground-click displacement, no moveTarget; all24 bat/handgun/rocket attack directions match pointer aim. Pointer grace ends at28th sampled tick (floating-point endpoint). Drawn body remains71.1degrees away from walking direction at46ticks/0.767s after release, independently in bat/handgun both qualities. This exceeds literal walking-facing exception, caused by separate6rad/s presentation turn."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-15-controls.json.gz",
-            "sha256": "9f490b4070d36ee16b11fa6afce7719c21d02922230be2150a6ad1116aef205b",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-15-summary.json",
-            "sha256": "8010fcfc8ab51b19631de1f329a21aaa8d6765b854f9eb2447376bc23c9687f0",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-15-captures.json",
-            "sha256": "4b09c35287b19b0dcea8e72c31576e46de9a7cd3a73076188a34e8ce0fa2c367",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-15-final-closeout.json",
-            "sha256": "834626411fd6c4c4db549029fb4ed4b6c6201ae2a42d348b19974f1be2f26e89",
-            "what": "30 frames in six cells viewed. No click movement or attack aim discrepancy established; render facing remains 71.1 degrees off walking direction at 0.767 s after release, beyond 0.45 s grace."
-          }
-        ],
-        "notes": "No criteria, input grace or presentation turn rates changed. Raw captures deleted after review. Discarded harness receipts are explicitly separate.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
-      }
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
     },
     {
       "id": "G-16",
@@ -1494,19 +1438,16 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
       "id": "G-18",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, sweep-g/Codex): In L3/L4/L6/L8, both qualities, a visible escort2m from a runner interrupts ordinary complete-rush and receives real attack windups. With the authored finite courier focus, the same escort is never selected over120ticks; runner remains attracted and walks7.5–10m away toward courier30m away. This violates the unchanged normal-perception requirement for a nearby survivor, even though the preference is deliberate code. Not measured by this batch run.",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-18-final-party-perception.json.gz",
-        "docs/reports/sweep-g/G-18-final-party-summary.json"
-      ],
+      "receipt": [],
       "expected": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
       "checks": [],
       "historical": {
@@ -1517,36 +1458,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
       },
-      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets.",
-      "reviewDecision": {
-        "row": "G-18",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "ffb04621df18f7f4b09b5cd6277fa78a31a9f3b1",
-        "clauses": [
-          {
-            "clause": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
-            "verdict": "FAIL",
-            "note": "In L3/L4/L6/L8, both qualities, a visible escort2m from a runner interrupts ordinary complete-rush and receives real attack windups. With the authored finite courier focus, the same escort is never selected over120ticks; runner remains attracted and walks7.5–10m away toward courier30m away. This violates the unchanged normal-perception requirement for a nearby survivor, even though the preference is deliberate code."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-18-final-party-perception.json.gz",
-            "sha256": "93e7178a01166ecd14a7b6e599479f628f79acd03651dfb3b8e226c283c35c56",
-            "what": "Fresh final-source rerun of all300 actual production-world party/finite-focus cells; all measured values identical to prior proof; zero setup errors."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-18-final-party-summary.json",
-            "sha256": "01619f4bfa55c4ee05111e9a72d77dccd02417751aeda56c87a0bc2d3571c146",
-            "what": "Final-source exact counterexample and parity summary. Prior full evidence remains immutable."
-          }
-        ],
-        "notes": "No criteria, AI, target count, focus duration or caps changed. Companion detection redirects to courier without targeting corgi. Full-role coverage is not claimed.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
-      }
+      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
     },
     {
       "id": "G-19",
@@ -1653,15 +1565,13 @@
       "id": "G-20",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts.",
+      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
         "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L9-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
-        "docs/reports/sweep-g/G-20-final-runout.json",
-        "docs/reports/sweep-g/G-20-runout.json"
+        "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
       ],
       "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
       "checks": [
@@ -1718,42 +1628,13 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts and a read-only final-objective/transition tick ledger on every level; verify five live invulnerable seconds when action continues."
       },
-      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge.",
-      "reviewDecision": {
-        "row": "G-20",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "4ec2699068306bbf58cccf265aba25dd3a3516d1",
-        "clauses": [
-          {
-            "clause": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
-            "verdict": "FAIL",
-            "note": "Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-20-final-runout.json",
-            "sha256": "2adc1d3cadfa0858fc2fdee1b87767b1db4e3712d5c813f45451d3f673c97b95",
-            "what": "Fresh final-source run of every arranged terminal predicate, both qualities. All18 measured cells and both explicit L5 fixture rejections identical to prior proof; L7/L9 still transition immediately with live chaser."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-20-runout.json",
-            "sha256": "7baee8979188050947f855a6fbab585f5e874e590aedae13ffbbd504fe043a23",
-            "what": "18 controlled native terminal receipts, exact0/300tick transition and protection values; L5 cap errors retained, not passed."
-          }
-        ],
-        "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage. Final-source refresh preserves all original setup errors and counterexamples; no shortened clocks or caps.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
-      }
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5f32d0e78f06e139f5510059de23d171bd1ccc184d2ad869f292923e08548eb2\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a4436b01d9c2fad86c9a63e4c3e5b782529c8a560f442f660a2ee7a4ad9be4d1\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b74e047c653417ee4d7a7167aae7e94f9e067626d189bad3320413d91750ad95\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"31afe3b5edf771bae64473cbb4b7357a901edd1113ea0b0f8f959cd842919038\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
@@ -1841,7 +1722,7 @@
           "value": {
             "checkpoint": "outskirts-approach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "5f32d0e78f06e139f5510059de23d171bd1ccc184d2ad869f292923e08548eb2",
+            "snapshotSha256": "b74e047c653417ee4d7a7167aae7e94f9e067626d189bad3320413d91750ad95",
             "damage": 100,
             "expected": {
               "id": "outskirts-approach",
@@ -1983,7 +1864,7 @@
           "value": {
             "checkpoint": "outskirts-approach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "a4436b01d9c2fad86c9a63e4c3e5b782529c8a560f442f660a2ee7a4ad9be4d1",
+            "snapshotSha256": "31afe3b5edf771bae64473cbb4b7357a901edd1113ea0b0f8f959cd842919038",
             "damage": 100,
             "expected": {
               "id": "outskirts-approach",
@@ -2060,22 +1941,9 @@
       "id": "G-22",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, sweep-g/Codex): Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls. Not measured by this batch run.",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
-        "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
-        "docs/reports/sweep-g/G-22-L3-native.json",
-        "docs/reports/sweep-g/G-22-diagnosis.json",
-        "docs/reports/sweep-g/G-22-final-L3-low-complete.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-low-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-high-complete.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-high-stationary.json.gz"
-      ],
+      "receipt": [],
       "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "checks": [],
       "historical": {
@@ -2086,86 +1954,7 @@
         "evidence": [],
         "method": "NEXT: Run npm run qa:threat at low and high; retain each actual announced-cohort ledger, first player attack and reachable count, including a deliberately broken fixture proof."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
-      "reviewDecision": {
-        "row": "G-22",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
-        "clauses": [
-          {
-            "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
-            "verdict": "FAIL",
-            "note": "Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
-            "sha256": "c72849107b3e6f2fc035acb4fa2a85a4f04e69243c928b37530e4b609f4af5c3",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
-            "sha256": "a0ed6495767677070eaf14cb73b8e261d94370da1b6622492f9002843e85ff6b",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
-            "sha256": "944e1b38d66295311b08c46238479813fcceb3d12b5a45e55a26f575ed427faa",
-            "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
-            "sha256": "dd49400ef2a38e7b3307854c475cfded01ba9aeb45b4ae0da22a1b418f667a6d",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
-            "sha256": "4d2251b97a8b2433408d1f9ce8b63f5b7bcc68f18786bbe9a7ec7a6b96be9317",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
-            "sha256": "02eee70dda7adf4e5adedf1d373d691050b54c2c3f45c4fb7c39d880c50b7ba2",
-            "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-native.json",
-            "sha256": "f87961b1982371e8cec51519c65c345304059bffc73d8e4b8859e73d7d52b89f",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-diagnosis.json",
-            "sha256": "85148d11e06ad8234b2fd10bf6ee90a134238c917e662a61df46c3d28bda8020",
-            "what": "4 reproduced failing L3 cohort clocks; 92/92 independent bounded-path queries pass and both traced states equal controls."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-low-complete.json.gz",
-            "sha256": "e38621da9f0a2fb6f9e6ed2053074c55b7cbeb37eda12a2adedcff92d1a53c21",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-low-stationary.json.gz",
-            "sha256": "6226d13a47b400ebee89d04bb61d5a1fe26da2b9c0789345557e7d3a5d5697f5",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-high-complete.json.gz",
-            "sha256": "906d16f98952415e94d7a6fb80a6ca5f12f5d52d7001b6b929f0bbe721db3e98",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-high-stationary.json.gz",
-            "sha256": "51c4ea7c122c23ebeccece07dff8383ac45c92c6b635922ff037aa314528914b",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          }
-        ],
-        "notes": "Measured game failure; targets/checkers/counts/timers/caps unchanged. No whole-row PASS or all-level announcement inventory claim. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
-      }
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune)."
     },
     {
       "id": "G-23",
@@ -2416,7 +2205,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -2504,7 +2293,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -2592,7 +2381,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     }
   ],
@@ -2675,7 +2464,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -2784,7 +2573,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -2807,6 +2596,7 @@
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-countryside-1793944381271/input.json.gz",
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-dry-shortcut-1793944868517/input.json.gz",
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/input.json.gz",
+        "docs/reports/fix73-g/L9-patrol.json",
         "docs/reports/batch51-qa/L9.jpg",
         "docs/reports/batch51-qa/l9-road-low-gap.json",
         "docs/reports/batch51-qa/visual-runs.json"
@@ -2904,17 +2694,23 @@
             "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/input.json.gz",
             "sha256": "e137b07d93599a5a6954d00028b71f7143a7f97a3e79548f621b4f938d237db2",
             "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+          },
+          {
+            "file": "docs/reports/fix73-g/L9-patrol.json",
+            "sha256": "815dc783ac6d552596d34e28897668f9dbde16c9f40b3157be4031c9d5a6be74",
+            "what": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row."
           }
         ],
+        "notes": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row.",
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
       "id": "L9-04",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED)",
+      "value": "low/complete actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":712,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":752,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); low/stationary actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":712,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":752,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); high/complete actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":776,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":777,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); high/stationary actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":776,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":777,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
@@ -2930,8 +2726,196 @@
           "level": "L9",
           "tier": "low",
           "policy": "complete",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 712,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 752,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 754,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2676,
+              "sourceId": 667,
+              "targetId": 815,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2678,
+              "sourceId": 667,
+              "targetId": 814,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3381,
+              "sourceId": 667,
+              "targetId": 881,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 880,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4090,
+              "sourceId": 667,
+              "targetId": 909,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4094,
+              "sourceId": 667,
+              "targetId": 908,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 977,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 978,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 979,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6211,
+              "sourceId": 667,
+              "targetId": 1073,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
         },
@@ -2941,8 +2925,196 @@
           "level": "L9",
           "tier": "low",
           "policy": "stationary",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 712,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 752,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 754,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2676,
+              "sourceId": 667,
+              "targetId": 815,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2678,
+              "sourceId": 667,
+              "targetId": 814,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3381,
+              "sourceId": 667,
+              "targetId": 881,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 880,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4090,
+              "sourceId": 667,
+              "targetId": 909,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4094,
+              "sourceId": 667,
+              "targetId": 908,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 977,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 978,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 979,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6211,
+              "sourceId": 667,
+              "targetId": 1073,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
         },
@@ -2952,8 +3124,207 @@
           "level": "L9",
           "tier": "high",
           "policy": "complete",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 756,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 780,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 781,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1938,
+              "sourceId": 667,
+              "targetId": 779,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2672,
+              "sourceId": 667,
+              "targetId": 819,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3378,
+              "sourceId": 667,
+              "targetId": 913,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3383,
+              "sourceId": 667,
+              "targetId": 915,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 914,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 962,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 963,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4097,
+              "sourceId": 667,
+              "targetId": 961,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4838,
+              "sourceId": 667,
+              "targetId": 1052,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6215,
+              "sourceId": 667,
+              "targetId": 1112,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6220,
+              "sourceId": 667,
+              "targetId": 1113,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6322,
+              "sourceId": 667,
+              "targetId": 997,
+              "source": "contact",
+              "contactId": 18,
+              "attackId": null,
+              "before": 830,
+              "after": 820
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
         },
@@ -2963,8 +3334,207 @@
           "level": "L9",
           "tier": "high",
           "policy": "stationary",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 756,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 780,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 781,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1938,
+              "sourceId": 667,
+              "targetId": 779,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2672,
+              "sourceId": 667,
+              "targetId": 819,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3378,
+              "sourceId": 667,
+              "targetId": 913,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3383,
+              "sourceId": 667,
+              "targetId": 915,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 914,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 962,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 963,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4097,
+              "sourceId": 667,
+              "targetId": 961,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4838,
+              "sourceId": 667,
+              "targetId": 1052,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6215,
+              "sourceId": 667,
+              "targetId": 1112,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6220,
+              "sourceId": 667,
+              "targetId": 1113,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6322,
+              "sourceId": 667,
+              "targetId": 997,
+              "source": "contact",
+              "contactId": 18,
+              "attackId": null,
+              "before": 830,
+              "after": 820
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
         }
@@ -3067,7 +3637,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -3148,7 +3718,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -3340,7 +3910,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+        "latestRelevantCommit": "35d5042ae0cd74312bd66dbd1fe9ceafd35d2704"
       }
     },
     {
@@ -3387,7 +3957,7 @@
               "collision": {
                 "failures": 0,
                 "pending": 0,
-                "admitted": 513,
+                "admitted": 533,
                 "deferred": 0,
                 "requests": [],
                 "offenders": []
@@ -3440,7 +4010,7 @@
                 "z": 0,
                 "yaw": 0
               },
-              "preCrashDurability": 1000,
+              "preCrashDurability": 830,
               "lostWeapons": [
                 "weapon.fists",
                 "weapon.kick",
@@ -3509,7 +4079,7 @@
               "collision": {
                 "failures": 0,
                 "pending": 0,
-                "admitted": 635,
+                "admitted": 655,
                 "deferred": 0,
                 "requests": [],
                 "offenders": []
@@ -3562,7 +4132,7 @@
                 "z": 0,
                 "yaw": 0
               },
-              "preCrashDurability": 1000,
+              "preCrashDurability": 820,
               "lostWeapons": [
                 "weapon.fists",
                 "weapon.kick",

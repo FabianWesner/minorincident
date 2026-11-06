@@ -41,6 +41,17 @@
       "file": "docs/reports/fix72-c/L7-01/quality-order-cause.json",
       "sha256": "c2f5c9c313ab73c717bec275547752e70b18f0e81c800e1ac24d0d0c628b1fb6",
       "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
+    },
+    {
+      "file": "docs/reports/fix73-g/L7-opening.json",
+      "sha256": "8e36c8ec37ad1ea4b72686f1d25b1255e3faf6e52c7763b4b5ee8c73fc4273d8",
+      "what": "Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Per-capture SHA256 and personal visual observations archived in this receipt."
+    },
+    {
+      "file": "docs/reports/fix73-g/L7-release-opening.json",
+      "sha256": "263dc36b35bc432abee748324b155f73028775b2827d5141aa18eba658705de0",
+      "what": "Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification."
     }
-  ]
+  ],
+  "notes": "Scoped fix73-g observation 2026-11-06, 11555ca: Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Existing whole-row decision, clauses and source qualification retained. Final source35d5042 supersedes earlier scoped success claims: Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification. Existing compound decision/clauses/source qualification remain unchanged."
 }
