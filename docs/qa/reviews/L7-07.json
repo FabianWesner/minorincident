@@ -1,37 +1,31 @@
 {
   "row": "L7-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "77cbbd9808c3bbf6e37b0f2150722f01e7046808",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "3f2fe3c076a5949545c2c8dde3b02475aa566480",
   "clauses": [
     {
       "clause": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
       "verdict": "PASS",
-      "note": "Both unchanged native competent routes:4427 low/4395 high active ticks, independent living-follow roster within18m exactly matches production objective string; zero count mismatches and marker changes, exact authored horizontal anchor(x=-30,z=50), with unchanged optional y, final control hashes identical. Both physical WASD/mouse runs complete without skips/errors, visible24/24 and0/0 samples retain destination marker. These physical runs lost all humans; they do not qualify escort survival, blast gap or actual living-human boarding. Initial low attempt trapped at pharmacy and did not finish."
+      "note": "Current-source canonical native routes sampled4508 low and4418 high corridor ticks. Zero HUD-count mismatches against independent living/18m roster census; zero marker identity or destination-coordinate changes. Both final hashes equal independent controls. Current physical carried-party captures personally reviewed show matching Group1/1 andGroup4/4 displays; complete equality is established by the native every-tick ledger."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/historical/L7-counter.json",
-      "sha256": "c3152824799b5c3bcb9f500e8f8658d5c63c742b7d61d15b2c7b88c57280cebb",
-      "what": "Independent source-bound every-tick counter/marker proof or personally inspected captures with SHA256, seen notes, raw deletion and compressed route logs."
+      "file": "docs/reports/sweep-c5/L7-07/counter-proof.json",
+      "sha256": "1de782f22728383d7a5cfd960bc96d035235bf25f08535a6c29f939f12950078",
+      "what": "Every corridor tick: production HUD string independently compared with living/near follower census, destination identity and coordinates fixed, native control hashes identical."
     },
     {
-      "file": "docs/reports/sweep-c4/L7-07-low-initial-review.json",
-      "sha256": "7743853836644e89caaef419a4ffd2ad65237285f3a0518baca8e88c81dc35e3",
-      "what": "Independent source-bound every-tick counter/marker proof or personally inspected captures with SHA256, seen notes, raw deletion and compressed route logs."
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-review.json.gz",
+      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
+      "what": "Personally reviewed physical corridor frames show Group1/1 on low and Group4/4 on high beside the corresponding visible party."
     },
     {
-      "file": "docs/reports/sweep-c4/L7-07-low-guided-review.json",
-      "sha256": "98505740d1565cb1369b0d5b3e66ae565b42ce35ce7a8ab1ffd73291b857e8e0",
-      "what": "Independent source-bound every-tick counter/marker proof or personally inspected captures with SHA256, seen notes, raw deletion and compressed route logs."
-    },
-    {
-      "file": "docs/reports/sweep-c4/L7-07-high-guided-review.json",
-      "sha256": "82c0bbb7e5e036aab3d154c987f99ef61872e4913de278f508f5ab375c1c83e2",
-      "what": "Independent source-bound every-tick counter/marker proof or personally inspected captures with SHA256, seen notes, raw deletion and compressed route logs."
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-review.json.gz",
+      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
+      "what": "Personally reviewed physical corridor frames show Group1/1 on low and Group4/4 on high beside the corresponding visible party."
     }
-  ],
-  "notes": "Scope is fixed destination and correct Group n/n only. No actor changes or objective skips; courier protection explicit. Both-tier native proof supplies nonempty living follower samples; late physical0/0 is not treated as escort success."
+  ]
 }

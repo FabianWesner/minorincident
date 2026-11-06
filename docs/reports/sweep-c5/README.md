@@ -7,6 +7,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 | Row | Result |
 |---|---|
 | L7-04 | existing current PASS |
+| L7-07 | current PASS;4508/4418 ticks, zero counter mismatches or moving marker ticks; independent controls identical |
 | L7-10 | existing current PASS |
 | L7-05 | current PASS; fresh exact-criterion review closes historical failure; all14 low/high complete/stationary checks pass |
 | L8-01 | current PASS; actual low1/high4 roster, full HP, unchanged arsenal and selected rocket; eleven semantic fault controls reject |
@@ -30,7 +31,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L7-02 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier). |
 | L7-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance. |
 | L7-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep. |
-| L7-07 | NOT CHECKED | NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter "Group n/n" correct. |
 | L7-08 | NOT CHECKED | NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it. |
 | L7-09 | FAIL | Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks. |
 | L7-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge. |
@@ -78,4 +78,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 34. Current PASS rows listed above: 13. No game code was changed. Perf work was not performed.
+Open current rows: 33. Current PASS rows listed above: 14. No game code was changed. Perf work was not performed.
