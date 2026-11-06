@@ -917,9 +917,7 @@ export class LevelFourWar {
     // The arrival roster mixes silhouette and combat archetypes at the source.
     // Refill the least represented living archetype so slower survivors cannot dominate later waves.
     const neighbours = ai.active.filter(e => e.health.current > 0 && !e.hidden);
-    // Keep the escape cohort's original roles; reinforced silhouettes belong to the plaza war.
-    const roles = this.s.phase === 'collapse' ? roster.filter(role => role !== 'infected.armored') : roster;
-    const archetype = balancedCrowdModel(roles, neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z })), at, this.s.emergedIds.length + this.s.collapseIds.length);
+    const archetype = balancedCrowdModel(roster, neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z })), at, this.s.emergedIds.length + this.s.collapseIds.length);
     const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
