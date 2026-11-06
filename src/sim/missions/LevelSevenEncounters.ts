@@ -118,8 +118,16 @@ export class LevelSevenEncounters {
     for (let i = 0; i < count; i++) {
       // Spread along the road so one rocket cannot erase a whole compact row
       // before its unhit neighbours have time to approach from the flanks.
-      const p = { x: centre.x + (i % 10 - 4.5) * 2.8, z: centre.z + (Math.floor(i / 10) - (rows - 1) / 2) * rowGap };
-      if (ai.director.tier === 'low' && group !== l7Encounters.finalGroup && centre.x > 90) {
+      let p = { x: centre.x + (i % 10 - 4.5) * 2.8, z: centre.z + (Math.floor(i / 10) - (rows - 1) / 2) * rowGap };
+      if (group === l7Encounters.firstStreetGroup) {
+        // fix69-r (L7-05/G-13): a 25 m column along the road reached from the launcher into the forming party, so a group
+        // following a courier who walks on was dragged through the whole pack. A close cluster (4 low / 5 high) waits on
+        // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
+        // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
+        const close = ai.director.tier === 'low' ? 4 : 5, j = i - close;
+        p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
+          : { x: centre.x - Math.floor(j / 10) * 1.6, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 10 >> 1) * 1.8) };
+      } else if (ai.director.tier === 'low' && group !== l7Encounters.finalGroup && centre.x > 90) {
         const row = Math.floor(i / 10);
         // The broad Northgate road has two clear verges. Keep the existing
         // low roster on three approaches rather than one rocket-sized lane.
@@ -134,6 +142,10 @@ export class LevelSevenEncounters {
     if (this.state.started) return;
     this.state.started = true;
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'l7.armed' });
+    // fix69-r (L7-05): arming (the launcher pickup) sets the opening verge ranks on the courier, so they close in within
+    // seconds instead of waiting for their idle leash. The close cluster east of the anchor keeps its own native notice;
+    // pressing it too drove it through the following party.
+    for (const e of this.world.infected!.active) if (e.infected!.pack === l7Encounters.firstStreetGroup && e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
     const streetCount = low ? 140 : 280;
