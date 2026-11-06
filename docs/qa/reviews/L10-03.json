@@ -1,17 +1,22 @@
 {
   "row": "L10-03",
   "status": "FAIL",
-  "reviewer": "Codex sweep-c5",
+  "reviewer": "Codex sweep-c6",
   "date": "2026-11-06",
-  "commit": "0388b3488dd2823b2662e9b7fe4e8bf747b18e00",
+  "commit": "cd87b9587866301d7ac17c115cfa3d5f56be356c",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
       "verdict": "FAIL",
-      "note": "Current-source full competent routes finish at both tiers with independent control hashes14a5235c/fe1371ba. Separate population/species/group peaks meet their bounds, and dogs follow handgun pickup3497 (first dog4950, zero premature ticks). Stronger every-tick admitted local census finds no same-tick count/species witness for low industrial, low campus, high industrial or high corridor. With required species present, industrial max count9<16 low and15<25 high; low campus33<35. High corridor never has required3\u20135 dogs and2\u20133 Alphas together. Exact count intervals retain every sampled tick; hidden/pending actors and separate Mega excluded. This contradicts full concurrent-composition qualification;90 legacy peak-boundary fault controls still reject and do not prove simultaneity. No counts, timers, caps, game code or criteria changed. Resolving four region/tier admission/combat overlaps needs a game change beyond a single clear local correction; recorded FAIL rather than claiming closure from independent peaks."
+      "note": "Fresh same-tick native admission census on current game sourceHash 8f5d6d4a. No required species/count witness exists at low industrial (peak 23 total, only 3 dogs and no Alpha; target \u226516 with 2\u20134 dogs and 1 Alpha), low research campus (peak 38 total, only 1 dog and 1 Alpha; target \u226535 with 2\u20134 dogs and 1\u20132 Alphas), high industrial (peak 32 total, no Alpha; target \u226525 with 2\u20134 dogs and 1 Alpha), or high destroyed corridor (peak 97, only 1 dog and 2 Alphas; target 3\u20135 dogs and 2\u20133 Alphas). Other region/tier witnesses were found. Counts and species are sampled on the same admitted-local tick; upper bounds are never violated. Game edits tried in this lane caused the competent low route to time out, so no spawn/count/timer tweak has a clear safe cause. Retained as measured FAIL without changing targets."
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/sweep-c5/L10-03/simultaneous-census.json",
+      "sha256": "89221179c4150140ff098b731497cb7acd9774543079b024af46a73f14dbdb16",
+      "what": "Fresh current-source low/high tick-by-tick local admitted census; all six regions, count/species witnesses and contiguous intervals. Four required compositions have no same-tick witness."
+    },
     {
       "file": "docs/reports/sweep-c5/L10-03/fringe-dogs.json",
       "sha256": "156275dd30348ae358ffa9e58d4144b627d6a77a9bc027fdae8e312733cae596",
@@ -23,7 +28,7 @@
       "what": "Fresh handgun-before-dogs timing with unchanged native controls, or90 separate-peak/composition boundary fault rejections."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-03/simultaneous-census.json",
+      "file": "docs/reports/sweep-c6/L10-03/prior/simultaneous-census.json",
       "sha256": "d5f56a3a47a128dcacd9f7fdeec09a2289117fc2315e6475c6394de463da6340",
       "what": "Every tick represented by contiguous count intervals; same-tick admitted local population/species witnesses, four failing region/tier combinations, all native controls identical."
     },
