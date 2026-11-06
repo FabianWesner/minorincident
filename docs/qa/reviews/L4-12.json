@@ -1,26 +1,21 @@
 {
   "row": "L4-12",
   "status": "FAIL",
-  "reviewer": "Codex/fix71-b",
+  "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
   "commit": "b7553885e283ad16af8a5d727f37d1cd272f38e1",
   "clauses": [
     {
-      "clause": "Horde mix: \u2265 4 distinct infected looks in every 20-infected sample (not only suits).",
+      "clause": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
       "verdict": "FAIL",
-      "note": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
+      "note": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L4-release-native.json",
-      "sha256": "1ceff5eb440f704146b6154987337caf7a1140ee41766942aab397b10109613e",
-      "what": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
-    },
-    {
-      "file": "docs/reports/fix71-b/L4-release-native.json.gz",
-      "sha256": "0e87b569a3585b973ba8278539cc4efdc2e10428381b71615d69a9cd8b202eb8",
-      "what": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
+      "file": "docs/reports/fix73-b/L4-native-summary.json",
+      "sha256": "b7247e0d39d696d83f0f64d74a93c989eb58ecde767c810f6ff5bd755ebdb555",
+      "what": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
     },
     {
       "file": "docs/reports/fix71-b/L4-release-capture-review.json",
