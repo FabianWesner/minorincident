@@ -851,7 +851,7 @@ export class LevelFourWar {
       .sort((a, b) => dist(a.at, player) - dist(b.at, player));
     while (s.alarmPending > 0 && mouths.length) {
       // The alarm uses the same small exterior groups as the later streets.
-      // Nine/eighteen authored bodies leave in threes, never one bulk spawn.
+      // The authored alarm bodies leave in threes, never one bulk spawn.
       const mouth = mouths[Math.floor(s.alarmCursor / 3) % mouths.length];
       const lane = s.alarmCursor % 3, row = Math.floor(s.alarmCursor / (mouths.length * 3));
       const at = this.snap({ x: mouth.at.x + (lane - 1) * .9, z: mouth.at.z + row * .8 }, .45);
