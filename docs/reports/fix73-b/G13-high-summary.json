@@ -1,0 +1,43 @@
+{
+  "row": "G-13 (L5 high tier)",
+  "sourceHash": "6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e",
+  "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+  "nativeStateHash": "147553b8",
+  "receiptSha256": "10606032ed30ecd7c53b0e827fdf4dae8d0b6639eec51669b5aaaab4e4ed65f4",
+  "measurement": "Native complete-route acceptance follower medians, step/look phase; same existing 0.95 floor; no new threshold.",
+  "followerPace": [
+    {
+      "seed": 1,
+      "outcome": "complete",
+      "phase": "step/look",
+      "followerId": 28,
+      "samples": 47,
+      "followerMedian": 4.350523783328833,
+      "groupMedian": 4.350523783328833,
+      "ratio": 1,
+      "meetsFloor": true
+    },
+    {
+      "seed": 2,
+      "outcome": "complete",
+      "phase": "step/look",
+      "followerId": 28,
+      "samples": 46,
+      "followerMedian": 4.081309799188867,
+      "groupMedian": 4.18653567595033,
+      "ratio": 0.974865644316389,
+      "meetsFloor": true
+    },
+    {
+      "seed": 3,
+      "outcome": "complete",
+      "phase": "step/look",
+      "followerId": 28,
+      "samples": 46,
+      "followerMedian": 3.947744963831267,
+      "groupMedian": 4.447189613994879,
+      "ratio": 0.88769432079264,
+      "meetsFloor": false
+    }
+  ]
+}

@@ -1,14 +1,14 @@
 {
   "row": "G-13",
-  "status": "PASS",
-  "reviewer": "fix68-g/Codex",
+  "status": "FAIL",
+  "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
   "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
-      "verdict": "PASS",
-      "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+      "verdict": "FAIL",
+      "note": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Native complete-route acceptance measures follower 28 in the L5 step/look phase with at least 46 samples in every seed. Ratios to the group median: seed 1 1.0000, seed 2 0.9749, seed 3 0.8877. Seed 3 is below the unchanged 0.95 floor; the required two failing seeds are not established. L5 high G-13 remains open/FAIL."
     },
     {
       "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -22,6 +22,11 @@
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/fix73-b/G13-high-summary.json",
+      "sha256": "b96c4292edffdc7b47b010d9241a02df6a8ecd2819c8d3bb03e751b6593bdf9c",
+      "what": "Current sourceHash 6e2674feea13b9370719803cc5518d6d2c84e3230b6b728b6705a5c2b9d28f9e. Native complete-route acceptance measures follower 28 in the L5 step/look phase with at least 46 samples in every seed. Ratios to the group median: seed 1 1.0000, seed 2 0.9749, seed 3 0.8877. Seed 3 is below the unchanged 0.95 floor; the required two failing seeds are not established. L5 high G-13 remains open/FAIL."
+    },
     {
       "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
       "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
