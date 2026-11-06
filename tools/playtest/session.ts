@@ -159,6 +159,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const handoversCaptured = new Set<string>();
   let acceptanceTick = -Infinity;
   let l6FightCaptured = false, l6RetreatFightCaptured = false;
+  const l6ShieldPhotos = new Set<number>();
+  let l6GatePhoto = false;
   let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
   let l6DeathExercise = process.env.PLAYTEST_L6_DIE_ONCE === '1';
   let l10DeathExercise = process.env.PLAYTEST_L10_DIE_ONCE === '1', l10Mortal = false;
@@ -168,6 +170,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     eyes = await observeWithin(page.evaluate(look));
+    if (process.env.PLAYTEST_L6_SHIELD_CAPTURES === '1' && eyes.level === 'L6' && eyes.phase === 'playing' && eyes.player && eyes.player.x > 50 && eyes.player.x < 115 && l6ShieldPhotos.size < 2) {
+      const hit = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.sourceId === 1 && e.shieldBreak).at(-1));
+      if (hit && eyes.tick - hit.tick < 60 && !l6ShieldPhotos.has(hit.tick)) {
+        l6ShieldPhotos.add(hit.tick); await capture(`L6-shield-break-t${hit.tick}`);
+      }
+    }
+    if (process.env.PLAYTEST_L6_SHIELD_CAPTURES === '1' && eyes.level === 'L6' && !l6GatePhoto && eyes.player && eyes.player.x > 85 && eyes.player.x < 110) {
+      const prompt = await page.evaluate(() => {
+        const panel = document.querySelector<HTMLElement>('[data-testid=interaction-prompt]');
+        return panel && !panel.hidden && panel.innerText.includes('E or click') ? panel.innerText : null;
+      });
+      if (prompt) { l6GatePhoto = true; log({ l6GatePrompt: { tick: eyes.tick, text: prompt } }); await capture(`L6-gate90-prompt-t${eyes.tick}`); }
+    }
     if (process.env.PLAYTEST_COMPANION_TRACE === '1' && eyes.phase === 'playing' && !eyes.loading) {
       const alarm = await page.evaluate(() => {
         const g = (window.__SCENE__ as unknown as { game: Game }).game;
