@@ -1,0 +1,1118 @@
+{
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "status": "NOT CHECKED",
+  "method": "Read-only physical route observations. Sampled marker coordinates require comparison with authored action points; handoffs and UI/world update boundaries are not automatically failures. Corpse lifetimes include sleeping chunks; checkpoint restores/revivals and separate Resume batches end an observation interval.",
+  "rows": [
+    {
+      "route": "G-25-audited-L1-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L1-high-webgl2-observations.json.gz",
+        "sha256": "63d1e8dcdabd47b6a299cc613c0de962fd747f3bab3e6fff59b00e94e27e7bd8"
+      },
+      "stepMarkerPoints": {
+        "pickup": [
+          [
+            -37.8,
+            -37.5
+          ],
+          [
+            66,
+            -12.3
+          ]
+        ],
+        "deliver": [
+          [
+            66,
+            -12.3
+          ]
+        ],
+        "weapon": [
+          [
+            22.8,
+            36.7
+          ]
+        ],
+        "firestation": [
+          [
+            -76.6,
+            41.27
+          ]
+        ]
+      },
+      "distanceSamples": 105,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L1-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L1-low-webgl2-observations.json.gz",
+        "sha256": "a331acedd8109a8b218e62de702ee5396694c455aa43c5d4346558ef6745f40b"
+      },
+      "stepMarkerPoints": {
+        "pickup": [
+          [
+            -37.8,
+            -37.5
+          ]
+        ],
+        "deliver": [
+          [
+            66,
+            -12.3
+          ]
+        ],
+        "weapon": [
+          [
+            22.8,
+            36.7
+          ]
+        ],
+        "firestation": [
+          [
+            -76.6,
+            41.27
+          ]
+        ]
+      },
+      "distanceSamples": 93,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L10-low-webgl2",
+      "batch": "-batch1",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-low-webgl2-batch1-observations.json.gz",
+        "sha256": "bfbb1d5eb29bb54508ec356029542c4c5293f74b4e11498e78e5eb1db7d677dc"
+      },
+      "stepMarkerPoints": {
+        "residential-fringe": [
+          [
+            767,
+            25
+          ]
+        ],
+        "industrial-area": [
+          [
+            1257,
+            25
+          ]
+        ],
+        "military-zone": [
+          [
+            1857,
+            25
+          ]
+        ],
+        "research-campus": [
+          [
+            2467,
+            -5
+          ]
+        ]
+      },
+      "distanceSamples": 386,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L10-low-webgl2",
+      "batch": "-batch2",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-low-webgl2-batch2-observations.json.gz",
+        "sha256": "06b94c5072a63af31b422f0288e30119ba3ff72f32fb84fb0cccb1d549ca4bd3"
+      },
+      "stepMarkerPoints": {
+        "research-campus": [
+          [
+            2467,
+            -5
+          ]
+        ],
+        "research": [
+          [
+            2707,
+            41.25
+          ]
+        ],
+        "cure": [
+          [
+            2713,
+            41
+          ]
+        ],
+        "research-exit": [
+          [
+            2807,
+            45
+          ]
+        ],
+        "destroyed-corridor": [
+          [
+            2937,
+            -5
+          ]
+        ],
+        "dispersal-complex": [
+          [
+            3697,
+            -25
+          ]
+        ]
+      },
+      "distanceSamples": 369,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L10-low-webgl2",
+      "batch": "-batch4",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-low-webgl2-batch4-observations.json.gz",
+        "sha256": "fdc527dcf4c299204ca884daf24ec0416de3d6466544e7952e2cfa21c7dd8953"
+      },
+      "stepMarkerPoints": {},
+      "distanceSamples": 0,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L10-low-webgl2",
+      "batch": "-batch3",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-low-webgl2-batch3-observations.json.gz",
+        "sha256": "ba33f51f7600d7b89b461d2e4cfee25ac6eb423af1aad928a05cb92d6258e000"
+      },
+      "stepMarkerPoints": {
+        "dispersal-complex": [
+          [
+            3697,
+            -25
+          ]
+        ],
+        "install": [
+          [
+            4006.5,
+            -39
+          ]
+        ],
+        "hold": [
+          [
+            4002,
+            -27
+          ]
+        ],
+        "mega": [
+          [
+            3991.159,
+            -24.769
+          ],
+          [
+            3995.451,
+            -24.467
+          ],
+          [
+            3996.869,
+            -23.996
+          ],
+          [
+            4001.506,
+            -22.632
+          ],
+          [
+            4003.686,
+            -21.186
+          ]
+        ],
+        "release": [
+          [
+            4002,
+            -27
+          ]
+        ]
+      },
+      "distanceSamples": 266,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 18292,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 3\u00a0m",
+          "shownM": 3,
+          "directM": 5.256740120776191,
+          "roundingErrorM": 2,
+          "marker": {
+            "x": 3991.159063846037,
+            "y": 0.7,
+            "z": -24.769441956878662
+          },
+          "player": {
+            "x": 3996.3927576633287,
+            "z": -24.27774517610669,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 18439,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 8\u00a0m",
+          "shownM": 8,
+          "directM": 10.145261980321484,
+          "roundingErrorM": 2,
+          "marker": {
+            "x": 3995.450989256149,
+            "y": 0.7,
+            "z": -24.46735777918055
+          },
+          "player": {
+            "x": 4005.42626953125,
+            "z": -22.618000030517578,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 18587,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 12\u00a0m",
+          "shownM": 12,
+          "directM": 15.074715944246632,
+          "roundingErrorM": 3,
+          "marker": {
+            "x": 3996.8690432044377,
+            "y": 0.7,
+            "z": -23.9958492027286
+          },
+          "player": {
+            "x": 4010.910888671875,
+            "z": -18.511905670166016,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-audited-L2-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L2-high-webgl2-observations.json.gz",
+        "sha256": "ef7cc7a85e096a8e36c75151abdfa83a06a093dec42d9fffc51bc637b95ee106"
+      },
+      "stepMarkerPoints": {
+        "board": [
+          [
+            -70.6,
+            41.1
+          ]
+        ],
+        "ride": [
+          [
+            -43,
+            -32
+          ]
+        ],
+        "bridge": [
+          [
+            79.5,
+            30
+          ]
+        ]
+      },
+      "distanceSamples": 58,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L2-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L2-low-webgl2-observations.json.gz",
+        "sha256": "e467cc31ade9a67754813dafb062c5e1981390ac630b72a8fc3d60c3533f1d80"
+      },
+      "stepMarkerPoints": {
+        "board": [
+          [
+            -70.6,
+            41.1
+          ]
+        ],
+        "ride": [
+          [
+            -43,
+            -32
+          ]
+        ],
+        "bridge": [
+          [
+            79.5,
+            30
+          ]
+        ]
+      },
+      "distanceSamples": 62,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L3-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L3-high-webgl2-observations.json.gz",
+        "sha256": "3a801230bdd7cc4d11306a299483eca583c4f3bc3b76d4dabed3608a502691cc"
+      },
+      "stepMarkerPoints": {
+        "armory": [
+          [
+            -139.2,
+            -8.4
+          ]
+        ],
+        "checkpoint": [
+          [
+            225,
+            0
+          ]
+        ]
+      },
+      "distanceSamples": 124,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L3-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L3-low-webgl2-observations.json.gz",
+        "sha256": "071e3c206e14f6cbbc160dc4ba30cacb316dac627d7fea4e37cd0f08257caa68"
+      },
+      "stepMarkerPoints": {
+        "armory": [
+          [
+            -139.2,
+            -8.4
+          ]
+        ],
+        "checkpoint": [
+          [
+            225,
+            0
+          ]
+        ]
+      },
+      "distanceSamples": 120,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L4-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L4-high-webgl2-observations.json.gz",
+        "sha256": "fe87f9dbb4bfccd96cf819d34f9796f25d4756cbc42048c57fee6a077fc5e31a"
+      },
+      "stepMarkerPoints": {
+        "ride": [
+          [
+            -17,
+            3
+          ]
+        ],
+        "quartermaster": [
+          [
+            -23.2,
+            0.6
+          ]
+        ],
+        "hold": [
+          [
+            -79.3,
+            -45.28
+          ],
+          [
+            -31.2,
+            6.106
+          ],
+          [
+            -20.923,
+            -9.2
+          ],
+          [
+            -17.769,
+            20
+          ]
+        ],
+        "hide": [
+          [
+            -79.3,
+            -45.28
+          ],
+          [
+            74.6,
+            -1.8
+          ]
+        ],
+        "bar": [
+          [
+            74.6,
+            -1.8
+          ]
+        ]
+      },
+      "distanceSamples": 209,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 13589,
+          "step": "hold",
+          "text": "Hold the south breach \u00b7 0:01 remaining \u00b7 22\u00a0m",
+          "shownM": 22,
+          "directM": 71.59844709433177,
+          "roundingErrorM": 50,
+          "marker": {
+            "x": -79.29999999999998,
+            "y": 0,
+            "z": -45.2801
+          },
+          "player": {
+            "x": -22.972942352294922,
+            "z": -1.080550193786621,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-audited-L4-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L4-low-webgl2-observations.json.gz",
+        "sha256": "0ea25f2600333a8f49410fb24663f2e8397b4e33879c7e46a07248499fc30d77"
+      },
+      "stepMarkerPoints": {
+        "ride": [
+          [
+            -17,
+            3
+          ]
+        ],
+        "quartermaster": [
+          [
+            -23.2,
+            0.6
+          ]
+        ],
+        "hold": [
+          [
+            -31.2,
+            6.106
+          ],
+          [
+            -17.769,
+            20
+          ]
+        ],
+        "hide": [
+          [
+            -79.3,
+            -45.28
+          ]
+        ],
+        "bar": [
+          [
+            74.6,
+            -1.8
+          ]
+        ]
+      },
+      "distanceSamples": 200,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L5-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L5-high-webgl2-observations.json.gz",
+        "sha256": "31650e2e72bc8b759c108c5678117056c0158cfd20176506af44cb82987095b7"
+      },
+      "stepMarkerPoints": {
+        "emerge": [
+          [
+            74.6,
+            -1.4
+          ]
+        ],
+        "look": [
+          [
+            -45,
+            50
+          ],
+          [
+            -33.5,
+            -2.7
+          ],
+          [
+            -30.37,
+            -44.4
+          ],
+          [
+            -4.401,
+            2.6
+          ],
+          [
+            58,
+            41.3
+          ]
+        ],
+        "metro": [
+          [
+            37.485,
+            -48.44
+          ]
+        ]
+      },
+      "distanceSamples": 32,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L5-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L5-low-webgl2-observations.json.gz",
+        "sha256": "fb063c68aa13a85855a74aeb09a37d6b90023e2d07e01062dd63815960ec2664"
+      },
+      "stepMarkerPoints": {
+        "emerge": [
+          [
+            74.6,
+            -1.4
+          ]
+        ],
+        "look": [
+          [
+            -45,
+            50
+          ],
+          [
+            -33.5,
+            -2.7
+          ],
+          [
+            -30.37,
+            -44.4
+          ],
+          [
+            -4.401,
+            2.6
+          ],
+          [
+            58,
+            41.3
+          ]
+        ],
+        "metro": [
+          [
+            37.485,
+            -48.44
+          ]
+        ]
+      },
+      "distanceSamples": 26,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L7-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L7-high-webgl2-observations.json.gz",
+        "sha256": "54e0fadd57fd7381015c5e7b7d66a8fb6e9f696761d0a76904154059cff95e03"
+      },
+      "stepMarkerPoints": {
+        "rocket": [
+          [
+            276,
+            15
+          ]
+        ],
+        "corridor": [
+          [
+            -30,
+            50
+          ]
+        ],
+        "departure": [
+          [
+            -70.5,
+            47.5
+          ]
+        ]
+      },
+      "distanceSamples": 161,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 14612,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 1.9684897697365542,
+          "roundingErrorM": 2,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -68.5960693359375,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 14753,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 40.444680114897224,
+          "roundingErrorM": 40,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -30.05841064453125,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 14826,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 64.32228304805658,
+          "roundingErrorM": 64,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -6.179660320281982,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 14895,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 85.18147826339587,
+          "roundingErrorM": 85,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": 14.680010795593262,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 14964,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 101.35447617695792,
+          "roundingErrorM": 101,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": 30.853242874145508,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 15033,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 109.87452786496006,
+          "roundingErrorM": 110,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": 39.373390197753906,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-audited-L7-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L7-low-webgl2-observations.json.gz",
+        "sha256": "afc4552b8a20ecea74cb62e175dcb5d79e164faa1d329f818580d6888200210e"
+      },
+      "stepMarkerPoints": {
+        "rocket": [
+          [
+            276,
+            15
+          ]
+        ],
+        "corridor": [
+          [
+            -30,
+            50
+          ]
+        ],
+        "departure": [
+          [
+            -70.5,
+            47.5
+          ]
+        ]
+      },
+      "distanceSamples": 97,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 7409,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 2.7323858629911606,
+          "roundingErrorM": 3,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -67.81375122070312,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 7558,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 44.35425683066738,
+          "roundingErrorM": 44,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -26.148561477661133,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 7619,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 64.32228304805658,
+          "roundingErrorM": 64,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": -6.179660320281982,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 7699,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 88.15059559053041,
+          "roundingErrorM": 88,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": 17.64917755126953,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 7776,
+          "step": "departure",
+          "text": "Get everyone aboard the bus \u00b7 0\u00a0m",
+          "shownM": 0,
+          "directM": 104.58993263833031,
+          "roundingErrorM": 105,
+          "marker": {
+            "x": -70.5,
+            "y": 0,
+            "z": 47.5
+          },
+          "player": {
+            "x": 34.08873748779297,
+            "z": 47,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-audited-L8-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L8-high-webgl2-observations.json.gz",
+        "sha256": "ff60e6d593752a58a650fe7cfbafd5a3bc61d75343130b3b9160d12bd4d9c36e"
+      },
+      "stepMarkerPoints": {
+        "escape": [
+          [
+            96.71,
+            76.275
+          ]
+        ]
+      },
+      "distanceSamples": 22,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L8-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L8-low-webgl2-observations.json.gz",
+        "sha256": "20116c5484f0c2916d7e197d586fc74d3682b1895cbd7c2ba07503326d155eeb"
+      },
+      "stepMarkerPoints": {
+        "escape": [
+          [
+            96.71,
+            76.275
+          ]
+        ]
+      },
+      "distanceSamples": 23,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-final-L6-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-final-L6-high-webgl2-observations.json.gz",
+        "sha256": "bbb399b4f61c766742beab3c3adceb259730930b465b4cdc14ffb4effdfdd3f2"
+      },
+      "stepMarkerPoints": {
+        "retreat": [
+          [
+            92.4,
+            17.3
+          ],
+          [
+            152.4,
+            17.3
+          ],
+          [
+            212.4,
+            17.3
+          ],
+          [
+            242,
+            15
+          ]
+        ],
+        "exit": [
+          [
+            273,
+            15
+          ]
+        ]
+      },
+      "distanceSamples": 116,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 7621,
+          "step": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 Everyone through \u00b7 E or click the gate to close it \u00b7 3\u00a0m",
+          "shownM": 3,
+          "directM": 149.9964053153567,
+          "roundingErrorM": 147,
+          "marker": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "player": {
+            "x": 92.00543975830078,
+            "z": 14.256020545959473,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        },
+        {
+          "tick": 8219,
+          "step": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 126\u00a0m",
+          "shownM": 126,
+          "directM": 24.37338590655013,
+          "roundingErrorM": 102,
+          "marker": {
+            "x": 92.4,
+            "y": 0.6,
+            "z": 17.3
+          },
+          "player": {
+            "x": 116.15509796142578,
+            "z": 11.844978332519531,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        },
+        {
+          "tick": 10764,
+          "step": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 6\u00a0m",
+          "shownM": 6,
+          "directM": 24.65091207820372,
+          "roundingErrorM": 19,
+          "marker": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "player": {
+            "x": 217.36178588867188,
+            "z": 14.208879470825195,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-final-L6-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-final-L6-low-webgl2-observations.json.gz",
+        "sha256": "7f42730dfdffcc598410acba2414aaa1680529aa5f7640b6a231f7c13f3adbb8"
+      },
+      "stepMarkerPoints": {
+        "retreat": [
+          [
+            92.4,
+            17.3
+          ],
+          [
+            152.4,
+            17.3
+          ],
+          [
+            212.4,
+            17.3
+          ],
+          [
+            242,
+            15
+          ]
+        ],
+        "exit": [
+          [
+            273,
+            15
+          ]
+        ]
+      },
+      "distanceSamples": 127,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 7346,
+          "step": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 5\u00a0m",
+          "shownM": 5,
+          "directM": 152.72930643526632,
+          "roundingErrorM": 148,
+          "marker": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "player": {
+            "x": 89.28501892089844,
+            "z": 12.908206939697266,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        },
+        {
+          "tick": 11500,
+          "step": "retreat",
+          "text": "Stay with the group \u00b7 84\u00a0m",
+          "shownM": 84,
+          "directM": 6.0383861074354375,
+          "roundingErrorM": 78,
+          "marker": {
+            "x": 152.4,
+            "y": 0.6,
+            "z": 17.3
+          },
+          "player": {
+            "x": 157.96298217773438,
+            "z": 14.95152473449707,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        },
+        {
+          "tick": 12373,
+          "step": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 6\u00a0m",
+          "shownM": 6,
+          "directM": 33.92513346874889,
+          "roundingErrorM": 28,
+          "marker": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "player": {
+            "x": 208.1057891845703,
+            "z": 13.551844596862793,
+            "hp": 100,
+            "weapon": "weapon.army-mg"
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No whole-row PASS: coordinates sampled at route observations, not continuously at each rendered marker update.",
+    "HUD/marker discrepancies retained at L6 gate handoffs, L4 breach change, L7 moving bus departure and L10 Mega target poses; authored action points/cinematic clocks require precise same-frame reconciliation.",
+    "The L4 cellar route steering fix has separate low/high before/after evidence. No further game changes."
+  ]
+}
