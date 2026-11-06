@@ -1,27 +1,27 @@
 {
   "row": "L1-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "897bf99ce750445e7fbb4a514ece7ce5ca3fe248",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "50d23a8fd557e2497cba39fd21abb3d631ed612c",
   "clauses": [
     {
-      "clause": "50\u201360 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
+      "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
       "verdict": "PASS",
-      "note": "Fresh current-source untouched seed1 morning runs: 51 low / 58 high human civilians, zero infected or combat, every tick through 60 seconds. Maximum near-stationary interval without an authored meaningful target ahead is 133 ticks (2.217s) in both tiers. Technician faces the actual lab door. Four negative/boundary measurement controls pass."
+      "note": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L1-02-current-review.json",
-      "sha256": "861639380c50e4aaee48c1d6f7f902a7faad4145dd414c5ae54991391afd7d9d",
-      "what": "Current-source every-human/every-tick morning census and actual body-yaw/facing target observation, both qualities for sixty seconds; four negative/boundary controls. No spawn, teleport, protection or mission skips."
+      "file": "docs/reports/sweep-a3/L1-02-current-review.json",
+      "sha256": "049eb4e8c14d83de973873eeb7b38a96b86dc613253d43cce2eb4c5ab3d815fa",
+      "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-02-current-ledger.json.gz",
-      "sha256": "074e579761a5dfc8b997fd2b306cce56024def2bf11b781dbb6e53c292b9c721",
-      "what": "Current-source every-human/every-tick morning census and actual body-yaw/facing target observation, both qualities for sixty seconds; four negative/boundary controls. No spawn, teleport, protection or mission skips."
+      "file": "docs/reports/sweep-a3/L1-02-current-ledger.json.gz",
+      "sha256": "c80ddf015a1a79005e2593e66924d19cdc21b1a416a3d3abd3f58dc5b96ef4fb",
+      "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
     }
   ],
-  "notes": "This is the source criterion\u2019s simulation check. Animals are excluded from human count; even that stricter census meets50\u201360. Existing whole-native-run census53/60 also passes."
+  "notes": "Scripted sim criterion. Actual actor positions/yaws, authored targets, civilian identity census and combat events measured for every tick; no visual appearance claim."
 }
