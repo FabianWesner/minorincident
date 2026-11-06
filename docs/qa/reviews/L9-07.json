@@ -1,47 +1,51 @@
 {
   "row": "L9-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "7abb609dd4600bd46df41f136027d1e010cde6b6",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "d1411ce2664d04300633be5fca34add7319b5d6e",
   "clauses": [
     {
       "clause": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
       "verdict": "PASS",
-      "note": "Both qualities, actual healthy-start1000HP and production-damaged0HP physical WASD routes reach postimpact crawl. Healthy starts have860/960HP before crash after ordinary contacts; zero stays0. One impact each at ticks9960/14585(low healthy/zero) and7305/10473(high). Wreck objective follows impact in event-array order on that same tick; every earlier sampled HUD says Drive toward the city, later HUD says Get clear of the wreck. Each case has10 fall samples retaining hull entity and4 physics wheels. All96 visual captures personally inspected: whole green hull descends with attached rendered sidewheels and moving headlights across fall0\u20139; impact flash/fire leaves wreck visible and courier outside. All raw hashes verified and images deleted. Eight actual-consumer faults reject duplicate impact,early objective/HUD,missing hull/wheel,unfinished drive,unseen image,stale source, with exact bytes restored."
+      "note": "Current-source ordinary healthy and production damage(maxHP)0HP actual WASD drives bothtiers all reach crawl without skips/teleports. Exactly one crash-impact signal and one reach-outskirts objective percell, same tick: healthy7347bothtiers, zero11979low/10442high. Each cell has10fall snapshots over120ticks: vehicleentity present and4physicswheels throughout; dense pairedfall0\u20139 images personally inspected show attached visible wheels/whole hull/headlights descending together with no vanishing body. All96 smoke/fall panels reviewed in L9-05; firstpostimpact bright flash limits surface detail but wreck/courier persist. HUDsamplesbeforeimpact never say Get clear; samplesat/afterimpact and finalframes show it. Fall camera overrides playerzoom, so pairs are not independentzoom views. Fresh native canonicalcontrols/zero drive independently measure exactlyone impact and objectiveat/afterimpact. Eight actualconsumer faults duplicateimpact/earlyobjective/earlyHUD/missinghull/missingwheel/unfinished/unseen/stalesource allreject; exactbytesrestored. No game/criterion change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-05/historical-qualification.json",
-      "sha256": "4a7802248b720e506312c5f167402d49e92ff5637b64a3983361dab55dfe8f62",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
-    },
-    {
-      "file": "docs/reports/sweep-c3/L9-07/coverage-proof.json",
+      "file": "docs/reports/sweep-c5/L9-07/coverage-proof.json",
       "sha256": "0d7b76ff498dc0fa2e3ef5002bf8743b51f28b580bcc68349d68ee55aec63f78",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
     },
     {
-      "file": "docs/reports/sweep-c4/L9-05-full-review.json",
-      "sha256": "8527e65c6e043fde2f625b36c699835c8cf6331e0ee6ded410b5dbc105662e39",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+      "file": "docs/reports/sweep-c5/L9-05/qualification.json",
+      "sha256": "df96f2267ac627fe12f7d103f99f37145b23ae4c13b22e0b850342f26da144ea",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
     },
     {
-      "file": "docs/reports/sweep-c4/L9-05-zero-review.json",
-      "sha256": "f0214a58706d38890605f6b3332c14412e760754e2d837e1c6b8a4bcf227a7f9",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+      "file": "docs/reports/sweep-c5/L9-05/native.json",
+      "sha256": "965c454123cc7af418bc7da6f33b702efa0823ea66e19ca4c8bba520e9b46917",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
     },
     {
-      "file": "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
-      "sha256": "3b6dc320b2d1238b71050a222dcfe98146d2f137a07c8cf8b8ee75393925fd8a",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+      "file": "docs/reports/sweep-c5/L9-05/full-review.json",
+      "sha256": "07c86e4058931f9c8c8b4257325ee3e3a41f4f1b8ee1fd5c5f60c09e34ca2cf4",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
     },
     {
-      "file": "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz",
-      "sha256": "e72e19b78fda9333de999a33150ddeecf3ca1de1eadb18415a020fc6207c4f35",
-      "what": "Current actual full-start/zero drive event order and whole-body samples, personally inspected96-frame SHA256 ledger, or actual-consumer fault result."
+      "file": "docs/reports/sweep-c5/L9-05/zero-review.json",
+      "sha256": "8efd9707223daee0e018e0831d283a55ca6cacc4f9b457ca368595f643352fee",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-05/full-assembled.json.gz",
+      "sha256": "dc649c80a88c99302e36adfc0c9d7ddc25a4d6e797c99e969eb563bb5371c99f",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-05/zero-assembled.json.gz",
+      "sha256": "ad3e09311deb8c07b74853721b6fc2e1466d7d607d2db9425fba0e6bc5ef2556",
+      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
     }
-  ],
-  "notes": "Existing full/zero fixture contract means healthy1000HP start plus normal contacts versus0HP setup; exact1000HP at impact is not asserted. The scripted cinematic overrides requested0.5/1.5 zoom, so paired fall images share production framing. Crash flash is bright but whole fall hull remains visible. No target, actor state after setup, game or performance changes."
+  ]
 }

@@ -35,6 +35,8 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 
 | L9-05 | current PASS; actual0HP keyboard drives>1.5km,60.36% healthy speed, dense smoke;96 panels reviewed and8 faults reject |
 
+| L9-07 | current PASS; four whole-body physical crashes, oneimpact each,10 intact fall samples/cell and postimpact objective;8 faults reject |
+
 ## Still open rows
 
 These are the `qa:accept` currentStatus values. The separate status field preserves historical failures until fresh exact-criterion review; it must not be mistaken for a new measured failure.
@@ -55,7 +57,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L9-01 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. |
 | L9-04 | NOT CHECKED | NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers. |
 | L9-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. |
-| L9-07 | NOT CHECKED | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. |
 | L9-09 | NOT CHECKED | NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries. |
 | L10-03 | FAIL | Same-tick census: low industrial max9<16 and campus33<35 with required species; high industrial15<25; high corridor never has required dogs/Alphas together. Full ledgers and identical native controls retained. |
 
@@ -83,4 +84,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 21. Current PASS rows listed above: 26. No game code was changed. Perf work was not performed.
+Open current rows: 20. Current PASS rows listed above: 27. No game code was changed. Perf work was not performed.
