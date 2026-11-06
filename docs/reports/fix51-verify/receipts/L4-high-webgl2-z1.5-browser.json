@@ -1153,6 +1153,54 @@
       },
       "target": "6low/8high; at least6 actual source directions, staggered offscreen; at least3 same-ID Alphas damage a line",
       "receipt": "docs/reports/sweep-b/L4-08-proof.json"
+    },
+    {
+      "id": "L4-02",
+      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "zoom": 1.5,
+        "samples": 12,
+        "firstTick": 1830,
+        "lastTick": 2160,
+        "minimumCivilians": 64,
+        "requiredCivilians": 40,
+        "minimumCentreSeparationM": 0.7029606600245242,
+        "closestPair": [
+          1980,
+          38,
+          42
+        ],
+        "infected": 0,
+        "combatWindups": 0,
+        "damageDecals": 0,
+        "anyEngagedSoldier": false,
+        "routines": [
+          "bus-stop",
+          "carry-belongings",
+          "chat",
+          "jog",
+          "shop",
+          "walk-dog"
+        ],
+        "allCivilianActivitiesCalm": true,
+        "status": "PASS",
+        "controlsRejectWrongFact": {
+          "count": true,
+          "separation": true,
+          "infected": true,
+          "decals": true,
+          "combat": true,
+          "engaged": true
+        },
+        "input": "docs/reports/sweep-b/L4-high-z1.5-ledger.json.gz",
+        "inputSha256": "e755953d65635a8b895508227f3b9077b46ff5165159e9be9209ad9969192790"
+      },
+      "target": "high\u226540/low\u226530 civilians; no infected/combat/damage decals; calm routines, relaxed soldiers, no overlap or outside-camp clump",
+      "receipt": "docs/reports/sweep-b/L4-02-proof.json"
     }
   ],
   "observations": {

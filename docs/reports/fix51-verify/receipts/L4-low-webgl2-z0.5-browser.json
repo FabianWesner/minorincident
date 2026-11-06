@@ -685,7 +685,7 @@
         "audioPath": "test-results/vqa-1b/sweep-b-L4-low-z0.5/sweep-b-L4-low-z0.5-audio.json",
         "audioSha256": "ac654ead0085cbafd31a12103ea9a539e37d8a1897df0b133bdb1bd80a7cbf3f"
       },
-      "target": "decoded RMS≥0.001 spans≥6sim seconds; gaps≤1.5s; positive-gain voices filtered≤750Hz in live graph",
+      "target": "decoded RMS\u22650.001 spans\u22656sim seconds; gaps\u22641.5s; positive-gain voices filtered\u2264750Hz in live graph",
       "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z0.5-browser.json"
     },
     {
@@ -797,6 +797,54 @@
       },
       "target": "courier/corgi inspected in actual cellar at both photo zooms and qualities",
       "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z0.5-browser.json"
+    },
+    {
+      "id": "L4-02",
+      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "zoom": 0.5,
+        "samples": 16,
+        "firstTick": 1830,
+        "lastTick": 2280,
+        "minimumCivilians": 32,
+        "requiredCivilians": 30,
+        "minimumCentreSeparationM": 0.7115133003961259,
+        "closestPair": [
+          1920,
+          35,
+          45
+        ],
+        "infected": 0,
+        "combatWindups": 0,
+        "damageDecals": 0,
+        "anyEngagedSoldier": false,
+        "routines": [
+          "bus-stop",
+          "carry-belongings",
+          "chat",
+          "jog",
+          "shop",
+          "walk-dog"
+        ],
+        "allCivilianActivitiesCalm": true,
+        "status": "PASS",
+        "controlsRejectWrongFact": {
+          "count": true,
+          "separation": true,
+          "infected": true,
+          "decals": true,
+          "combat": true,
+          "engaged": true
+        },
+        "input": "docs/reports/sweep-b/L4-low-z0.5-ledger.json.gz",
+        "inputSha256": "55bbec00142f26445bbb5e6f792deb67f10e70792813b86ad54f8f91b66c0a1c"
+      },
+      "target": "high\u226540/low\u226530 civilians; no infected/combat/damage decals; calm routines, relaxed soldiers, no overlap or outside-camp clump",
+      "receipt": "docs/reports/sweep-b/L4-02-proof.json"
     }
   ],
   "observations": {
