@@ -15,8 +15,8 @@ for(const tier of ['low','high'] as const){
   w.events.on('l4.wave',e=>{if(e.type==='l4.wave'&&w.missions!.state.l4!.phase==='collapse')waves.push({tick:e.tick,count:e.count,edges:[...e.edges]});});
   w.events.on('sim.tick',()=>{
    const s=w.missions!.state.l4!,p=w.entities.get(1)!.transform;
-   if(!savedCellar&&s.phase==='cellar'&&!s.barredAt){
-    savedCellar=true;mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/cellar-resume-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,tier,origin:'Actual mortal native complete route, first rendered sim-tick cellar entry before barring',save:w.missions!.saveResume()})));
+   if(!savedCellar&&s.phase==='cellar'&&!s.barredAt&&w.missions!.state.steps.bar.interaction>=1){
+    savedCellar=true;mkdirSync('test-results/fix71-b',{recursive:true});writeFileSync(`test-results/fix71-b/cellar-brace-resume-${tier}.json.gz`,gzipSync(JSON.stringify({...identity,tier,origin:'Actual mortal native complete route, actually reached brace before normal barring',save:w.missions!.saveResume()})));
    }
    peak=Math.max(peak,w.infected!.director.count);
    if(s.phase==='war'){
