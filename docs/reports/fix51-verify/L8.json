@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "7f0d870373ab3e80bc8a6d2a6e3fba87b6a47eebb832c3659b9e0e9d885cebde",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T05:17:36.120Z",
+  "generatedAt": "2026-11-06T06:22:32.282Z",
   "policies": [
     {
       "tier": "low",
@@ -57,6 +57,13 @@
       "receipt": "docs/reports/fix51-verify/receipts/L8-low-handover.json"
     },
     {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-population.json"
+    },
+    {
       "tier": "high",
       "policy": "controlled-fixtures",
       "outcome": "complete",
@@ -76,6 +83,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L8-high-handover.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-population.json"
     },
     {
       "tier": "low",
@@ -3172,16 +3186,21 @@
     },
     {
       "id": "L8-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/complete initial zoo staff identities: 4 (target at least4 staff; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial zoo staff identities: 4 (target at least4 staff; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial zoo staff identities: 4 (target at least4 staff; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial zoo staff identities: 4 (target at least4 staff; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/complete initial zoo staff identities: 4 (target at least4 staff; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial zoo staff identities: 4 (target at least4 staff; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial zoo staff identities: 4 (target at least4 staff; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial zoo staff identities: 4 (target at least4 staff; PASS); low/calm-population actual calm local census and purposeful routines: {\"civilians\":20,\"soldiers\":6,\"staff\":4,\"animals\":[\"lion\",\"gorilla\",\"elephant\",\"zebra\",\"zebra\",\"flamingo\",\"flamingo\",\"flamingo\"],\"maximumIdleSeconds\":0.6,\"controlIdentical\":true} (target 20local civilians,6soldiers,4staff,8animals/5species/2zebras/3flamingos; no hostile or idle-facing-nowhere>3s; exact independent natural control; PASS); low/calm-population outside wall pursuit cannot cross or damage occupants: {\"crossed\":0,\"missing\":0,\"dead\":0,\"hits\":0} (target four live admitted production runners outside four walls, normal pursuit3599ticks; none crosses/damages inside; no missing/dead actor masking; PASS); low/real-input-calm reviewed physical calm activity clips: {\"seen\":true,\"drawnIds\":21,\"drawnClasses\":[\"npc.bathrobe-neighbor\",\"npc.cashier\",\"npc.zookeeper\",\"npc.soldier\",\"npc.groundskeeper\",\"animal.elephant\",\"animal.lion\"],\"maxObservedIdleSeconds\":0.8,\"clips\":[\"npc-walk\",\"civ-flee\",\"npc-look-around\",\"npc-carry\",\"npc-walk-relaxed\",\"walk\",\"idle\"]} (target actual WASD before breach,6006tick samples; rendered civilian/soldier/staff/lion/elephant; idleclip<=3s; all20pairedzoom frames reviewed; PASS); high/calm-population actual calm local census and purposeful routines: {\"civilians\":20,\"soldiers\":6,\"staff\":4,\"animals\":[\"lion\",\"gorilla\",\"elephant\",\"zebra\",\"zebra\",\"flamingo\",\"flamingo\",\"flamingo\"],\"maximumIdleSeconds\":0.6,\"controlIdentical\":true} (target 20local civilians,6soldiers,4staff,8animals/5species/2zebras/3flamingos; no hostile or idle-facing-nowhere>3s; exact independent natural control; PASS); high/calm-population outside wall pursuit cannot cross or damage occupants: {\"crossed\":0,\"missing\":0,\"dead\":0,\"hits\":0} (target four live admitted production runners outside four walls, normal pursuit3599ticks; none crosses/damages inside; no missing/dead actor masking; PASS); high/real-input-calm reviewed physical calm activity clips: {\"seen\":true,\"drawnIds\":24,\"drawnClasses\":[\"npc.cashier\",\"npc.soldier\",\"npc.zookeeper\",\"npc.groundskeeper\",\"animal.elephant\",\"animal.lion\"],\"maxObservedIdleSeconds\":0.8,\"clips\":[\"npc-walk\",\"npc-walk-relaxed\",\"run\",\"npc-look-around\",\"npc-carry\",\"civ-flee\",\"walk\",\"idle\"]} (target actual WASD before breach,6006tick samples; rendered civilian/soldier/staff/lion/elephant; idleclip<=3s; all20pairedzoom frames reviewed; PASS) Manual review PASS (FRESH, Codex sweep-c5): Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30§5.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix55-c/L8-05-native.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+        "docs/reports/sweep-c5/L8-03/review.json",
+        "docs/reports/sweep-c5/L8-03/native.json.gz",
+        "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
+        "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
+        "docs/reports/sweep-c5/L8-03/coverage-proof.json"
       ],
       "expected": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
       "checks": [
@@ -3492,6 +3511,158 @@
           "value": 4,
           "target": "at least4 staff",
           "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-03",
+          "clause": "actual calm local census and purposeful routines",
+          "tier": "low",
+          "policy": "calm-population",
+          "status": "PASS",
+          "value": {
+            "civilians": 20,
+            "soldiers": 6,
+            "staff": 4,
+            "animals": [
+              "lion",
+              "gorilla",
+              "elephant",
+              "zebra",
+              "zebra",
+              "flamingo",
+              "flamingo",
+              "flamingo"
+            ],
+            "maximumIdleSeconds": 0.6,
+            "controlIdentical": true
+          },
+          "target": "20local civilians,6soldiers,4staff,8animals/5species/2zebras/3flamingos; no hostile or idle-facing-nowhere>3s; exact independent natural control",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-03",
+          "clause": "outside wall pursuit cannot cross or damage occupants",
+          "tier": "low",
+          "policy": "calm-population",
+          "status": "PASS",
+          "value": {
+            "crossed": 0,
+            "missing": 0,
+            "dead": 0,
+            "hits": 0
+          },
+          "target": "four live admitted production runners outside four walls, normal pursuit3599ticks; none crosses/damages inside; no missing/dead actor masking",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-03",
+          "clause": "reviewed physical calm activity clips",
+          "tier": "low",
+          "policy": "real-input-calm",
+          "status": "PASS",
+          "value": {
+            "seen": true,
+            "drawnIds": 21,
+            "drawnClasses": [
+              "npc.bathrobe-neighbor",
+              "npc.cashier",
+              "npc.zookeeper",
+              "npc.soldier",
+              "npc.groundskeeper",
+              "animal.elephant",
+              "animal.lion"
+            ],
+            "maxObservedIdleSeconds": 0.8,
+            "clips": [
+              "npc-walk",
+              "civ-flee",
+              "npc-look-around",
+              "npc-carry",
+              "npc-walk-relaxed",
+              "walk",
+              "idle"
+            ]
+          },
+          "target": "actual WASD before breach,6006tick samples; rendered civilian/soldier/staff/lion/elephant; idleclip<=3s; all20pairedzoom frames reviewed",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-03",
+          "clause": "actual calm local census and purposeful routines",
+          "tier": "high",
+          "policy": "calm-population",
+          "status": "PASS",
+          "value": {
+            "civilians": 20,
+            "soldiers": 6,
+            "staff": 4,
+            "animals": [
+              "lion",
+              "gorilla",
+              "elephant",
+              "zebra",
+              "zebra",
+              "flamingo",
+              "flamingo",
+              "flamingo"
+            ],
+            "maximumIdleSeconds": 0.6,
+            "controlIdentical": true
+          },
+          "target": "20local civilians,6soldiers,4staff,8animals/5species/2zebras/3flamingos; no hostile or idle-facing-nowhere>3s; exact independent natural control",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-03",
+          "clause": "outside wall pursuit cannot cross or damage occupants",
+          "tier": "high",
+          "policy": "calm-population",
+          "status": "PASS",
+          "value": {
+            "crossed": 0,
+            "missing": 0,
+            "dead": 0,
+            "hits": 0
+          },
+          "target": "four live admitted production runners outside four walls, normal pursuit3599ticks; none crosses/damages inside; no missing/dead actor masking",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
+        },
+        {
+          "id": "L8-03",
+          "clause": "reviewed physical calm activity clips",
+          "tier": "high",
+          "policy": "real-input-calm",
+          "status": "PASS",
+          "value": {
+            "seen": true,
+            "drawnIds": 24,
+            "drawnClasses": [
+              "npc.cashier",
+              "npc.soldier",
+              "npc.zookeeper",
+              "npc.groundskeeper",
+              "animal.elephant",
+              "animal.lion"
+            ],
+            "maxObservedIdleSeconds": 0.8,
+            "clips": [
+              "npc-walk",
+              "npc-walk-relaxed",
+              "run",
+              "npc-look-around",
+              "npc-carry",
+              "civ-flee",
+              "walk",
+              "idle"
+            ]
+          },
+          "target": "actual WASD before breach,6006tick samples; rendered civilian/soldier/staff/lion/elephant; idleclip<=3s; all20pairedzoom frames reviewed",
+          "receipt": "docs/reports/sweep-c5/L8-03/review.json",
+          "level": "L8"
         }
       ],
       "historical": {
@@ -3504,7 +3675,55 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+        "clause": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+      },
+      "reviewDecision": {
+        "row": "L8-03",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "d28e01013453088a4f784b51684e5ebd6c1490ca",
+        "clauses": [
+          {
+            "clause": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+            "verdict": "PASS",
+            "note": "Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30§5.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L8-03/native.json.gz",
+            "sha256": "3bf50f44a9516676875d3a1d823bc03bf41e549676e6fe2561875f1fde1ba87e",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
+            "sha256": "7bbd402e8f64bfb9601139aca232f3f179d6a11c5c9e5108396a6b8ed8c3753b",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
+            "sha256": "fbe9d2c112d6d0f0e5a9068eb868d3a8f1d6742a177e3ed20f8c0bb0a967ad78",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/review.json",
+            "sha256": "232c928e3feb21709e3bd9d824f650ad11232455c6c5baecd609603eff5cdd1c",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/coverage-proof.json",
+            "sha256": "7310d85b2fce5664bce85adc5fce26d1e05328be95cc3923e4b2cc887ce672b2",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
+      }
     },
     {
       "id": "L8-04",

@@ -1,0 +1,41 @@
+{
+  "row": "L8-03",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "d28e01013453088a4f784b51684e5ebd6c1490ca",
+  "clauses": [
+    {
+      "clause": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+      "verdict": "PASS",
+      "note": "Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30\u00a75.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c5/L8-03/native.json.gz",
+      "sha256": "3bf50f44a9516676875d3a1d823bc03bf41e549676e6fe2561875f1fde1ba87e",
+      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
+      "sha256": "7bbd402e8f64bfb9601139aca232f3f179d6a11c5c9e5108396a6b8ed8c3753b",
+      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
+      "sha256": "fbe9d2c112d6d0f0e5a9068eb868d3a8f1d6742a177e3ed20f8c0bb0a967ad78",
+      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-03/review.json",
+      "sha256": "232c928e3feb21709e3bd9d824f650ad11232455c6c5baecd609603eff5cdd1c",
+      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-03/coverage-proof.json",
+      "sha256": "7310d85b2fce5664bce85adc5fce26d1e05328be95cc3923e4b2cc887ce672b2",
+      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+    }
+  ]
+}
