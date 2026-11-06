@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "6924e69c716aeea5e73f112f0a2354a44c58f53d",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
       "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
@@ -14,14 +14,14 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L1-14-measurements.json",
-      "sha256": "32e687e55816eef4921c04a44b61b47d67a9f72e36bea5f6cdb48e7a0e52083a",
+      "sha256": "df799849c279e428df8cedfecd147055e7db877a39dc0e4a567858816701f434",
       "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
     },
     {
       "file": "docs/reports/sweep-a3/L1-14-current-ledger.json.gz",
-      "sha256": "7a2e505b320c93566642c5a5497e2a4a4d40d1a4636577783510f2e28889ccc3",
+      "sha256": "559c289f68168d7c0877deab3be8118a9d7307c50da4810730c539775bfaf8f9",
       "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
     }
   ],
-  "notes": "Scripted sim criterion: actual admission and nonhidden flags qualify emergence location; no screenshot appearance claim. Courier-target pursuit is distinguished from valid attacks on civilians."
+  "notes": "Scripted sim criterion: actual admission and nonhidden flags qualify emergence location; no screenshot appearance claim. Courier-target pursuit is distinguished from valid attacks on civilians. Native scripted observation rerun after the final constant-width ring change."
 }
