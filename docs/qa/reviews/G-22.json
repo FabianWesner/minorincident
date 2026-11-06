@@ -1,0 +1,57 @@
+{
+  "row": "G-22",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "9390d329fd2fd08dbbba93f48d230c6ae3331696",
+  "clauses": [
+    {
+      "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack \u2264 20 s after the announcement (tune).",
+      "verdict": "FAIL",
+      "note": "Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
+      "sha256": "c72849107b3e6f2fc035acb4fa2a85a4f04e69243c928b37530e4b609f4af5c3",
+      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
+      "sha256": "a0ed6495767677070eaf14cb73b8e261d94370da1b6622492f9002843e85ff6b",
+      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
+      "sha256": "944e1b38d66295311b08c46238479813fcceb3d12b5a45e55a26f575ed427faa",
+      "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
+      "sha256": "dd49400ef2a38e7b3307854c475cfded01ba9aeb45b4ae0da22a1b418f667a6d",
+      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
+      "sha256": "4d2251b97a8b2433408d1f9ce8b63f5b7bcc68f18786bbe9a7ec7a6b96be9317",
+      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
+      "sha256": "02eee70dda7adf4e5adedf1d373d691050b54c2c3f45c4fb7c39d880c50b7ba2",
+      "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-L3-native.json",
+      "sha256": "f87961b1982371e8cec51519c65c345304059bffc73d8e4b8859e73d7d52b89f",
+      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-22-diagnosis.json",
+      "sha256": "85148d11e06ad8234b2fd10bf6ee90a134238c917e662a61df46c3d28bda8020",
+      "what": "4 reproduced failing L3 cohort clocks; 92/92 independent bounded-path queries pass and both traced states equal controls."
+    }
+  ],
+  "notes": "Measured game failure; targets/checkers/counts/timers/caps unchanged. No whole-row PASS or all-level announcement inventory claim."
+}

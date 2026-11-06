@@ -1,0 +1,84 @@
+{
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "status": "FAIL",
+  "scope": "All cited L3 cohort failures remeasured at both tiers and both input policies; other-level announcement coverage will be refreshed by the whole-group native acceptance gate.",
+  "failing": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "id": "G-22",
+      "clause": "announcement cohort station-0",
+      "level": "L3",
+      "status": "FAIL",
+      "value": {
+        "seconds": 264.65,
+        "spawned": 15,
+        "firstAttackSeconds": 24.983333333333334,
+        "flags": [
+          "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ]
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz"
+    },
+    {
+      "tier": "low",
+      "policy": "complete",
+      "id": "G-22",
+      "clause": "announcement cohort station-2",
+      "level": "L3",
+      "status": "FAIL",
+      "value": {
+        "seconds": 224.65,
+        "spawned": 50,
+        "firstAttackSeconds": null,
+        "flags": [
+          "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ]
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "id": "G-22",
+      "clause": "announcement cohort station-2",
+      "level": "L3",
+      "status": "FAIL",
+      "value": {
+        "seconds": 129.18333333333334,
+        "spawned": 100,
+        "firstAttackSeconds": null,
+        "flags": [
+          "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ]
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/sweep-g/G-22-L3-high-complete.json.gz"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "id": "G-22",
+      "clause": "announcement cohort station-1",
+      "level": "L3",
+      "status": "FAIL",
+      "value": {
+        "seconds": 60.55,
+        "spawned": 60,
+        "firstAttackSeconds": 30.983333333333334,
+        "flags": [
+          "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ]
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz"
+    }
+  ],
+  "boundedPathQueries": 92,
+  "boundedPathPasses": 92,
+  "unobservedControlsIdentical": true,
+  "observation": "Opening low complete-route actors are downed before contact, recover later, or engage officers; station-0 first player attack remains24.9833s. Later wave actors have ordinary paths and attack officers or lose contact after the courier leaves the station. High stationary station-1 first player attack remains30.9833s. This is a coupled encounter pacing/target-competition failure, not a proven missing-path bug.",
+  "next": "Tune the L3 encounter while preserving all wave totals, streams, normal perception, officer attrition and fallback rules; repeat every cohort clock and dependent L3 acceptance row. No small proven game fix was established in this trace."
+}
