@@ -4,6 +4,7 @@ import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
 import { l4, l4InfectedArchetypes, l4InfectedLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -912,22 +913,15 @@ export class LevelFourWar {
     // turn in place with their own identity, clothes and accessories.
     // The arrival roster mixes silhouette and combat archetypes at the source.
     // Refill the least represented living archetype so slower survivors cannot dominate later waves.
-    const counts = new Map<string, number>(roster.map(archetype => [archetype, 0]));
-    for (const living of ai.active) if (living.health.current > 0 && !living.hidden && counts.has(living.archetype ?? '')) counts.set(living.archetype!, counts.get(living.archetype!)! + 1);
-    const minimum = Math.min(...counts.values()), choices = roster.filter(archetype => counts.get(archetype) === minimum);
-    const rosterIndex = (this.s.emergedIds.length + this.s.collapseIds.length) % choices.length;
-    const id = ai.spawn(choices[rosterIndex], at), e = world.entities.get(id)!;
+    const neighbours = ai.active.filter(e => e.health.current > 0 && !e.hidden);
+    const archetype = balancedCrowdModel(roster, neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z })), at, this.s.emergedIds.length + this.s.collapseIds.length);
+    const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
     if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
     if (!this.outsidePerimeter(e.transform)) { ai.release(e); return 0; }
     if (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter') {
-      const looks = new Map<string, number>(l4InfectedLooks.map(model => [model, 0]));
-      for (const living of ai.active) if (living.health.current > 0 && !living.hidden) {
-        const model = living.infected!.model ?? living.infected!.variant;
-        if (looks.has(model)) looks.set(model, looks.get(model)! + 1);
-      }
-      e.infected!.model = l4InfectedLooks.reduce((least, model) => looks.get(model)! < looks.get(least)! ? model : least);
+      e.infected!.model = balancedCrowdModel(l4InfectedLooks, neighbours.map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), at, e.id);
     }
     if (e.combat) { e.combat.staggerUntil = world.tick; e.combat.allyResist = l4.war.arrivalAllyResist; }
     return id;

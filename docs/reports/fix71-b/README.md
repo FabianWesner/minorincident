@@ -7,7 +7,7 @@ Work in progress. No deployment or push.
 | L6-06 | Six authored side entries now admit two each, both native tiers. Commit `fe30ed0`. | Final-source track trajectories and physical capture review; group acceptance rerun. |
 | L6-11 | Both mortal native tiers save **26/29 = 89.66%** with complete; evade-only saves **1/29 = 3.45%**. Complete has zero deaths; evade-only has nine ordinary deaths and completes. [Receipt](L6-11-native.json), [full compressed trace](L6-11-native.json.gz). | Physical route/capture review is running; final group gates remain. |
 | L4-13 | First-window admissions fixed: **2/2/2 low, 3/3/3 high**. All low windows pass. [Fresh native receipt](L4-13-native.json). | Later high windows still miss quotas; whole row remains FAIL. |
-| L4-12 | Not yet changed. | Nearest-20 infected look distribution. |
+| L4-12 | Arrival rosters and clothing now balance within 30m; existing brute adds a fourth durable silhouette. Early full-rate diagnostics: **minimum 5 looks low / 4 high**, 10,601 ticks each. [Receipt](L4-12-native.json). | Full final-source war and rendered appearance review. |
 | L4-16 | Not yet changed. | Decoded filtered battle audio spans at least six seconds in all four cells. |
 | L4-17 | Not yet remeasured. | Current corpse layout and rendered poses after spreading changes. |
 

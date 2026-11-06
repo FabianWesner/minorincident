@@ -2,7 +2,7 @@ import { l3 } from './l3';
 import { l1Pedestrians } from './npcs';
 
 /** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
-export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat'] as const;
+export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat', 'infected.brute'] as const;
 /** Already-infected arrivals: suit, fatigues and the five skinned civilian bodies with the infected material. */
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 
