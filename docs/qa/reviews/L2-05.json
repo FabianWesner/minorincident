@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "29f19fbb37a7f23ecefc0d8c650fee022aed6581",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
       "clause": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen.",
@@ -14,24 +14,24 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L2-05-native.json.gz",
-      "sha256": "d337c2e57b574e03ace6a435dd7b9ebdfa13f47e3cfa3530b4bbaa7bb7f8c9e9",
+      "sha256": "2d94b53f3b75b14e9e98e19932eb94c8795b34c40810725ee053ed520de601e1",
       "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
       "file": "docs/reports/sweep-a3/L2-05-browser-ledger.json.gz",
-      "sha256": "8c2745ceca64d9763ab719a13c16c1cd1a595688a90ebf5d671a0643a0e56e29",
+      "sha256": "ba057aac791e6dde5d90c41345309408a4d5faf72979adf7dbc755bda2457e29",
       "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
       "file": "docs/reports/sweep-a3/L2-05-measurements.json",
-      "sha256": "ff9430d61ee86c81e6615b07912d67df30814781956b73b774965ad939c52b86",
+      "sha256": "38dd8117e381c94fd422ad89c46294bbf10b176a40c7a2a6a6f1682d444c43ac",
       "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     },
     {
       "file": "docs/reports/sweep-a3/L2-05-images.json",
-      "sha256": "a10dc612d4715b71457d1ef6ffcf4dc4514c38c1b071e622297136bd405f5c2a",
+      "sha256": "c384ae286df130d87ff0060758d4d594839052ced63a817c12087341266fe9fb",
       "what": "All36 fresh WebGL2/WebGPU low/high closed-door panic frames personally inspected on four sheets, with low/high close tick3330 views inspected full-size. People visibly raise/press hands, plead, hug and cower inside the actual glazed market; arm/hand poses change across three samples60ticks apart. Native every-tick observation keeps all20low/30high actual identities admitted/nonhidden inside for240 closed-door ticks; first whole-body exit occurs on doorsOpen(0s). All20/30 actual roots are drawn at each renderer sample. Production framing is preserved; close/wide camera-only inspection does not claim unlocked gameplay zoom."
     }
   ],
-  "notes": "Ordinary no-axe native input; paused only for same-tick photographs. Shared headless pool. No protection, relocation, actor injection or objective skips; no performance timing."
+  "notes": "Ordinary no-axe native input; paused only for same-tick photographs. Shared headless pool. No protection, relocation, actor injection or objective skips; no performance timing. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
 }
