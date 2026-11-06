@@ -9,5 +9,5 @@ for(const tier of ['low','high'])for(let n=1;n<=10;n++){
   for(let i=0;i<302&&m.state.phase==='playing';i++){w.applyInput(emptyInput(),'keyboard');w.update();maxTick=Math.max(maxTick,w.tick);if(w.tick<(m.state.runOutUntil??-1))minProtection=Math.min(minProtection,p.survivor.invulnerableUntil);if(m.state.phase!=='playing')transitioned=w.tick;}
   result.cells.push({tier,level,start,atStart,immediate,transitioned,maxTick,minProtection,finalPhase:m.state.phase,playerHp:p.health.current,delay:transitioned===null?null:transitioned-start,pass:immediate.runOutUntil===start+300&&minProtection>=start+300&&(transitioned===null||transitioned-start>=300)});
  }catch(error){result.errors.push({tier,level,error:String(error)});}finally{w?.dispose();}
- writeFileSync('docs/reports/sweep-g/G-20-runout.json',JSON.stringify(result,null,2)+'\n');console.log(level,tier,result.cells.at(-1)?.pass);
+ writeFileSync(process.env.SWEEP_G_RECEIPT_OUT??'docs/reports/sweep-g/G-20-runout.json',JSON.stringify(result,null,2)+'\n');console.log(level,tier,result.cells.at(-1)?.pass);
 }
