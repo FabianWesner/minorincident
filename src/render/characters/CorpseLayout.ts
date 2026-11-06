@@ -35,6 +35,77 @@ function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, 
   return Math.min(pointDistanceSquared(ax, az, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(bx, bz, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(p.ax, p.az, ax, az, bx, bz), pointDistanceSquared(p.bx, p.bz, ax, az, bx, bz));
 }
 const yawDistance = (a: number, b: number) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+interface SearchState {
+  e: EntitySnapshot; player: EntitySnapshot['transform'] | undefined;
+  nav: NonNullable<SimWorld['infected']>['nav'] | undefined; support: SimWorld['districts'];
+  startsOnVehicle: boolean; feet: number; direction: number; length: number; radius: number; height: number;
+  pose: RestingPose; numeric: Float64Array; ownPose: string;
+  vehicleClear(x: number, z: number, padding?: number): boolean;
+  neighbors: (RestingPose | undefined)[]; layers: (RestingPose | undefined)[];
+  spatial: SpatialHash; query: { x: number; z: number; r: number }; ids: number[]; swept: { x: number; z: number };
+  collectNeighbor(id: number): void; rootX: number; rootZ: number; rootClear: boolean; rootFloor: number;
+  queriedX: number; queriedZ: number; neighborCount: number;
+}
+/** One shared evaluator keeps dense searches on the same optimized numeric path. */
+function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number, supported = true): RestingPose | undefined {
+  const { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear, neighbors, layers } = state;
+  if (x !== state.rootX || z !== state.rootZ) {
+    state.rootX = x; state.rootZ = z; state.rootClear = vehicleClear(x, z);
+    // A body falling off a hull does not need a route from its roof.
+    if (state.rootClear && nav && !startsOnVehicle) {
+      const swept = state.swept; swept.x = e.transform.x; swept.z = e.transform.z;
+      nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
+      state.rootClear = Math.hypot(swept.x - x, swept.z - z) <= .01;
+    }
+    state.rootFloor = NaN;
+  }
+  if (!state.rootClear) return;
+  const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
+  const ax = x - dx * .15, az = z - dz * .15;
+  const bx = x + dx * length, bz = z + dz * length;
+  numeric[0] = x; numeric[1] = z; numeric[2] = yaw;
+  numeric[3] = ax; numeric[4] = az; numeric[5] = bx; numeric[6] = bz;
+  if (!vehicleClear(ax, az, radius) || !vehicleClear(bx, bz, radius)) return;
+  if (player && !(pointDistanceSquared(player.x, player.z, ax, az, bx, bz) >= .95 ** 2)) return;
+  if (Number.isNaN(state.rootFloor)) state.rootFloor = support?.supportBelow(x, z, feet) ?? feet;
+  let y = state.rootFloor; numeric[7] = y;
+  if (supported) for (let sample = 0; sample < 3; sample++) {
+    const t = sample * .5;
+    const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
+    if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
+  }
+  if (x !== state.queriedX || z !== state.queriedZ) {
+    state.query.x = state.queriedX = x; state.query.z = state.queriedZ = z;
+    state.neighborCount = 0;
+    state.spatial.query(state.query, state.ids, false, state.collectNeighbor);
+  }
+  const minX = Math.min(ax, bx), maxX = Math.max(ax, bx), minZ = Math.min(az, bz), maxZ = Math.max(az, bz);
+  let layerCount = 0;
+  for (let n = 0; n < state.neighborCount; n++) {
+    const other = neighbors[n]!;
+    // A separated capsule AABB cannot overlap. Keep a small margin so this
+    // only skips definite misses; surviving pairs use the exact old distance.
+    const reach = radius + other.radius + 1e-6;
+    if (maxX < Math.min(other.ax, other.bx) - reach || minX > Math.max(other.ax, other.bx) + reach
+      || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
+    if (segmentDistanceSquared(ax, az, bx, bz, other) >= (radius + other.radius) ** 2) continue;
+    if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
+    // Stable insertion into the used prefix retains the old height sort
+    // and bucket tie order without resizing the scratch backing store.
+    let at = layerCount++;
+    while (at > 0 && layers[at - 1]!.y > other.y) { layers[at] = layers[at - 1]; at--; }
+    layers[at] = other;
+  }
+  // Fill the lowest free layer. Always going above the highest neighbour
+  // made a chain of touching feet climb into an artificial body tower.
+  for (let i = 0; i < layerCount; i++) {
+    const other = layers[i]!;
+    if (y + height > other.y + .001 && y < other.y + other.height - .001) y = other.y + other.height;
+  }
+  pose.x = x; pose.z = z; pose.yaw = yaw; pose.ax = ax; pose.az = az; pose.bx = bx; pose.bz = bz; pose.y = y;
+  // Reuse search scratch; only the winning pose needs an owned record.
+  return pose;
+}
 export class CorpseLayout {
   readonly bodies = new Map<number, RestingPose>();
   private readonly spatial = new SpatialHash();
@@ -194,76 +265,18 @@ export class CorpseLayout {
     numeric[3] = pose.ax; numeric[4] = pose.az; numeric[5] = pose.bx; numeric[6] = pose.bz; numeric[7] = pose.y;
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
-    let queriedX = NaN, queriedZ = NaN;
     const neighbors = this.neighborPoses, layers = this.layerPoses;
-    let neighborCount = 0, layerCount = 0;
     // Clearing an array's length to zero also discards its V8 backing store.
     // Thousands of dense-pile roots must reuse capacity, not just the array
     // objects. The visitor avoids a second growing/truncated ID buffer.
-    const collectNeighbor = (id: number): void => { if (id !== e.id) neighbors[neighborCount++] = this.bodies.get(id)!; };
     const ownPose = corpsePose(e.id);
     // The four orientations at one root share its hull, sweep and support.
     // Dense piles search hundreds of roots; repeating these queries per yaw
     // made the zoo's settling waves block the view update.
-    let rootX = NaN, rootZ = NaN, rootClear = false, rootFloor = feet;
-    const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
-      if (x !== rootX || z !== rootZ) {
-        rootX = x; rootZ = z; rootClear = vehicleClear(x, z);
-        // A body falling off a hull does not need a route from its roof.
-        if (rootClear && nav && !startsOnVehicle) {
-          const swept = this.swept; swept.x = e.transform.x; swept.z = e.transform.z;
-          nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
-          rootClear = Math.hypot(swept.x - x, swept.z - z) <= .01;
-        }
-        rootFloor = NaN;
-      }
-      if (!rootClear) return;
-      const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
-      const ax = x - dx * .15, az = z - dz * .15;
-      const bx = x + dx * length, bz = z + dz * length;
-      numeric[0] = x; numeric[1] = z; numeric[2] = yaw;
-      numeric[3] = ax; numeric[4] = az; numeric[5] = bx; numeric[6] = bz;
-      if (!vehicleClear(ax, az, radius) || !vehicleClear(bx, bz, radius)) return;
-      if (player && !(pointDistanceSquared(player.x, player.z, ax, az, bx, bz) >= .95 ** 2)) return;
-      if (Number.isNaN(rootFloor)) rootFloor = support?.supportBelow(x, z, feet) ?? feet;
-      let y = rootFloor; numeric[7] = y;
-      if (supported) for (let sample = 0; sample < 3; sample++) {
-        const t = sample * .5;
-        const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
-        if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
-      }
-      if (x !== queriedX || z !== queriedZ) {
-        this.query.x = queriedX = x; this.query.z = queriedZ = z;
-        neighborCount = 0;
-        this.spatial.query(this.query, this.neighbors, false, collectNeighbor);
-      }
-      const minX = Math.min(ax, bx), maxX = Math.max(ax, bx), minZ = Math.min(az, bz), maxZ = Math.max(az, bz);
-      layerCount = 0;
-      for (let n = 0; n < neighborCount; n++) {
-        const other = neighbors[n]!;
-        // A separated capsule AABB cannot overlap. Keep a small margin so this
-        // only skips definite misses; surviving pairs use the exact old distance.
-        const reach = radius + other.radius + 1e-6;
-        if (maxX < Math.min(other.ax, other.bx) - reach || minX > Math.max(other.ax, other.bx) + reach
-          || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
-        if (segmentDistanceSquared(ax, az, bx, bz, other) >= (radius + other.radius) ** 2) continue;
-        if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
-        // Stable insertion into the used prefix retains the old height sort
-        // and bucket tie order without resizing the scratch backing store.
-        let at = layerCount++;
-        while (at > 0 && layers[at - 1]!.y > other.y) { layers[at] = layers[at - 1]; at--; }
-        layers[at] = other;
-      }
-      // Fill the lowest free layer. Always going above the highest neighbour
-      // made a chain of touching feet climb into an artificial body tower.
-      for (let i = 0; i < layerCount; i++) {
-        const other = layers[i]!;
-        if (y + height > other.y + .001 && y < other.y + other.height - .001) y = other.y + other.height;
-      }
-      pose.x = x; pose.z = z; pose.yaw = yaw; pose.ax = ax; pose.az = az; pose.bx = bx; pose.bz = bz; pose.y = y;
-      // Reuse search scratch; only the winning pose needs an owned record.
-      return pose;
-    };
+    const state: SearchState = { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear,
+      neighbors, layers, spatial: this.spatial, query: this.query, ids: this.neighbors, swept: this.swept,
+      rootX: NaN, rootZ: NaN, rootClear: false, rootFloor: feet, queriedX: NaN, queriedZ: NaN, neighborCount: 0,
+      collectNeighbor: id => { if (id !== e.id) neighbors[state.neighborCount++] = this.bodies.get(id)!; } };
     let best: RestingPose | undefined;
     // First prefer an unoccupied footprint, nearest to the death position.
     // Combat bodies stay within 1 m. Once the L10 fight ends, use the surrounding
@@ -278,7 +291,7 @@ export class CorpseLayout {
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
         for (let turn = 0; turn < 4; turn++) {
-          const candidate = evaluate(x, z, initialYaw + turn * 2.399963229728653);
+          const candidate = evaluateCandidate(state, x, z, initialYaw + turn * 2.399963229728653);
           if (!candidate) continue;
           if (candidate.y <= feet + .05) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; break; }
           if (!best || candidate.y < best.y - .001) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; }
@@ -291,10 +304,10 @@ export class CorpseLayout {
     // strip. Keep the bounded root and heap layer, never teleport it elsewhere.
     if (!best) for (let i = 0; i < 80 && !best; i++) {
       const angle = initialYaw + i * Math.PI * 2 / 80;
-      best = evaluate(e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
+      best = evaluateCandidate(state, e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
     }
     if (!best) {
-      best = evaluate(e.transform.x, e.transform.z, initialYaw + .7, false);
+      best = evaluateCandidate(state, e.transform.x, e.transform.z, initialYaw + .7, false);
       if (!best) {
         // The legacy fallback uses the final rejected candidate's footprint.
         pose.x = numeric[0]; pose.z = numeric[1]; pose.yaw = numeric[2];
