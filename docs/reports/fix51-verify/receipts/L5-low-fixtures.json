@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L5",
   "tier": "low",
-  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "4037c7440d3e6094f446910b5c16e2fbefa51476a0c3dd65f2dcd31c253ca39a",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checks": [
     {
       "id": "L5-13",
@@ -22,9 +22,9 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 61.36666666666667,
+          "time": 63.233333333333334,
           "deaths": 0,
-          "kills": 21,
+          "kills": 18,
           "damageTaken": 0,
           "failures": {},
           "objectiveTimeline": [
@@ -38,7 +38,7 @@
             },
             {
               "id": "metro",
-              "t": 61.36666666666667
+              "t": 63.233333333333334
             }
           ],
           "furthestObjective": "metro",
@@ -55,8 +55,8 @@
           }
         },
         "result": {
-          "time": 61.36666666666667,
-          "kills": 21,
+          "time": 63.233333333333334,
+          "kills": 18,
           "knockdowns": 1,
           "damage": 0,
           "deaths": 0,
@@ -2798,11 +2798,13 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 206.58333333333334,
-          "deaths": 0,
-          "kills": 78,
-          "damageTaken": 62.5,
-          "failures": {},
+          "time": 233.4,
+          "deaths": 1,
+          "kills": 75,
+          "damageTaken": 162.5,
+          "failures": {
+            "player-died": 1
+          },
           "objectiveTimeline": [
             {
               "id": "emerge",
@@ -2810,11 +2812,11 @@
             },
             {
               "id": "look",
-              "t": 163.28333333333333
+              "t": 178.31666666666666
             },
             {
               "id": "metro",
-              "t": 206.58333333333334
+              "t": 233.4
             }
           ],
           "furthestObjective": "metro",
@@ -2859,7 +2861,7 @@
             }
           ]
         },
-        "finalHash": "41e92b1f"
+        "finalHash": "37db0b06"
       },
       "target": "at least2 living Alphas; every actual body has a legal path to the street courier",
       "status": "PASS",
@@ -3017,9 +3019,9 @@
         "policy": "complete",
         "seed": 1,
         "completed": true,
-        "time": 61.36666666666667,
+        "time": 63.233333333333334,
         "deaths": 0,
-        "kills": 21,
+        "kills": 18,
         "damageTaken": 0,
         "failures": {},
         "objectiveTimeline": [
@@ -3033,7 +3035,7 @@
           },
           {
             "id": "metro",
-            "t": 61.36666666666667
+            "t": 63.233333333333334
           }
         ],
         "furthestObjective": "metro",
@@ -3050,8 +3052,8 @@
         }
       },
       "result": {
-        "time": 61.36666666666667,
-        "kills": 21,
+        "time": 63.233333333333334,
+        "kills": 18,
         "knockdowns": 1,
         "damage": 0,
         "deaths": 0,

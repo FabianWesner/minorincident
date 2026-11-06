@@ -1,31 +1,26 @@
 {
   "row": "L5-12",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "ce205550cbcb205dacf810a8771e82982723f357",
+  "commit": "8210b0f6c1f2cf1c12102c565a468ed9890aa677",
   "clauses": [
     {
       "clause": "20\u201330 occupants (24) visible inside; every living follower and the corgi cross before the shutter; no body overlap at the shutter; end camera frames the group naturally.",
       "verdict": "FAIL",
-      "note": "Both corrected100low/150high mortal renderer runs complete through actual shutter closure. During each intended3s resident-view sequence the renderer submits at most19 of24 station identities, so at most19 can be visible (minimum20). Reviewed every metro-second capture: camera stays at exterior stairs/canopy with courier, dog and a small follower group; no20\u201330-resident interior look appears, then L6 loads. The physical routes show the same exterior framing. This closes FAIL through resident visibility; no unconditional PASS for continuous crossing, body-overlap or end-camera clauses."
+      "note": "Ordinary mortal completed routes, actual low/high renderer, existing three-second arrival period, fixed game-camera angle and player zoom. 24 submitted and 21 fully projected identities is not proof of 21 unoccluded pixels; HUD/edge occlusion remains. Personally inspected all eight captures. Closed views show overlapping followers at the shutter, so the compound row remains FAIL. No counts or timers changed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L5-12-proof.json",
-      "sha256": "14a4116d81ace04d659b967e2eb274eae9c26551c9e67179c098025893aceafc",
-      "what": "Both corrected100low/150high mortal renderer runs complete through actual shutter closure. During each intended3s resident-view sequence the renderer submits at most19 of24 station identities, so at most19 can be visible (minimum20). Reviewed every metro-second capture: camera stays at exterior stairs/canopy with courier, dog and a small follower group; no20\u201330-resident interior look appears, then L6 loads. The physical routes show the same exterior framing. This closes FAIL through resident visibility; no unconditional PASS for continuous crossing, body-overlap or end-camera clauses."
+      "file": "docs/reports/fix67-b/L5-12-recheck.json",
+      "sha256": "22c5a753e1aa56fad75e5b2da9722db9de6d0d49f65abddaf3c6c349f9e67498",
+      "what": "Ordinary mortal completed routes, actual low/high renderer, existing three-second arrival period, fixed game-camera angle and player zoom. 24 submitted and 21 fully projected identities is not proof of 21 unoccluded pixels; HUD/edge occlusion remains. Personally inspected all eight captures. Closed views show overlapping followers at the shutter, so the compound row remains FAIL. No counts or timers changed."
     },
     {
-      "file": "docs/reports/sweep-b/L5-render-ledger.json.gz",
-      "sha256": "af5375bb80c5c745837834a73e24ab6eeb15a6feee8fd50dfbd704956cb1432a",
-      "what": "Both corrected100low/150high mortal renderer runs complete through actual shutter closure. During each intended3s resident-view sequence the renderer submits at most19 of24 station identities, so at most19 can be visible (minimum20). Reviewed every metro-second capture: camera stays at exterior stairs/canopy with courier, dog and a small follower group; no20\u201330-resident interior look appears, then L6 loads. The physical routes show the same exterior framing. This closes FAIL through resident visibility; no unconditional PASS for continuous crossing, body-overlap or end-camera clauses."
-    },
-    {
-      "file": "docs/reports/sweep-b/L5-render-capture-review.json",
-      "sha256": "9638449ebcd7745be40d55af2a61df1014b8cdcf8d6144bcfa3963d779d4c698",
-      "what": "Both corrected100low/150high mortal renderer runs complete through actual shutter closure. During each intended3s resident-view sequence the renderer submits at most19 of24 station identities, so at most19 can be visible (minimum20). Reviewed every metro-second capture: camera stays at exterior stairs/canopy with courier, dog and a small follower group; no20\u201330-resident interior look appears, then L6 loads. The physical routes show the same exterior framing. This closes FAIL through resident visibility; no unconditional PASS for continuous crossing, body-overlap or end-camera clauses."
+      "file": "docs/reports/fix67-b/l5-metro-ledger.json.gz",
+      "sha256": "23faf2422ef7f2c15d93c62a3ba5d95c193ff3e1853ad1d67fe94c87f3024171",
+      "what": "Every sample, camera, projected resident endpoints, screenshot hashes and personal inspection notes. Raw captures removed after review."
     }
   ]
 }
