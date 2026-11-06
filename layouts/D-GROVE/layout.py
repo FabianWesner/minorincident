@@ -266,7 +266,7 @@ for i in range(3):
     g.place(bk, cxs, SHOP_FRONT - bd / 2, FACE_YAW['S'])
     doors.append((cxs, SHOP_FRONT + 1.0))
     g.flowers(cxs - 3, SHOP_FRONT + .3, cxs + 3, SHOP_FRONT + 1.4, 8)
-    planter(cxs - bw / 2 + 1.2, SHOP_FRONT + .8)
+    planter(cxs - bw / 2 + 1.2, SHOP_FRONT + .42)   # nearly flush to the facade (0.12 m, too narrow to enter): no 0.5 m pocket behind it (fix66-a)
     shop_x += bw + .8
 PASS_X = shop_x - .8 + 2.0       # centre of the 4 m service passage (courier van parks in the strip in front of it)
 depot = 'bld.courier-depot'
@@ -292,7 +292,7 @@ g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark') 
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
 g.path(depot_x - 4.0, SHOP_FRONT - .2, depot_x + 4.0, ZN - 4.5, 'sidewalk')     # open paved plaza in front of the counter (>= 3 m clear)
-g.place('prop.bench', -53.5, SHOP_FRONT + 1.0, FACE_YAW['S'], (.9, .9 * D.SEAT_SY['bench'], .9), soft=True)
+g.place('prop.bench', -53.5, SHOP_FRONT + .5, FACE_YAW['S'], (.9, .9 * D.SEAT_SY['bench'], .9), soft=True)
 # service strip behind the shops (accessible through the passage): crates, bins, fence line
 for x in (-78, -69, -60):
     g.place('prop.trash-bin', x, -46.4, FACE_YAW['N'], .55, soft=True)

@@ -1,0 +1,16 @@
+{
+ "name": "fix66-shopfront",
+ "note": "L1 Main Row shop fronts and courier depot frontage at the game camera, zoom 0.5 / 1.0 / 1.5 along the pavement. Look for: a continuous walkable pavement strip between the facades/planters and the kerb, no 0.5 m slits behind planters or benches, planters flush to the facade, collision matching the visuals.",
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-86, -48], [-30, -28]] },
+ "clipping": { "ignoreFoliage": true },
+ "camera": { "mode": "game", "target": [-70, -36.5], "zoom": 0.5 },
+ "script": [
+  { "frame": 8, "camera": { "mode": "game", "target": [-70, -36.5], "zoom": 1.0 } },
+  { "frame": 16, "camera": { "mode": "game", "target": [-56, -36.5], "zoom": 1.5 } },
+  { "frame": 24, "camera": { "mode": "game", "target": [-38, -36.5], "zoom": 1.5 } }
+ ],
+ "frames": 32,
+ "shots": [2, 10, 18, 28],
+ "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}

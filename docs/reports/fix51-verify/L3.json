@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "90b4aa5b57e7a719a3070e7413d469fcd5a1bbeebf58a369202a37208b0d27b2",
+  "sourceHash": "c7a509a67d9cf56003518ca7d81b21a9c97c8c1f0f6438cc8083539a5445ddb0",
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T01:02:21.190Z",
+  "generatedAt": "2026-11-06T02:09:01.625Z",
   "policies": [
     {
       "tier": "low",
@@ -890,7 +890,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "41b9ef3eaa2b9fabd35159cea73a66871cdec679"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -1019,7 +1019,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "41b9ef3eaa2b9fabd35159cea73a66871cdec679"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -3242,7 +3242,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "41b9ef3eaa2b9fabd35159cea73a66871cdec679"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -3374,7 +3374,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "41b9ef3eaa2b9fabd35159cea73a66871cdec679"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     }
   ],
@@ -3599,7 +3599,7 @@
         ],
         "notes": "Actual production InputFrames, no weapon/ammo/actor injection or objective skip. Only stationary browser courier damage is suppressed; separate acquisition-location probes are ordinary mortal input. No performance timing or audible-quality verdict.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -4247,7 +4247,7 @@
         ],
         "notes": "Current source PO-owned measured failure recorded only, as instructed. No game/spec/criteria tuning or PO decision fabricated.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -4504,7 +4504,7 @@
         ],
         "notes": "No game or criterion changes. Moving policy mortal; stationary control survival protected as declared by existing native runner. Numeric row requires no pixel verdict.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -4993,7 +4993,7 @@
         ],
         "notes": "No game changes. Protected native-input presentation; not physical keyboard or mortal difficulty qualification.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -5117,64 +5117,64 @@
           "id": "L3-06",
           "clause": "native squad cardinality and loss causes (formation/teleport review open)",
           "value": {
-            "atFallback": 4,
-            "segmentEnds": [
-              4,
-              4,
-              2
-            ],
-            "atCheckpoint": 2,
-            "losses": [
+            "seeds": [
               {
-                "cause": "bite",
-                "t": 226.15
+                "seed": 1,
+                "outcome": "complete",
+                "deaths": 1,
+                "atFallback": 4,
+                "atCheckpoint": 2,
+                "segmentEnds": [
+                  4,
+                  4,
+                  2
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite"
+                ]
               },
               {
-                "cause": "bite",
-                "t": 227.03333333333333
+                "seed": 2,
+                "outcome": "complete",
+                "deaths": 2,
+                "atFallback": 4,
+                "atCheckpoint": 0,
+                "segmentEnds": [
+                  0,
+                  0,
+                  0
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite",
+                  "bite",
+                  "bite"
+                ]
+              },
+              {
+                "seed": 3,
+                "outcome": "complete",
+                "deaths": 2,
+                "atFallback": 4,
+                "atCheckpoint": 0,
+                "segmentEnds": [
+                  0,
+                  0,
+                  0
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite",
+                  "bite",
+                  "bite"
+                ]
               }
             ],
-            "turnedInCorridor": 2,
-            "protected": 0,
-            "maxJumpM": 0.2911487357142075,
-            "near8Share": 1,
-            "followRange": [
-              {
-                "id": 30,
-                "samples": 62,
-                "within3to6": 62,
-                "minM": 4.5292410180793805,
-                "medianM": 5.750978151852484,
-                "maxM": 5.991253404933314
-              },
-              {
-                "id": 31,
-                "samples": 62,
-                "within3to6": 58,
-                "minM": 4.322399762479623,
-                "medianM": 5.636293377713716,
-                "maxM": 6.067579507888032
-              },
-              {
-                "id": 32,
-                "samples": 62,
-                "within3to6": 11,
-                "minM": 5.3409650110071665,
-                "medianM": 6.459639869239778,
-                "maxM": 6.552284064869407
-              },
-              {
-                "id": 33,
-                "samples": 62,
-                "within3to6": 5,
-                "minM": 4.872193837961474,
-                "medianM": 6.43208554567348,
-                "maxM": 6.55609997441979
-              }
-            ]
+            "atArmyAtMost2": "3/3"
           },
-          "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation",
-          "status": "NOT CHECKED",
+          "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+          "status": "PASS",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -5228,38 +5228,65 @@
           "id": "L3-06",
           "clause": "native squad cardinality and loss causes (formation/teleport review open)",
           "value": {
-            "atFallback": 4,
-            "segmentEnds": [
-              0,
-              0,
-              0
-            ],
-            "atCheckpoint": 0,
-            "losses": [
+            "seeds": [
               {
-                "cause": "bite",
-                "t": 39.416666666666664
+                "seed": 1,
+                "outcome": "complete",
+                "deaths": 0,
+                "atFallback": 4,
+                "atCheckpoint": 0,
+                "segmentEnds": [
+                  0,
+                  0,
+                  0
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite",
+                  "bite",
+                  "bite"
+                ]
               },
               {
-                "cause": "bite",
-                "t": 39.416666666666664
+                "seed": 2,
+                "outcome": "timeout",
+                "deaths": 1,
+                "atFallback": 4,
+                "atCheckpoint": -1,
+                "segmentEnds": [
+                  0,
+                  0,
+                  0
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite",
+                  "bite",
+                  "bite"
+                ]
               },
               {
-                "cause": "bite",
-                "t": 40.5
-              },
-              {
-                "cause": "bite",
-                "t": 40.766666666666666
+                "seed": 3,
+                "outcome": "complete",
+                "deaths": 2,
+                "atFallback": 4,
+                "atCheckpoint": 0,
+                "segmentEnds": [
+                  3,
+                  3,
+                  0
+                ],
+                "lossCauses": [
+                  "bite",
+                  "bite",
+                  "bite",
+                  "bite"
+                ]
               }
             ],
-            "turnedInCorridor": 4,
-            "protected": 0,
-            "maxJumpM": 0.10242475825920586,
-            "near8Share": 1,
-            "followRange": []
+            "atArmyAtMost2": "2/2"
           },
-          "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation",
+          "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
           "status": "PASS",
           "tier": "high",
           "policy": "controlled-fixture",
@@ -5336,7 +5363,7 @@
         ],
         "notes": "Final source refresh: native low/high and all controlled fixtures rerun after the L1 marker change. Calm spacing still fails; rejected candidate remains reverted. Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement≤2 at army prevents shipping this otherwise promising spacing improvement.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -5445,7 +5472,7 @@
         ],
         "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup. Fresh moving-hit browser replay after the L1 cue change retains the same pistol-hit frames and actual locked zoom1; its source hash is current.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -7472,7 +7499,7 @@
         ],
         "notes": "No game changes. Numeric trajectory/frustum review; no image or performance-timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -7760,7 +7787,7 @@
         ],
         "notes": "Fixed l3-zone destination and no corridor steering preserved. Movement works during the early plaza circle; the later truck/fence repeats remain an unresolved combination of navigation confusion and crowd/obstacle pressure. No speculative game change. Images deleted after SHA/observation recording.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -7836,7 +7863,7 @@
         ],
         "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -8015,7 +8042,7 @@
         ],
         "notes": "No game changes; courier damage protection qualifies mechanics/presentation, not mortality or physical keyboard/alternate zoom coverage. Civilian groups stand beside evacuation buses; no fabricated seated-passenger census.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -8109,7 +8136,7 @@
         ],
         "notes": "Closes the horde readability defect. Native game input and controlled80-infected fixture are labelled separately; survival protection is only for presentation. Frozen-clock attempt retained under rejected/ and excluded. Final-source refresh on ba261cb1a: both tiers and actualzoom0.5/1.5 personally re-reviewed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     },
     {
@@ -8173,7 +8200,7 @@
         ],
         "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL. Coverage clarification: per tier,6 static images cover all3 streets at0.5/1.5;6 moving images cover x-80/x-40 at0.5/1/1.5. No default-zoom moving Boulevard qualification is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c8317e8676fc499135ba4e104b40b5a26a60e390"
+        "latestRelevantCommit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215"
       }
     }
   ]

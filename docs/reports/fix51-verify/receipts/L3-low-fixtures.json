@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L3",
   "tier": "low",
-  "sourceHash": "90b4aa5b57e7a719a3070e7413d469fcd5a1bbeebf58a369202a37208b0d27b2",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "c7a509a67d9cf56003518ca7d81b21a9c97c8c1f0f6438cc8083539a5445ddb0",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checks": [
     {
       "id": "L3-02",
@@ -185,64 +185,64 @@
       "id": "L3-06",
       "clause": "native squad cardinality and loss causes (formation/teleport review open)",
       "value": {
-        "atFallback": 4,
-        "segmentEnds": [
-          4,
-          4,
-          2
-        ],
-        "atCheckpoint": 2,
-        "losses": [
+        "seeds": [
           {
-            "cause": "bite",
-            "t": 226.15
+            "seed": 1,
+            "outcome": "complete",
+            "deaths": 1,
+            "atFallback": 4,
+            "atCheckpoint": 2,
+            "segmentEnds": [
+              4,
+              4,
+              2
+            ],
+            "lossCauses": [
+              "bite",
+              "bite"
+            ]
           },
           {
-            "cause": "bite",
-            "t": 227.03333333333333
+            "seed": 2,
+            "outcome": "complete",
+            "deaths": 2,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "deaths": 2,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
           }
         ],
-        "turnedInCorridor": 2,
-        "protected": 0,
-        "maxJumpM": 0.2911487357142075,
-        "near8Share": 1,
-        "followRange": [
-          {
-            "id": 30,
-            "samples": 62,
-            "within3to6": 62,
-            "minM": 4.5292410180793805,
-            "medianM": 5.750978151852484,
-            "maxM": 5.991253404933314
-          },
-          {
-            "id": 31,
-            "samples": 62,
-            "within3to6": 58,
-            "minM": 4.322399762479623,
-            "medianM": 5.636293377713716,
-            "maxM": 6.067579507888032
-          },
-          {
-            "id": 32,
-            "samples": 62,
-            "within3to6": 11,
-            "minM": 5.3409650110071665,
-            "medianM": 6.459639869239778,
-            "maxM": 6.552284064869407
-          },
-          {
-            "id": 33,
-            "samples": 62,
-            "within3to6": 5,
-            "minM": 4.872193837961474,
-            "medianM": 6.43208554567348,
-            "maxM": 6.55609997441979
-          }
-        ]
+        "atArmyAtMost2": "3/3"
       },
-      "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation",
-      "status": "NOT CHECKED",
+      "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+      "status": "PASS",
       "tier": "low",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
@@ -1855,6 +1855,90 @@
         "stationPoliceLook": 10,
         "station": 10,
         "missingAppearance": 0
+      }
+    ],
+    "L3/squad-3-seeds": [
+      {
+        "seed": 1,
+        "outcome": "complete",
+        "deaths": 1,
+        "atFallback": 4,
+        "atCheckpoint": 2,
+        "segmentEnds": [
+          4,
+          4,
+          2
+        ],
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 226.15
+          },
+          {
+            "cause": "bite",
+            "t": 227.03333333333333
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "outcome": "complete",
+        "deaths": 2,
+        "atFallback": 4,
+        "atCheckpoint": 0,
+        "segmentEnds": [
+          0,
+          0,
+          0
+        ],
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 37.68333333333333
+          },
+          {
+            "cause": "bite",
+            "t": 39.68333333333333
+          },
+          {
+            "cause": "bite",
+            "t": 40.28333333333333
+          },
+          {
+            "cause": "bite",
+            "t": 41.95
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "outcome": "complete",
+        "deaths": 2,
+        "atFallback": 4,
+        "atCheckpoint": 0,
+        "segmentEnds": [
+          0,
+          0,
+          0
+        ],
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 37.233333333333334
+          },
+          {
+            "cause": "bite",
+            "t": 41.15
+          },
+          {
+            "cause": "bite",
+            "t": 44.25
+          },
+          {
+            "cause": "bite",
+            "t": 45.25
+          }
+        ]
       }
     ],
     "L3/newbie": {
