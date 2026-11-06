@@ -44,6 +44,10 @@ function instanced(geometry: BufferGeometry, material: MeshBasicNodeMaterial | M
 /** E27 view: the seven-beat blast (flash, fireball, shockwave/dust, sparks, smoke column, scorch), persistent
  * fires (flame cards + ground light pools), smoke columns/clouds, detached car parts, camera roll and bullet time.
  * Everything is pooled and fixed-size; only spawn/assignment writes attributes, motion runs in TSL. */
+/** vqa-fix-7 (L7 point-blank rocket, vqa-4 #3): the courier cut through blast lobes and smoke. Clear over her (inside 0.9 of the
+ * solid radius, which already encloses her projected box at 0.85), then a wide soft falloff to 1.9 radii. The old 0.98-1.15 band
+ * was a hard rim: a fireball around her read as an opaque orange torus with a hole punched out. */
+const blastHole = () => seeThroughHole(1.9, seeThrough.solidRadius, .47);
 export class Blasts extends Group {
   readonly clock = uniform(0);
   /** Fireball/glow emissive scale; flash reduction lowers it. */
@@ -127,7 +131,7 @@ export class Blasts extends Group {
         // Blast lobes and smoke sit outside the ordinary geometry reveal
         // materials. Apply the same clean courier silhouette cut to every
         // blast layer, including opaque fire and the flash core.
-        dither.greaterThan(seeThroughHole(1.15, seeThrough.solidRadius, .85)).discard();
+        dither.greaterThan(blastHole()).discard();
         // Round 3: hot lobes read orange/yellow with white only in small pockets, so a close camera sees fire, not a white wipe.
         const h = n.mul(float(1).sub(progress).pow(1.25)).mul(1.3);
         const sootTone = vec3(.07, .055, .05), red = vec3(.85, .16, .04), orange = vec3(1, .45, .08), yellow = vec3(1, .82, .32), white = vec3(1, .97, .85);
@@ -214,7 +218,7 @@ export class Blasts extends Group {
         const reach = lens.y.sub(plane).div(lens.y.sub(positionWorld.y).max(.01));
         const landing = above.select(lens.add(positionWorld.sub(lens).mul(reach)), positionWorld);
         const veil = mix(.8, 1, smoothstep(9, 14, vec2(landing.x.sub(this.playerNode.x), landing.z.sub(this.playerNode.z)).length()));
-        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(mistOpacity, streetSmoke.select(.8, .97))).mul(playableMist.select(groundFeather, float(1))).mul(alive).mul(streetSmoke.select(veil, seeThroughHole(1.15, seeThrough.solidRadius, .85))));
+        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(mistOpacity, streetSmoke.select(.8, .97))).mul(playableMist.select(groundFeather, float(1))).mul(alive).mul(streetSmoke.select(veil, blastHole())));
       })();
       this.puffs.renderOrder = 3;
     }
