@@ -1,0 +1,643 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "63753924083b70d7eef936e97413017385b29af1",
+  "toolSha256": "6243395105afe7ad7f7c4511cf7c561dc49d5c9c17b4d8a52bb7a1b6b02735ff",
+  "method": "Read-only path queries on separate copies of actual low/high navigation. Each enclosure has distinct north/south gates: interior paths constrained inside enclosure, explicit6m gate crossing at1.25m radius, then body-clear path from outside to actual fixed APC marker. Start anchor adjustment≤3m recorded if occupied. Inserting a slab at either gate must block its explicit crossing. Does not move actors or measure rendered visibility.",
+  "rows": [
+    {
+      "tier": "low",
+      "clearanceRadius": 1.25,
+      "enclosures": [
+        {
+          "species": "lion",
+          "center": {
+            "x": -60,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": -60,
+                "z": -52
+              },
+              "start": {
+                "x": -60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": -49
+              },
+              "outside": {
+                "x": -60,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 275.79645723282096,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": -60,
+                "z": -12
+              },
+              "start": {
+                "x": -60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": -15
+              },
+              "outside": {
+                "x": -60,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 237.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "gorilla",
+          "center": {
+            "x": 60,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 60,
+                "z": -52
+              },
+              "start": {
+                "x": 60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": -49
+              },
+              "outside": {
+                "x": 60,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 160.97085534775167,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 60,
+                "z": -12
+              },
+              "start": {
+                "x": 60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": -15
+              },
+              "outside": {
+                "x": 60,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 117.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "elephant",
+          "center": {
+            "x": -60,
+            "z": 32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": -60,
+                "z": 12
+              },
+              "start": {
+                "x": -60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": 15
+              },
+              "outside": {
+                "x": -60,
+                "z": 9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 198.95332882880172,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": -60,
+                "z": 52
+              },
+              "start": {
+                "x": -60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": 49
+              },
+              "outside": {
+                "x": -60,
+                "z": 55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 166.6315777727244,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "zebra",
+          "center": {
+            "x": 60,
+            "z": 32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 60,
+                "z": 12
+              },
+              "start": {
+                "x": 60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": 15
+              },
+              "outside": {
+                "x": 60,
+                "z": 9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 92.94309951638434,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 60,
+                "z": 52
+              },
+              "start": {
+                "x": 60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": 49
+              },
+              "outside": {
+                "x": 60,
+                "z": 55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 48.81882705140794,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "flamingo",
+          "center": {
+            "x": 0,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 0,
+                "z": -52
+              },
+              "start": {
+                "x": 0,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 0,
+                "z": -49
+              },
+              "outside": {
+                "x": 0,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 214.36431223396318,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 0,
+                "z": -12
+              },
+              "start": {
+                "x": 0,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 0,
+                "z": -15
+              },
+              "outside": {
+                "x": 0,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 177.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "clearanceRadius": 1.25,
+      "enclosures": [
+        {
+          "species": "lion",
+          "center": {
+            "x": -60,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": -60,
+                "z": -52
+              },
+              "start": {
+                "x": -60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": -49
+              },
+              "outside": {
+                "x": -60,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 275.79645723282096,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": -60,
+                "z": -12
+              },
+              "start": {
+                "x": -60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": -15
+              },
+              "outside": {
+                "x": -60,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 237.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "gorilla",
+          "center": {
+            "x": 60,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 60,
+                "z": -52
+              },
+              "start": {
+                "x": 60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": -49
+              },
+              "outside": {
+                "x": 60,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 160.97085534775167,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 60,
+                "z": -12
+              },
+              "start": {
+                "x": 60,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": -15
+              },
+              "outside": {
+                "x": 60,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 117.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "elephant",
+          "center": {
+            "x": -60,
+            "z": 32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": -60,
+                "z": 12
+              },
+              "start": {
+                "x": -60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": 15
+              },
+              "outside": {
+                "x": -60,
+                "z": 9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 198.95332882880172,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": -60,
+                "z": 52
+              },
+              "start": {
+                "x": -60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": -60,
+                "z": 49
+              },
+              "outside": {
+                "x": -60,
+                "z": 55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 166.6315777727244,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "zebra",
+          "center": {
+            "x": 60,
+            "z": 32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 60,
+                "z": 12
+              },
+              "start": {
+                "x": 60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": 15
+              },
+              "outside": {
+                "x": 60,
+                "z": 9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 92.94309951638434,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 60,
+                "z": 52
+              },
+              "start": {
+                "x": 60,
+                "z": 32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 60,
+                "z": 49
+              },
+              "outside": {
+                "x": 60,
+                "z": 55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 48.81882705140794,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        },
+        {
+          "species": "flamingo",
+          "center": {
+            "x": 0,
+            "z": -32
+          },
+          "gates": [
+            {
+              "direction": "north",
+              "gate": {
+                "x": 0,
+                "z": -52
+              },
+              "start": {
+                "x": 0,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 0,
+                "z": -49
+              },
+              "outside": {
+                "x": 0,
+                "z": -55
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 214.36431223396318,
+              "negativeBlocked": true,
+              "pass": true
+            },
+            {
+              "direction": "south",
+              "gate": {
+                "x": 0,
+                "z": -12
+              },
+              "start": {
+                "x": 0,
+                "z": -32
+              },
+              "startAdjustment": 0,
+              "inside": {
+                "x": 0,
+                "z": -15
+              },
+              "outside": {
+                "x": 0,
+                "z": -9
+              },
+              "endpoints": true,
+              "crossing": true,
+              "interiorMetres": 17,
+              "escapeMetres": 177.28687675370745,
+              "negativeBlocked": true,
+              "pass": true
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ]
+}

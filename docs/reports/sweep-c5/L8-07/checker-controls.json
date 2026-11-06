@@ -1,0 +1,97 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "a84a47a37cfa51f4561273586d43742466eb857d",
+  "cases": [
+    {
+      "tier": "low",
+      "fault": "original",
+      "observed": "PASS"
+    },
+    {
+      "tier": "low",
+      "fault": "missing north",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "missing south",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "narrow clearance",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "blocked crossing",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "blocked endpoints",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "disconnected interior",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "disconnected APC",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "low",
+      "fault": "ineffective slab control",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "original",
+      "observed": "PASS"
+    },
+    {
+      "tier": "high",
+      "fault": "missing north",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "missing south",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "narrow clearance",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "blocked crossing",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "blocked endpoints",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "disconnected interior",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "disconnected APC",
+      "observed": "FAIL"
+    },
+    {
+      "tier": "high",
+      "fault": "ineffective slab control",
+      "observed": "FAIL"
+    }
+  ]
+}

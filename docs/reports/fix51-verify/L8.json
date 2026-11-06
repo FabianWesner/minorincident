@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:28:05.537Z",
+  "generatedAt": "2026-11-06T05:01:29.540Z",
   "policies": [
     {
       "tier": "low",
@@ -7300,24 +7300,354 @@
     },
     {
       "id": "L8-07",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS); high/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS) Manual review PASS (STALE, Codex sweep-c4): Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete two independent body-clear enclosure exits at2.5m width: {\"tier\":\"low\",\"clearanceRadius\":1.25,\"enclosures\":[{\"species\":\"lion\",\"center\":{\"x\":-60,\"z\":-32},\"gates\":[{\"direction\":\"north\",\"gate\":{\"x\":-60,\"z\":-52},\"start\":{\"x\":-60,\"z\":-32},\"startAdjustment\":0,\"inside\":{\"x\":-60,\"z\":-49},\"outside\":{\"x\":-60,\"z\":-55},\"endpoints\":true,\"crossing\":true,\"interiorMetres\":17,\"escapeMetres\":275.79645723282096,\"negativeBlocked\":true,\"pass\":true},{\"direction\":\"south\",\"gat… (full values in JSON) (target all five enclosures have north/south interior paths, explicit gate crossings, and external paths to APC;1.25m clearance; gate-blocking negative controls; PASS); low/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS); high/complete two independent body-clear enclosure exits at2.5m width: {\"tier\":\"high\",\"clearanceRadius\":1.25,\"enclosures\":[{\"species\":\"lion\",\"center\":{\"x\":-60,\"z\":-32},\"gates\":[{\"direction\":\"north\",\"gate\":{\"x\":-60,\"z\":-52},\"start\":{\"x\":-60,\"z\":-32},\"startAdjustment\":0,\"inside\":{\"x\":-60,\"z\":-49},\"outside\":{\"x\":-60,\"z\":-55},\"endpoints\":true,\"crossing\":true,\"interiorMetres\":17,\"escapeMetres\":275.79645723282096,\"negativeBlocked\":true,\"pass\":true},{\"direction\":\"south\",\"ga… (full values in JSON) (target all five enclosures have north/south interior paths, explicit gate crossings, and external paths to APC;1.25m clearance; gate-blocking negative controls; PASS); high/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS) Manual review PASS (FRESH, Codex sweep-c5): Current low/high1.25m-radius navigation finds separate north/south interior paths, explicit6m gate crossings and external paths to unchanged APC for allfive enclosures. Inserted gate slab blocks each crossing; sixteen semantic checker faults reject. Fresh shared-pool headless Metal physical WASD walks from actual carried L7 campaigns with low1/high4 humans reach all46 goals per tier within0.65m, no actor/position/objective writes; only courier protected, normal actors/colliders/outbreak continue. Nonempty physical markers are always exit at fixed APC(96.71,76.275). Personally inspected all44 original-size frames at both PO zooms: continuous pavement and open/fallen fence crossings in wide views, courier beyond each gate; final gold ring/yellow arrow at lit APC, objective1m. Close views supplement courier visibility, while wide views establish gate geometry. This qualifies paths/marker only, not boarding or escort success. Raw images deleted after hashing.",
+      "automatedComplete": true,
       "receipt": [
-        "docs/reports/fix55-c/L8-05-native.json",
         "docs/reports/fix55-c/L8-enclosure-paths.json",
-        "docs/reports/sweep-c5/historical/L8-05-native-586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042.json",
-        "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
-        "docs/reports/sweep-c4/L8-07-low-review.json",
-        "docs/reports/sweep-c4/L8-07-low-seed.json",
-        "docs/reports/sweep-c4/L8-07-high-physical.json.gz",
-        "docs/reports/sweep-c4/L8-07-high-review.json",
-        "docs/reports/sweep-c4/L8-07-high-seed.json",
-        "tools/qa/accept/sweep-c4-l8-paths.mjs"
+        "docs/reports/fix55-c/L8-05-native.json",
+        "docs/reports/sweep-c5/L8-07/low-physical.json.gz",
+        "docs/reports/sweep-c5/L8-07/high-review.json",
+        "docs/reports/sweep-c5/L8-07/high-physical.json.gz",
+        "docs/reports/sweep-c5/L8-07/low-review.json",
+        "docs/reports/sweep-c5/L8-07/native-marker.json.gz",
+        "docs/reports/sweep-c5/L8-07/seed-provenance.json",
+        "docs/reports/sweep-c5/L8-07/low-campaign.json.gz",
+        "docs/reports/sweep-c5/L8-07/physical-audit.json",
+        "docs/reports/sweep-c5/L8-07/high-campaign.json.gz",
+        "docs/reports/sweep-c5/L8-07/native-paths.json",
+        "docs/reports/sweep-c5/L8-07/checker-controls.json"
       ],
       "expected": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
       "checks": [
+        {
+          "id": "L8-07",
+          "clause": "two independent body-clear enclosure exits at2.5m width",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "clearanceRadius": 1.25,
+            "enclosures": [
+              {
+                "species": "lion",
+                "center": {
+                  "x": -60,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": -60,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 275.79645723282096,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": -60,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 237.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "gorilla",
+                "center": {
+                  "x": 60,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 60,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 160.97085534775167,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 60,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 117.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "elephant",
+                "center": {
+                  "x": -60,
+                  "z": 32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": -60,
+                      "z": 12
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": 15
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": 9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 198.95332882880172,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": -60,
+                      "z": 52
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": 49
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": 55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 166.6315777727244,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "zebra",
+                "center": {
+                  "x": 60,
+                  "z": 32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 60,
+                      "z": 12
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": 15
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": 9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 92.94309951638434,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 60,
+                      "z": 52
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": 49
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": 55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 48.81882705140794,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "flamingo",
+                "center": {
+                  "x": 0,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 0,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": 0,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 0,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": 0,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 214.36431223396318,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 0,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": 0,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 0,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": 0,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 177.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              }
+            ],
+            "pass": true
+          },
+          "target": "all five enclosures have north/south interior paths, explicit gate crossings, and external paths to APC;1.25m clearance; gate-blocking negative controls",
+          "receipt": "docs/reports/fix55-c/L8-enclosure-paths.json"
+        },
         {
           "id": "L8-07",
           "clause": "native escape marker remains fixed at APC",
@@ -7339,6 +7669,333 @@
           ],
           "target": "every nonempty marker is exit at the unchanged APC anchor",
           "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-07",
+          "clause": "two independent body-clear enclosure exits at2.5m width",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "clearanceRadius": 1.25,
+            "enclosures": [
+              {
+                "species": "lion",
+                "center": {
+                  "x": -60,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": -60,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 275.79645723282096,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": -60,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 237.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "gorilla",
+                "center": {
+                  "x": 60,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 60,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 160.97085534775167,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 60,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 117.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "elephant",
+                "center": {
+                  "x": -60,
+                  "z": 32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": -60,
+                      "z": 12
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": 15
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": 9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 198.95332882880172,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": -60,
+                      "z": 52
+                    },
+                    "start": {
+                      "x": -60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": -60,
+                      "z": 49
+                    },
+                    "outside": {
+                      "x": -60,
+                      "z": 55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 166.6315777727244,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "zebra",
+                "center": {
+                  "x": 60,
+                  "z": 32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 60,
+                      "z": 12
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": 15
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": 9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 92.94309951638434,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 60,
+                      "z": 52
+                    },
+                    "start": {
+                      "x": 60,
+                      "z": 32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 60,
+                      "z": 49
+                    },
+                    "outside": {
+                      "x": 60,
+                      "z": 55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 48.81882705140794,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              },
+              {
+                "species": "flamingo",
+                "center": {
+                  "x": 0,
+                  "z": -32
+                },
+                "gates": [
+                  {
+                    "direction": "north",
+                    "gate": {
+                      "x": 0,
+                      "z": -52
+                    },
+                    "start": {
+                      "x": 0,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 0,
+                      "z": -49
+                    },
+                    "outside": {
+                      "x": 0,
+                      "z": -55
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 214.36431223396318,
+                    "negativeBlocked": true,
+                    "pass": true
+                  },
+                  {
+                    "direction": "south",
+                    "gate": {
+                      "x": 0,
+                      "z": -12
+                    },
+                    "start": {
+                      "x": 0,
+                      "z": -32
+                    },
+                    "startAdjustment": 0,
+                    "inside": {
+                      "x": 0,
+                      "z": -15
+                    },
+                    "outside": {
+                      "x": 0,
+                      "z": -9
+                    },
+                    "endpoints": true,
+                    "crossing": true,
+                    "interiorMetres": 17,
+                    "escapeMetres": 177.28687675370745,
+                    "negativeBlocked": true,
+                    "pass": true
+                  }
+                ],
+                "pass": true
+              }
+            ],
+            "pass": true
+          },
+          "target": "all five enclosures have north/south interior paths, explicit gate crossings, and external paths to APC;1.25m clearance; gate-blocking negative controls",
+          "receipt": "docs/reports/fix55-c/L8-enclosure-paths.json"
         },
         {
           "id": "L8-07",
@@ -7371,7 +8028,7 @@
         "evidence": [],
         "method": "NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review."
       },
-      "remaining": "NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
@@ -7380,65 +8037,74 @@
       "reviewDecision": {
         "row": "L8-07",
         "status": "PASS",
-        "reviewer": "Codex sweep-c4",
-        "date": "2026-11-05",
-        "commit": "ddeaceb079344d72dc9cbd40ac55613c0484073d",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "a84a47a37cfa51f4561273586d43742466eb857d",
         "clauses": [
           {
             "clause": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
             "verdict": "PASS",
-            "note": "Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes."
+            "note": "Current low/high1.25m-radius navigation finds separate north/south interior paths, explicit6m gate crossings and external paths to unchanged APC for allfive enclosures. Inserted gate slab blocks each crossing; sixteen semantic checker faults reject. Fresh shared-pool headless Metal physical WASD walks from actual carried L7 campaigns with low1/high4 humans reach all46 goals per tier within0.65m, no actor/position/objective writes; only courier protected, normal actors/colliders/outbreak continue. Nonempty physical markers are always exit at fixed APC(96.71,76.275). Personally inspected all44 original-size frames at both PO zooms: continuous pavement and open/fallen fence crossings in wide views, courier beyond each gate; final gold ring/yellow arrow at lit APC, objective1m. Close views supplement courier visibility, while wide views establish gate geometry. This qualifies paths/marker only, not boarding or escort success. Raw images deleted after hashing."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix55-c/L8-enclosure-paths.json",
-            "sha256": "71349a3a0193d11618b2dad8d1b91414c3f18d298b8fff649adc7821364e71d8",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-physical.json.gz",
+            "sha256": "46cbf37326a43ffd6cf2f2879e6158d84ca14e7689d6496625c11065310a3eeb",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c5/historical/L8-05-native-586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042.json",
-            "sha256": "586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042",
-            "what": "Exact original reviewed bytes archived when the shared receipt was refreshed by sweep-c5. This remains historical evidence, with unchanged digest, source identity and review decision. Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-review.json",
+            "sha256": "938f2e867356b0ec12f1455f59ce9040383aa5d7aabc33b09c6156736dbf535b",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
-            "sha256": "46f61ea7d851653b32c7097c54746984a3995f37c08d8159ad7fc0544196b1f9",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-physical.json.gz",
+            "sha256": "12bd17915f57cc7cb23aa10052d0ffd3263c4b8cca09474f0cb4738861c8de34",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-review.json",
-            "sha256": "8625d7836c48c81da0909f2edc168668f3be3909baf728aa30ba80661f8f0f6f",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-review.json",
+            "sha256": "3b33301eb29592aaf9225f6bb1ed2ec7df8b8fd24061956a2e6cc778a718cca6",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-seed.json",
-            "sha256": "1e70c61ea48e2de5013eaa49d902e04d6a9261293fcf13258aa7c971f276c1c0",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/native-marker.json.gz",
+            "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-physical.json.gz",
-            "sha256": "890757af8638c6b6972f05dfe1d70a022e6d10141fe38d3804cb47b395b1b241",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/seed-provenance.json",
+            "sha256": "62486db5009dd3b8f4400fef1bc7f78fe913165e2e1cd01cbeb032c8ecb63dbe",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-review.json",
-            "sha256": "b25727e754fb7cb92d3a66e0f6655f9a58362f1dbb6a5df1422596daccf474eb",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-campaign.json.gz",
+            "sha256": "7d18800b3477b35fc377b3209b4e906913ff9e783fcfa8d027ec9ab0ba7198c7",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-seed.json",
-            "sha256": "36c0314863c07536c448c68bc262cbca01be20c62bd8c1b51e0ffcb9d7650b20",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/physical-audit.json",
+            "sha256": "8b8a3d0e562641785179b49c7f57812080f9265daffff23196e52fbf2f3a148f",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "tools/qa/accept/sweep-c4-l8-paths.mjs",
-            "sha256": "5bd0733e7fa060e336e9cd98ec54cc7db7b93b5849fed5a16af760b5a15e4e2e",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-campaign.json.gz",
+            "sha256": "5c876daa169912a68450a7c99a0544116be98477e1e59a15c60353c502de1a67",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/native-paths.json",
+            "sha256": "00da053fb7572276339a383e5b6411b6b7f6fa82a838afea91692897dbbdd7d0",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/checker-controls.json",
+            "sha256": "1f4550e1fab5535892c2b4da33db9329d0a3c8cc1ccd100b974dbe64138fce6d",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           }
         ],
-        "notes": "Path capability and fixed APC destination only; no successful human escort or boarding claim. Both physical runs terminal and contexts released.",
-        "freshness": "STALE",
+        "freshness": "FRESH",
         "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },

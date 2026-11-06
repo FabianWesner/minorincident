@@ -1,0 +1,20 @@
+[
+  {
+    "tier": "low",
+    "source": "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
+    "sourceSha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
+    "seed": "docs/reports/sweep-c4/L8-07-actual-low-campaign.json.gz",
+    "seedSha256": "7d18800b3477b35fc377b3209b4e906913ff9e783fcfa8d027ec9ab0ba7198c7",
+    "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+    "method": "Exact unmodified campaign from current physical L7/L8 run; ordinary L8 constructor consumes original L7 result. No Resume or actor/objective changes."
+  },
+  {
+    "tier": "high",
+    "source": "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
+    "sourceSha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
+    "seed": "docs/reports/sweep-c4/L8-07-actual-high-campaign.json.gz",
+    "seedSha256": "5c876daa169912a68450a7c99a0544116be98477e1e59a15c60353c502de1a67",
+    "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+    "method": "Exact unmodified campaign from current physical L7/L8 run; ordinary L8 constructor consumes original L7 result. No Resume or actor/objective changes."
+  }
+]
