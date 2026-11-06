@@ -1,5 +1,6 @@
-import { execFileSync } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { execFileSync, fork } from 'node:child_process';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { runnerLevels, runLevel, type RunnerLevel, type LevelReport } from '../sim-runner/levels';
@@ -54,7 +55,47 @@ const sourceMatchesMain = process.env.QA_THREAT_SOURCE_MATCHES_MAIN !== undefine
   : mainRevision === 'not-supplied' ? null : git('diff', mainRevision, '--', 'src', 'public') === '' && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
 const started = performance.now(), levels: LevelReceipt[] = [];
 await mkdir(values.out!, { recursive: true });
-for (const level of selected) {
+// Each leaf uses one simulation process, including serial extra follower seeds.
+// Waiting for exit keeps the whole audit within the existing two-worker cap.
+const parallelLevels = maxWorkers === 2 && selected.length > 1;
+if (parallelLevels) {
+  const pending = [...selected];
+  const completed = new Map<RunnerLevel, LevelReceipt>();
+  const worker = async () => {
+    for (let level = pending.shift(); level; level = pending.shift()) {
+      const out = join(values.out!, level);
+      const code = await new Promise<number | null>((resolve, reject) => {
+        const child = fork(fileURLToPath(import.meta.url), ['--levels', level, '--maxWorkers', '1', '--out', out], {
+          execArgv: ['--import', 'tsx/esm'], stdio: 'inherit',
+          env: { ...process.env, QA_THREAT_REVISION: revision, QA_THREAT_MAIN_REVISION: mainRevision,
+            ...(sourceMatchesMain === null ? {} : { QA_THREAT_SOURCE_MATCHES_MAIN: String(sourceMatchesMain) }) },
+        });
+        child.once('error', reject);
+        child.once('exit', resolve);
+      });
+      const audit = JSON.parse(await readFile(join(out, 'audit.json'), 'utf8')) as AuditReceipt;
+      const partial = 'PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate';
+      const row = audit.levels[0];
+      if (audit.revision !== revision || audit.mainRevision !== mainRevision || audit.sourceMatchesMain !== sourceMatchesMain
+        || audit.seed !== 1 || audit.tier !== 'low' || audit.policy !== 'complete + passive' || audit.workers !== 1
+        || audit.levels.length !== 1 || row?.level !== level
+        || audit.flags.filter(flag => flag === partial).length !== 1
+        || JSON.stringify(audit.flags.filter(flag => flag !== partial)) !== JSON.stringify(row.passiveFlags.map(flag => `${level}/${flag}`))
+        || code !== 1) throw new Error(`Invalid isolated threat receipt for ${level} (exit ${code})`);
+      completed.set(level, row);
+      await writeFile(join(values.out!, `${level}.json`), JSON.stringify(row, null, 2) + '\n');
+    }
+  };
+  // allSettled waits for both owned workers even if a leaf fails unexpectedly.
+  const results = await Promise.allSettled([worker(), worker()]);
+  for (const result of results) if (result.status === 'rejected') throw result.reason;
+  for (const level of selected) {
+    const row = completed.get(level);
+    if (!row) throw new Error(`Missing isolated threat receipt for ${level}`);
+    levels.push(row);
+  }
+}
+for (const level of parallelLevels ? [] : selected) {
   console.log(`[qa:threat] ${level}: skilled and passive native routes, seed=1, low population`);
   const multiSeedPace = level === 'L5' || level === 'L7';
   const start = performance.now(), holder: { audit?: ThreatObserver; observation?: ReturnType<ThreatObserver['finish']>; hash?: string } = {};
