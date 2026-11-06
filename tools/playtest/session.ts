@@ -128,7 +128,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           activeSteps: mission?.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => ({ id: s.id, anchor: s.anchor })),
           marker: marker && { visible: marker.visible, position: marker.getWorldPosition(marker.position.clone()).toArray(), children: marker.children.map(c => ({ visible: c.visible, position: c.getWorldPosition(c.position.clone()).toArray() })) },
           tracker: hud('mission-tracker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
-        return { tick: g.world.tick, objective, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        const companions = [...g.world.entities.iterate()].filter(e => !!e.companion).map(e => ({ id: e.id, archetype: e.archetype, health: { ...e.health }, hidden: !!e.hidden, passengerOf: e.passengerOf, state: e.companion?.state, transform: { ...e.transform } }));
+        const vehicles = [...(g.world.vehicles?.cars.values() ?? [])].filter(c => c.entity.id === g.world.vehicles?.active || c.entity.vehicle?.driver != null || (c.entity.vehicle?.attached.length ?? 0) > 0 || (c.entity.vehicle?.passengers?.length ?? 0) > 0).map(c => ({ id: c.entity.id, archetype: c.entity.archetype, transform: { ...c.entity.transform }, vehicle: c.entity.vehicle }));
+        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
