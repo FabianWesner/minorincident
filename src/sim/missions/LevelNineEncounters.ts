@@ -48,22 +48,25 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
     if (ids.length === members.length) state.spawned.push(g.id);
   }
   // Free driving can miss all three fixed route traces, and a slow reversal
-  // can outlast the once-only roadside singles. A lone approaching wanderer
-  // fills quiet driving intervals using the same pool, cap and offscreen
-  // placement predicate. Authored risk groups/detours keep their identities.
+  // can outlast the once-only roadside groups. Small patrols fill quiet
+  // driving intervals using the same pool, cap and offscreen placement
+  // predicate. Authored risk groups/detours keep their identities.
   const patrol = state.patrol ??= { nextAt: w.tick + 300, serial: 0 };
-  if (w.tick < patrol.nextAt || ai.director.count >= ai.director.cap || !ai.pool.length) return;
+  const patrolSize = 3;
+  if (w.tick < patrol.nextAt || ai.director.count + patrolSize > ai.director.cap || ai.pool.length < patrolSize) return;
   const player = w.entities.get(1)!, active = w.vehicles?.active;
   const car = active == null ? undefined : w.entities.get(active);
   if (!car?.vehicle) return;
   if (ai.active.some(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 40 && ai.director.inFrame(e.transform))) return;
   const heading = -car.transform.yaw + (car.vehicle.forwardSpeed < -.5 ? Math.PI : 0);
-  for (const distance of [30, 40, 50, 60]) for (const offset of [.25, -.25, .6, -.6, 1, -1]) {
-    const at = { x: car.transform.x + Math.cos(heading + offset) * distance, z: car.transform.z + Math.sin(heading + offset) * distance };
-    if (!chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at)) continue;
-    const id = ai.spawn('infected.runner', at, { state: 'chase' });
-    ai.pursueTarget(id, 1);
-    state.ids[`crossing-patrol-${patrol.serial++}`] = [id];
+  for (const distance of [30, 40, 50, 60, 75, 90]) for (const offset of [0, .25, -.25, .6, -.6, 1, -1]) {
+    const centre = { x: car.transform.x + Math.cos(heading + offset) * distance, z: car.transform.z + Math.sin(heading + offset) * distance };
+    const side = heading + offset + Math.PI / 2;
+    const group = [-1, 0, 1].map(slot => ({ x: centre.x + Math.cos(side) * slot * 1.4, z: centre.z + Math.sin(side) * slot * 1.4 }));
+    if (group.some(at => !chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at))) continue;
+    const ids = group.map(at => ai.spawn('infected.runner', at, { state: 'chase' }));
+    for (const id of ids) ai.pursueTarget(id, 1);
+    state.ids[`crossing-patrol-${patrol.serial++}`] = ids;
     patrol.nextAt = w.tick + 720;
     return;
   }

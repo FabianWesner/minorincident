@@ -1,0 +1,745 @@
+{
+  "observations": {
+    "finding": "4: small quiet-driving patrol groups",
+    "status": "PASS for bounded default real-input drives at both tiers; not an all-route row requalification",
+    "method": "Shared headless Metal WebGL2, wide zoom 1.5, unpaused WASD, normal APC durability, courier protected. No entity edits or mission skips. Initial angle-only placement retained as diagnostic, then direct-ahead safe candidate tested.",
+    "change": "Three runners admitted atomically under existing pool/cap and offscreen predicates, unchanged 720-tick cadence. Direct-ahead candidate meets real driven lane; longer search supports wide framing.",
+    "results": [
+      {
+        "label": "fix73-L9-patrol-low",
+        "source": {
+          "sourceHash": "e6f02e4e982c3968b5c1909c5dfbaedc95f170af91122cfde62d8e6b627eece9",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+          "input": {
+            "level": "L9",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "ticks": 6750,
+        "groups": {
+          "crossing-patrol-0": [
+            712,
+            713,
+            714
+          ],
+          "crossing-patrol-1": [
+            791,
+            792,
+            793
+          ],
+          "crossing-patrol-2": [
+            828,
+            829,
+            830
+          ],
+          "crossing-patrol-3": [
+            875,
+            876,
+            877
+          ],
+          "crossing-patrol-4": [
+            956,
+            957,
+            958
+          ],
+          "crossing-patrol-5": [
+            987,
+            988,
+            989
+          ],
+          "crossing-patrol-6": [
+            1055,
+            1056,
+            1057
+          ]
+        },
+        "groupSizes": [
+          3
+        ],
+        "onscreenPatrolMembers": [
+          712,
+          713,
+          714,
+          791,
+          792,
+          793,
+          828,
+          829,
+          830,
+          875,
+          876,
+          877,
+          956,
+          987,
+          988,
+          989,
+          1055,
+          1056,
+          1057
+        ],
+        "maximumCapExcess": -60,
+        "minimumArmor": 1000,
+        "patrolContacts": []
+      },
+      {
+        "label": "fix73-L9-patrol-high",
+        "source": {
+          "sourceHash": "e6f02e4e982c3968b5c1909c5dfbaedc95f170af91122cfde62d8e6b627eece9",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+          "input": {
+            "level": "L9",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "ticks": 8850,
+        "groups": {
+          "crossing-patrol-0": [
+            756,
+            757,
+            758
+          ],
+          "crossing-patrol-1": [
+            813,
+            814,
+            815
+          ],
+          "crossing-patrol-2": [
+            866,
+            867,
+            868
+          ],
+          "crossing-patrol-3": [
+            935,
+            936,
+            937
+          ],
+          "crossing-patrol-4": [
+            1024,
+            1025,
+            1026
+          ],
+          "crossing-patrol-5": [
+            1027,
+            1028,
+            1029
+          ]
+        },
+        "groupSizes": [
+          3
+        ],
+        "onscreenPatrolMembers": [
+          756,
+          757,
+          758,
+          813,
+          814,
+          815,
+          866,
+          867,
+          868,
+          935,
+          936,
+          937,
+          1026,
+          1027,
+          1028,
+          1029
+        ],
+        "maximumCapExcess": -117,
+        "minimumArmor": 290,
+        "patrolContacts": []
+      },
+      {
+        "label": "fix73-L9-intercept-low",
+        "source": {
+          "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+          "input": {
+            "level": "L9",
+            "tier": "low",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "ticks": 5220,
+        "groups": {
+          "crossing-patrol-0": [
+            712,
+            713,
+            714
+          ],
+          "crossing-patrol-1": [
+            791,
+            792,
+            793
+          ],
+          "crossing-patrol-2": [
+            828,
+            829,
+            830
+          ],
+          "crossing-patrol-3": [
+            875,
+            876,
+            877
+          ],
+          "crossing-patrol-4": [
+            956,
+            957,
+            958
+          ],
+          "crossing-patrol-5": [
+            959,
+            960,
+            961
+          ],
+          "crossing-patrol-6": [
+            990,
+            991,
+            992
+          ]
+        },
+        "groupSizes": [
+          3
+        ],
+        "onscreenPatrolMembers": [
+          712,
+          713,
+          714,
+          791,
+          792,
+          793,
+          828,
+          829,
+          830,
+          875,
+          876,
+          877,
+          956,
+          990,
+          991,
+          992
+        ],
+        "maximumCapExcess": -57,
+        "minimumArmor": 890,
+        "patrolContacts": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 714,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1183,
+            "sourceId": 667,
+            "targetId": 791,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2602,
+            "sourceId": 667,
+            "targetId": 875,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2605,
+            "sourceId": 667,
+            "targetId": 877,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2612,
+            "sourceId": 667,
+            "targetId": 876,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4957,
+            "sourceId": 667,
+            "targetId": 990,
+            "source": "contact",
+            "contactId": 9,
+            "attackId": null,
+            "before": 920,
+            "after": 910
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4970,
+            "sourceId": 667,
+            "targetId": 992,
+            "source": "contact",
+            "contactId": 10,
+            "attackId": null,
+            "before": 910,
+            "after": 900
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4975,
+            "sourceId": 667,
+            "targetId": 991,
+            "source": "contact",
+            "contactId": 11,
+            "attackId": null,
+            "before": 900,
+            "after": 890
+          }
+        ]
+      },
+      {
+        "label": "fix73-L9-intercept-high",
+        "source": {
+          "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+          "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+          "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+          "input": {
+            "level": "L9",
+            "tier": "high",
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "source": "preset",
+            "courierGodMode": true,
+            "movingCoverRoute": false,
+            "noSkip": true,
+            "frameTiming": false
+          }
+        },
+        "ticks": 5040,
+        "groups": {
+          "crossing-patrol-0": [
+            756,
+            757,
+            758
+          ],
+          "crossing-patrol-1": [
+            813,
+            814,
+            815
+          ],
+          "crossing-patrol-2": [
+            866,
+            867,
+            868
+          ],
+          "crossing-patrol-3": [
+            921,
+            922,
+            923
+          ],
+          "crossing-patrol-4": [
+            1024,
+            1025,
+            1026
+          ],
+          "crossing-patrol-5": [
+            1027,
+            1028,
+            1029
+          ],
+          "crossing-patrol-6": [
+            1076,
+            1077,
+            1078
+          ]
+        },
+        "groupSizes": [
+          3
+        ],
+        "onscreenPatrolMembers": [
+          756,
+          757,
+          758,
+          813,
+          814,
+          815,
+          866,
+          867,
+          868,
+          921,
+          922,
+          923,
+          1024,
+          1026,
+          1076,
+          1077,
+          1078
+        ],
+        "maximumCapExcess": -123,
+        "minimumArmor": 880,
+        "patrolContacts": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 756,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 757,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 402,
+            "sourceId": 667,
+            "targetId": 758,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1153,
+            "sourceId": 667,
+            "targetId": 814,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1159,
+            "sourceId": 667,
+            "targetId": 815,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1892,
+            "sourceId": 667,
+            "targetId": 867,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2606,
+            "sourceId": 667,
+            "targetId": 921,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2606,
+            "sourceId": 667,
+            "targetId": 922,
+            "source": "contact",
+            "contactId": 8,
+            "attackId": null,
+            "before": 930,
+            "after": 920
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2606,
+            "sourceId": 667,
+            "targetId": 923,
+            "source": "contact",
+            "contactId": 9,
+            "attackId": null,
+            "before": 920,
+            "after": 910
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4836,
+            "sourceId": 667,
+            "targetId": 1076,
+            "source": "contact",
+            "contactId": 10,
+            "attackId": null,
+            "before": 910,
+            "after": 900
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4836,
+            "sourceId": 667,
+            "targetId": 1077,
+            "source": "contact",
+            "contactId": 11,
+            "attackId": null,
+            "before": 900,
+            "after": 890
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4836,
+            "sourceId": 667,
+            "targetId": 1078,
+            "source": "contact",
+            "contactId": 12,
+            "attackId": null,
+            "before": 890,
+            "after": 880
+          }
+        ]
+      }
+    ],
+    "limitation": "Bounded 90-second repeats do not finish L9 or cover all authored detours. High initial driver stalled near barricades and took damage; low initial completed bridge drive with no damage, prompting direct-ahead placement.",
+    "rawCapturesDeleted": true
+  },
+  "evidence": [
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-checkpoint-yield.jpg",
+      "sha256": "c65f596b12a8793e776a5ffd84a94abb4b912e33670c55ea4244c4590e73b599",
+      "what": "Yield: courier crawling on broken bridge; vehicle drive has ended."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t1811.jpg",
+      "sha256": "b1417a0299443d62471413dcbfb6808aa808effaba340bd83cfa6c2a2413fdcf",
+      "what": "APC 1000 armor; living red-bar infected off the right flank, open lane."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t2.jpg",
+      "sha256": "c1b20684bda0574ba075e5e09d9506648a639d9a8717d80d5a07a1673c913d8e",
+      "what": "Initial APC 1000 armor at crash-approach; empty road ahead."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t2717.jpg",
+      "sha256": "c651a67c4d64d1bca20b3f94751074eef58bcdbf1c4fab3d256d07010552a4b8",
+      "what": "APC 1000 armor; infected clustered at upper road edge off driven lane."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t3622.jpg",
+      "sha256": "07979bd5929a0a4b4006c0749e28f62245168c8667fe51a52632a5137222ed4d",
+      "what": "APC 1000 armor turning on open road, only distant body at edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t4529.jpg",
+      "sha256": "3d0c62cd83e89c19fcc2335069af4bf9c9632b5dce08dbdf5938808ffb5740c6",
+      "what": "APC 1000 armor with blue red-bar infected beside lane; still no durability loss."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t5430.jpg",
+      "sha256": "3930f0dc617f7e885925a9659ffe0b14fbebc13200de4f3d13fc671ae0775728",
+      "what": "APC 1000 armor reaches bridge approach with scattered props and distant infected."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t6336.jpg",
+      "sha256": "1c4c20c3af5dd0443c642e2bcf24fef74e2502c1890e858bf43f5c0925d1cfd6",
+      "what": "APC 1000 armor tips over broken bridge, debris below."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-low/captures/fix73-L9-patrol-low-L9-t903.jpg",
+      "sha256": "c11e00c783bcc9cb300d89763d641cbce60d35bda758e2b9feabc21c395bf9e6",
+      "what": "APC 1000 armor drives straight with infected on distant shoulder."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-checkpoint-yield.jpg",
+      "sha256": "8a2b6688a9e06f2d6c0770203569d06e4a194d85dd7a27f2a822e29a39677b05",
+      "what": "Yield: APC armor 290, several living red-bar infected surround vehicle near barricade."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t0.jpg",
+      "sha256": "2511da14f1c64fdf9fe039a5baee3ddbadbdddba5693d8fc931a776866d54089",
+      "what": "Initial APC 1000 armor in crash approach."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t1208.jpg",
+      "sha256": "1452dfc082731410b4eb77224bfe2b670688ea2f87637178e46f6e22d4c3374c",
+      "what": "APC 1000 armor drives past several blue infected and red bars on road sides."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t2416.jpg",
+      "sha256": "e7ee5792e821c429a08cf3dbcbae3b1b88a9ed859c93babc849583336d2c713a",
+      "what": "APC 1000 armor in clear lane; living infected at upper edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t3620.jpg",
+      "sha256": "77da9708b876def873cd4b67f17653c44c24b3ffa4bf47953559e482450a3e0b",
+      "what": "APC 1000 armor turns in largely clear lane."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t4827.jpg",
+      "sha256": "505468a213e7b203d1ba6fe54c9c64d1ef6f1ed1cf358a0567ff7f7cee795b54",
+      "what": "APC 970 armor with living infected immediately beside bonnet."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t6029.jpg",
+      "sha256": "64765f4118d5f6985f369ad4e17fadfbd94d05b6ae36e9e3ad8ff0962816a5ab",
+      "what": "APC 880 armor among living infected and barricades."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t7233.jpg",
+      "sha256": "da9705ccc8ca6f9532c5737af11b2c69a11ad70c7eda12043061b4bb6f3e6b68",
+      "what": "APC 670 armor surrounded by red-bar infected near roadside barrier."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-patrol-high/captures/fix73-L9-patrol-high-L9-t8441.jpg",
+      "sha256": "7818f55e02428d675eab24f761a0e8db7f43b6c2e045e40a89935d58fa9bbcfb",
+      "what": "APC 510 armor with living red-bar infected around vehicle and fire."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-checkpoint-yield.jpg",
+      "sha256": "1b372bf2e85744e0c9cb6fea602d1f96e5f5aafe11ec4763705963b8f2955b57",
+      "what": "Yield: APC 890 armor reaches barricaded bridge approach."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t1806.jpg",
+      "sha256": "97815ae77f3f18ca4be63c51d301def405754839a667dc6b21395cfb72573245",
+      "what": "APC 960 armor; living red-bar infected visible on shoulder."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t2708.jpg",
+      "sha256": "01d0aedd0e3be738f6e3d5d987eeada38a5d9a2de01138d0bc9208be48f8472d",
+      "what": "APC 930 armor; several living infected alongside vehicle and upper edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t3.jpg",
+      "sha256": "0a4965c7526575a1f9bcfb7cb82902dcee900a12c9a0b94291a86afcbb310450",
+      "what": "Initial APC 1000 armor on crash approach."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t3615.jpg",
+      "sha256": "8a59618f12128c5394cc8f362bde35b3307df52a5513cc46ec37cef0d1d482be",
+      "what": "APC 930 armor turns through open lane with distant infected at edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t4517.jpg",
+      "sha256": "cf4bdd45ea3a65b70e9e83e5a30d14f4ec124f755c5eaf65a1673c5c5259b275",
+      "what": "APC 920 armor approaches barricades, living infected at upper edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-low/captures/fix73-L9-intercept-low-L9-t905.jpg",
+      "sha256": "2affff8be5d7abd9d448d7fd22665f9fb5fe9b02a1db27e8b8aa8a4eb6494504",
+      "what": "APC 970 armor driving through open lane; previous trio contact is recorded in ledger."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-checkpoint-yield.jpg",
+      "sha256": "51d336bb8155e5c3a28c943b6773c3dc556bc1c59c3fc9a3d45103efb4160a7a",
+      "what": "Yield: APC 880 armor reaches bridge approach with distant infected visible above."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t0.jpg",
+      "sha256": "2511da14f1c64fdf9fe039a5baee3ddbadbdddba5693d8fc931a776866d54089",
+      "what": "Initial APC 1000 armor in crash approach."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t1806.jpg",
+      "sha256": "d581a6a917fa5d3908afbed78c0964533a95b60df62391cadb87586ddef6ab1a",
+      "what": "APC 950 armor driving past blue infected visible near upper roadside."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t2713.jpg",
+      "sha256": "8ec319024c78958ea3c2ceccf6fe09a443712952a428a0239fb02f03cd5459c9",
+      "what": "APC 910 armor; living red-bar infected immediately beside bonnet and more at upper edge."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t3620.jpg",
+      "sha256": "0b3ef8fbf3abcd4bb8aac0f0f63094ca88da4e45bfa1dde126f279b0996d0dbe",
+      "what": "APC 910 armor turning through open lane with distant living infected above."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t4529.jpg",
+      "sha256": "dc2a186718142a117a6b854bea846c267c5ed2698b523bf98499098ef6822ccd",
+      "what": "APC 910 armor approaching barricades; scattered infected visible beyond."
+    },
+    {
+      "file": "test-results/vqa-4/fix73-L9-intercept-high/captures/fix73-L9-intercept-high-L9-t902.jpg",
+      "sha256": "acea84dab7d13471845c10e17a51ecad01385dcbc8572d0305936c873d066558",
+      "what": "APC 970 armor driving straight after first trio contact."
+    }
+  ],
+  "input": {
+    "file": "docs/reports/fix73-g/L9-patrol-input.json.gz",
+    "sha256": "37ac27ae405eada17238645452ae15bf13f3fb509bdb3fef706c1b70db6f02da"
+  }
+}
