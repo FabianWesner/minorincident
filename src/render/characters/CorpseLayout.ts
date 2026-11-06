@@ -336,7 +336,15 @@ export class CorpseLayout {
           yield;
           // The courier can move while a dense search is suspended. A best
           // candidate from an earlier frame must still leave their capsule clear.
-          if (best && player && !(pointDistanceSquared(player.x, player.z, best.ax, best.az, best.bx, best.bz) >= .95 ** 2)) best = undefined;
+          if (best && player && !(pointDistanceSquared(player.x, player.z, best.ax, best.az, best.bx, best.bz) >= .95 ** 2)) {
+            best = undefined; state.bestY = Infinity;
+            // A bound is valid only while its winner is valid. Revisit the
+            // skipped roots, including the legacy fallback footprint.
+            state.rootX = state.rootZ = state.queriedX = state.queriedZ = NaN;
+            numeric[0] = e.transform.x; numeric[1] = e.transform.z; numeric[2] = initialYaw;
+            numeric[3] = numeric[4] = numeric[5] = numeric[6] = 0; numeric[7] = feet;
+            ring = -1; break;
+          }
         }
       }
       if (best && best.y <= feet + .05) break;
