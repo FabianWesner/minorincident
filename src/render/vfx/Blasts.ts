@@ -164,7 +164,8 @@ export class Blasts extends Group {
         // Rise decelerates; wind bends the column more the higher (older) a puff is.
         const drift = m.xyz.mul(age.mul(float(1).sub(progress.mul(.35)))).add(this.windNode.mul(age.mul(progress.mul(1.5).add(.2))).mul(st.z.greaterThan(1.5).select(.1, 1)));
         // Cure is a low ground mist: upright survivors remain above the bank.
-        const shape = positionGeometry.mul(st.z.greaterThan(1.5).select(vec3(.6, 1.15, .6), vec3(1, st.z.lessThan(-1.5).select(.14, 1), 1)));
+        // vqa-3 #3: street columns billow round instead of stretching into vertical curtain panels.
+        const shape = positionGeometry.mul(st.z.greaterThan(1.5).select(vec3(.8, 1, .8), vec3(1, st.z.lessThan(-1.5).select(.14, 1), 1)));
         return o.xyz.add(drift).add(shape.mul(size).mul(bump));
       })();
       puffMaterial.outputNode = Fn(() => {
@@ -174,7 +175,8 @@ export class Blasts extends Group {
         const nearRay = positionWorld.sub(this.playerNode.add(direction.mul(along))).length().lessThanEqual(streetSmoke.select(1, 6));
         const sun = normalWorld.dot(vec3(.45, .78, .43)).mul(.5).add(.5);
         const ambient = host.ambient ? host.ambient.clamp(.12, 1) : float(1);
-        const base = vec3(st.w).mul(mix(.62, 1.12, sun)).mul(ambient);
+        // vqa-3 #3: street smoke greys as it rises and thins, so a column reads as dispersing smoke, not a dark curtain.
+        const base = vec3(st.w).add(st.z.greaterThan(1.5).select(progress.mul(.22), 0)).mul(mix(.62, 1.12, sun)).mul(ambient);
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
         // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
         const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75)).mul(streetSmoke.select(0, 1));
@@ -187,7 +189,10 @@ export class Blasts extends Group {
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
         // Dark (soot) puffs stay dense for most of their life and fade late, so a blast column reads as a solid dark plume.
         const dark = smoothstep(.16, .07, st.w).mul(st.z.greaterThanEqual(0).select(1, 0));
-        const fade = age.div(.45).min(1).mul(mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark));
+        // vqa-3 #3 (L3 street columns read as hanging teardrops: densest, rounded bottoms fading upward). Rise from the base:
+        // a thin wispy stem that thickens over its first quarter, then widens and fades from mid-height to the top.
+        const streetFade = smoothstep(0, .28, progress).mul(.75).add(.25).mul(float(1).sub(smoothstep(.3, 1, progress)));
+        const fade = age.div(.45).min(1).mul(st.z.greaterThan(1.5).select(streetFade, mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark)));
         // Retain 20% in the 6 m player-ray tube, leaving headroom for antialiasing
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
@@ -497,7 +502,8 @@ export class Blasts extends Group {
       } else if (c.street) {
         // Street wreck smoke must clear cars and frontage props as a column;
         // the same bounded puff lifetime and pool keep its particle budget fixed.
-        this.puff(c.x + j() * .3, ground + .2, c.z + j() * .3, j() * .1, 1 + this.rng.next() * .3, j() * .1, 6, c.size * .65, c.size * 1.7, c.heat, c.shade, born);
+        // vqa-3 #3: a narrow stem at the base that widens upward (taper, then billow); same count and lifetime.
+        this.puff(c.x + j() * .3, ground + .2, c.z + j() * .3, j() * .1, 1 + this.rng.next() * .3, j() * .1, 6, c.size * .35, c.size * 2.1, c.heat, c.shade, born);
       } else if (c.plume) {
         // Blast plume: hot buoyant soot that climbs fast, swells with height and bends downwind (wind drift grows with age in TSL).
         // Thickest in its first seconds: up to 2.5 puffs per emission, easing to one by 4 s (same birth time, so the cohort spacing holds).
