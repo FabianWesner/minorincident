@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "5bc0c1bb33c0dd9a1da263598fba3da47cb90c9f",
+  "commit": "060891ca4be42ef2fedff4e68e2050350ba1c0a8",
   "clauses": [
     {
       "clause": "Covering matters: `evade-only` \u2264 30 % out, `complete` \u2265 60 %.",
@@ -13,19 +13,19 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L6-11-native.json",
-      "sha256": "67428002577948ed0b8d7c5d85d4e42688d17b592db134d2e0d73694fcb9dea0",
-      "what": "E24-AC09 explicitly specifies the native named bots, one seed. Both current-source mortal complete routes save26/29=89.66% with zero deaths; moving evade-only saves1/29=3.45% with nine ordinary deaths. Per-identity roster outcomes and mission result agree. Complete final world hashes match canonical acceptance: low4a1802d3/high10d0a475. Separate physical WASD controller fares poorly (low2/29,high1/29); this PASS qualifies the specified named policies and does not claim human usability."
+      "file": "docs/reports/fix71-b/L6-11-release-native.json",
+      "sha256": "9f1118832f407d43168c6ba512acbf1118d39186d9ef9ec20ce757f97dc79360",
+      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
     },
     {
-      "file": "docs/reports/fix71-b/L6-11-native.json.gz",
-      "sha256": "b7241391218a5826217e5aa0c039ccb550c6a95b7409550c3bd3c26741cf7b6a",
-      "what": "Read-only complete/evade-only full survivor roster, every actual follower bite, range/rifle LOS, per-second column positions, and final state hashes."
+      "file": "docs/reports/fix71-b/L6-11-release-native.json.gz",
+      "sha256": "fb725d73edc97c20c2d6ccd1f4fa13a83362501a461d4cc84be76e0f3d48cdfe",
+      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
     },
     {
       "file": "docs/reports/fix71-b/L6-11-physical.json",
       "sha256": "f4ccd2ac8d62eba2e2b85b35d82d027903ced402701e51d0c4f7efb05714cfd7",
-      "what": "E24-AC09 explicitly specifies the native named bots, one seed. Both current-source mortal complete routes save26/29=89.66% with zero deaths; moving evade-only saves1/29=3.45% with nine ordinary deaths. Per-identity roster outcomes and mission result agree. Complete final world hashes match canonical acceptance: low4a1802d3/high10d0a475. Separate physical WASD controller fares poorly (low2/29,high1/29); this PASS qualifies the specified named policies and does not claim human usability."
+      "what": "Final-source mortal named-policy result, identity and bite/position ledger; complete hashes match canonical qa:accept. Physical controller artifact is an earlier independent limitation, not the named-policy qualification."
     }
   ]
 }
