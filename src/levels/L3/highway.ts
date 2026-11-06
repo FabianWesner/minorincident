@@ -8,6 +8,8 @@ export function highwayPoint(p: Placement, t: number, offset = 0): [number, numb
 /** Fine support strips and continuous jersey rails replace the old ground-level pier footprints on L3's traversed ramps. */
 const deckCells = 10;
 const cellIndex = (o0: number) => Math.round((o0 + 2.31) / (4.62 / deckCells));
+/** Half-width (in t) of the tight inner bend round each S apex (t 0.25 / 0.75): the inner rail radius stays under ~2 m there. */
+const apexHalfT = .07;
 export function highwayColliders(p: Placement): StaticCollider[] {
   const result: StaticCollider[] = [];
   for (let i = 0; i < 120; i++) {
@@ -23,6 +25,12 @@ export function highwayColliders(p: Placement): StaticCollider[] {
       if(side) box.navBlocker = true;
       box.min[1] -= .5; box.max[1] += side ? .95 : 0;
       result.push({id:`${p.id}/highway-${side}-${i}${side ? '' : `-${cellIndex(o0)}`}`,aabb:box,walkable:side===0,minTier:p.minTier,maxTier:p.maxTier});
+      // fix65-a (L3-13): at each S-bend apex the inner Jersey rail winds round a 0.8 m radius and its straight segments fan
+      // open, so a body on the last deck cell stood over the fan and read as hanging past the broken inner edge. Those
+      // apex cells keep their support but also carry a rail-height nav blocker, holding walkers ~1 m off the inner rail.
+      const apex = Math.abs(a + .5 / 120 - .25) < apexHalfT ? 1 : Math.abs(a + .5 / 120 - .75) < apexHalfT ? -1 : 0;
+      if (!side && apex && (apex > 0 ? o0 > 2.31 - 4.62 / deckCells - 1e-6 : o1 < -2.31 + 4.62 / deckCells + 1e-6))
+        result.push({id:`${p.id}/highway-apex-${i}`,aabb:{min:[box.min[0],box.max[1],box.min[2]],max:[box.max[0],box.max[1]+.95,box.max[2]],navBlocker:true},walkable:false,minTier:p.minTier,maxTier:p.maxTier});
     }
   }
   for (const joint of highwayJointSegments) {

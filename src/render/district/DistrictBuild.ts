@@ -270,6 +270,25 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           reference({ name, userData: { name, ...markers.extras[extras] }, matrixWorld: transform.matrix });
         }
       } else base?.traverse(reference);
+      // fix65-a (L1-16): L1 keeps the baked Grove markers, so draw its few runtime frontage edits (levels/L1/layout.ts) on top:
+      // the added hedge rows, and the courier van turned into its passage.
+      if (deps.world.composition.id === 'L1' && d.id === 'D-GROVE') for (const p of d.decay.placements) {
+        if (p.assetId === 'veh.courier-van') {
+          for (const [key, refs] of references) if (key.startsWith('veh.courier-van:')) for (const ref of refs) { ref.position.fromArray(p.position); ref.rotation.set(0, p.yaw, 0); }
+        } else if (p.id.startsWith('l1-')) {
+          const key = `${p.assetId}:${d.decay.lights.includes(p.lightGroup)}:`, ref = new Object3D();
+          ref.position.fromArray(p.position); ref.rotation.y = p.yaw; ref.scale.fromArray(p.scale);
+          if (!references.has(key)) references.set(key, []);
+          references.get(key)!.push(ref);
+          // Hedge foliage is drawn as crowns, as the placement path does for L2.
+          for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
+            const colors = worldAssets[p.assetId].foliage!.colors.join(':'), c = new Object3D(), [cx, cy, cz] = crown.position.map((v, a) => v * p.scale[a]);
+            c.position.set(p.position[0] + cx * Math.cos(p.yaw) + cz * Math.sin(p.yaw), p.position[1] + cy, p.position[2] - cx * Math.sin(p.yaw) + cz * Math.cos(p.yaw));
+            c.scale.set(crown.radius[0] * p.scale[0], crown.radius[1] * p.scale[1], crown.radius[2] * p.scale[2]);
+            if (!crowns.has(colors)) crowns.set(colors, []); crowns.get(colors)!.push(c);
+          }
+        }
+      }
       // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
       // references must use those placements, rather than the unchanged baked GLB empties.
       if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
