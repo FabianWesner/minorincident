@@ -22,7 +22,7 @@ try {
         for (const style of document.querySelectorAll('style')) if (style.textContent?.includes('#hud:not([data-scene-hud])')) style.remove();
         a.teleport(1, { x: 255.5, z: 15.9 }); await a.step(2);
       }, { tier, save });
-      const captures = [];
+      const captures: { file: string; sha256: string }[] = [];
       const capture = async (label: string) => {
         await session.ready(); const file = `${out}/${tier}-${label}.png`;
         await session.page.screenshot({ path: file });
