@@ -25,7 +25,13 @@ for (const tier of ['low', 'high'] as const) {
   }
   const w = await loadLevel('L6', 1, save, 0, { quality: tier });
   try {
-    const samples = [], idleTicks = new Map<number, number>(); let maxIdleTicks = 0;
+    const snapshot = (second: number) => ({ second, actors: w.missions!.state.l6!.survivors.map(row => {
+      const e = w.entities.get(row.id)!;
+      return { id: e.id, key: row.key, routine: row.routine, clip: e.civilian!.story?.clip,
+        at: { ...e.transform }, health: { ...e.health }, appearance: e.appearance,
+        storyProp: e.civilian!.story?.prop, allyWeapon: e.civilian!.ally?.weapon };
+    }) });
+    const samples: ReturnType<typeof snapshot>[] = [], idleTicks = new Map<number, number>(); let maxIdleTicks = 0;
     for (let second = 0; second <= 4; second++) {
       if (second) for (let tick = 0; tick < 60; tick++) {
         w.applyInput(emptyInput(), 'keyboard'); w.update();
@@ -35,12 +41,7 @@ for (const tier of ['low', 'high'] as const) {
           idleTicks.set(row.id, idle); maxIdleTicks = Math.max(maxIdleTicks, idle);
         }
       }
-      samples.push({ second, actors: w.missions!.state.l6!.survivors.map(row => {
-        const e = w.entities.get(row.id)!;
-        return { id: e.id, key: row.key, routine: row.routine, clip: e.civilian!.story?.clip,
-          at: { ...e.transform }, health: { ...e.health }, appearance: e.appearance,
-          storyProp: e.civilian!.story?.prop, allyWeapon: e.civilian!.ally?.weapon };
-      }) });
+      samples.push(snapshot(second));
     }
     const expectedIds = [...save.stationOccupants!, ...save.rescuedSurvivors ?? []].map(e => e.id).sort((a, b) => a - b);
     const identityPreserved = JSON.stringify(samples[0].actors.map(e => e.id).sort((a, b) => a - b)) === JSON.stringify(expectedIds);
