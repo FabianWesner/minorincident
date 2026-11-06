@@ -1,0 +1,73 @@
+{
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "645c32e8748939dcce39fde7340839f3f2032132",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "toolSha256": "6cb4b75aadfacd0cf827d8143c1c367147c824be89bbfd97cdc2a1c4f1954b4b",
+  "rows": [
+    {
+      "tier": "low",
+      "id": 119,
+      "hpFixture": "PASS",
+      "physicalDeathTick": 813,
+      "specials": [
+        {
+          "move": "alpha.ground-slam",
+          "distance": 3.194632565332462
+        },
+        {
+          "move": "alpha.charge",
+          "distance": 5.982819865692841
+        }
+      ],
+      "corpseApproachDistance": 1.7898871077767504,
+      "corpseDrawn": true,
+      "corpseReadability": "FAIL",
+      "frameGate": "NOT CHECKED",
+      "grabBoundary": "NOT CHECKED",
+      "files": [
+        {
+          "file": "docs/reports/sweep-c6/L10-12/low-physical.json.gz",
+          "sha256": "45a3a5a5b0258e1b44bd21257bccb86e83132ed123eb48bd771f82051f75a253"
+        },
+        {
+          "file": "docs/reports/sweep-c6/L10-12/low-corpse-physical.json.gz",
+          "sha256": "9bfac7ed7acd9cc0002339d7f08fdf7734c0387ed9d73df5f5083c16a9f6dd8c"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "id": 122,
+      "hpFixture": "PASS",
+      "physicalDeathTick": 711,
+      "specials": [
+        {
+          "move": "alpha.ground-slam",
+          "distance": 2.9803983531485074
+        },
+        {
+          "move": "alpha.charge",
+          "distance": 5.588377610737316
+        }
+      ],
+      "corpseApproachDistance": 1.8010045149114575,
+      "corpseDrawn": true,
+      "corpseReadability": "FAIL",
+      "frameGate": "NOT CHECKED",
+      "grabBoundary": "NOT CHECKED",
+      "files": [
+        {
+          "file": "docs/reports/sweep-c6/L10-12/high-physical.json.gz",
+          "sha256": "b08fd6c0c99b3cac212047e504ee7df86c81137d92fa72000c7f3938d70b00f8"
+        },
+        {
+          "file": "docs/reports/sweep-c6/L10-12/high-corpse-physical.json.gz",
+          "sha256": "2185b6504b379237c96fb24146773dc082797de238dfb4268e31c5f6f6f3d924"
+        }
+      ]
+    }
+  ],
+  "status": "FAIL",
+  "reason": "Personally reviewed settled creature silhouette unreadable at measured physical approach; no whole-row timing/grab qualification claimed."
+}

@@ -18,7 +18,8 @@ const targets = [
   { region: 'dispersal-complex', low: [75, 95], high: [140, 190] },
 ] as const;
 const identity = provenance(), rows = [];
-type Census = { tick: number; count: number; regular: number; dogs: number; alphas: number; ids: number[] };
+type Census = { tick: number; count: number; regular: number; dogs: number; alphas: number; ids: number[];
+  specialActors: { id: number; archetype: string; x: number; z: number; cureRegion?: string; hidden: boolean }[] };
 type Interval = { firstTick: number; lastTick: number; count: number; regular: number; dogs: number; alphas: number };
 for (const tier of ['low', 'high'] as const) {
   const campaign = preset('L10-default'); campaign.settings.quality = tier;
@@ -46,7 +47,11 @@ for (const tier of ['low', 'high'] as const) {
         record.ticks++;
         if (count > record.peak) {
           record.peak = count;
-          record.peakCensus = { tick: world.tick, count, regular, dogs, alphas, ids: actors.map(actor => actor.id) };
+          record.peakCensus = { tick: world.tick, count, regular, dogs, alphas, ids: actors.map(actor => actor.id),
+            specialActors: actors.filter(actor => actor.archetype.includes('dog') || actor.archetype.includes('alpha')).map(actor => ({
+              id: actor.id, archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z,
+              cureRegion: actor.infected?.cureRegion, hidden: !!actor.hidden || !!actor.infected?.hidden,
+            })) };
         }
         const previous = record.intervals.at(-1);
         if (previous && previous.lastTick === world.tick - 1 && previous.count === count && previous.regular === regular && previous.dogs === dogs && previous.alphas === alphas) previous.lastTick = world.tick;
@@ -54,7 +59,11 @@ for (const tier of ['low', 'high'] as const) {
         if (count > bounds[1] || ('dogs' in target && (dogs > target.dogs[1] || alphas > target.alphas[1]))) record.upperViolations++;
         if (!record.witness && count >= bounds[0] && count <= bounds[1] &&
           (!('dogs' in target) || (dogs >= target.dogs[0] && dogs <= target.dogs[1] && alphas >= target.alphas[0] && alphas <= target.alphas[1]))) {
-          record.witness = { tick: world.tick, count, regular, dogs, alphas, ids: actors.map(actor => actor.id) };
+          record.witness = { tick: world.tick, count, regular, dogs, alphas, ids: actors.map(actor => actor.id),
+            specialActors: actors.filter(actor => actor.archetype.includes('dog') || actor.archetype.includes('alpha')).map(actor => ({
+              id: actor.id, archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z,
+              cureRegion: actor.infected?.cureRegion, hidden: !!actor.hidden || !!actor.infected?.hidden,
+            })) };
         }
       };
     },

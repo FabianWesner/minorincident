@@ -1,0 +1,28 @@
+
+> qa:threat
+> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+[qa:threat] L1: skilled and passive native routes, seed=1, low population
+[qa:threat] L1: skilled complete, passive complete, 0 passive flags (34.0s)
+[qa:threat] L2: skilled and passive native routes, seed=1, low population
+[qa:threat] L2: skilled complete, passive complete, 0 passive flags (100.1s)
+[qa:threat] L3: skilled and passive native routes, seed=1, low population
+[qa:threat] L3 army line over seeds 1–3: {"seeds":[{"seed":1,"valid":true,"army":2},{"seed":2,"valid":true,"army":0},{"seed":3,"valid":true,"army":0}],"measured":3,"within":3,"pass":true}
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (132.3s)
+[qa:threat] L4: skilled and passive native routes, seed=1, low population
+[qa:threat] L4: high-tier native hold census through the line break
+[qa:threat] L4 high hold: {"tier":"high","holdComplete":true,"firstBreachLevelSeconds":52.71666666666667,"firstBreachAfterTurnSeconds":19.9,"aliveAtFirstBreach":66,"peakAlive":99,"peakPlazaAlive":91,"minPlazaAliveAfter45Seconds":63,"samplesAfter45Seconds":8760,"arrivalEdges":[0,1,2,3,4,5],"threeDirectionsAtLeast60Degrees":true,"maxGroupAtOneSourcePerTick":5,"firstAttackSeconds":7.716666666666667,"lineBreakAfterTurnSeconds":190}
+[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (183.9s)
+[qa:threat] L5: skilled and passive native routes, seed=1, low population
+[qa:threat] L5: skilled complete, passive tick-budget, 0 passive flags (112.7s)
+[qa:threat] L6: skilled and passive native routes, seed=1, low population
+[qa:threat] L6: skilled complete, passive tick-budget, 0 passive flags (10.1s)
+[qa:threat] L7: skilled and passive native routes, seed=1, low population
+[qa:threat] L7: skilled complete, passive complete, 0 passive flags (19.5s)
+[qa:threat] L8: skilled and passive native routes, seed=1, low population
+Browser reservation reached its 597s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.
+[test-budget] qa-threat: 600.7 s (budget 600 s)
+[test-budget] FAIL: qa-threat failed (exit 124)
+[test-budget] FAIL: qa-threat took 600.7 s, over the 600 s budget
+[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.

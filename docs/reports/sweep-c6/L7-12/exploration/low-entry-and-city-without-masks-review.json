@@ -1,0 +1,582 @@
+{
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "inputSha256": "5c6b6f53702a37d382dfbb5d5281503b195fb40f2dac9af10b130bc2c9563d44",
+  "cityInputSha256": "b0596e37dc0701f30de54a2bf200856336355f1f64a3b70bab3d1e8ea2cb6a46",
+  "reviewer": "Codex sweep-c6",
+  "date": "2026-11-06",
+  "allPersonallyReviewed": true,
+  "alphaHuman": true,
+  "cityDestruction": true,
+  "P": "PO: compare the ruined convoy/road fire views with earlier city levels: does L7 read as the worst destruction so far, and do the enlarged brown Alpha bodies still read as human? Agent frame inspection and the numeric contrast pass do not claim PO approval.",
+  "captures": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z0.5-normal.png",
+      "sha256": "337d90da1e3ca13186f8a17512826783980e3199ea19f22734e866eb74cb0d7e",
+      "label": "rocket",
+      "zoom": 0.5,
+      "kind": "normal",
+      "seen": "Personally inspected actual rocket pickup/equip view: bright readable courier with green launcher beside wrecked military truck and warm lamp, corgi and carried followers, cracked dark road. Wide zoom shows incoming red-bar enemies; no new PO taste approval is claimed."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z0.5-hidden.png",
+      "sha256": "d0a3e6f481275bab522c289d68bec785164ee63d8b8b08112252a5e115574563",
+      "label": "rocket",
+      "zoom": 0.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z0.5-id.png",
+      "sha256": "4b5dde623c05611eb829159309faafe8b2942999955ac6fda2fd126474c884c3",
+      "label": "rocket",
+      "zoom": 0.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z1.5-normal.png",
+      "sha256": "8eb401f6bfdc04bd6a337c7f47ac32220055aad6fbe41c1d626eb793f220e2ae",
+      "label": "rocket",
+      "zoom": 1.5,
+      "kind": "normal",
+      "seen": "Personally inspected actual rocket pickup/equip view: bright readable courier with green launcher beside wrecked military truck and warm lamp, corgi and carried followers, cracked dark road. Wide zoom shows incoming red-bar enemies; no new PO taste approval is claimed."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z1.5-hidden.png",
+      "sha256": "42c38839854d6152626a4418a653d4644ada8f15b0198bf4bf457227b776b869",
+      "label": "rocket",
+      "zoom": 1.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-rocket-z1.5-id.png",
+      "sha256": "ee6142f2b6fce1120d6c596924e2b09da9de7c73ad9fba97e3181546ed2d6cd5",
+      "label": "rocket",
+      "zoom": 1.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z0.5-normal.png",
+      "sha256": "45bddce1e202f21f5a04a944c1709e8bfd93153c9b33613e047df3f8415b01ad",
+      "label": "horde-0",
+      "zoom": 0.5,
+      "kind": "normal",
+      "seen": "Personally inspected close live Alpha/horde motion frame: courier and normal corgi remain distinct among regular infected and red ground telegraphs; enlarged brown Alpha has humanoid torso, two arms/legs and running stance, though the close frame crops part of its head near the top edge."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z0.5-hidden.png",
+      "sha256": "df937bf9a73841c88bc1390376a9e9b8cde0bd8a4ca4554cca7bff2050619a1a",
+      "label": "horde-0",
+      "zoom": 0.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z0.5-id.png",
+      "sha256": "805a8b0f1e56d5788d1434affb66d29e6827c0ec78571a3f4bd36ea78a3f6d64",
+      "label": "horde-0",
+      "zoom": 0.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z1.5-normal.png",
+      "sha256": "5aaf5ef0bff97c838053e2b1b6c4f12bfb775ddaf2ed4d2bca1da3de8174141c",
+      "label": "horde-0",
+      "zoom": 1.5,
+      "kind": "normal",
+      "seen": "Personally inspected wide live Alpha/horde motion frame: original brown enlarged Alpha reads as a bulky human with separate head/torso/arms/legs amid a moving regular crowd and red ground telegraphs. Courier remains visibly bright; all12physical motion ticks are native, not an injected pose."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z1.5-hidden.png",
+      "sha256": "6e00d56cd27a020340c0c73029cb49ad7f2260d8b127cfb596ab3d5e13af4af4",
+      "label": "horde-0",
+      "zoom": 1.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-0-z1.5-id.png",
+      "sha256": "e7a5b5e6730f3e4904ed7475aca6b9b5bed15b4249acef095674f170f22976c0",
+      "label": "horde-0",
+      "zoom": 1.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z0.5-normal.png",
+      "sha256": "19acb81a0e042f4b4bf4a46ab94bf754a8505d30206db744bc4f9a15aec95390",
+      "label": "horde-6",
+      "zoom": 0.5,
+      "kind": "normal",
+      "seen": "Personally inspected close live Alpha/horde motion frame: courier and normal corgi remain distinct among regular infected and red ground telegraphs; enlarged brown Alpha has humanoid torso, two arms/legs and running stance, though the close frame crops part of its head near the top edge."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z0.5-hidden.png",
+      "sha256": "2c568df32bcbecec2cb9e22977dd83c58caace380ac6cc5a2259ba7a1d18ca10",
+      "label": "horde-6",
+      "zoom": 0.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z0.5-id.png",
+      "sha256": "086dec3ef2990f7d422ebaf7538b76e1d32e00d983be96706d045c93ad72fb8e",
+      "label": "horde-6",
+      "zoom": 0.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z1.5-normal.png",
+      "sha256": "ea5db1e0003d85146fc642e3c97076fa058c5d5c3b24ecaf88bbfdf871477745",
+      "label": "horde-6",
+      "zoom": 1.5,
+      "kind": "normal",
+      "seen": "Personally inspected wide live Alpha/horde motion frame: original brown enlarged Alpha reads as a bulky human with separate head/torso/arms/legs amid a moving regular crowd and red ground telegraphs. Courier remains visibly bright; all12physical motion ticks are native, not an injected pose."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z1.5-hidden.png",
+      "sha256": "da3c0e420480aa7482daf783bcdc6a6ef1af000de7a375e28e88bb7523aa2bfc",
+      "label": "horde-6",
+      "zoom": 1.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-6-z1.5-id.png",
+      "sha256": "be025b95fc5b6c458e4062d34bd3b96c0219b032a8589ee2a5af36ca4bbcc1df",
+      "label": "horde-6",
+      "zoom": 1.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z0.5-normal.png",
+      "sha256": "755d477707e9de893ea9846836b4be6955cf9a062d1112734cfa4865518d3963",
+      "label": "horde-12",
+      "zoom": 0.5,
+      "kind": "normal",
+      "seen": "Personally inspected close live Alpha/horde motion frame: courier and normal corgi remain distinct among regular infected and red ground telegraphs; enlarged brown Alpha has humanoid torso, two arms/legs and running stance, though the close frame crops part of its head near the top edge."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z0.5-hidden.png",
+      "sha256": "11f43343e117fd5004c5e6dd8ecd5696c1c80d4aa067e10ac24de3d3bceb3efe",
+      "label": "horde-12",
+      "zoom": 0.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z0.5-id.png",
+      "sha256": "dd92263c3d436aa2252ea47ebdba7ccc3edb2c1dc826fc9b82fd9ef882677133",
+      "label": "horde-12",
+      "zoom": 0.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z1.5-normal.png",
+      "sha256": "c2ec84ec42926ce7e7be73375fe25b88a40b5dfd60dc9795011a3ee71f3123c5",
+      "label": "horde-12",
+      "zoom": 1.5,
+      "kind": "normal",
+      "seen": "Personally inspected wide live Alpha/horde motion frame: original brown enlarged Alpha reads as a bulky human with separate head/torso/arms/legs amid a moving regular crowd and red ground telegraphs. Courier remains visibly bright; all12physical motion ticks are native, not an injected pose."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z1.5-hidden.png",
+      "sha256": "010716fbd78977288969536f7ba02c499f218220b3f58dd0fca831be045f53e1",
+      "label": "horde-12",
+      "zoom": 1.5,
+      "kind": "hidden",
+      "seen": "Personally inspected same-pose courier-hidden redraw: courier/rocket body removed, native corgi, followers/infected, truck, lamps and ground remain; this is a probe control, not a normal gameplay appearance."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/low-horde-12-z1.5-id.png",
+      "sha256": "76dea610df507fee06208bf872638e31a3f8386d9d25823f9a23da8ba96149cb",
+      "label": "horde-12",
+      "zoom": 1.5,
+      "kind": "id",
+      "seen": "Personally inspected production-depth ID pass: magenta selects the visible courier body/rocket/gear over black, retaining natural occlusion; no crowd, corgi, ground or shadow is part of the body mask. Some high-tier rocket silhouette is clipped at the truck boundary, matching its native view."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-0-z0.5.jpg",
+      "sha256": "77687f40ac8f21ec044c424dde90c42cd22e070606d845e38a15c425d2b9a041",
+      "label": "city-0",
+      "zoom": 0.5,
+      "camera": {
+        "zoom": 0.5,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.5,
+        "regionScale": 1,
+        "focus": [
+          -37.79396723513604,
+          0.12905173634386874,
+          41.42801625564122
+        ],
+        "target": [
+          -37.79396723513604,
+          0.12905173634386874,
+          41.42801625564122
+        ],
+        "position": [
+          -32.35938390836804,
+          5.713011633122364,
+          46.86259958240922
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4800,
+        "player": {
+          "x": -38.203617095947266,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.0346763209808563
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 2,
+        "crossed": 0,
+        "finalAlive": 54,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Close zoom shows courier partly dithered by foreground fence and bright rocket/fire light; no quantitative city contrast claim beyond the separately measured rocket/horde spots."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-0-z1.5.jpg",
+      "sha256": "6f77dc04733149b3b3f53116885ea0641b53f418337c57313bf92f271390b219",
+      "label": "city-0",
+      "zoom": 1.5,
+      "camera": {
+        "zoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.500000000000004,
+        "regionScale": 1,
+        "focus": [
+          -37.79396723513604,
+          0.12905173634386874,
+          41.42801625564122
+        ],
+        "target": [
+          -37.79396723513604,
+          0.12905173634386874,
+          41.42801625564122
+        ],
+        "position": [
+          -21.490217254832036,
+          16.880931426679354,
+          57.73176623594522
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4800,
+        "player": {
+          "x": -38.203617095947266,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.0346763209808563
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 2,
+        "crossed": 0,
+        "finalAlive": 54,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Wide zoom shows staggered convoy wrecks, street barriers, road fires and smoke. This establishes W6 destruction framing; the relative \"worst destruction so far\" judgment remains P."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-6-z0.5.jpg",
+      "sha256": "1749f2dd5852dca5a4faee235e4c6f05237f533892f38d63891de2a8d13bee37",
+      "label": "city-6",
+      "zoom": 0.5,
+      "camera": {
+        "zoom": 0.5,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.5,
+        "regionScale": 1,
+        "focus": [
+          -38.241509367742665,
+          0.12947959262859896,
+          41.426003036833045
+        ],
+        "target": [
+          -38.241509367742665,
+          0.12947959262859896,
+          41.426003036833045
+        ],
+        "position": [
+          -32.806926040974666,
+          5.713439489407094,
+          46.860586363601044
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4806,
+        "player": {
+          "x": -38.653621673583984,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.035114166078522
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 2,
+        "crossed": 0,
+        "finalAlive": 54,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Close zoom shows courier partly dithered by foreground fence and bright rocket/fire light; no quantitative city contrast claim beyond the separately measured rocket/horde spots."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-6-z1.5.jpg",
+      "sha256": "0374c3d305846fc520b4f733fdfd1ed60b9be3198e1d2ac25c81b7f68bb88df8",
+      "label": "city-6",
+      "zoom": 1.5,
+      "camera": {
+        "zoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.500000000000004,
+        "regionScale": 1,
+        "focus": [
+          -38.241509367742665,
+          0.12947959262859896,
+          41.426003036833045
+        ],
+        "target": [
+          -38.241509367742665,
+          0.12947959262859896,
+          41.426003036833045
+        ],
+        "position": [
+          -21.937759387438664,
+          16.881359282964084,
+          57.72975301713705
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4806,
+        "player": {
+          "x": -38.653621673583984,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.035114166078522
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 2,
+        "crossed": 0,
+        "finalAlive": 54,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Wide zoom shows staggered convoy wrecks, street barriers, road fires and smoke. This establishes W6 destruction framing; the relative \"worst destruction so far\" judgment remains P."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-12-z0.5.jpg",
+      "sha256": "6a208f8ec71f015b8d972b2948cf8efa661320c2ae1bb0e1c261b206ab204ff8",
+      "label": "city-12",
+      "zoom": 0.5,
+      "camera": {
+        "zoom": 0.5,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.5,
+        "regionScale": 1,
+        "focus": [
+          -38.69060806247779,
+          0.1297144051362349,
+          41.42526241502294
+        ],
+        "target": [
+          -38.69060806247779,
+          0.1297144051362349,
+          41.42526241502294
+        ],
+        "position": [
+          -33.256024735709794,
+          5.71367430191473,
+          46.85984574179094
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4812,
+        "player": {
+          "x": -39.1036262512207,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.035285388479635
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 3,
+        "crossed": 0,
+        "finalAlive": 50,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Close zoom shows courier partly dithered by foreground fence and bright rocket/fire light; no quantitative city contrast claim beyond the separately measured rocket/horde spots."
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/low-city-12-z1.5.jpg",
+      "sha256": "6d0ff14fa9bb7a0e3c86826a28334f1dbb7a71b46389ffa0871e6c780edcd30f",
+      "label": "city-12",
+      "zoom": 1.5,
+      "camera": {
+        "zoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.500000000000004,
+        "regionScale": 1,
+        "focus": [
+          -38.69060806247779,
+          0.1297144051362349,
+          41.42526241502294
+        ],
+        "target": [
+          -38.69060806247779,
+          0.1297144051362349,
+          41.42526241502294
+        ],
+        "position": [
+          -22.38685808217379,
+          16.88159409547172,
+          57.72901239532695
+        ],
+        "spot": null
+      },
+      "state": {
+        "tick": 4812,
+        "player": {
+          "x": -39.1036262512207,
+          "y": 0.8500000238418579,
+          "z": 41.42483139038086,
+          "yaw": -3.035285388479635
+        },
+        "phase": "playing",
+        "departure": {
+          "phase": "waiting",
+          "busId": 338,
+          "boarded": [],
+          "entering": {},
+          "lastEnterAt": -1000000000,
+          "startedAt": 0,
+          "readyAt": null
+        },
+        "blasts": 3,
+        "crossed": 0,
+        "finalAlive": 50,
+        "weapon": "weapon.rocket-launcher"
+      },
+      "seen": "Personally inspected actual physical ruined-city approach frame: wrecked army truck/APCs/sedan, broken fence/jersey line, burning road/scorch effects, smoke/ash and live red-bar infected, with carried companions. Wide zoom shows staggered convoy wrecks, street barriers, road fires and smoke. This establishes W6 destruction framing; the relative \"worst destruction so far\" judgment remains P."
+    }
+  ],
+  "sheets": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/review-sheet-1.jpg",
+      "sha256": "32118a2617202b356f726b1404a40792f53763d601d32bf7480304e02ccc1a18"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/review-sheet-2.jpg",
+      "sha256": "4efeb04abfb19635279f6a820321013ad769b72570b9603a9b2994123b18fb1b"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/review-sheet-3.jpg",
+      "sha256": "226f8c1c88eb3386086823305c8ae7add1326126862688b92e9574865e6815bc"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-readability-low-1793958455032/review-sheet-4.jpg",
+      "sha256": "3b2961a5c2c278ce51fbc80914d29dbf0cf552130ffe029ca9b98f17b9cd1874"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c6/test-results/sweep-c6-l7-destruction-low-1793959118976/review-sheet.jpg",
+      "sha256": "2eead5d9ff99b63464eda0b7e9211d416f2e60ed488b09dfdf1c533e9fd824b3"
+    }
+  ]
+}

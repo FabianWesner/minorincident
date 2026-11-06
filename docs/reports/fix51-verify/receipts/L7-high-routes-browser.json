@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "high",
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "fixtureHash": "6a8c1c54832b4d44553b1f6cda09b180a74c65de82b6dc1d1da86c2c64c1b2d3",
+  "errors": [],
+  "observations": {
+    "aFile": "docs/reports/sweep-c6/L7-06/high-A-physical.json.gz",
+    "bFile": "docs/reports/sweep-c6/L7-06/high-B-physical.json.gz",
+    "screenFile": "docs/reports/sweep-c6/L7-06/low-screen-physical.json.gz",
+    "reviewFile": "docs/reports/sweep-c6/L7-06/review.json",
+    "boundsFile": "docs/reports/sweep-c6/L7-06/bounds-high/bounds-sweep.json"
+  },
+  "checks": [
+    {
+      "id": "L7-06",
+      "clause": "physical Harbor and Lakeshore corridor routes with current bounds sweep",
+      "tier": "high",
+      "policy": "physical-routes",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "routeA": true,
+        "routeB": true,
+        "perimeter": true,
+        "validReview": true,
+        "seenA": true,
+        "seenB": true
+      },
+      "target": "Real progressed save, complete physical input trace, both distinct map branches into corridor and current production perimeter sweep; reviewed frames.",
+      "receipt": "docs/reports/sweep-c6/L7-06/review.json"
+    },
+    {
+      "id": "L7-06",
+      "clause": "screenshot-only wrong-turn and route-clarity review",
+      "tier": "high",
+      "policy": "physical-routes",
+      "status": "PASS",
+      "value": {
+        "clarity": true,
+        "commands": 16,
+        "note": "Both connected routes physically traversed at both tiers. Separate low screenshot-only controller after logged east-junction prefix reaches(-35.419,47.813), t5136, via16manual WASD commands. Plaza shortcut hits collision and recovers down-left onto marked road, then upper-left along lake road; fences/facades and wall read as limits, no dead-end street looked like the route and no wall/slab crossed. One precautionary sidestep reason incorrectly described a stalled frame; the next action explicitly corrects it from HUD101→88m. The same reviewer previously read the authored map, so this is image-driven navigation, not a blinded first-exposure usability trial. Native driver detached throughout; no post-prefix nav/planner calls. Close zoom limits distant route visibility, wide zoom makes continuity legible. Courier god only; incoming companions can die naturally, no survivor-pace claim."
+      },
+      "target": "Separate screenshot-only controller after logged east-junction prefix; physical wrong-turn recovery and route to corridor; no post-prefix map/nav/planner recommendations.",
+      "receipt": "docs/reports/sweep-c6/L7-06/low-screen-physical.json.gz"
+    }
+  ]
+}

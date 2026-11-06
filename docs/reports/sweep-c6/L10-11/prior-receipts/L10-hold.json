@@ -1,0 +1,6333 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "ef01b8b04de57f5ec27533d309dfb9b66de6751b",
+  "toolSha256": "53f2f3e3a5be4fa52b6a1a391b8ae5037e4a4f0289cdca0292872a7c749049bc",
+  "method": "Ordinary native stationary policy; 240 active seconds after charge activation; actual first Mega centre crossing of 25m arena and 12m close-move radii. Track every Mega movement tick from introduction, and all actual Mega relocations regardless of writer. Native final state must match the independent canonical acceptance control.",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 1242.7,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 194.7
+          },
+          {
+            "id": "military-zone",
+            "t": 366.01666666666665
+          },
+          {
+            "id": "research-campus",
+            "t": 556.9166666666666
+          },
+          {
+            "id": "research",
+            "t": 621.3666666666667
+          },
+          {
+            "id": "cure",
+            "t": 622.7
+          },
+          {
+            "id": "research-exit",
+            "t": 647.7333333333333
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 689.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 921.8333333333334
+          },
+          {
+            "id": "install",
+            "t": 1000.4
+          },
+          {
+            "id": "hold",
+            "t": 1062.7166666666667
+          }
+        ],
+        "furthestObjective": "mega",
+        "activeObjectives": [
+          "mega"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "mega",
+          "detail": "tick-budget: Kill the Mega Alpha",
+          "player": {
+            "x": 4003.9482421875,
+            "z": -28.332515716552734
+          },
+          "distance": 8.287732160536908,
+          "actors": {}
+        },
+        "cureReleases": 0,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 8.483333333333334,
+            "combatSeconds": 57.549999999998015,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 125.29999999999417,
+            "travelSeconds": 0,
+            "combatSeconds": 125.29999999999417,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.1016731806161
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 170.53333333336118,
+            "travelSeconds": 0,
+            "combatSeconds": 170.53333333336118,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1290438866814
+          },
+          {
+            "id": "military-zone",
+            "seconds": 199.9166666667179,
+            "travelSeconds": 0.35,
+            "combatSeconds": 199.56666666671762,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.4215954095678
+          },
+          {
+            "id": "research-campus",
+            "seconds": 134.13333333333222,
+            "travelSeconds": 0,
+            "combatSeconds": 134.13333333333222,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.8706063996063
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 230.78333333340913,
+            "travelSeconds": 0,
+            "combatSeconds": 230.78333333340913,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.1456201068855
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 315.96666666670797,
+            "travelSeconds": 0,
+            "combatSeconds": 73.68333333333044,
+            "interactionSeconds": 0,
+            "holdSeconds": 242.28333333341828,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 346.8487104163311
+          }
+        ],
+        "maxConcurrentInfected": 95,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 269,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "activationTick": 60163,
+      "firstInside25mTick": 63630,
+      "firstInside12mTick": 63880,
+      "arenaAfterActivationSeconds": 57.78333333333333,
+      "closeAfterActivationSeconds": 61.95,
+      "observedSeconds": 240,
+      "peakAlive": 95,
+      "lastAlive": 95,
+      "nativeStateHash": "3fae02ac",
+      "controlIdentical": true,
+      "persistentMegaIds": [
+        119
+      ],
+      "scheduledRelocations": [],
+      "maximumMegaStepMetres": 0.31500000000021167,
+      "movementDiscontinuities": [],
+      "phases": [
+        {
+          "key": "step/hold",
+          "label": "hold: Charge the dispersal system",
+          "threat": true,
+          "startSeconds": 1000.4,
+          "seconds": 62.31666666666667,
+          "spawned": 75,
+          "initial": 20,
+          "observed": 95,
+          "reachableEver": 95,
+          "within2_5m": 64,
+          "attacks": 1263,
+          "attacksPerMinute": 1216.0470714094677,
+          "firstAttackSeconds": 0.1,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 5,
+              "median": 3.9340287200607187
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 32,
+            "minimumPercent": 100,
+            "worstTick": 63744,
+            "nearby": 95,
+            "reachable": 95,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 63744,
+            "alive": 95,
+            "reachable": 95,
+            "playerX": 4003.23974609375,
+            "playerZ": -28.891843795776367,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/mega",
+          "label": "mega: Kill the Mega Alpha",
+          "threat": false,
+          "startSeconds": 1062.7166666666667,
+          "seconds": 179.98333333333332,
+          "spawned": 0,
+          "initial": 95,
+          "observed": 95,
+          "reachableEver": 95,
+          "within2_5m": 85,
+          "attacks": 3714,
+          "attacksPerMinute": 1238.1146402444672,
+          "firstAttackSeconds": 0.03333333333333333,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 1,
+              "median": 1.0786107705765606
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 90,
+            "minimumPercent": 100,
+            "worstTick": 74443,
+            "nearby": 95,
+            "reachable": 95,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 74443,
+            "alive": 95,
+            "reachable": 95,
+            "playerX": 4003.95751953125,
+            "playerZ": -28.309329986572266,
+            "positions": []
+          },
+          "flags": []
+        }
+      ],
+      "trajectory": [
+        {
+          "tick": 60180,
+          "afterActivation": 0.2833333333333333,
+          "alive": 37,
+          "megaDistance": 189.36231941535823,
+          "mega": {
+            "id": 119,
+            "x": 3813.1559161255927,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60240,
+          "afterActivation": 1.2833333333333334,
+          "alive": 95,
+          "megaDistance": 186.22108577161788,
+          "mega": {
+            "id": 119,
+            "x": 3816.3059161255796,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60300,
+          "afterActivation": 2.283333333333333,
+          "alive": 95,
+          "megaDistance": 183.08015336883514,
+          "mega": {
+            "id": 119,
+            "x": 3819.4559161255665,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60360,
+          "afterActivation": 3.283333333333333,
+          "alive": 95,
+          "megaDistance": 179.93953798193425,
+          "mega": {
+            "id": 119,
+            "x": 3822.6059161255534,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60420,
+          "afterActivation": 4.283333333333333,
+          "alive": 95,
+          "megaDistance": 176.79925650507576,
+          "mega": {
+            "id": 119,
+            "x": 3825.7559161255404,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60480,
+          "afterActivation": 5.283333333333333,
+          "alive": 95,
+          "megaDistance": 173.65932705254562,
+          "mega": {
+            "id": 119,
+            "x": 3828.9059161255273,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60540,
+          "afterActivation": 6.283333333333333,
+          "alive": 95,
+          "megaDistance": 170.51976907073936,
+          "mega": {
+            "id": 119,
+            "x": 3832.055916125514,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60600,
+          "afterActivation": 7.283333333333333,
+          "alive": 95,
+          "megaDistance": 167.38060346268736,
+          "mega": {
+            "id": 119,
+            "x": 3835.205916125501,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60660,
+          "afterActivation": 8.283333333333333,
+          "alive": 95,
+          "megaDistance": 164.24185272678923,
+          "mega": {
+            "id": 119,
+            "x": 3838.355916125488,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60720,
+          "afterActivation": 9.283333333333333,
+          "alive": 95,
+          "megaDistance": 161.10354111168104,
+          "mega": {
+            "id": 119,
+            "x": 3841.505916125475,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60780,
+          "afterActivation": 10.283333333333333,
+          "alive": 95,
+          "megaDistance": 157.96569478946282,
+          "mega": {
+            "id": 119,
+            "x": 3844.6559161254618,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60840,
+          "afterActivation": 11.283333333333333,
+          "alive": 95,
+          "megaDistance": 154.82834204987202,
+          "mega": {
+            "id": 119,
+            "x": 3847.8059161254487,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60900,
+          "afterActivation": 12.283333333333333,
+          "alive": 95,
+          "megaDistance": 151.69151351841163,
+          "mega": {
+            "id": 119,
+            "x": 3850.9559161254356,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60960,
+          "afterActivation": 13.283333333333333,
+          "alive": 95,
+          "megaDistance": 148.55524240194478,
+          "mega": {
+            "id": 119,
+            "x": 3854.1059161254225,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61020,
+          "afterActivation": 14.283333333333333,
+          "alive": 95,
+          "megaDistance": 145.41956476586816,
+          "mega": {
+            "id": 119,
+            "x": 3857.2559161254094,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61080,
+          "afterActivation": 15.283333333333333,
+          "alive": 95,
+          "megaDistance": 142.2845198476922,
+          "mega": {
+            "id": 119,
+            "x": 3860.4059161253963,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61140,
+          "afterActivation": 16.283333333333335,
+          "alive": 95,
+          "megaDistance": 139.1501504127176,
+          "mega": {
+            "id": 119,
+            "x": 3863.555916125383,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61200,
+          "afterActivation": 17.283333333333335,
+          "alive": 95,
+          "megaDistance": 136.01650315853362,
+          "mega": {
+            "id": 119,
+            "x": 3866.70591612537,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61260,
+          "afterActivation": 18.283333333333335,
+          "alive": 95,
+          "megaDistance": 132.88362917631608,
+          "mega": {
+            "id": 119,
+            "x": 3869.855916125357,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61320,
+          "afterActivation": 19.283333333333335,
+          "alive": 95,
+          "megaDistance": 129.75158447842483,
+          "mega": {
+            "id": 119,
+            "x": 3873.005916125344,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61380,
+          "afterActivation": 20.283333333333335,
+          "alive": 95,
+          "megaDistance": 126.62043060365406,
+          "mega": {
+            "id": 119,
+            "x": 3876.155916125331,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61440,
+          "afterActivation": 21.283333333333335,
+          "alive": 95,
+          "megaDistance": 123.49023531375902,
+          "mega": {
+            "id": 119,
+            "x": 3879.3059161253177,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61500,
+          "afterActivation": 22.283333333333335,
+          "alive": 95,
+          "megaDistance": 120.36107339767374,
+          "mega": {
+            "id": 119,
+            "x": 3882.4559161253046,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61560,
+          "afterActivation": 23.283333333333335,
+          "alive": 95,
+          "megaDistance": 117.23302760328538,
+          "mega": {
+            "id": 119,
+            "x": 3885.6059161252915,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61620,
+          "afterActivation": 24.283333333333335,
+          "alive": 95,
+          "megaDistance": 114.10618972091294,
+          "mega": {
+            "id": 119,
+            "x": 3888.7559161252784,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61680,
+          "afterActivation": 25.283333333333335,
+          "alive": 95,
+          "megaDistance": 110.98066184798645,
+          "mega": {
+            "id": 119,
+            "x": 3891.9059161252653,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61740,
+          "afterActivation": 26.283333333333335,
+          "alive": 95,
+          "megaDistance": 107.85655787113312,
+          "mega": {
+            "id": 119,
+            "x": 3895.055916125252,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61800,
+          "afterActivation": 27.283333333333335,
+          "alive": 95,
+          "megaDistance": 105.77659751662598,
+          "mega": {
+            "id": 119,
+            "x": 3897,
+            "z": -39.794083874755806,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61860,
+          "afterActivation": 28.283333333333335,
+          "alive": 95,
+          "megaDistance": 105.44196675794379,
+          "mega": {
+            "id": 119,
+            "x": 3897,
+            "z": -36.64408387475569,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61920,
+          "afterActivation": 29.283333333333335,
+          "alive": 95,
+          "megaDistance": 105.20063272325106,
+          "mega": {
+            "id": 119,
+            "x": 3897,
+            "z": -33.49408387475557,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 61980,
+          "afterActivation": 30.283333333333335,
+          "alive": 95,
+          "megaDistance": 105.05323839349931,
+          "mega": {
+            "id": 119,
+            "x": 3897,
+            "z": -30.34408387475556,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 62040,
+          "afterActivation": 31.283333333333335,
+          "alive": 95,
+          "megaDistance": 105.0001793738965,
+          "mega": {
+            "id": 119,
+            "x": 3897,
+            "z": -27.194083874755655,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 62100,
+          "afterActivation": 32.28333333333333,
+          "alive": 95,
+          "megaDistance": 104.06330472043443,
+          "mega": {
+            "id": 119,
+            "x": 3897.9559161252405,
+            "z": -25,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 62160,
+          "afterActivation": 33.28333333333333,
+          "alive": 95,
+          "megaDistance": 101.39153214072063,
+          "mega": {
+            "id": 119,
+            "x": 3900.62820459991,
+            "z": -24.999528254362833,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62220,
+          "afterActivation": 34.28333333333333,
+          "alive": 95,
+          "megaDistance": 98.90792808781099,
+          "mega": {
+            "id": 119,
+            "x": 3903.112633514894,
+            "z": -24.983322469039813,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62280,
+          "afterActivation": 35.28333333333333,
+          "alive": 95,
+          "megaDistance": 95.76772695269591,
+          "mega": {
+            "id": 119,
+            "x": 3906.253926925751,
+            "z": -24.96357751272845,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62340,
+          "afterActivation": 36.28333333333333,
+          "alive": 95,
+          "megaDistance": 92.6190545952479,
+          "mega": {
+            "id": 119,
+            "x": 3909.4037729201887,
+            "z": -24.943788750754255,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62400,
+          "afterActivation": 37.28333333333333,
+          "alive": 95,
+          "megaDistance": 89.47005708383548,
+          "mega": {
+            "id": 119,
+            "x": 3912.55373592896,
+            "z": -24.936760237252727,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62460,
+          "afterActivation": 38.28333333333333,
+          "alive": 95,
+          "megaDistance": 86.32076899070726,
+          "mega": {
+            "id": 119,
+            "x": 3915.7037269578245,
+            "z": -24.943688210084133,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62520,
+          "afterActivation": 39.28333333333333,
+          "alive": 95,
+          "megaDistance": 83.17152513136409,
+          "mega": {
+            "id": 119,
+            "x": 3918.853718492809,
+            "z": -24.950984576902087,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62580,
+          "afterActivation": 40.28333333333333,
+          "alive": 95,
+          "megaDistance": 80.02234066252481,
+          "mega": {
+            "id": 119,
+            "x": 3922.0037100307295,
+            "z": -24.95828595009853,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62640,
+          "afterActivation": 41.28333333333333,
+          "alive": 95,
+          "megaDistance": 76.87322301851539,
+          "mega": {
+            "id": 119,
+            "x": 3925.1537015686504,
+            "z": -24.965587393286615,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62700,
+          "afterActivation": 42.28333333333333,
+          "alive": 95,
+          "megaDistance": 73.72418076449253,
+          "mega": {
+            "id": 119,
+            "x": 3928.3036931065712,
+            "z": -24.9728888374989,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62760,
+          "afterActivation": 43.28333333333333,
+          "alive": 95,
+          "megaDistance": 70.57522399211211,
+          "mega": {
+            "id": 119,
+            "x": 3931.453684644492,
+            "z": -24.98019028172718,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62820,
+          "afterActivation": 44.28333333333333,
+          "alive": 95,
+          "megaDistance": 67.42636467790729,
+          "mega": {
+            "id": 119,
+            "x": 3934.603676182413,
+            "z": -24.98749172595571,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62880,
+          "afterActivation": 45.28333333333333,
+          "alive": 95,
+          "megaDistance": 64.27762612881939,
+          "mega": {
+            "id": 119,
+            "x": 3937.753668123798,
+            "z": -24.99449228144268,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62940,
+          "afterActivation": 46.28333333333333,
+          "alive": 95,
+          "megaDistance": 61.12918202936832,
+          "mega": {
+            "id": 119,
+            "x": 3940.903666896018,
+            "z": -24.99625929149609,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63000,
+          "afterActivation": 47.28333333333333,
+          "alive": 95,
+          "megaDistance": 57.98103188338974,
+          "mega": {
+            "id": 119,
+            "x": 3944.0536556637076,
+            "z": -24.994697947319125,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63060,
+          "afterActivation": 48.28333333333333,
+          "alive": 95,
+          "megaDistance": 54.8335285608575,
+          "mega": {
+            "id": 119,
+            "x": 3947.20362326977,
+            "z": -24.98184448738569,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63120,
+          "afterActivation": 49.28333333333333,
+          "alive": 95,
+          "megaDistance": 51.68633527040978,
+          "mega": {
+            "id": 119,
+            "x": 3950.3535957671074,
+            "z": -24.9686990627031,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63180,
+          "afterActivation": 50.28333333333333,
+          "alive": 95,
+          "megaDistance": 48.539506130366654,
+          "mega": {
+            "id": 119,
+            "x": 3953.5035683275946,
+            "z": -24.95555131548413,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63240,
+          "afterActivation": 51.28333333333333,
+          "alive": 95,
+          "megaDistance": 45.39311684736002,
+          "mega": {
+            "id": 119,
+            "x": 3956.6535408887407,
+            "z": -24.94240354078568,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63300,
+          "afterActivation": 52.28333333333333,
+          "alive": 95,
+          "megaDistance": 42.247265696813805,
+          "mega": {
+            "id": 119,
+            "x": 3959.803513449891,
+            "z": -24.929255765757954,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63360,
+          "afterActivation": 53.28333333333333,
+          "alive": 95,
+          "megaDistance": 39.10213892059778,
+          "mega": {
+            "id": 119,
+            "x": 3962.9534796853054,
+            "z": -24.915169196344465,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63420,
+          "afterActivation": 54.28333333333333,
+          "alive": 95,
+          "megaDistance": 35.95779088020114,
+          "mega": {
+            "id": 119,
+            "x": 3966.1034530481547,
+            "z": -24.902229297982117,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63480,
+          "afterActivation": 55.28333333333333,
+          "alive": 95,
+          "megaDistance": 32.814524822160415,
+          "mega": {
+            "id": 119,
+            "x": 3969.2534265955146,
+            "z": -24.88932011692149,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63540,
+          "afterActivation": 56.28333333333333,
+          "alive": 95,
+          "megaDistance": 29.67268696715642,
+          "mega": {
+            "id": 119,
+            "x": 3972.4034001450773,
+            "z": -24.876411320796084,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63600,
+          "afterActivation": 57.28333333333333,
+          "alive": 95,
+          "megaDistance": 26.532784708258333,
+          "mega": {
+            "id": 119,
+            "x": 3975.5533736946754,
+            "z": -24.863502529535403,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63660,
+          "afterActivation": 58.28333333333333,
+          "alive": 95,
+          "megaDistance": 23.395597382810525,
+          "mega": {
+            "id": 119,
+            "x": 3978.7033472442736,
+            "z": -24.85059373833727,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63720,
+          "afterActivation": 59.28333333333333,
+          "alive": 95,
+          "megaDistance": 20.262386074262505,
+          "mega": {
+            "id": 119,
+            "x": 3981.8533207938717,
+            "z": -24.83768494713991,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63780,
+          "afterActivation": 60.28333333333333,
+          "alive": 95,
+          "megaDistance": 17.135331976547164,
+          "mega": {
+            "id": 119,
+            "x": 3985.00329434347,
+            "z": -24.824776155942548,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63840,
+          "afterActivation": 61.28333333333333,
+          "alive": 95,
+          "megaDistance": 14.018556076522593,
+          "mega": {
+            "id": 119,
+            "x": 3988.153267893068,
+            "z": -24.811867364745186,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63900,
+          "afterActivation": 62.28333333333333,
+          "alive": 95,
+          "megaDistance": 10.92086200786612,
+          "mega": {
+            "id": 119,
+            "x": 3991.303241442666,
+            "z": -24.798958573547825,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63960,
+          "afterActivation": 63.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.867350728348752,
+          "mega": {
+            "id": 119,
+            "x": 3994.4531522185953,
+            "z": -24.777322324952113,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64020,
+          "afterActivation": 64.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.935089305081931,
+          "mega": {
+            "id": 119,
+            "x": 3997.603091822216,
+            "z": -24.758950039541872,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64080,
+          "afterActivation": 65.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.570232652247279,
+          "mega": {
+            "id": 119,
+            "x": 4000.7530836638375,
+            "z": -24.752491259796926,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64140,
+          "afterActivation": 66.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.3086992644701367,
+          "mega": {
+            "id": 119,
+            "x": 4002.1860745285035,
+            "z": -24.698811488902493,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64200,
+          "afterActivation": 67.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.3590307408138163,
+          "mega": {
+            "id": 119,
+            "x": 4002.2851390078063,
+            "z": -24.65826521947257,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64260,
+          "afterActivation": 68.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.3186602715598528,
+          "mega": {
+            "id": 119,
+            "x": 4001.3702090186507,
+            "z": -24.76850974128922,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64320,
+          "afterActivation": 69.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.424016538771467,
+          "mega": {
+            "id": 119,
+            "x": 4001.477592722708,
+            "z": -24.63294553994425,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64380,
+          "afterActivation": 70.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.2861188435347035,
+          "mega": {
+            "id": 119,
+            "x": 4001.5463864979397,
+            "z": -24.759336223903052,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64440,
+          "afterActivation": 71.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.3136049018221465,
+          "mega": {
+            "id": 119,
+            "x": 4001.6843860707663,
+            "z": -24.708023671717104,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64500,
+          "afterActivation": 72.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.354741742249422,
+          "mega": {
+            "id": 119,
+            "x": 4001.740311378991,
+            "z": -24.659621720146443,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64560,
+          "afterActivation": 73.28333333333333,
+          "alive": 95,
+          "megaDistance": 2.375861765144175,
+          "mega": {
+            "id": 119,
+            "x": 4001.7941293841814,
+            "z": -24.633074480129032,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 64620,
+          "afterActivation": 74.28333333333333,
+          "alive": 95,
+          "megaDistance": 3.9532839907709563,
+          "mega": {
+            "id": 119,
+            "x": 4002.7437166291224,
+            "z": -23.117302498616112,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64680,
+          "afterActivation": 75.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.722653992920343,
+          "mega": {
+            "id": 119,
+            "x": 4003.2943696135903,
+            "z": -22.458186701298647,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64740,
+          "afterActivation": 76.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64800,
+          "afterActivation": 77.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64860,
+          "afterActivation": 78.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64920,
+          "afterActivation": 79.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 64980,
+          "afterActivation": 80.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65040,
+          "afterActivation": 81.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65100,
+          "afterActivation": 82.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65160,
+          "afterActivation": 83.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65220,
+          "afterActivation": 84.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65280,
+          "afterActivation": 85.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65340,
+          "afterActivation": 86.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65400,
+          "afterActivation": 87.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65460,
+          "afterActivation": 88.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65520,
+          "afterActivation": 89.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.728180482172209,
+          "mega": {
+            "id": 119,
+            "x": 4003.298240143858,
+            "z": -22.453543885522517,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65580,
+          "afterActivation": 90.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.8244048750502255,
+          "mega": {
+            "id": 119,
+            "x": 4003.3114908535576,
+            "z": -22.35727729242387,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65640,
+          "afterActivation": 91.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.8244048750502255,
+          "mega": {
+            "id": 119,
+            "x": 4003.3114908535576,
+            "z": -22.35727729242387,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65700,
+          "afterActivation": 92.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.8244048750502255,
+          "mega": {
+            "id": 119,
+            "x": 4003.3114908535576,
+            "z": -22.35727729242387,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65760,
+          "afterActivation": 93.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.8244048750502255,
+          "mega": {
+            "id": 119,
+            "x": 4003.3114908535576,
+            "z": -22.35727729242387,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65820,
+          "afterActivation": 94.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.850668906954688,
+          "mega": {
+            "id": 119,
+            "x": 4003.187977298232,
+            "z": -22.29705424401021,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65880,
+          "afterActivation": 95.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.850668906954688,
+          "mega": {
+            "id": 119,
+            "x": 4003.187977298232,
+            "z": -22.29705424401021,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 65940,
+          "afterActivation": 96.28333333333333,
+          "alive": 95,
+          "megaDistance": 4.9384299421252065,
+          "mega": {
+            "id": 119,
+            "x": 4003.22077233874,
+            "z": -22.214834883700888,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66000,
+          "afterActivation": 97.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.270058421329827,
+          "mega": {
+            "id": 119,
+            "x": 4003.1462900466136,
+            "z": -21.85611674964681,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66060,
+          "afterActivation": 98.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.434420784651471,
+          "mega": {
+            "id": 119,
+            "x": 4003.085510653245,
+            "z": -21.67509663126703,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66120,
+          "afterActivation": 99.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.512723840695705,
+          "mega": {
+            "id": 119,
+            "x": 4003.051919656161,
+            "z": -21.588568656930292,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66180,
+          "afterActivation": 100.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.549967541634089,
+          "mega": {
+            "id": 119,
+            "x": 4003.0261590313917,
+            "z": -21.545723021748415,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66240,
+          "afterActivation": 101.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.515861725358749,
+          "mega": {
+            "id": 119,
+            "x": 4003.2886116835193,
+            "z": -21.63677238014504,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66300,
+          "afterActivation": 102.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66360,
+          "afterActivation": 103.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66420,
+          "afterActivation": 104.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66480,
+          "afterActivation": 105.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66540,
+          "afterActivation": 106.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66600,
+          "afterActivation": 107.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66660,
+          "afterActivation": 108.28333333333333,
+          "alive": 95,
+          "megaDistance": 5.66810488204259,
+          "mega": {
+            "id": 119,
+            "x": 4003.701366095432,
+            "z": -21.593266571843124,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66720,
+          "afterActivation": 109.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.332700452822749,
+          "mega": {
+            "id": 119,
+            "x": 4003.9973385090925,
+            "z": -20.990529648523296,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66780,
+          "afterActivation": 110.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.402667427274016,
+          "mega": {
+            "id": 119,
+            "x": 4004.038614550273,
+            "z": -20.93055184553893,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66840,
+          "afterActivation": 111.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.534791037819398,
+          "mega": {
+            "id": 119,
+            "x": 4004.1078237091533,
+            "z": -20.814486834619466,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66900,
+          "afterActivation": 112.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 66960,
+          "afterActivation": 113.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67020,
+          "afterActivation": 114.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67080,
+          "afterActivation": 115.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67140,
+          "afterActivation": 116.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67200,
+          "afterActivation": 117.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67260,
+          "afterActivation": 118.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67320,
+          "afterActivation": 119.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67380,
+          "afterActivation": 120.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67440,
+          "afterActivation": 121.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67500,
+          "afterActivation": 122.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67560,
+          "afterActivation": 123.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67620,
+          "afterActivation": 124.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67680,
+          "afterActivation": 125.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67740,
+          "afterActivation": 126.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67800,
+          "afterActivation": 127.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67860,
+          "afterActivation": 128.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67920,
+          "afterActivation": 129.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 67980,
+          "afterActivation": 130.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68040,
+          "afterActivation": 131.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68100,
+          "afterActivation": 132.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68160,
+          "afterActivation": 133.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68220,
+          "afterActivation": 134.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68280,
+          "afterActivation": 135.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68340,
+          "afterActivation": 136.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68400,
+          "afterActivation": 137.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68460,
+          "afterActivation": 138.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68520,
+          "afterActivation": 139.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68580,
+          "afterActivation": 140.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68640,
+          "afterActivation": 141.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68700,
+          "afterActivation": 142.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68760,
+          "afterActivation": 143.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68820,
+          "afterActivation": 144.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68880,
+          "afterActivation": 145.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 68940,
+          "afterActivation": 146.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69000,
+          "afterActivation": 147.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69060,
+          "afterActivation": 148.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69120,
+          "afterActivation": 149.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69180,
+          "afterActivation": 150.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69240,
+          "afterActivation": 151.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69300,
+          "afterActivation": 152.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69360,
+          "afterActivation": 153.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69420,
+          "afterActivation": 154.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69480,
+          "afterActivation": 155.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69540,
+          "afterActivation": 156.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69600,
+          "afterActivation": 157.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69660,
+          "afterActivation": 158.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69720,
+          "afterActivation": 159.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69780,
+          "afterActivation": 160.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69840,
+          "afterActivation": 161.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69900,
+          "afterActivation": 162.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 69960,
+          "afterActivation": 163.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70020,
+          "afterActivation": 164.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70080,
+          "afterActivation": 165.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70140,
+          "afterActivation": 166.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70200,
+          "afterActivation": 167.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70260,
+          "afterActivation": 168.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70320,
+          "afterActivation": 169.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70380,
+          "afterActivation": 170.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70440,
+          "afterActivation": 171.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70500,
+          "afterActivation": 172.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70560,
+          "afterActivation": 173.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70620,
+          "afterActivation": 174.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70680,
+          "afterActivation": 175.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70740,
+          "afterActivation": 176.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70800,
+          "afterActivation": 177.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70860,
+          "afterActivation": 178.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70920,
+          "afterActivation": 179.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 70980,
+          "afterActivation": 180.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71040,
+          "afterActivation": 181.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71100,
+          "afterActivation": 182.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71160,
+          "afterActivation": 183.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71220,
+          "afterActivation": 184.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71280,
+          "afterActivation": 185.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71340,
+          "afterActivation": 186.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71400,
+          "afterActivation": 187.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71460,
+          "afterActivation": 188.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71520,
+          "afterActivation": 189.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71580,
+          "afterActivation": 190.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71640,
+          "afterActivation": 191.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71700,
+          "afterActivation": 192.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71760,
+          "afterActivation": 193.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71820,
+          "afterActivation": 194.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71880,
+          "afterActivation": 195.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 71940,
+          "afterActivation": 196.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72000,
+          "afterActivation": 197.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72060,
+          "afterActivation": 198.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72120,
+          "afterActivation": 199.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72180,
+          "afterActivation": 200.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72240,
+          "afterActivation": 201.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72300,
+          "afterActivation": 202.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72360,
+          "afterActivation": 203.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72420,
+          "afterActivation": 204.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72480,
+          "afterActivation": 205.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72540,
+          "afterActivation": 206.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72600,
+          "afterActivation": 207.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72660,
+          "afterActivation": 208.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72720,
+          "afterActivation": 209.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72780,
+          "afterActivation": 210.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72840,
+          "afterActivation": 211.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72900,
+          "afterActivation": 212.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 72960,
+          "afterActivation": 213.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73020,
+          "afterActivation": 214.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73080,
+          "afterActivation": 215.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73140,
+          "afterActivation": 216.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.707724245944297,
+          "mega": {
+            "id": 119,
+            "x": 4004.1479546808737,
+            "z": -20.645485443517984,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73200,
+          "afterActivation": 217.28333333333333,
+          "alive": 95,
+          "megaDistance": 6.897296383799783,
+          "mega": {
+            "id": 119,
+            "x": 4004.1997390292163,
+            "z": -20.4628870585464,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73260,
+          "afterActivation": 218.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73320,
+          "afterActivation": 219.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73380,
+          "afterActivation": 220.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73440,
+          "afterActivation": 221.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73500,
+          "afterActivation": 222.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73560,
+          "afterActivation": 223.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73620,
+          "afterActivation": 224.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73680,
+          "afterActivation": 225.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73740,
+          "afterActivation": 226.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73800,
+          "afterActivation": 227.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73860,
+          "afterActivation": 228.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73920,
+          "afterActivation": 229.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 73980,
+          "afterActivation": 230.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74040,
+          "afterActivation": 231.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74100,
+          "afterActivation": 232.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74160,
+          "afterActivation": 233.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74220,
+          "afterActivation": 234.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74280,
+          "afterActivation": 235.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74340,
+          "afterActivation": 236.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.130795029571373,
+          "mega": {
+            "id": 119,
+            "x": 4004.3410723314646,
+            "z": -20.26445116619212,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74400,
+          "afterActivation": 237.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.342039881327781,
+          "mega": {
+            "id": 119,
+            "x": 4004.395633911964,
+            "z": -20.059791949886847,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74460,
+          "afterActivation": 238.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.3449358085209315,
+          "mega": {
+            "id": 119,
+            "x": 4004.3961136188823,
+            "z": -20.056893954669864,
+            "mode": "breach"
+          }
+        },
+        {
+          "tick": 74520,
+          "afterActivation": 239.28333333333333,
+          "alive": 95,
+          "megaDistance": 7.3449358085209315,
+          "mega": {
+            "id": 119,
+            "x": 4004.3961136188823,
+            "z": -20.056893954669864,
+            "mode": "breach"
+          }
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 1216.9,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 193.43333333333334
+          },
+          {
+            "id": "military-zone",
+            "t": 366.3
+          },
+          {
+            "id": "research-campus",
+            "t": 551.9333333333333
+          },
+          {
+            "id": "research",
+            "t": 617.0166666666667
+          },
+          {
+            "id": "cure",
+            "t": 618.35
+          },
+          {
+            "id": "research-exit",
+            "t": 639.2833333333333
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 678.6333333333333
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 897.95
+          },
+          {
+            "id": "install",
+            "t": 974.6
+          },
+          {
+            "id": "hold",
+            "t": 1036.9166666666667
+          }
+        ],
+        "furthestObjective": "mega",
+        "activeObjectives": [
+          "mega"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "mega",
+          "detail": "tick-budget: Kill the Mega Alpha",
+          "player": {
+            "x": 4002.360595703125,
+            "z": -29.588624954223633
+          },
+          "distance": 5.786992093479968,
+          "actors": {}
+        },
+        "cureReleases": 0,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 8.483333333333334,
+            "combatSeconds": 57.549999999998015,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 123.36666666666095,
+            "travelSeconds": 0,
+            "combatSeconds": 123.36666666666095,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0935219115884
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 172.86666666669637,
+            "travelSeconds": 0,
+            "combatSeconds": 172.86666666669637,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1997934989527
+          },
+          {
+            "id": "military-zone",
+            "seconds": 195.1833333333808,
+            "travelSeconds": 0,
+            "combatSeconds": 195.1833333333808,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.7389264563808
+          },
+          {
+            "id": "research-campus",
+            "seconds": 128.26666666666088,
+            "travelSeconds": 12.90000000000022,
+            "combatSeconds": 115.34999999999474,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.2707341981547
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 217.1000000000649,
+            "travelSeconds": 0,
+            "combatSeconds": 217.1000000000649,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 964.1920530896517
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 314.05000000004304,
+            "travelSeconds": 0,
+            "combatSeconds": 71.76666666666388,
+            "interactionSeconds": 0,
+            "holdSeconds": 242.28333333341828,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 363.61009298416735
+          }
+        ],
+        "maxConcurrentInfected": 190,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 479,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "activationTick": 58615,
+      "firstInside25mTick": 62002,
+      "firstInside12mTick": 62252,
+      "arenaAfterActivationSeconds": 56.45,
+      "closeAfterActivationSeconds": 60.61666666666667,
+      "observedSeconds": 240,
+      "peakAlive": 190,
+      "lastAlive": 190,
+      "nativeStateHash": "3826f8f2",
+      "controlIdentical": true,
+      "persistentMegaIds": [
+        122
+      ],
+      "scheduledRelocations": [],
+      "maximumMegaStepMetres": 0.3565516362860421,
+      "movementDiscontinuities": [],
+      "phases": [
+        {
+          "key": "step/hold",
+          "label": "hold: Charge the dispersal system",
+          "threat": true,
+          "startSeconds": 974.6,
+          "seconds": 62.31666666666667,
+          "spawned": 135,
+          "initial": 55,
+          "observed": 190,
+          "reachableEver": 190,
+          "within2_5m": 52,
+          "attacks": 1772,
+          "attacksPerMinute": 1706.1246322546135,
+          "firstAttackSeconds": 0.06666666666666667,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 21,
+              "median": 1.0622677851251394
+            }
+          ],
+          "followerMin": 1.0622677851251394,
+          "followerMedian": 1.0622677851251394,
+          "boundedPaths": {
+            "samples": 32,
+            "minimumPercent": 100,
+            "worstTick": 62196,
+            "nearby": 190,
+            "reachable": 190,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 62196,
+            "alive": 190,
+            "reachable": 190,
+            "playerX": 4002.58544921875,
+            "playerZ": -28.713701248168945,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/mega",
+          "label": "mega: Kill the Mega Alpha",
+          "threat": false,
+          "startSeconds": 1036.9166666666667,
+          "seconds": 179.98333333333332,
+          "spawned": 0,
+          "initial": 190,
+          "observed": 190,
+          "reachableEver": 190,
+          "within2_5m": 96,
+          "attacks": 3582,
+          "attacksPerMinute": 1194.110565793129,
+          "firstAttackSeconds": 0.8,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 25,
+              "median": 0.32802858532119944
+            }
+          ],
+          "followerMin": 0.32802858532119944,
+          "followerMedian": 0.32802858532119944,
+          "boundedPaths": {
+            "samples": 90,
+            "minimumPercent": 100,
+            "worstTick": 72895,
+            "nearby": 190,
+            "reachable": 190,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 72895,
+            "alive": 190,
+            "reachable": 190,
+            "playerX": 4002.337158203125,
+            "playerZ": -29.573753356933594,
+            "positions": []
+          },
+          "flags": []
+        }
+      ],
+      "trajectory": [
+        {
+          "tick": 58620,
+          "afterActivation": 0.08333333333333333,
+          "alive": 60,
+          "megaDistance": 189.85768093949443,
+          "mega": {
+            "id": 122,
+            "x": 3812.659198766555,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58680,
+          "afterActivation": 1.0833333333333333,
+          "alive": 120,
+          "megaDistance": 186.71640116486026,
+          "mega": {
+            "id": 122,
+            "x": 3815.809198766542,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58740,
+          "afterActivation": 2.0833333333333335,
+          "alive": 180,
+          "megaDistance": 183.5754202397234,
+          "mega": {
+            "id": 122,
+            "x": 3818.959198766529,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58800,
+          "afterActivation": 3.0833333333333335,
+          "alive": 190,
+          "megaDistance": 180.4347537710651,
+          "mega": {
+            "id": 122,
+            "x": 3822.109198766516,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58860,
+          "afterActivation": 4.083333333333333,
+          "alive": 190,
+          "megaDistance": 177.29441847012154,
+          "mega": {
+            "id": 122,
+            "x": 3825.259198766503,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58920,
+          "afterActivation": 5.083333333333333,
+          "alive": 190,
+          "megaDistance": 174.1544322516429,
+          "mega": {
+            "id": 122,
+            "x": 3828.4091987664897,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 58980,
+          "afterActivation": 6.083333333333333,
+          "alive": 190,
+          "megaDistance": 171.014814344037,
+          "mega": {
+            "id": 122,
+            "x": 3831.5591987664766,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59040,
+          "afterActivation": 7.083333333333333,
+          "alive": 190,
+          "megaDistance": 167.8755854118121,
+          "mega": {
+            "id": 122,
+            "x": 3834.7091987664635,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59100,
+          "afterActivation": 8.083333333333334,
+          "alive": 190,
+          "megaDistance": 164.7367676919504,
+          "mega": {
+            "id": 122,
+            "x": 3837.8591987664504,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59160,
+          "afterActivation": 9.083333333333334,
+          "alive": 190,
+          "megaDistance": 161.5983851460914,
+          "mega": {
+            "id": 122,
+            "x": 3841.0091987664373,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59220,
+          "afterActivation": 10.083333333333334,
+          "alive": 190,
+          "megaDistance": 158.46046363070246,
+          "mega": {
+            "id": 122,
+            "x": 3844.159198766424,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59280,
+          "afterActivation": 11.083333333333334,
+          "alive": 190,
+          "megaDistance": 155.32303108776145,
+          "mega": {
+            "id": 122,
+            "x": 3847.309198766411,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59340,
+          "afterActivation": 12.083333333333334,
+          "alive": 190,
+          "megaDistance": 152.1861177588878,
+          "mega": {
+            "id": 122,
+            "x": 3850.459198766398,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59400,
+          "afterActivation": 13.083333333333334,
+          "alive": 190,
+          "megaDistance": 149.04975642635,
+          "mega": {
+            "id": 122,
+            "x": 3853.609198766385,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59460,
+          "afterActivation": 14.083333333333334,
+          "alive": 190,
+          "megaDistance": 145.91398268495823,
+          "mega": {
+            "id": 122,
+            "x": 3856.759198766372,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59520,
+          "afterActivation": 15.083333333333334,
+          "alive": 190,
+          "megaDistance": 142.77883524955004,
+          "mega": {
+            "id": 122,
+            "x": 3859.9091987663587,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59580,
+          "afterActivation": 16.083333333333332,
+          "alive": 190,
+          "megaDistance": 139.64435630361098,
+          "mega": {
+            "id": 122,
+            "x": 3863.0591987663456,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59640,
+          "afterActivation": 17.083333333333332,
+          "alive": 190,
+          "megaDistance": 136.51059189557927,
+          "mega": {
+            "id": 122,
+            "x": 3866.2091987663325,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59700,
+          "afterActivation": 18.083333333333332,
+          "alive": 190,
+          "megaDistance": 133.37759239059892,
+          "mega": {
+            "id": 122,
+            "x": 3869.3591987663194,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59760,
+          "afterActivation": 19.083333333333332,
+          "alive": 190,
+          "megaDistance": 130.24541298696076,
+          "mega": {
+            "id": 122,
+            "x": 3872.5091987663063,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59820,
+          "afterActivation": 20.083333333333332,
+          "alive": 190,
+          "megaDistance": 127.11411430826635,
+          "mega": {
+            "id": 122,
+            "x": 3875.6591987662932,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59880,
+          "afterActivation": 21.083333333333332,
+          "alive": 190,
+          "megaDistance": 123.98376308455022,
+          "mega": {
+            "id": 122,
+            "x": 3878.80919876628,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 59940,
+          "afterActivation": 22.083333333333332,
+          "alive": 190,
+          "megaDistance": 120.85443293829394,
+          "mega": {
+            "id": 122,
+            "x": 3881.959198766267,
+            "z": -41,
+            "mode": "coarse"
+          }
+        },
+        {
+          "tick": 60000,
+          "afterActivation": 23.083333333333332,
+          "alive": 190,
+          "megaDistance": 117.72620529460352,
+          "mega": {
+            "id": 122,
+            "x": 3885.109198766254,
+            "z": -41,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60060,
+          "afterActivation": 24.083333333333332,
+          "alive": 190,
+          "megaDistance": 114.59917043895872,
+          "mega": {
+            "id": 122,
+            "x": 3888.259198766241,
+            "z": -41,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60120,
+          "afterActivation": 25.083333333333332,
+          "alive": 190,
+          "megaDistance": 111.47342875110519,
+          "mega": {
+            "id": 122,
+            "x": 3891.4091987662277,
+            "z": -41,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60180,
+          "afterActivation": 26.083333333333332,
+          "alive": 190,
+          "megaDistance": 108.37458515132923,
+          "mega": {
+            "id": 122,
+            "x": 3894.528772998727,
+            "z": -40.963741388452924,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60240,
+          "afterActivation": 27.083333333333332,
+          "alive": 190,
+          "megaDistance": 106.97202574756369,
+          "mega": {
+            "id": 122,
+            "x": 3895.668906858768,
+            "z": -38.692430197699224,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60300,
+          "afterActivation": 28.083333333333332,
+          "alive": 190,
+          "megaDistance": 106.35754794826333,
+          "mega": {
+            "id": 122,
+            "x": 3895.9883894657223,
+            "z": -35.57125647123905,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60360,
+          "afterActivation": 29.083333333333332,
+          "alive": 190,
+          "megaDistance": 105.85095703577882,
+          "mega": {
+            "id": 122,
+            "x": 3896.2887052410056,
+            "z": -32.4357396706696,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60420,
+          "afterActivation": 30.083333333333332,
+          "alive": 190,
+          "megaDistance": 105.43642421255126,
+          "mega": {
+            "id": 122,
+            "x": 3896.58866619344,
+            "z": -29.300055619124457,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60480,
+          "afterActivation": 31.083333333333332,
+          "alive": 190,
+          "megaDistance": 104.55382504106348,
+          "mega": {
+            "id": 122,
+            "x": 3897.4464649515407,
+            "z": -26.753748933171593,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60540,
+          "afterActivation": 32.083333333333336,
+          "alive": 190,
+          "megaDistance": 101.58689297288768,
+          "mega": {
+            "id": 122,
+            "x": 3900.4147365784584,
+            "z": -26.424604952286344,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60600,
+          "afterActivation": 33.083333333333336,
+          "alive": 190,
+          "megaDistance": 98.44264029708636,
+          "mega": {
+            "id": 122,
+            "x": 3903.559920640643,
+            "z": -26.28992649319367,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60660,
+          "afterActivation": 34.083333333333336,
+          "alive": 190,
+          "megaDistance": 95.29659355504157,
+          "mega": {
+            "id": 122,
+            "x": 3906.7071280263235,
+            "z": -26.157803940109996,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60720,
+          "afterActivation": 35.083333333333336,
+          "alive": 190,
+          "megaDistance": 92.15079350138201,
+          "mega": {
+            "id": 122,
+            "x": 3909.8543570826155,
+            "z": -26.025713452717127,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60780,
+          "afterActivation": 36.083333333333336,
+          "alive": 190,
+          "megaDistance": 89.0048401722525,
+          "mega": {
+            "id": 122,
+            "x": 3913.001925379779,
+            "z": -25.902599443318728,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60840,
+          "afterActivation": 37.083333333333336,
+          "alive": 190,
+          "megaDistance": 85.85828923031805,
+          "mega": {
+            "id": 122,
+            "x": 3916.1501429621444,
+            "z": -25.796722751522594,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60900,
+          "afterActivation": 38.083333333333336,
+          "alive": 190,
+          "megaDistance": 82.71196363956538,
+          "mega": {
+            "id": 122,
+            "x": 3919.2983865080546,
+            "z": -25.691544826269958,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 60960,
+          "afterActivation": 39.083333333333336,
+          "alive": 190,
+          "megaDistance": 79.56592829666513,
+          "mega": {
+            "id": 122,
+            "x": 3922.4466304026537,
+            "z": -25.586376493519648,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61020,
+          "afterActivation": 40.083333333333336,
+          "alive": 190,
+          "megaDistance": 76.4202195833009,
+          "mega": {
+            "id": 122,
+            "x": 3925.594874302056,
+            "z": -25.48120829562623,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61080,
+          "afterActivation": 41.083333333333336,
+          "alive": 190,
+          "megaDistance": 73.27487957405286,
+          "mega": {
+            "id": 122,
+            "x": 3928.7431182015353,
+            "z": -25.376040099721113,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61140,
+          "afterActivation": 42.083333333333336,
+          "alive": 190,
+          "megaDistance": 70.12995787837738,
+          "mega": {
+            "id": 122,
+            "x": 3931.8913621010215,
+            "z": -25.270871903847294,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61200,
+          "afterActivation": 43.083333333333336,
+          "alive": 190,
+          "megaDistance": 66.98551341487332,
+          "mega": {
+            "id": 122,
+            "x": 3935.039606000508,
+            "z": -25.165703707973847,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61260,
+          "afterActivation": 44.083333333333336,
+          "alive": 190,
+          "megaDistance": 63.841063242156466,
+          "mega": {
+            "id": 122,
+            "x": 3938.1880647775943,
+            "z": -25.071716032189325,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61320,
+          "afterActivation": 45.083333333333336,
+          "alive": 190,
+          "megaDistance": 60.69336629451744,
+          "mega": {
+            "id": 122,
+            "x": 3941.3379089142054,
+            "z": -25.05181693385223,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61380,
+          "afterActivation": 46.083333333333336,
+          "alive": 190,
+          "megaDistance": 57.54547020333216,
+          "mega": {
+            "id": 122,
+            "x": 3944.4863505959042,
+            "z": -25.086554640094388,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61440,
+          "afterActivation": 47.083333333333336,
+          "alive": 190,
+          "megaDistance": 54.3983178203885,
+          "mega": {
+            "id": 122,
+            "x": 3947.627927499945,
+            "z": -25.310410186827877,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61500,
+          "afterActivation": 48.083333333333336,
+          "alive": 190,
+          "megaDistance": 51.25160729775856,
+          "mega": {
+            "id": 122,
+            "x": 3950.7689744822064,
+            "z": -25.54766567249727,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61560,
+          "afterActivation": 49.083333333333336,
+          "alive": 190,
+          "megaDistance": 48.105329630743725,
+          "mega": {
+            "id": 122,
+            "x": 3953.910014320178,
+            "z": -25.78508593018472,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61620,
+          "afterActivation": 50.083333333333336,
+          "alive": 190,
+          "megaDistance": 44.959573295865155,
+          "mega": {
+            "id": 122,
+            "x": 3957.051054065132,
+            "z": -26.02250816341229,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61680,
+          "afterActivation": 51.083333333333336,
+          "alive": 190,
+          "megaDistance": 41.81445591022728,
+          "mega": {
+            "id": 122,
+            "x": 3960.1920938088756,
+            "z": -26.259930420512145,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61740,
+          "afterActivation": 52.083333333333336,
+          "alive": 190,
+          "megaDistance": 38.67013337437029,
+          "mega": {
+            "id": 122,
+            "x": 3963.3331335525986,
+            "z": -26.49735267790314,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61800,
+          "afterActivation": 53.083333333333336,
+          "alive": 190,
+          "megaDistance": 35.526816734893856,
+          "mega": {
+            "id": 122,
+            "x": 3966.4741732963216,
+            "z": -26.73477493529761,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61860,
+          "afterActivation": 54.083333333333336,
+          "alive": 190,
+          "megaDistance": 32.38479889450897,
+          "mega": {
+            "id": 122,
+            "x": 3969.6152130400446,
+            "z": -26.972197192692082,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61920,
+          "afterActivation": 55.083333333333336,
+          "alive": 190,
+          "megaDistance": 29.244498483659317,
+          "mega": {
+            "id": 122,
+            "x": 3972.7562527837676,
+            "z": -27.209619450086553,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 61980,
+          "afterActivation": 56.083333333333336,
+          "alive": 190,
+          "megaDistance": 26.119274072570313,
+          "mega": {
+            "id": 122,
+            "x": 3975.8839160501557,
+            "z": -27.408212203060675,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62040,
+          "afterActivation": 57.083333333333336,
+          "alive": 190,
+          "megaDistance": 22.991793516945453,
+          "mega": {
+            "id": 122,
+            "x": 3979.0172278188634,
+            "z": -27.64401241900101,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62100,
+          "afterActivation": 58.083333333333336,
+          "alive": 190,
+          "megaDistance": 19.862816050375297,
+          "mega": {
+            "id": 122,
+            "x": 3982.1572719662304,
+            "z": -27.89308769384635,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62160,
+          "afterActivation": 59.083333333333336,
+          "alive": 190,
+          "megaDistance": 16.741627961397427,
+          "mega": {
+            "id": 122,
+            "x": 3985.2973921390912,
+            "z": -28.14236484651498,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62220,
+          "afterActivation": 60.083333333333336,
+          "alive": 190,
+          "megaDistance": 13.633488992052278,
+          "mega": {
+            "id": 122,
+            "x": 3988.437603753,
+            "z": -28.390478383784878,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 62280,
+          "afterActivation": 61.083333333333336,
+          "alive": 190,
+          "megaDistance": 11.470148999163484,
+          "mega": {
+            "id": 122,
+            "x": 3990.636203292197,
+            "z": -28.55834606128977,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62340,
+          "afterActivation": 62.083333333333336,
+          "alive": 190,
+          "megaDistance": 7.927410194892235,
+          "mega": {
+            "id": 122,
+            "x": 3994.2359500056227,
+            "z": -28.601049681581305,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62400,
+          "afterActivation": 63.083333333333336,
+          "alive": 190,
+          "megaDistance": 5.720774260852385,
+          "mega": {
+            "id": 122,
+            "x": 3996.5157895907923,
+            "z": -28.628095307765943,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62460,
+          "afterActivation": 64.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.7236723069210695,
+          "mega": {
+            "id": 122,
+            "x": 3996.5132127374077,
+            "z": -28.629598175032694,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62520,
+          "afterActivation": 65.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.919005793324761,
+          "mega": {
+            "id": 122,
+            "x": 3996.3862809117572,
+            "z": -28.87637618288843,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62580,
+          "afterActivation": 66.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.853699904526805,
+          "mega": {
+            "id": 122,
+            "x": 3996.446096316734,
+            "z": -28.849312426081838,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62640,
+          "afterActivation": 67.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.502562075611197,
+          "mega": {
+            "id": 122,
+            "x": 3996.6803664844083,
+            "z": -28.40701409223506,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62700,
+          "afterActivation": 68.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.208656174546423,
+          "mega": {
+            "id": 122,
+            "x": 3996.792863122071,
+            "z": -27.125796180998705,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62760,
+          "afterActivation": 69.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.395373530180106,
+          "mega": {
+            "id": 122,
+            "x": 3996.638952006789,
+            "z": -27.60763471317746,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 62820,
+          "afterActivation": 70.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.199858193005691,
+          "mega": {
+            "id": 122,
+            "x": 3996.8159982274824,
+            "z": -27.40577191857342,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 62880,
+          "afterActivation": 71.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.5461024139006785,
+          "mega": {
+            "id": 122,
+            "x": 3994.4539509443216,
+            "z": -27.028377638605747,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 62940,
+          "afterActivation": 72.08333333333333,
+          "alive": 190,
+          "megaDistance": 10.65765608127691,
+          "mega": {
+            "id": 122,
+            "x": 3991.352213665947,
+            "z": -26.54143775653027,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 63000,
+          "afterActivation": 73.08333333333333,
+          "alive": 190,
+          "megaDistance": 13.793485369108199,
+          "mega": {
+            "id": 122,
+            "x": 3988.2379815535696,
+            "z": -26.06882498534804,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 63060,
+          "afterActivation": 74.08333333333333,
+          "alive": 190,
+          "megaDistance": 16.404830300749406,
+          "mega": {
+            "id": 122,
+            "x": 3985.646100772914,
+            "z": -25.708319982851165,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63120,
+          "afterActivation": 75.08333333333333,
+          "alive": 190,
+          "megaDistance": 14.643611935670322,
+          "mega": {
+            "id": 122,
+            "x": 3987.375661538034,
+            "z": -26.24893737120959,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63180,
+          "afterActivation": 76.08333333333333,
+          "alive": 190,
+          "megaDistance": 11.602006855363143,
+          "mega": {
+            "id": 122,
+            "x": 3990.398092448983,
+            "z": -27.04800259935949,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 63240,
+          "afterActivation": 77.08333333333333,
+          "alive": 190,
+          "megaDistance": 8.530491424821994,
+          "mega": {
+            "id": 122,
+            "x": 3993.476588945959,
+            "z": -27.347488061398366,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63300,
+          "afterActivation": 78.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.656406698053553,
+          "mega": {
+            "id": 122,
+            "x": 3995.3963892125576,
+            "z": -26.163295334143566,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63360,
+          "afterActivation": 79.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.474818298163647,
+          "mega": {
+            "id": 122,
+            "x": 3995.638351340026,
+            "z": -25.79472064595545,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63420,
+          "afterActivation": 80.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.496508322859107,
+          "mega": {
+            "id": 122,
+            "x": 3995.6404847147346,
+            "z": -25.67290327200557,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63480,
+          "afterActivation": 81.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.877429066352705,
+          "mega": {
+            "id": 122,
+            "x": 3995.143581284167,
+            "z": -26.46282874622108,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63540,
+          "afterActivation": 82.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.611047922738318,
+          "mega": {
+            "id": 122,
+            "x": 3995.4749494050043,
+            "z": -25.937140945614782,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63600,
+          "afterActivation": 83.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.013009089622956,
+          "mega": {
+            "id": 122,
+            "x": 3996.4320676408283,
+            "z": -24.72966796358388,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63660,
+          "afterActivation": 84.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.153407448954278,
+          "mega": {
+            "id": 122,
+            "x": 3996.754671054497,
+            "z": -23.78271115901679,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63720,
+          "afterActivation": 85.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.66006948168931,
+          "mega": {
+            "id": 122,
+            "x": 3997.0853444343898,
+            "z": -22.505260166333812,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63780,
+          "afterActivation": 86.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.9048880043996705,
+          "mega": {
+            "id": 122,
+            "x": 3996.952736138111,
+            "z": -22.2880358806786,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63840,
+          "afterActivation": 87.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.928484933509133,
+          "mega": {
+            "id": 122,
+            "x": 3996.9289727522705,
+            "z": -22.27892108447146,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63900,
+          "afterActivation": 88.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.974910938167105,
+          "mega": {
+            "id": 122,
+            "x": 3997.1535081551183,
+            "z": -21.983935866353164,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 63960,
+          "afterActivation": 89.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.6073038418302374,
+          "mega": {
+            "id": 122,
+            "x": 3996.967388750758,
+            "z": -21.295274261112382,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64020,
+          "afterActivation": 90.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.679911623681334,
+          "mega": {
+            "id": 122,
+            "x": 3997.773491359367,
+            "z": -20.58769407637066,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64080,
+          "afterActivation": 91.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.149489275183095,
+          "mega": {
+            "id": 122,
+            "x": 3998.2350117587807,
+            "z": -20.92216646826859,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64140,
+          "afterActivation": 92.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.149489275183095,
+          "mega": {
+            "id": 122,
+            "x": 3998.2350117587807,
+            "z": -20.92216646826859,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64200,
+          "afterActivation": 93.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.712858371627316,
+          "mega": {
+            "id": 122,
+            "x": 3998.6258159233,
+            "z": -20.064362604826837,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64260,
+          "afterActivation": 94.08333333333333,
+          "alive": 190,
+          "megaDistance": 7.726829973324288,
+          "mega": {
+            "id": 122,
+            "x": 3999.4846781858278,
+            "z": -19.69403958347625,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64320,
+          "afterActivation": 95.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.514945748658146,
+          "mega": {
+            "id": 122,
+            "x": 4000.9363341361477,
+            "z": -21.588600777920934,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64380,
+          "afterActivation": 96.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.569999494798113,
+          "mega": {
+            "id": 122,
+            "x": 4002.324176187017,
+            "z": -22.441512840620696,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64440,
+          "afterActivation": 97.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.27844510368352,
+          "mega": {
+            "id": 122,
+            "x": 4002.372284976347,
+            "z": -22.737782689535916,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64500,
+          "afterActivation": 98.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.27844510368352,
+          "mega": {
+            "id": 122,
+            "x": 4002.372284976347,
+            "z": -22.737782689535916,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64560,
+          "afterActivation": 99.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.1894662073091045,
+          "mega": {
+            "id": 122,
+            "x": 4003.5120185024966,
+            "z": -23.092900417151775,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64620,
+          "afterActivation": 100.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.502371885179804,
+          "mega": {
+            "id": 122,
+            "x": 4004.0459210616386,
+            "z": -22.989319309393856,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64680,
+          "afterActivation": 101.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.490550624790042,
+          "mega": {
+            "id": 122,
+            "x": 4004.356585642098,
+            "z": -23.177494404809753,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64740,
+          "afterActivation": 102.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.763211487222852,
+          "mega": {
+            "id": 122,
+            "x": 4004.8104718912996,
+            "z": -23.154297018719898,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64800,
+          "afterActivation": 103.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.34903498661935,
+          "mega": {
+            "id": 122,
+            "x": 4004.6772761873185,
+            "z": -23.572712802863403,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64860,
+          "afterActivation": 104.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.34903498661935,
+          "mega": {
+            "id": 122,
+            "x": 4004.6772761873185,
+            "z": -23.572712802863403,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64920,
+          "afterActivation": 105.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.592652506367819,
+          "mega": {
+            "id": 122,
+            "x": 4005.420709089266,
+            "z": -22.57546483982833,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 64980,
+          "afterActivation": 106.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.436161475818339,
+          "mega": {
+            "id": 122,
+            "x": 4004.56293167994,
+            "z": -22.205916897348214,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65040,
+          "afterActivation": 107.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.344121004213462,
+          "mega": {
+            "id": 122,
+            "x": 4004.4934371759127,
+            "z": -22.273225163237427,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65100,
+          "afterActivation": 108.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.205817249791273,
+          "mega": {
+            "id": 122,
+            "x": 4004.5380095633086,
+            "z": -22.45477825680876,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65160,
+          "afterActivation": 109.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.830928357227981,
+          "mega": {
+            "id": 122,
+            "x": 4004.442654288295,
+            "z": -22.832109787849202,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65220,
+          "afterActivation": 110.08333333333333,
+          "alive": 190,
+          "megaDistance": 4.830928357227981,
+          "mega": {
+            "id": 122,
+            "x": 4004.442654288295,
+            "z": -22.832109787849202,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65280,
+          "afterActivation": 111.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.192013567288412,
+          "mega": {
+            "id": 122,
+            "x": 4004.8530454077777,
+            "z": -22.662127620126945,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65340,
+          "afterActivation": 112.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.275946643640799,
+          "mega": {
+            "id": 122,
+            "x": 4005.105689089112,
+            "z": -22.734990238192132,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65400,
+          "afterActivation": 113.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.271901082841606,
+          "mega": {
+            "id": 122,
+            "x": 4005.4672458659975,
+            "z": -23.028709638922148,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65460,
+          "afterActivation": 114.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.665693270624698,
+          "mega": {
+            "id": 122,
+            "x": 4006.1217516680836,
+            "z": -23.11268171827256,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65520,
+          "afterActivation": 115.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.355084939413637,
+          "mega": {
+            "id": 122,
+            "x": 4005.9914770628884,
+            "z": -23.429979612835453,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65580,
+          "afterActivation": 116.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.355084939413637,
+          "mega": {
+            "id": 122,
+            "x": 4005.9914770628884,
+            "z": -23.429979612835453,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65640,
+          "afterActivation": 117.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.833102091845275,
+          "mega": {
+            "id": 122,
+            "x": 4006.500203876525,
+            "z": -23.288767713602663,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65700,
+          "afterActivation": 118.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.795935759066894,
+          "mega": {
+            "id": 122,
+            "x": 4006.842869427255,
+            "z": -23.81574388062343,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65760,
+          "afterActivation": 119.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.015962383001923,
+          "mega": {
+            "id": 122,
+            "x": 4007.199273228852,
+            "z": -23.973556330370684,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65820,
+          "afterActivation": 120.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.376003906277539,
+          "mega": {
+            "id": 122,
+            "x": 4007.8020203983424,
+            "z": -24.356142002662544,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65880,
+          "afterActivation": 121.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.02091437584611,
+          "mega": {
+            "id": 122,
+            "x": 4007.5795216234696,
+            "z": -24.73718132089533,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 65940,
+          "afterActivation": 122.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.02091437584611,
+          "mega": {
+            "id": 122,
+            "x": 4007.5795216234696,
+            "z": -24.73718132089533,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66000,
+          "afterActivation": 123.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.50768648287972,
+          "mega": {
+            "id": 122,
+            "x": 4007.9460788268584,
+            "z": -24.35535825786525,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66060,
+          "afterActivation": 124.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.4580708407407945,
+          "mega": {
+            "id": 122,
+            "x": 4007.9867894436784,
+            "z": -24.57821736295606,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66120,
+          "afterActivation": 125.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.567097189973543,
+          "mega": {
+            "id": 122,
+            "x": 4008.196673590547,
+            "z": -24.825603091711535,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66180,
+          "afterActivation": 126.08333333333333,
+          "alive": 190,
+          "megaDistance": 6.392602738317912,
+          "mega": {
+            "id": 122,
+            "x": 4008.1447993264746,
+            "z": -25.23738517897231,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66240,
+          "afterActivation": 127.08333333333333,
+          "alive": 190,
+          "megaDistance": 5.94873981651252,
+          "mega": {
+            "id": 122,
+            "x": 4007.7537778306264,
+            "z": -25.489521241343155,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66300,
+          "afterActivation": 128.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.94873981651252,
+          "mega": {
+            "id": 122,
+            "x": 4007.7537778306264,
+            "z": -25.489521241343155,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66360,
+          "afterActivation": 129.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.342257808501684,
+          "mega": {
+            "id": 122,
+            "x": 4008.2268502160327,
+            "z": -25.795603679599797,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66420,
+          "afterActivation": 130.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.321604803453111,
+          "mega": {
+            "id": 122,
+            "x": 4008.3027572577657,
+            "z": -26.512210864488758,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66480,
+          "afterActivation": 131.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.351165055138623,
+          "mega": {
+            "id": 122,
+            "x": 4008.3471517138214,
+            "z": -27.22574915137828,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66540,
+          "afterActivation": 132.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.46544545906596,
+          "mega": {
+            "id": 122,
+            "x": 4008.4300592218697,
+            "z": -27.67551712591575,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66600,
+          "afterActivation": 133.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.180912328030006,
+          "mega": {
+            "id": 122,
+            "x": 4008.140823933954,
+            "z": -27.702821897049272,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66660,
+          "afterActivation": 134.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.180912328030006,
+          "mega": {
+            "id": 122,
+            "x": 4008.140823933954,
+            "z": -27.702821897049272,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66720,
+          "afterActivation": 135.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.787528632708652,
+          "mega": {
+            "id": 122,
+            "x": 4008.7483755119847,
+            "z": -27.727992368837036,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66780,
+          "afterActivation": 136.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.977477742651653,
+          "mega": {
+            "id": 122,
+            "x": 4008.9190501900716,
+            "z": -27.901077197840984,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66840,
+          "afterActivation": 137.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.3194323604746,
+          "mega": {
+            "id": 122,
+            "x": 4009.2056457727012,
+            "z": -28.28559677889898,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66900,
+          "afterActivation": 138.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.422827519094491,
+          "mega": {
+            "id": 122,
+            "x": 4009.1972255862906,
+            "z": -28.81612561191945,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 66960,
+          "afterActivation": 139.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.019539026618845,
+          "mega": {
+            "id": 122,
+            "x": 4008.7852091070445,
+            "z": -28.79857319003311,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67020,
+          "afterActivation": 140.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.019539026618845,
+          "mega": {
+            "id": 122,
+            "x": 4008.7852091070445,
+            "z": -28.79857319003311,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67080,
+          "afterActivation": 141.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.699129884199145,
+          "mega": {
+            "id": 122,
+            "x": 4008.5851036520385,
+            "z": -28.230752248537314,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67140,
+          "afterActivation": 142.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.713508039497127,
+          "mega": {
+            "id": 122,
+            "x": 4008.5658479131716,
+            "z": -28.400296889053248,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67200,
+          "afterActivation": 143.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.766745725575985,
+          "mega": {
+            "id": 122,
+            "x": 4008.5466558055473,
+            "z": -28.711766770998565,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67260,
+          "afterActivation": 144.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.8834968904280265,
+          "mega": {
+            "id": 122,
+            "x": 4008.5754612485234,
+            "z": -29.036133298607698,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67320,
+          "afterActivation": 145.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.514378027678863,
+          "mega": {
+            "id": 122,
+            "x": 4008.1959563047717,
+            "z": -29.01177696499016,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67380,
+          "afterActivation": 146.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.514378027678863,
+          "mega": {
+            "id": 122,
+            "x": 4008.1959563047717,
+            "z": -29.01177696499016,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67440,
+          "afterActivation": 147.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.173483810098573,
+          "mega": {
+            "id": 122,
+            "x": 4008.79188118482,
+            "z": -29.30851033028574,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 67500,
+          "afterActivation": 148.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.712089775314477,
+          "mega": {
+            "id": 122,
+            "x": 4008.6553762977883,
+            "z": -27.870698275362432,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 67560,
+          "afterActivation": 149.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.464105128673282,
+          "mega": {
+            "id": 122,
+            "x": 4008.447950598959,
+            "z": -27.45671455847848,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 67620,
+          "afterActivation": 150.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.681253313739932,
+          "mega": {
+            "id": 122,
+            "x": 4007.5804509938334,
+            "z": -25.934539573562514,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 67680,
+          "afterActivation": 151.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.311515639346381,
+          "mega": {
+            "id": 122,
+            "x": 4007.1946099525458,
+            "z": -25.891746496538936,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67740,
+          "afterActivation": 152.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.29449014329995,
+          "mega": {
+            "id": 122,
+            "x": 4007.179140907373,
+            "z": -25.9008524489062,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67800,
+          "afterActivation": 153.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.060453841619007,
+          "mega": {
+            "id": 122,
+            "x": 4006.9100961261724,
+            "z": -25.775602550270996,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67860,
+          "afterActivation": 154.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.818941968995872,
+          "mega": {
+            "id": 122,
+            "x": 4006.8012742463247,
+            "z": -26.58772907921049,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67920,
+          "afterActivation": 155.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.880125792494733,
+          "mega": {
+            "id": 122,
+            "x": 4006.872523073298,
+            "z": -26.727701173798014,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 67980,
+          "afterActivation": 156.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.66212258547329,
+          "mega": {
+            "id": 122,
+            "x": 4006.642382156955,
+            "z": -26.5714268898254,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68040,
+          "afterActivation": 157.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.367620203915737,
+          "mega": {
+            "id": 122,
+            "x": 4006.3608912647765,
+            "z": -26.75764979379141,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68100,
+          "afterActivation": 158.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.367620203915737,
+          "mega": {
+            "id": 122,
+            "x": 4006.3608912647765,
+            "z": -26.75764979379141,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68160,
+          "afterActivation": 159.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.626475989887679,
+          "mega": {
+            "id": 122,
+            "x": 4006.5998109332154,
+            "z": -26.503996508400096,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 68220,
+          "afterActivation": 160.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.751944067977373,
+          "mega": {
+            "id": 122,
+            "x": 4006.722824906354,
+            "z": -26.47474070297981,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 68280,
+          "afterActivation": 161.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.931947022039556,
+          "mega": {
+            "id": 122,
+            "x": 4006.930527576757,
+            "z": -26.881681603104155,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 68340,
+          "afterActivation": 162.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.972933521895379,
+          "mega": {
+            "id": 122,
+            "x": 4006.965705433135,
+            "z": -27.268024932652416,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 68400,
+          "afterActivation": 163.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.621198740709314,
+          "mega": {
+            "id": 122,
+            "x": 4006.602077189677,
+            "z": -27.419956356528242,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68460,
+          "afterActivation": 164.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.621198740709314,
+          "mega": {
+            "id": 122,
+            "x": 4006.602077189677,
+            "z": -27.419956356528242,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68520,
+          "afterActivation": 165.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.798383699502125,
+          "mega": {
+            "id": 122,
+            "x": 4006.795613974617,
+            "z": -27.163011453909178,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68580,
+          "afterActivation": 166.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.916232117109196,
+          "mega": {
+            "id": 122,
+            "x": 4006.891171694848,
+            "z": -27.49575970067734,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68640,
+          "afterActivation": 167.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.9295154745961165,
+          "mega": {
+            "id": 122,
+            "x": 4006.914678467466,
+            "z": -27.382175843965058,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68700,
+          "afterActivation": 168.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.912094111633446,
+          "mega": {
+            "id": 122,
+            "x": 4006.8854741537925,
+            "z": -27.510696440333337,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68760,
+          "afterActivation": 169.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.578083904938071,
+          "mega": {
+            "id": 122,
+            "x": 4006.534904792866,
+            "z": -27.627288418745465,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68820,
+          "afterActivation": 170.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.4427798586461495,
+          "mega": {
+            "id": 122,
+            "x": 4006.39091168705,
+            "z": -27.676895434258267,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 68880,
+          "afterActivation": 171.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.124975867644879,
+          "mega": {
+            "id": 122,
+            "x": 4007.0707099946717,
+            "z": -27.743826454140365,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 68940,
+          "afterActivation": 172.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.097928752090325,
+          "mega": {
+            "id": 122,
+            "x": 4007.0658412211396,
+            "z": -26.428921823572555,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69000,
+          "afterActivation": 173.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.986549753288985,
+          "mega": {
+            "id": 122,
+            "x": 4005.328632488587,
+            "z": -24.80619401692611,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69060,
+          "afterActivation": 174.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.336691090415642,
+          "mega": {
+            "id": 122,
+            "x": 4002.7787050280585,
+            "z": -23.755446731499777,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69120,
+          "afterActivation": 175.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.040280861962755,
+          "mega": {
+            "id": 122,
+            "x": 4000.8205031455655,
+            "z": -24.19784103056304,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69180,
+          "afterActivation": 176.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.660455875023212,
+          "mega": {
+            "id": 122,
+            "x": 4001.622293538869,
+            "z": -24.366492207688474,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69240,
+          "afterActivation": 177.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.67955611355285,
+          "mega": {
+            "id": 122,
+            "x": 4001.9346765506175,
+            "z": -24.321240247308612,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69300,
+          "afterActivation": 178.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.3415755963333256,
+          "mega": {
+            "id": 122,
+            "x": 4001.927911999887,
+            "z": -24.659534321212238,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69360,
+          "afterActivation": 179.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.230275145099414,
+          "mega": {
+            "id": 122,
+            "x": 4002.012035612576,
+            "z": -24.769757330047213,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69420,
+          "afterActivation": 180.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.2359990571361026,
+          "mega": {
+            "id": 122,
+            "x": 4002.0386284724773,
+            "z": -24.764334634917915,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69480,
+          "afterActivation": 181.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.4784930306202373,
+          "mega": {
+            "id": 122,
+            "x": 4001.3433594943026,
+            "z": -24.610073024314225,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69540,
+          "afterActivation": 182.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.428956377124062,
+          "mega": {
+            "id": 122,
+            "x": 3998.3297691903263,
+            "z": -24.521076767185086,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69600,
+          "afterActivation": 183.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.3135143902021635,
+          "mega": {
+            "id": 122,
+            "x": 3995.186379112318,
+            "z": -24.342545741760535,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69660,
+          "afterActivation": 184.08333333333334,
+          "alive": 190,
+          "megaDistance": 10.34970238257137,
+          "mega": {
+            "id": 122,
+            "x": 3992.0403167526815,
+            "z": -24.18556417360653,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 69720,
+          "afterActivation": 185.08333333333334,
+          "alive": 190,
+          "megaDistance": 11.90280950655903,
+          "mega": {
+            "id": 122,
+            "x": 3990.453463949722,
+            "z": -24.109605668933547,
+            "mode": "detailed"
+          }
+        },
+        {
+          "tick": 69780,
+          "afterActivation": 186.08333333333334,
+          "alive": 190,
+          "megaDistance": 9.324749618690367,
+          "mega": {
+            "id": 122,
+            "x": 3993.097953631635,
+            "z": -24.22429722291011,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69840,
+          "afterActivation": 187.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.382574926144813,
+          "mega": {
+            "id": 122,
+            "x": 3996.241545148094,
+            "z": -24.247281270014984,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69900,
+          "afterActivation": 188.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.787720976743326,
+          "mega": {
+            "id": 122,
+            "x": 3999.3911748635282,
+            "z": -24.253937071920134,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 69960,
+          "afterActivation": 189.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.369906271358763,
+          "mega": {
+            "id": 122,
+            "x": 4001.6835442122315,
+            "z": -24.651317077719217,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70020,
+          "afterActivation": 190.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.1181545937319464,
+          "mega": {
+            "id": 122,
+            "x": 4001.3726818788264,
+            "z": -24.976871022946156,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70080,
+          "afterActivation": 191.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.0058168675415633,
+          "mega": {
+            "id": 122,
+            "x": 4001.422018599178,
+            "z": -25.07926086976442,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70140,
+          "afterActivation": 192.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.9904836853527779,
+          "mega": {
+            "id": 122,
+            "x": 4001.393119936669,
+            "z": -25.104288552973635,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70200,
+          "afterActivation": 193.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.9898888554921121,
+          "mega": {
+            "id": 122,
+            "x": 4001.420569852105,
+            "z": -25.096340797064215,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70260,
+          "afterActivation": 194.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.0047549127538953,
+          "mega": {
+            "id": 122,
+            "x": 4001.389338137106,
+            "z": -25.09051463754825,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70320,
+          "afterActivation": 195.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.0102041006565217,
+          "mega": {
+            "id": 122,
+            "x": 4001.901949231927,
+            "z": -24.99218861115477,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 70380,
+          "afterActivation": 196.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.1389372489014185,
+          "mega": {
+            "id": 122,
+            "x": 4000.178125425105,
+            "z": -24.443889656941234,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 70440,
+          "afterActivation": 197.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.645132427257041,
+          "mega": {
+            "id": 122,
+            "x": 3997.059350568671,
+            "z": -24.26915703161488,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 70500,
+          "afterActivation": 198.08333333333334,
+          "alive": 190,
+          "megaDistance": 8.584179328006371,
+          "mega": {
+            "id": 122,
+            "x": 3993.9131749584108,
+            "z": -24.120521664937005,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 70560,
+          "afterActivation": 199.08333333333334,
+          "alive": 190,
+          "megaDistance": 10.112572680063384,
+          "mega": {
+            "id": 122,
+            "x": 3992.325872776034,
+            "z": -24.05459872613531,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70620,
+          "afterActivation": 200.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.579477312462158,
+          "mega": {
+            "id": 122,
+            "x": 3994.970830538797,
+            "z": -24.164642347811874,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70680,
+          "afterActivation": 201.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.775873745622364,
+          "mega": {
+            "id": 122,
+            "x": 3998.1140278312673,
+            "z": -24.223637210672923,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70740,
+          "afterActivation": 202.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.5791595380396735,
+          "mega": {
+            "id": 122,
+            "x": 4001.2215516775236,
+            "z": -24.54112177367509,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70800,
+          "afterActivation": 203.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.9905842343373714,
+          "mega": {
+            "id": 122,
+            "x": 4001.965560433627,
+            "z": -25.009713711482554,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70860,
+          "afterActivation": 204.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.0991888116682533,
+          "mega": {
+            "id": 122,
+            "x": 4002.220725437632,
+            "z": -24.91244785736613,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70920,
+          "afterActivation": 205.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.0998312658577856,
+          "mega": {
+            "id": 122,
+            "x": 4002.380370233881,
+            "z": -24.934906822864583,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 70980,
+          "afterActivation": 206.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.086942221998901,
+          "mega": {
+            "id": 122,
+            "x": 4002.252194618143,
+            "z": -24.928351933232552,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71040,
+          "afterActivation": 207.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.8383291924268583,
+          "mega": {
+            "id": 122,
+            "x": 4001.4060986784298,
+            "z": -25.26024845452981,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71100,
+          "afterActivation": 208.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.022914488703654,
+          "mega": {
+            "id": 122,
+            "x": 4001.682725831493,
+            "z": -23.993781593427947,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71160,
+          "afterActivation": 209.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.479109685211241,
+          "mega": {
+            "id": 122,
+            "x": 3998.929601531596,
+            "z": -23.738853450490993,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71220,
+          "afterActivation": 210.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.063781097122133,
+          "mega": {
+            "id": 122,
+            "x": 3995.7857818499424,
+            "z": -23.641355009597678,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71280,
+          "afterActivation": 211.08333333333334,
+          "alive": 190,
+          "megaDistance": 8.506243122445966,
+          "mega": {
+            "id": 122,
+            "x": 3994.197401104307,
+            "z": -23.612431176921785,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71340,
+          "afterActivation": 212.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.126880663228954,
+          "mega": {
+            "id": 122,
+            "x": 3996.8435603388098,
+            "z": -23.690952299837125,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71400,
+          "afterActivation": 213.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.7297701378365207,
+          "mega": {
+            "id": 122,
+            "x": 3999.965456217415,
+            "z": -23.87400945653349,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71460,
+          "afterActivation": 214.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.7122506575070524,
+          "mega": {
+            "id": 122,
+            "x": 4002.086102623125,
+            "z": -25.289915600789154,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71520,
+          "afterActivation": 215.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.5898982913445494,
+          "mega": {
+            "id": 122,
+            "x": 4002.8194404287783,
+            "z": -25.637541207777666,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71580,
+          "afterActivation": 216.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.5898982913445494,
+          "mega": {
+            "id": 122,
+            "x": 4002.8194404287783,
+            "z": -25.637541207777666,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71640,
+          "afterActivation": 217.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.5553504226346393,
+          "mega": {
+            "id": 122,
+            "x": 4002.8113742699898,
+            "z": -25.67305360651293,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71700,
+          "afterActivation": 218.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.4024832118657597,
+          "mega": {
+            "id": 122,
+            "x": 4002.901233916091,
+            "z": -25.925413294306676,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 71760,
+          "afterActivation": 219.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.6139422188906076,
+          "mega": {
+            "id": 122,
+            "x": 4003.2566756907613,
+            "z": -25.987292888260818,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71820,
+          "afterActivation": 220.08333333333334,
+          "alive": 190,
+          "megaDistance": 2.064650836727583,
+          "mega": {
+            "id": 122,
+            "x": 4001.632096239915,
+            "z": -24.968392286656893,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71880,
+          "afterActivation": 221.08333333333334,
+          "alive": 190,
+          "megaDistance": 4.1599272174388275,
+          "mega": {
+            "id": 122,
+            "x": 3999.2388436477786,
+            "z": -23.888567845352284,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 71940,
+          "afterActivation": 222.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.727606140687076,
+          "mega": {
+            "id": 122,
+            "x": 3996.1051812451083,
+            "z": -23.757809963745622,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 72000,
+          "afterActivation": 223.08333333333334,
+          "alive": 190,
+          "megaDistance": 9.53404619002158,
+          "mega": {
+            "id": 122,
+            "x": 3993.0654185524395,
+            "z": -23.672645027897886,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72060,
+          "afterActivation": 224.08333333333334,
+          "alive": 190,
+          "megaDistance": 8.782741507286984,
+          "mega": {
+            "id": 122,
+            "x": 3993.8680955769532,
+            "z": -23.682067083521105,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72120,
+          "afterActivation": 225.08333333333334,
+          "alive": 190,
+          "megaDistance": 6.018857920419252,
+          "mega": {
+            "id": 122,
+            "x": 3996.9493964539256,
+            "z": -23.726156007599894,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72180,
+          "afterActivation": 226.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.6394436049613375,
+          "mega": {
+            "id": 122,
+            "x": 4000.0715447832918,
+            "z": -23.913479267711825,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72240,
+          "afterActivation": 227.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.2125611279765938,
+          "mega": {
+            "id": 122,
+            "x": 4002.0512945714954,
+            "z": -25.788524306469597,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72300,
+          "afterActivation": 228.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.9770061829032592,
+          "mega": {
+            "id": 122,
+            "x": 4001.8017680433636,
+            "z": -26.04331553122291,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72360,
+          "afterActivation": 229.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.8969012159683827,
+          "mega": {
+            "id": 122,
+            "x": 4001.861265367255,
+            "z": -26.11389363342619,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72420,
+          "afterActivation": 230.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.7151829506342761,
+          "mega": {
+            "id": 122,
+            "x": 4001.9281811669816,
+            "z": -26.288432218195744,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72480,
+          "afterActivation": 231.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.49965524505469205,
+          "mega": {
+            "id": 122,
+            "x": 4001.936722240789,
+            "z": -26.504367788476262,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72540,
+          "afterActivation": 232.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.5014041651206071,
+          "mega": {
+            "id": 122,
+            "x": 4002.1226299721634,
+            "z": -26.513823049983344,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72600,
+          "afterActivation": 233.08333333333334,
+          "alive": 190,
+          "megaDistance": 0.18441961751350627,
+          "mega": {
+            "id": 122,
+            "x": 4001.952602701557,
+            "z": -26.82177516608465,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 72660,
+          "afterActivation": 234.08333333333334,
+          "alive": 190,
+          "megaDistance": 1.363509961859895,
+          "mega": {
+            "id": 122,
+            "x": 4001.7681023699975,
+            "z": -25.656354620708882,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 72720,
+          "afterActivation": 235.08333333333334,
+          "alive": 190,
+          "megaDistance": 3.648559051819377,
+          "mega": {
+            "id": 122,
+            "x": 4000.6146760755364,
+            "z": -23.624668789744938,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 72780,
+          "afterActivation": 236.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.688688813206237,
+          "mega": {
+            "id": 122,
+            "x": 3997.553099679782,
+            "z": -23.452288349436653,
+            "mode": "recover"
+          }
+        },
+        {
+          "tick": 72840,
+          "afterActivation": 237.08333333333334,
+          "alive": 190,
+          "megaDistance": 8.310053762061564,
+          "mega": {
+            "id": 122,
+            "x": 3994.5134792868203,
+            "z": -23.393200707069465,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72900,
+          "afterActivation": 238.08333333333334,
+          "alive": 190,
+          "megaDistance": 7.631278987905088,
+          "mega": {
+            "id": 122,
+            "x": 3995.316223388787,
+            "z": -23.31712758805802,
+            "mode": "close"
+          }
+        },
+        {
+          "tick": 72960,
+          "afterActivation": 239.08333333333334,
+          "alive": 190,
+          "megaDistance": 5.18466906637608,
+          "mega": {
+            "id": 122,
+            "x": 3998.397554881154,
+            "z": -23.271302842340223,
+            "mode": "close"
+          }
+        }
+      ]
+    }
+  ]
+}
