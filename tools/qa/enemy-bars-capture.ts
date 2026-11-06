@@ -9,7 +9,8 @@ import { provenance } from './accept/probe';
 
 const backend = (process.argv[2] ?? 'webgl2') as Backend, tier = (process.argv[3] ?? 'low') as 'low' | 'high';
 if (!['webgl2', 'webgpu'].includes(backend) || !['low', 'high'].includes(tier)) throw new Error('Expected backend and quality');
-const out = `test-results/fix51-r10g/G-24-${backend}-${tier}`;
+const reportSlug = process.env.QA_REPORT_SLUG ?? 'fix51-r10g';
+const out = `test-results/${reportSlug}/G-24-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend, tier });
 const species = ['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'] as const;
@@ -56,9 +57,9 @@ try {
   await session.step(2); await capture('dead-near', 0);
   await session.load({ ...spec, name: 'G-24-healthy-zoo', actors: [{ id: 'courier', kind: 'courier', at: [0, 0] }, ...species.map((name, i) => ({ id: name, kind: 'animal' as const, species: name, at: point(i), state: 'idle' as const }))] });
   await session.step(1); await capture('healthy-zoo', 0);
-  await session.makeSheet(shots, `test-results/fix51-r10g/G-24-${backend}-${tier}.jpg`, 640, 380);
+  await session.makeSheet(shots, `test-results/${reportSlug}/G-24-${backend}-${tier}.jpg`, 640, 380);
 } finally {
-  writeFileSync(`docs/reports/fix51-r10g/G-24-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier,
+  writeFileSync(`docs/reports/${reportSlug}/G-24-${backend}-${tier}.json`, JSON.stringify({ ...provenance(), scriptSha256: createHash('sha256').update(readFileSync(import.meta.filename)).digest('hex'), backend, tier,
     setup: 'production renderer fixture; actual Alpha and five zoo species; native lethal damage; healthy animals; fixed camera; no route or timing claim', rows, errors: session.errors }, null, 2) + '\n');
   await session.close(); stopServer();
 }

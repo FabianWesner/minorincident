@@ -21,3 +21,5 @@ G-08: fixed active L4 minimap waypoint and routed distance; verified low/high sh
 G-11: four fresh backend/quality pickup-ring fixtures PASS; eight full-size frames inspected; one collection and5.796m away/return without respawn. Native all-level duplicate ledger refresh remains part of final acceptance.
 
 G-12: fresh shared follower-bar matrix PASS (140 group-size identity/count samples; 17 captures reviewed including negative control). Campaign occlusion remains G-07.
+
+G-24: fresh shared Alpha/zoo health-bar matrix PASS (four backend/quality cells; 20 state captures reviewed).

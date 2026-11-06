@@ -1,62 +1,56 @@
 {
   "row": "G-24",
   "status": "PASS",
-  "reviewer": "fix51-r10g/Sol",
-  "date": "2026-11-03",
-  "commit": "ce8180065be67df55824915d9edb53fc1b68162d",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "715da4ac13157aa385870b1f2d8e38f414edce45",
   "clauses": [
     {
       "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or \u2264 15 m); dead ones show none; normal animals none.",
       "verdict": "PASS",
-      "note": "I inspected all20 full-size native Metal captures. Alpha, lion, gorilla, elephant, zebra and flamingo show six full bars nearby, no bars while far/full-health, and six half bars while far/damaged. Native lethal damage leaves all six at0HP with no bar during falling corpse poses. All five healthy zoo species show none. Pixel fills are512/full and256/half; the actual far-healthy frames have0 red pixels in each former bar region."
+      "note": "All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10g/G-24-review.json",
-      "sha256": "f7f8cd1f5dd6f617b9032299feb0041d35ff6a2c7aafa328bf8e51773be4a69c",
-      "what": "All20 full-size captures inspected. Every species/state/backend/quality matches the criterion; previous near-bar pixel regions reject the actual far-healthy missing bars as a negative control."
+      "file": "docs/reports/sweep-g/G-24-webgl2-high-captures.json",
+      "sha256": "46336ef1f0cc845c90788ea7a4adf19f8fec1fd6e51d850ba6fff6049abca52d",
+      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgl2-low.json",
-      "sha256": "89a840a397a5efa817e3910a47bd8786e982124e3c2c149729e320edf62dee2f",
-      "what": "webgl2/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+      "file": "docs/reports/sweep-g/G-24-webgl2-low-captures.json",
+      "sha256": "cb6c8182df8afbca8bf416c95c4631f0360daeaa0ac9e50cce7fa1d1a49a9fc1",
+      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgl2-low.jpg",
-      "sha256": "4269c1799f535ce559ef156e09c9155c785b87cd7ef09ca1b5b63294a08b31ef",
-      "what": "webgl2/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+      "file": "docs/reports/sweep-g/G-24-webgpu-high-captures.json",
+      "sha256": "ed0987ca3d8f8468e9a23ececd99a6368ad4f1dcdd53fc2887f2739b762c6e6b",
+      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgl2-high.json",
-      "sha256": "7049a0f5cdd39824d90e7e482a1969ab45b179ba2fa04cce4a3678bf0b40a4a2",
-      "what": "webgl2/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+      "file": "docs/reports/sweep-g/G-24-webgpu-low-captures.json",
+      "sha256": "2e9a0c908f169676fabf325874de3b2e26612de116de37f07c783a278cb5f0b3",
+      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgl2-high.jpg",
-      "sha256": "8f667665ac580bfcb5cf935b4f1653cde4cde1760166c4c9f42523830b7935fd",
-      "what": "webgl2/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+      "file": "docs/reports/sweep-g/G-24-webgl2-high.json",
+      "sha256": "e140c745a32849338b23c8390b4d791b9ccf90779f78ba4460ba2bfeabaa515c",
+      "what": "webgl2/high: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgpu-low.json",
-      "sha256": "44932068900c132c9bc8bafb98bbf28037ee6799db6f9c264bf7603975ec30d6",
-      "what": "webgpu/low: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
+      "file": "docs/reports/sweep-g/G-24-webgl2-low.json",
+      "sha256": "fbf709bea979ba7b435afff41733a91cd1ac2ebe7cf47ad7631e018ccbac031d",
+      "what": "webgl2/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgpu-low.jpg",
-      "sha256": "25d0554c5f53f0963976f8905831bde16688b81124dbea979106d00fd138ab3d",
-      "what": "webgpu/low: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+      "file": "docs/reports/sweep-g/G-24-webgpu-high.json",
+      "sha256": "06198465d8d728b8e8015f1d542dc8c6bce26e6c31b28ae8d3c8b77a25cd2448",
+      "what": "webgpu/high: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
     },
     {
-      "file": "docs/reports/fix51-r10g/G-24-webgpu-high.json",
-      "sha256": "f68e3abb9b35b96c4e68e679abf12fdde659b2d38bc2b5462225f1ae8a16cec6",
-      "what": "webgpu/high: Exact species IDs, health, player position/distance, bar count/fill pixels and raw screenshot hashes."
-    },
-    {
-      "file": "docs/reports/fix51-r10g/G-24-webgpu-high.jpg",
-      "sha256": "29596159e47ec5ca3107fe585c383afcf797f7315016ff56162ff143af510d31",
-      "what": "webgpu/high: Compact derived contact sheet; every full-size source screenshot was inspected before deletion."
+      "file": "docs/reports/sweep-g/G-24-webgpu-low.json",
+      "sha256": "e2103ba73abba5c12cce45c68301abd638cd0169aba23b8ed67f0cd76c669112",
+      "what": "webgpu/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
     }
-  ],
-  "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim."
+  ]
 }
