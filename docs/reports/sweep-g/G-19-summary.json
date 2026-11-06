@@ -3,9 +3,9 @@
   "status": "NOT CHECKED",
   "coverage": "22 low/high controlled authored fixture poses,44 reviewed/hash/deleted frames; native health/target/attack samples are in refreshed level reports. No visible HP bar. Shutter closure has dog inside beside courier. Wreck full-size crop has connected panniers, no apparent hull overlap.",
   "limits": [
-    "APC boardCar command fails Transport doorway unavailable at frame61 (two tiers); later hull/exit poses not reached.",
-    "Fixed fixture camera ignores requested zoom changes; labels retained as requests, not independent coverage.",
-    "Every actual campaign closure and vehicle boarding remains unqualified."
+    "Original driver-door setup rejections retained as harness evidence; corrected rear-door fixture now passes.",
+    "Initial fixed-camera zoom request labels were not independent framing.",
+    "Every actual campaign closure/vehicle route still lacks complete placement/clearance proof."
   ],
   "evidence": [
     {
@@ -18,5 +18,21 @@
       "sha256": "2a1b6bba2df17ece5da93c08c103c22f6390daaa2a162d0a8bb84a98574946ea",
       "what": "Read-only positions, health, collision metrics and exact retained fixture exceptions."
     }
-  ]
+  ],
+  "correctedApc": {
+    "explanation": "Old fixture used driver doorway; production transport.entry is rear(-3.35,0). Corrected setup starts corgi by actual rear door and boards at frame1; native passenger lifecycle unchanged.",
+    "errors": [],
+    "evidence": [
+      {
+        "file": "docs/reports/sweep-g/G-19-apc.json",
+        "sha256": "e4ed865b76407e8cc3d84d726ba2d7a0989f117f41754487bf8bdfc21490707b",
+        "what": "Both tiers board/hide/exit/rejoin;14 poses, HP100, no errors."
+      },
+      {
+        "file": "docs/reports/sweep-g/G-19-apc-captures.json",
+        "sha256": "88004f7675dff81ca66b9d2b5dcfcbeb6b947b8b34b1c1e9fa2ac647fda2ba40",
+        "what": "Every frame reviewed; dog hidden when seated, visible clear of hull on exit; no bar."
+      }
+    ]
+  }
 }
