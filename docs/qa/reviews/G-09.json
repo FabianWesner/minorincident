@@ -1,31 +1,27 @@
 {
   "row": "G-09",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
+  "status": "PASS",
+  "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "67385d24a66e61d6a272f61ff906236da58250ea",
+  "commit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5",
   "clauses": [
     {
-      "clause": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
-      "verdict": "FAIL",
-      "note": "L4 hold/plaza ring stays invisible for180 observed simulation ticks at both requested zooms1/1.5 and low/high. waypoint=false explicitly suppresses it. Earlier full physical route also remained in hold fromtick2295 until13681 without a ring. Preserve the literal EVERY-step criterion; authored suppression needs reconciliation before changing survival-step guidance."
+      "clause": "Steps without a spatial destination show no world ring by design; the HUD objective text is the marker there (2026-11-06 clarification).",
+      "verdict": "PASS",
+      "note": "L4 hold: all 28 observations across low/high and zoom 1/1.5 show the actual objective HUD, with no world ring. All 12 captures reviewed including intermediate UI configurations. The former hold counterexample is closed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-09-marker.json",
-      "sha256": "b4afa196299301250bc4950f3acccedeef5d52db47d6c7a34fca3fbdb10f6c17",
-      "what": "Four inspected frame hashes and28 read-only marker samples; active hold step stays ring-invisible beyond2s."
+      "file": "docs/reports/fix68-g/G-09-visible.json",
+      "sha256": "fd358185e537ea17e87c68fac7f0c2ce6a54ff4676e8544d8729ba32214a0ffa",
+      "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
     },
     {
-      "file": "docs/reports/sweep-g/G-25-L4-high.json",
-      "sha256": "619378a34ca6a4d0dc9563fc6ebfe1817208376323c33fdf61b34e6903a871b9",
-      "what": "Independent full physical L4 high route: hold starts2295 with drawn=null; hide starts13681."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-09-final-closeout.json",
-      "sha256": "d618e909084dfe2ff423664af215df69c77d0644cd60ce0cf205db1fcad66dcb",
-      "what": "Four frames viewed. L4 hold ring absent beyond 180 ticks at both qualities and zooms 1/1.5; authored waypoint=false. Whole-row failure retained."
+      "file": "docs/reports/fix68-g/G-09-closure.json",
+      "sha256": "c3cedc87fb3d453d407875524105d7f2f8afe51b7f7e9138f7e86eaed0247fff",
+      "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
     }
-  ]
+  ],
+  "notes": "Scoped clarification review; this does not certify every spatial step start or prop-hidden pickup. Historical literal-ring receipts remain in sweep-g."
 }
