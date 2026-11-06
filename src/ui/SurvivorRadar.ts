@@ -27,7 +27,7 @@ export class SurvivorRadar {
       attribute(pin, 'data-entity-id', String(entity.id));
       attribute(pin, 'aria-label', civilian?.survivor?.key ?? 'Survivor');
       attribute(pin, 'data-clamped', String(Math.hypot(dx, dz) > 30));
-      attribute(pin, 'data-world-x', String(entity.transform.x)); attribute(pin, 'data-world-z', String(entity.transform.z));
+      if (__QA_HOOKS__) { attribute(pin, 'data-world-x', String(entity.transform.x)); attribute(pin, 'data-world-z', String(entity.transform.z)); }
       style(pin, 'left', `${50 + dx * scale}%`); style(pin, 'top', `${50 + dz * scale}%`);
     }
     for (let i = count; i < this.count; i++) setHidden(this.pins[i], true);

@@ -242,7 +242,7 @@ export class Hud {
     const scale = clampEdge ? Math.min(1, 44 / (Math.hypot(dx, dz) || 1)) : 1;
     dx *= scale; dz *= scale;
     style(pin, 'left', `${50 + dx}%`); style(pin, 'top', `${50 + dz}%`);
-    attribute(pin, 'data-world-x', String(x)); attribute(pin, 'data-world-z', String(z));
+    if (__QA_HOOKS__) { attribute(pin, 'data-world-x', String(x)); attribute(pin, 'data-world-z', String(z)); }
     attribute(pin, 'data-clamped', String(scale < 1));
   }
   private readonly weatherIcon = node('output', 'weather-icon');
