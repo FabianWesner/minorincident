@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "7a209c94a752825a8af96010ec762a06e599406f549834880538e359489cc3a1",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "night-exit",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "22aec3df037053b5c27c369f5d526e06cc29c2e1686d595db86be08bb3be3698",
+        "snapshotSha256": "6903e08fc4f9bd56a33fe54b0acd834c2491ebc80eb0854c5dcaa82f7015f155",
         "damage": 100,
         "expected": {
           "id": "night-exit",
@@ -110,7 +110,7 @@
       "value": {
         "checkpoint": "rocket",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "c88d17329ee23a3ff43918be543c84fde22971e35499a1093b911f3647cc9736",
+        "snapshotSha256": "076f2e989e21a006be2a32feff4e08d7f4c37f5165cec610a8c89518e32f615f",
         "damage": 100,
         "expected": {
           "id": "rocket",
@@ -118,7 +118,7 @@
             "x": 273.8050842285156,
             "y": 4.619999885559082,
             "z": 15,
-            "yaw": 2.9809001352281057
+            "yaw": -1.93955913418426
           },
           "gates": {},
           "racks": {
@@ -205,15 +205,15 @@
       "value": {
         "checkpoint": "corridor",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "76848550dec5e896bd9103734c7c6f4d6dad8b1a1543aac5e8536dc6ad62743d",
+        "snapshotSha256": "f5163d94b72336d79829c538612136377317c48f8cf4a7f685a9f0fbf346fe32",
         "damage": 100,
         "expected": {
           "id": "corridor",
           "anchor": {
-            "x": -24.544782638549805,
+            "x": -24.59774398803711,
             "y": 0.7099999785423279,
-            "z": 47.50983810424805,
-            "yaw": -3.234780426655141
+            "z": 47.50360107421875,
+            "yaw": -3.0625632641309886
           },
           "gates": {},
           "racks": {
@@ -261,8 +261,8 @@
         "observed": {
           "id": "corridor",
           "position": {
-            "x": -24.544782638549805,
-            "z": 47.50983810424805
+            "x": -24.59774398803711,
+            "z": 47.50360107421875
           },
           "gates": {},
           "racks": {
@@ -294,8 +294,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "593cf510",
-    "control": "593cf510",
+    "observed": "7dc2eded",
+    "control": "7dc2eded",
     "identical": true
   }
 }
