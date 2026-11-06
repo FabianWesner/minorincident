@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex fix65-c",
   "date": "2026-11-06",
-  "commit": "2183cb9b27d047e68bc1eee8179a635edde67e3a",
+  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
   "clauses": [
     {
       "clause": "Every contact onset \u221210 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, \u2265 0.6 s windup; safe route ends with more HP than the shortcut.",
@@ -13,9 +13,19 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/L9-04-review.json",
-      "sha256": "6c7eecde09294f176da0770e1533cc8335277ee59fc608c7a777b132ae2aa262",
+      "file": "docs/reports/fix65-c/L9-04-98ba7f93-review.json",
+      "sha256": "a2d5fac7e8dccbe08f643672db466e9e5e12beaca583983be2cce35b273d36c3",
       "what": "Personally inspected all24 final paired-zoom captures; raw file hashes, full path/input/contact ledgers, producer digest and both-tier HP comparisons. Early safe grass detour and shortcut contact-marked APC are visible; final frames show the normal bridge approach."
+    },
+    {
+      "file": "docs/reports/fix65-c/L9-04-98ba7f93-native.json.gz",
+      "sha256": "2bfcb4a138a1b9182fb8dd841ec6d235b9030925c8d93bc90383ab40a471440e",
+      "what": "Reviewed unique native shortcut contact transactions, each ten damage; both tiers canonical states equal independent controls."
+    },
+    {
+      "file": "docs/reports/fix65-c/L9-04-98ba7f93-stopped-contact.json.gz",
+      "sha256": "bd1e6bb25e048c94779dbbeb416c0798f68a47803384617a909791d27e4017ab",
+      "what": "Reviewed both-tier stopped/surrounded windup ledger: at least36 ticks before hits, exactly ten damage per distinct completed attack."
     }
   ],
   "notes": "Historical low safe failure retained in before/trial proofs; this fixes a proven physical route producer defect, with no L9-04 gameplay or criterion change. Final source-bound fixtures required for complete automated row coverage."
