@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "431013dc92a8341006a871dcb552c23fcfb064ba1a84cbe3fbcc9914fb812dfe",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T07:12:42.925Z",
+  "generatedAt": "2026-11-06T07:20:11.516Z",
   "policies": [
     {
       "tier": "low",
@@ -169,6 +169,13 @@
       "receipt": "docs/reports/fix51-verify/receipts/L9-low-streaming-browser.json"
     },
     {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-wedge-browser.json"
+    },
+    {
       "tier": "high",
       "policy": "real-input-browser",
       "outcome": "complete",
@@ -202,6 +209,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-high-streaming-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-wedge-browser.json"
     }
   ],
   "globals": [
@@ -11021,12 +11035,19 @@
     },
     {
       "id": "L9-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native safe rough/road traversal without wedge: {\"canonical\":true,\"zero\":true,\"zeroDistance\":1498.1217216954765} (target ordinary safe route and0HP detour both complete without relocation; PASS); high/controlled-fixture native safe rough/road traversal without wedge: {\"canonical\":true,\"zero\":true,\"zeroDistance\":1498.1048004211953} (target ordinary safe route and0HP detour both complete without relocation; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture native safe rough/road traversal without wedge: {\"canonical\":true,\"zero\":true,\"zeroDistance\":1498.1217216954765} (target ordinary safe route and0HP detour both complete without relocation; PASS); high/controlled-fixture native safe rough/road traversal without wedge: {\"canonical\":true,\"zero\":true,\"zeroDistance\":1498.1048004211953} (target ordinary safe route and0HP detour both complete without relocation; PASS); low/physical-wedge six authored physical routes remain driveable: [{\"clause\":\"road physical streaming residency and continuous input\",\"status\":\"PASS\"},{\"clause\":\"countryside physical streaming residency and continuous input\",\"status\":\"PASS\"},{\"clause\":\"dry-shortcut physical streaming residency and continuous input\",\"status\":\"PASS\"}] (target All three current physical authored detours per tier reach bridge, normal AI/physics, no actor writes or skips; PASS); low/physical-wedge three physical offroad stall and reverse recoveries: {\"valid\":true,\"recoveries\":true,\"cases\":[{\"id\":\"prop.tent:2455\",\"escaped\":true,\"reverseTicks\":90},{\"id\":\"veh.school-bus:2427\",\"escaped\":true,\"reverseTicks\":114},{\"id\":\"kit.army-checkpoint:2454\",\"escaped\":true,\"reverseTicks\":108}]} (target Physical offroad approaches to existing tent/bus/checkpoint corners, ≥20six-tick stalled samples<0.5m/s, foursecond forward press, ordinary reverse clears≥8m within5s; no placement/teleport; PASS); low/physical-wedge reviewed world arrow absence and exact durability HUD: {\"valid\":true,\"seen\":true,\"hud\":true} (target All12pairedPOzoom panels inspected, no giant flat world arrow above APC; live HUD text and bar match exact health; exact O-review supplies visible judgement; PASS); high/physical-wedge six authored physical routes remain driveable: [{\"clause\":\"road physical streaming residency and continuous input\",\"status\":\"PASS\"},{\"clause\":\"countryside physical streaming residency and continuous input\",\"status\":\"PASS\"},{\"clause\":\"dry-shortcut physical streaming residency and continuous input\",\"status\":\"PASS\"}] (target All three current physical authored detours per tier reach bridge, normal AI/physics, no actor writes or skips; PASS); high/physical-wedge three physical offroad stall and reverse recoveries: {\"valid\":true,\"recoveries\":true,\"cases\":[{\"id\":\"prop.tent:2455\",\"escaped\":true,\"reverseTicks\":90},{\"id\":\"veh.school-bus:2427\",\"escaped\":true,\"reverseTicks\":114},{\"id\":\"kit.army-checkpoint:2454\",\"escaped\":true,\"reverseTicks\":108}]} (target Physical offroad approaches to existing tent/bus/checkpoint corners, ≥20six-tick stalled samples<0.5m/s, foursecond forward press, ordinary reverse clears≥8m within5s; no placement/teleport; PASS); high/physical-wedge reviewed world arrow absence and exact durability HUD: {\"valid\":true,\"seen\":true,\"hud\":true} (target All12pairedPOzoom panels inspected, no giant flat world arrow above APC; live HUD text and bar match exact health; exact O-review supplies visible judgement; PASS) Manual review PASS (FRESH, Codex sweep-c5): Current six ordinary physical authored detours all reach bridge. Fresh separate adversarial offroad drives physically approach existing tent2455, parked schoolbus2427 and checkpoint2454 corners. Each case records20successive6tick approach samples below0.5m/s within12m of solid target, then240ticks forward press. Ordinary S reverse moves8.05–8.52m backwards along actual chassis heading, clearing≥8m in90/114/108ticks (1.5/1.9/1.8s), same bothqualities; no position writes/teleports/replacement/AI freeze/cheats. This is route coverage plus three deliberate obstruction challenges, not an exhaustive proof over every physically possible orientation. All24pairedPOzoom panels personally reviewed/digests verified/rawdeleted. Wide frames show near tent, bus/props/hazardlights and concrete checkpoint/ladder/razorwire, followed by clear separation; closeframes show intact APC/cab. Contact photos are AFTER forward press, by which time some slipping/automatic recovery already separates hull; stills alone do not establish sustained impact. Dense low-speed approach supplies the challenge validity. No giant flat world arrow over APC; only small gold screen-edge HUD pointer. Live Armor text/bar matches native HP at every photo (low1000→990→970, high1000→990→940); losses are real infected contacts/attacks. No claim ordinary layout-obstacle contact billed HP: those hits were not logged by this fixture. All15 semantic faults reject, exact originals restored. No game/criteria change.",
+      "automatedComplete": true,
       "receipt": [
-        "docs/reports/fix55-c/L9-native.json"
+        "docs/reports/fix55-c/L9-native.json",
+        "docs/reports/sweep-c5/L9-09/coverage-proof.json",
+        "docs/reports/sweep-c5/L9-06/low-physical.json.gz",
+        "docs/reports/sweep-c5/L9-06/low-review.json",
+        "docs/reports/sweep-c5/L9-06/high-physical.json.gz",
+        "docs/reports/sweep-c5/L9-06/high-review.json",
+        "docs/reports/sweep-c5/L9-06/coverage-proof.json",
+        "docs/reports/sweep-c5/L9-06/producer.mjs"
       ],
       "expected": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
       "checks": [
@@ -11059,6 +11080,146 @@
           "status": "PASS",
           "receipt": "docs/reports/fix55-c/L9-native.json",
           "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "six authored physical routes remain driveable",
+          "tier": "low",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": [
+            {
+              "clause": "road physical streaming residency and continuous input",
+              "status": "PASS"
+            },
+            {
+              "clause": "countryside physical streaming residency and continuous input",
+              "status": "PASS"
+            },
+            {
+              "clause": "dry-shortcut physical streaming residency and continuous input",
+              "status": "PASS"
+            }
+          ],
+          "target": "All three current physical authored detours per tier reach bridge, normal AI/physics, no actor writes or skips",
+          "receipt": "docs/reports/sweep-c5/L9-09/coverage-proof.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "three physical offroad stall and reverse recoveries",
+          "tier": "low",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "recoveries": true,
+            "cases": [
+              {
+                "id": "prop.tent:2455",
+                "escaped": true,
+                "reverseTicks": 90
+              },
+              {
+                "id": "veh.school-bus:2427",
+                "escaped": true,
+                "reverseTicks": 114
+              },
+              {
+                "id": "kit.army-checkpoint:2454",
+                "escaped": true,
+                "reverseTicks": 108
+              }
+            ]
+          },
+          "target": "Physical offroad approaches to existing tent/bus/checkpoint corners, ≥20six-tick stalled samples<0.5m/s, foursecond forward press, ordinary reverse clears≥8m within5s; no placement/teleport",
+          "receipt": "docs/reports/sweep-c5/L9-06/low-physical.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "reviewed world arrow absence and exact durability HUD",
+          "tier": "low",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "seen": true,
+            "hud": true
+          },
+          "target": "All12pairedPOzoom panels inspected, no giant flat world arrow above APC; live HUD text and bar match exact health; exact O-review supplies visible judgement",
+          "receipt": "docs/reports/sweep-c5/L9-06/low-review.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "six authored physical routes remain driveable",
+          "tier": "high",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": [
+            {
+              "clause": "road physical streaming residency and continuous input",
+              "status": "PASS"
+            },
+            {
+              "clause": "countryside physical streaming residency and continuous input",
+              "status": "PASS"
+            },
+            {
+              "clause": "dry-shortcut physical streaming residency and continuous input",
+              "status": "PASS"
+            }
+          ],
+          "target": "All three current physical authored detours per tier reach bridge, normal AI/physics, no actor writes or skips",
+          "receipt": "docs/reports/sweep-c5/L9-09/coverage-proof.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "three physical offroad stall and reverse recoveries",
+          "tier": "high",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "recoveries": true,
+            "cases": [
+              {
+                "id": "prop.tent:2455",
+                "escaped": true,
+                "reverseTicks": 90
+              },
+              {
+                "id": "veh.school-bus:2427",
+                "escaped": true,
+                "reverseTicks": 114
+              },
+              {
+                "id": "kit.army-checkpoint:2454",
+                "escaped": true,
+                "reverseTicks": 108
+              }
+            ]
+          },
+          "target": "Physical offroad approaches to existing tent/bus/checkpoint corners, ≥20six-tick stalled samples<0.5m/s, foursecond forward press, ordinary reverse clears≥8m within5s; no placement/teleport",
+          "receipt": "docs/reports/sweep-c5/L9-06/high-physical.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-06",
+          "clause": "reviewed world arrow absence and exact durability HUD",
+          "tier": "high",
+          "policy": "physical-wedge",
+          "status": "PASS",
+          "value": {
+            "valid": true,
+            "seen": true,
+            "hud": true
+          },
+          "target": "All12pairedPOzoom panels inspected, no giant flat world arrow above APC; live HUD text and bar match exact health; exact O-review supplies visible judgement",
+          "receipt": "docs/reports/sweep-c5/L9-06/high-review.json",
+          "level": "L9"
         }
       ],
       "historical": {
@@ -11071,7 +11232,60 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
+        "clause": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+      },
+      "reviewDecision": {
+        "row": "L9-06",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "57b750c4d03febd3392cc28d533a06e2e1357108",
+        "clauses": [
+          {
+            "clause": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
+            "verdict": "PASS",
+            "note": "Current six ordinary physical authored detours all reach bridge. Fresh separate adversarial offroad drives physically approach existing tent2455, parked schoolbus2427 and checkpoint2454 corners. Each case records20successive6tick approach samples below0.5m/s within12m of solid target, then240ticks forward press. Ordinary S reverse moves8.05–8.52m backwards along actual chassis heading, clearing≥8m in90/114/108ticks (1.5/1.9/1.8s), same bothqualities; no position writes/teleports/replacement/AI freeze/cheats. This is route coverage plus three deliberate obstruction challenges, not an exhaustive proof over every physically possible orientation. All24pairedPOzoom panels personally reviewed/digests verified/rawdeleted. Wide frames show near tent, bus/props/hazardlights and concrete checkpoint/ladder/razorwire, followed by clear separation; closeframes show intact APC/cab. Contact photos are AFTER forward press, by which time some slipping/automatic recovery already separates hull; stills alone do not establish sustained impact. Dense low-speed approach supplies the challenge validity. No giant flat world arrow over APC; only small gold screen-edge HUD pointer. Live Armor text/bar matches native HP at every photo (low1000→990→970, high1000→990→940); losses are real infected contacts/attacks. No claim ordinary layout-obstacle contact billed HP: those hits were not logged by this fixture. All15 semantic faults reject, exact originals restored. No game/criteria change."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L9-06/coverage-proof.json",
+            "sha256": "39c4b15592864fc57958cbabbfaff29c32be958275083b6d66a2027bc50a44a5",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-06/high-physical.json.gz",
+            "sha256": "58553c6730b54d59f2fe07f953328749f0ac7be41dfd2ae782ece0becc4c827a",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-06/high-review.json",
+            "sha256": "8ce4d04e1ed8af91fb0df02316a6b03d399280f3ea237ae9555691492f02dc87",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-06/low-physical.json.gz",
+            "sha256": "66293c775f2eb64cad7830aa1a6724600e17d76dc9ace6c1bd3c77164db4f7d3",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-06/low-review.json",
+            "sha256": "e134a20912a6c0f82202269040ada5a45d24ccf82a215f09790edf55cd7431b8",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-06/producer.mjs",
+            "sha256": "45adfcc8f1b05601a7440258156fccbba0dc1b8c85a7fe8b75b6742768231157",
+            "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
+      }
     },
     {
       "id": "L9-07",

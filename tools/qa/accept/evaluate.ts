@@ -722,6 +722,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],
   ['L6-08', [{ clause: 'observed human follower pace versus phase group median', policy: 'complete' }, { clause: 'all original follower settled speed and per-ID visible bars', policy: 'controlled-fixture' }]],
   ['L6-09', [{ clause: 'actual gates width collision endurance refusal and persistent prompt', policy: 'controlled-fixture' }]],
+  ['L9-06', ['six authored physical routes remain driveable','three physical offroad stall and reverse recoveries','reviewed world arrow absence and exact durability HUD'].map(clause=>({clause,policy:'physical-wedge'}))],
   ['L9-09', ['actual terrain GLB shared-edge heights',...['road','countryside','dry-shortcut'].map(r=>`${r} physical streaming residency and continuous input`)].map(clause=>({clause,policy:'streaming-physical'}))],
   ['L9-01', [{clause:'physical carried start control and reviewed occupants',policy:'real-input-webgl2'}]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],

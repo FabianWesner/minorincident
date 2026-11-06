@@ -51,6 +51,8 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 
 | L9-09 | current PASS;172actualGLB boundaries/43140positions max1cm, six physical streamed drives capped9/25, every held-input tick matches across54–73residency sets;21faults |
 
+| L9-06 | current PASS; six complete physical detours plus three real offroad stall/press/reverse cases/tier,8.05–8.52mbackward escape,24reviewedpanels/15faults |
+
 ## Still open rows
 
 These are the `qa:accept` currentStatus values. The separate status field preserves historical failures until fresh exact-criterion review; it must not be mistaken for a new measured failure.
@@ -64,7 +66,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L7-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge. |
 | L7-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1. |
 | L8-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus "is it stunning?" pass. |
-| L9-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. |
 | L10-03 | FAIL | Same-tick census: low industrial max9<16 and campus33<35 with required species; high industrial15<25; high corridor never has required dogs/Alphas together. Full ledgers and identical native controls retained. |
 
 | L10-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. |
@@ -91,4 +92,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 13. Current PASS rows listed above: 34. No game code was changed. Perf work was not performed.
+Open current rows: 12. Current PASS rows listed above: 35. No game code was changed. Perf work was not performed.

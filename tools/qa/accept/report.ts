@@ -120,6 +120,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'L8-07': source.expected,
     'L9-01': source.expected,
     'L9-02': source.expected,
+    'L9-06': source.expected,
     'L9-05': source.expected,
     'L9-07': source.expected,
     'L10-07': source.expected, // Personally reviewed minimap frames supplement pursuit and actual audio graph checks.
