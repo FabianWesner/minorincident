@@ -25,7 +25,8 @@ const pointDistanceSquared = (x: number, z: number, ax: number, az: number, bx: 
   return (x - ax - t * dx) ** 2 + (z - az - t * dz) ** 2;
 };
 const cross = (x: number, z: number, u: number, v: number) => x * v - z * u;
-function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, p: RestingPose): number {
+function segmentDistanceSquared(coordinates: Float64Array, p: RestingPose): number {
+  const ax = coordinates[3], az = coordinates[4], bx = coordinates[5], bz = coordinates[6];
   const d = cross(bx - ax, bz - az, p.bx - p.ax, p.bz - p.az);
   if (Math.abs(d) > 1e-8) {
     const t = cross(p.ax - ax, p.az - az, p.bx - p.ax, p.bz - p.az) / d;
@@ -39,7 +40,7 @@ interface SearchState {
   e: EntitySnapshot; player: EntitySnapshot['transform'] | undefined;
   nav: NonNullable<SimWorld['infected']>['nav'] | undefined; support: SimWorld['districts'];
   startsOnVehicle: boolean; feet: number; direction: number; length: number; radius: number; height: number;
-  pose: RestingPose; numeric: Float64Array; ownPose: string;
+  pose: RestingPose; numeric: Float64Array; input: Float64Array; ownPose: string;
   vehicleClear(x: number, z: number, padding?: number): boolean;
   neighbors: (RestingPose | undefined)[]; layers: (RestingPose | undefined)[];
   spatial: SpatialHash; query: { x: number; z: number; r: number }; ids: number[]; swept: { x: number; z: number };
@@ -47,8 +48,9 @@ interface SearchState {
   queriedX: number; queriedZ: number; neighborCount: number;
 }
 /** One shared evaluator keeps dense searches on the same optimized numeric path. */
-function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number, supported = true): RestingPose | undefined {
-  const { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear, neighbors, layers } = state;
+function evaluateCandidate(state: SearchState, supported = true): RestingPose | undefined {
+  const x = state.input[0], z = state.input[1], yaw = state.input[2];
+  const { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, input, ownPose, vehicleClear, neighbors, layers } = state;
   if (x !== state.rootX || z !== state.rootZ) {
     state.rootX = x; state.rootZ = z; state.rootClear = vehicleClear(x, z);
     // A body falling off a hull does not need a route from its roof.
@@ -99,7 +101,7 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
     const reach = radius + other.radius + 1e-6;
     if (maxX < Math.min(other.ax, other.bx) - reach || minX > Math.max(other.ax, other.bx) + reach
       || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
-    if (segmentDistanceSquared(ax, az, bx, bz, other) >= (radius + other.radius) ** 2) continue;
+    if (segmentDistanceSquared(numeric, other) >= (radius + other.radius) ** 2) continue;
     if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
     // Stable insertion into the used prefix retains the old height sort
     // and bucket tie order without resizing the scratch backing store.
@@ -134,6 +136,9 @@ export class CorpseLayout {
   private readonly bestScratch = {} as RestingPose;
   private readonly swept = { x: 0, z: 0 };
   private readonly candidateNumbers = new Float64Array(8);
+  // Numeric arguments crossing the generator/function boundary otherwise box
+  // every sampled root and orientation. Only one suspended search owns these.
+  private readonly candidateInput = new Float64Array(3);
   private readonly deferred = new Map<number, DeferredPose>();
   private remainingMs = Infinity;
   private searchDeadline = Infinity;
@@ -165,10 +170,12 @@ export class CorpseLayout {
   }
   audit() {
     const bodies = [...this.bodies.values()], player = this.world.entities.get(1)?.transform;
+    const coordinates = new Float64Array(8);
     let sunkPairs = 0, heapPairs = 0, repeatedPairs = 0;
     for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
       const a = bodies[i], b = bodies[j];
-      if (segmentDistanceSquared(a.ax, a.az, a.bx, a.bz, b) >= (a.radius + b.radius - .001) ** 2) continue;
+      coordinates[3] = a.ax; coordinates[4] = a.az; coordinates[5] = a.bx; coordinates[6] = a.bz;
+      if (segmentDistanceSquared(coordinates, b) >= (a.radius + b.radius - .001) ** 2) continue;
       heapPairs++;
       const lower = a.y <= b.y ? a : b, upper = lower === a ? b : a;
       if (upper.y < lower.y + lower.height - .001) sunkPairs++;
@@ -290,7 +297,7 @@ export class CorpseLayout {
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e, prone };
     // Rejected candidates keep numeric scratch unboxed. Publishing every
     // sampled coordinate into a spread/copied pose record caused heavy GC.
-    const numeric = this.candidateNumbers;
+    const numeric = this.candidateNumbers, input = this.candidateInput;
     numeric[0] = pose.x; numeric[1] = pose.z; numeric[2] = pose.yaw;
     numeric[3] = pose.ax; numeric[4] = pose.az; numeric[5] = pose.bx; numeric[6] = pose.bz; numeric[7] = pose.y;
     // The four orientations at one root share the same spatial query. The
@@ -303,7 +310,7 @@ export class CorpseLayout {
     // The four orientations at one root share its hull, sweep and support.
     // Dense piles search hundreds of roots; repeating these queries per yaw
     // made the zoo's settling waves block the view update.
-    const state: SearchState = { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear,
+    const state: SearchState = { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, input, ownPose, vehicleClear,
       neighbors, layers, spatial: this.spatial, query: this.query, ids: this.neighbors, swept: this.swept,
       rootX: NaN, rootZ: NaN, rootClear: false, rootFloor: feet, queriedX: NaN, queriedZ: NaN, neighborCount: 0,
       collectNeighbor: id => { if (id !== e.id) neighbors[state.neighborCount++] = this.bodies.get(id)!; } };
@@ -321,7 +328,8 @@ export class CorpseLayout {
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
         for (let turn = 0; turn < 4; turn++) {
-          const candidate = evaluateCandidate(state, x, z, initialYaw + turn * 2.399963229728653);
+          input[0] = x; input[1] = z; input[2] = initialYaw + turn * 2.399963229728653;
+          const candidate = evaluateCandidate(state);
           if (!candidate) continue;
           if (candidate.y <= feet + .05) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; break; }
           if (!best || candidate.y < best.y - .001) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; }
@@ -340,11 +348,13 @@ export class CorpseLayout {
     // strip. Keep the bounded root and heap layer, never teleport it elsewhere.
     if (!best) for (let i = 0; i < 80 && !best; i++) {
       const angle = initialYaw + i * Math.PI * 2 / 80;
-      best = evaluateCandidate(state, e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
+      input[0] = e.transform.x + Math.cos(angle); input[1] = e.transform.z + Math.sin(angle); input[2] = angle + Math.PI / 2;
+      best = evaluateCandidate(state, false);
       if (!best && performance.now() >= this.searchDeadline) yield;
     }
     if (!best) {
-      best = evaluateCandidate(state, e.transform.x, e.transform.z, initialYaw + .7, false);
+      input[0] = e.transform.x; input[1] = e.transform.z; input[2] = initialYaw + .7;
+      best = evaluateCandidate(state, false);
       if (!best) {
         // The legacy fallback uses the final rejected candidate's footprint.
         pose.x = numeric[0]; pose.z = numeric[1]; pose.yaw = numeric[2];
