@@ -1,5 +1,12 @@
 {
   "file": "src/levels/L3/mission.ts",
   "sha256": "c7708d4a2db14658d991950d787398e38b04ed20dfb9788e187228f351026e26",
-  "observation": "Only handgun grant in L3 level definitions: armory.onComplete; step interact anchor l3-armory radius1.2. Native receipts acquire at tick267; normal browser route independently same."
+  "observation": "Only handgun grant in L3 level definitions: armory.onComplete; step interact anchor l3-armory radius1.2. Native receipts acquire at tick267; normal browser route independently same.",
+  "alliedReloadingCallout": {
+    "file": "src/sim/outbreak/Allies.ts",
+    "sha256": "4d7a6f9b222918459922ce7e4a10e1807773e4ff43cd22980fb27e35c411ba71",
+    "lowHudSamples": 40,
+    "highHudSamples": 35,
+    "observation": "Exact Reloading! text emitted by allied NPC callout. Raw HUD text intentionally retains it, not filtered. No ammunition/reload counter or widget for courier in inspected frames."
+  }
 }

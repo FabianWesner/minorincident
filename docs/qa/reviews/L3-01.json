@@ -8,24 +8,24 @@
     {
       "clause": "Handgun only at the armory, within 40 s of start; no reload/ammo UI over 600 shots; 40 HP infected = 2 hits.",
       "verdict": "PASS",
-      "note": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; all798 text samples per tier have no reload/ammo text. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "note": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L3-01-current-ledger.json.gz",
       "sha256": "ece1164f144839b77c5453af1c71ccfb00384c38cfafd01a81970484203c5325",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; all798 text samples per tier have no reload/ammo text. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     },
     {
       "file": "docs/reports/sweep-a3/L3-01-current-images.json",
-      "sha256": "1632a97a6425d16fab11f8c987959e86f374f6718c1e148d4ee5491a12829942",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; all798 text samples per tier have no reload/ammo text. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "sha256": "f4b479c3041a7f4c01864cfcb10b69fb1926c7a2b1129bf8d7f8176c1db2f3ed",
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     },
     {
       "file": "docs/reports/sweep-a3/L3-01-grant-source.json",
-      "sha256": "68c8e84bf7d2a7df98d609083625c8c2c1fc0c89a32a837502b1081f4c14b023",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; all798 text samples per tier have no reload/ammo text. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "sha256": "2073e26c627edebcda0715fdebb3677ca3682ef461a669f47698a64dfcbb4f27",
+      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
     }
   ],
   "notes": "Courier damage suppressed solely to keep 600-shot count/UI observation running. Camera requested0.5/1/1.5 for final shots is actually yard-locked1; no zoom-extreme coverage claimed."
