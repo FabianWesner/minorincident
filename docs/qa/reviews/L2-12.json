@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "3c19379e90c849d6b9fd9ac1629a4433e4f3f922",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
       "clause": "combat: competent run meets ≥ 1 infected per 30 m of route (tune); attacks on the player ≥ 2/min, ≤ 20/min (tune).",
@@ -14,9 +14,9 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L2-12-clauses.json",
-      "sha256": "d7ad018ccc96ab305e8c8e03f1af1d26471f3cdfd133c7eb493ff7a2b70a6a76",
+      "sha256": "e868454e7eefcd84b49036197bc306d0d36849af976c01f88221085de6ab9b9e",
       "what": "Current-source competent native bridge routes pass both clauses at both tiers: player attacks10.3765/min low,15.7424/min high (required2–20); distinct visible infected per30m5.23384/4.60775 (required≥1). Trajectories257.9366/279.9633m have zero discontinuities. Reviewed full clause/ID ledgers and exact receipt hashes. No performance or visual-gameplay claim; this scripted criterion uses actual native attack events and route sight queries."
     }
   ],
-  "notes": "Fresh exact-criterion review supersedes the historical bridge attack-rate failure; targets/checkers and game were unchanged."
+  "notes": "Fresh exact-criterion review supersedes the historical bridge attack-rate failure; targets/checkers and game were unchanged. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
 }
