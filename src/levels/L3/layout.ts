@@ -57,7 +57,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   ...([[-104, -3.4, 0], [-28, 3.4, PI], [22, -3.4, 0], [64, 3.4, PI], [102, -3.4, 0]] as const).map(([x, z, yaw]) => d('looted', 'commerce', 'decay.looted-store', x, z, { yaw })),
   ...([[-101.6, -1.8, 'prop.shopping-cart'], [-25.8, 2.2, 'prop.shopping-cart'], [60.2, 1.6, 'prop.shopping-cart'], [24.4, -3.3, 'prop.crates'], [-64.8, 3.3, 'prop.crates'], [100.4, 2.2, 'prop.vending-cart']] as const)
     .map(([x, z, assetId], i) => d('merchandise', 'commerce', assetId, x, z, { yaw: i * 1.3 })),
-  ...([[-60, 1.0], [-19, -1.2], [48, .8], [90, -1.4]] as const).map(([x, z], i) => d('bags', 'commerce', 'decay.dropped-belongings', x, z, { yaw: i * 1.9 })),
+  ...([[-60, 1.0], [-8, -1.2], [48, .8], [90, -1.4]] as const).map(([x, z], i) => d('bags', 'commerce', 'decay.dropped-belongings', x, z, { yaw: i * 1.9 })),
   ...([[-80, -3.7, 0], [5, 3.7, PI], [75, -3.7, 0]] as const).map(([x, z, yaw]) => d('damaged-sign', 'commerce', 'decay.damaged-sign', x, z, { yaw: yaw + .3 })),
   d('abandoned', 'commerce', 'veh.sedan-blue', -64, 1.3, { yaw: .1 }), d('abandoned', 'commerce', 'veh.sedan-white', 110, -1.3, { yaw: PI, decay: 'wrecked' }),
   corpse('commerce', -44, 1.8, 'npc.civilian-woman-a', .8), corpse('commerce', -10, 3.6, 'npc.civilian-elderly', 2.2), corpse('commerce', 34, -1.6, 'npc.civilian-man-a', 5.0), corpse('commerce', 88, 2.4, 'npc.civilian-woman-b', 3.3),
@@ -71,7 +71,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('barricade', 'oak', 'decay.makeshift-barricade', -24, 26.6, { yaw: H }),
   d('barricade', 'oak', 'decay.furniture-barricade', 72, 29.6),
   d('barricade', 'oak', 'decay.makeshift-barricade', 112, 29.4, { yaw: -H }),
-  ...([[-80, 32.0, 'prop.broken-chair'], [-19, 24.0, 'prop.trash-bags'], [62, 32.0, 'decay.dropped-belongings'], [100.6, 24.0, 'prop.wheelbarrow'], [-58, 24.0, 'prop.lawn-chair-a'], [24, 32.0, 'prop.trash-bin']] as const)
+  ...([[-80, 32.0, 'prop.broken-chair'], [-8, 24.0, 'prop.trash-bags'], [62, 32.0, 'decay.dropped-belongings'], [100.6, 24.0, 'prop.wheelbarrow'], [-58, 24.0, 'prop.lawn-chair-a'], [24, 32.0, 'prop.trash-bin']] as const)
     .map(([x, z, assetId], i) => d('garden', 'oak', assetId, x, z, { yaw: i * 1.7 })),
   corpse('oak', -66, 24.6, 'npc.civilian-man-b', 1.9), corpse('oak', -20, 31.6, 'npc.civilian-woman-a', .3), corpse('oak', 18.4, 31.4, 'npc.civilian-elderly', 4.4),
   corpse('oak', 60, 24.2, 'npc.civilian-man-a', 2.8), corpse('oak', 102, 31.6, 'npc.civilian-woman-b', 5.6),
@@ -99,12 +99,13 @@ export const l3Dressing: readonly L3Dressing[] = [
 ].map(entry => entry.street === 'army' ? { ...entry, x: entry.x + l3ArmyOffset } : entry);
 
 /** Two staggered crash lines force Oak -> Boulevard; their ends overlap the solid lot frontages.
- * fix65-a (L3-12): each line stands at the east mouth of its open cross-link alley (x -91.5..-88.5 and -16.5..-13.5), not
- * 14-24 m past it. A screenshot player who meets the wreck now sees the open alley beside it in the same frame instead of a
- * dead-end street that needs an unseen backtrack. The route itself (Oak, then the Boulevard) is unchanged. */
+ * fix65-a (L3-12): the first line (Commerce + Boulevard) stands at the east mouth of its open cross-link alley (x -91.5..-88.5),
+ * not 14 m past it, so a screenshot player who meets the wreck sees the open alley beside it in the same frame instead of a
+ * dead end that needs an unseen backtrack. The second line stays at x 12: moving it to the -15 alley mouth let 3 officers
+ * reach the army line (qa:threat L3-06, limit 2). The route itself (Oak, then the Boulevard) is unchanged. */
 export const l3Roadblocks = [
   {x:-85.5,z:0,halfWidth:5}, {x:-85.5,z:-28,halfWidth:6},
-  {x:-10,z:0,halfWidth:5}, {x:-10,z:28,halfWidth:5},
+  {x:12,z:0,halfWidth:5}, {x:12,z:28,halfWidth:5},
 ] as const;
 
 /** The big hull of each crash line (PO 10-12: a blocker must read as a real vehicle, never a box): bus, army truck, bus, APC. */
