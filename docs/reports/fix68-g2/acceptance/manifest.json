@@ -4,7 +4,7 @@
   "currentFreshFailingRows": [
     "L5-08"
   ],
-  "note": "Only L5-08 is freshly failing. Historical sticky status FAIL on L5-05 and G-13 is retained by the unmodified report builder; numeric L5-05 currentStatus is PASS and measured G-13 checks PASS, while full global G-13 remains NOT CHECKED. No whole-group current-source acceptance is claimed.",
+  "note": "Only L5-08 is freshly failing. Historical sticky status FAIL on L5-05 and G-13 is retained by the unmodified report builder; numeric L5-05 currentStatus is PASS and measured G-13 checks PASS, while full global G-13 remains NOT CHECKED. No whole-group current-source acceptance is claimed. Archive contains only the nine fresh native/fixture/checkpoint/level files; inherited stale browser receipts are excluded.",
   "metrics": [
     {
       "tier": "low",
@@ -53,18 +53,6 @@
       "original": "docs/reports/fix51-verify/L5.json"
     },
     {
-      "file": "docs/reports/fix68-g2/acceptance/L5-high-browser-completion.json.gz",
-      "sha256": "1e477a93e8591420ea2bab4bcb02990686dcd82f7e6e38469df580c66f4b8a5a",
-      "rawSha256": "174ddc98cd806109cf103fefcb198551d9e282c55278e27c2531d95107467ba8",
-      "original": "docs/reports/fix51-verify/receipts/L5-high-browser-completion.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-high-browser.json.gz",
-      "sha256": "5d6f213f7a5de4f4f96c1cd7362cb35465c8944aaa0fec8953b9e3cb3ff96273",
-      "rawSha256": "b00f0c436ac3bf43cb5998b06cb7a33591889a1d9e57df3df4f98cc2f619878d",
-      "original": "docs/reports/fix51-verify/receipts/L5-high-browser.json"
-    },
-    {
       "file": "docs/reports/fix68-g2/acceptance/L5-high-checkpoints.json.gz",
       "sha256": "faa6078f6c73c0c2bb03e93356b029bdeeb634aa74141c7ea0aff30f4e2e451b",
       "rawSha256": "176a6bc686fdaedc9e04ff1829d1dbbe8605002d033a11bed30c0370adf1e080",
@@ -89,36 +77,6 @@
       "original": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
     },
     {
-      "file": "docs/reports/fix68-g2/acceptance/L5-high-webgl2-z1.5-browser.json.gz",
-      "sha256": "ad0875efdd8816172dbc56b53e4c20620109013b4bf6847a7b649a54ccd1feb5",
-      "rawSha256": "d6edc0173ceeef058d3a1b5ca8a1d8cf5a7e36a7c1953a9de3a69d2213c0ddf4",
-      "original": "docs/reports/fix51-verify/receipts/L5-high-webgl2-z1.5-browser.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-high-webgpu-z1.5-browser-completion.json.gz",
-      "sha256": "1d2d3b53355403fbec1d9c5f03498bc8f15b41f1c52d9ba23667cc9d71c090f4",
-      "rawSha256": "656fdb94a04f92b2b6eca9933e3b5daf282757413d5257c089e1e5e50aa2a699",
-      "original": "docs/reports/fix51-verify/receipts/L5-high-webgpu-z1.5-browser-completion.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-high-webgpu-z1.5-browser.json.gz",
-      "sha256": "b082274c7b6bd2810a379475be79a94a09c5ac03975d9d94afeaf8ca7db53c1c",
-      "rawSha256": "ff6c5106ba5ea0dd09699e3b43a2408fa1249a92ff10018234926125b8071f73",
-      "original": "docs/reports/fix51-verify/receipts/L5-high-webgpu-z1.5-browser.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-low-browser-completion.json.gz",
-      "sha256": "f2a2dbf30c147747c749de7c79564f6e8ebc3461d9ecf3b33c833e536d9c29ac",
-      "rawSha256": "8edbdf74461153e068da5b2ae6e59eb78131b07dfcfb2621492c86a648e2494e",
-      "original": "docs/reports/fix51-verify/receipts/L5-low-browser-completion.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-low-browser.json.gz",
-      "sha256": "383b74b1a32440a68b2a38f8e68ea14ab8bcbf01ff8e59d437b4041f7e03290e",
-      "rawSha256": "4816c04052ad38eda8458a68a6c9070231212c02bcd728b883092b434b72e886",
-      "original": "docs/reports/fix51-verify/receipts/L5-low-browser.json"
-    },
-    {
       "file": "docs/reports/fix68-g2/acceptance/L5-low-checkpoints.json.gz",
       "sha256": "f60702965fc406c7a985d44110a4c12ce600cf366f27c378fd7d51dfb36f06fa",
       "rawSha256": "b1ecb031412c737208846d8d767294954449e6ca53be447db8a7804ce4baccc3",
@@ -141,24 +99,6 @@
       "sha256": "10e3b03c45659d2a86c806f3716fa0dffa6c089e61668f836adbaf72d7425525",
       "rawSha256": "a91f22250e1a80bcac09f21f5f35a209fe967a00d8058dae74058f22663a6423",
       "original": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-low-webgl2-z1.5-browser.json.gz",
-      "sha256": "792ca3f051cb554d8ef52702f5c45a68db0b43b26e2a31a231ee60c2563d3ced",
-      "rawSha256": "e6a1c23424dedd96dcd040ef9f2dabb7a0fa8248fec8c5d3f36a8ae970ab5167",
-      "original": "docs/reports/fix51-verify/receipts/L5-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-low-webgpu-z1.5-browser-completion.json.gz",
-      "sha256": "db1c4d3231090378731c09cb0ffe9cf30ee800bde304e95ef656fd234186eaaa",
-      "rawSha256": "86c47d233980d45477d0a41912d93f459a60b0267920ffbb3a15c82632dde58d",
-      "original": "docs/reports/fix51-verify/receipts/L5-low-webgpu-z1.5-browser-completion.json"
-    },
-    {
-      "file": "docs/reports/fix68-g2/acceptance/L5-low-webgpu-z1.5-browser.json.gz",
-      "sha256": "4b006253a2a6467bf0d7471f6e94d41cf54c33337f908b42ed708fd56c728f5f",
-      "rawSha256": "fd15cca5bb78ed2b36a317b6befb405ec977fcef8fc32c44066596b2ac2d6350",
-      "original": "docs/reports/fix51-verify/receipts/L5-low-webgpu-z1.5-browser.json"
     }
   ]
 }
