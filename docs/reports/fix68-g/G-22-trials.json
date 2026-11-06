@@ -238,7 +238,7 @@
     },
     {
       "file": "docs/reports/fix68-g/G-22-captures.json",
-      "sha256": "29b1c76c6b1957be8730c8d314992e93c6a18c11797c2f56ecc874410edde32c",
+      "sha256": "2e72341e454c6fc95c5c53a4ae645d8987cd5bc045681ff88661a6701d05069d",
       "selected": false
     },
     {
@@ -265,6 +265,18 @@
       "file": "docs/reports/fix68-g/G-22-rejected-captures.json",
       "sha256": "082c71363e3990f58def8e1c9a677c855c0fbd3130aa0de19d747b4d0b230635",
       "selected": false
+    }
+  ],
+  "annotationCorrections": [
+    {
+      "file": "docs/reports/fix68-g/G-22-captures.json",
+      "previousSHA256": "29b1c76c6b1957be8730c8d314992e93c6a18c11797c2f56ecc874410edde32c",
+      "correctedFrames": [
+        "test-results/fix68-g/G-22-clean-preview/low-age24.png",
+        "test-results/fix68-g/G-22-final-preview/low-age24.png",
+        "test-results/fix68-g/G-22-preview/low-age24.png"
+      ],
+      "note": "Corrected generic age24 descriptions using inspected frames and recorded mission phase. Raw image hashes unchanged."
     }
   ]
 }

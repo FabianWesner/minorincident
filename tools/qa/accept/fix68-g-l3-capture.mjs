@@ -6,7 +6,7 @@ import { provenance } from './probe.ts';
 
 const out = process.env.FIX68_G_CAPTURE_OUT ?? 'test-results/fix68-g/G-22-browser';
 mkdirSync(out, { recursive: true });
-const result = { ...provenance(), method: 'Ordinary production complete-bot input frames, 90 seconds from real L3 entry. Fixed simulation stepping; unchanged populations, camera and attack rules. Read-only cohort/pose observations and game-camera captures; no objective skips.', cells: [], errors: [] };
+const result = { ...provenance(), method: 'Production complete-bot input frames, courier survival-protected for visual review, 90 seconds from real L3 entry. Fixed simulation stepping; unchanged populations, camera and attack rules. Read-only cohort/pose observations and game-camera captures; no objective skips.', cells: [], errors: [] };
 try {
   for (const tier of ['low', 'high']) {
     const session = new SceneSession({ backend: 'webgl2', tier, query: { ui: '1' } });

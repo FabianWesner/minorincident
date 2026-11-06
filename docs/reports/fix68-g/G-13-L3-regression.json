@@ -7,8 +7,6 @@
     {
       "tier": "low",
       "version": "base-be6af29",
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "32007a94f27b33273c828c67dc88a7bdd67968a20ae022779140a67dba08bb3c",
       "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
       "checks": [
         {
@@ -52,7 +50,7 @@
               "ratio": 1.0083174268590032
             }
           ],
-          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -94,10 +92,13 @@
               }
             ]
           },
-          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         }
-      ]
+      ],
+      "gitObject": "be6af29:docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "historicalContentSHA256": "32007a94f27b33273c828c67dc88a7bdd67968a20ae022779140a67dba08bb3c"
     },
     {
       "tier": "low",
@@ -147,7 +148,7 @@
               "ratio": 1.57433984523127
             }
           ],
-          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -189,7 +190,7 @@
               }
             ]
           },
-          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         }
       ],
@@ -199,8 +200,6 @@
     {
       "tier": "high",
       "version": "base-be6af29",
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "dea34935556fba842b8df2717c506713281d1d91c969da147d02b6fb1ce42ce8",
       "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
       "checks": [
         {
@@ -211,7 +210,7 @@
           "policy": "complete",
           "status": "NOT CHECKED",
           "value": [],
-          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -253,10 +252,13 @@
               }
             ]
           },
-          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         }
-      ]
+      ],
+      "gitObject": "be6af29:docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "historicalContentSHA256": "dea34935556fba842b8df2717c506713281d1d91c969da147d02b6fb1ce42ce8"
     },
     {
       "tier": "high",
@@ -290,7 +292,7 @@
               "ratio": 0.9247683419752407
             }
           ],
-          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -332,7 +334,7 @@
               }
             ]
           },
-          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         }
       ],

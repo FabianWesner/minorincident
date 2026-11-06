@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L2",
-  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
-  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T02:15:48.011Z",
+  "generatedAt": "2026-11-06T06:43:37.329Z",
   "policies": [
     {
       "tier": "low",
@@ -62,20 +62,6 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json"
-    },
-    {
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L2-low-browser.json"
-    },
-    {
-      "tier": "high",
-      "policy": "real-input-webgl2",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L2-high-browser.json"
     }
   ],
   "globals": [
@@ -286,13 +272,15 @@
       "id": "G-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":4696,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10885,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":5520,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10885,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":5551,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10885,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":5031,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1460,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10885,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS) Manual review FAIL (STALE, sweep-g/Codex): Current L1 routeCue remains1.6m ahead of heroine and steers next walkable leg. Over54 physical-input ticks its world position changes2.997m low/2.915m high while the depot destination ring moves0m. All six original-size frames inspected. L4 cellar fix alone did not close G08.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
         "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+        "docs/reports/sweep-g/G-08-L1-cue-before.json",
+        "docs/reports/sweep-g/G-08-L1-cue-source.json"
       ],
       "expected": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
       "checks": [
@@ -323,7 +311,7 @@
                 "id": "l2-gate-inside",
                 "x": 79.5,
                 "z": 30,
-                "samples": 4696,
+                "samples": 5551,
                 "maxDisplacement": 0
               }
             ],
@@ -365,7 +353,7 @@
                 "z": 30
               },
               {
-                "tick": 8212,
+                "tick": 9067,
                 "step": "",
                 "marker": null
               }
@@ -474,7 +462,7 @@
                 "id": "l2-gate-inside",
                 "x": 79.5,
                 "z": 30,
-                "samples": 5520,
+                "samples": 5031,
                 "maxDisplacement": 0
               }
             ],
@@ -516,7 +504,7 @@
                 "z": 30
               },
               {
-                "tick": 9036,
+                "tick": 8547,
                 "step": "",
                 "marker": null
               }
@@ -607,19 +595,45 @@
         "evidence": [],
         "method": "NEXT: Add a read-only per-tick marker-position/HUD-distance observer to tools/playtest/session.ts for every step; compare world marker and arrow with the authored fixed action/destination anchor, including offscreen targets."
       },
-      "remaining": "Compare HUD arrow, distance and ring with each real destination; distinguish fixed-gate handoffs and Mega intro from player-following markers."
+      "remaining": "Compare HUD arrow, distance and ring with each real destination; distinguish fixed-gate handoffs and Mega intro from player-following markers.",
+      "reviewDecision": {
+        "row": "G-08",
+        "status": "FAIL",
+        "reviewer": "sweep-g/Codex",
+        "date": "2026-11-06",
+        "commit": "f9f6eedac52a868fd4601a2729eb3368a87aeabd",
+        "clauses": [
+          {
+            "clause": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
+            "verdict": "FAIL",
+            "note": "Current L1 routeCue remains1.6m ahead of heroine and steers next walkable leg. Over54 physical-input ticks its world position changes2.997m low/2.915m high while the depot destination ring moves0m. All six original-size frames inspected. L4 cellar fix alone did not close G08."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-g/G-08-L1-cue-before.json",
+            "sha256": "e0c61761a9c9d09cb1bc4628cdcc5f49ac8ffc80910aec6050e661caf785a887",
+            "what": "Both-quality physical movement, actual marker children/world coordinates, HUD/camera and six reviewed/hashed/deleted original frames."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-08-L1-cue-source.json",
+            "sha256": "b6323884dc28ec7936a42401dfc9a8ba259013beeea98eb491cfa5cd06f77943",
+            "what": "Exact source diagnosis of the separate moving nav-steering cone missed by the primary-marker observer."
+          }
+        ],
+        "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+      }
     },
     {
       "id": "G-09",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, sweep-g/Codex): L4 hold/plaza ring stays invisible for180 observed simulation ticks at both requested zooms1/1.5 and low/high. waypoint=false explicitly suppresses it. Earlier full physical route also remained in hold fromtick2295 until13681 without a ring. Preserve the literal EVERY-step criterion; authored suppression needs reconciliation before changing survival-step guidance. Not measured by this batch run.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-09-marker.json",
-        "docs/reports/sweep-g/G-25-L4-high.json"
-      ],
-      "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
+      "receipt": [],
+      "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283). Orchestrator 2026-11-06: steps without a spatial destination (hold/defend in place, e.g. the L4 hold) show no world ring by design; the HUD objective text is the marker there.",
       "checks": [],
       "historical": {
         "id": "G-09",
@@ -629,35 +643,7 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props.",
-      "reviewDecision": {
-        "row": "G-09",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "67385d24a66e61d6a272f61ff906236da58250ea",
-        "clauses": [
-          {
-            "clause": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283).",
-            "verdict": "FAIL",
-            "note": "L4 hold/plaza ring stays invisible for180 observed simulation ticks at both requested zooms1/1.5 and low/high. waypoint=false explicitly suppresses it. Earlier full physical route also remained in hold fromtick2295 until13681 without a ring. Preserve the literal EVERY-step criterion; authored suppression needs reconciliation before changing survival-step guidance."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-09-marker.json",
-            "sha256": "b4afa196299301250bc4950f3acccedeef5d52db47d6c7a34fca3fbdb10f6c17",
-            "what": "Four inspected frame hashes and28 read-only marker samples; active hold step stays ring-invisible beyond2s."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-25-L4-high.json",
-            "sha256": "619378a34ca6a4d0dc9563fc6ebfe1817208376323c33fdf61b34e6903a871b9",
-            "what": "Independent full physical L4 high route: hold starts2295 with drawn=null; hide starts13681."
-          }
-        ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
-      }
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
     },
     {
       "id": "G-10",
@@ -786,7 +772,7 @@
       "id": "G-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS) Manual review PASS (FRESH, sweep-g/Codex): All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior.",
+      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS) Manual review PASS (STALE, sweep-g/Codex): All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -795,6 +781,9 @@
         "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+        "docs/reports/sweep-g/final-cue/G-11-webgl2-high.json",
+        "docs/reports/sweep-g/final-cue/G-11-webgl2-low.json",
+        "docs/reports/sweep-g/G-11-final-captures.json",
         "docs/reports/sweep-g/G-11-webgl2-high.json",
         "docs/reports/sweep-g/G-11-webgl2-low.json",
         "docs/reports/sweep-g/G-11-webgpu-high.json",
@@ -918,7 +907,7 @@
         "status": "PASS",
         "reviewer": "sweep-g/Codex",
         "date": "2026-11-06",
-        "commit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f",
+        "commit": "d6945beba8e279996e878593305b5806db9386e3",
         "clauses": [
           {
             "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
@@ -927,6 +916,21 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-high.json",
+            "sha256": "4acf8341653c6c8439e0c70463a4dfe0e446878fd49bb305da71f436143f42ef",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-low.json",
+            "sha256": "be46ae710bb67ba3432952335a205d04ebecbf97cad7f07ced9faf6e868753ed",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-11-final-captures.json",
+            "sha256": "3fda6e214c4703366675a6dbd79ef5895001fcf6d229442251a2573112aa12b6",
+            "what": "All four original frames viewed: yellow ring only around courier pickup; survivor-only handgun has no ring. Courier pickup absent after collection/return, survivor-only item remains. Native collection ledger retained."
+          },
           {
             "file": "docs/reports/sweep-g/G-11-webgl2-high.json",
             "sha256": "5d8d4632d508f4cdda17f857f8fe31be86a9ecdaf1906cf62e47d54684aff053",
@@ -948,20 +952,23 @@
             "what": "webgpu/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
           }
         ],
-        "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "G-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS) Manual review PASS (FRESH, sweep-g/Codex): 140 exact group-size identity/count samples (1–35 across both renderers and qualities) pass. All17 captures inspected; separate compact pips at35/6 and full bars at5/1. Negative render suppression removes every bar and is detected. Actual L6 roster plus L7 fallback models; this qualifies shared follower-bar renderer in view, campaign occluders remain G-07.",
+      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS) Manual review PASS (STALE, sweep-g/Codex): 140 exact group-size identity/count samples (1–35 across both renderers and qualities) pass. All17 captures inspected; separate compact pips at35/6 and full bars at5/1. Negative render suppression removes every bar and is detected. Actual L6 roster plus L7 fallback models; this qualifies shared follower-bar renderer in view, campaign occluders remain G-07.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+        "docs/reports/sweep-g/final-cue/G-12-webgl2-high.json",
+        "docs/reports/sweep-g/final-cue/G-12-webgl2-low.json",
+        "docs/reports/sweep-g/G-12-final-captures.json",
         "docs/reports/sweep-g/G-12-webgl2-high-captures.json",
         "docs/reports/sweep-g/G-12-webgl2-low-captures.json",
         "docs/reports/sweep-g/G-12-webgpu-high-captures.json",
@@ -1021,7 +1028,7 @@
         "status": "PASS",
         "reviewer": "sweep-g/Codex",
         "date": "2026-11-06",
-        "commit": "5e104db33681dcd04e4755e07ecd073cced8230b",
+        "commit": "8023bad78de3aea29241fe2f5594a32d5f06a120",
         "clauses": [
           {
             "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
@@ -1030,6 +1037,21 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-high.json",
+            "sha256": "6cfc667b17305aa15f6c9295b5e929eac90020fa32dd80f5594bb4b6a56a8dcc",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-low.json",
+            "sha256": "078797f07956c0ba381468d206bb448d6614121947311fca14329d2baed95b90",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-12-final-captures.json",
+            "sha256": "3e83a7ccac3b5699a211cb51f090ed439590e3fc38beb4868d4611a5d3650f04",
+            "what": "All nine original frames viewed: compact teal pips above all35/6 followers, full bars at5/1, and no bars in deliberate hidden-bars negative control. Both qualities retain all35 group-size samples and exact identities."
+          },
           {
             "file": "docs/reports/sweep-g/G-12-webgl2-high-captures.json",
             "sha256": "f5dec25a6711d0480fe8ece480243af40dbaf9584111226456f8924826c7bfc1",
@@ -1071,28 +1093,30 @@
             "what": "webgpu/low: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":7051,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":107,\"escortTicks\":7051,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":7875,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":107,\"escortTicks\":7875,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review FAIL (FRESH, sweep-g/Codex): Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":7906,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":107,\"escortTicks\":7906,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":7386,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":107,\"escortTicks\":7386,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (FRESH, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
-        "docs/reports/sweep-g/G-13-L5-high-trace.json.gz",
-        "docs/reports/sweep-g/G-13-L5-low-complete.json.gz",
-        "docs/reports/sweep-g/G-13-L5-low-trace.json.gz",
-        "docs/reports/sweep-g/G-13-L5-native.json",
-        "docs/reports/sweep-g/G-13-diagnosis.json",
-        "docs/reports/sweep-g/G13-after/REJECTED.json",
-        "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
-        "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
+        "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
+        "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
+        "docs/reports/fix68-g/G-13-fix.json",
+        "docs/reports/fix68-g/G-13-trials.json",
+        "docs/reports/fix68-g/G-13-L3-fix.json",
+        "docs/reports/fix68-g/G-13-L3-trials.json",
+        "docs/reports/fix68-g/G-13-L3-regression.json",
+        "docs/reports/fix68-g/G-13-final-source.json",
+        "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
+        "docs/reports/fix68-g/threat-final/manifest.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -1116,13 +1140,13 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 7051,
+            "escortTicks": 7906,
             "stationaryFarTicks": 0,
             "upperBoundPercent": 0,
             "followers": [
               {
                 "id": 107,
-                "escortTicks": 7051,
+                "escortTicks": 7906,
                 "stationaryFarTicks": 0
               }
             ]
@@ -1149,13 +1173,13 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 7875,
+            "escortTicks": 7386,
             "stationaryFarTicks": 0,
             "upperBoundPercent": 0,
             "followers": [
               {
                 "id": 107,
-                "escortTicks": 7875,
+                "escortTicks": 7386,
                 "stationaryFarTicks": 0
               }
             ]
@@ -1177,76 +1201,93 @@
       "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: **No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "reviewDecision": {
         "row": "G-13",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
         "date": "2026-11-06",
-        "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
+        "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
         "clauses": [
           {
-            "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
-            "verdict": "FAIL",
-            "note": "Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed."
+            "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
+            "verdict": "PASS",
+            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+          },
+          {
+            "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
+            "verdict": "PASS",
+            "note": "Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification."
+          },
+          {
+            "clause": "Eligible L3 human follower waiting <=10% of human escort time, both tiers.",
+            "verdict": "PASS",
+            "note": "Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
-            "sha256": "59fb7fc319c25ac13b730041e6d616298a86e5bb14344f1b2cff50403c60038c",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
+            "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-high-trace.json.gz",
-            "sha256": "d2d5e74fc70901c3da81a652be4bd3053635ae14fdd7a35c575a37ade0f279d5",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
+            "sha256": "157c2c402a91a125647973af7a746b15eb021ccc23b4fc3a114c0120275b1546",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-low-complete.json.gz",
-            "sha256": "922e3d3adb6f88fecb09194b3ef9ecb8195ee43c207fc96262a5a1a3583b3a9e",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-fix.json",
+            "sha256": "f96258968825d34633b799bdca2366cd779b091f97877a96869286771fa8e4eb",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-low-trace.json.gz",
-            "sha256": "0d7250bfbf58b3d26d72e90422b2663193648b1e51e6006834161e26374b0e02",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-trials.json",
+            "sha256": "a468229f22527de669eab639c3232765e2ef516dd4e229a5ca3e8388f9431193",
+            "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-L5-native.json",
-            "sha256": "5b4cf529437998593e85f869e53bde18a24559cad5a084a437e3fc33077d5c7e",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-fix.json",
+            "sha256": "f3788fd7a413bb0b59668450c9877af711171504289ceef230be39b594de1f0a",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-diagnosis.json",
-            "sha256": "69dc4af411a9ae73f04e111a68280b9f01b8155899c5705822a4369c41be4cb5",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-trials.json",
+            "sha256": "1f72a2f979ce07d95643ba1dd22ee4d1b1767e5efd70ee839227bbaf6950e2a0",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G13-after/REJECTED.json",
-            "sha256": "907d79ac7f2ac1d705d0ee9ac27cdf7a075fde10c5cdfc2eb0742e0058c2e9e4",
-            "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+            "file": "docs/reports/fix68-g/G-13-L3-regression.json",
+            "sha256": "f96f6f399b9c076f76233bcdcbca6b6c7d51fae7bbbdd2cd386acd450cd0fe8a",
+            "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
-            "sha256": "f211ff2a536f5f30dd65db270c6d01f5da7f84a8df299ad84b6102777a64b372",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+            "file": "docs/reports/fix68-g/G-13-final-source.json",
+            "sha256": "4745a9359b95895dd5bb178230a7b73e69fd5bd8ea975a622699fa1c3469effc",
+            "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
-            "file": "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
-            "sha256": "7683795440e9b4c9db5ebb804c2337cf83ef66a609113b398e6bed19a8df5d6b",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+            "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
+            "sha256": "fdbf3218bfdd5da05edcdf741163015873c1db642fa3444f52b03ab69705c2ff",
+            "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
+          },
+          {
+            "file": "docs/reports/fix68-g/threat-final/manifest.json",
+            "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
+            "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
           }
         ],
-        "notes": "Unchanged95% and10% thresholds. This establishes a current whole-row FAIL from L5; all-level follower coverage remains required for any eventual PASS. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled.",
+        "notes": "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval.",
         "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "G-14",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, sweep-g/Codex): Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix. Independent full physical L10 low epilogue also shows corpses as red/black folded shards and pointed geometry; per-capture metadata records actual dead/corpse entities and death-back clips (e.g. runner454 drawn). Not measured by this batch run.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, sweep-g/Codex): Final-source ordinary physical L10 low/high cure epilogues still show folded, pointed corpse torso/limb panels around the console. All48 ending frames inspected; high epilogue close frame reopened at1280x720. This confirms the unchanged no-spiky-limbs clause fails. Prior controlled floating-pile and lifetime evidence remains historical, without relabelling its source. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/sweep-g/G-25-final-cue-L10-high-webgl2-batch3-captures.json",
+        "docs/reports/sweep-g/G-25-final-cue-L10-low-webgl2-batch3-captures.json",
         "docs/reports/sweep-g/G-14-scenes-captures.json",
         "docs/reports/sweep-g/G-14-scenes.json",
         "test-results/sweep-g/G-25-audited-L10-low-webgl2/batch3/captures/accept-L10-epilogue-t19582-low-z0-5.jpg",
@@ -1268,15 +1309,25 @@
         "status": "FAIL",
         "reviewer": "sweep-g/Codex",
         "date": "2026-11-06",
-        "commit": "5668a7eb7c7419e1d2203b0afc7c68fb94a59841",
+        "commit": "f1eeb1810ed698d1f68dc9fb5f21b275aa74e7c9",
         "clauses": [
           {
             "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
             "verdict": "FAIL",
-            "note": "Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix. Independent full physical L10 low epilogue also shows corpses as red/black folded shards and pointed geometry; per-capture metadata records actual dead/corpse entities and death-back clips (e.g. runner454 drawn)."
+            "note": "Final-source ordinary physical L10 low/high cure epilogues still show folded, pointed corpse torso/limb panels around the console. All48 ending frames inspected; high epilogue close frame reopened at1280x720. This confirms the unchanged no-spiky-limbs clause fails. Prior controlled floating-pile and lifetime evidence remains historical, without relabelling its source."
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/sweep-g/G-25-final-cue-L10-high-webgl2-batch3-captures.json",
+            "sha256": "e85fefce8799de9586957055df63dc45d7db7923c29e12c2e991b6c8c9007cc2",
+            "what": "Final-source full L10 ending captures; every frame viewed/hashed/deleted, with pointed and folded corpse geometry visible. Full-size suspect frames explicitly marked."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-25-final-cue-L10-low-webgl2-batch3-captures.json",
+            "sha256": "0a6466cf3553af74fd4ddc1527f0f27d1c5da704682d1d834e79fafe1460b7ab",
+            "what": "Final-source full L10 ending captures; every frame viewed/hashed/deleted, with pointed and folded corpse geometry visible. Full-size suspect frames explicitly marked."
+          },
           {
             "file": "docs/reports/sweep-g/G-14-scenes-captures.json",
             "sha256": "f6f0e0ecdf0703f6978621c2b0e3dd5ffcdab493e33c23e80c0ec3e0069f7d09",
@@ -1299,21 +1350,17 @@
           }
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "G-15",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, sweep-g/Codex): Physical WASD/mouse: no ground-click displacement, no moveTarget; all24 bat/handgun/rocket attack directions match pointer aim. Pointer grace ends at28th sampled tick (floating-point endpoint). Drawn body remains71.1degrees away from walking direction at46ticks/0.767s after release, independently in bat/handgun both qualities. This exceeds literal walking-facing exception, caused by separate6rad/s presentation turn. Not measured by this batch run.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/sweep-g/G-15-controls.json.gz",
-        "docs/reports/sweep-g/G-15-summary.json",
-        "docs/reports/sweep-g/G-15-captures.json"
-      ],
+      "receipt": [],
       "expected": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
       "checks": [],
       "historical": {
@@ -1324,41 +1371,7 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys.",
-      "reviewDecision": {
-        "row": "G-15",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "af6e0748c4aa433a251b26f037efa18eb14421e9",
-        "clauses": [
-          {
-            "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
-            "verdict": "FAIL",
-            "note": "Physical WASD/mouse: no ground-click displacement, no moveTarget; all24 bat/handgun/rocket attack directions match pointer aim. Pointer grace ends at28th sampled tick (floating-point endpoint). Drawn body remains71.1degrees away from walking direction at46ticks/0.767s after release, independently in bat/handgun both qualities. This exceeds literal walking-facing exception, caused by separate6rad/s presentation turn."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-15-controls.json.gz",
-            "sha256": "9f490b4070d36ee16b11fa6afce7719c21d02922230be2150a6ad1116aef205b",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-15-summary.json",
-            "sha256": "8010fcfc8ab51b19631de1f329a21aaa8d6765b854f9eb2447376bc23c9687f0",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-15-captures.json",
-            "sha256": "4b09c35287b19b0dcea8e72c31576e46de9a7cd3a73076188a34e8ce0fa2c367",
-            "what": "Physical input and exact attack/yaw trace, numerical summary, or all30 inspected capture observations with hashes."
-          }
-        ],
-        "notes": "No criteria, input grace or presentation turn rates changed. Raw captures deleted after review. Discarded harness receipts are explicitly separate.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
-      }
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
     },
     {
       "id": "G-16",
@@ -1439,13 +1452,14 @@
     },
     {
       "id": "G-17",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, sweep-g/Codex): Identity-matched npc.civilian-woman-b.aftermath wander has splayed near-horizontal leg extension (G-17-44 strip, frames0-7). Crawler chase exceeds42deg by design; PO review of exemption remains separate. Fresh L10 low/high moving-runner observer: 232 pose samples; maximum drawn hip-to-head lean 38.00 degrees. Full per-variant low-quality sliding/splay and foot-placement review is not established.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, sweep-g/Codex): Identity-matched npc.civilian-woman-b.aftermath wander has splayed near-horizontal leg extension (G-17-44 strip, frames0-7). Crawler chase exceeds42deg by design; PO review of exemption remains separate. Fresh L10 low/high moving-runner observer: 232 pose samples; maximum drawn hip-to-head lean 38.00 degrees. Full per-variant low-quality sliding/splay and foot-placement review is not established.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-g/G-17-summary.json",
-        "docs/reports/sweep-g/G-17-44-captures.json"
+        "docs/reports/sweep-g/G-17-44-captures.json",
+        "docs/reports/sweep-g/G-17-final-closeout.json"
       ],
       "expected": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42°, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
       "checks": [],
@@ -1484,11 +1498,16 @@
             "file": "docs/reports/sweep-g/G-17-44-captures.json",
             "sha256": "4a68e704bfd5f76e7c6a9196f4286fb5741423ce919291ff23de79ab5739fdd9",
             "what": "All frames inspected; converted civilian woman b visibly splays legs; derived sheet retained only in test-results."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-17-final-closeout.json",
+            "sha256": "6348cfa831112b39d693495e2c62989f9a829b7e7ae7d6f8c09d89ed8aba1a14",
+            "what": "64 original-pixel crop frames in eight strips viewed: Sam/manA/manB/womanB wander/chase. WomanB wander still splays knees nearly horizontally. Existing full inventory evidence retained; this is a scoped refresh."
           }
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -1514,7 +1533,7 @@
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":8512} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":9336} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":9367} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":8847} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -1538,7 +1557,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 8512
+            "samples": 9367
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
@@ -1576,7 +1595,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 9336
+            "samples": 8847
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -1613,16 +1632,15 @@
     },
     {
       "id": "G-20",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete engaged run-out duration and invulnerability: {\"tick\":8212,\"until\":8512,\"minimumInvulnerableUntil\":8512} (target 300 ticks ±1; invulnerability through deadline; PASS); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: {\"tick\":9036,\"until\":9336,\"minimumInvulnerableUntil\":9336} (target 300 ticks ±1; invulnerability through deadline; PASS); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED) Manual review FAIL (FRESH, sweep-g/Codex): Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete engaged run-out duration and invulnerability: {\"tick\":9067,\"until\":9367,\"minimumInvulnerableUntil\":9367} (target 300 ticks ±1; invulnerability through deadline; PASS); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: {\"tick\":8547,\"until\":8847,\"minimumInvulnerableUntil\":8847} (target 300 ticks ±1; invulnerability through deadline; PASS); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
         "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
-        "docs/reports/sweep-g/G-20-runout.json"
+        "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
       ],
       "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
       "checks": [
@@ -1634,9 +1652,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "tick": 8212,
-            "until": 8512,
-            "minimumInvulnerableUntil": 8512
+            "tick": 9067,
+            "until": 9367,
+            "minimumInvulnerableUntil": 9367
           },
           "target": "300 ticks ±1; invulnerability through deadline",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
@@ -1660,9 +1678,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "tick": 9036,
-            "until": 9336,
-            "minimumInvulnerableUntil": 9336
+            "tick": 8547,
+            "until": 8847,
+            "minimumInvulnerableUntil": 8847
           },
           "target": "300 ticks ±1; invulnerability through deadline",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -1687,43 +1705,19 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts and a read-only final-objective/transition tick ledger on every level; verify five live invulnerable seconds when action continues."
       },
-      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge.",
-      "reviewDecision": {
-        "row": "G-20",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "4b7b48aee485fb75eb65d33ce901b5d5a36498a5",
-        "clauses": [
-          {
-            "clause": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
-            "verdict": "FAIL",
-            "note": "Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-20-runout.json",
-            "sha256": "7baee8979188050947f855a6fbab585f5e874e590aedae13ffbbd504fe043a23",
-            "what": "18 controlled native terminal receipts, exact0/300tick transition and protection values; L5 cap errors retained, not passed."
-          }
-        ],
-        "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
-      }
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a339a20d4926de1450d0c2bfec331191211a748b41d1e0dfdcdcdd979837e4d5\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a21f0b7b8d2730261bd23c6b8414c406b370208bd9a03c4e15cde7fb1330476e\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-45.97011184692383,\"y\":0.7049999833106995,\"z\":-36.76974105834961,\"yaw\":1.977493168738604},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f0aadc3d2e8deed9a7a7993ad15053b92122c43ddc39114773fbd01fa63adea7\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-66.63066101074219,\"y\":0.7099999785423279,\"z\":27.934968948364258,\"yaw\":-2.8858082823882993},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"picku… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"05a0c2120d52db6fe18bdae5ab3b95c3e0195e039571108717bfb286d649f339\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.059947967529297,\"y\":0.7099999785423279,\"z\":47.999977111816406,\"yaw\":-6.355171467821323e-7},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"p… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6290373a410d9bea9203931fed576273511524c74b19074bc2ffe069e6d9c534\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"40ae1d5a6e3f5b0c576763391366065bf84c9c68a7392490b028c1c84ac0eccf\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-45.97011184692383,\"y\":0.7049999833106995,\"z\":-36.76974105834961,\"yaw\":1.977493168738604},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b9c2c534cd364cf40225ab76b402bd54e6f6014ea566e09f3acede0cef98cb82\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-65.9944076538086,\"y\":0.7099999785423279,\"z\":-14.806102752685547,\"yaw\":-1.6309014453497774},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"picku… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d99dd2ea0848190f96ec547f76f2256f41c072110803115673bbef27c408f540\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":81.41786193847656,\"y\":0.7099999785423279,\"z\":37.491600036621094,\"yaw\":-3.8022671337352634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a339a20d4926de1450d0c2bfec331191211a748b41d1e0dfdcdcdd979837e4d5\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a21f0b7b8d2730261bd23c6b8414c406b370208bd9a03c4e15cde7fb1330476e\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-45.97011184692383,\"y\":0.7049999833106995,\"z\":-36.76974105834961,\"yaw\":1.977493168738604},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6fe5c6a7fee2e6a9b7c74eca8833e65bbf183dbb91575b6d87d6c2bcfeebc3d9\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-18.73966407775879,\"y\":0.7099999785423279,\"z\":47.559024810791016,\"yaw\":3.0489995190115042},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickup… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"2c7c4100736a4003dd4616a3617b7bd5ca9720c0cbf8f11e2e47e584b1290717\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.329883575439453,\"y\":0.7099999785423279,\"z\":47.999671936035156,\"yaw\":-0.000009177867934064631},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[]… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6290373a410d9bea9203931fed576273511524c74b19074bc2ffe069e6d9c534\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"40ae1d5a6e3f5b0c576763391366065bf84c9c68a7392490b028c1c84ac0eccf\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-45.97011184692383,\"y\":0.7049999833106995,\"z\":-36.76974105834961,\"yaw\":1.977493168738604},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e82bfcc75b36f23c0ddd6be3958ecd2b4f14fe7d06b8d77e0aa172f578a93813\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":81.41925048828125,\"y\":0.7099999785423279,\"z\":37.554298400878906,\"yaw\":-3.201527765829101},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"picku… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json",
         "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json"
       ],
-      "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists.",
+      "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist.",
       "checks": [
         {
           "id": "G-21",
@@ -1872,15 +1866,15 @@
           "value": {
             "checkpoint": "escape",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "f0aadc3d2e8deed9a7a7993ad15053b92122c43ddc39114773fbd01fa63adea7",
+            "snapshotSha256": "6fe5c6a7fee2e6a9b7c74eca8833e65bbf183dbb91575b6d87d6c2bcfeebc3d9",
             "damage": 100,
             "expected": {
               "id": "escape",
               "anchor": {
-                "x": -66.63066101074219,
+                "x": -18.73966407775879,
                 "y": 0.7099999785423279,
-                "z": 27.934968948364258,
-                "yaw": -2.8858082823882993
+                "z": 47.559024810791016,
+                "yaw": 3.0489995190115042
               },
               "gates": {},
               "racks": {
@@ -1904,8 +1898,8 @@
             "observed": {
               "id": "escape",
               "position": {
-                "x": -67.38066101074219,
-                "z": 27.934968948364258
+                "x": -18.73966407775879,
+                "z": 47.559024810791016
               },
               "gates": {},
               "racks": {
@@ -1924,7 +1918,7 @@
               "bossMode": null,
               "bossHp": null
             },
-            "positionError": 0.75,
+            "positionError": 0,
             "gateMatch": true,
             "rackMatch": true
           },
@@ -1941,15 +1935,15 @@
           "value": {
             "checkpoint": "cluster",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "05a0c2120d52db6fe18bdae5ab3b95c3e0195e039571108717bfb286d649f339",
+            "snapshotSha256": "2c7c4100736a4003dd4616a3617b7bd5ca9720c0cbf8f11e2e47e584b1290717",
             "damage": 100,
             "expected": {
               "id": "cluster",
               "anchor": {
-                "x": 24.059947967529297,
+                "x": 24.329883575439453,
                 "y": 0.7099999785423279,
-                "z": 47.999977111816406,
-                "yaw": -6.355171467821323e-7
+                "z": 47.999671936035156,
+                "yaw": -0.000009177867934064631
               },
               "gates": {},
               "racks": {
@@ -1973,8 +1967,8 @@
             "observed": {
               "id": "cluster",
               "position": {
-                "x": 24.059947967529297,
-                "z": 47.999977111816406
+                "x": 24.329883575439453,
+                "z": 47.999671936035156
               },
               "gates": {},
               "racks": {
@@ -2141,75 +2135,6 @@
         },
         {
           "id": "G-21",
-          "clause": "mortal checkpoint restore at L2/escape",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "escape",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "b9c2c534cd364cf40225ab76b402bd54e6f6014ea566e09f3acede0cef98cb82",
-            "damage": 100,
-            "expected": {
-              "id": "escape",
-              "anchor": {
-                "x": -65.9944076538086,
-                "y": 0.7099999785423279,
-                "z": -14.806102752685547,
-                "yaw": -1.6309014453497774
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.fire-axe",
-                  "weapon.bat"
-                ],
-                "RIGHT": [
-                  "weapon.kick"
-                ]
-              },
-              "followers": [],
-              "pickups": [
-                104,
-                105,
-                106
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "escape",
-              "position": {
-                "x": -65.9944076538086,
-                "z": -14.806102752685547
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.fire-axe",
-                  "weapon.bat"
-                ],
-                "RIGHT": [
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json",
-          "level": "L2"
-        },
-        {
-          "id": "G-21",
           "clause": "mortal checkpoint restore at L2/cluster",
           "tier": "high",
           "policy": "checkpoint-death-fixture",
@@ -2217,15 +2142,15 @@
           "value": {
             "checkpoint": "cluster",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "d99dd2ea0848190f96ec547f76f2256f41c072110803115673bbef27c408f540",
+            "snapshotSha256": "e82bfcc75b36f23c0ddd6be3958ecd2b4f14fe7d06b8d77e0aa172f578a93813",
             "damage": 100,
             "expected": {
               "id": "cluster",
               "anchor": {
-                "x": 81.41786193847656,
+                "x": 81.41925048828125,
                 "y": 0.7099999785423279,
-                "z": 37.491600036621094,
-                "yaw": -3.8022671337352634
+                "z": 37.554298400878906,
+                "yaw": -3.201527765829101
               },
               "gates": {},
               "racks": {
@@ -2249,8 +2174,8 @@
             "observed": {
               "id": "cluster",
               "position": {
-                "x": 81.41786193847656,
-                "z": 37.491600036621094
+                "x": 81.41925048828125,
+                "z": 37.554298400878906
               },
               "gates": {},
               "racks": {
@@ -2286,31 +2211,19 @@
         "evidence": [],
         "method": "NEXT: Run mortal checkpoint death/retry exercises for every later checkpoint using tools/playtest/session.ts; compare follower/pickup/gate snapshots, inventory and restored location before/after death."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists."
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist."
     },
     {
       "id": "G-22",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete announcement cohort market-ambush: {\"seconds\":83.26666666666667,\"spawned\":24,\"firstAttackSeconds\":3.283333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort market-ambush: {\"seconds\":181.4,\"spawned\":24,\"firstAttackSeconds\":3.283333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort market-ambush: {\"seconds\":97,\"spawned\":24,\"firstAttackSeconds\":2.8,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort market-ambush: {\"seconds\":181.4,\"spawned\":24,\"firstAttackSeconds\":2.8,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS) Manual review FAIL (FRESH, sweep-g/Codex): Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete announcement cohort market-ambush: {\"seconds\":97.51666666666667,\"spawned\":24,\"firstAttackSeconds\":3.283333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort market-ambush: {\"seconds\":181.4,\"spawned\":24,\"firstAttackSeconds\":3.283333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort market-ambush: {\"seconds\":88.85,\"spawned\":24,\"firstAttackSeconds\":2.8,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort market-ambush: {\"seconds\":181.4,\"spawned\":24,\"firstAttackSeconds\":2.8,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
         "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
-        "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
-        "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
-        "docs/reports/sweep-g/G-22-L3-native.json",
-        "docs/reports/sweep-g/G-22-diagnosis.json",
-        "docs/reports/sweep-g/G-22-final-L3-low-complete.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-low-stationary.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-high-complete.json.gz",
-        "docs/reports/sweep-g/G-22-final-L3-high-stationary.json.gz"
+        "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
       ],
       "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "checks": [
@@ -2322,7 +2235,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 83.26666666666667,
+            "seconds": 97.51666666666667,
             "spawned": 24,
             "firstAttackSeconds": 3.283333333333333,
             "flags": []
@@ -2354,7 +2267,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 97,
+            "seconds": 88.85,
             "spawned": 24,
             "firstAttackSeconds": 2.8,
             "flags": []
@@ -2387,86 +2300,7 @@
         "evidence": [],
         "method": "NEXT: Run npm run qa:threat at low and high; retain each actual announced-cohort ledger, first player attack and reachable count, including a deliberately broken fixture proof."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
-      "reviewDecision": {
-        "row": "G-22",
-        "status": "FAIL",
-        "reviewer": "sweep-g/Codex",
-        "date": "2026-11-06",
-        "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
-        "clauses": [
-          {
-            "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
-            "verdict": "FAIL",
-            "note": "Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
-            "sha256": "c72849107b3e6f2fc035acb4fa2a85a4f04e69243c928b37530e4b609f4af5c3",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
-            "sha256": "a0ed6495767677070eaf14cb73b8e261d94370da1b6622492f9002843e85ff6b",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
-            "sha256": "944e1b38d66295311b08c46238479813fcceb3d12b5a45e55a26f575ed427faa",
-            "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
-            "sha256": "dd49400ef2a38e7b3307854c475cfded01ba9aeb45b4ae0da22a1b418f667a6d",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
-            "sha256": "4d2251b97a8b2433408d1f9ce8b63f5b7bcc68f18786bbe9a7ec7a6b96be9317",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
-            "sha256": "02eee70dda7adf4e5adedf1d373d691050b54c2c3f45c4fb7c39d880c50b7ba2",
-            "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-L3-native.json",
-            "sha256": "f87961b1982371e8cec51519c65c345304059bffc73d8e4b8859e73d7d52b89f",
-            "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-diagnosis.json",
-            "sha256": "85148d11e06ad8234b2fd10bf6ee90a134238c917e662a61df46c3d28bda8020",
-            "what": "4 reproduced failing L3 cohort clocks; 92/92 independent bounded-path queries pass and both traced states equal controls."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-low-complete.json.gz",
-            "sha256": "e38621da9f0a2fb6f9e6ed2053074c55b7cbeb37eda12a2adedcff92d1a53c21",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-low-stationary.json.gz",
-            "sha256": "6226d13a47b400ebee89d04bb61d5a1fe26da2b9c0789345557e7d3a5d5697f5",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-high-complete.json.gz",
-            "sha256": "906d16f98952415e94d7a6fb80a6ca5f12f5d52d7001b6b929f0bbe721db3e98",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          },
-          {
-            "file": "docs/reports/sweep-g/G-22-final-L3-high-stationary.json.gz",
-            "sha256": "51c4ea7c122c23ebeccece07dff8383ac45c92c6b635922ff037aa314528914b",
-            "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-          }
-        ],
-        "notes": "Measured game failure; targets/checkers/counts/timers/caps unchanged. No whole-row PASS or all-level announcement inventory claim. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
-      }
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune)."
     },
     {
       "id": "G-23",
@@ -2491,11 +2325,14 @@
       "id": "G-24",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (FRESH, sweep-g/Codex): All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim.",
+      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (STALE, sweep-g/Codex): All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+        "docs/reports/sweep-g/final-cue/G-24-webgl2-high.json",
+        "docs/reports/sweep-g/final-cue/G-24-webgl2-low.json",
+        "docs/reports/sweep-g/G-24-final-captures.json",
         "docs/reports/sweep-g/G-24-webgl2-high-captures.json",
         "docs/reports/sweep-g/G-24-webgl2-low-captures.json",
         "docs/reports/sweep-g/G-24-webgpu-high-captures.json",
@@ -2647,7 +2484,7 @@
         "status": "PASS",
         "reviewer": "sweep-g/Codex",
         "date": "2026-11-06",
-        "commit": "715da4ac13157aa385870b1f2d8e38f414edce45",
+        "commit": "e7fe7fff51eb4a9a53b1444d03fb174c1af44e85",
         "clauses": [
           {
             "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
@@ -2656,6 +2493,21 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-high.json",
+            "sha256": "f7991992c53b66734afd47b16358d781dc940e7fd380d25edd22496f42b8f9f3",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-low.json",
+            "sha256": "6305299a6c866e9e6ee9af5c8e0640dba4a6d30431f7e12bd7fccdccbb1f9e54",
+            "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-24-final-captures.json",
+            "sha256": "dd8f7c480ce8c4a71a9362ca6e797331bde540a466ef7ca2886b88e094c5fcab",
+            "what": "All ten original frames viewed: full bars for nearby healthy Alpha/zoo infected, no bars for far healthy actors, partial bars for far damaged actors, none for normal animals or dead actors."
+          },
           {
             "file": "docs/reports/sweep-g/G-24-webgl2-high-captures.json",
             "sha256": "46336ef1f0cc845c90788ea7a4adf19f8fec1fd6e51d850ba6fff6049abca52d",
@@ -2697,63 +2549,23 @@
             "what": "webgpu/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "G-25",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS); high/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS) Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "value": "Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L2-low-browser.json",
-        "docs/reports/fix51-verify/receipts/L2-high-browser.json",
         "docs/reports/batch51-qa/quality-repro.json",
         "docs/reports/batch51-qa/gates/visual-L4.log"
       ],
       "expected": "Zero console errors over a full real-input play-through of the level.",
-      "checks": [
-        {
-          "id": "G-25",
-          "clause": "physical WASD/mouse full-level browser console",
-          "tier": "low",
-          "policy": "real-input-webgl2",
-          "status": "PASS",
-          "value": {
-            "backend": "webgl2",
-            "zoom": 1.5,
-            "completed": true,
-            "skipped": [],
-            "consoleErrors": [],
-            "immortal": true,
-            "frameTiming": false
-          },
-          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-          "receipt": "docs/reports/fix51-verify/receipts/L2-low-browser.json",
-          "level": "L2"
-        },
-        {
-          "id": "G-25",
-          "clause": "physical WASD/mouse full-level browser console",
-          "tier": "high",
-          "policy": "real-input-webgl2",
-          "status": "PASS",
-          "value": {
-            "backend": "webgl2",
-            "zoom": 1.5,
-            "completed": true,
-            "skipped": [],
-            "consoleErrors": [],
-            "immortal": true,
-            "frameTiming": false
-          },
-          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-          "receipt": "docs/reports/fix51-verify/receipts/L2-high-browser.json",
-          "level": "L2"
-        }
-      ],
+      "checks": [],
       "historical": {
         "id": "G-25",
         "level": "global",
@@ -2769,14 +2581,15 @@
     },
     {
       "id": "G-26",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, sweep-g/Codex): Current-source coffee-holder close camera visibly separates cap above head in low/high; full-size high-ped-grip-coffee-standing-grip0-coffee.png inspected. Height catalog141LOD rows matches adult heroine1.454m but does not cure accessory placement. Zoo bag-holder also shows long pointed body/arm triangles; no speculative skinning fix. Not measured by this batch run.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, sweep-g/Codex): Current-source coffee-holder close camera visibly separates cap above head in low/high; full-size high-ped-grip-coffee-standing-grip0-coffee.png inspected. Height catalog141LOD rows matches adult heroine1.454m but does not cure accessory placement. Zoo bag-holder also shows long pointed body/arm triangles; no speculative skinning fix. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-g/G-26-scenes-captures.json",
         "docs/reports/sweep-g/G-26-heights.json",
-        "docs/reports/sweep-g/G-26-scenes.json"
+        "docs/reports/sweep-g/G-26-scenes.json",
+        "docs/reports/sweep-g/G-26-final-closeout.json"
       ],
       "expected": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
       "checks": [],
@@ -2817,11 +2630,16 @@
             "file": "docs/reports/sweep-g/G-26-scenes.json",
             "sha256": "675a707266656fc036f961bd89545e2faad36bb1fbdcd16b5ee4b384bc2d3f2e",
             "what": "Five authored routines both qualities, grip contact gaps and actual rendered accessories."
+          },
+          {
+            "file": "docs/reports/sweep-g/G-26-final-closeout.json",
+            "sha256": "f876d67f1f90038d429031ef72307d69d99aee4c7991aad65ecb1881557643ae",
+            "what": "28 frames viewed, including full original high coffee closeup. Coffee cap floats visibly above head; zoo bag holder and phone arm show triangular stretching. Large pale foreground weather triangle is not counted as a body defect."
           }
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "freshness": "STALE",
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -2909,7 +2727,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     }
   ],
@@ -3212,7 +3030,7 @@
         ],
         "notes": "The cropped0.5 seat frames are explicitly scoped; actual four-civilian count is native and both default/wide views visibly confirm two seated pairs. No game change, injected actor, relocation, protection or performance timing.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -3333,7 +3151,7 @@
         ],
         "notes": "Fresh presentation proof uses the same12 already inspected untouched opening frames, retained as unscaled sheets. Native no-axe completion establishes absence of an axe prerequisite, not mortal survival.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -3648,7 +3466,7 @@
         ],
         "notes": "No game changes. Ordinary native no-axe InputFrame route. Fixed simulation clocks, no performance timing. s0 sampled13ticks after departure.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -4124,7 +3942,7 @@
         ],
         "notes": "No game/criterion changes. Native no-axe input, no protection or relocation. Existing L2-11 low/no-axe18<25 regression remains independent.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -4459,14 +4277,14 @@
         ],
         "notes": "No game changes, ordinary no-axe native input, no teleport/protection. Missing old diagnostic visibility qualification remains attributed; fresh exact review supplies pixel clause.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "L2-07",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":12.983333333333333,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.34916559691913} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 32.34916559691913 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":455,\"groupWindups\":0,\"attacksPerMinute\":606.6666666666666} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 606.6666666666666 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95.23809523809523 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":899,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 449.4375781141508 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":5,\"groupWindups\":0,\"attacksPerMinute\":23.778071334214} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 23.778071334214 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":502,\"groupWindups\":0,\"attacksPerMinute\":669.3333333333334} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 669.3333333333334 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.87755102040816 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":940,\"groupAttacks\":0,\"firstAttackSeconds\":3.15} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 469.9347312873212 (target 4 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 32.47422680412371 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":416,\"groupWindups\":0,\"attacksPerMinute\":554.6666666666666} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 554.6666666666666 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 90.47619047619048 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":907,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 453.43702263574505 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":14.266842800528401} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 14.266842800528401 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":513,\"groupWindups\":0,\"attacksPerMinute\":684} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 684 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.18181818181817 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":912,\"groupAttacks\":0,\"firstAttackSeconds\":3.15} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 455.9366754617414 (target 4 ≤ value ≤ Infinity; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -4484,10 +4302,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 12.983333333333333,
+            "seconds": 12.933333333333334,
             "playerWindups": 7,
             "groupWindups": 0,
-            "attacksPerMinute": 32.34916559691913
+            "attacksPerMinute": 32.47422680412371
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
@@ -4499,7 +4317,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 32.34916559691913,
+          "value": 32.47422680412371,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
         },
@@ -4523,9 +4341,9 @@
           "status": "PASS",
           "value": {
             "seconds": 45,
-            "playerWindups": 455,
+            "playerWindups": 416,
             "groupWindups": 0,
-            "attacksPerMinute": 606.6666666666666
+            "attacksPerMinute": 554.6666666666666
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
@@ -4551,7 +4369,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 606.6666666666666,
+          "value": 554.6666666666666,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
         },
@@ -4562,7 +4380,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 95.23809523809523,
+          "value": 90.47619047619048,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
         },
@@ -4575,7 +4393,7 @@
           "status": "PASS",
           "value": {
             "ticks": 7201,
-            "playerAttacks": 899,
+            "playerAttacks": 907,
             "groupAttacks": 0,
             "firstAttackSeconds": 3.6333333333333333
           },
@@ -4589,7 +4407,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 449.4375781141508,
+          "value": 453.43702263574505,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
         },
@@ -4602,9 +4420,9 @@
           "status": "PASS",
           "value": {
             "seconds": 12.616666666666667,
-            "playerWindups": 5,
+            "playerWindups": 3,
             "groupWindups": 0,
-            "attacksPerMinute": 23.778071334214
+            "attacksPerMinute": 14.266842800528401
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -4616,7 +4434,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 23.778071334214,
+          "value": 14.266842800528401,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
         },
@@ -4640,9 +4458,9 @@
           "status": "PASS",
           "value": {
             "seconds": 45,
-            "playerWindups": 502,
+            "playerWindups": 513,
             "groupWindups": 0,
-            "attacksPerMinute": 669.3333333333334
+            "attacksPerMinute": 684
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
@@ -4668,7 +4486,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 669.3333333333334,
+          "value": 684,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
         },
@@ -4679,7 +4497,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 93.87755102040816,
+          "value": 93.18181818181817,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
         },
@@ -4692,7 +4510,7 @@
           "status": "PASS",
           "value": {
             "ticks": 7201,
-            "playerAttacks": 940,
+            "playerAttacks": 912,
             "groupAttacks": 0,
             "firstAttackSeconds": 3.15
           },
@@ -4706,7 +4524,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 469.9347312873212,
+          "value": 455.9366754617414,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
         }
@@ -4727,7 +4545,7 @@
       "id": "L2-08",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":17},\"at120\":{\"all\":30,\"rescue\":16},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":29,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":735,\"protectedTicks\":0},{\"id\":123,\"samples\":658,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":44},\"at120\":{\"all\":60,\"rescue\":40},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":77,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":123,\"seconds\":2.533333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":597,\"protectedTicks\":0},{\"id\":123,\"samples\":785,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS)",
+      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -4741,11 +4559,11 @@
           "value": {
             "at60": {
               "all": 30,
-              "rescue": 17
+              "rescue": 8
             },
             "at120": {
               "all": 30,
-              "rescue": 16
+              "rescue": 7
             },
             "protected": true
           },
@@ -4760,7 +4578,7 @@
           "id": "L2-08",
           "clause": "idle firefighter combat and turns",
           "value": {
-            "hits": 29,
+            "hits": 111,
             "turnedBy90": 4,
             "turns": [
               {
@@ -4803,12 +4621,12 @@
             },
             {
               "id": 122,
-              "samples": 735,
+              "samples": 747,
               "protectedTicks": 0
             },
             {
               "id": 123,
-              "samples": 658,
+              "samples": 978,
               "protectedTicks": 0
             },
             {
@@ -4840,11 +4658,11 @@
           "value": {
             "at60": {
               "all": 60,
-              "rescue": 44
+              "rescue": 40
             },
             "at120": {
               "all": 60,
-              "rescue": 40
+              "rescue": 31
             },
             "protected": true
           },
@@ -4859,7 +4677,7 @@
           "id": "L2-08",
           "clause": "idle firefighter combat and turns",
           "value": {
-            "hits": 77,
+            "hits": 43,
             "turnedBy90": 6,
             "turns": [
               {
@@ -4884,12 +4702,12 @@
               },
               {
                 "id": 122,
-                "seconds": 2.683333333333333,
+                "seconds": 3.2,
                 "sameAsset": true
               },
               {
                 "id": 123,
-                "seconds": 2.533333333333333,
+                "seconds": 2.6666666666666665,
                 "sameAsset": true
               }
             ]
@@ -4912,12 +4730,12 @@
             },
             {
               "id": 122,
-              "samples": 597,
+              "samples": 605,
               "protectedTicks": 0
             },
             {
               "id": 123,
-              "samples": 785,
+              "samples": 719,
               "protectedTicks": 0
             },
             {
@@ -4958,7 +4776,7 @@
       "id": "L2-09",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":77.4,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":19,\"rescue\":19}},\"deathsAt\":[\"77s@-46,-34/collapse\"]} (target player reaches0HP within120s after doors; PASS); low/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":19,\"rescue\":19},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); low/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":19,\"rescue\":19},\"late\":{\"all\":30,\"rescue\":0},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":10.003386703483809,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS); high/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":78.96666666666667,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":17,\"rescue\":17}},\"deathsAt\":[\"79s@-44,-37/collapse\"]} (target player reaches0HP within120s after doors; PASS); high/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":17,\"rescue\":17},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); high/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":17,\"rescue\":17},\"late\":{\"all\":53,\"rescue\":19},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":8.818720618718087,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS)",
+      "value": "low/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":78.85,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":18,\"rescue\":18}},\"deathsAt\":[\"79s@-47,-34/collapse\"]} (target player reaches0HP within120s after doors; PASS); low/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":18,\"rescue\":18},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); low/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":18,\"rescue\":18},\"late\":{\"all\":30,\"rescue\":0},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":9.466926905811153,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS); high/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":78.33333333333333,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":16,\"rescue\":16}},\"deathsAt\":[\"78s@-42,-37/collapse\"]} (target player reaches0HP within120s after doors; PASS); high/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":16,\"rescue\":16},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); high/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":16,\"rescue\":16},\"late\":{\"all\":48,\"rescue\":14},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":11.800666244822747,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -4972,19 +4790,19 @@
           "value": {
             "axe": true,
             "diedBy120": true,
-            "firstDeathS": 77.4,
+            "firstDeathS": 78.85,
             "infectedAt": {
               "0": {
                 "all": 0,
                 "rescue": 0
               },
               "10": {
-                "all": 19,
-                "rescue": 19
+                "all": 18,
+                "rescue": 18
               }
             },
             "deathsAt": [
-              "77s@-46,-34/collapse"
+              "79s@-47,-34/collapse"
             ]
           },
           "target": "player reaches0HP within120s after doors",
@@ -4999,8 +4817,8 @@
           "clause": "mortal aggressive live census at10/90s",
           "value": {
             "early": {
-              "all": 19,
-              "rescue": 19
+              "all": 18,
+              "rescue": 18
             },
             "stoppedAtFirstDeath": true
           },
@@ -5016,8 +4834,8 @@
           "clause": "uninterrupted protected aggressive live census at10/90s",
           "value": {
             "early": {
-              "all": 19,
-              "rescue": 19
+              "all": 18,
+              "rescue": 18
             },
             "late": {
               "all": 30,
@@ -5028,7 +4846,7 @@
             "qualified": true,
             "route": {
               "samples": 5401,
-              "maxDoorDistanceM": 10.003386703483809,
+              "maxDoorDistanceM": 9.466926905811153,
               "outside15mTicks": 0
             },
             "deaths": 0
@@ -5046,19 +4864,19 @@
           "value": {
             "axe": true,
             "diedBy120": true,
-            "firstDeathS": 78.96666666666667,
+            "firstDeathS": 78.33333333333333,
             "infectedAt": {
               "0": {
                 "all": 0,
                 "rescue": 0
               },
               "10": {
-                "all": 17,
-                "rescue": 17
+                "all": 16,
+                "rescue": 16
               }
             },
             "deathsAt": [
-              "79s@-44,-37/collapse"
+              "78s@-42,-37/collapse"
             ]
           },
           "target": "player reaches0HP within120s after doors",
@@ -5073,8 +4891,8 @@
           "clause": "mortal aggressive live census at10/90s",
           "value": {
             "early": {
-              "all": 17,
-              "rescue": 17
+              "all": 16,
+              "rescue": 16
             },
             "stoppedAtFirstDeath": true
           },
@@ -5090,19 +4908,19 @@
           "clause": "uninterrupted protected aggressive live census at10/90s",
           "value": {
             "early": {
-              "all": 17,
-              "rescue": 17
+              "all": 16,
+              "rescue": 16
             },
             "late": {
-              "all": 53,
-              "rescue": 19
+              "all": 48,
+              "rescue": 14
             },
             "protected": true,
             "countOnly": true,
             "qualified": true,
             "route": {
               "samples": 5401,
-              "maxDoorDistanceM": 8.818720618718087,
+              "maxDoorDistanceM": 11.800666244822747,
               "outside15mTicks": 0
             },
             "deaths": 0
@@ -5336,10 +5154,10 @@
     },
     {
       "id": "L2-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":30,\"escapeArea\":27,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.03333333333333333,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4023,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4030,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4040,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4050,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4060,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4070,\"x\":25,\"z\":26.5}]} (target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk; PASS); low/controlled-fixture native axe-route bridge-start escape-area census, groups, chase share and scattered singles: {\"radio\":{\"infected\":30,\"escapeArea\":29,\"groupsOf4\":4,\"chasingPlayer\":0,\"chasingFraction\":0,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4023,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4030,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4040,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4050,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4060,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4070,\"x\":25,\"z\":26.5}]} (target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk; PASS); high/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":42,\"escapeArea\":34,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.023809523809523808,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":274,\"tick\":4033,\"x\":-33.5,\"z\":-14},{\"id\":276,\"tick\":4033,\"x\":-34,\"z\":2},{\"id\":278,\"tick\":4033,\"x\":-27.2,\"z\":19},{\"id\":280,\"tick\":4033,\"x\":-13,\"z\":26.5},{\"id\":282,\"tick\":4033,\"x\":6,\"z\":26.5},{\"id\":284,\"tick\":4033,\"x\":25,\"z\":26.5}]} (target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk; PASS); high/controlled-fixture native axe-route bridge-start escape-area census, groups, chase share and scattered singles: {\"radio\":{\"infected\":45,\"escapeArea\":40,\"groupsOf4\":4,\"chasingPlayer\":3,\"chasingFraction\":0.06666666666666667,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":274,\"tick\":4033,\"x\":-33.5,\"z\":-14},{\"id\":276,\"tick\":4033,\"x\":-34,\"z\":2},{\"id\":278,\"tick\":4033,\"x\":-27.2,\"z\":19},{\"id\":280,\"tick\":4033,\"x\":-13,\"z\":26.5},{\"id\":282,\"tick\":4033,\"x\":6,\"z\":26.5},{\"id\":284,\"tick\":4033,\"x\":25,\"z\":26.5}]} (target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk; PASS) Manual review PASS (STALE, Codex fix62-a): All four current-source native ordinary/axe-route radio-event clauses PASS after the L2 runner-panic repair. Exact measurements: [{\"tier\":\"low\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":30,\"escapeArea\":27,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.03333333333333333,\"scatteredSingles\":6}},{\"tier\":\"low\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":30,\"escapeArea\":29,\"groupsOf4\":4,\"chasingPlayer\":0,\"chasingFraction\":0,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":42,\"escapeArea\":34,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.023809523809523808,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":45,\"escapeArea\":40,\"groupsOf4\":4,\"chasingPlayer\":3,\"chasingFraction\":0.06666666666666667,\"scatteredSingles\":6}}]. No population, cap, timer or criterion changed. The independent no-axe event ledger retains actual actor positions/identities/membership. Courier protection establishes census only, not mortal difficulty.",
-      "automatedComplete": true,
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":30,\"escapeArea\":21,\"groupsOf4\":3,\"chasingPlayer\":5,\"chasingFraction\":0.16666666666666666,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4040,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4040,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4050,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4060,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4080,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4080,\"x\":25,\"z\":26.5}]} (target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk; FAIL) Manual review PASS (STALE, Codex fix62-a): All four current-source native ordinary/axe-route radio-event clauses PASS after the L2 runner-panic repair. Exact measurements: [{\"tier\":\"low\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":30,\"escapeArea\":27,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.03333333333333333,\"scatteredSingles\":6}},{\"tier\":\"low\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":30,\"escapeArea\":29,\"groupsOf4\":4,\"chasingPlayer\":0,\"chasingFraction\":0,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":42,\"escapeArea\":34,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.023809523809523808,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":45,\"escapeArea\":40,\"groupsOf4\":4,\"chasingPlayer\":3,\"chasingFraction\":0.06666666666666667,\"scatteredSingles\":6}}]. No population, cap, timer or criterion changed. The independent no-axe event ledger retains actual actor positions/identities/membership. Courier protection establishes census only, not mortal difficulty.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
@@ -5354,53 +5172,53 @@
           "value": {
             "radio": {
               "infected": 30,
-              "escapeArea": 27,
-              "groupsOf4": 4,
-              "chasingPlayer": 1,
-              "chasingFraction": 0.03333333333333333,
+              "escapeArea": 21,
+              "groupsOf4": 3,
+              "chasingPlayer": 5,
+              "chasingFraction": 0.16666666666666666,
               "scatteredSingles": 6
             },
             "scatteredSingleAdmissions": [
               {
                 "id": 262,
-                "tick": 4023,
+                "tick": 4040,
                 "x": -33.5,
                 "z": -14
               },
               {
                 "id": 264,
-                "tick": 4030,
+                "tick": 4040,
                 "x": -34,
                 "z": 2
               },
               {
                 "id": 266,
-                "tick": 4040,
+                "tick": 4050,
                 "x": -27.2,
                 "z": 19
               },
               {
                 "id": 268,
-                "tick": 4050,
+                "tick": 4060,
                 "x": -13,
                 "z": 26.5
               },
               {
                 "id": 270,
-                "tick": 4060,
+                "tick": 4080,
                 "x": 6,
                 "z": 26.5
               },
               {
                 "id": 272,
-                "tick": 4070,
+                "tick": 4080,
                 "x": 25,
                 "z": 26.5
               }
             ]
           },
           "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
-          "status": "PASS",
+          "status": "FAIL",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -5421,37 +5239,37 @@
             "scatteredSingleAdmissions": [
               {
                 "id": 262,
-                "tick": 4023,
+                "tick": 4040,
                 "x": -33.5,
                 "z": -14
               },
               {
                 "id": 264,
-                "tick": 4030,
+                "tick": 4040,
                 "x": -34,
                 "z": 2
               },
               {
                 "id": 266,
-                "tick": 4040,
+                "tick": 4050,
                 "x": -27.2,
                 "z": 19
               },
               {
                 "id": 268,
-                "tick": 4050,
+                "tick": 4060,
                 "x": -13,
                 "z": 26.5
               },
               {
                 "id": 270,
-                "tick": 4060,
+                "tick": 4080,
                 "x": 6,
                 "z": 26.5
               },
               {
                 "id": 272,
-                "tick": 4070,
+                "tick": 4080,
                 "x": 25,
                 "z": 26.5
               }
@@ -5527,11 +5345,11 @@
           "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
           "value": {
             "radio": {
-              "infected": 45,
-              "escapeArea": 40,
+              "infected": 39,
+              "escapeArea": 37,
               "groupsOf4": 4,
-              "chasingPlayer": 3,
-              "chasingFraction": 0.06666666666666667,
+              "chasingPlayer": 0,
+              "chasingFraction": 0,
               "scatteredSingles": 6
             },
             "scatteredSingleAdmissions": [
@@ -5589,7 +5407,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus 6 scattered singles along the walk (high; low ≥ 4). "
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus 6 scattered singles along the walk (high; low ≥ 4). ",
       "review": {
         "tag": "O",
         "instruction": "Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus **6 scattered singles** along the walk (high; low ≥ 4). PO: \"Put a few ones here and there, no group.\"",
@@ -5622,14 +5440,14 @@
         ],
         "notes": "The systemic L2 panic repair closes both this population finding and L2-13. No second game tuning was required. Existing native clauses independently cover no-axe and axe policies at both qualities.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "L2-12",
       "status": "FAIL",
       "currentStatus": "PASS",
-      "value": "low/complete competent bridge player attack rate: 12.265758091993186 (target 2 ≤ value ≤ 20; PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.86518743945237,\"ticks\":4696,\"discontinuities\":0,\"maxEncounterGapM\":29.19377590458056,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,219,126,233,235,237,239,241,265,257,259,293,277,295,275,281,291,297,287,273,279,285],\"infectedPer30m\":4.76993429091241} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; PASS); high/complete competent bridge player attack rate: 12.391304347826088 (target 2 ≤ value ≤ 20; PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.22341339436554,\"ticks\":5520,\"discontinuities\":0,\"maxEncounterGapM\":2.5300372302422782,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,197,199,207,219,211,217,209,229,237,227,161,154,167,241,243,245,247,159,183,277,128,265,267,269,271,297,293,301,307,309,291,289,285,299,303,136,287,295],\"infectedPer30m\":5.598246213272369} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; PASS) Manual review PASS (STALE, Codex sweep-a2): Every numeric clause is measured PASS on current source in ordinary mortal low/high complete routes: bridge player attacks12.186/17.555 per minute within2–20, aggregate distinct living clear-sight infected density5.587/5.823 per30m over257.76/257.59m walked. Both complete without deaths or discontinuities. Attack rates independently recomputed from actual windups/phase seconds and densities from distinct IDs/metres. Maximum observed encounter gaps7.74/33.45m are retained; no claim of uniform spacing. Original1.62/min failure remains attributed in historical evidence. Open prior FAIL: Native competent escape: 1.62 attacks/min, below >=2/min. Route-contact density remains unmeasured.",
+      "value": "low/complete competent bridge player attack rate: 10.376508737164475 (target 2 ≤ value ≤ 20; PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; PASS); high/complete competent bridge player attack rate: 15.742397137745975 (target 2 ≤ value ≤ 20; PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; PASS) Manual review PASS (STALE, Codex sweep-a2): Every numeric clause is measured PASS on current source in ordinary mortal low/high complete routes: bridge player attacks12.186/17.555 per minute within2–20, aggregate distinct living clear-sight infected density5.587/5.823 per30m over257.76/257.59m walked. Both complete without deaths or discontinuities. Attack rates independently recomputed from actual windups/phase seconds and densities from distinct IDs/metres. Maximum observed encounter gaps7.74/33.45m are retained; no claim of uniform spacing. Original1.62/min failure remains attributed in historical evidence. Open prior FAIL: Native competent escape: 1.62 attacks/min, below >=2/min. Route-contact density remains unmeasured.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -5648,7 +5466,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 12.265758091993186,
+          "value": 10.376508737164475,
           "target": "2 ≤ value ≤ 20",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
         },
@@ -5660,10 +5478,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "metres": 257.86518743945237,
-            "ticks": 4696,
+            "metres": 257.93660948553963,
+            "ticks": 5551,
             "discontinuities": 0,
-            "maxEncounterGapM": 29.19377590458056,
+            "maxEncounterGapM": 40.886333493601065,
             "encounterIds": [
               185,
               193,
@@ -5685,29 +5503,33 @@
               199,
               217,
               227,
-              219,
               126,
+              219,
               233,
               235,
               237,
               239,
+              247,
+              243,
+              245,
               241,
               265,
               257,
               259,
-              293,
-              277,
-              295,
-              275,
-              281,
-              291,
-              297,
               287,
-              273,
+              283,
+              277,
+              297,
+              293,
+              289,
+              275,
               279,
-              285
+              295,
+              273,
+              285,
+              291
             ],
-            "infectedPer30m": 4.76993429091241
+            "infectedPer30m": 5.23384409329333
           },
           "target": "≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
@@ -5719,7 +5541,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 12.391304347826088,
+          "value": 15.742397137745975,
           "target": "2 ≤ value ≤ 20",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
         },
@@ -5731,10 +5553,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "metres": 257.22341339436554,
-            "ticks": 5520,
+            "metres": 279.9633285130393,
+            "ticks": 5031,
             "discontinuities": 0,
-            "maxEncounterGapM": 2.5300372302422782,
+            "maxEncounterGapM": 10.874970625774736,
             "encounterIds": [
               195,
               203,
@@ -5746,46 +5568,41 @@
               239,
               193,
               201,
+              219,
               197,
               199,
               207,
-              219,
               211,
               217,
               209,
-              229,
-              237,
               227,
+              237,
+              229,
               161,
               154,
-              167,
               241,
               243,
-              245,
               247,
-              159,
-              183,
+              245,
+              249,
+              251,
+              255,
+              253,
+              171,
+              167,
               277,
-              128,
               265,
               267,
+              283,
               269,
               271,
-              297,
-              293,
-              301,
-              307,
-              309,
-              291,
-              289,
               285,
-              299,
-              303,
-              136,
-              287,
-              295
+              289,
+              295,
+              309,
+              301
             ],
-            "infectedPer30m": 5.598246213272369
+            "infectedPer30m": 4.607746331819734
           },
           "target": "≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -5834,7 +5651,7 @@
         ],
         "notes": "Simulation-only row. No new captures or game/checker target changes. Fresh exact full-row review closes only this historical numeric finding after all four required native clauses pass.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
@@ -6101,14 +5918,14 @@
         ],
         "notes": "Closes the current runner-propagation defect with native state/vision evidence and fresh browser review. Source restriction to L2 protects other levels from new panic cascades. Full L1-L3 acceptance and final gates are recorded in the lane report. Final-source refresh on ba261cb1a: both tiers and actualzoom0.5/1.5 personally re-reviewed. Native propagation fixture and required-clause registration now supply automated coverage; report acceptance gate unchanged.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "L2-14",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); high/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); low/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":0,\"ratio\":0,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); low/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":15,\"ratio\":1.1538461538461537,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED); high/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":3,\"ratio\":0.23076923076923078,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); high/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":14,\"ratio\":1.0769230769230769,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED) Manual review PASS (STALE, Codex sweep-a2): All104 fresh captures personally inspected, including every incomplete and rejected trial. Retained original-size four-cell sheets; overview sheets viewed at half-size per cell. Side path visibly runs along hedges/tree-lined edge into police checkpoint. Alarm frames show Car alarm prompt by white SUV; subsequent crosswalk/road and checkpoint frames show live courier, corgi and pursuing infected. Read-only actor ledger corroborates actual car118 distraction and attracted modes. Ordinary mortal native prefix followed by physical WASD/E and mouse only; coordinate/nav assistance explicitly declared, no screen-only claim. Low/high side kills0/13; low alarm6/13 HP20.33; high alarm4/13 HP90.07. Seven-kill alarm excluded; navigation setup failures and mortal deaths are incomplete trials, not game FAILs.",
+      "value": "low/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); high/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); low/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":3,\"ratio\":0.23076923076923078,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); low/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":18,\"ratio\":1.3846153846153846,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED); high/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":1,\"ratio\":0.07692307692307693,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); high/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":14,\"ratio\":1.0769230769230769,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED) Manual review PASS (STALE, Codex sweep-a2): All104 fresh captures personally inspected, including every incomplete and rejected trial. Retained original-size four-cell sheets; overview sheets viewed at half-size per cell. Side path visibly runs along hedges/tree-lined edge into police checkpoint. Alarm frames show Car alarm prompt by white SUV; subsequent crosswalk/road and checkpoint frames show live courier, corgi and pursuing infected. Read-only actor ledger corroborates actual car118 distraction and attracted modes. Ordinary mortal native prefix followed by physical WASD/E and mouse only; coordinate/nav assistance explicitly declared, no screen-only claim. Low/high side kills0/13; low alarm6/13 HP20.33; high alarm4/13 HP90.07. Seven-kill alarm excluded; navigation setup failures and mortal deaths are incomplete trials, not game FAILs.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -6200,8 +6017,8 @@
               "size": 13
             },
             "size": 13,
-            "killed": 0,
-            "ratio": 0,
+            "killed": 3,
+            "ratio": 0.23076923076923078,
             "visitedSide": true,
             "alarms": []
           },
@@ -6225,8 +6042,8 @@
               "size": 13
             },
             "size": 13,
-            "killed": 15,
-            "ratio": 1.1538461538461537,
+            "killed": 18,
+            "ratio": 1.3846153846153846,
             "visitedSide": false,
             "alarms": []
           },
@@ -6250,8 +6067,8 @@
               "size": 13
             },
             "size": 13,
-            "killed": 3,
-            "ratio": 0.23076923076923078,
+            "killed": 1,
+            "ratio": 0.07692307692307693,
             "visitedSide": true,
             "alarms": []
           },
@@ -6554,14 +6371,14 @@
         ],
         "notes": "No game changes or weakened criteria. Six-kill stopping policy controls physical attacks only; ordinary damage remains enabled. Failed attempts retained and excluded.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {
       "id": "L2-15",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); low/complete prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete gate delay after crossing: 0.6 (target 0 ≤ value ≤ 1.5; PASS); low/stationary prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); low/stationary prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary gate delay after crossing: null (target 0 ≤ value ≤ 1.5; NOT CHECKED); high/complete prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); high/complete prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete gate delay after crossing: 0.6 (target 0 ≤ value ≤ 1.5; PASS); high/stationary prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); high/stationary prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary gate delay after crossing: null (target 0 ≤ value ≤ 1.5; NOT CHECKED); low/controlled-fixture gate close and post-close infected crossings: {\"closeS\":0.6,\"infectedInsideAfter\":3,\"infectedInsideAtClosure\":[280,282,294],\"crossingsAfterClosure\":[]} (target close≤1.5s;0 infected cross the gate after closure; PASS); high/controlled-fixture gate close and post-close infected crossings: {\"closeS\":0.6,\"infectedInsideAfter\":2,\"infectedInsideAtClosure\":[272,306],\"crossingsAfterClosure\":[]} (target close≤1.5s;0 infected cross the gate after closure; PASS) Manual review PASS (STALE, Codex sweep-a2): All22 fresh frames personally inspected. Wide checkpoint frame shows3 police vehicles with red/blue light bars;4 officers visibly aim/fire muzzle flashes, confirmed4 actual shot-source IDs. Actual nonhidden/noninfected civilians within12m of checkpoint centre: low9/high8, including market arrivals (low prepared135 absent, not silently counted). Native gate closure0.6s; postclosure crossingIDs empty at both qualities;2/5 infected were already inside at closure and are not later crossings. No all-eight unoccluded-pixel claim from cropped tight frame.",
+      "value": "low/complete prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); low/complete prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete gate delay after crossing: 0.6 (target 0 ≤ value ≤ 1.5; PASS); low/stationary prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); low/stationary prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary gate delay after crossing: null (target 0 ≤ value ≤ 1.5; NOT CHECKED); high/complete prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); high/complete prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete gate delay after crossing: 0.6 (target 0 ≤ value ≤ 1.5; PASS); high/stationary prepared checkpoint officers: 4 (target 4 ≤ value ≤ Infinity; PASS); high/stationary prepared checkpoint civilians: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary gate delay after crossing: null (target 0 ≤ value ≤ 1.5; NOT CHECKED); low/controlled-fixture gate close and post-close infected crossings: {\"closeS\":0.6,\"infectedInsideAfter\":4,\"infectedInsideAtClosure\":[280,282,286,288],\"crossingsAfterClosure\":[]} (target close≤1.5s;0 infected cross the gate after closure; PASS); high/controlled-fixture gate close and post-close infected crossings: {\"closeS\":0.6,\"infectedInsideAfter\":5,\"infectedInsideAtClosure\":[290,292,294,296,304],\"crossingsAfterClosure\":[]} (target close≤1.5s;0 infected cross the gate after closure; PASS) Manual review PASS (STALE, Codex sweep-a2): All22 fresh frames personally inspected. Wide checkpoint frame shows3 police vehicles with red/blue light bars;4 officers visibly aim/fire muzzle flashes, confirmed4 actual shot-source IDs. Actual nonhidden/noninfected civilians within12m of checkpoint centre: low9/high8, including market arrivals (low prepared135 absent, not silently counted). Native gate closure0.6s; postclosure crossingIDs empty at both qualities;2/5 infected were already inside at closure and are not later crossings. No all-eight unoccluded-pixel claim from cropped tight frame.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -6720,11 +6537,12 @@
           "clause": "gate close and post-close infected crossings",
           "value": {
             "closeS": 0.6,
-            "infectedInsideAfter": 3,
+            "infectedInsideAfter": 4,
             "infectedInsideAtClosure": [
               280,
               282,
-              294
+              286,
+              288
             ],
             "crossingsAfterClosure": []
           },
@@ -6740,10 +6558,13 @@
           "clause": "gate close and post-close infected crossings",
           "value": {
             "closeS": 0.6,
-            "infectedInsideAfter": 2,
+            "infectedInsideAfter": 5,
             "infectedInsideAtClosure": [
-              272,
-              306
+              290,
+              292,
+              294,
+              296,
+              304
             ],
             "crossingsAfterClosure": []
           },
@@ -6838,7 +6659,7 @@
         ],
         "notes": "No game changes. Protection qualifies mechanics/presentation, not mortality. Full exact-clause review mapping and complete native gate/count requirements added; before receipt preserves previously ignored review gap.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f"
+        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
       }
     },
     {

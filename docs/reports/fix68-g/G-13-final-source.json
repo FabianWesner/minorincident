@@ -1,0 +1,554 @@
+{
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "scope": "Final-source L3/L5 observed human pace, both tiers. L3 high only one qualified officer; aggregate including-corgi wait is inconclusive. Supplemental eligible-human wait bound is separate.",
+  "rows": [
+    {
+      "level": "L3",
+      "tier": "low",
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "stateHash": "3ce6de95",
+      "outcome": "complete",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 23,
+              "median": 4.4901615192863975,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9953970760110403
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 203,
+              "median": 4.511584052402963,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.000146109366163
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 203,
+              "median": 4.51661443419605,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.001261264646558
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 202,
+              "median": 4.510265875628361,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9998538906338371
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11457,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8728288382648163,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11457,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1557,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9285,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9358,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        }
+      ],
+      "roster": null
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "stateHash": "9e71c96f",
+      "outcome": "complete",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 10,
+              "median": 4.926288360902988,
+              "groupMedian": 4.926288360902988,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 12416,
+            "stationaryFarTicks": 1608,
+            "upperBoundPercent": 12.95103092783505,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 12416,
+                "stationaryFarTicks": 1602
+              },
+              {
+                "id": 30,
+                "escortTicks": 283,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 133,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 204,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 287,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        }
+      ],
+      "roster": null
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "87056c5a3542d41903622d434264bf772ce3e4f9597d3a65b12b866228ca15e6",
+      "stateHash": "dddd9808",
+      "outcome": "complete",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/look",
+              "id": 31,
+              "samples": 128,
+              "median": 4.445839331841539,
+              "groupMedian": 4.459246337772025,
+              "ratio": 0.9969934368018823
+            },
+            {
+              "phase": "step/look",
+              "id": 30,
+              "samples": 107,
+              "median": 4.472653343702511,
+              "groupMedian": 4.459246337772025,
+              "ratio": 1.0030065631981175
+            },
+            {
+              "phase": "step/look",
+              "id": 32,
+              "samples": 76,
+              "median": 4.476729432700671,
+              "groupMedian": 4.459246337772025,
+              "ratio": 1.003920638961018
+            },
+            {
+              "phase": "step/look",
+              "id": 28,
+              "samples": 42,
+              "median": 4.264060631724194,
+              "groupMedian": 4.459246337772025,
+              "ratio": 0.9562289922414665
+            },
+            {
+              "phase": "step/metro",
+              "id": 28,
+              "samples": 43,
+              "median": 4.433255975957091,
+              "groupMedian": 4.427343382536844,
+              "ratio": 1.0013354720674184
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 43,
+              "median": 4.500293320805127,
+              "groupMedian": 4.427343382536844,
+              "ratio": 1.0164771358273283
+            },
+            {
+              "phase": "step/metro",
+              "id": 30,
+              "samples": 43,
+              "median": 4.415381830517192,
+              "groupMedian": 4.427343382536844,
+              "ratio": 0.9972982551868842
+            },
+            {
+              "phase": "step/metro",
+              "id": 31,
+              "samples": 44,
+              "median": 4.427343382536844,
+              "groupMedian": 4.427343382536844,
+              "ratio": 1
+            },
+            {
+              "phase": "step/metro",
+              "id": 32,
+              "samples": 46,
+              "median": 4.3903782376461855,
+              "groupMedian": 4.427343382536844,
+              "ratio": 0.9916507165365888
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11200,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": 0,
+            "followers": [
+              {
+                "id": 18,
+                "escortTicks": 11143,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 31,
+                "escortTicks": 9100,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 7445,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 5826,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 28,
+                "escortTicks": 3985,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 29,
+                "escortTicks": 2343,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+        }
+      ],
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "sheltered",
+          "foundAt": 7058,
+          "cueAt": 7243,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "sheltered",
+          "foundAt": 8752,
+          "cueAt": 8972,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "sheltered",
+          "foundAt": 3443,
+          "cueAt": 3846,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "sheltered",
+          "foundAt": 1852,
+          "cueAt": 2119,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "sheltered",
+          "foundAt": 5267,
+          "cueAt": 5493,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "9382bbfaa27e8730dd1dea37b11310ee7451013323f322bd308cdc2f9f9d132a",
+      "stateHash": "046b9ac6",
+      "outcome": "complete",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/look",
+              "id": 31,
+              "samples": 136,
+              "median": 4.244979033487137,
+              "groupMedian": 4.238333546743301,
+              "ratio": 1.0015679480320614
+            },
+            {
+              "phase": "step/look",
+              "id": 30,
+              "samples": 118,
+              "median": 4.231688059999465,
+              "groupMedian": 4.238333546743301,
+              "ratio": 0.9984320519679386
+            },
+            {
+              "phase": "step/look",
+              "id": 32,
+              "samples": 84,
+              "median": 4.316408590107902,
+              "groupMedian": 4.238333546743301,
+              "ratio": 1.0184211654187985
+            },
+            {
+              "phase": "step/look",
+              "id": 28,
+              "samples": 48,
+              "median": 4.138492276308822,
+              "groupMedian": 4.238333546743301,
+              "ratio": 0.9764432720234593
+            },
+            {
+              "phase": "step/metro",
+              "id": 28,
+              "samples": 44,
+              "median": 4.288621333760503,
+              "groupMedian": 4.288621333760503,
+              "ratio": 1
+            },
+            {
+              "phase": "step/metro",
+              "id": 30,
+              "samples": 44,
+              "median": 4.1966844261087015,
+              "groupMedian": 4.288621333760503,
+              "ratio": 0.9785625961126333
+            },
+            {
+              "phase": "step/metro",
+              "id": 31,
+              "samples": 43,
+              "median": 4.241260181579233,
+              "groupMedian": 4.288621333760503,
+              "ratio": 0.9889565553833262
+            },
+            {
+              "phase": "step/metro",
+              "id": 32,
+              "samples": 44,
+              "median": 4.49745456583889,
+              "groupMedian": 4.288621333760503,
+              "ratio": 1.0486947239744457
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 43,
+              "median": 4.485013076148157,
+              "groupMedian": 4.288621333760503,
+              "ratio": 1.0457936775256038
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14483,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": 0,
+            "followers": [
+              {
+                "id": 18,
+                "escortTicks": 14483,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 31,
+                "escortTicks": 12009,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 9528,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 7495,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 28,
+                "escortTicks": 5393,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 29,
+                "escortTicks": 2905,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+        }
+      ],
+      "roster": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "sheltered",
+          "foundAt": 8891,
+          "cueAt": 9227,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "sheltered",
+          "foundAt": 11536,
+          "cueAt": 11791,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "sheltered",
+          "foundAt": 4608,
+          "cueAt": 4972,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "sheltered",
+          "foundAt": 1891,
+          "cueAt": 2076,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "sheltered",
+          "foundAt": 6980,
+          "cueAt": 7259,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ]
+    }
+  ]
+}

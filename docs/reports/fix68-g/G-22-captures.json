@@ -185,7 +185,7 @@
       "file": "test-results/fix68-g/G-22-clean-preview/low-age24.png",
       "sha256": "0f230b6b3288a618ab18288da6ba73b58be850226c4bf1a6f3cd594d365db719",
       "reviewed": true,
-      "what": "Fallback caption and distant army objective; crowd presses around truck/courier.",
+      "what": "Station-defence HUD remains active at this frame; living attackers approach the courier and officers around the truck.",
       "qualification": "accepted final L3 visual witness",
       "tier": "low",
       "cohortAgeSeconds": 24
@@ -365,7 +365,7 @@
       "file": "test-results/fix68-g/G-22-final-preview/low-age24.png",
       "sha256": "f4b7df5c53423bc329a0d8966a6a2f484cdf86abf58e9a321661d666ac2b7f44",
       "reviewed": true,
-      "what": "Fallback caption and distant army objective; crowd presses around truck/courier.",
+      "what": "Station-defence HUD remains active at this frame; living attackers approach the courier and officers around the truck.",
       "qualification": "rejected: build/preview race with 404 errors",
       "tier": "low",
       "cohortAgeSeconds": 24
@@ -545,7 +545,7 @@
       "file": "test-results/fix68-g/G-22-preview/low-age24.png",
       "sha256": "e976134123d5c660a973fa0aa28e0436546d3dd19e98d6512ac19fd026eb9005",
       "reviewed": true,
-      "what": "Fallback caption and distant army objective; crowd presses around truck/courier.",
+      "what": "Station-defence HUD remains active at this frame; living attackers approach the courier and officers around the truck.",
       "qualification": "historical intermediate gameplay variant",
       "tier": "low",
       "cohortAgeSeconds": 24
@@ -603,6 +603,21 @@
       "qualification": "historical intermediate gameplay variant",
       "tier": "low",
       "cohortAgeSeconds": 61
+    }
+  ],
+  "protection": "Courier survival protection is enabled for these visual-only bot sequences; no mortal difficulty or physical-input qualification.",
+  "annotationCorrections": [
+    {
+      "file": "test-results/fix68-g/G-22-clean-preview/low-age24.png",
+      "previous": "Fallback caption and distant army objective; crowd presses around truck/courier."
+    },
+    {
+      "file": "test-results/fix68-g/G-22-final-preview/low-age24.png",
+      "previous": "Fallback caption and distant army objective; crowd presses around truck/courier."
+    },
+    {
+      "file": "test-results/fix68-g/G-22-preview/low-age24.png",
+      "previous": "Fallback caption and distant army objective; crowd presses around truck/courier."
     }
   ]
 }

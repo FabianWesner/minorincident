@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "49d44dcc4829fa724cec7e54afc4277bbd870aec",
+  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
   "clauses": [
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
@@ -11,9 +11,14 @@
       "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
     },
     {
-      "clause": "L3 observed human follower medians >=0.95 of the phase group median; waiting upper bound<=10%, both tiers.",
+      "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
       "verdict": "PASS",
-      "note": "Low all four officers min99.54%, high one officer with10 qualifying samples; other high officers overwhelmed before qualification. Original counts/speed limits retained. Both three-seed army-line rules and competent3-25/min attack-rate limits pass."
+      "note": "Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification."
+    },
+    {
+      "clause": "Eligible L3 human follower waiting <=10% of human escort time, both tiers.",
+      "verdict": "PASS",
+      "note": "Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed."
     }
   ],
   "evidence": [
@@ -49,9 +54,24 @@
     },
     {
       "file": "docs/reports/fix68-g/G-13-L3-regression.json",
-      "sha256": "ccab33aaf59705b565288429c37a71a08145e33e9620802b2c90c988f63d81e6",
+      "sha256": "f96f6f399b9c076f76233bcdcbca6b6c7d51fae7bbbdd2cd386acd450cd0fe8a",
       "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-final-source.json",
+      "sha256": "4745a9359b95895dd5bb178230a7b73e69fd5bd8ea975a622699fa1c3469effc",
+      "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
+      "sha256": "fdbf3218bfdd5da05edcdf741163015873c1db642fa3444f52b03ab69705c2ff",
+      "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
+    },
+    {
+      "file": "docs/reports/fix68-g/threat-final/manifest.json",
+      "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
+      "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
     }
   ],
-  "notes": "Scoped L5 correction and measured L3 follow-up. All-level full-row qualification, high-tier officers without enough walking samples, and independent L5-08 distance failures remain unclaimed."
+  "notes": "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval."
 }

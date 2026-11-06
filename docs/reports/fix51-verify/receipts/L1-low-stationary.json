@@ -4,10 +4,10 @@
   "tier": "low",
   "policy": "stationary",
   "seed": 1,
-  "sourceHash": "c7a509a67d9cf56003518ca7d81b21a9c97c8c1f0f6438cc8083539a5445ddb0",
-  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "revision": "9f82472999e751987b0cb428e18e8af4fa5579ee",
-  "generatedAt": "2026-11-06T02:09:10.451Z",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "f6031cac649a3d5faa2a64a27eab72e0e0c4ebf2",
+  "generatedAt": "2026-11-06T05:47:22.842Z",
   "run": {
     "level": "L1",
     "policy": "complete",
@@ -1379,8 +1379,8 @@
         {
           "id": 83,
           "archetype": "char.corgi",
-          "x": 66.69646470175542,
-          "z": -10.503332041100784,
+          "x": 56.859928242220015,
+          "z": -19.38940178065861,
           "hp": 100,
           "maxHp": 100,
           "civilian": false,
@@ -1799,8 +1799,8 @@
         {
           "id": 124,
           "archetype": "npc.bbq-dad",
-          "x": 42.20590653651615,
-          "z": -28.219142356798802,
+          "x": 42.63469548099181,
+          "z": -27.771481817112193,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1813,8 +1813,8 @@
         {
           "id": 125,
           "archetype": "npc.dog",
-          "x": 41.63736904721767,
-          "z": -29.792271236899765,
+          "x": 43.323731888809384,
+          "z": -29.167673854584468,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1883,8 +1883,8 @@
         {
           "id": 130,
           "archetype": "npc.jogger",
-          "x": 76.12267686103344,
-          "z": 3.983103407940786,
+          "x": 76.09929614058815,
+          "z": 3.9832798732058117,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -2121,8 +2121,8 @@
         {
           "id": 147,
           "archetype": "infected.runner",
-          "x": 65.59883124020365,
-          "z": -8.497832712517202,
+          "x": 64.24697349367855,
+          "z": -9.74771838541573,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2149,8 +2149,8 @@
         {
           "id": 151,
           "archetype": "infected.runner",
-          "x": 64.56429149116913,
-          "z": -10.327366201404574,
+          "x": 64.8501135582321,
+          "z": -10.518511009548725,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2163,8 +2163,8 @@
         {
           "id": 153,
           "archetype": "infected.runner",
-          "x": 65.43690836711077,
-          "z": -10.61578464882775,
+          "x": 65.81592995235921,
+          "z": -10.491731064376449,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2177,8 +2177,8 @@
         {
           "id": 155,
           "archetype": "infected.runner",
-          "x": 64.69170283819531,
-          "z": -8.651523513510362,
+          "x": 66.05671611054679,
+          "z": -8.76225839673653,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2191,8 +2191,8 @@
         {
           "id": 157,
           "archetype": "infected.runner",
-          "x": 64.22897688282224,
-          "z": -9.46891479173546,
+          "x": 66.38203140489472,
+          "z": -9.639415929275247,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2246,10 +2246,10 @@
       "l1.screams": 1,
       "l1.infectedExit": 1,
       "checkpoint.set": 2,
-      "ai.alerted": 12,
-      "telegraph": 1582,
-      "combat.hit": 1564,
-      "infected.attack": 1564
+      "ai.alerted": 5,
+      "telegraph": 1596,
+      "combat.hit": 1593,
+      "infected.attack": 1593
     },
     "ledger": [
       {
@@ -2534,13 +2534,13 @@
     "ticks": 21600,
     "followerWait": {
       "escortTicks": 20918,
-      "stationaryFarTicks": 0,
-      "upperBoundPercent": 0,
+      "stationaryFarTicks": 18420,
+      "upperBoundPercent": 88.0581317525576,
       "followers": [
         {
           "id": 83,
           "escortTicks": 20918,
-          "stationaryFarTicks": 0
+          "stationaryFarTicks": 18420
         }
       ]
     },
@@ -2603,12 +2603,12 @@
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 78,
-            "median": 4.500076187317064
+            "samples": 77,
+            "median": 0
           }
         ],
-        "followerMin": 4.500076187317064,
-        "followerMedian": 4.500076187317064,
+        "followerMin": 0,
+        "followerMedian": 0,
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
@@ -2641,12 +2641,12 @@
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 49,
-            "median": 4.503846810454924
+            "samples": 48,
+            "median": 0
           }
         ],
-        "followerMin": 4.503846810454924,
-        "followerMedian": 4.503846810454924,
+        "followerMin": 0,
+        "followerMedian": 0,
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
@@ -2744,7 +2744,7 @@
           {
             "id": 83,
             "samples": 1,
-            "median": 2.431162429790057
+            "median": 0.4119556753145347
           }
         ],
         "followerMin": null,
@@ -2812,8 +2812,8 @@
         "observed": 5,
         "reachableEver": 5,
         "within2_5m": 5,
-        "attacks": 1582,
-        "attacksPerMinute": 326.6720201904325,
+        "attacks": 1596,
+        "attacksPerMinute": 329.5629230239761,
         "firstAttackSeconds": 2.316666666666667,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
@@ -2852,8 +2852,8 @@
         "observed": 5,
         "reachableEver": 5,
         "within2_5m": 5,
-        "attacks": 1582,
-        "attacksPerMinute": 326.690758905524,
+        "attacks": 1596,
+        "attacksPerMinute": 329.5818275684048,
         "firstAttackSeconds": 2.3,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
@@ -2884,6 +2884,6 @@
     ],
     "waves": []
   },
-  "nativeStateHash": "6a6d2430",
+  "nativeStateHash": "9c98c50e",
   "error": null
 }

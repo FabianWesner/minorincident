@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "scope": "High-tier finite L3 cohort goal refresh must not shorten an already-active arrival deadline. Ordinary hearing/distraction assignments remain independent.",
+  "change": "Preserve max(existing active deadline, original nominal finite deadline). No renewal from current tick; no authored duration/cap/count/threshold reductions.",
+  "rows": [
+    {
+      "phase": "before",
+      "file": "docs/reports/fix68-g/G-22-deadline-before.json.gz",
+      "sha256": "1bdb628a4523c8656e5ddd5cfb1ade93e617abcfaf01193c44f3dd93d221b2a6",
+      "sourceHash": "29121ecf8fef2c55ae57e18edc957d83be43a99c812ec7a5f403108352d0d2c1",
+      "observedHash": "835e604f",
+      "controlHash": "835e604f",
+      "identical": true,
+      "shortened": 43,
+      "maximumLostTicks": 652,
+      "cohortRefreshCalls": 4059
+    },
+    {
+      "phase": "after",
+      "file": "docs/reports/fix68-g/G-22-deadline-after.json.gz",
+      "sha256": "f613f4b9893e3d63ffe52c46188640abca61c5e580dca9d907a5a1cbe5ff3c03",
+      "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+      "observedHash": "f9a73aa0",
+      "controlHash": "f9a73aa0",
+      "identical": true,
+      "shortened": 0,
+      "maximumLostTicks": 0,
+      "cohortRefreshCalls": 4059
+    }
+  ],
+  "note": "G-22-all-rush-before.json.gz is an earlier unfiltered diagnostic; it includes ordinary hearing goal changes and is not the targeted counterexample count."
+}

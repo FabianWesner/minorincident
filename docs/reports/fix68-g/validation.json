@@ -1,0 +1,79 @@
+{
+  "status": "FAIL",
+  "gameplayRevision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/typecheck-final.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/typecheck-both.log.gz",
+      "sha256": "3b25f86b83e7b7021bddbd3dd789ea1341611977d1c7f4ee16b2a2f4c976bae0",
+      "rawSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/lint-closeout.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692",
+      "rawSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/test-final3.log.gz",
+      "sha256": "63ea9ef967b5bd225e7ef8a068da91e79fa2907bea15ad212e6ae484d36f22cd",
+      "rawSha256": "fdc0e96ea1193e6fba664c6ad77e2a06835cf2b99e895f87a3b6e68507a88a69"
+    },
+    {
+      "command": "npm run build:qa",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/build-closeout.log.gz",
+      "sha256": "8a2519c4572a82d9836ca88ef52940f5ae116a39f33ba04abe3ae0045f29bf73",
+      "rawSha256": "1f45de5ed6eb53dc4cefd0582fbee5499bf6e7ca10be850f16d37f410d99aacb"
+    },
+    {
+      "command": "npm run qa:accept -- --level all --skip-browser",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/validation-logs/accept-final.log.gz",
+      "sha256": "a3347027e8bcae57937b04514140acd52d69bcc0139954bc137e8537c4ceef61",
+      "rawSha256": "673a138cea4d3ed3153849958d705fe9f33eb1d792c038ce696472e36b85a33e"
+    },
+    {
+      "command": "npm run qa:accept -- --level all --reuse --skip-browser",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/validation-logs/accept-handoff.log.gz",
+      "sha256": "af12b6faba31166cd96a58bcde51860866d89fa236513a023e9f35fb8a9e147f",
+      "rawSha256": "4ab8965263d69ee001ceafaf59330190ded31fba9e8c2364152d803464077de8"
+    },
+    {
+      "command": "npm run qa:threat",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/validation-logs/threat-final.log.gz",
+      "sha256": "dc3c18a37eb81d773d041615d78b120a316e32a03abd81f5658caf7256f15365",
+      "rawSha256": "32b9107a301d9504e4d21e3ff81382828440dde069b253d1d8487a380dd60503"
+    },
+    {
+      "command": "node --import tsx/esm tools/qa/accept/fix68-g-l3-retirement.mjs",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/validation-logs/retirement.log.gz",
+      "sha256": "2df015579c24be8fe2dd46b7afebfe4ef42ee253f20c7ab9c41086a7f7a9dfa6",
+      "rawSha256": "45f5ba5bddfac3efa00f13286ebef066b4431c4a770c07419dafe10656f67486"
+    }
+  ],
+  "notes": [
+    "Commands were invoked separately; this is not a claim that a single shell && chain passed.",
+    "Compiler/lint/107 unit tests/build pass. Acceptance retains measured failures and incomplete full-row coverage.",
+    "Standalone threat gate:14 flags,419.2seconds; no other owned check ran concurrently.",
+    "Final read-only retirement audit and metadata consolidation happened after the standalone gate; no gameplay code changes.",
+    "No push/deployment. No source change after final gameplay revision."
+  ],
+  "threatManifest": "docs/reports/fix68-g/threat-final/manifest.json"
+}

@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { runLevel } from '../../sim-runner/levels.ts';
 import { preset } from '../../../src/sim/progression/Campaign.ts';
 import { stateHash } from '../../../src/sim/world/stateHash.ts';
+import { emptyInput } from '../../../src/input/InputFrame.ts';
 import { WaveObserver } from '../threat/waves.ts';
 import { SpawnIdentities, PathProbe } from '../threat/observer.ts';
 import { observeAttackStarts } from '../threat/attackStarts.ts';
@@ -12,12 +13,22 @@ import { provenance } from './probe.ts';
 
 const tier = process.argv[2] ?? 'low';
 const passive = process.env.SWEEP_G_PASSIVE === '1';
+const stationaryInput = process.env.SWEEP_G_STATIONARY_INPUT === '1';
+if (stationaryInput && !passive) throw new Error('Stationary input requires passive protection');
+const prepare = world => {
+  if (!stationaryInput) return;
+  const apply = world.applyInput.bind(world);
+  world.applyInput = (frame, scheme) => apply(world.missions.state.l3?.phase === 'attack' ? emptyInput() : frame, scheme);
+};
+const pathAges = process.env.SWEEP_G_PATH_AGES?.split(',').map(Number) ?? [18, 20];
+if (pathAges.some(age => !Number.isFinite(age) || age <= 0)) throw new Error('Expected positive path snapshot ages');
 if (!['low', 'high'].includes(tier)) throw new Error('Expected low|high');
 const campaign = () => { const save = preset('L3-default'); save.settings.quality = tier; return save; };
 const identity = provenance(), samples = [], attacks = [], paths = [];
 let waves, observedHash, controlHash;
 const run = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefined, 0, { quality: tier,
   passive, beforeBegin: world => {
+    prepare(world);
     const ids = new SpawnIdentities(), probe = new PathProbe();
     const observer = new WaveObserver(world, 'L3', entity => ids.identity(entity));
     const spawn = world.infected.spawn.bind(world.infected);
@@ -36,7 +47,7 @@ const run = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefine
       const state = world.missions.state.l3, player = world.entities.get(1);
       if (!state.attackAt) return;
       const current = observer.finish();
-      for (const wave of current) if ([18 * 60, 20 * 60].includes(world.tick - Math.round(wave.startSeconds * 60))) {
+      for (const wave of current) if (pathAges.some(age => Math.round(age * 60) === world.tick - Math.round(wave.startSeconds * 60))) {
         const tokens = new Set(wave.members);
         const actors = world.infected.active.filter(e => e.health.current > 0 && !e.hidden && !e.pendingAdmission && tokens.has(ids.identity(e)));
         paths.push({ tick: world.tick, wave: wave.key, ageSeconds: wave.observedSeconds, player: { ...player.transform },
@@ -60,9 +71,9 @@ const run = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefine
   }, beforeDispose: world => { observedHash = stateHash(world.getState()); },
 });
 const control = await runLevel('L3', 'complete', 1, 90, 'auto', campaign(), undefined, 0, { quality: tier,
-  passive,
+  passive, beforeBegin: prepare,
   beforeDispose: world => { controlHash = stateHash(world.getState()); } });
-const result = { ...identity, tier, passive, method: 'Unchanged canonical input prefix for90sim seconds (passive flag records stationary protection): all three scheduled station waves plus at least40s after the third. No event injection or actor relocation. Actual attack starts on every target; independent2.5x path snapshots at cohort age18/20s. Exact final state compared with an unobserved90s control.',
+const result = { ...identity, tier, passive, stationaryInput, pathAges, method: 'Unchanged production-bot prefix for90sim seconds; stationaryInput matches the existing acceptance input wrapper when requested. Passive flag records survival protection. All three scheduled station waves plus at least40s after the third. No event injection or actor relocation. Actual attack starts on every target; independent2.5x path snapshots at the recorded cohort ages. Exact final state compared with an unobserved90s control.',
   run, control, observedHash, controlHash, identical: observedHash === controlHash, waves, paths, attacks, samples };
 const data = gzipSync(JSON.stringify(result));
 const path = `${process.env.SWEEP_G_TRACE_OUT ?? 'docs/reports/sweep-g'}/G-22-L3-${tier}-trace.json.gz`; writeFileSync(path, data);

@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "0dccac032bc397e34d4fe30c891eddb98e1a5bca",
+  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
   "clauses": [
     {
       "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
@@ -27,5 +27,6 @@
       "sha256": "32a5511ae0d40bc15dddf5e445bed32d192f8a84fe733aad62f00854786f34ef",
       "what": "Physical input trace, exact attack directions, per-tick sim/render headings and hashed reviewed captures."
     }
-  ]
+  ],
+  "notes": "Reviewed against final gameplay commit 49d44dc: later changes outside the stated fixture scope do not expand its coverage. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope."
 }

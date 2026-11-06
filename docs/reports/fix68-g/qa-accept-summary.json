@@ -1,0 +1,936 @@
+{
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "gameplayRevision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "commands": [
+    {
+      "command": "npm run qa:accept -- --level all --skip-browser",
+      "exitCode": 1
+    },
+    {
+      "command": "npm run qa:accept -- --level all --reuse --skip-browser",
+      "exitCode": 1
+    },
+    {
+      "command": "npm run qa:accept -- --level all --reuse --skip-browser",
+      "exitCode": 1,
+      "purpose": "Final consolidation after adding explicit failed-gate evidence to scoped reviews."
+    }
+  ],
+  "scope": "Both native policies and qualities, all10 levels;20 complete routes,20 matching controls. Browser skipped by this command; dedicated physical/render checks retain their limited scope. Exit1 retains measured failures and incomplete full rows.",
+  "levels": [
+    {
+      "level": "L1",
+      "file": "docs/reports/fix51-verify/L1.json",
+      "sha256": "39f508a5d8d0a2e70e2235faf543aa9f37e8f76248789e2d5a6341c09a7e0845",
+      "freshFailRows": [
+        {
+          "id": "L1-08",
+          "clauses": [
+            {
+              "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+              "tier": "low",
+              "policy": "complete"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L1-02",
+        "L1-03",
+        "L1-04",
+        "L1-05",
+        "L1-06",
+        "L1-10",
+        "L1-11",
+        "L1-12",
+        "L1-14",
+        "L1-15",
+        "L1-16",
+        "L1-17"
+      ]
+    },
+    {
+      "level": "L2",
+      "file": "docs/reports/fix51-verify/L2.json",
+      "sha256": "9a34518d9d47d09738c4d52fbd01f9e6a867136c2056d0f995910daf20310534",
+      "freshFailRows": [
+        {
+          "id": "L2-11",
+          "clauses": [
+            {
+              "clause": "native ordinary-route bridge-start population and route singles",
+              "tier": "low",
+              "policy": "controlled-fixture"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L2-01",
+        "L2-02",
+        "L2-03",
+        "L2-05",
+        "L2-06",
+        "L2-13",
+        "L2-14",
+        "L2-15",
+        "L2-16"
+      ]
+    },
+    {
+      "level": "L3",
+      "file": "docs/reports/fix51-verify/L3.json",
+      "sha256": "4f7cbf10a813f565d9d1169f19eed02ca3b5079f749195df46fb643ecc9dd525",
+      "freshFailRows": [
+        {
+          "id": "L3-02",
+          "clauses": [
+            {
+              "clause": "wave 2 actual admissions",
+              "tier": "low",
+              "policy": "complete"
+            },
+            {
+              "clause": "wave 2 actual admissions",
+              "tier": "high",
+              "policy": "stationary"
+            }
+          ]
+        },
+        {
+          "id": "L3-06",
+          "clauses": [
+            {
+              "clause": "calm squad following distance by member",
+              "tier": "low",
+              "policy": "controlled-fixture"
+            }
+          ]
+        },
+        {
+          "id": "L3-08",
+          "clauses": [
+            {
+              "clause": "median live within30m by traversed segment and concurrent cap",
+              "tier": "low",
+              "policy": "controlled-fixture"
+            },
+            {
+              "clause": "median live within30m by traversed segment and concurrent cap",
+              "tier": "high",
+              "policy": "controlled-fixture"
+            }
+          ]
+        },
+        {
+          "id": "L3-10",
+          "clauses": [
+            {
+              "clause": "native idle pressure actual admissions per full ten-second window",
+              "tier": "high",
+              "policy": "controlled-fixture"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L3-01",
+        "L3-05",
+        "L3-07",
+        "L3-12",
+        "L3-13",
+        "L3-14",
+        "L3-15",
+        "L3-16"
+      ]
+    },
+    {
+      "level": "L4",
+      "file": "docs/reports/fix51-verify/L4.json",
+      "sha256": "823c9209dbdbdb57b756a0885f31de92de45108bedcb59bd55d6275cea4c350b",
+      "freshFailRows": [],
+      "incompleteRows": [
+        "L4-02",
+        "L4-03",
+        "L4-05",
+        "L4-07",
+        "L4-08",
+        "L4-10",
+        "L4-11",
+        "L4-12",
+        "L4-13",
+        "L4-14",
+        "L4-15",
+        "L4-16",
+        "L4-17",
+        "L4-18"
+      ]
+    },
+    {
+      "level": "L5",
+      "file": "docs/reports/fix51-verify/L5.json",
+      "sha256": "795983a240f108bb4233e8593f2a7121cfa1db4b8c6729e43e0c95bee976f7d9",
+      "freshFailRows": [
+        {
+          "id": "L5-08",
+          "clauses": [
+            {
+              "clause": "calm straight-walk follower distance tolerance",
+              "tier": "low",
+              "policy": "complete"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L5-02",
+        "L5-03",
+        "L5-06",
+        "L5-07",
+        "L5-09",
+        "L5-10",
+        "L5-11",
+        "L5-12",
+        "L5-14"
+      ]
+    },
+    {
+      "level": "L6",
+      "file": "docs/reports/fix51-verify/L6.json",
+      "sha256": "fac32f3f23a6f325459161f687dea53a2e086bd48b2df2a28c5367b85c16289f",
+      "freshFailRows": [
+        {
+          "id": "L6-04",
+          "clauses": [
+            {
+              "clause": "second-wave admitted identities",
+              "tier": "low",
+              "policy": "stationary"
+            },
+            {
+              "clause": "second-wave source accesses",
+              "tier": "low",
+              "policy": "stationary"
+            },
+            {
+              "clause": "second-wave admitted identities",
+              "tier": "high",
+              "policy": "stationary"
+            },
+            {
+              "clause": "second-wave source accesses",
+              "tier": "high",
+              "policy": "stationary"
+            }
+          ]
+        },
+        {
+          "id": "L6-05",
+          "clauses": [
+            {
+              "clause": "combat hard rule on actual player windups",
+              "tier": "low",
+              "policy": "complete"
+            },
+            {
+              "clause": "real player/group windups per minute",
+              "tier": "low",
+              "policy": "complete"
+            },
+            {
+              "clause": "combat hard rule on actual player windups",
+              "tier": "high",
+              "policy": "complete"
+            },
+            {
+              "clause": "real player/group windups per minute",
+              "tier": "high",
+              "policy": "complete"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L6-01",
+        "L6-02",
+        "L6-06",
+        "L6-08",
+        "L6-09",
+        "L6-11",
+        "L6-12",
+        "L6-14"
+      ]
+    },
+    {
+      "level": "L7",
+      "file": "docs/reports/fix51-verify/L7.json",
+      "sha256": "41640d94ccb8057f2bd75647765574e75c0d5a316e1e1d8fd3b8aa9b9a8e86b9",
+      "freshFailRows": [
+        {
+          "id": "L7-09",
+          "clauses": [
+            {
+              "clause": "observed human follower pace versus phase group median",
+              "tier": "high",
+              "policy": "complete"
+            }
+          ]
+        }
+      ],
+      "incompleteRows": [
+        "L7-01",
+        "L7-02",
+        "L7-03",
+        "L7-06",
+        "L7-07",
+        "L7-08",
+        "L7-11",
+        "L7-12"
+      ]
+    },
+    {
+      "level": "L8",
+      "file": "docs/reports/fix51-verify/L8.json",
+      "sha256": "b5876f961a106ffb3c5716f28c7670fede02a3f9cb4ac26d2f3610fa28eed9cc",
+      "freshFailRows": [],
+      "incompleteRows": [
+        "L8-01",
+        "L8-02",
+        "L8-03",
+        "L8-04",
+        "L8-05",
+        "L8-07",
+        "L8-08",
+        "L8-09",
+        "L8-10",
+        "L8-11"
+      ]
+    },
+    {
+      "level": "L9",
+      "file": "docs/reports/fix51-verify/L9.json",
+      "sha256": "f5fc36f0b077f080d61785496cb5b0c58cfd1c3fe9942868d15a842129f983ac",
+      "freshFailRows": [],
+      "incompleteRows": [
+        "L9-01",
+        "L9-02",
+        "L9-03",
+        "L9-04",
+        "L9-05",
+        "L9-06",
+        "L9-07",
+        "L9-09"
+      ]
+    },
+    {
+      "level": "L10",
+      "file": "docs/reports/fix51-verify/L10.json",
+      "sha256": "03b91a73c618a8adc299f6d8e88e2d5e38de2779ee85e8d59750eee4beb8bb09",
+      "freshFailRows": [],
+      "incompleteRows": [
+        "L10-02",
+        "L10-03",
+        "L10-04",
+        "L10-05",
+        "L10-06",
+        "L10-07",
+        "L10-08",
+        "L10-09",
+        "L10-11",
+        "L10-12",
+        "L10-14"
+      ]
+    }
+  ],
+  "native": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "98275606d015d28cf2fe88d8942d2376e78adf94ae9f1b246ddc70d659ed0fb0",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "b5e6a3be"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "eaab06cec370df6b0e05731ef13b6d01d848f1eeee8fd2ad6bb8453147befa99",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "9c98c50e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "c49239fa600f362c5fd1cc59ccb6a6b7650177bf9aab05c92bbca95726b8b7be",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "462b2557"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "3cf50a78fac5ee9e33fdf83e0018c9acbec1db6720ae5b01e45dbb0ef7e8d6e8",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "1f8e7129"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "c224b6779fb890d74112fc834bbeda78519787ffc78508656808a837590ee46b",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "2c5c5390"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "fd58c742d803ba7a34ddfa33f033bdcbd95031622ea1b957ad7e8b1fa52ee6d1",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "726c5b94"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "eda7c1e2e9544ee56db664545167b2c5662d12ecfe2f2662c8175e669ae61e00",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "8c8b9c53"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "788b8d0246ceb1db166bfa498bd22510faaf481b422ea2cf1c751ae30e852d08",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "3cc64483"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "3ce6de95"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "dfcceac0538db2df4f30467a13571073eb847f09e6e089d5c7f7aa0f8ccc11b7",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "c30feb32"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "9e71c96f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "29346ba31e0ba95df57db1ae93908605fe0807169657f41b23514bc7d9179905",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "9e07e267"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "0315ed68f01b3052fd185de00051b726489856b9c5c692e702e74e6cdf83b25d",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "a65e22be"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "9f411253f25baa3f9a4d7c271d02caae779cbe82bf43ac0d354b058baaad7551",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "4b4301c8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "1633562b2faf08b58bf956d820c69767476bafa8db15f8bdccea7b7ecc3a55b5",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "d2a00dc0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "60cf7742c18fb6b7891d83a2f7ea2a1b6098dee78b86fe9cf35227e67bc8f21f",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "220225b9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "87056c5a3542d41903622d434264bf772ce3e4f9597d3a65b12b866228ca15e6",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "dddd9808"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "64667528c5b70c5ff760b256c80746aeb2bc4c4633222bb3f0bd395a80f04c5e",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "045408fd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "9382bbfaa27e8730dd1dea37b11310ee7451013323f322bd308cdc2f9f9d132a",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "046b9ac6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "a841a06d76906fbf3a81a09c11eb3734041ca1812869438c90b36d83609e8b21",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "6a06279f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "d8503f9159eb91dbaee3642b586b3d80c97a11380e920f6d639a7babd849e744",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "55a0e6d4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "8c3b023e5dec5c389bdc1db87b7d209c68695ef410a07393c932a00d38e33956",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "9393efd4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "6a8557d7bdd93d23cb62537e9445f5cbe3264531416d9735af1d4f0203835a2a",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "dc096532"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "849949c423ff0f89838041a0ce4aac760cdc27da7a6948735480da0ef09e169e",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "82bc53b6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "fa3ffe334f3960d92879a66519f9a898dfb71b39be5610043196ba76a017a7a3",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "7037718c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+      "sha256": "4cea695d03ff098e5db51348e70c216881fa8648c0250ffdd9e2604813e3ff40",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "53644089"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "1e5a26dde45a7e55340a8cc6bf118720157bf7b1f53dc935ae427857379368ff",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "34cbf696"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+      "sha256": "571da28af929c32b329fe2aba11373e80a63a7a03d65c47d734ea31e1f4a4ff3",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "7b187aae"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "sha256": "b87e67a7e03140ca6763fca1c4219d5bc6b955e28ea2fde43d1bca7c687055ef",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "b1b9cd1a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "sha256": "2ec4d6e3c3bc6b8aa265e259d8af19c4acfa126a7d90c07d38ded5be26893a57",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "7aab142d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "sha256": "cc8f6266afe350e3f537180172f892608fce210a62b1f4cab4e491437f868d37",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "b12fc825"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "sha256": "0f0d0dbb02ca5d1a93239372cbc4888e8fe00a108ffb325dbce69b90c8c4d71d",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "b480e68f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+      "sha256": "75c325979e67cac3845e2de45f7908e4065e219a486fdb68b3c6a2867647a1ed",
+      "level": "L9",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "970c818b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+      "sha256": "f285b062da927c2345221c954c0685225933cf0e2c87289c5f1ea1db4ac4282d",
+      "level": "L9",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "complete",
+      "stateHash": "970c818b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+      "sha256": "7408b65ecbd10783783af6cca6ba8e2e0e9ceebb54d0052856500e7195c018ba",
+      "level": "L9",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "42d0758b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+      "sha256": "14755a4a3db948e86daad0b2d3c3edfdff4ba8840bd1d6267d0d619068c8e2e2",
+      "level": "L9",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "complete",
+      "stateHash": "42d0758b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "575d8a08c910e72f83c82cbc898aed14256d5dacafc1ac4265aef58da1ca2fd1",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "14a5235c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "f6b04452aa9b3c8f2b1b5beba579e26932f085fcc72128793e618386f5490c2d",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "2949e325"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "5b42b5d73bd522e1655b2963e281a76599a8a8a5a761ee3efa374ec82b772faf",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "stateHash": "fe1371ba"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "9fe7820a9c8ea1c8968bc214f594f41ee739253d36345871f692cd301a145c77",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "stateHash": "2ad5bffb"
+    }
+  ],
+  "controls": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-checkpoints.json",
+      "sha256": "4b67fe39b5e5cd02e3810c66462f055f54ab8437f22545e2da23e1e0ed2ccade",
+      "level": "L1",
+      "tier": "low",
+      "control": {
+        "observed": "b5e6a3be",
+        "control": "b5e6a3be",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-checkpoints.json",
+      "sha256": "50d599a9259771c247101d49715c994fd083e08278d319508cd06a4a29877ee6",
+      "level": "L1",
+      "tier": "high",
+      "control": {
+        "observed": "462b2557",
+        "control": "462b2557",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json",
+      "sha256": "a7e7682f04e169a1538891e10e366264f02453f578c11ae833464d93f19a9bd6",
+      "level": "L2",
+      "tier": "low",
+      "control": {
+        "observed": "2c5c5390",
+        "control": "2c5c5390",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json",
+      "sha256": "8dc6774258b1c6c2ba48333cc4605c63f8f7ab51b6f64db9fa77a8363f62b4ab",
+      "level": "L2",
+      "tier": "high",
+      "control": {
+        "observed": "8c8b9c53",
+        "control": "8c8b9c53",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
+      "sha256": "f20502267e11f804230abb42a99a984e68e9ce9c9f5af7b4839152107b86326e",
+      "level": "L3",
+      "tier": "low",
+      "control": {
+        "observed": "3ce6de95",
+        "control": "3ce6de95",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
+      "sha256": "ca5e18e41992f62ca61857d8d5ec431ee4f82a6b831049ea030c47b24fb3461e",
+      "level": "L3",
+      "tier": "high",
+      "control": {
+        "observed": "9e71c96f",
+        "control": "9e71c96f",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json",
+      "sha256": "999f93068e85e08205b7499a033feaddb508bf08fe5ca7148e08cd9dc763aef3",
+      "level": "L4",
+      "tier": "low",
+      "control": {
+        "observed": "a65e22be",
+        "control": "a65e22be",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json",
+      "sha256": "385c992b6860e437b059c33e06619dd9cbe697470258572d50212e6469f3b617",
+      "level": "L4",
+      "tier": "high",
+      "control": {
+        "observed": "d2a00dc0",
+        "control": "d2a00dc0",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json",
+      "sha256": "bb058e76fa4fea5b58899a76e6f567034e8b78d0c477376bc3fabe710ea98102",
+      "level": "L5",
+      "tier": "low",
+      "control": {
+        "observed": "dddd9808",
+        "control": "dddd9808",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json",
+      "sha256": "1d5022a13aaed5b736ee1feebb5233a409f11e71d572b368733f23ee360d5085",
+      "level": "L5",
+      "tier": "high",
+      "control": {
+        "observed": "046b9ac6",
+        "control": "046b9ac6",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json",
+      "sha256": "d3a0830d1a7e6e55cfab5b21380f5bc57325822d19033294c89e34111f7f98db",
+      "level": "L6",
+      "tier": "low",
+      "control": {
+        "observed": "55a0e6d4",
+        "control": "55a0e6d4",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json",
+      "sha256": "a611967084054be0302c9884e5806156c3ae3dcfc6d7e2f23bd52b5a553b662e",
+      "level": "L6",
+      "tier": "high",
+      "control": {
+        "observed": "dc096532",
+        "control": "dc096532",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+      "sha256": "6a44ce8067d2039cc2f6cbf85ab20fe47b8ebb2bd2b122d3fa435e5757e90097",
+      "level": "L7",
+      "tier": "low",
+      "control": {
+        "observed": "7037718c",
+        "control": "7037718c",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+      "sha256": "916a2b4645b76400b0cc743ce32271f331b187cf98557e393c387d0fc5dfea46",
+      "level": "L7",
+      "tier": "high",
+      "control": {
+        "observed": "34cbf696",
+        "control": "34cbf696",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json",
+      "sha256": "e455687a612e82d6663b81701f1a66fab757987e74779220cc154522ec4ce66e",
+      "level": "L8",
+      "tier": "low",
+      "control": {
+        "observed": "b1b9cd1a",
+        "control": "b1b9cd1a",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json",
+      "sha256": "21329f68eb9dea43c85b2b530966d2ecf81c1087b20fdadd1101f21b145197a6",
+      "level": "L8",
+      "tier": "high",
+      "control": {
+        "observed": "b12fc825",
+        "control": "b12fc825",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
+      "sha256": "f858350382b896185b972d0d204d73d961f0a655f63b167806b3f535d71d11a6",
+      "level": "L9",
+      "tier": "low",
+      "control": {
+        "observed": "970c818b",
+        "control": "970c818b",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json",
+      "sha256": "ab322a0f02f50f9d45263bd6e1192ca56af63139067cd23029f6160d4ba0740d",
+      "level": "L9",
+      "tier": "high",
+      "control": {
+        "observed": "42d0758b",
+        "control": "42d0758b",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+      "sha256": "47d2b5f1a40c5da32753d113ec4d2ff7647f442e40f2a4987e00b536c2da7496",
+      "level": "L10",
+      "tier": "low",
+      "control": {
+        "observed": "14a5235c",
+        "control": "14a5235c",
+        "identical": true
+      }
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
+      "sha256": "3cebf7a07838894519899001337de230caf75aef65a0a26022b1fd7d840465e6",
+      "level": "L10",
+      "tier": "high",
+      "control": {
+        "observed": "fe1371ba",
+        "control": "fe1371ba",
+        "identical": true
+      }
+    }
+  ],
+  "fixtureErrors": [],
+  "checkpointCases": {
+    "PASS": 95,
+    "FAIL": 0,
+    "NOT CHECKED": 0
+  }
+}
