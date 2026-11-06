@@ -1,3 +1,4 @@
+import { cloneData } from './core/clone';
 import { LevelEightBot } from './debug/bot/LevelEightBot';
 import type { LevelSevenBot } from './debug/bot/LevelSevenBot';
 import type { LevelNineBot } from './debug/bot/LevelNineBot';
@@ -396,7 +397,7 @@ export class Game {
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
       this.campaign.cureResume = { ...this.world.missions.saveResume(), cameraZoom: this.view.view.getState().targetZoom };
     }
-    if(liveCampaign){this.world.progression!.campaign=structuredClone(this.campaign);}
+    if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
     return this.saves.write(this.campaign);
   }
   campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}

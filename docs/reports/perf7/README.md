@@ -1,5 +1,7 @@
 # perf7 — targeted release performance fixes
 
+> Follow-up: [perf7b](../perf7b/README.md) closes the remaining L10 hitch with two clean 90-second captures. This part-1 report retains its historical failed confirmation.
+
 **Performance FAIL: 7/8 targeted cells pass; L10 confirmation fails. All required gates pass. Goal not met.**
 
 Candidate: `5f790f7`, fresh `MI_BUILD_CACHE=off npm run build`, public bundle `index-BIBEe6kP.js`. Live PROD: batch 54, `index-DSZ-4VAt.js`, SHA-256 `c23aa36a5b56cc4dc64d97a63125ad66008b5727f20cd6e841143c73e1cc54e4`. The new mirror has 2,756 files and exactly matches the perf6 deployment ledger. No runtime fallback files were substituted.

@@ -1,0 +1,109 @@
+{
+  "corpse-equivalence": {
+    "revision": "1782d04",
+    "cases": 400,
+    "budgetFrames": 973,
+    "framedCases": 400,
+    "airborneChecks": 3,
+    "densePileCases": 160,
+    "parkedVehicles": 240,
+    "scriptedAndDynamicVehicles": 2,
+    "phases": [
+      "ordinary",
+      "courier exclusion",
+      "hidden/moving hulls",
+      "epilogue"
+    ],
+    "baselineSha256": "7eec10ccfc799b8ee8ccc0d4214d176928fa7ef434d6dc4ca57b34b190edb42f",
+    "candidateSha256": "b203ded5682b6608dc0ab1a6f16e61d95b705191869d7acde2ca02429d70c70b",
+    "result": "PASS: identical poses and audits"
+  },
+  "pruning-equivalence": {
+    "work": {
+      "baseline": {
+        "supportBelow": 211127,
+        "move": 14611,
+        "clear": 387251
+      },
+      "candidate": {
+        "supportBelow": 31060,
+        "move": 1616,
+        "clear": 23011
+      },
+      "framed": {
+        "supportBelow": 31055,
+        "move": 1615,
+        "clear": 23007
+      }
+    },
+    "revision": "9ab7ba7",
+    "cases": 400,
+    "budgetFrames": 1124,
+    "framedCases": 400,
+    "airborneChecks": 3,
+    "densePileCases": 160,
+    "parkedVehicles": 240,
+    "scriptedAndDynamicVehicles": 2,
+    "phases": [
+      "ordinary",
+      "courier exclusion",
+      "hidden/moving hulls",
+      "epilogue"
+    ],
+    "baselineSha256": "d2a21f31b10d81f8ce6dd5ab9b30c08a065cf36ecc0839e0f97cb5544bea3590",
+    "candidateSha256": "b203ded5682b6608dc0ab1a6f16e61d95b705191869d7acde2ca02429d70c70b",
+    "result": "PASS: identical poses and audits"
+  },
+  "moving-bound-proof": {
+    "injectedAtFrame": 31,
+    "originSweepsBeforeInjection": 1,
+    "originSweepsAfter": 2,
+    "courierDistance": 1.0457568696907071,
+    "result": "PASS: invalidated bound restarts and settles clear of courier"
+  },
+  "dom-cache-proof": {
+    "cases": 2000,
+    "counts": {
+      "before": {
+        "css": 5334,
+        "attributes": 6000
+      },
+      "after": {
+        "css": 0,
+        "attributes": 0
+      }
+    },
+    "html": "<div aria-label=\"initial\" data-entity-id=\"1\" data-clamped=\"true\" style=\"color: red; position: absolute; left: 50%; top: 66%;\">666</div>",
+    "result": "PASS: identical DOM, including CSSOM rounding and repeated state"
+  },
+  "save-clone-bench": {
+    "results": {
+      "structuredClone": [
+        18.72658299999999,
+        14.24437500000002,
+        21.13737499999999,
+        20.987832999999995,
+        20.732499999999987
+      ],
+      "cloneData": [
+        8.064041999999972,
+        8.130875000000003,
+        7.641375000000039,
+        7.861625000000004,
+        7.805165999999986
+      ]
+    },
+    "result": "PASS: exact campaign copies; current and checkpoint remain independent",
+    "jsonLength": 5538715
+  },
+  "clear-segment-proof": {
+    "cases": 200000,
+    "admitted": 93610,
+    "maxError": 9.923779290562196e-14,
+    "wallCount": 24,
+    "dynamicBlockers": 8,
+    "masks": 2,
+    "result": "PASS: every fast admission reaches the legacy root within 1 cm",
+    "status": "reverted experiment; not selected implementation"
+  }
+}

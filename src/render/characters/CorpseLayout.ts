@@ -44,25 +44,33 @@ interface SearchState {
   neighbors: (RestingPose | undefined)[]; layers: (RestingPose | undefined)[];
   spatial: SpatialHash; query: { x: number; z: number; r: number }; ids: number[]; swept: { x: number; z: number };
   collectNeighbor(id: number): void; rootX: number; rootZ: number; rootClear: boolean; rootFloor: number;
-  queriedX: number; queriedZ: number; neighborCount: number;
+  queriedX: number; queriedZ: number; neighborCount: number; rootChecked: boolean; bestY: number;
+}
+/** Route admission is needed only for a footprint that could win. */
+function reachableRoot(state: SearchState): boolean {
+  if (state.rootChecked) return state.rootClear;
+  state.rootChecked = true;
+  const { e, nav, startsOnVehicle, swept, rootX: x, rootZ: z } = state;
+  if (nav && !startsOnVehicle) {
+    swept.x = e.transform.x; swept.z = e.transform.z;
+    nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
+    const errorX = Math.abs(swept.x - x), errorZ = Math.abs(swept.z - z);
+    state.rootClear = errorX <= .005 && errorZ <= .005 || errorX <= .01 && errorZ <= .01 && Math.hypot(errorX, errorZ) <= .01;
+  }
+  return state.rootClear;
 }
 /** One shared evaluator keeps dense searches on the same optimized numeric path. */
 function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number, supported = true): RestingPose | undefined {
-  const { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear, neighbors, layers } = state;
+  const { player, nav, support, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear, neighbors, layers } = state;
   if (x !== state.rootX || z !== state.rootZ) {
     state.rootX = x; state.rootZ = z; state.rootClear = vehicleClear(x, z);
-    // A body falling off a hull does not need a route from its roof.
-    if (state.rootClear && nav && !startsOnVehicle) {
-      const swept = state.swept; swept.x = e.transform.x; swept.z = e.transform.z;
-      nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
-      const errorX = Math.abs(swept.x - x), errorZ = Math.abs(swept.z - z);
-      // This inner square is strictly inside the legacy 1 cm circle.
-      // Preserve the exact hypot comparison along its boundary.
-      state.rootClear = errorX <= .005 && errorZ <= .005 || errorX <= .01 && errorZ <= .01 && Math.hypot(errorX, errorZ) <= .01;
-    }
+    state.rootChecked = false;
     state.rootFloor = NaN;
   }
   if (!state.rootClear) return;
+  // Until a winner exists, retain the legacy last-rejected footprint for its
+  // fallback. Once one exists, defer the sweep until the height can improve it.
+  if (state.bestY === Infinity && !reachableRoot(state)) return;
   const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
   const ax = x - dx * .15, az = z - dz * .15;
   const bx = x + dx * length, bz = z + dz * length;
@@ -72,11 +80,6 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
   if (player && !(pointDistanceSquared(player.x, player.z, ax, az, bx, bz) >= .95 ** 2)) return;
   if (Number.isNaN(state.rootFloor)) state.rootFloor = support?.supportBelow(x, z, feet) ?? feet;
   let y = state.rootFloor; numeric[7] = y;
-  if (supported) for (let sample = 0; sample < 3; sample++) {
-    const t = sample * .5;
-    const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
-    if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
-  }
   if (x !== state.queriedX || z !== state.queriedZ) {
     state.query.x = state.queriedX = x; state.query.z = state.queriedZ = z;
     state.neighborCount = 0;
@@ -104,6 +107,15 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
   for (let i = 0; i < layerCount; i++) {
     const other = layers[i]!;
     if (y + height > other.y + .001 && y < other.y + other.height - .001) y = other.y + other.height;
+  }
+  // Navigation and support samples cannot rescue a footprint that is already
+  // higher than the current winner. Dense heaps reject those before sweeping.
+  if (state.bestY !== Infinity && y > feet + .05 && !(y < state.bestY - .001)) return;
+  if (!reachableRoot(state)) return;
+  if (supported) for (let sample = 0; sample < 3; sample++) {
+    const t = sample * .5;
+    const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
+    if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
   }
   pose.x = x; pose.z = z; pose.yaw = yaw; pose.ax = ax; pose.az = az; pose.bx = bx; pose.bz = bz; pose.y = y;
   // Reuse search scratch; only the winning pose needs an owned record.
@@ -297,7 +309,7 @@ export class CorpseLayout {
     // made the zoo's settling waves block the view update.
     const state: SearchState = { e, player, nav, support, startsOnVehicle, feet, direction, length, radius, height, pose, numeric, ownPose, vehicleClear,
       neighbors, layers, spatial: this.spatial, query: this.query, ids: this.neighbors, swept: this.swept,
-      rootX: NaN, rootZ: NaN, rootClear: false, rootFloor: feet, queriedX: NaN, queriedZ: NaN, neighborCount: 0,
+      rootX: NaN, rootZ: NaN, rootClear: false, rootFloor: feet, queriedX: NaN, queriedZ: NaN, neighborCount: 0, rootChecked: false, bestY: Infinity,
       collectNeighbor: id => { if (id !== e.id) neighbors[state.neighborCount++] = this.bodies.get(id)!; } };
     let best: RestingPose | undefined;
     // First prefer an unoccupied footprint, nearest to the death position.
@@ -313,6 +325,7 @@ export class CorpseLayout {
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
         for (let turn = 0; turn < 4; turn++) {
+          state.bestY = best?.y ?? Infinity;
           const candidate = evaluateCandidate(state, x, z, initialYaw + turn * 2.399963229728653);
           if (!candidate) continue;
           if (candidate.y <= feet + .05) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; break; }
@@ -323,13 +336,22 @@ export class CorpseLayout {
           yield;
           // The courier can move while a dense search is suspended. A best
           // candidate from an earlier frame must still leave their capsule clear.
-          if (best && player && !(pointDistanceSquared(player.x, player.z, best.ax, best.az, best.bx, best.bz) >= .95 ** 2)) best = undefined;
+          if (best && player && !(pointDistanceSquared(player.x, player.z, best.ax, best.az, best.bx, best.bz) >= .95 ** 2)) {
+            best = undefined; state.bestY = Infinity;
+            // A bound is valid only while its winner is valid. Revisit the
+            // skipped roots, including the legacy fallback footprint.
+            state.rootX = state.rootZ = state.queriedX = state.queriedZ = NaN;
+            numeric[0] = e.transform.x; numeric[1] = e.transform.z; numeric[2] = initialYaw;
+            numeric[3] = numeric[4] = numeric[5] = numeric[6] = 0; numeric[7] = feet;
+            ring = -1; break;
+          }
         }
       }
       if (best && best.y <= feet + .05) break;
     }
     // A narrow doorway can fit the actor but reject a conservative full-body
     // strip. Keep the bounded root and heap layer, never teleport it elsewhere.
+    if (!best) state.bestY = Infinity;
     if (!best) for (let i = 0; i < 80 && !best; i++) {
       const angle = initialYaw + i * Math.PI * 2 / 80;
       best = evaluateCandidate(state, e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
