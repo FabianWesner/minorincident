@@ -1,0 +1,37 @@
+{
+  "row": "L8-08",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-c3",
+  "date": "2026-11-05",
+  "commit": "3a44a56cd66e67a19080dff2220bf216c29b3a72",
+  "clauses": [
+    {
+      "clause": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
+      "verdict": "FAIL",
+      "note": "Current source8765679a low physical route atx34.0358,z78.8733, tick7819. Personally inspected all four low/high render and zoom0.5/1.5 frames: the courier is only a head/goggles inside a large green canopy shape; her body, backpack and weapon disappear. This fails player readability. The route later reaches its reservation cap and does not qualify L8 completion; that does not undo this actual rendered counterexample. Animal snarl/wounds and moving zebra legs remain unmeasured in this row. No small proven game fix is claimed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c3/L8-08/canopy-counterexamples.jpg",
+      "sha256": "7d7d45ed3883433a91773c7726823d5d82e46c8d2a820184c908751b293f8c9a",
+      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-route/low-review/review.json",
+      "sha256": "cd338f6b757ef12893f2ff41462e6f78fe9731f072098df44b85d66eea9bc7b2",
+      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-route/L7-L8-carried-low-input.json",
+      "sha256": "18094f101c97ef77e8e24a73693e6183778ee93a2cc6167c1a39733bbfce8e3c",
+      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L8-route/worker.ts",
+      "sha256": "ae9a0a1fb331f0202fcb79c12dff0449015a603729054312a20e873dea68fd3c",
+      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+    }
+  ],
+  "notes": "Shared pooled headless Metal WebGL2; actual movement and ordinary actors, protected courier requested; camera/quality photos are presentation overrides only. Any failed clause fails the compound row; no PASS for unmeasured clauses."
+}
