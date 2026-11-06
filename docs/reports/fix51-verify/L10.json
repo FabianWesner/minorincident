@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:32:21.844Z",
+  "generatedAt": "2026-11-06T03:36:03.062Z",
   "policies": [
     {
       "tier": "low",
@@ -6525,13 +6525,47 @@
       "id": "L10-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex fix53-c): Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification. Not measured by this batch run.",
+      "value": "low/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[119],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS); high/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[122],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS) Manual review FAIL (STALE, Codex fix53-c): Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L10-hold.json",
         "docs/reports/fix53-c/L10-hold-before.json"
       ],
       "expected": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 6× catch-up on the final delivery approach, vqa-fix-2) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-07",
+          "clause": "persistent Mega identity without scheduled replacement or teleport",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              119
+            ],
+            "relocations": []
+          },
+          "target": "one persistent ID; zero scheduled relocations (E32-AC21)",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-hold.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "persistent Mega identity without scheduled replacement or teleport",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              122
+            ],
+            "relocations": []
+          },
+          "target": "one persistent ID; zero scheduled relocations (E32-AC21)",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-hold.json"
+        }
+      ],
       "historical": {
         "id": "L10-07",
         "level": "L10",
@@ -6838,17 +6872,16 @@
     {
       "id": "L10-11",
       "status": "FAIL",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":62.36666666666667,\"playerWindups\":73,\"groupWindups\":0,\"attacksPerMinute\":70.22982362373062} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent hold player windups per minute: 70.22982362373062 (target 8 ≤ value ≤ Infinity; PASS); low/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":62.31666666666667,\"playerWindups\":1263,\"groupWindups\":0,\"attacksPerMinute\":1216.0470714094677} (target nonzero player windups in each combat policy; PASS); low/stationary real player/group windups per minute: 1216.0470714094677 (target 8 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":64.2,\"playerWindups\":281,\"groupWindups\":0,\"attacksPerMinute\":262.61682242990656} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent hold player windups per minute: 262.61682242990656 (target 8 ≤ value ≤ Infinity; PASS); high/complete competent hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":62.31666666666667,\"playerWindups\":1772,\"groupWindups\":0,\"attacksPerMinute\":1706.1246322546135} (target nonzero player windups in each combat policy; PASS); high/stationary real player/group windups per minute: 1706.1246322546135 (target 8 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review FAIL (STALE, Codex sweep-c3): Fresh original stationary-policy proof measures actual persistent Mega crossing of25m arena at57.7833333333s low /56.3166666667s high after charge activation, outside unchanged120–160s target. Both full240s assaults reach capped95/190 peaks, other current native windup/reach checks pass; neither actual Mega relocates and canonical stationary final-state controls are identical. Current arrival counterexample conclusively fails row; no timer/count/cap/target/game/checker change. Timing is simulation time, not performance timing. Open prior FAIL: Native low complete step/hold: 62.32 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Low passive hold: 111.32 attacks/min, last reach 93/94 = 98.9%; high peak and ~140 s Mega arrival not covered by the 60 s passive window. Complete low hold records0 windups over62.3 s; the acceptance document hard-rule wording is stricter than the gate diagnostic and requires explicit competent-policy qualification.",
+      "currentStatus": "FAIL",
+      "value": "low/stationary Mega arena arrival after charge activation: 57.78333333333333 (target 120 ≤ value ≤ 160; FAIL); high/stationary Mega arena arrival after charge activation: 56.45 (target 120 ≤ value ≤ 160; FAIL) Manual review FAIL (FRESH, Codex sweep-c5): Current-source full 240-second native hold in both tiers: Mega crosses the 25 m arena at +57.7833 s low / +56.4500 s high, outside the unchanged 120–160 s by-walking target. Both tiers reach capped peaks 95/190, exceed 8 attacks/min (mega phase 1238.11/1194.11), and have 100% bounded-path reachability. Each run retains one Mega ID, zero scheduled relocations and canonical final-state identity. This is a measured arrival-time FAIL; no timer, cap, criterion or game change. Open prior FAIL: Native low complete step/hold: 62.32 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Low passive hold: 111.32 attacks/min, last reach 93/94 = 98.9%; high peak and ~140 s Mega arrival not covered by the 60 s passive window. Complete low hold records0 windups over62.3 s; the acceptance document hard-rule wording is stricter than the gate diagnostic and requires explicit competent-policy qualification.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L10-hold.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/sweep-c3/L10-11/l10-hold-proof.json.gz",
-        "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-        "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+        "docs/reports/fix55-c/L10-11-boundaries.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
@@ -6942,6 +6975,77 @@
         },
         {
           "id": "L10-11",
+          "clause": "full active assault hold duration",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 240,
+          "target": "240 ≤ value ≤ 240",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "capped active infected peak",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 95,
+          "target": "75 ≤ value ≤ 95",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "hold player windups per minute",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 1238.1146402444672,
+          "target": "8 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "hold bounded-path reachable share",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "Mega arena arrival after charge activation",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": 57.78333333333333,
+          "target": "120 ≤ value ≤ 160",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "persistent Mega identity without scheduled replacement or teleport",
+          "level": "L10",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              119
+            ],
+            "relocations": []
+          },
+          "target": "one persistent ID; zero scheduled relocations (E32-AC21)",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-hold.json"
+        },
+        {
+          "id": "L10-11",
           "clause": "combat hard rule on actual player windups",
           "level": "L10",
           "tier": "high",
@@ -7026,6 +7130,77 @@
           "value": 100,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "full active assault hold duration",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 240,
+          "target": "240 ≤ value ≤ 240",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "capped active infected peak",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 190,
+          "target": "140 ≤ value ≤ 190",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "hold player windups per minute",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 1194.110565793129,
+          "target": "8 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "hold bounded-path reachable share",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "Mega arena arrival after charge activation",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": 56.45,
+          "target": "120 ≤ value ≤ 160",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+        },
+        {
+          "id": "L10-11",
+          "clause": "persistent Mega identity without scheduled replacement or teleport",
+          "level": "L10",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              122
+            ],
+            "relocations": []
+          },
+          "target": "one persistent ID; zero scheduled relocations (E32-AC21)",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-hold.json"
         }
       ],
       "historical": {
@@ -7042,35 +7217,40 @@
       "reviewDecision": {
         "row": "L10-11",
         "status": "FAIL",
-        "reviewer": "Codex sweep-c3",
-        "date": "2026-11-05",
-        "commit": "1abbb0e54627a41f5a8c984d2dd494f56725fdad",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "ef01b8b04de57f5ec27533d309dfb9b66de6751b",
         "clauses": [
           {
             "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
             "verdict": "FAIL",
-            "note": "Fresh original stationary-policy proof measures actual persistent Mega crossing of25m arena at57.7833333333s low /56.3166666667s high after charge activation, outside unchanged120–160s target. Both full240s assaults reach capped95/190 peaks, other current native windup/reach checks pass; neither actual Mega relocates and canonical stationary final-state controls are identical. Current arrival counterexample conclusively fails row; no timer/count/cap/target/game/checker change. Timing is simulation time, not performance timing."
+            "note": "Current-source full 240-second native hold in both tiers: Mega crosses the 25 m arena at +57.7833 s low / +56.4500 s high, outside the unchanged 120–160 s by-walking target. Both tiers reach capped peaks 95/190, exceed 8 attacks/min (mega phase 1238.11/1194.11), and have 100% bounded-path reachability. Each run retains one Mega ID, zero scheduled relocations and canonical final-state identity. This is a measured arrival-time FAIL; no timer, cap, criterion or game change."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c3/L10-11/l10-hold-proof.json.gz",
-            "sha256": "104449cd07e694022c6224a7b790906a9a1726d0a8f6a21316307509c0d41709",
-            "what": "Fresh original stationary-policy proof measures actual persistent Mega crossing of25m arena at57.7833333333s low /56.3166666667s high after charge activation, outside unchanged120–160s target. Both full240s assaults reach capped95/190 peaks, other current native windup/reach checks pass; neither actual Mega relocates and canonical stationary final-state controls are identical. Current arrival counterexample conclusively fails row; no timer/count/cap/target/game/checker change. Timing is simulation time, not performance timing."
+            "file": "docs/reports/fix51-verify/receipts/L10-hold.json",
+            "sha256": "30547f83b2c3957f2a17a43be6fd21b96c8c862a0d8f7b994aabd0445093b76e",
+            "what": "Exact-source four-minute hold, arena-arrival and persistent-identity evidence for both tiers."
           },
           {
-            "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-            "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
-            "what": "Immutable current original native complete route; exact source/observer hashes."
+            "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
+            "what": "Current-source low stationary final-state control."
           },
           {
-            "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
-            "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
-            "what": "Immutable current original native complete route; exact source/observer hashes."
+            "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
+            "what": "Current-source high stationary final-state control."
+          },
+          {
+            "file": "docs/reports/fix55-c/L10-11-boundaries.json",
+            "sha256": "79e8cabc4f9cfe8f808a8df9428886782801eb7baacc8fa1f34f7582b6341a00",
+            "what": "Ten exact-boundary and missing-evidence controls (119.99/120/160/160.01 seconds and absent proof)."
           }
         ],
-        "notes": "Original current-source producer, measured unchanged criterion.",
-        "freshness": "STALE",
+        "notes": "The current measured FAIL is retained for explicit review; no acceptance target or timing was changed.",
+        "freshness": "FRESH",
         "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
