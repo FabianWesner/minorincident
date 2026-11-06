@@ -58,6 +58,7 @@ export class Barricades {
     const x = (slot.a.x + slot.b.x) / 2, z = (slot.a.z + slot.b.z) / 2;
     const id = this.world.interactables!.spawn('barricade', { x, z }, { radius: 1.6, holdTime: slot.boardUp ? 2 : 1.5, instant: !slot.boardUp, label: slot.boardUp ? 'Board up' : 'Brace' });
     const e = this.world.entities.get(id)!;
+    if (slot.id === 'l6-night-exit') e.transform.y = 3.9;
     e.health = { current: 0, max: 200 };
     e.barricade = { slot: structuredClone(slot), coverage: 0, props: [], intact: false, hitTick: -60, breaks: 0 };
     e.combat = { radius: Math.hypot(slot.b.x - slot.a.x, slot.b.z - slot.a.z) / 2, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
@@ -80,7 +81,11 @@ export class Barricades {
   }
   private wall(e: EntitySnapshot): CoverWall {
     const s = e.barricade!.slot, depth = s.depth ?? .7;
-    return { x: e.transform.x, z: e.transform.z, y: s.height / 2, halfY: s.height / 2,
+    // The L6 night exit is authored on the raised Northgate landing. Its gate
+    // leaf is drawn at the entity's elevated pose, so its physical slab must
+    // occupy that same vertical band instead of sealing only ground level.
+    const y = s.id === 'l6-night-exit' ? e.transform.y : s.height / 2;
+    return { x: e.transform.x, z: e.transform.z, y, halfY: s.height / 2,
       halfX: Math.max(.15, Math.abs(s.b.x - s.a.x) / 2 + depth / 2), halfZ: Math.max(.15, Math.abs(s.b.z - s.a.z) / 2 + depth / 2), entityId: e.id };
   }
   private candidates(e: EntitySnapshot): { items: PushProp[]; coverage: number } {
