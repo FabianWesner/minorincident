@@ -29,11 +29,12 @@ export function l9GroupCensusReceipts(sourceHash: string): { path: string; recei
     const groups = row.groups;
     const expected = [['road', 2, 6], ['countryside', 3, 6], ['dry-shortcut', 6, 8]] as const;
     const composition = expected.every(([route, count, size]) => groups.filter(group => group.route === route).length === count &&
+      Array.from({ length: count }, (_, i) => `${route}-${i + 1}`).every(id => groups.filter(group => group.id === id && group.route === route).length === 1) &&
       groups.filter(group => group.route === route).every(group => group.ids.length === size && new Set(group.ids).size === size &&
-        group.actors.length === size && new Set(group.actors.map(actor => actor.id)).size === size)) &&
+        group.actors.length === size && new Set(group.actors.map(actor => actor.id)).size === size && group.ids.every(id => group.actors.some(actor => actor.id === id)))) &&
       groups.every(group => group.actors.every(actor => ['infected.runner', 'infected.alpha'].includes(actor.archetype))) &&
       groups.filter(group => group.route === 'dry-shortcut').flatMap(group => group.actors).filter(actor => actor.archetype === 'infected.alpha').length === 2;
-    const detours = row.detours.length === 11 && row.detours.every(detour => detour.minimumDriveClearance >= 20);
+    const detours = row.detours.length === 11 && groups.every(group => row.detours.filter(detour => detour.id === group.id && detour.route === group.route && detour.minimumDriveClearance >= 20).length === 1);
     const path = `${reportRoot}/receipts/L9-${tier}-group-census.json`;
     const receipt: FixtureReceipt = { version: 1, level: 'L9', tier, sourceHash,
       fixtureHash: sha(readFileSync(new URL(import.meta.url))), errors: [], observations: { censusPath }, checks: [

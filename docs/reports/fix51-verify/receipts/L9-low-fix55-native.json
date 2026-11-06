@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L9",
   "tier": "low",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "fixtureHash": "6ef6338509693851d4bf2766a89295d4f7d9f2d376991709644ffcf0b04f8462",
+  "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+  "fixtureHash": "431013dc92a8341006a871dcb552c23fcfb064ba1a84cbe3fbcc9914fb812dfe",
   "errors": [],
   "checks": [
     {
@@ -109,7 +109,7 @@
             -60,
             -30
           ],
-          "runners": 8,
+          "runners": 7,
           "alphas": 1,
           "detourClearance": 40
         },
@@ -142,12 +142,12 @@
             240,
             -30
           ],
-          "runners": 8,
+          "runners": 7,
           "alphas": 1,
           "detourClearance": 40
         }
       ],
-      "target": "road2×6; countryside3×6; shortcut6×at least8 with2Alphas; every authored group detour≥20m",
+      "target": "road2×6; countryside3×6; shortcut6×8 total including2Alphas; every authored group detour≥20m",
       "status": "PASS",
       "receipt": "docs/reports/fix55-c/L9-native.json"
     },
@@ -470,70 +470,70 @@
         {
           "id": "dry-shortcut-1",
           "route": "dry-shortcut",
-          "tick": 890,
+          "tick": 530,
           "expectedCount": 8,
           "ids": [
+            713,
+            714,
+            715,
             716,
             717,
             718,
             719,
-            720,
-            721,
-            722,
-            723
+            720
           ],
           "actors": [
             {
-              "id": 716,
+              "id": 713,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -301.95,
               "z": -23.15
             },
             {
-              "id": 717,
+              "id": 714,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -300.65,
               "z": -23.15
             },
             {
-              "id": 718,
+              "id": 715,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -299.35,
               "z": -23.15
             },
             {
-              "id": 719,
+              "id": 716,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -298.05,
               "z": -23.15
             },
             {
-              "id": 720,
+              "id": 717,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -301.95,
               "z": -21.85
             },
             {
-              "id": 721,
+              "id": 718,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -300.65,
               "z": -21.85
             },
             {
-              "id": 722,
+              "id": 719,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -299.35,
               "z": -21.85
             },
             {
-              "id": 723,
+              "id": 720,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -298.05,
@@ -548,70 +548,70 @@
         {
           "id": "dry-shortcut-2",
           "route": "dry-shortcut",
-          "tick": 1040,
+          "tick": 1030,
           "expectedCount": 8,
           "ids": [
+            747,
+            748,
+            749,
             750,
             751,
             752,
             753,
-            754,
-            755,
-            756,
-            757
+            754
           ],
           "actors": [
             {
-              "id": 750,
+              "id": 747,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -151.95,
               "z": -30.65
             },
             {
-              "id": 751,
+              "id": 748,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -150.65,
               "z": -30.65
             },
             {
-              "id": 752,
+              "id": 749,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -149.35,
               "z": -30.65
             },
             {
-              "id": 753,
+              "id": 750,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -148.05,
               "z": -30.65
             },
             {
-              "id": 754,
+              "id": 751,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -151.95,
               "z": -29.35
             },
             {
-              "id": 755,
+              "id": 752,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -150.65,
               "z": -29.35
             },
             {
-              "id": 756,
+              "id": 753,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -149.35,
               "z": -29.35
             },
             {
-              "id": 757,
+              "id": 754,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -148.05,
@@ -626,156 +626,148 @@
         {
           "id": "dry-shortcut-3",
           "route": "dry-shortcut",
-          "tick": 1550,
+          "tick": 1540,
           "expectedCount": 8,
           "ids": [
+            790,
             791,
             792,
             793,
             794,
             795,
             796,
-            797,
-            798,
-            799
+            797
           ],
           "actors": [
             {
-              "id": 791,
+              "id": 790,
               "archetype": "infected.alpha",
               "hp": 300,
               "x": -60,
               "z": -33
             },
             {
-              "id": 792,
+              "id": 791,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -61.95,
+              "z": -30.65
+            },
+            {
+              "id": 792,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": -60.65,
               "z": -30.65
             },
             {
               "id": 793,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": -60.65,
+              "x": -59.35,
               "z": -30.65
             },
             {
               "id": 794,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": -59.35,
+              "x": -58.05,
               "z": -30.65
             },
             {
               "id": 795,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": -58.05,
-              "z": -30.65
-            },
-            {
-              "id": 796,
-              "archetype": "infected.runner",
-              "hp": 60,
               "x": -61.95,
               "z": -29.35
             },
             {
-              "id": 797,
+              "id": 796,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -60.65,
               "z": -29.35
             },
             {
-              "id": 798,
+              "id": 797,
               "archetype": "infected.runner",
               "hp": 60,
               "x": -59.35,
               "z": -29.35
-            },
-            {
-              "id": 799,
-              "archetype": "infected.runner",
-              "hp": 60,
-              "x": -58.05,
-              "z": -29.35
             }
           ],
-          "runners": 8,
+          "runners": 7,
           "alphas": 1,
-          "actualCount": 9,
-          "status": "FAIL"
+          "actualCount": 8,
+          "status": "PASS"
         },
         {
           "id": "dry-shortcut-4",
           "route": "dry-shortcut",
-          "tick": 2060,
+          "tick": 2050,
           "expectedCount": 8,
           "ids": [
+            826,
             827,
             828,
             829,
             830,
             831,
             832,
-            833,
-            834
+            833
           ],
           "actors": [
+            {
+              "id": 826,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 58.05,
+              "z": -30.65
+            },
             {
               "id": 827,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 58.05,
+              "x": 59.35,
               "z": -30.65
             },
             {
               "id": 828,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 59.35,
+              "x": 60.65,
               "z": -30.65
             },
             {
               "id": 829,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 60.65,
+              "x": 61.95,
               "z": -30.65
             },
             {
               "id": 830,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 61.95,
-              "z": -30.65
-            },
-            {
-              "id": 831,
-              "archetype": "infected.runner",
-              "hp": 60,
               "x": 58.05,
               "z": -29.35
             },
             {
-              "id": 832,
+              "id": 831,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 59.35,
               "z": -29.35
             },
             {
-              "id": 833,
+              "id": 832,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 60.65,
               "z": -29.35
             },
             {
-              "id": 834,
+              "id": 833,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 61.95,
@@ -790,70 +782,70 @@
         {
           "id": "dry-shortcut-5",
           "route": "dry-shortcut",
-          "tick": 2560,
+          "tick": 2550,
           "expectedCount": 8,
           "ids": [
+            870,
+            871,
             872,
             873,
             874,
             875,
             876,
-            877,
-            878,
-            879
+            877
           ],
           "actors": [
+            {
+              "id": 870,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 148.05,
+              "z": -30.65
+            },
+            {
+              "id": 871,
+              "archetype": "infected.runner",
+              "hp": 60,
+              "x": 149.35,
+              "z": -30.65
+            },
             {
               "id": 872,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 148.05,
+              "x": 150.65,
               "z": -30.65
             },
             {
               "id": 873,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 149.35,
+              "x": 151.95,
               "z": -30.65
             },
             {
               "id": 874,
               "archetype": "infected.runner",
               "hp": 60,
-              "x": 150.65,
-              "z": -30.65
-            },
-            {
-              "id": 875,
-              "archetype": "infected.runner",
-              "hp": 60,
-              "x": 151.95,
-              "z": -30.65
-            },
-            {
-              "id": 876,
-              "archetype": "infected.runner",
-              "hp": 60,
               "x": 148.05,
               "z": -29.35
             },
             {
-              "id": 877,
+              "id": 875,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 149.35,
               "z": -29.35
             },
             {
-              "id": 878,
+              "id": 876,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 150.65,
               "z": -29.35
             },
             {
-              "id": 879,
+              "id": 877,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 151.95,
@@ -868,92 +860,84 @@
         {
           "id": "dry-shortcut-6",
           "route": "dry-shortcut",
-          "tick": 5840,
+          "tick": 3060,
           "expectedCount": 8,
           "ids": [
-            1005,
-            1006,
-            1007,
-            1008,
-            1009,
-            1010,
-            1011,
-            1012,
-            1013
+            940,
+            941,
+            942,
+            943,
+            944,
+            945,
+            946,
+            947
           ],
           "actors": [
             {
-              "id": 1005,
+              "id": 940,
               "archetype": "infected.alpha",
               "hp": 300,
               "x": 240,
               "z": -33
             },
             {
-              "id": 1006,
+              "id": 941,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 238.05,
               "z": -30.65
             },
             {
-              "id": 1007,
+              "id": 942,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 239.35,
               "z": -30.65
             },
             {
-              "id": 1008,
+              "id": 943,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 240.65,
               "z": -30.65
             },
             {
-              "id": 1009,
+              "id": 944,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 241.95,
               "z": -30.65
             },
             {
-              "id": 1010,
+              "id": 945,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 238.05,
               "z": -29.35
             },
             {
-              "id": 1011,
+              "id": 946,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 239.35,
               "z": -29.35
             },
             {
-              "id": 1012,
+              "id": 947,
               "archetype": "infected.runner",
               "hp": 60,
               "x": 240.65,
-              "z": -29.35
-            },
-            {
-              "id": 1013,
-              "archetype": "infected.runner",
-              "hp": 60,
-              "x": 241.95,
               "z": -29.35
             }
           ],
-          "runners": 8,
+          "runners": 7,
           "alphas": 1,
-          "actualCount": 9,
-          "status": "FAIL"
+          "actualCount": 8,
+          "status": "PASS"
         }
       ],
       "target": "road2×6; countryside3×6; shortcut6×8 total members including2Alphas; exact distinct production entity IDs",
-      "status": "FAIL",
+      "status": "PASS",
       "receipt": "docs/reports/sweep-c/L9-02-census.json"
     },
     {
@@ -963,7 +947,7 @@
       "policy": "controlled-fixture",
       "value": {
         "safe": 1000,
-        "shortcut": 880
+        "shortcut": 830
       },
       "target": "both routes complete; safe pre-crash durability strictly greater",
       "status": "PASS",
@@ -999,7 +983,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 1989,
+          "tick": 1988,
           "sourceId": 667,
           "targetId": 756,
           "source": "contact",
@@ -1010,9 +994,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2018,
+          "tick": 2398,
           "sourceId": 667,
-          "targetId": 751,
+          "targetId": 791,
           "source": "contact",
           "contactId": 4,
           "attackId": null,
@@ -1021,9 +1005,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2403,
+          "tick": 2438,
           "sourceId": 667,
-          "targetId": 793,
+          "targetId": 797,
           "source": "contact",
           "contactId": 5,
           "attackId": null,
@@ -1034,7 +1018,7 @@
           "type": "vehicle.durability-hit",
           "tick": 2439,
           "sourceId": 667,
-          "targetId": 791,
+          "targetId": 796,
           "source": "contact",
           "contactId": 6,
           "attackId": null,
@@ -1043,9 +1027,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2989,
+          "tick": 2446,
           "sourceId": 667,
-          "targetId": 827,
+          "targetId": 795,
           "source": "contact",
           "contactId": 7,
           "attackId": null,
@@ -1054,9 +1038,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3026,
+          "tick": 3015,
           "sourceId": 667,
-          "targetId": 829,
+          "targetId": 827,
           "source": "contact",
           "contactId": 8,
           "attackId": null,
@@ -1065,9 +1049,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3035,
+          "tick": 3037,
           "sourceId": 667,
-          "targetId": 828,
+          "targetId": 831,
           "source": "contact",
           "contactId": 9,
           "attackId": null,
@@ -1076,9 +1060,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3458,
+          "tick": 3464,
           "sourceId": 667,
-          "targetId": 876,
+          "targetId": 871,
           "source": "contact",
           "contactId": 10,
           "attackId": null,
@@ -1087,9 +1071,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3472,
+          "tick": 3471,
           "sourceId": 667,
-          "targetId": 879,
+          "targetId": 877,
           "source": "contact",
           "contactId": 11,
           "attackId": null,
@@ -1098,14 +1082,69 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3945,
+          "tick": 3474,
           "sourceId": 667,
-          "targetId": 914,
+          "targetId": 875,
           "source": "contact",
           "contactId": 12,
           "attackId": null,
           "before": 890,
           "after": 880
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3904,
+          "sourceId": 667,
+          "targetId": 912,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 880,
+          "after": 870
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3908,
+          "sourceId": 667,
+          "targetId": 907,
+          "source": "contact",
+          "contactId": 14,
+          "attackId": null,
+          "before": 870,
+          "after": 860
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3949,
+          "sourceId": 667,
+          "targetId": 913,
+          "source": "contact",
+          "contactId": 15,
+          "attackId": null,
+          "before": 860,
+          "after": 850
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3999,
+          "sourceId": 667,
+          "targetId": 909,
+          "source": "contact",
+          "contactId": 16,
+          "attackId": null,
+          "before": 850,
+          "after": 840
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 4589,
+          "sourceId": 667,
+          "targetId": 950,
+          "source": "contact",
+          "contactId": 17,
+          "attackId": null,
+          "before": 840,
+          "after": 830
         }
       ],
       "target": "nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge",
@@ -1718,7 +1757,7 @@
           ]
         },
         "finished": true,
-        "finalHash": "9883fa62",
+        "finalHash": "b995316f",
         "controlIdentical": null,
         "firstDrive": 0,
         "firstMotion": 2,
@@ -2098,22 +2137,22 @@
           },
           {
             "type": "vehicle.durability-hit",
-            "tick": 14862,
+            "tick": 12661,
             "sourceId": 667,
-            "targetId": 1094,
+            "targetId": 1015,
             "source": "contact",
-            "contactId": 36,
+            "contactId": 37,
             "attackId": null,
             "before": 0,
             "after": 0
           },
           {
             "type": "vehicle.durability-hit",
-            "tick": 15093,
+            "tick": 15026,
             "sourceId": 667,
             "targetId": 1014,
             "source": "contact",
-            "contactId": 37,
+            "contactId": 38,
             "attackId": null,
             "before": 0,
             "after": 0
@@ -2345,44 +2384,43 @@
               1020,
               1021,
               1022,
-              1023,
-              1024
+              1023
             ],
             "shortcut-wanderer-4": [
-              1025
+              1024
             ],
             "crossing-patrol-13": [
-              1088
+              1087
             ],
             "crossing-patrol-14": [
-              1089
+              1088
             ],
             "crossing-patrol-15": [
-              1090
+              1089
             ],
             "crossing-patrol-16": [
-              1091
+              1090
             ],
             "crossing-patrol-17": [
-              1092
+              1091
             ],
             "crossing-patrol-18": [
-              1094
+              1093
             ],
             "crossing-patrol-19": [
-              1095
+              1094
             ],
             "crossing-patrol-20": [
-              1096
+              1095
             ],
             "crossing-patrol-21": [
-              1139
+              1138
             ],
             "countryside-wanderer-0": [
-              1140
+              1139
             ],
             "countryside-wanderer-1": [
-              1141
+              1140
             ]
           },
           "patrol": {

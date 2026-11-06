@@ -707,6 +707,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],
+  ['L9-02', [{ clause: 'actual admitted route group census and driven detour clearance', policy: 'controlled-physical' }]],
   ['L9-04', [
     ...['shortcut durability billing per unique contact onset', 'stopped-surround attacks deal10 damage after at least0.6s windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...['physical matched safe route retains more durability than shortcut', 'physical route contact and attack billing'].map(clause => ({ clause, policy: 'real-input-webgl2' })),

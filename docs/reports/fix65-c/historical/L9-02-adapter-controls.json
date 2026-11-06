@@ -1,0 +1,50 @@
+{
+  "sourceHash": "dad460c1a64eaaef012d09583576a8aa924cec26b92646b77fc3d6f331be41bd",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "87d2c008d524a31cabf53f3008916eed4a479b15",
+  "results": [
+    {
+      "name": "actual eight-member groups and all driven detours qualify",
+      "qualifies": true
+    },
+    {
+      "name": "nine bodies rejected",
+      "qualifies": false
+    },
+    {
+      "name": "missing Alpha rejected",
+      "qualifies": false
+    },
+    {
+      "name": "duplicate IDs rejected",
+      "qualifies": false
+    },
+    {
+      "name": "actor IDs must match census IDs",
+      "qualifies": false
+    },
+    {
+      "name": "missing group rejected",
+      "qualifies": false
+    },
+    {
+      "name": "duplicated detour cannot replace missing detour",
+      "qualifies": false
+    },
+    {
+      "name": "clearance below twenty metres rejected",
+      "qualifies": false
+    },
+    {
+      "name": "stale source rejected",
+      "qualifies": false
+    },
+    {
+      "name": "observer side effect rejected",
+      "qualifies": false
+    }
+  ],
+  "toolSha256": "4f6443dfd6b0d033fc843d511d59bb03a495378598ff10559f90d3ed2b34429c",
+  "originalRestored": true,
+  "censusSha256": "a0bb7dcc91675bea0467292f54fc18d08b51ebe45bd6f1f61c2aca569c3abae2"
+}
