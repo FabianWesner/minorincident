@@ -1,0 +1,3 @@
+# L7-01 — approach and first shot measured; timing pending
+
+Both current tiers, actual carried L5/L6 campaign: launcher starts3m from exit/courier, original pickup collected while moving at tick14 without E/mouse, actual physical first rocket fires tick22. All20paired frames personally inspected: launcher ring by truck, collected/held launcher and slot7, flash and traveling rocket. SHA verified before deleting raw frames. No perf timing performed: the ≤50ms pickup/first-shot frame gate remains NOT CHECKED under the brief’s explicit no-perf-timing restriction; scheduler clarification requested.

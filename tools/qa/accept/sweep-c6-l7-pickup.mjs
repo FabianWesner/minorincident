@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {createServer} from 'node:net';
+import {spawn} from 'node:child_process';
+import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {gunzipSync,gzipSync} from 'node:zlib';
+import {resolve} from 'node:path';
+import {setTimeout as delay} from 'node:timers/promises';
+import {launchBrowser} from '../../browser-pool/client.ts';
+import {markerWalkKeys} from '../../playtest/input.ts';
+import {provenance} from './probe.ts';
+import {browserHash} from './browser.ts';
+const tier=process.argv[2];assert(['low','high'].includes(tier));
+const identity=provenance(),hash=browserHash(),sha=b=>createHash('sha256').update(b).digest('hex');
+const root='docs/reports/sweep-c6/L7-01',seedFile=`docs/reports/fix51-r10c/L7-${tier}-carried-save.json.gz`,seedBytes=readFileSync(seedFile),campaign=JSON.parse(gunzipSync(seedBytes));
+mkdirSync(root,{recursive:true});
+const out=resolve(`test-results/sweep-c6-l7-pickup-${tier}-${Date.now()}`);mkdirSync(out,{recursive:true});
+const socket=createServer();await new Promise(r=>socket.listen(0,'127.0.0.1',r));const port=socket.address().port;await new Promise(r=>socket.close(r));assert.notEqual(port,3300);
+const server=spawn(process.execPath,[resolve('node_modules/vite/bin/vite.js'),'preview','--host','127.0.0.1','--port',String(port),'--strictPort','--configLoader','runner'],{stdio:'ignore'});
+const browser=await launchBrowser({headless:true,args:['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist']});
+const captures=[],commands=[],errors=[];let setup,result;
+try{
+ for(let i=0;i<100;i++){try{if((await fetch(`http://127.0.0.1:${port}`)).ok)break;}catch{}await delay(100);}
+ const context=await browser.newContext({viewport:{width:1280,height:720},deviceScaleFactor:1}),timer=setTimeout(()=>void context.close(),8*60_000),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ try{
+ await page.addInitScript('window.__name=f=>f');await page.goto(`http://127.0.0.1:${port}/?test=1&ui=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);await page.waitForFunction(()=>!!window.__SS__&&!!window.__SCENE__);
+ setup=await page.evaluate(async({campaign,tier})=>{const a=window.__SS__,g=window.__SCENE__.game;await a.ready;a.pause();a.campaign.restore(campaign);await a.loadLevel('L7',{seed:1});a.pause();a.settings.set({quality:tier,cameraShake:false,aimAssist:'Off'});a.missions.begin();a.cheats.god(true);g.driver=null;g.ui.show(null);g.input.release();g.world.clearInput();a.camera.zoom(1.5);const w=g.world,p=w.entities.get(1),pickup=[...w.entities.iterate()].find(e=>e.pickup?.actionId==='weapon.rocket-launcher');window.__proof={inputs:[],events:[],ticks:[]};g.input.tap=f=>window.__proof.inputs.push({tick:w.tick,move:{...f.move},interact:!!f.interact,mouseAttack:!!f.mouseAttack,nativeDriver:!!g.driver});for(const type of ['pickup.collected','combat.attack','explosion'])w.events.on(type,e=>window.__proof.events.push({...e,player:{...p.transform},moving:Math.hypot(w.inputFrame.move.x,w.inputFrame.move.z)>0}));w.events.on('sim.tick',()=>window.__proof.ticks.push({tick:w.tick,player:{...p.transform},pickupRemaining:!!w.entities.get(pickup.id),rack:p.weapons.RIGHT.rack.map(s=>s.id)}),7);return{tick:w.tick,player:{...p.transform},pickup:{id:pickup.id,position:{...pickup.transform}},initialRacks:structuredClone(p.weapons),backend:a.perf().backend,quality:a.getState().render.quality,driverDetached:!g.driver};},{campaign,tier});
+ const photo=async label=>{for(const zoom of [.5,1.5]){await page.evaluate(async z=>{window.__SS__.camera.zoom(z);await window.__SS__.screenshotReady();},zoom);const file=resolve(out,`${label}-z${zoom}.jpg`);await page.screenshot({path:file,type:'jpeg',quality:90});captures.push({file,sha256:sha(readFileSync(file)),label,zoom,tick:await page.evaluate(()=>window.__SS__.tick())});}await page.evaluate(()=>window.__SS__.camera.zoom(1.5));};
+ await page.locator('canvas').first().focus();await photo('before-pickup');let held=[],collected=false;
+ for(let i=0;i<300;i++){const s=await page.evaluate(()=>{const w=window.__SCENE__.game.world,p=w.entities.get(1);return{tick:w.tick,p:{...p.transform},rocket:p.weapons.RIGHT.rack.some(s=>s.id==='weapon.rocket-launcher')};});if(s.rocket){collected=true;break;}const dx=setup.pickup.position.x-s.p.x,dz=setup.pickup.position.z-s.p.z,keys=markerWalkKeys((dx-dz)*100,(dx+dz)*100,(i%10)/10);for(const k of held.filter(k=>!keys.includes(k)))await page.keyboard.up(k);for(const k of keys.filter(k=>!held.includes(k)))await page.keyboard.down(k);held=keys;commands.push({tick:s.tick,keys:[...held],reason:'Physical approach without E/click'});await page.evaluate(()=>{window.__SCENE__.game.view.frame(.05);return window.__SS__.step(3);});}
+ for(const k of held)await page.keyboard.up(k);assert(collected,'Launcher acquired on actual moving approach');await photo('after-pickup');await page.keyboard.press('Digit7');const cursor=await page.evaluate(()=>{const p=window.__SCENE__.game.world.entities.get(1).transform;return window.__SS__.input.project({x:p.x-8,z:p.z},'destination');});assert(cursor&&cursor.x>0&&cursor.x<1280&&cursor.y>0&&cursor.y<720);await page.mouse.move(cursor.x,cursor.y);await page.keyboard.down('ShiftLeft');await page.mouse.down();commands.push({tick:await page.evaluate(()=>window.__SS__.tick()),keys:['ShiftLeft'],mouseDown:true,cursor});await page.evaluate(()=>{window.__SCENE__.game.view.frame(1/60);return window.__SS__.step(1);});await page.mouse.up();await page.keyboard.up('ShiftLeft');await photo('first-shot-0');for(const n of [6,12]){await page.evaluate(()=>{window.__SCENE__.game.view.frame(.1);return window.__SS__.step(6);});await photo(`first-shot-${n}`);}result=await page.evaluate(()=>window.__proof);
+ }finally{clearTimeout(timer);await context.close();}
+}catch(e){errors.push(String(e));}
+finally{await browser.close();server.kill('SIGTERM');writeFileSync(`${root}/${tier}-physical.json.gz`,gzipSync(JSON.stringify({...identity,browserHash:hash,toolSha256:sha(readFileSync(new URL(import.meta.url))),seed:{file:seedFile,sha256:sha(seedBytes)},tier,out,setup,result,captures,commands,errors,method:'Actual carried L5/L6 production campaign, native L7 initial launcher. Physical moving approach without E or mouse; actual Digit7 and ShiftLMB first shot; normal AI/actors, courier god only. No actor/HP/scheduler/objective edits. Explicit render clock, paired userzooms and six/twelve-tick motion. NO performance/frame timing; quiet-window gate remains pending authorization.'})));}process.exitCode=errors.length?1:0;
