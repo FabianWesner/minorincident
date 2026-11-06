@@ -1,0 +1,45 @@
+{
+  "row": "L5-02",
+  "status": "PASS",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "37a2370e99e647a801c3688bd9f049007ec405b561063868ea94cb686c109397",
+  "ledger": "docs/reports/sweep-b/L5-render-ledger.json.gz",
+  "ledgerSha256": "af5375bb80c5c745837834a73e24ab6eeb15a6feee8fd50dfbd704956cb1432a",
+  "observation": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used.",
+  "rows": [
+    {
+      "tier": "low",
+      "actualTier": "low",
+      "initialInfected": 100,
+      "mortal": true,
+      "emergedTick": 99,
+      "objectiveTick": 699,
+      "firstFoundTick": 1921,
+      "firstObservedMusicRequestTick": 2040,
+      "first60AlliedFighters": 0,
+      "first60MovingVehicles": 0,
+      "first60AlliedShots": 0,
+      "nativeControlHashes": [
+        "2f733146",
+        "2f733146"
+      ]
+    },
+    {
+      "tier": "high",
+      "actualTier": "high",
+      "initialInfected": 150,
+      "mortal": true,
+      "emergedTick": 99,
+      "objectiveTick": 699,
+      "firstFoundTick": 2126,
+      "firstObservedMusicRequestTick": 2220,
+      "first60AlliedFighters": 0,
+      "first60MovingVehicles": 0,
+      "first60AlliedShots": 0,
+      "nativeControlHashes": [
+        "339acd18",
+        "339acd18"
+      ]
+    }
+  ]
+}
