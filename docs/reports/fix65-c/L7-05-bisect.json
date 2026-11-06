@@ -1,0 +1,140 @@
+{
+  "method": "One-factor source bisection: retain all current regroup, offscreen alarm, boarding yield and escort protection behavior; change only first street anchor x239 vs x259. Exact named pre-squash commits unavailable. Each policy uses ordinary native input with unchanged observer and thresholds.",
+  "variants": [
+    {
+      "label": "baseline239",
+      "cells": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "sourceHash": "4d39739edccf48e6ff59463eb9ba965428e57cbdc5607c741df11146bb21d399",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-baseline239-low-complete.json.gz",
+          "sha256": "d1f304053dcda3b1108c67332101d2078350a5280bba41b1bd559aebecf0a642",
+          "error": null,
+          "completed": true,
+          "rate": 0.8131917777275808,
+          "playerWindups": 1,
+          "groupWindups": 0,
+          "firstPlayerWindupSeconds": 3.1,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "sourceHash": "4d39739edccf48e6ff59463eb9ba965428e57cbdc5607c741df11146bb21d399",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-baseline239-low-stationary.json.gz",
+          "sha256": "06fca877ca0ad01c9a1f6d4d375f9ddd65a99a97a28ca6d17b469abb9a3f6fec",
+          "error": null,
+          "completed": false,
+          "rate": 146.64256916446544,
+          "playerWindups": 560,
+          "groupWindups": 26,
+          "firstPlayerWindupSeconds": 83.96666666666667,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "sourceHash": "4d39739edccf48e6ff59463eb9ba965428e57cbdc5607c741df11146bb21d399",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-baseline239-high-complete.json.gz",
+          "sha256": "ae122af141c330e194eb7c7608964a07c104cdfd3cd60470df231143a0dffa97",
+          "error": null,
+          "completed": true,
+          "rate": 0,
+          "playerWindups": 0,
+          "groupWindups": 0,
+          "firstPlayerWindupSeconds": null,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "sourceHash": "4d39739edccf48e6ff59463eb9ba965428e57cbdc5607c741df11146bb21d399",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-baseline239-high-stationary.json.gz",
+          "sha256": "08d0abb7d06c28a8e962e5e34685fa3dc9273f2afa734813e1a5ec4d55f60b29",
+          "error": null,
+          "completed": false,
+          "rate": 409.14778256638397,
+          "playerWindups": 1611,
+          "groupWindups": 24,
+          "firstPlayerWindupSeconds": 22.666666666666668,
+          "minimumReachablePercent": 100
+        }
+      ]
+    },
+    {
+      "label": "opening259",
+      "cells": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "sourceHash": "0079c7ffdc8f3b0a1a68e686fafa2474bb1b899e713ca0e2458cbcb0f8ca9077",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-opening259-low-complete.json.gz",
+          "sha256": "42dc44e7227e3ce2aff55c25010f52d1bacdf6489e389b6830508c2ab7ecf914",
+          "error": null,
+          "completed": true,
+          "rate": 11.180124223602485,
+          "playerWindups": 14,
+          "groupWindups": 0,
+          "firstPlayerWindupSeconds": 0.6833333333333333,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "sourceHash": "0079c7ffdc8f3b0a1a68e686fafa2474bb1b899e713ca0e2458cbcb0f8ca9077",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-opening259-low-stationary.json.gz",
+          "sha256": "a390f526de8cb591afbb1cc2aff48e6f24b86d5af04d7243da1a0ba4c14231d8",
+          "error": null,
+          "completed": false,
+          "rate": 774.0025024329209,
+          "playerWindups": 3066,
+          "groupWindups": 27,
+          "firstPlayerWindupSeconds": 0.06666666666666667,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "sourceHash": "0079c7ffdc8f3b0a1a68e686fafa2474bb1b899e713ca0e2458cbcb0f8ca9077",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-opening259-high-complete.json.gz",
+          "sha256": "009f9b13be37a7cc8886404d2811fbc660602c18fc7ab341e06c19695e3ca0f8",
+          "error": null,
+          "completed": true,
+          "rate": 6.518786781349027,
+          "playerWindups": 8,
+          "groupWindups": 0,
+          "firstPlayerWindupSeconds": 0.6833333333333333,
+          "minimumReachablePercent": 100
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "sourceHash": "0079c7ffdc8f3b0a1a68e686fafa2474bb1b899e713ca0e2458cbcb0f8ca9077",
+          "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+          "receipt": "docs/reports/fix65-c/L7-opening259-high-stationary.json.gz",
+          "sha256": "25f326a9c3dcbaccbeb20f618d6dc6fbc0be173b3446afb331af4f89463fb60b",
+          "error": null,
+          "completed": false,
+          "rate": 1614.3194772695676,
+          "playerWindups": 6427,
+          "groupWindups": 24,
+          "firstPlayerWindupSeconds": 0.06666666666666667,
+          "minimumReachablePercent": 100
+        }
+      ]
+    }
+  ],
+  "initialFollowerClearance": {
+    "low": 3.085498646149529,
+    "high": 2.9999999999999885,
+    "method": "Minimum initial horizontal distance between every first-pack actor and every living roster actor, less both actorRadius values; original IDs/positions retained; no overlaps."
+  }
+}
