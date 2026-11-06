@@ -76,8 +76,8 @@ export const l4 = {
     /** Radio line (loudspeaker) once the convoy has stopped, and the quartermaster's interact time. */
     welcomeAtS: 1.5, issueS: .6,
   },
-  /** The machine gun (E06 section 5.3 campaign values): 14 per round, 10 rounds/s, 4 degrees, 26 m, pierce 1, no ammunition. */
-  machineGun: { id: 'weapon.army-mg', damage: 14, fireRate: 10, spreadDeg: 4, rangeM: 26, pierce: 1 },
+  /** E06 section 5.3 campaign gun: 14 per round, 10 rounds/s, 2° spread, 26 m, pierce 1, no ammunition. */
+  machineGun: { id: 'weapon.army-mg', damage: 14, fireRate: 10, spreadDeg: 2, rangeM: 26, pierce: 1 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
     fromS: 0, waveEveryS: 11,
