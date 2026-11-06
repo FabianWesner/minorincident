@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:16:12.498Z",
+  "generatedAt": "2026-11-06T04:19:34.209Z",
   "policies": [
     {
       "tier": "low",
@@ -3530,12 +3530,13 @@
     },
     {
       "id": "L7-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); low/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); low/complete actual L6 carried identities full-health formation and arsenal: {\"tier\":\"low\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":10,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"outcome\":\"tick-budget\",\"blocker\":{\"objective\":\"bus-departure\",\"detail\":\"{\\\"phase\\\":\\\"waiting\\\",\\\"hp\\\":100,\\\"roster\\\":[{\\\"id\\\":289,\\\"key\\\":\\\"shelter-0\\\",\\\"injured… (full values in JSON) (target exact nonempty L6 roster; full HP; every first-ten-second relative segment clears actual body radii; six story weapons; control identical; PASS); low/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/complete actual L6 carried identities full-health formation and arsenal: {\"tier\":\"high\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":10,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"outcome\":\"tick-budget\",\"blocker\":{\"objective\":\"bus-departure\",\"detail\":\"{\\\"phase\\\":\\\"waiting\\\",\\\"hp\\\":100,\\\"roster\\\":[{\\\"id\\\":389,\\\"key\\\":\\\"shelter-0\\\",\\\"injure… (full values in JSON) (target exact nonempty L6 roster; full HP; every first-ten-second relative segment clears actual body radii; six story weapons; control identical; PASS); high/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-arrival.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
         "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
@@ -3552,6 +3553,117 @@
           "value": 6,
           "target": "6 ≤ value ≤ 6",
           "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "L7-02",
+          "clause": "actual L6 carried identities full-health formation and arsenal",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "run": {
+              "level": "L7",
+              "policy": "complete",
+              "seed": 1,
+              "completed": false,
+              "time": 10,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {
+                "tick-budget": 1
+              },
+              "objectiveTimeline": [],
+              "furthestObjective": "bus-departure",
+              "activeObjectives": [],
+              "outcome": "tick-budget",
+              "blocker": {
+                "objective": "bus-departure",
+                "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.26241530994608,\"z\":16.200000150348774,\"y\":4.6,\"yaw\":3.141592606552247}}]}",
+                "player": {
+                  "x": 230.90321350097656,
+                  "y": 4.619999885559082,
+                  "z": 15,
+                  "yaw": 3.1415926535897936
+                }
+              },
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 138,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "controlRun": {
+              "level": "L7",
+              "policy": "complete",
+              "seed": 1,
+              "completed": false,
+              "time": 10,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {
+                "tick-budget": 1
+              },
+              "objectiveTimeline": [],
+              "furthestObjective": "bus-departure",
+              "activeObjectives": [],
+              "outcome": "tick-budget",
+              "blocker": {
+                "objective": "bus-departure",
+                "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.26241530994608,\"z\":16.200000150348774,\"y\":4.6,\"yaw\":3.141592606552247}}]}",
+                "player": {
+                  "x": 230.90321350097656,
+                  "y": 4.619999885559082,
+                  "z": 15,
+                  "yaw": 3.1415926535897936
+                }
+              },
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 138,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "expectedIds": [
+              289
+            ],
+            "initial": [
+              {
+                "id": 289,
+                "hp": 100,
+                "max": 100,
+                "x": 275.3,
+                "z": 16.2
+              }
+            ],
+            "idsMatch": true,
+            "allFullHealth": true,
+            "formationTicks": 600,
+            "samples": 600,
+            "minimumClearance": 1.0826930928086607,
+            "storyWeapons": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "nativeStateHash": "b1e52206",
+            "controlHash": "b1e52206",
+            "controlIdentical": true
+          },
+          "target": "exact nonempty L6 roster; full HP; every first-ten-second relative segment clears actual body radii; six story weapons; control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-arrival.json"
         },
         {
           "id": "L7-02",
@@ -3577,6 +3689,141 @@
         },
         {
           "id": "L7-02",
+          "clause": "actual L6 carried identities full-health formation and arsenal",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "run": {
+              "level": "L7",
+              "policy": "complete",
+              "seed": 1,
+              "completed": false,
+              "time": 10,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {
+                "tick-budget": 1
+              },
+              "objectiveTimeline": [],
+              "furthestObjective": "bus-departure",
+              "activeObjectives": [],
+              "outcome": "tick-budget",
+              "blocker": {
+                "objective": "bus-departure",
+                "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.53354167038043,\"z\":16.200000000011357,\"y\":4.6,\"yaw\":-3.141592653631119}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.5335555555571,\"z\":15,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.98620839573715,\"z\":13.800000799510354,\"y\":4.6,\"yaw\":3.1415916983402}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.7335478367258,\"z\":16.20000000000853,\"y\":4.6,\"yaw\":-3.141592653620825}}]}",
+                "player": {
+                  "x": 230.90321350097656,
+                  "y": 4.619999885559082,
+                  "z": 15,
+                  "yaw": -3.141592653589793
+                }
+              },
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 276,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "controlRun": {
+              "level": "L7",
+              "policy": "complete",
+              "seed": 1,
+              "completed": false,
+              "time": 10,
+              "deaths": 0,
+              "kills": 0,
+              "damageTaken": 0,
+              "failures": {
+                "tick-budget": 1
+              },
+              "objectiveTimeline": [],
+              "furthestObjective": "bus-departure",
+              "activeObjectives": [],
+              "outcome": "tick-budget",
+              "blocker": {
+                "objective": "bus-departure",
+                "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.53354167038043,\"z\":16.200000000011357,\"y\":4.6,\"yaw\":-3.141592653631119}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.5335555555571,\"z\":15,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.98620839573715,\"z\":13.800000799510354,\"y\":4.6,\"yaw\":3.1415916983402}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.7335478367258,\"z\":16.20000000000853,\"y\":4.6,\"yaw\":-3.141592653620825}}]}",
+                "player": {
+                  "x": 230.90321350097656,
+                  "y": 4.619999885559082,
+                  "z": 15,
+                  "yaw": -3.141592653589793
+                }
+              },
+              "collision": {
+                "failures": 0,
+                "pending": 0,
+                "admitted": 276,
+                "deferred": 0,
+                "requests": [],
+                "offenders": []
+              }
+            },
+            "expectedIds": [
+              30,
+              31,
+              32,
+              389
+            ],
+            "initial": [
+              {
+                "id": 389,
+                "hp": 100,
+                "max": 100,
+                "x": 275.3,
+                "z": 16.2
+              },
+              {
+                "id": 30,
+                "hp": 60,
+                "max": 60,
+                "x": 275.3,
+                "z": 15
+              },
+              {
+                "id": 31,
+                "hp": 60,
+                "max": 60,
+                "x": 275.76193976625564,
+                "z": 13.991341716182546
+              },
+              {
+                "id": 32,
+                "hp": 60,
+                "max": 60,
+                "x": 276.5,
+                "z": 16.2
+              }
+            ],
+            "idsMatch": true,
+            "allFullHealth": true,
+            "formationTicks": 600,
+            "samples": 2400,
+            "minimumClearance": 0.5998901367187613,
+            "storyWeapons": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "nativeStateHash": "c0132985",
+            "controlHash": "c0132985",
+            "controlIdentical": true
+          },
+          "target": "exact nonempty L6 roster; full HP; every first-ten-second relative segment clears actual body radii; six story weapons; control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-arrival.json"
+        },
+        {
+          "id": "L7-02",
           "clause": "selectable story weapons after native launcher pickup",
           "level": "L7",
           "tier": "high",
@@ -3595,7 +3842,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
       },
-      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L7-03",
