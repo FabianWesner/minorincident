@@ -1,0 +1,20 @@
+{
+  "status": "BLOCKED",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "reason": "Required isolated load<6 final-source whole-game threat run has no quiet window. Other worktrees running threat/browser jobs. No final-source0-flag claim.",
+  "samples": [
+    {
+      "at": "2026-11-06T13:25:54.214312+01:00",
+      "load1m": 10.29052734375
+    },
+    {
+      "at": "2026-11-06T13:26:40.512080+01:00",
+      "load1m": 11.6865234375
+    }
+  ],
+  "earlierAttempt": {
+    "revision": "a49ce666e00daae357349a65aff3d017d9c3ffd3",
+    "result": "600s timeout during L5 after0 passive flags L1-L4",
+    "finalSource": false
+  }
+}

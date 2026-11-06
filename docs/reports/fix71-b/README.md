@@ -44,7 +44,7 @@ Dedicated L6 native complete saves26/29; earlier mortal physical attempts saved 
 - `npm run build:qa`: PASS,23.39s.
 - Fresh L4/L5/L6 low/high native acceptance: all fixtures and checkpoint cases complete,0 fixture errors; independent controls identical. L4 fixtures10/checkpoints6 per tier; L5 same; L6 fixtures8/checkpoints7. Final per-level JSON/receipts are under [fix51-verify](../fix51-verify/L4.json). Reports exit1 because measured FAILs remain, plus incomplete clauses. Dedicated PASS proofs above do not silently override stock automation gaps.
 - Final headless shared-pool physical WASD/mouse WebGL2 zoom1.5 routes:6/6 finish,0 console/page errors, GOD1 explicitly enabled. No objective skips. Temporary navigation diagnostics recovered; a L4 high frozen-enemy diagnostic is retained as a P observation, not a lasting-immobility finding.
-- Whole-game threat gate: final retry awaiting host load below6; see gate section below. No zero-flag release sign-off.
+- Whole-game threat gate: BLOCKED by lack of an isolated host-load<6 window; see gate section below. No zero-flag release sign-off.
 
 Global acceptance indexes were restored because this run covers only L4–L6; regenerating the whole-game index requires all levels. Per-level reports retain this run's actual receipts.
 
@@ -52,7 +52,7 @@ Global acceptance indexes were restored because this run covers only L4–L6; re
 
 An isolated full attempt on rejected candidate `a49ce66` started at load5.71, with all four owned native runs suspended. L1–L4 reported0 passive flags; the unchanged600s budget expired during L5. This is incomplete and is not final-source evidence. Comparison used the committed candidate revision and normal source equality checks; no SOURCE_MATCHES_MAIN override. Historical log: `test-results/fix71-b/threat-final.log`.
 
-Final-source retry status will be recorded here before the lane ends. All owned native/browser jobs have finished; other worktrees still run threat/browser jobs and host load is above6.
+**BLOCKED: final-source retry requires a quiet window.** All owned native/browser checks have finished; other worktrees still run threat/browser jobs. Recorded host load is10.29–10.89. [Window record](threat-release-window.json). [Earlier timed-out candidate log](threat-incomplete-candidate.log), [isolation record](threat-incomplete-candidate-isolation.json). No final-source full threat run was launched above the required load threshold. Coordinate a quiet window, then rerun `npm run qa:threat` alone with its unchanged600s limit;0 flags is still required.
 
 ## Evidence handling
 
