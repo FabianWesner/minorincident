@@ -1,0 +1,51 @@
+{
+  "scope": "L6 low, real110second survival-protected passive window, production bot; both wrappers equal unobserved controls. Full native both-tier acceptance still pending.",
+  "before": {
+    "sourceHash": "3507edc948e569d70ced69e6a5477e04e184c2bd73d4df7df12d170f81a95d08",
+    "waves": [
+      {
+        "key": "l6.breach1",
+        "members": 8,
+        "firstAttackSeconds": 5.766666666666667,
+        "flags": []
+      },
+      {
+        "key": "l6.breach2",
+        "members": 1,
+        "firstAttackSeconds": 11.016666666666667,
+        "flags": [
+          "WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
+        ]
+      }
+    ]
+  },
+  "after": {
+    "sourceHash": "5fbe695a46e4241ed6cedd566fe0c42c32573c73f44d16bee602860ec138cbf0",
+    "waves": [
+      {
+        "key": "l6.breach1",
+        "members": 8,
+        "firstAttackSeconds": 5.766666666666667,
+        "flags": []
+      },
+      {
+        "key": "l6.breach2",
+        "members": 10,
+        "firstAttackSeconds": 9.733333333333333,
+        "flags": []
+      }
+    ]
+  },
+  "finding": "Retreat reserved18 unannounced hatch slots ahead of the already-announced second breach, leaving its9 remaining members blocked at count21/cap30. Only filler now reserves unannounced hatch promises; live announcements retain their quotas.",
+  "countsAndCapUnchanged": true,
+  "evidence": [
+    {
+      "file": "docs/reports/fix68-g/L6-low-gate-trace.json.gz",
+      "sha256": "73f7d17d75ce54587d5c11714e81a7653825241bb7ca0fb3c686989c407ba933"
+    },
+    {
+      "file": "docs/reports/fix68-g/L6-low-gate-priority-after.json.gz",
+      "sha256": "ed2a8e193e140e740fcd3667acccb84864a14a6fa6951b189d4cdef861817358"
+    }
+  ]
+}
