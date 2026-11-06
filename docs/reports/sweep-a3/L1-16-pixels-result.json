@@ -1,0 +1,555 @@
+{
+  "source": {
+    "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
+    "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+    "revision": "d660b9f3f76c0b3265e88ee5289663980db2dd79"
+  },
+  "model": "gpt-6-luna",
+  "quality": "low",
+  "actions": 52,
+  "activeSimulationSeconds": 118.61666666666666,
+  "timeBasis": "Sum completed afterTick-beforeTick /60; paused between decisions. No wall-clock/performance measurement.",
+  "reservationExitCode": 124,
+  "reservationSeconds": 480,
+  "images": [
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000001-action.jpg",
+      "sha256": "a1e2054e059a9f89ff908aabfddf3996c2c77fcd3174ed90d42da5a3d4300dd2",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000001-input.jpg",
+      "sha256": "85aa12a0da234644d90481d9fff4f7cb0dc0069451801b572fe4905e259df725",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000002-action.jpg",
+      "sha256": "2240516c037b43d4c7d8ed033602f1b263785748b70fe52992226b2c40f069d9",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000002-input.jpg",
+      "sha256": "a1e2054e059a9f89ff908aabfddf3996c2c77fcd3174ed90d42da5a3d4300dd2",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000003-action.jpg",
+      "sha256": "e9d591cd2530dfaed7e56bfda9ca9ec4519787289625068b7e89bfc32d5ba626",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000003-input.jpg",
+      "sha256": "2240516c037b43d4c7d8ed033602f1b263785748b70fe52992226b2c40f069d9",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000004-action.jpg",
+      "sha256": "f9760466c869714ef1c06df9822b4a295cf228450e1cd32252eb692f325b0327",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000004-input.jpg",
+      "sha256": "e9d591cd2530dfaed7e56bfda9ca9ec4519787289625068b7e89bfc32d5ba626",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000005-action.jpg",
+      "sha256": "45bb39575bfb52b87d7257de9e2094f5872d074c2d8ca0576de844e1bc0c3060",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000005-input.jpg",
+      "sha256": "f9760466c869714ef1c06df9822b4a295cf228450e1cd32252eb692f325b0327",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000006-action.jpg",
+      "sha256": "9ade412581ad024b54c2a32df5b0bc8eb18c722b500e5001dd7e053602992995",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000006-input.jpg",
+      "sha256": "45bb39575bfb52b87d7257de9e2094f5872d074c2d8ca0576de844e1bc0c3060",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000007-action.jpg",
+      "sha256": "d7714252f3fcb65316880407f6ec1c5ed99fec40bb90045fa92a0812622b4518",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000007-input.jpg",
+      "sha256": "9ade412581ad024b54c2a32df5b0bc8eb18c722b500e5001dd7e053602992995",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000008-action.jpg",
+      "sha256": "8e53b0416068aeeb927e4f345a219c588cc90b56c1fde111ee3727d7611b4c41",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000008-input.jpg",
+      "sha256": "d7714252f3fcb65316880407f6ec1c5ed99fec40bb90045fa92a0812622b4518",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000009-action.jpg",
+      "sha256": "691eac0ca021e7fe103f4366a9f3fdc42bc6c914c5aae7a8f68fff8e591d700f",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000009-input.jpg",
+      "sha256": "8e53b0416068aeeb927e4f345a219c588cc90b56c1fde111ee3727d7611b4c41",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000010-action.jpg",
+      "sha256": "c1a84b90bbca2e03a076ebb19529f8acbb947cd751a9814317f8986f65e28b6e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000010-input.jpg",
+      "sha256": "691eac0ca021e7fe103f4366a9f3fdc42bc6c914c5aae7a8f68fff8e591d700f",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000011-action.jpg",
+      "sha256": "356e3c1c7d8df343dd5ef8209c858e4a1604f4b6a68c0b74f2afb87e0e86bef7",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000011-input.jpg",
+      "sha256": "c1a84b90bbca2e03a076ebb19529f8acbb947cd751a9814317f8986f65e28b6e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000012-action.jpg",
+      "sha256": "6be6b60dcbd989cee32594bb72377d5ad1292cffd87814f6d8f2fe51c3fb0657",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000012-input.jpg",
+      "sha256": "356e3c1c7d8df343dd5ef8209c858e4a1604f4b6a68c0b74f2afb87e0e86bef7",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000013-action.jpg",
+      "sha256": "faee0684c11f385cf5fffadc0db0a1b12f4f9eeed4c023ad7ffb2dcc82ebe37d",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000013-input.jpg",
+      "sha256": "6be6b60dcbd989cee32594bb72377d5ad1292cffd87814f6d8f2fe51c3fb0657",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000014-action.jpg",
+      "sha256": "7c98f3495aceee06e76cabe3a51b88b3e0de58c1d9cfd1084d0fcdc9d7e647c7",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000014-input.jpg",
+      "sha256": "faee0684c11f385cf5fffadc0db0a1b12f4f9eeed4c023ad7ffb2dcc82ebe37d",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000015-action.jpg",
+      "sha256": "ae324402a29b1a5e68021dd71baf65535cf913605005b99aea0aa05853a13667",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000015-input.jpg",
+      "sha256": "7c98f3495aceee06e76cabe3a51b88b3e0de58c1d9cfd1084d0fcdc9d7e647c7",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000016-action.jpg",
+      "sha256": "153e4b2885378bcaae5706f1b6f64a959e12b1a2398077b0c0241f190e41cdb4",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000016-input.jpg",
+      "sha256": "ae324402a29b1a5e68021dd71baf65535cf913605005b99aea0aa05853a13667",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000017-action.jpg",
+      "sha256": "d40fb959f2746c35c2ca16bc98b04703a7cf7bf5b8bda9a6daf27a97fb78c94e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000017-input.jpg",
+      "sha256": "153e4b2885378bcaae5706f1b6f64a959e12b1a2398077b0c0241f190e41cdb4",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000018-action.jpg",
+      "sha256": "a17ea5eec3a4853f35750c11218a8ed739d7575949a5c11094c9d5b8cb38076b",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000018-input.jpg",
+      "sha256": "d40fb959f2746c35c2ca16bc98b04703a7cf7bf5b8bda9a6daf27a97fb78c94e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000019-action.jpg",
+      "sha256": "fb6aaa7fd6ccdb5f418788fcb8e8ca522cdfc85c484e6c90592a2770c2fe6108",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000019-input.jpg",
+      "sha256": "a17ea5eec3a4853f35750c11218a8ed739d7575949a5c11094c9d5b8cb38076b",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000020-action.jpg",
+      "sha256": "5eebd05f9e25bd5acccbb2a57bcf19063e53869c3c04217f24b33820af2609fe",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000020-input.jpg",
+      "sha256": "fb6aaa7fd6ccdb5f418788fcb8e8ca522cdfc85c484e6c90592a2770c2fe6108",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000021-action.jpg",
+      "sha256": "d9401b05b384f9ddf88cfb12fdf8480ad179090e914fc6084e1fe2ba57a0a02c",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000021-input.jpg",
+      "sha256": "5eebd05f9e25bd5acccbb2a57bcf19063e53869c3c04217f24b33820af2609fe",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000022-action.jpg",
+      "sha256": "314a5abb099e44429dcd1deb4567a604e20acf4b044e23d9b97d3db31c46c5de",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000022-input.jpg",
+      "sha256": "d9401b05b384f9ddf88cfb12fdf8480ad179090e914fc6084e1fe2ba57a0a02c",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000023-action.jpg",
+      "sha256": "898e984dcbb034f13a84a422478445d391410a2b369dbbd8c429e9333a7ddfa9",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000023-input.jpg",
+      "sha256": "314a5abb099e44429dcd1deb4567a604e20acf4b044e23d9b97d3db31c46c5de",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000024-action.jpg",
+      "sha256": "cb8bbeee48e52bac99157c70b5e7fdc9ce696b6a4e350fdabf5b5dd55922c7bf",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000024-input.jpg",
+      "sha256": "898e984dcbb034f13a84a422478445d391410a2b369dbbd8c429e9333a7ddfa9",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000025-action.jpg",
+      "sha256": "5425a3de58e0b2d42f37c947c36e83addfcdb66d6b95f9db1222a310b9d83f0e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000025-input.jpg",
+      "sha256": "cb8bbeee48e52bac99157c70b5e7fdc9ce696b6a4e350fdabf5b5dd55922c7bf",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000026-action.jpg",
+      "sha256": "95f8a480d1da4db09c8a7e16a040bb2db40a7c06666b8b072e006bc2f2d69378",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000026-input.jpg",
+      "sha256": "5425a3de58e0b2d42f37c947c36e83addfcdb66d6b95f9db1222a310b9d83f0e",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000027-action.jpg",
+      "sha256": "1094073c227cbd13bff238e67d0fa6a7a71ea71121847fc1b2286c34c789a871",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000027-input.jpg",
+      "sha256": "95f8a480d1da4db09c8a7e16a040bb2db40a7c06666b8b072e006bc2f2d69378",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000028-action.jpg",
+      "sha256": "254897e5eac7ecfccc44cf8700ecd11abcf90d03b532481480e8c5c7df70165a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000028-input.jpg",
+      "sha256": "1094073c227cbd13bff238e67d0fa6a7a71ea71121847fc1b2286c34c789a871",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000029-action.jpg",
+      "sha256": "f927a153a04c8c7968d16f4927d26023153ebb1298f3d137d6c8571a55505fc1",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000029-input.jpg",
+      "sha256": "254897e5eac7ecfccc44cf8700ecd11abcf90d03b532481480e8c5c7df70165a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000030-action.jpg",
+      "sha256": "fbceb546da73f35005de508cfa9fbab8ec33964e6b4667006ed44d063d45d503",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000030-input.jpg",
+      "sha256": "f927a153a04c8c7968d16f4927d26023153ebb1298f3d137d6c8571a55505fc1",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000031-action.jpg",
+      "sha256": "aee59ab600017257c9738a9d4c80dee145e4c890cae38ca8724033c568627aa3",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000031-input.jpg",
+      "sha256": "fbceb546da73f35005de508cfa9fbab8ec33964e6b4667006ed44d063d45d503",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000032-action.jpg",
+      "sha256": "a690fdb1918edcd17eda656f8b2483c8549e5d0f98b6c4e8765275516601764a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000032-input.jpg",
+      "sha256": "aee59ab600017257c9738a9d4c80dee145e4c890cae38ca8724033c568627aa3",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000033-action.jpg",
+      "sha256": "f9d99713dcf12169119fa3fb16bf25903d29ab65e03f751a1813ae72acdf0b71",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000033-input.jpg",
+      "sha256": "a690fdb1918edcd17eda656f8b2483c8549e5d0f98b6c4e8765275516601764a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000034-action.jpg",
+      "sha256": "816f1f55bc9b252a18639662d185d8da73fa79b002c77a4ac7650a8583fe5f3d",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000034-input.jpg",
+      "sha256": "f9d99713dcf12169119fa3fb16bf25903d29ab65e03f751a1813ae72acdf0b71",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000035-action.jpg",
+      "sha256": "3654e052102a4162973ac2e390896c23b876f999452cf55beb8a3dd1ddc73486",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000035-input.jpg",
+      "sha256": "816f1f55bc9b252a18639662d185d8da73fa79b002c77a4ac7650a8583fe5f3d",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000036-action.jpg",
+      "sha256": "5836bfca9d8513b6bcdbc5b9decb9d18c6c087306074c19ef7cc94282eb86752",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000036-input.jpg",
+      "sha256": "3654e052102a4162973ac2e390896c23b876f999452cf55beb8a3dd1ddc73486",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000037-action.jpg",
+      "sha256": "0745726e5fac186533e7f07d0e12e1c1fb591f9f3a60a4c62b031aefd0104535",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000037-input.jpg",
+      "sha256": "5836bfca9d8513b6bcdbc5b9decb9d18c6c087306074c19ef7cc94282eb86752",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000038-action.jpg",
+      "sha256": "a34cb3b21dbfdc8d43d3e7f5f53f098038ebd8df0620c74893c3f440cb328d38",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000038-input.jpg",
+      "sha256": "0745726e5fac186533e7f07d0e12e1c1fb591f9f3a60a4c62b031aefd0104535",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000039-action.jpg",
+      "sha256": "7438e96603373b26648f7ce4e3efa0b8769aec5f054b0aead546e413c9d6cca5",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000039-input.jpg",
+      "sha256": "a34cb3b21dbfdc8d43d3e7f5f53f098038ebd8df0620c74893c3f440cb328d38",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000040-action.jpg",
+      "sha256": "4b9a85b225f8a7c41d398759efb446cf2674ba22f832aea7474fa8312dac8e19",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000040-input.jpg",
+      "sha256": "7438e96603373b26648f7ce4e3efa0b8769aec5f054b0aead546e413c9d6cca5",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000041-action.jpg",
+      "sha256": "0612c705c3d6884111f7d8fb953a3a42e85640d8721d5fe48b2c47ca9ea62623",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000041-input.jpg",
+      "sha256": "4b9a85b225f8a7c41d398759efb446cf2674ba22f832aea7474fa8312dac8e19",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000042-action.jpg",
+      "sha256": "b74a694e36769796a2d78f21c5f7062199fc304543836af9afce3ac999c39603",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000042-input.jpg",
+      "sha256": "0612c705c3d6884111f7d8fb953a3a42e85640d8721d5fe48b2c47ca9ea62623",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000043-action.jpg",
+      "sha256": "91e114d6d28b3b5e27d8d30863b378411c23493c46dcc74e2d019183770e92a1",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000043-input.jpg",
+      "sha256": "b74a694e36769796a2d78f21c5f7062199fc304543836af9afce3ac999c39603",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000044-action.jpg",
+      "sha256": "1d4f405b6b160a6cd04c1e030ac78b8e21585c762bc423f3d1eab8fc7a86d68c",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000044-input.jpg",
+      "sha256": "91e114d6d28b3b5e27d8d30863b378411c23493c46dcc74e2d019183770e92a1",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000045-action.jpg",
+      "sha256": "698b0b49928b1b484a296853ba28a545d8cb38d2f1fb8d275d256c3f95ff4a5a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000045-input.jpg",
+      "sha256": "1d4f405b6b160a6cd04c1e030ac78b8e21585c762bc423f3d1eab8fc7a86d68c",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000046-action.jpg",
+      "sha256": "4ab95ade1c8169111ccbbd8a3c15b491bee96aa1935df0b7df601d099057cb60",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000046-input.jpg",
+      "sha256": "698b0b49928b1b484a296853ba28a545d8cb38d2f1fb8d275d256c3f95ff4a5a",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000047-action.jpg",
+      "sha256": "8b17043a68b5bb7c85d43f4c2b0ecbc9eaa14c2433694ec2a212736b3aad8b8b",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000047-input.jpg",
+      "sha256": "4ab95ade1c8169111ccbbd8a3c15b491bee96aa1935df0b7df601d099057cb60",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000048-action.jpg",
+      "sha256": "ef35e3bcb326dd0cfcbf14f3674ff5b5bf1690a6d10a330559e6e115cd71f248",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000048-input.jpg",
+      "sha256": "8b17043a68b5bb7c85d43f4c2b0ecbc9eaa14c2433694ec2a212736b3aad8b8b",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000049-action.jpg",
+      "sha256": "eed7460a048a5a5ffb6e874ce929b8c4dd7022a175fe6a1640ce91cb1de69d4f",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000049-input.jpg",
+      "sha256": "ef35e3bcb326dd0cfcbf14f3674ff5b5bf1690a6d10a330559e6e115cd71f248",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000050-action.jpg",
+      "sha256": "96356feb8f34734765d106fced4c1e3089aea4c354252b4ed0a5c980623fa542",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000050-input.jpg",
+      "sha256": "eed7460a048a5a5ffb6e874ce929b8c4dd7022a175fe6a1640ce91cb1de69d4f",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000051-action.jpg",
+      "sha256": "e242b185c1de1e27bd6e7bdbab0e434a389462c451ab8af0a8f92508ad059fb6",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000051-input.jpg",
+      "sha256": "96356feb8f34734765d106fced4c1e3089aea4c354252b4ed0a5c980623fa542",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000052-action.jpg",
+      "sha256": "8e42d04084f5bb5eb6e55a48a8149909bb3bd2548f96d276d75ff64c74875d13",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/.frames/turn-000052-input.jpg",
+      "sha256": "e242b185c1de1e27bd6e7bdbab0e434a389462c451ab8af0a8f92508ad059fb6",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/shot-keep.jpg",
+      "sha256": "8e42d04084f5bb5eb6e55a48a8149909bb3bd2548f96d276d75ff64c74875d13",
+      "personallyInspected": true
+    },
+    {
+      "file": "test-results/sweep-a3/screen-L1-low-pixels/shot.jpg",
+      "sha256": "6efce1fba68321576d6d619e2750ac29219d0f8cd36f3fa2d9249c4f06100310",
+      "personallyInspected": true
+    }
+  ],
+  "toolSha256": "df95d5fdba5b264f7ed8f50541fecf1cac4f538c0debf3a033e1d83465942153",
+  "protocol": "Each decision receives fresh --image attachment. No DOM/HUD text, coordinates, code, map or service access supplied to model; recent history includes only its own prior decisions/actions. Completed agent event audits contain no tools. Live controller retains DOM HUD and tick data outside player context for analysis. L3 ordinary native prefix only to actual fallback; physical WASD from there. Aim assist/courier protection isolate navigation.",
+  "coverage": "A low-tier counterexample may refute a universal criterion; no high-tier readability pass is claimed.",
+  "status": "NOT CHECKED",
+  "finalVisibleDistanceM": 5,
+  "closestVisibleDistanceM": 5,
+  "objectivesReached": [],
+  "earlyUnproductiveEpisodeSeconds": 51.71666666666667,
+  "observation": "All53 unique pre/post states plus final snapshot inspected. Luna stalls at house porch at34m for51.7167s, then circles houses and approaches depot from behind. It remains5m from ring at52 completed actions, no pickup/Annex/garage. Later behind-depot looping is retained, but no individually qualified contiguous >60s lost episode asserted. Bound ends without full route; no PASS/FAIL fabricated from reservation expiry."
+}
