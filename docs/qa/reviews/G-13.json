@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
       "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
@@ -59,19 +59,27 @@
     },
     {
       "file": "docs/reports/fix68-g/G-13-final-source.json",
-      "sha256": "4745a9359b95895dd5bb178230a7b73e69fd5bd8ea975a622699fa1c3469effc",
+      "sha256": "288c720cfb683f40371aa07e34c7404e8ef15aa982ea2f4843f1a4a24e1b31c5",
       "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
     },
     {
       "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
-      "sha256": "fdbf3218bfdd5da05edcdf741163015873c1db642fa3444f52b03ab69705c2ff",
+      "sha256": "2074090064937eeb357bf9e167ac16cedf424dd902835343cb48efd45f04b4e1",
       "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
     },
     {
       "file": "docs/reports/fix68-g/threat-final/manifest.json",
       "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
       "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+      "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+      "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
     }
   ],
-  "notes": "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval."
+  "notes": [
+    "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }

@@ -1,0 +1,72 @@
+{
+  "gameplayCommit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+  "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/typecheck-continuation.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/lint-continuation.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692",
+      "rawSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/test-continuation.log.gz",
+      "sha256": "872a67509e583a923da2e7d50dce9a723c4a766ed0e9eba322f54b5f46ea38b3",
+      "rawSha256": "45daf083f45a1f6c6500b8dd9928c12838f356b2d5062b93b36d77e02581d690"
+    },
+    {
+      "command": "npm run qa:accept -- --level L3 --skip-browser",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/accept-ready-wave-retirement-L3.log.gz",
+      "sha256": "cb00c773c0e867228ca1abd7f601a377ba0d58ee0b80e8904cdccb81a5325a7a",
+      "rawSha256": "1991cbe793cc0a7099f3dab8d9f1d81c8d3282f9f783910486ab2af67346ef20"
+    },
+    {
+      "command": "npm run qa:accept -- --level L6 --skip-browser",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/accept-breach-priority-L6.log.gz",
+      "sha256": "1d0d7ccc16a5997ecbb56581db0a768080c3652f7c8f672b642b56e8b0ba50fb",
+      "rawSha256": "9924d1d1e30d8a90f4deb8f9c1ba7d813e13ba3b6ed8a0f50370a45041c45aaa"
+    },
+    {
+      "command": "npm run qa:threat",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/threat-continuation.log.gz",
+      "sha256": "2762adf2fe24dc85c7c7713630685a0e8aedeeda07824ba0b66268715c022c77",
+      "rawSha256": "c272b219cf502e2ac726f77053d5c8eac15c23701c2fb17c04ddc720aebaf793"
+    },
+    {
+      "command": "npm run qa:threat (final load-qualified standalone)",
+      "exitCode": 1,
+      "log": "docs/reports/fix68-g/continuation-validation-logs/threat-load-qualified.log.gz",
+      "sha256": "f89b94d52ce8617af8089eeeb1bb06544cc4612c86b5d69b7d9b3677b9721d58",
+      "rawSha256": "1cdc7f8dcfa603a98336c24a30335f774be3bc800e00221bc9869fc32b2503dc"
+    }
+  ],
+  "threatFlags": [
+    "L7/step/corridor:SLOW_FOLLOWER:62",
+    "L7/step/corridor:SLOW_FOLLOWER:63",
+    "L7/step/corridor:SLOW_FOLLOWER:67",
+    "L7/step/corridor:SLOW_FOLLOWER:70",
+    "L7/step/corridor:SLOW_FOLLOWER:71",
+    "L7/step/corridor:SLOW_FOLLOWER:74",
+    "L7/phase/encounters:SLOW_FOLLOWER:62",
+    "L7/phase/encounters:SLOW_FOLLOWER:63",
+    "L7/phase/encounters:SLOW_FOLLOWER:67",
+    "L7/phase/encounters:SLOW_FOLLOWER:70",
+    "L7/phase/encounters:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:SLOW_FOLLOWER:74"
+  ],
+  "threatSeconds": 473.14580937499994,
+  "status": "PARTIAL / NO-GO",
+  "note": "L6 native acceptance predates only the later L3 guard; its raw source identity is retained. Historical all-level acceptance and build are not current-source qualifications. Final threat began at one-minute load3.59, alone, and terminated exit1."
+}

@@ -7,8 +7,8 @@
   "rows": [
     {
       "tier": "low",
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-complete.json.gz",
+      "sha256": "1699db5823bcc37ad69d6e026ecdcbc5e575f43ec2c88555ec81445f0e094d25",
       "excludedCorgiIds": [
         23
       ],
@@ -37,12 +37,14 @@
       "upperNumerator": 115,
       "lowerDenominator": 9358,
       "boundPercent": 1.2288950630476598,
-      "aggregateIncludingCorgiPercent": 0.8728288382648163
+      "aggregateIncludingCorgiPercent": 0.8728288382648163,
+      "rawSha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "encoding": "gzip"
     },
     {
       "tier": "high",
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-complete.json.gz",
+      "sha256": "2b9b08440b1365a2cbf64d114930f52ba3cd50e0cf2522d95a18c9743dc91ec8",
       "excludedCorgiIds": [
         23
       ],
@@ -71,7 +73,10 @@
       "upperNumerator": 6,
       "lowerDenominator": 287,
       "boundPercent": 2.0905923344947737,
-      "aggregateIncludingCorgiPercent": 12.95103092783505
+      "aggregateIncludingCorgiPercent": 12.95103092783505,
+      "rawSha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "encoding": "gzip"
     }
-  ]
+  ],
+  "archiveNote": "Historical sourceD evidence now links immutable gzip copies reconstructed byte-for-byte from49e8004; rawSha256 retains its original JSON hash. Current continuation checks are recorded separately."
 }

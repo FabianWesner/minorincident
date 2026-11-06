@@ -1,5 +1,5 @@
 {
-  "scope": "L6 low, real110second survival-protected passive window, production bot; both wrappers equal unobserved controls. Full native both-tier acceptance still pending.",
+  "scope": "L6 breach admission counterexample fixed. Both-tier full native acceptance completed; separate L6-05 combat criterion still FAIL.",
   "before": {
     "sourceHash": "3507edc948e569d70ced69e6a5477e04e184c2bd73d4df7df12d170f81a95d08",
     "waves": [
@@ -47,5 +47,15 @@
       "file": "docs/reports/fix68-g/L6-low-gate-priority-after.json.gz",
       "sha256": "ed2a8e193e140e740fcd3667acccb84864a14a6fa6951b189d4cdef861817358"
     }
-  ]
+  ],
+  "fullAcceptance": {
+    "command": "npm run qa:accept -- --level L6 --skip-browser",
+    "exitCode": 1,
+    "manifest": "docs/reports/fix68-g/L6-breach-priority-final/manifest.json",
+    "remainingFailRows": [
+      "L6-05"
+    ],
+    "sourceHash": "e2943d65aab29f4bd13e504830255129c16fd6e3ac20ca4e4a76faa146f8ddac",
+    "note": "Before subsequent L3-only retirement guard; raw provenance retained. Both tiers admit all10 second-breach members."
+  }
 }

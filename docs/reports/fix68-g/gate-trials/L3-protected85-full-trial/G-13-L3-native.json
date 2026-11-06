@@ -1,0 +1,171 @@
+{
+  "sourceHash": "88b0ab74717ff197aa5b364d128e3dca531fd136bc8b8f1cc94b82d531366b65",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "49e80049e17c75d90e7736f7e47a1eab0c21b6b1",
+  "generatedAt": "2026-11-06T07:06:00.328Z",
+  "row": "G-13",
+  "level": "L3",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "94bd0108797a7ae554e29d87a9c25e4553df28852717c9203521cac431721965",
+      "outcome": "complete",
+      "nativeStateHash": "d24192c9",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 207,
+              "median": 4.510490972930115,
+              "groupMedian": 4.500079257100992,
+              "ratio": 1.002313673878675
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 208,
+              "median": 4.500057764614101,
+              "groupMedian": 4.500079257100992,
+              "ratio": 0.9999952239759206
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 208,
+              "median": 4.500039908224349,
+              "groupMedian": 4.500079257100992,
+              "ratio": 0.9999912559591965
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 206,
+              "median": 4.500100749587885,
+              "groupMedian": 4.500079257100992,
+              "ratio": 1.0000047760240798
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11582,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8634087376964255,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11582,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 9378,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9410,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9428,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9454,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "dd187f6512e0c52df9e1ef95919cf0d6d1b30e61a46aed2e1b27109795e59100",
+      "outcome": "complete",
+      "nativeStateHash": "c8b8cd02",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 14445,
+            "stationaryFarTicks": 3347,
+            "upperBoundPercent": 23.170647282796814,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14445,
+                "stationaryFarTicks": 3341
+              },
+              {
+                "id": 30,
+                "escortTicks": 258,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 115,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 203,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 275,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/L3-protected85-full-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

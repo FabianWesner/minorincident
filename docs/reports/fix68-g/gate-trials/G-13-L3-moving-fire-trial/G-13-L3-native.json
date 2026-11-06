@@ -1,0 +1,180 @@
+{
+  "sourceHash": "7d9aa40d1efdfc3ebae660ea73da7374982b3d095ac1e865cd2bd52f9df20444",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "49d44dcc4829fa724cec7e54afc4277bbd870aec",
+  "generatedAt": "2026-11-06T05:20:53.429Z",
+  "row": "G-13",
+  "level": "L3",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "043f9cadb79a38a4b56a1fd2d458513f40af812caed825e291eeaa5af525866f",
+      "outcome": "complete",
+      "nativeStateHash": "0f60ad86",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 166,
+              "median": 4.299001787479316,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 1.0958275226151466
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 175,
+              "median": 4.4421940955979125,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 1.1323276405541884
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 25,
+              "median": 2.9341476638461685,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 0.7479224072025434
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 40,
+              "median": 3.547126729570388,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 0.9041724773848533
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 18556,
+            "stationaryFarTicks": 376,
+            "upperBoundPercent": 2.0262987712869154,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 18556,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 8523,
+                "stationaryFarTicks": 58
+              },
+              {
+                "id": 31,
+                "escortTicks": 8156,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1825,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2584,
+                "stationaryFarTicks": 337
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "c0b4007e4b924a57fff3d26264722bd55640861aeb2083d04e9be73e69ae4a54",
+      "outcome": "complete",
+      "nativeStateHash": "ac1983f9",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 12,
+              "median": 4.057786850025106,
+              "groupMedian": 4.057786850025106,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14608,
+            "stationaryFarTicks": 44,
+            "upperBoundPercent": 0.30120481927710846,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14608,
+                "stationaryFarTicks": 38
+              },
+              {
+                "id": 30,
+                "escortTicks": 224,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 115,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 200,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 351,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

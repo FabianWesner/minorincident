@@ -7,8 +7,8 @@
     {
       "level": "L3",
       "tier": "low",
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-complete.json.gz",
+      "sha256": "1699db5823bcc37ad69d6e026ecdcbc5e575f43ec2c88555ec81445f0e094d25",
       "stateHash": "3ce6de95",
       "outcome": "complete",
       "checks": [
@@ -53,7 +53,7 @@
               "ratio": 0.9998538906338371
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -95,17 +95,19 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         }
       ],
-      "roster": null
+      "roster": null,
+      "rawSha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "encoding": "gzip"
     },
     {
       "level": "L3",
       "tier": "high",
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-complete.json.gz",
+      "sha256": "2b9b08440b1365a2cbf64d114930f52ba3cd50e0cf2522d95a18c9743dc91ec8",
       "stateHash": "9e71c96f",
       "outcome": "complete",
       "checks": [
@@ -126,7 +128,7 @@
               "ratio": 1
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -168,17 +170,19 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         }
       ],
-      "roster": null
+      "roster": null,
+      "rawSha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "encoding": "gzip"
     },
     {
       "level": "L5",
       "tier": "low",
-      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
-      "sha256": "87056c5a3542d41903622d434264bf772ce3e4f9597d3a65b12b866228ca15e6",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L5-low-complete.json.gz",
+      "sha256": "e1e3f8edc1c18e45c5846f1f0cd9dc3e3915b5270069b2cf246a7cf5038e4b52",
       "stateHash": "dddd9808",
       "outcome": "complete",
       "checks": [
@@ -263,7 +267,7 @@
               "ratio": 0.9916507165365888
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         },
         {
@@ -310,7 +314,7 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         }
       ],
@@ -360,13 +364,15 @@
           "lostAt": 0,
           "hold": 0
         }
-      ]
+      ],
+      "rawSha256": "87056c5a3542d41903622d434264bf772ce3e4f9597d3a65b12b866228ca15e6",
+      "encoding": "gzip"
     },
     {
       "level": "L5",
       "tier": "high",
-      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
-      "sha256": "9382bbfaa27e8730dd1dea37b11310ee7451013323f322bd308cdc2f9f9d132a",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L5-high-complete.json.gz",
+      "sha256": "82b52437aeb85dcc6bce7707771254dd6831489d030694d1e441fc6fbf5abc93",
       "stateHash": "046b9ac6",
       "outcome": "complete",
       "checks": [
@@ -451,7 +457,7 @@
               "ratio": 1.0457936775256038
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
         {
@@ -498,7 +504,7 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         }
       ],
@@ -548,7 +554,10 @@
           "lostAt": 0,
           "hold": 0
         }
-      ]
+      ],
+      "rawSha256": "9382bbfaa27e8730dd1dea37b11310ee7451013323f322bd308cdc2f9f9d132a",
+      "encoding": "gzip"
     }
-  ]
+  ],
+  "archiveNote": "Historical sourceD evidence now links immutable gzip copies reconstructed byte-for-byte from49e8004; rawSha256 retains its original JSON hash. Current continuation checks are recorded separately."
 }

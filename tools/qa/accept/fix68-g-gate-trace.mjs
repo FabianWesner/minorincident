@@ -41,7 +41,7 @@ const run = await runLevel(level, 'complete', 1, seconds, 'auto', campaign(), un
         const leaderSpeed = Math.hypot(player.transform.x - previous.x, player.transform.z - previous.z) * 60;
         previous = { ...player.transform };
         if (w.tick % 30) return;
-        samples.push({ tick: w.tick, player: { ...player.transform }, leaderSpeed,
+        samples.push({ tick: w.tick, player: { ...player.transform }, leaderSpeed, requestedMove: { ...w.inputFrame.move },
           followers: controller.state.roster.map(r => {
             const e = w.entities.get(r.id);
             return { id: r.id, status: r.status, position: e ? { ...e.transform } : null, hp: e?.health.current,

@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L6",
   "tier": "high",
-  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "sourceHash": "e2943d65aab29f4bd13e504830255129c16fd6e3ac20ca4e4a76faa146f8ddac",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checks": [
     {
@@ -14,10 +14,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 289.43333333333334,
+          "time": 288.7,
           "deaths": 0,
-          "kills": 29,
-          "damageTaken": 90,
+          "kills": 36,
+          "damageTaken": 120,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -30,11 +30,11 @@
             },
             {
               "id": "retreat",
-              "t": 279.8833333333333
+              "t": 272.68333333333334
             },
             {
               "id": "exit",
-              "t": 289.43333333333334
+              "t": 283.7
             }
           ],
           "furthestObjective": "exit",
@@ -44,13 +44,13 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 125,
+            "admitted": 134,
             "deferred": 0,
             "requests": [],
             "offenders": []
           }
         },
-        "samples": 14113,
+        "samples": 13769,
         "gateCount": 3,
         "seenGates": [
           90,
@@ -75,49 +75,49 @@
             "z": 15
           },
           {
-            "tick": 8626,
+            "tick": 8447,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 92.4,
             "z": 17.3
           },
           {
-            "tick": 8916,
+            "tick": 8641,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 12345,
+            "tick": 11989,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 152.4,
             "z": 17.3
           },
           {
-            "tick": 12692,
+            "tick": 12183,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 15963,
+            "tick": 15559,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 212.4,
             "z": 17.3
           },
           {
-            "tick": 16101,
+            "tick": 15753,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 16793,
+            "tick": 16361,
             "phase": "exit",
             "marker": "night-exit",
             "x": 273,
@@ -125,7 +125,7 @@
           }
         ],
         "offenders": [],
-        "nativeStateHash": "dc096532",
+        "nativeStateHash": "63dcf2ee",
         "branchChecks": [
           {
             "gateX": 90,
@@ -231,11 +231,11 @@
           "seed": 1,
           "completed": false,
           "time": 900,
-          "deaths": 17,
+          "deaths": 51,
           "kills": 0,
-          "damageTaken": 1923.4333333333295,
+          "damageTaken": 5148.566666666666,
           "failures": {
-            "player-died": 17,
+            "player-died": 51,
             "tick-budget": 1
           },
           "objectiveTimeline": [
@@ -261,16 +261,16 @@
             "objective": "retreat",
             "detail": "tick-budget: Cover the retreat through the tunnel",
             "player": {
-              "x": 65.03004455566406,
-              "z": 14.818597793579102
+              "x": 0.33253079652786255,
+              "z": 3.5566253662109375
             },
-            "distance": 176.97004841704353,
+            "distance": 241.9382493410672,
             "actors": {}
           },
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 98,
+            "admitted": 997,
             "deferred": 0,
             "requests": [],
             "offenders": []
@@ -280,11 +280,11 @@
           "outcome": "complete",
           "seed": 1,
           "profile": "evade-only",
-          "simSeconds": 405.51666666666665,
-          "deaths": 7,
+          "simSeconds": 530.9833333333333,
+          "deaths": 14,
           "rescued": 1,
           "total": 29,
-          "peak": 21,
+          "peak": 30,
           "timeline": [
             {
               "type": "l6.breach1",
@@ -312,7 +312,7 @@
             },
             {
               "type": "l6.exit",
-              "t": 394.4
+              "t": 524.85
             }
           ],
           "fates": [
@@ -572,13 +572,94 @@
               "tick": 12153,
               "wave": 2,
               "offscreen": true
+            },
+            {
+              "id": 85,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 12199,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 87,
+              "door": 0,
+              "x": -9.25,
+              "z": -19.4,
+              "tick": 12244,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 89,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 12289,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 91,
+              "door": 0,
+              "x": -9.25,
+              "z": -19.4,
+              "tick": 12334,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 93,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 12379,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 95,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 12424,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 97,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 12469,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 99,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 12514,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 101,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 12559,
+              "wave": 2,
+              "offscreen": true
             }
           ],
           "player": {
-            "x": 272.2767639160156,
+            "x": 272.29052734375,
             "y": 4.619999885559082,
-            "z": 14.999993324279785,
-            "yaw": -0.000007906531246446732
+            "z": 15.000006675720215,
+            "yaw": 0.000008082095617942697
           },
           "leader": [
             272.38333333331946,
@@ -904,10 +985,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 289.43333333333334,
+          "time": 288.7,
           "deaths": 0,
-          "kills": 29,
-          "damageTaken": 90,
+          "kills": 36,
+          "damageTaken": 120,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -920,11 +1001,11 @@
             },
             {
               "id": "retreat",
-              "t": 279.8833333333333
+              "t": 272.68333333333334
             },
             {
               "id": "exit",
-              "t": 289.43333333333334
+              "t": 283.7
             }
           ],
           "furthestObjective": "exit",
@@ -934,15 +1015,15 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 125,
+            "admitted": 134,
             "deferred": 0,
             "requests": [],
             "offenders": []
           }
         },
-        "samples": 17366,
-        "observedHash": "dc096532",
-        "canonicalHash": "dc096532",
+        "samples": 17322,
+        "observedHash": "63dcf2ee",
+        "canonicalHash": "63dcf2ee",
         "events": [
           {
             "type": "l6.bang",
@@ -976,7 +1057,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 4592,
+            "tick": 4634,
             "breach": 3,
             "position": {
               "x": 54,
@@ -985,7 +1066,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 6151,
+            "tick": 6436,
             "breach": 6,
             "position": {
               "x": 78,
@@ -994,7 +1075,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 8626,
+            "tick": 8447,
             "breach": 4,
             "position": {
               "x": 126,
@@ -1003,7 +1084,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 10442,
+            "tick": 10076,
             "breach": 7,
             "position": {
               "x": 162,
@@ -1012,7 +1093,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 12730,
+            "tick": 12221,
             "breach": 5,
             "position": {
               "x": 198,
@@ -1021,7 +1102,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 13910,
+            "tick": 13652,
             "breach": 8,
             "position": {
               "x": 228,
@@ -1064,7 +1145,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 44,
+            "pathSamples": 46,
             "pathFailures": 0
           },
           {
@@ -1100,7 +1181,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 47,
+            "pathSamples": 49,
             "pathFailures": 0
           },
           {
@@ -1190,201 +1271,21 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 50,
+            "pathSamples": 48,
             "pathFailures": 0
           },
           {
             "id": 79,
             "wave": 2,
             "door": 1,
-            "bornAt": 3358,
+            "bornAt": 3298,
             "birth": {
               "x": 10,
               "z": -19.4,
               "y": 1.2999999999999998,
               "yaw": 0.5178801230087025
             },
-            "firstShelterFloor": 3358,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 18,
-            "pathFailures": 0
-          },
-          {
-            "id": 82,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 3433,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 3.4277868035706103
-            },
-            "firstShelterFloor": 3433,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 10,
-            "pathFailures": 0
-          },
-          {
-            "id": 84,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 4003,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 4.259372314582193
-            },
-            "firstShelterFloor": 4003,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 22,
-            "pathFailures": 0
-          },
-          {
-            "id": 86,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 4183,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 1.8632161631176822
-            },
-            "firstShelterFloor": 4183,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 21,
-            "pathFailures": 0
-          },
-          {
-            "id": 88,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 4663,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 0.0964556251696664
-            },
-            "firstShelterFloor": 4663,
-            "firstTrack": 6964,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 34,
-            "pathFailures": 0
-          },
-          {
-            "id": 90,
-            "wave": 4,
-            "door": 2,
-            "bornAt": 4712,
-            "birth": {
-              "x": 54,
-              "z": 12.6,
-              "y": 1.5700000143051147,
-              "yaw": 0
-            },
-            "firstShelterFloor": 5222,
-            "firstTrack": 4831,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 32,
-            "pathFailures": 0
-          },
-          {
-            "id": 91,
-            "wave": 4,
-            "door": 2,
-            "bornAt": 4712,
-            "birth": {
-              "x": 55.0884097751874,
-              "z": 12.520792214576742,
-              "y": 1.5700000143051147,
-              "yaw": 3.734635895375519
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 4796,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 74,
-            "pathFailures": 0
-          },
-          {
-            "id": 93,
-            "wave": 4,
-            "door": 2,
-            "bornAt": 4712,
-            "birth": {
-              "x": 54.68790189359284,
-              "z": 13.346710673898178,
-              "y": 1.2999999999999998,
-              "yaw": 2.144047258345742
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 4712,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 94,
-            "pathFailures": 0
-          },
-          {
-            "id": 95,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 4753,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 5.303296151114482
-            },
-            "firstShelterFloor": 4753,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 13,
-            "pathFailures": 0
-          },
-          {
-            "id": 97,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 5413,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 5.125042789872208
-            },
-            "firstShelterFloor": 5413,
-            "firstTrack": null,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 18,
-            "pathFailures": 0
-          },
-          {
-            "id": 99,
-            "wave": 2,
-            "door": 0,
-            "bornAt": 5473,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 0.21692205309135879
-            },
-            "firstShelterFloor": 5473,
+            "firstShelterFloor": 3298,
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
@@ -1392,25 +1293,205 @@
             "pathFailures": 0
           },
           {
-            "id": 101,
+            "id": 81,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3343,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.4277868035706103
+            },
+            "firstShelterFloor": 3343,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 12,
+            "pathFailures": 0
+          },
+          {
+            "id": 83,
             "wave": 2,
             "door": 1,
-            "bornAt": 5518,
+            "bornAt": 3388,
             "birth": {
               "x": 10,
               "z": -19.4,
               "y": 1.2999999999999998,
-              "yaw": 0.2973907441810507
+              "yaw": 4.259372314582193
             },
-            "firstShelterFloor": 5518,
+            "firstShelterFloor": 3388,
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 25,
+            "pathSamples": 13,
             "pathFailures": 0
           },
           {
-            "id": 103,
+            "id": 86,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3433,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.948515018262715
+            },
+            "firstShelterFloor": 3433,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 13,
+            "pathFailures": 0
+          },
+          {
+            "id": 88,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3478,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.3683567141920783
+            },
+            "firstShelterFloor": 3478,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 22,
+            "pathFailures": 0
+          },
+          {
+            "id": 90,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3523,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 0.9182127258742234
+            },
+            "firstShelterFloor": 3523,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 13,
+            "pathFailures": 0
+          },
+          {
+            "id": 92,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3568,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 1.6714631650013465
+            },
+            "firstShelterFloor": 3568,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 20,
+            "pathFailures": 0
+          },
+          {
+            "id": 94,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3613,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 6.193976397396132
+            },
+            "firstShelterFloor": 3613,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 14,
+            "pathFailures": 0
+          },
+          {
+            "id": 96,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3658,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.6656945569491923
+            },
+            "firstShelterFloor": 3658,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 30,
+            "pathFailures": 0
+          },
+          {
+            "id": 98,
+            "wave": 4,
+            "door": 2,
+            "bornAt": 4754,
+            "birth": {
+              "x": 54,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 0
+            },
+            "firstShelterFloor": 5190,
+            "firstTrack": 4860,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 35,
+            "pathFailures": 0
+          },
+          {
+            "id": 99,
+            "wave": 4,
+            "door": 2,
+            "bornAt": 4754,
+            "birth": {
+              "x": 55.0884097751874,
+              "z": 12.520792214576742,
+              "y": 1.5700000143051147,
+              "yaw": 5.032105541199902
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 4827,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 69,
+            "pathFailures": 0
+          },
+          {
+            "id": 101,
+            "wave": 4,
+            "door": 2,
+            "bornAt": 4754,
+            "birth": {
+              "x": 54.68790189359284,
+              "z": 13.346710673898178,
+              "y": 1.2999999999999998,
+              "yaw": 3.0407727136917573
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 4754,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 29,
+            "pathFailures": 0
+          },
+          {
+            "id": 107,
             "wave": 3,
             "door": 0,
             "bornAt": 5742,
@@ -1418,20 +1499,38 @@
               "x": -10,
               "z": -19.4,
               "y": 1.2999999999999998,
-              "yaw": 4.628597067532329
+              "yaw": 4.941702615235167
             },
             "firstShelterFloor": 5742,
-            "firstTrack": 10948,
+            "firstTrack": 15175,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 48,
+            "pathSamples": 89,
             "pathFailures": 0
           },
           {
-            "id": 109,
+            "id": 113,
+            "wave": 3,
+            "door": 2,
+            "bornAt": 6342,
+            "birth": {
+              "x": 54,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 5.997011207953963
+            },
+            "firstShelterFloor": 12961,
+            "firstTrack": 6430,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 13,
+            "pathFailures": 0
+          },
+          {
+            "id": 117,
             "wave": 4,
             "door": 5,
-            "bornAt": 6271,
+            "bornAt": 6556,
             "birth": {
               "x": 78,
               "z": 17.400000000000002,
@@ -1439,50 +1538,104 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 6535,
+            "firstTrack": 6592,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 29,
+            "pathSamples": 31,
             "pathFailures": 0
           },
           {
-            "id": 110,
+            "id": 118,
             "wave": 4,
             "door": 5,
-            "bornAt": 6271,
+            "bornAt": 6556,
             "birth": {
               "x": 79.08840977518742,
               "z": 17.320792214576738,
               "y": 1.5700000143051147,
-              "yaw": 2.648557601866607
+              "yaw": 5.681392421118914
             },
             "firstShelterFloor": null,
-            "firstTrack": 6373,
+            "firstTrack": 6678,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 46,
+            "pathSamples": 5,
             "pathFailures": 0
           },
           {
-            "id": 112,
+            "id": 120,
             "wave": 4,
             "door": 5,
-            "bornAt": 6271,
+            "bornAt": 6556,
             "birth": {
               "x": 78.68790189359287,
               "z": 18.146710673898177,
               "y": 1.5700000143051147,
-              "yaw": 6.150860326330137
+              "yaw": 3.81245140897829
             },
             "firstShelterFloor": null,
-            "firstTrack": 6360,
+            "firstTrack": 6681,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 54,
+            "pathSamples": 6,
             "pathFailures": 0
           },
           {
-            "id": 115,
+            "id": 122,
+            "wave": 4,
+            "door": 3,
+            "bornAt": 8567,
+            "birth": {
+              "x": 126,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 0
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 8709,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 25,
+            "pathFailures": 0
+          },
+          {
+            "id": 123,
+            "wave": 4,
+            "door": 3,
+            "bornAt": 8567,
+            "birth": {
+              "x": 127.08840977518742,
+              "z": 12.520792214576737,
+              "y": 1.5700000143051147,
+              "yaw": 3.526270417945596
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 8691,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 9,
+            "pathFailures": 0
+          },
+          {
+            "id": 125,
+            "wave": 4,
+            "door": 3,
+            "bornAt": 8567,
+            "birth": {
+              "x": 126.68790189359287,
+              "z": 13.346710673898178,
+              "y": 1.2999999999999998,
+              "yaw": 1.3631579693895841
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 8567,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 88,
+            "pathFailures": 0
+          },
+          {
+            "id": 127,
             "wave": 3,
             "door": 3,
             "bornAt": 8742,
@@ -1490,71 +1643,17 @@
               "x": 126,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 2.8710291761749427
+              "yaw": 1.106404614193185
             },
             "firstShelterFloor": null,
-            "firstTrack": 8860,
+            "firstTrack": 8849,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 56,
+            "pathSamples": 65,
             "pathFailures": 0
           },
           {
-            "id": 117,
-            "wave": 4,
-            "door": 3,
-            "bornAt": 8746,
-            "birth": {
-              "x": 127.07545475042888,
-              "z": 12.608251959664978,
-              "y": 1.5700000143051147,
-              "yaw": 0
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 8865,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 63,
-            "pathFailures": 0
-          },
-          {
-            "id": 118,
-            "wave": 4,
-            "door": 3,
-            "bornAt": 8746,
-            "birth": {
-              "x": 126.49700209485366,
-              "z": 13.248852776910274,
-              "y": 1.2999999999999998,
-              "yaw": 3.81245140897829
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 8746,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 58,
-            "pathFailures": 0
-          },
-          {
-            "id": 120,
-            "wave": 4,
-            "door": 3,
-            "bornAt": 8746,
-            "birth": {
-              "x": 125.57951099382605,
-              "z": 13.312543307777975,
-              "y": 1.2999999999999998,
-              "yaw": 3.612576491568558
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 8746,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 27,
-            "pathFailures": 0
-          },
-          {
-            "id": 122,
+            "id": 129,
             "wave": 3,
             "door": 3,
             "bornAt": 9342,
@@ -1562,17 +1661,17 @@
               "x": 126,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 2.786391686432339
+              "yaw": 1.9416861965095442
             },
             "firstShelterFloor": null,
-            "firstTrack": 9437,
+            "firstTrack": 9376,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 14,
+            "pathSamples": 51,
             "pathFailures": 0
           },
           {
-            "id": 124,
+            "id": 131,
             "wave": 3,
             "door": 3,
             "bornAt": 9942,
@@ -1580,20 +1679,20 @@
               "x": 126,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 3.2029075689278437
+              "yaw": 5.87674460586439
             },
             "firstShelterFloor": null,
-            "firstTrack": 10053,
+            "firstTrack": 10762,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 16,
+            "pathSamples": 8,
             "pathFailures": 0
           },
           {
-            "id": 126,
+            "id": 133,
             "wave": 4,
             "door": 6,
-            "bornAt": 10562,
+            "bornAt": 10196,
             "birth": {
               "x": 161,
               "y": 1.5700000143051147,
@@ -1601,122 +1700,122 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 10632,
+            "firstTrack": 10266,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 33,
-            "pathFailures": 0
-          },
-          {
-            "id": 127,
-            "wave": 4,
-            "door": 6,
-            "bornAt": 10562,
-            "birth": {
-              "x": 162.8,
-              "z": 17.400000000000002,
-              "y": 1.5700000143051147,
-              "yaw": 0.7241123645179295
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 10593,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 60,
-            "pathFailures": 0
-          },
-          {
-            "id": 129,
-            "wave": 4,
-            "door": 6,
-            "bornAt": 10562,
-            "birth": {
-              "x": 160.29289321881345,
-              "z": 18.10710678118655,
-              "y": 1.5700000143051147,
-              "yaw": 4.248868537903447
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 10645,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 44,
-            "pathFailures": 0
-          },
-          {
-            "id": 131,
-            "wave": 3,
-            "door": 3,
-            "bornAt": 12342,
-            "birth": {
-              "x": 126,
-              "z": 12.6,
-              "y": 1.5700000143051147,
-              "yaw": 4.650027663151229
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 13390,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 1,
-            "pathFailures": 0
-          },
-          {
-            "id": 133,
-            "wave": 4,
-            "door": 4,
-            "bornAt": 12850,
-            "birth": {
-              "x": 198,
-              "z": 12.6,
-              "y": 1.5700000143051147,
-              "yaw": 0
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 12950,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 68,
+            "pathSamples": 34,
             "pathFailures": 0
           },
           {
             "id": 134,
             "wave": 4,
-            "door": 4,
-            "bornAt": 12850,
+            "door": 6,
+            "bornAt": 10196,
             "birth": {
-              "x": 199.0884097751874,
-              "z": 12.520792214576744,
+              "x": 162.8,
+              "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 2.7134918160315524
+              "yaw": 5.062405134728164
             },
             "firstShelterFloor": null,
-            "firstTrack": 12957,
+            "firstTrack": 10227,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 14,
+            "pathSamples": 27,
             "pathFailures": 0
           },
           {
             "id": 136,
             "wave": 4,
+            "door": 6,
+            "bornAt": 10196,
+            "birth": {
+              "x": 160.29289321881345,
+              "z": 18.10710678118655,
+              "y": 1.5700000143051147,
+              "yaw": 3.7859160207014293
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 10281,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 64,
+            "pathFailures": 1
+          },
+          {
+            "id": 138,
+            "wave": 4,
             "door": 4,
-            "bornAt": 12850,
+            "bornAt": 12341,
+            "birth": {
+              "x": 198,
+              "y": 1.5700000143051147,
+              "z": 12.6,
+              "yaw": 0
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 12456,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 62,
+            "pathFailures": 0
+          },
+          {
+            "id": 139,
+            "wave": 4,
+            "door": 4,
+            "bornAt": 12341,
+            "birth": {
+              "x": 199.0884097751874,
+              "z": 12.520792214576744,
+              "y": 1.5700000143051147,
+              "yaw": 5.116842450855173
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 12484,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 17,
+            "pathFailures": 0
+          },
+          {
+            "id": 141,
+            "wave": 4,
+            "door": 4,
+            "bornAt": 12341,
             "birth": {
               "x": 198.68790189359282,
               "z": 13.346710673898182,
               "y": 1.2999999999999998,
-              "yaw": 2.5739986433867137
+              "yaw": 0.07176960965231846
             },
             "firstShelterFloor": null,
-            "firstTrack": 12850,
+            "firstTrack": 12341,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 16,
+            "pathSamples": 13,
             "pathFailures": 0
           },
           {
-            "id": 138,
+            "id": 143,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 12342,
+            "birth": {
+              "x": 197.937666473878,
+              "z": 13.622590210617673,
+              "y": 1.2999999999999998,
+              "yaw": 1.8845428959417079
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 12342,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 12,
+            "pathFailures": 0
+          },
+          {
+            "id": 145,
             "wave": 3,
             "door": 4,
             "bornAt": 12942,
@@ -1724,17 +1823,17 @@
               "x": 198,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 0.3633603781153857
+              "yaw": 1.4452812222898452
             },
             "firstShelterFloor": null,
-            "firstTrack": 13127,
+            "firstTrack": 13006,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 64,
+            "pathSamples": 54,
             "pathFailures": 0
           },
           {
-            "id": 140,
+            "id": 147,
             "wave": 3,
             "door": 4,
             "bornAt": 13542,
@@ -1742,20 +1841,20 @@
               "x": 198,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 0.96379149371571
+              "yaw": 1.1728438638488998
             },
             "firstShelterFloor": null,
-            "firstTrack": 13583,
+            "firstTrack": 14380,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 44,
+            "pathSamples": 6,
             "pathFailures": 0
           },
           {
-            "id": 142,
+            "id": 149,
             "wave": 4,
             "door": 7,
-            "bornAt": 14030,
+            "bornAt": 13772,
             "birth": {
               "x": 228,
               "z": 17.400000000000002,
@@ -1763,62 +1862,80 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 14125,
+            "firstTrack": 13859,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 33,
+            "pathSamples": 31,
             "pathFailures": 0
           },
           {
-            "id": 143,
+            "id": 150,
             "wave": 4,
             "door": 7,
-            "bornAt": 14030,
+            "bornAt": 13772,
             "birth": {
               "x": 229.0884097751874,
               "z": 17.320792214576745,
               "y": 1.5700000143051147,
-              "yaw": 3.7266879009496487
+              "yaw": 0.6533560699428228
             },
             "firstShelterFloor": null,
-            "firstTrack": 14144,
+            "firstTrack": 13868,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 53,
+            "pathSamples": 28,
             "pathFailures": 0
           },
           {
-            "id": 145,
+            "id": 152,
             "wave": 4,
             "door": 7,
-            "bornAt": 14030,
+            "bornAt": 13772,
             "birth": {
               "x": 228.68790189359282,
               "z": 18.146710673898184,
               "y": 1.5700000143051147,
-              "yaw": 4.0283882086870335
+              "yaw": 4.1002891049965395
             },
             "firstShelterFloor": null,
-            "firstTrack": 14194,
+            "firstTrack": 13917,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 20,
+            "pathSamples": 18,
             "pathFailures": 0
           },
           {
-            "id": 147,
+            "id": 154,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 15942,
+            "birth": {
+              "x": 198,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 3.654645612144863
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 16013,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 28,
+            "pathFailures": 0
+          },
+          {
+            "id": 156,
             "wave": 3,
             "door": 7,
-            "bornAt": 17142,
+            "bornAt": 16542,
             "birth": {
               "x": 228,
               "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 3.121426671652844
+              "yaw": 4.4316147634115515
             },
             "firstShelterFloor": null,
-            "firstTrack": 17228,
-            "end": null,
+            "firstTrack": 17319,
+            "end": "downed",
             "pathAtBirth": true,
             "pathSamples": 2,
             "pathFailures": 0
@@ -1840,10 +1957,10 @@
         "policy": "complete",
         "seed": 1,
         "completed": true,
-        "time": 289.43333333333334,
+        "time": 288.7,
         "deaths": 0,
-        "kills": 29,
-        "damageTaken": 90,
+        "kills": 36,
+        "damageTaken": 120,
         "failures": {},
         "objectiveTimeline": [
           {
@@ -1856,11 +1973,11 @@
           },
           {
             "id": "retreat",
-            "t": 279.8833333333333
+            "t": 272.68333333333334
           },
           {
             "id": "exit",
-            "t": 289.43333333333334
+            "t": 283.7
           }
         ],
         "furthestObjective": "exit",
@@ -1870,13 +1987,13 @@
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 125,
+          "admitted": 134,
           "deferred": 0,
           "requests": [],
           "offenders": []
         }
       },
-      "samples": 14113,
+      "samples": 13769,
       "gateCount": 3,
       "seenGates": [
         90,
@@ -1901,49 +2018,49 @@
           "z": 15
         },
         {
-          "tick": 8626,
+          "tick": 8447,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 92.4,
           "z": 17.3
         },
         {
-          "tick": 8916,
+          "tick": 8641,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 12345,
+          "tick": 11989,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 152.4,
           "z": 17.3
         },
         {
-          "tick": 12692,
+          "tick": 12183,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 15963,
+          "tick": 15559,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 212.4,
           "z": 17.3
         },
         {
-          "tick": 16101,
+          "tick": 15753,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 16793,
+          "tick": 16361,
           "phase": "exit",
           "marker": "night-exit",
           "x": 273,
@@ -1951,7 +2068,7 @@
         }
       ],
       "offenders": [],
-      "nativeStateHash": "dc096532",
+      "nativeStateHash": "63dcf2ee",
       "branchChecks": [
         {
           "gateX": 90,
@@ -2048,11 +2165,11 @@
         "seed": 1,
         "completed": false,
         "time": 900,
-        "deaths": 17,
+        "deaths": 51,
         "kills": 0,
-        "damageTaken": 1923.4333333333295,
+        "damageTaken": 5148.566666666666,
         "failures": {
-          "player-died": 17,
+          "player-died": 51,
           "tick-budget": 1
         },
         "objectiveTimeline": [
@@ -2078,16 +2195,16 @@
           "objective": "retreat",
           "detail": "tick-budget: Cover the retreat through the tunnel",
           "player": {
-            "x": 65.03004455566406,
-            "z": 14.818597793579102
+            "x": 0.33253079652786255,
+            "z": 3.5566253662109375
           },
-          "distance": 176.97004841704353,
+          "distance": 241.9382493410672,
           "actors": {}
         },
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 98,
+          "admitted": 997,
           "deferred": 0,
           "requests": [],
           "offenders": []
@@ -2097,11 +2214,11 @@
         "outcome": "complete",
         "seed": 1,
         "profile": "evade-only",
-        "simSeconds": 405.51666666666665,
-        "deaths": 7,
+        "simSeconds": 530.9833333333333,
+        "deaths": 14,
         "rescued": 1,
         "total": 29,
-        "peak": 21,
+        "peak": 30,
         "timeline": [
           {
             "type": "l6.breach1",
@@ -2129,7 +2246,7 @@
           },
           {
             "type": "l6.exit",
-            "t": 394.4
+            "t": 524.85
           }
         ],
         "fates": [
@@ -2389,13 +2506,94 @@
             "tick": 12153,
             "wave": 2,
             "offscreen": true
+          },
+          {
+            "id": 85,
+            "door": 1,
+            "x": 10,
+            "z": -19.4,
+            "tick": 12199,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 87,
+            "door": 0,
+            "x": -9.25,
+            "z": -19.4,
+            "tick": 12244,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 89,
+            "door": 1,
+            "x": 10,
+            "z": -19.4,
+            "tick": 12289,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 91,
+            "door": 0,
+            "x": -9.25,
+            "z": -19.4,
+            "tick": 12334,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 93,
+            "door": 1,
+            "x": 10,
+            "z": -19.4,
+            "tick": 12379,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 95,
+            "door": 0,
+            "x": -10,
+            "z": -19.4,
+            "tick": 12424,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 97,
+            "door": 1,
+            "x": 10,
+            "z": -19.4,
+            "tick": 12469,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 99,
+            "door": 0,
+            "x": -10,
+            "z": -19.4,
+            "tick": 12514,
+            "wave": 2,
+            "offscreen": true
+          },
+          {
+            "id": 101,
+            "door": 1,
+            "x": 10,
+            "z": -19.4,
+            "tick": 12559,
+            "wave": 2,
+            "offscreen": true
           }
         ],
         "player": {
-          "x": 272.2767639160156,
+          "x": 272.29052734375,
           "y": 4.619999885559082,
-          "z": 14.999993324279785,
-          "yaw": -0.000007906531246446732
+          "z": 15.000006675720215,
+          "yaw": 0.000008082095617942697
         },
         "leader": [
           272.38333333331946,

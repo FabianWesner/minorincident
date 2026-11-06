@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
       "clause": "L3 station-0/1/2 announced cohorts: >=3 admitted members and actual player attack within20s, both qualities and complete/stationary policies.",
@@ -49,7 +49,7 @@
     },
     {
       "file": "docs/reports/fix68-g/G-22-final-source.json",
-      "sha256": "3f089f28b2475fd411e4e6993fe10b40d77d47d4d0e49a5be1b5343fbc74be12",
+      "sha256": "acae0dc2fe41309ae856897e6d22073535c4b6134569a1a60cd876f3eabdccd8",
       "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
@@ -74,7 +74,7 @@
     },
     {
       "file": "docs/reports/fix68-g/L3-02-admission-discrepancy.json",
-      "sha256": "df6900c6c6a34c30f9b7c214396ca0a56b2339acdd7925040ec730faf5efa03e",
+      "sha256": "a07fef26a4adc545a28b549b68a666e334064a3e1198b031af6ec26b0edfa0a0",
       "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
@@ -84,9 +84,22 @@
     },
     {
       "file": "docs/reports/fix68-g/L3-02-retirement-finding.json",
-      "sha256": "e88c58ae5ec3f1bba1832215881b537fd60c39a2a9d0c161bb243b2905fa88ae",
+      "sha256": "75aa82b46ccec9e0018eedbb954b90134c1cf05e3ced328976edf7464df65029",
       "what": "Read-only trace proves same-tick retirement of two living announced actors; proposed repair remains unapplied."
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+      "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+      "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
+    },
+    {
+      "file": "docs/reports/fix68-g/L6-breach-priority-fix.json",
+      "sha256": "4d5e5dd53dd170441a826945395a7f7d36526f2211726d8d31e00a8a551d8c83",
+      "what": "Real passive breach quota before/after, exact unobserved control matches; all10 members admitted with unchanged cap and9.733s first attack. Full both-tier targeted receipts archived separately."
     }
   ],
-  "notes": "Scoped L3 counterexample correction. Every-level announcement inventory remains unqualified. Historical proofs retain original source identities; current supplements describe final game source. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval."
+  "notes": [
+    "Scoped L3 counterexample correction. Every-level announcement inventory remains unqualified. Historical proofs retain original source identities; current supplements describe final game source. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }

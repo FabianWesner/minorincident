@@ -7,8 +7,8 @@
     {
       "tier": "low",
       "policy": "complete",
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-complete.json.gz",
+      "sha256": "1699db5823bcc37ad69d6e026ecdcbc5e575f43ec2c88555ec81445f0e094d25",
       "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
       "stateHash": "3ce6de95",
       "outcome": "complete",
@@ -76,7 +76,7 @@
               "ratio": 0.9998538906338371
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -118,7 +118,7 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -134,7 +134,7 @@
             "firstAttackSeconds": 2.95,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -150,7 +150,7 @@
             "firstAttackSeconds": 3.6333333333333333,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -166,7 +166,7 @@
             "firstAttackSeconds": 7.433333333333334,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -177,7 +177,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": 5.3857661893567,
-          "target": "3 ≤ value ≤ 25",
+          "target": "3 \u2264 value \u2264 25",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         },
         {
@@ -188,16 +188,18 @@
           "policy": "complete",
           "status": "PASS",
           "value": 33,
-          "target": "7 ≤ value ≤ Infinity",
+          "target": "7 \u2264 value \u2264 Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
         }
-      ]
+      ],
+      "rawSha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "encoding": "gzip"
     },
     {
       "tier": "low",
       "policy": "stationary",
-      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-      "sha256": "dfcceac0538db2df4f30467a13571073eb847f09e6e089d5c7f7aa0f8ccc11b7",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-stationary.json.gz",
+      "sha256": "160cf09d43f6b67b841c80ed85ddc11986fdc6194597b8c6be8af40e7477fe3c",
       "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
       "stateHash": "c30feb32",
       "outcome": "tick-budget",
@@ -216,7 +218,7 @@
             "firstAttackSeconds": 2.95,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
         },
         {
@@ -232,7 +234,7 @@
             "firstAttackSeconds": 2.966666666666667,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
         },
         {
@@ -248,7 +250,7 @@
             "firstAttackSeconds": 4.466666666666667,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
         },
         {
@@ -259,16 +261,18 @@
           "policy": "stationary",
           "status": "PASS",
           "value": 33,
-          "target": "7 ≤ value ≤ Infinity",
+          "target": "7 \u2264 value \u2264 Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
         }
-      ]
+      ],
+      "rawSha256": "dfcceac0538db2df4f30467a13571073eb847f09e6e089d5c7f7aa0f8ccc11b7",
+      "encoding": "gzip"
     },
     {
       "tier": "high",
       "policy": "complete",
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-complete.json.gz",
+      "sha256": "2b9b08440b1365a2cbf64d114930f52ba3cd50e0cf2522d95a18c9743dc91ec8",
       "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
       "stateHash": "9e71c96f",
       "outcome": "complete",
@@ -312,7 +316,7 @@
               "ratio": 1
             }
           ],
-          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -354,7 +358,7 @@
               }
             ]
           },
-          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -370,7 +374,7 @@
             "firstAttackSeconds": 2.4166666666666665,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -386,7 +390,7 @@
             "firstAttackSeconds": 0.16666666666666666,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -402,7 +406,7 @@
             "firstAttackSeconds": 14.466666666666667,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -413,7 +417,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": 12.020606754436177,
-          "target": "3 ≤ value ≤ 25",
+          "target": "3 \u2264 value \u2264 25",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         },
         {
@@ -424,16 +428,18 @@
           "policy": "complete",
           "status": "PASS",
           "value": 33,
-          "target": "7 ≤ value ≤ Infinity",
+          "target": "7 \u2264 value \u2264 Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
         }
-      ]
+      ],
+      "rawSha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "encoding": "gzip"
     },
     {
       "tier": "high",
       "policy": "stationary",
-      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-      "sha256": "29346ba31e0ba95df57db1ae93908605fe0807169657f41b23514bc7d9179905",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-stationary.json.gz",
+      "sha256": "54317280c42cff6d6d49a065a9bf68a3885d113b18c0245dbb41f0a1d977b092",
       "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
       "stateHash": "9e07e267",
       "outcome": "tick-budget",
@@ -452,7 +458,7 @@
             "firstAttackSeconds": 2.4166666666666665,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
         },
         {
@@ -468,7 +474,7 @@
             "firstAttackSeconds": 15.133333333333333,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
         },
         {
@@ -484,7 +490,7 @@
             "firstAttackSeconds": 7.333333333333333,
             "flags": []
           },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
         },
         {
@@ -495,10 +501,13 @@
           "policy": "stationary",
           "status": "PASS",
           "value": 33,
-          "target": "7 ≤ value ≤ Infinity",
+          "target": "7 \u2264 value \u2264 Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
         }
-      ]
+      ],
+      "rawSha256": "29346ba31e0ba95df57db1ae93908605fe0807169657f41b23514bc7d9179905",
+      "encoding": "gzip"
     }
-  ]
+  ],
+  "archiveNote": "Historical sourceD evidence now links immutable gzip copies reconstructed byte-for-byte from49e8004; rawSha256 retains its original JSON hash. Current continuation checks are recorded separately."
 }

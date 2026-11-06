@@ -1,0 +1,116 @@
+diff --git a/src/data/l7.ts b/src/data/l7.ts
+index 5488b75..5ab94e6 100644
+--- a/src/data/l7.ts
++++ b/src/data/l7.ts
+@@ -11,6 +11,7 @@ export const l7DefaultArsenal = {
+ 
+ /** Encounter anchors on the retained Northgate, Harbor and Lakeshore roads; E2 owns the bus. */
+ export const l7Encounters = {
++  formationColumns: 4,
+   finalGroup: 700, firstStreetGroup: 701,
+   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
+   // The party forms east of the courier, behind the westbound escape heading.
+diff --git a/src/sim/locomotion/AgentMotion.ts b/src/sim/locomotion/AgentMotion.ts
+index f413b04..4a075ed 100644
+--- a/src/sim/locomotion/AgentMotion.ts
++++ b/src/sim/locomotion/AgentMotion.ts
+@@ -76,7 +76,7 @@ export function installAgentMotion(world: SimWorld): void {
+     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
+       const yaw = e.transform.yaw;
+       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
+-        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
++        (world.scenario === 'L5' || world.scenario === 'L7') && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+       // Braking retains the authored approach distance. The windup owns facing,
+       // so residual steering must not turn the strike away from its victim.
+       if (e.infected?.state === 'attack') e.transform.yaw = yaw;
+diff --git a/src/sim/missions/LevelSevenEncounters.ts b/src/sim/missions/LevelSevenEncounters.ts
+index 08b48ab..ef41fd0 100644
+--- a/src/sim/missions/LevelSevenEncounters.ts
++++ b/src/sim/missions/LevelSevenEncounters.ts
+@@ -65,7 +65,7 @@ export class LevelSevenEncounters {
+     for (let slot = 0; slot < count; slot++) {
+       const source = roster?.[slot];
+       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
+-      const at = this.clearPoint(formationSlot(leader, heading, slot), .4);
++      const at = this.clearPoint(formationSlot(leader, heading, slot, l7Encounters.formationColumns), .4);
+       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
+       if (source) {
+         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
+@@ -204,7 +204,7 @@ export class LevelSevenEncounters {
+     if (this.walkPocketRoute(e)) return true;
+     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
+     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
+-    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
++    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot, l7Encounters.formationColumns);
+     // Reuse the L5 formation rule around cover: a clear slot across a wreck
+     // can still send one follower around its far side at every corner.
+     const nav = w.infected!.nav;
+@@ -212,7 +212,7 @@ export class LevelSevenEncounters {
+     // narrow opening as the courier turns toward the bus.
+     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
+     const target = ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
+-    if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
++    if (d > formationBack(slot, l7Encounters.formationColumns) + 10 && w.tick >= this.state.waitAt) {
+       this.state.waitAt = w.tick + 300;
+       this.warn(e, 'wait');
+     }
+diff --git a/src/sim/missions/LevelSixSubway.ts b/src/sim/missions/LevelSixSubway.ts
+index 442a690..3915516 100644
+--- a/src/sim/missions/LevelSixSubway.ts
++++ b/src/sim/missions/LevelSixSubway.ts
+@@ -165,9 +165,9 @@ export class LevelSixSubway {
+       // itself or it can sit forever at the cap with zero members spawned.
+       const currentEntry=wave===4?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
+       const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
+-      // Future quotas suppress filler, but an announced hatch has priority
++      // Future quotas suppress filler, but an announced breach or hatch has priority
+       // over those unannounced promises. Preserve other live announcements.
+-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
++      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
+       if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
+       if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
+       const requested=doors[i%doors.length];
+diff --git a/src/sim/missions/LevelThreeCollapse.ts b/src/sim/missions/LevelThreeCollapse.ts
+index f2cbdcc..8caa4ea 100644
+--- a/src/sim/missions/LevelThreeCollapse.ts
++++ b/src/sim/missions/LevelThreeCollapse.ts
+@@ -634,6 +634,7 @@ export class LevelThreeCollapse {
+     const finalIds = new Set(s.finaleIds ?? []);
+     const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
+     for (const e of [...ai.active]) {
++      if (!e.motion && s.waveIds.includes(e.id)) continue; // An announced admission must participate in the fixed step before it can retire.
+       if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
+       if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
+       const downBehind = e.health.current <= 0 && world.tick - e.infected!.deadAt > 120 && dist(e.transform, world.entities.get(1)!.transform) > 10;
+diff --git a/src/sim/missions/missionHelpers.ts b/src/sim/missions/missionHelpers.ts
+index efebc5f..c37e5d0 100644
+--- a/src/sim/missions/missionHelpers.ts
++++ b/src/sim/missions/missionHelpers.ts
+@@ -81,11 +81,11 @@ export function leaderHeading(yaw: number, velocity?: Point): Point {
+ }
+ 
+ /** Distance behind the leader of a follower slot (rows of three, 1.2 m apart). */
+-export function formationBack(slot: number): number { return 2.3 + Math.floor(slot / 3) * 1.2; }
++export function formationBack(slot: number, columns = 3): number { return 2.3 + Math.floor(slot / columns) * 1.2; }
+ 
+ /** Three-column follower formation behind the leader. */
+-export function formationSlot(leader: Point, heading: Point, slot: number): Point {
+-  const back = formationBack(slot), side = (slot % 3 - 1) * 1.2;
++export function formationSlot(leader: Point, heading: Point, slot: number, columns = 3): Point {
++  const back = formationBack(slot, columns), side = (slot % columns - (columns - 1) / 2) * 1.2;
+   return { x: leader.x - heading.x * back - heading.z * side, z: leader.z - heading.z * back + heading.x * side };
+ }
+ 
+diff --git a/src/sim/npc/Npcs.ts b/src/sim/npc/Npcs.ts
+index 3eb9ecb..16e47fe 100644
+--- a/src/sim/npc/Npcs.ts
++++ b/src/sim/npc/Npcs.ts
+@@ -98,7 +98,7 @@ export class Npcs {
+     // At its catch-up pace the ordinary crowd response carries the dog several
+     // metres beyond a corner before it can turn back toward the courier.
+     moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
+-      this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
++      (this.world.scenario === 'L5' || this.world.scenario === 'L7') && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
+     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
+   }
+   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

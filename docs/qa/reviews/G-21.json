@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
       "clause": "Per the E19 PO live-world decision, changes made after the checkpoint (opened gates, taken pickups) persist after death.",
@@ -23,5 +23,8 @@
       "what": "Naturally captured checkpoint, dirty live gates/pickup, actual death damage and respawn pose/state; no rewind expectation substituted for observed state."
     }
   ],
-  "notes": "Scoped contract review. This fixture has no human follower roster and cannot certify follower restoration across all levels. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope."
+  "notes": [
+    "Scoped contract review. This fixture has no human follower roster and cannot certify follower restoration across all levels. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }

@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
       "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
@@ -28,5 +28,8 @@
       "what": "Physical input trace, exact attack directions, per-tick sim/render headings and hashed reviewed captures."
     }
   ],
-  "notes": "Reviewed against final gameplay commit 49d44dc: later changes outside the stated fixture scope do not expand its coverage. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope."
+  "notes": [
+    "Reviewed against final gameplay commit 49d44dc: later changes outside the stated fixture scope do not expand its coverage. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }
