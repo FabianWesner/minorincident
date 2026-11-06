@@ -666,7 +666,11 @@ export class LevelThreeCollapse {
       // the moving column. Keep the original finite expiry; rush() refuses
       // to overwrite a human chase or attack acquired through normal senses.
       if (world.infected!.director.tier === 'high' && (s.phase === 'fallback' || s.phase === 'corridor')) {
-        for (const q of s.waves) if (q.id && tick < q.at + ticks(60)) world.infected!.rush(q.id, player.transform, q.at + ticks(60));
+        for (const q of s.waves) if (q.id && tick < q.at + ticks(60)) {
+          // A delayed admission already owns its full spawn-time budget.
+          const until = Math.max(q.at + ticks(60), world.entities.get(q.id)?.infected?.l1?.search.until ?? 0);
+          world.infected!.rush(q.id, player.transform, until);
+        }
       }
       for (const q of s.waves) if (q.id && s.phase === 'attack') {
         const arriving = world.entities.get(q.id)?.infected?.l1;
