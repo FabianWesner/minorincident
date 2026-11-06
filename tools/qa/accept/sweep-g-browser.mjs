@@ -1,19 +1,21 @@
 /** One bounded G-25 physical route, retaining captures for explicit review. */
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { provenance } from './probe.ts';
 import { browserHash } from './browser.ts';
 import { mergeBrowserBatches } from './browser-chain.ts';
 import { atomicJson } from './report.ts';
 
-const [level, tier] = process.argv.slice(2);
-if (!/^L([1-9]|10)$/.test(level) || !['low', 'high'].includes(tier)) throw new Error('Usage: sweep-g-browser.mjs L<N> low|high');
-const out = resolve(`test-results/sweep-g/G-25-${level}-${tier}`);
+const [level, tier, backend = 'webgl2'] = process.argv.slice(2);
+if (existsSync('test-results/sweep-g/pause-browser-matrix')) { console.log(`Paused before ${level}/${tier}; no browser context opened.`); process.exit(0); }
+if (!/^L([1-9]|10)$/.test(level) || !['low', 'high'].includes(tier) || !['webgl2', 'webgpu'].includes(backend)) throw new Error('Usage: sweep-g-browser.mjs L<N> low|high [webgl2|webgpu]');
+const suffix = backend === 'webgl2' ? '-webgl2' : '';
+const out = resolve(`test-results/sweep-g/G-25-${level}-${tier}${suffix}`);
 mkdirSync(out, { recursive: true });
 const options = { level, tier, origin: process.env.SWEEP_G_ORIGIN ?? 'http://127.0.0.1:4981', out,
-  path: `docs/reports/sweep-g/G-25-${level}-${tier}.json`, sourceHash: provenance().sourceHash,
-  browserHash: browserHash(), backend: 'webgpu', zoom: 1.5 };
+  path: `docs/reports/sweep-g/G-25-${level}-${tier}${suffix}.json`, sourceHash: provenance().sourceHash,
+  browserHash: browserHash(), backend, zoom: 1.5 };
 const batches = [];
 let resumeFrom;
 for (let batchIndex = 1; batchIndex <= (level === 'L10' ? 8 : 1); batchIndex++) {
@@ -23,7 +25,7 @@ mkdirSync(batchOptions.out, { recursive: true });
 const run = spawnSync(process.execPath, ['--import', 'tsx/esm', 'tools/qa/accept/browser-worker.ts', JSON.stringify(batchOptions)], {
   stdio: 'inherit', timeout: 590000 + Number(process.env.BROWSER_POOL_WAIT_MS ?? 120000),
   env: { ...process.env, BROWSER_POOL_JOB_ID: 'sweep-g', BROWSER_POOL_WAIT_MS: process.env.BROWSER_POOL_WAIT_MS ?? '120000',
-    PLAYTEST_GOD: '1', PLAYTEST_BACKEND: 'webgpu', PLAYTEST_NO_FRAME_TIMING: '1', PLAYTEST_FRAME_GATE: '0', PLAYTEST_CPU_PROFILE: '0',
+    PLAYTEST_GOD: '1', PLAYTEST_BACKEND: backend, PLAYTEST_NO_FRAME_TIMING: '1', PLAYTEST_FRAME_GATE: '0', PLAYTEST_CPU_PROFILE: '0',
     PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_ACCEPTANCE_CAPTURES: '1', PLAYTEST_ACCEPTANCE_CAPTURE_TIERS: 'single',
     ...(level === 'L7' ? { PLAYTEST_L7_ESCORT_ROUTE: '1' } : {}),
     ...(level === 'L5' ? { PLAYTEST_L5_TOUR: '1' } : {}),

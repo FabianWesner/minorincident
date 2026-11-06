@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "level": "L5",
+  "tier": "low",
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "fixtureHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgpu",
+      "status": "PASS",
+      "value": {
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-L5-low.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L5",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 238,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 11.266666666666667,
+      "deaths": 0,
+      "assists": 5,
+      "attacks": {
+        "weapon.army-mg": 1383
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "emerge",
+          "text": "Unbar the cellar door · 4 m",
+          "tick": 21,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "look",
+          "text": "Look for anyone still alive",
+          "tick": 818,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "metro",
+          "text": "Lead the survivors down into the Metro · Survivors in 0/1 · 91 m",
+          "tick": 11150,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": {
+              "x": 37.485400000000006,
+              "y": 0.94,
+              "z": -48.44
+            },
+            "drawn": [
+              37.49,
+              0.94,
+              -48.44
+            ],
+            "playerY": 1.034999966621399,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgpu",
+  "zoom": 1.5
+}
