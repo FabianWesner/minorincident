@@ -275,7 +275,8 @@ export class CrowdAccessories extends Group {
     const browSeat = this.minimumHatY.get(model);
     // The baseball cap's lower rim wraps the scalp below the brow; seating
     // that rim above the brow leaves the whole crown visibly suspended.
-    const rimDepth = id === 'acc.hat-baseball-cap' ? .075 * (this.brows.get(model)?.width ?? referenceSkullWidth) / referenceSkullWidth : 0;
+    // G-26 (sweep-g): the hard hat's lowest point sat ~5 cm above the brow, so it floated over the forehead; seat its rim like the cap's.
+    const rimDepth = (id === 'acc.hat-baseball-cap' ? .075 : id === 'acc.hat-hard-hat' ? .05 : 0) * (this.brows.get(model)?.width ?? referenceSkullWidth) / referenceSkullWidth;
     const seat = browSeat === undefined ? undefined : browSeat - rimDepth;
     if (definitions.get(id)?.slot !== 'hat' || top === undefined && seat === undefined) return 0;
     if (top !== undefined && this.measuredModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
