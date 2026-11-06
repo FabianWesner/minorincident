@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { SceneSession, stopServer } from '../../scenelab/session.ts';
 import { provenance } from './probe.ts';
-const out='test-results/sweep-g/G-15';mkdirSync(out,{recursive:true});
+const out=process.env.SWEEP_G_CAPTURE_OUT ?? 'test-results/sweep-g/G-15';mkdirSync(out,{recursive:true});
 const receipt={...provenance(),method:'Isolated production courier with requested weapon; physical Playwright WASD/mouse only, fixed60Hz simulation stepping; read-only input/attack/render-yaw samples. Camera follows courier; no injected InputFrame.',cells:[],errors:[]};
 try{for(const tier of ['low','high']){
  const s=new SceneSession({backend:'webgl2',tier});try{await s.open();
@@ -22,5 +22,5 @@ try{for(const tier of ['low','high']){
  }
  receipt.errors.push(...s.errors);
  }finally{await s.close();}
-}}finally{stopServer();writeFileSync('docs/reports/sweep-g/G-15-controls.json',JSON.stringify(receipt,null,2)+'\n');}
+}}finally{stopServer();writeFileSync(process.env.SWEEP_G_RECEIPT_OUT ?? 'docs/reports/sweep-g/G-15-controls.json',JSON.stringify(receipt,null,2)+'\n');}
 console.log(JSON.stringify(receipt.cells.map(c=>({tier:c.tier,weapon:c.weapon,attacks:c.attacks.length}))));
