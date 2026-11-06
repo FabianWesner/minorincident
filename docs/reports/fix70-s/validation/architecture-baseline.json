@@ -1,0 +1,16 @@
+{
+  "base": "479a75c6bab6530bb816b3794a85aa49de46e76c",
+  "files": [
+    {
+      "path": "src/sim/progression/Save.ts",
+      "baseSha256": "c56e8142ffc955e68c208333ff14bf00289439e04eb97c2874e57e3c39f907ef",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "tests/shared/architecture.test.ts",
+      "baseSha256": "dc7708e428e3a07fde2dee7b8b69329f1ed745d8b879979b4e8f3b947205fc8e",
+      "unchangedFromBase": true
+    }
+  ],
+  "finding": "The unchanged architecture test rejects the unchanged synchronous save-codec import introduced by 7bd7cdf. Save gzip already supplies mtime:0. The correction permits only gzipSync/gunzipSync/strFromU8/strToU8 and only in Save.ts; Worker APIs remain forbidden."
+}
