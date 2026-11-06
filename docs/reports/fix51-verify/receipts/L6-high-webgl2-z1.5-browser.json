@@ -864,6 +864,245 @@
       },
       "target": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS.",
       "receipt": "docs/reports/sweep-b/L6-12-proof.json"
+    },
+    {
+      "id": "L6-02",
+      "clause": "actual headlamp approach persistence head-following beam and no new weapons",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "before": {
+          "tick": 0,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 3,
+            "y": 1.3049999999999997,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "flashlight": false,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": false
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 0.32059198854886345,
+          "headlampOn": 0,
+          "beam": [
+            0.9490490319615965,
+            -0.3151284419609829
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false
+          }
+        },
+        "afterIdle": {
+          "tick": 120,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 3,
+            "y": 1.3200000524520874,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "flashlight": false,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": false
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 0.3205919885488633,
+          "headlampOn": 0,
+          "beam": [
+            0.9490490319615966,
+            -0.3151284419609827
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false
+          }
+        },
+        "afterApproach": {
+          "tick": 165,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 1.1219995021820068,
+            "y": 1.3200000524520874,
+            "z": -2.5039985179901123,
+            "yaw": 2.214297435588181
+          },
+          "flashlight": true,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": true
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 2.2142974067470855,
+          "headlampOn": 1,
+          "beam": [
+            -0.5999999769271234,
+            -0.800000017304657
+          ],
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": null,
+            "aimSource": null,
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false
+          }
+        },
+        "opposed": {
+          "tick": 225,
+          "tier": "high",
+          "renderTier": "high",
+          "player": {
+            "x": 43.753963470458984,
+            "y": 1.2699999809265137,
+            "z": 14.626964569091797,
+            "yaw": 0
+          },
+          "flashlight": true,
+          "lamp": {
+            "id": 56,
+            "at": {
+              "x": 1.5,
+              "z": -2,
+              "y": 0.9,
+              "yaw": 0
+            },
+            "pickup": {
+              "kind": "item",
+              "item": "headlamp",
+              "radius": 1.5,
+              "collected": true
+            }
+          },
+          "newWeaponIds": [],
+          "headYaw": 3.1415926535547865,
+          "headlampOn": 1,
+          "beam": [
+            -1,
+            -3.500678669874065e-11
+          ],
+          "input": {
+            "move": {
+              "x": 1,
+              "z": 0
+            },
+            "aim": {
+              "x": -1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "strafe": true
+          }
+        }
+      },
+      "target": "No new weapon; approach pickup; static uncollected lamp; beam follows head, including opposed movement/aim",
+      "receipt": "docs/reports/sweep-b/L6-02-proof.json"
     }
   ],
   "observations": {

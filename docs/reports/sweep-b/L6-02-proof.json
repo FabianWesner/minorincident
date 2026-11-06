@@ -1,0 +1,469 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "producerSha256": "512538cf8952ad672bc7a335677c12457397911d06d0871e34483012f2964e28",
+  "ledger": "docs/reports/sweep-b/L6-render-ledger.json.gz",
+  "ledgerSha256": "3e9c7c32f850b17e998c91883bcf19a2c796107e91d7692ec05c4e53e05ed6bb",
+  "observation": "Both tiers: no new weapon pickup entities; uncollected headlamp remains at exact original coordinates through120 idle ticks. Normal directional input approaches it without E and collects it. Actual headlampOn becomes1; with +X movement and -X pointer aim the drawn head yaw\u2248-\u03c0 and lighting beam[-1,0] match within1e-8. All32 current supplement captures were inspected: cyan ground ring disappears on pickup and a bright cone follows the facing head while the courier moves the other way. Fixture teleports only stage the later straight-tunnel aim check; the approach pickup uses normal input. Bar and Northgate fixtures in the same ledger do not grant a full-route or every-bar PASS.",
+  "rows": [
+    {
+      "tier": "low",
+      "status": "PASS",
+      "before": {
+        "tick": 0,
+        "tier": "low",
+        "renderTier": "low",
+        "player": {
+          "x": 3,
+          "y": 1.3049999999999997,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "flashlight": false,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 0.32059198854886345,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615965,
+          -0.3151284419609829
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "afterIdle": {
+        "tick": 120,
+        "tier": "low",
+        "renderTier": "low",
+        "player": {
+          "x": 3,
+          "y": 1.3200000524520874,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "flashlight": false,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 0.3205919885488633,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615966,
+          -0.3151284419609827
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false
+        }
+      },
+      "afterApproach": {
+        "tick": 165,
+        "tier": "low",
+        "renderTier": "low",
+        "player": {
+          "x": 1.1219995021820068,
+          "y": 1.3200000524520874,
+          "z": -2.5039985179901123,
+          "yaw": 2.214297435588181
+        },
+        "flashlight": true,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 2.2142974067470855,
+        "headlampOn": 1,
+        "beam": [
+          -0.5999999769271234,
+          -0.800000017304657
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "opposed": {
+        "tick": 225,
+        "tier": "low",
+        "renderTier": "low",
+        "player": {
+          "x": 43.753963470458984,
+          "y": 1.2699999809265137,
+          "z": 14.626964569091797,
+          "yaw": 0
+        },
+        "flashlight": true,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 3.1415926535547865,
+        "headlampOn": 1,
+        "beam": [
+          -1,
+          -3.500678669874065e-11
+        ],
+        "input": {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "aim": {
+            "x": -1,
+            "z": 0
+          },
+          "aimSource": "pointer",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "strafe": true
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "status": "PASS",
+      "before": {
+        "tick": 0,
+        "tier": "high",
+        "renderTier": "high",
+        "player": {
+          "x": 3,
+          "y": 1.3049999999999997,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "flashlight": false,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 0.32059198854886345,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615965,
+          -0.3151284419609829
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "afterIdle": {
+        "tick": 120,
+        "tier": "high",
+        "renderTier": "high",
+        "player": {
+          "x": 3,
+          "y": 1.3200000524520874,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "flashlight": false,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 0.3205919885488633,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615966,
+          -0.3151284419609827
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false
+        }
+      },
+      "afterApproach": {
+        "tick": 165,
+        "tier": "high",
+        "renderTier": "high",
+        "player": {
+          "x": 1.1219995021820068,
+          "y": 1.3200000524520874,
+          "z": -2.5039985179901123,
+          "yaw": 2.214297435588181
+        },
+        "flashlight": true,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 2.2142974067470855,
+        "headlampOn": 1,
+        "beam": [
+          -0.5999999769271234,
+          -0.800000017304657
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "opposed": {
+        "tick": 225,
+        "tier": "high",
+        "renderTier": "high",
+        "player": {
+          "x": 43.753963470458984,
+          "y": 1.2699999809265137,
+          "z": 14.626964569091797,
+          "yaw": 0
+        },
+        "flashlight": true,
+        "lamp": {
+          "id": 56,
+          "at": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "headYaw": 3.1415926535547865,
+        "headlampOn": 1,
+        "beam": [
+          -1,
+          -3.500678669874065e-11
+        ],
+        "input": {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "aim": {
+            "x": -1,
+            "z": 0
+          },
+          "aimSource": "pointer",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "strafe": true
+        }
+      }
+    }
+  ]
+}

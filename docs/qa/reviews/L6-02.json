@@ -1,0 +1,31 @@
+{
+  "row": "L6-02",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "bbd9c21f390551e4ac3a16cd0ddba0c5f9fa683c",
+  "clauses": [
+    {
+      "clause": "No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another).",
+      "verdict": "PASS",
+      "note": "Both tiers: no new weapon pickup entities; uncollected headlamp remains at exact original coordinates through120 idle ticks. Normal directional input approaches it without E and collects it. Actual headlampOn becomes1; with +X movement and -X pointer aim the drawn head yaw\u2248-\u03c0 and lighting beam[-1,0] match within1e-8. All32 current supplement captures were inspected: cyan ground ring disappears on pickup and a bright cone follows the facing head while the courier moves the other way. Fixture teleports only stage the later straight-tunnel aim check; the approach pickup uses normal input. Bar and Northgate fixtures in the same ledger do not grant a full-route or every-bar PASS."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L6-02-proof.json",
+      "sha256": "c10a11d61a3e58950baa5145e8d5c2b3b842cb0af87572e680482b6bf2ab03e0",
+      "what": "Both tiers: no new weapon pickup entities; uncollected headlamp remains at exact original coordinates through120 idle ticks. Normal directional input approaches it without E and collects it. Actual headlampOn becomes1; with +X movement and -X pointer aim the drawn head yaw\u2248-\u03c0 and lighting beam[-1,0] match within1e-8. All32 current supplement captures were inspected: cyan ground ring disappears on pickup and a bright cone follows the facing head while the courier moves the other way. Fixture teleports only stage the later straight-tunnel aim check; the approach pickup uses normal input. Bar and Northgate fixtures in the same ledger do not grant a full-route or every-bar PASS."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-render-ledger.json.gz",
+      "sha256": "3e9c7c32f850b17e998c91883bcf19a2c796107e91d7692ec05c4e53e05ed6bb",
+      "what": "Both tiers: no new weapon pickup entities; uncollected headlamp remains at exact original coordinates through120 idle ticks. Normal directional input approaches it without E and collects it. Actual headlampOn becomes1; with +X movement and -X pointer aim the drawn head yaw\u2248-\u03c0 and lighting beam[-1,0] match within1e-8. All32 current supplement captures were inspected: cyan ground ring disappears on pickup and a bright cone follows the facing head while the courier moves the other way. Fixture teleports only stage the later straight-tunnel aim check; the approach pickup uses normal input. Bar and Northgate fixtures in the same ledger do not grant a full-route or every-bar PASS."
+    },
+    {
+      "file": "docs/reports/sweep-b/L6-render-capture-review.json",
+      "sha256": "7f915aba79d1cd8913d48cfd7bd49c248283c11b5e5d9b3fc2293172e6d6cee8",
+      "what": "Both tiers: no new weapon pickup entities; uncollected headlamp remains at exact original coordinates through120 idle ticks. Normal directional input approaches it without E and collects it. Actual headlampOn becomes1; with +X movement and -X pointer aim the drawn head yaw\u2248-\u03c0 and lighting beam[-1,0] match within1e-8. All32 current supplement captures were inspected: cyan ground ring disappears on pickup and a bright cone follows the facing head while the courier moves the other way. Fixture teleports only stage the later straight-tunnel aim check; the approach pickup uses normal input. Bar and Northgate fixtures in the same ledger do not grant a full-route or every-bar PASS."
+    }
+  ]
+}
