@@ -18,9 +18,13 @@ const perRoute: Record<string, { runners: number; alphaAt?: number[] }> = {
 const openingEncounters: Record<string, Point> = {
   road: [-300, -330], countryside: [-250, 240], 'dry-shortcut': [-300, -22.5],
 };
-const riskGroups: readonly L9Group[] = crossing.routes.flatMap(r => r.risks.map((at, i) => ({
-  id: `${r.id}-${i + 1}`, route: r.id, at: i === 0 ? openingEncounters[r.id] ?? at : at, runners: perRoute[r.id].runners, alphas: perRoute[r.id].alphaAt?.includes(i) ? 1 : 0,
-})));
+const riskGroups: readonly L9Group[] = crossing.routes.flatMap(r => r.risks.map((at, i) => {
+  const alphas = perRoute[r.id].alphaAt?.includes(i) ? 1 : 0;
+  // The acceptance count includes Alphas. Preserve eight bodies in every
+  // shortcut pack while replacing one runner in the two Alpha formations.
+  const runners = r.id === 'dry-shortcut' ? 8 - alphas : perRoute[r.id].runners;
+  return { id: `${r.id}-${i + 1}`, route: r.id, at: i === 0 ? openingEncounters[r.id] ?? at : at, runners, alphas };
+}));
 // Fixed roadside wanderers fill the long asphalt interval between the two
 // risk groups. They exist once, preserve their identities on revisits, and
 // leave the authored detour open; driving contact remains optional.
