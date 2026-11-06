@@ -203,12 +203,11 @@ export class EntityAssets extends Group {
       rec.model.updateWorldMatrix(true, false);
       const enabled = !!subject && !!this.view && id !== ridden && this.occlusion.blockedBy(rec.bounds, rec.model.matrixWorld);
       const vehicle = rec.model.userData.assetId?.startsWith('veh.');
-      // vqa-1 P1: an on-foot hull only opens (and suppresses the near-camera slice) while it hides her own chest.
+      // vqa-3 P1: on foot, a vehicle hull is never cut (the disc read as a hole in the truck). While it hides her own
+      // chest or head she draws in the near-camera slice with the gold contour instead (GameView courierForeground).
       const hidesHer = enabled && onFoot && !!vehicle && this.occlusion.coreBlockedBy(rec.bounds, rec.model.matrixWorld);
       if (hidesHer) this.courierOccluded = true;
-      // On-foot vehicle occlusion still needs the bounded hull cut; only the
-      // near-camera character slice is suppressed so she cannot draw over a roof.
-      const open = enabled && (!(onFoot && vehicle) || hidesHer);
+      const open = enabled && !(onFoot && vehicle);
       for (const material of rec.reveal) material.seeThrough(open ? vehicle ? 'hull' : true : false);
     }
   }

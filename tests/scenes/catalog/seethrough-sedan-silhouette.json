@@ -1,6 +1,6 @@
 {
   "name": "seethrough-sedan-silhouette",
-  "note": "Foreground sedan across the camera ray, with clearance from the courier capsule: reveals her feet/body while retaining at least 30% of its unfaded body pixels. Adjacent and rear sedans stay whole. Same-frame body masks exclude shadows.",
+  "note": "Foreground sedan across the camera ray, with clearance from the courier capsule. vqa-3 P1: on foot the hull is never cut (no disc); she stays readable through the foreground slice and gold contour (courierVisibleShare). Adjacent and rear sedans stay whole. Same-frame body masks exclude shadows.",
   "ground": "asphalt",
   "size": 60,
   "time": "L3",
@@ -61,6 +61,6 @@
     "seeThroughCutPixelsMax": 0,
     "drawCallsMax": 300,
     "trianglesMax": 500000,
-    "seeThroughCutInsideMin": 10
+    "seeThroughCutInsideMax": 0
   }
 }

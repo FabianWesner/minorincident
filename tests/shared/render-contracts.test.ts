@@ -140,7 +140,6 @@ test('static placement batches reuse their graph and narrow barriers keep the fo
   const vehicleView = { camera } as Parameters<DistrictOcclusion['update']>[0], subject = new Box3(new Vector3(-.55, 0, -.55), new Vector3(.55, 1.9, .55));
   vehiclePolicy.update(vehicleView, true, { x: 0, y: .7, z: 0 }, subject, true);
   expect(vehiclePolicy.courierOccluded).toBe(true);
-  expect(courierForegroundWanted(true, 5, vehiclePolicy.courierOccluded)).toBe(false);
   vehiclePolicy.update(vehicleView, true, { x: 0, y: .7, z: 0 }, subject, false);
   expect(vehiclePolicy.courierOccluded).toBe(false);
   expect(fence.userData.occluder).toBe(true); // rider/driver retains the placement cut
@@ -543,7 +542,8 @@ function checkVehicleForegroundVeto(): void {
   expect(courierForegroundWanted(true, Infinity)).toBe(true);
   expect(courierForegroundWanted(false, 5)).toBe(true);
   expect(courierForegroundWanted(false, Infinity)).toBe(false);
+  // vqa-3 P1: an on-foot vehicle hull stays whole; her own occluded chest/head turns the foreground contour on instead.
   for (const crowd of [false, true]) for (const megaDistance of [5, Infinity]) {
-    expect(courierForegroundWanted(crowd, megaDistance, true)).toBe(false);
+    expect(courierForegroundWanted(crowd, megaDistance, true)).toBe(true);
   }
 }
