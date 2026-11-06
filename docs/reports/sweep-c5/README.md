@@ -39,6 +39,8 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 
 | L9-04 | current PASS; matched safe990HP vs shortcut860/900HP, unique10damage billing,36tick stopped windups;24 panels and11 faults reviewed |
 
+| L7-03 | current PASS;2.4shots/s,24/24kills, clicked/first-hit/35m fallback, readable pointblank;74 panels and10 faults reviewed |
+
 ## Still open rows
 
 These are the `qa:accept` currentStatus values. The separate status field preserves historical failures until fresh exact-criterion review; it must not be mistaken for a new measured failure.
@@ -46,7 +48,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | Row | Status | Required next work / current finding |
 |---|---|---|
 | L7-01 | NOT CHECKED | Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured. |
-| L7-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance. |
 | L7-06 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep. |
 | L7-08 | NOT CHECKED | NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it. |
 | L7-09 | FAIL | Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks. |
@@ -85,4 +86,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 19. Current PASS rows listed above: 28. No game code was changed. Perf work was not performed.
+Open current rows: 18. Current PASS rows listed above: 29. No game code was changed. Perf work was not performed.

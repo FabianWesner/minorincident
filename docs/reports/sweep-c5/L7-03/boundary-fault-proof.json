@@ -1,0 +1,33 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "a10f048a2db0e89ec2304b5a8007f9eb56d26bcc",
+  "results": [
+    {
+      "fault": "missed-first-body",
+      "rejected": true,
+      "failedClauses": [
+        "physical rocket first-hit detonation"
+      ]
+    },
+    {
+      "fault": "wrong-direction-range",
+      "rejected": true,
+      "failedClauses": [
+        "physical rocket catalog max-range detonation"
+      ]
+    },
+    {
+      "fault": "pointer-instead-of-space",
+      "rejected": true,
+      "failedClauses": [
+        "physical rocket catalog max-range detonation"
+      ]
+    },
+    {
+      "fault": "missing-high-range",
+      "rejected": true,
+      "failedClauses": []
+    }
+  ]
+}

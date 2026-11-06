@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:19:34.209Z",
+  "generatedAt": "2026-11-06T06:13:33.129Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-rocket-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-rocket-browser.json"
     }
   ],
   "globals": [
@@ -3846,13 +3860,4965 @@
     },
     {
       "id": "L7-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Visible rockets/blast effects, blood and opened movement space; no sampled white-out.2.4/s maximum cadence, clicked-impact and20/24 within3 m require the dedicated fixtures.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/real-input-webgl2 physical rocket cadence and overlapping flight: {\"shotTicks\":[7,32,57,82,107],\"impactTicks\":[48,73,98,123,148],\"intervals\":[25,25,25,25]} (target held LMB;25ticks per shot=2.4/s; second shot before first impact; PASS); low/real-input-webgl2 clicked empty-ground impact: {\"clicked\":{\"x\":12,\"z\":0},\"impacts\":[{\"type\":\"explosion\",\"tick\":48,\"defId\":\"explosion.rocket\",\"cls\":\"medium\",\"fx\":\"blast.medium\",\"sourceId\":1,\"position\":{\"x\":11.999999711812148,\"y\":0,\"z\":-4.6411599186058083e-7},\"radius\":6},{\"type\":\"explosion\",\"tick\":73,\"defId\":\"explosion.rocket\",\"cls\":\"medium\",\"fx\":\"blast.medium\",\"sourceId\":1,\"position\":{\"x\":11.999999711812148,\"y\":0,\"z\":-4.6411599186058083e-7},\"ra… (full values in JSON) (target actual mouse aimPoint; all empty-ground impacts within0.1m of clicked ground; PASS); low/real-input-webgl2 one physical rocket kills24-body three-metre cohort: {\"initial\":[{\"id\":2,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.6,\"y\":0.7,\"z\":0,\"yaw\":0}},{\"id\":3,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":14.318221983093764,\"y\":0.7,\"z\":0.6211657082460498,\"yaw\":0}},{\"id\":4,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.385640646055101,\"y\":0.7,\"z\":0.7999999999999999,\"yaw\":0}},{\"id\":5,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.697056274847714,\"y\":0.7,\"z\":1.6970562748477138,\"yaw\":0}},{\"id\":6… (full values in JSON) (target 24 unmodified60HP regulars initially within3m; one actual shot kills≥20; PASS); low/real-input-webgl2 three-metre movement gap in controlled cohort: {\"living\":[]} (target empty arena has no static blocker; no living cohort body intersects1.5m-radius gap around clicked ground; PASS); low/real-input-webgl2 reviewed night rockets blood and pointblank impact peak: {\"reviewPath\":\"docs/reports/fix55-c/L7-03-review.json\",\"visual\":{\"visibleRocket\":true,\"blastBlood\":true,\"noWhiteout\":true,\"pointblankPeakReviewed\":true}} (target all captures seen, retained sheets hash-valid; actual13/14/16/18tick close explosion frames retain courier/ground without white-out; PASS); low/real-input-webgl2 physical rocket first-hit detonation: {\"point\":{\"x\":12,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":-1.1115519537589818e-7},\"impact\":{\"x\":5.6500000000005635,\"y\":0.6111874819617147,\"z\":6.280268538738899e-7},\"distance\":5.650000000000599,\"target\":{\"id\":2,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":6,\"y\":0.7,\"z\":0,\"yaw\":0}}} (target actual ground click beyond ordinary60HP body; one rocket detonates at first body surface; PASS); low/real-input-webgl2 physical rocket clicked point beyond catalog range: {\"point\":{\"x\":50,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":-2.993301967268787e-8},\"impact\":{\"x\":49.9999999095032,\"y\":0,\"z\":0.0000014966509809255513},\"distance\":49.999999909503224} (target E29 §5.2 clicked world point is honored, including beyond direction-only catalog range; PASS); low/real-input-webgl2 physical rocket catalog max-range detonation: {\"point\":{\"x\":12,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":0.3205919885488634},\"impact\":{\"x\":33.21671611865588,\"y\":0,\"z\":-11.029495468634401},\"distance\":35} (target actual Space with no aimPoint; empty-ground detonation at catalog35m range ±0.1m; PASS); high/real-input-webgl2 physical rocket cadence and overlapping flight: {\"shotTicks\":[7,32,57,82,107],\"impactTicks\":[48,73,98,123,148],\"intervals\":[25,25,25,25]} (target held LMB;25ticks per shot=2.4/s; second shot before first impact; PASS); high/real-input-webgl2 clicked empty-ground impact: {\"clicked\":{\"x\":12,\"z\":0},\"impacts\":[{\"type\":\"explosion\",\"tick\":48,\"defId\":\"explosion.rocket\",\"cls\":\"medium\",\"fx\":\"blast.medium\",\"sourceId\":1,\"position\":{\"x\":11.999999711812148,\"y\":0,\"z\":-4.6411599186058083e-7},\"radius\":6},{\"type\":\"explosion\",\"tick\":73,\"defId\":\"explosion.rocket\",\"cls\":\"medium\",\"fx\":\"blast.medium\",\"sourceId\":1,\"position\":{\"x\":11.999999711812148,\"y\":0,\"z\":-4.6411599186058083e-7},\"ra… (full values in JSON) (target actual mouse aimPoint; all empty-ground impacts within0.1m of clicked ground; PASS); high/real-input-webgl2 one physical rocket kills24-body three-metre cohort: {\"initial\":[{\"id\":2,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.6,\"y\":0.7,\"z\":0,\"yaw\":0}},{\"id\":3,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":14.318221983093764,\"y\":0.7,\"z\":0.6211657082460498,\"yaw\":0}},{\"id\":4,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.385640646055101,\"y\":0.7,\"z\":0.7999999999999999,\"yaw\":0}},{\"id\":5,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":13.697056274847714,\"y\":0.7,\"z\":1.6970562748477138,\"yaw\":0}},{\"id\":6… (full values in JSON) (target 24 unmodified60HP regulars initially within3m; one actual shot kills≥20; PASS); high/real-input-webgl2 three-metre movement gap in controlled cohort: {\"living\":[]} (target empty arena has no static blocker; no living cohort body intersects1.5m-radius gap around clicked ground; PASS); high/real-input-webgl2 reviewed night rockets blood and pointblank impact peak: {\"reviewPath\":\"docs/reports/fix55-c/L7-03-review.json\",\"visual\":{\"visibleRocket\":true,\"blastBlood\":true,\"noWhiteout\":true,\"pointblankPeakReviewed\":true}} (target all captures seen, retained sheets hash-valid; actual13/14/16/18tick close explosion frames retain courier/ground without white-out; PASS); high/real-input-webgl2 physical rocket first-hit detonation: {\"point\":{\"x\":12,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":-1.1115519537589818e-7},\"impact\":{\"x\":5.6500000000005635,\"y\":0.6111874819617147,\"z\":6.280268538738899e-7},\"distance\":5.650000000000599,\"target\":{\"id\":2,\"hp\":60,\"maxHp\":60,\"position\":{\"x\":6,\"y\":0.7,\"z\":0,\"yaw\":0}}} (target actual ground click beyond ordinary60HP body; one rocket detonates at first body surface; PASS); high/real-input-webgl2 physical rocket clicked point beyond catalog range: {\"point\":{\"x\":50,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":-2.993301967268787e-8},\"impact\":{\"x\":49.9999999095032,\"y\":0,\"z\":0.0000014966509809255513},\"distance\":49.999999909503224} (target E29 §5.2 clicked world point is honored, including beyond direction-only catalog range; PASS); high/real-input-webgl2 physical rocket catalog max-range detonation: {\"point\":{\"x\":12,\"z\":0},\"origin\":{\"x\":0,\"y\":0.7049999833106995,\"z\":0,\"yaw\":0.3205919885488634},\"impact\":{\"x\":33.21671611865588,\"y\":0,\"z\":-11.029495468634401},\"distance\":35} (target actual Space with no aimPoint; empty-ground detonation at catalog35m range ±0.1m; PASS)",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix55-c/L7-03-physical.json",
+        "docs/reports/sweep-c4/L7-03-ballistics.json"
+      ],
       "expected": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L7-03",
+          "clause": "physical rocket cadence and overlapping flight",
+          "value": {
+            "shotTicks": [
+              7,
+              32,
+              57,
+              82,
+              107
+            ],
+            "impactTicks": [
+              48,
+              73,
+              98,
+              123,
+              148
+            ],
+            "intervals": [
+              25,
+              25,
+              25,
+              25
+            ]
+          },
+          "target": "held LMB;25ticks per shot=2.4/s; second shot before first impact",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "clicked empty-ground impact",
+          "value": {
+            "clicked": {
+              "x": 12,
+              "z": 0
+            },
+            "impacts": [
+              {
+                "type": "explosion",
+                "tick": 48,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 73,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 98,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 123,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 148,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              }
+            ],
+            "inputs": [
+              {
+                "tick": 0,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 1,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 2,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 3,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 4,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 5,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 6,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 7,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 8,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 9,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 10,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 11,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 12,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 13,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 14,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 15,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 16,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 17,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 18,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 19,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 20,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 21,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 22,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 23,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 24,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 25,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 26,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 27,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 28,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 29,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 30,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 31,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 32,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 33,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 34,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 35,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 36,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 37,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 38,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 39,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 40,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 41,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 42,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 43,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 44,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 45,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 46,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 47,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 48,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 49,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 50,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 51,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 52,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 53,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 54,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 55,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 56,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 57,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 58,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 59,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 60,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 61,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 62,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 63,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 64,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 65,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 66,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 67,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 68,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 69,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 70,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 71,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 72,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 73,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 74,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 75,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 76,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 77,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 78,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 79,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 80,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 81,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 82,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 83,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 84,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 85,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 86,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 87,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 88,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 89,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 90,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 91,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 92,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 93,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 94,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 95,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 96,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 97,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 98,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 99,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 100,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 101,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 102,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 103,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 104,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 105,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 106,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 107,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 108,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 109,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 110,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 111,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 112,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 113,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 114,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 115,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 116,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 117,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 118,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 119,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 120,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 121,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 122,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 123,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 124,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 125,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 126,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 127,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 128,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 129,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 130,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 131,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 132,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 133,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 134,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 135,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 136,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 137,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 138,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 139,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 140,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 141,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 142,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 143,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 144,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 145,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 146,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 147,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 148,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 149,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 150,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 151,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 152,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 153,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 154,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 155,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 156,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 157,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 158,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 159,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 160,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 161,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 162,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 163,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 164,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 165,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 166,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 167,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 168,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 169,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 170,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 171,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 172,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 173,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 174,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 175,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 176,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 177,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 178,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 179,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 180,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 181,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 182,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 183,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 184,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 185,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 186,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 187,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 188,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 189,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 190,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 191,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 192,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 193,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 194,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 195,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 196,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 197,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 198,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 199,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 200,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 201,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 202,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 203,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 204,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 205,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 206,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 207,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 208,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 209,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 210,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 211,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 212,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 213,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 214,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 215,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 216,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 217,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 218,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 219,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              }
+            ]
+          },
+          "target": "actual mouse aimPoint; all empty-ground impacts within0.1m of clicked ground",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "one physical rocket kills24-body three-metre cohort",
+          "value": {
+            "initial": [
+              {
+                "id": 2,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.6,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 14.318221983093764,
+                  "y": 0.7,
+                  "z": 0.6211657082460498,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.385640646055101,
+                  "y": 0.7,
+                  "z": 0.7999999999999999,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.697056274847714,
+                  "y": 0.7,
+                  "z": 1.6970562748477138,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.8,
+                  "y": 0.7,
+                  "z": 1.3856406460551018,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.62116570824605,
+                  "y": 0.7,
+                  "z": 2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.37883429175395,
+                  "y": 0.7,
+                  "z": 2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.200000000000001,
+                  "y": 0.7,
+                  "z": 1.385640646055102,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.302943725152286,
+                  "y": 0.7,
+                  "z": 1.697056274847714,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 12,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.614359353944899,
+                  "y": 0.7,
+                  "z": 0.7999999999999999,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 13,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 9.681778016906236,
+                  "y": 0.7,
+                  "z": 0.6211657082460504,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 14,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.4,
+                  "y": 0.7,
+                  "z": 1.9594348786357652e-16,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 15,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 9.681778016906236,
+                  "y": 0.7,
+                  "z": -0.6211657082460499,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 16,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.614359353944899,
+                  "y": 0.7,
+                  "z": -0.7999999999999996,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 17,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.302943725152286,
+                  "y": 0.7,
+                  "z": -1.6970562748477132,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 18,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.2,
+                  "y": 0.7,
+                  "z": -1.3856406460551014,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 19,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.37883429175395,
+                  "y": 0.7,
+                  "z": -2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 20,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12,
+                  "y": 0.7,
+                  "z": -1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 21,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.621165708246048,
+                  "y": 0.7,
+                  "z": -2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 22,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.8,
+                  "y": 0.7,
+                  "z": -1.3856406460551018,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 23,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.697056274847714,
+                  "y": 0.7,
+                  "z": -1.6970562748477145,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 24,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.385640646055101,
+                  "y": 0.7,
+                  "z": -0.8000000000000007,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 25,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 14.318221983093764,
+                  "y": 0.7,
+                  "z": -0.6211657082460518,
+                  "yaw": 0
+                }
+              }
+            ],
+            "killed": [
+              {
+                "id": 2,
+                "hp": 0,
+                "position": {
+                  "x": 14.356657925552017,
+                  "y": 0.7,
+                  "z": -0.2811437607932612,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 3,
+                "hp": 0,
+                "position": {
+                  "x": 15.052719357088712,
+                  "y": 0.7,
+                  "z": 0.5205096851406656,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 4,
+                "hp": 0,
+                "position": {
+                  "x": 14.234729857156925,
+                  "y": 0.7,
+                  "z": 0.6988228499269159,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 5,
+                "hp": 0,
+                "position": {
+                  "x": 14.499049670061588,
+                  "y": 0.7,
+                  "z": 1.8381713864480367,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 6,
+                "hp": 0,
+                "position": {
+                  "x": 13.720825783686166,
+                  "y": 0.7,
+                  "z": 1.4853229611965935,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 7,
+                "hp": 0,
+                "position": {
+                  "x": 13.415718239305326,
+                  "y": 0.7,
+                  "z": 2.7662136083860007,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 8,
+                "hp": 0,
+                "position": {
+                  "x": 12.968937904284914,
+                  "y": 0.7,
+                  "z": 1.9034875340218829,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 9,
+                "hp": 0,
+                "position": {
+                  "x": 11.97775935180561,
+                  "y": 0.7,
+                  "z": 3.151101164916102,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 10,
+                "hp": 0,
+                "position": {
+                  "x": 12.246180405171591,
+                  "y": 0.7,
+                  "z": 1.7700067332788072,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 11,
+                "hp": 0,
+                "position": {
+                  "x": 9.874601067052769,
+                  "y": 0.7,
+                  "z": 2.740291418676707,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 12,
+                "hp": 0,
+                "position": {
+                  "x": 10.888068907564794,
+                  "y": 0.7,
+                  "z": -0.32518757558782174,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 13,
+                "hp": 0,
+                "position": {
+                  "x": 8.75958734789413,
+                  "y": 0.7,
+                  "z": 0.058080332844681684,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 14,
+                "hp": 0,
+                "position": {
+                  "x": 10.278160279201016,
+                  "y": 0.7,
+                  "z": -1.0552708126903996,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 15,
+                "hp": 0,
+                "position": {
+                  "x": 9.262262609338064,
+                  "y": 0.7,
+                  "z": -1.49057488650017,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 16,
+                "hp": 0,
+                "position": {
+                  "x": 10.655555024602169,
+                  "y": 0.7,
+                  "z": -1.766100611258865,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 17,
+                "hp": 0,
+                "position": {
+                  "x": 10.233972743726195,
+                  "y": 0.7,
+                  "z": -2.5527201823268535,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 18,
+                "hp": 0,
+                "position": {
+                  "x": 11.426778594578504,
+                  "y": 0.7,
+                  "z": -2.2426235026764205,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 19,
+                "hp": 0,
+                "position": {
+                  "x": 11.562698527981244,
+                  "y": 0.7,
+                  "z": -3.0687611318867773,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 20,
+                "hp": 0,
+                "position": {
+                  "x": 12.390601491362625,
+                  "y": 0.7,
+                  "z": -2.328891059666093,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 21,
+                "hp": 0,
+                "position": {
+                  "x": 12.990991191625854,
+                  "y": 0.7,
+                  "z": -2.9303054940656956,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 22,
+                "hp": 0,
+                "position": {
+                  "x": 13.329619011377229,
+                  "y": 0.7,
+                  "z": -1.975346996308215,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 23,
+                "hp": 0,
+                "position": {
+                  "x": 14.21080482056519,
+                  "y": 0.7,
+                  "z": -2.1575240724270057,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 24,
+                "hp": 0,
+                "position": {
+                  "x": 14.035575409883599,
+                  "y": 0.7,
+                  "z": -1.2418091384006313,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 25,
+                "hp": 0,
+                "position": {
+                  "x": 14.951891717387731,
+                  "y": 0.7,
+                  "z": -0.9159031198939778,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              }
+            ],
+            "shots": [
+              {
+                "type": "combat.attack",
+                "tick": 7,
+                "attackId": 1,
+                "actionId": "weapon.rocket-launcher",
+                "combo": 0,
+                "sourceId": 1,
+                "side": "LEFT",
+                "position": {
+                  "x": 0,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": -0.1078332601055193
+                },
+                "direction": {
+                  "x": 0.9941916256019201,
+                  "z": 0.10762440050012628
+                }
+              }
+            ]
+          },
+          "target": "24 unmodified60HP regulars initially within3m; one actual shot kills≥20",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "three-metre movement gap in controlled cohort",
+          "value": {
+            "living": []
+          },
+          "target": "empty arena has no static blocker; no living cohort body intersects1.5m-radius gap around clicked ground",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "reviewed night rockets blood and pointblank impact peak",
+          "value": {
+            "reviewPath": "docs/reports/fix55-c/L7-03-review.json",
+            "visual": {
+              "visibleRocket": true,
+              "blastBlood": true,
+              "noWhiteout": true,
+              "pointblankPeakReviewed": true
+            }
+          },
+          "target": "all captures seen, retained sheets hash-valid; actual13/14/16/18tick close explosion frames retain courier/ground without white-out",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket first-hit detonation",
+          "value": {
+            "point": {
+              "x": 12,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -1.1115519537589818e-7
+            },
+            "impact": {
+              "x": 5.6500000000005635,
+              "y": 0.6111874819617147,
+              "z": 6.280268538738899e-7
+            },
+            "distance": 5.650000000000599,
+            "target": {
+              "id": 2,
+              "hp": 60,
+              "maxHp": 60,
+              "position": {
+                "x": 6,
+                "y": 0.7,
+                "z": 0,
+                "yaw": 0
+              }
+            }
+          },
+          "target": "actual ground click beyond ordinary60HP body; one rocket detonates at first body surface",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket clicked point beyond catalog range",
+          "value": {
+            "point": {
+              "x": 50,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -2.993301967268787e-8
+            },
+            "impact": {
+              "x": 49.9999999095032,
+              "y": 0,
+              "z": 0.0000014966509809255513
+            },
+            "distance": 49.999999909503224
+          },
+          "target": "E29 §5.2 clicked world point is honored, including beyond direction-only catalog range",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket catalog max-range detonation",
+          "value": {
+            "point": {
+              "x": 12,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0.3205919885488634
+            },
+            "impact": {
+              "x": 33.21671611865588,
+              "y": 0,
+              "z": -11.029495468634401
+            },
+            "distance": 35
+          },
+          "target": "actual Space with no aimPoint; empty-ground detonation at catalog35m range ±0.1m",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket cadence and overlapping flight",
+          "value": {
+            "shotTicks": [
+              7,
+              32,
+              57,
+              82,
+              107
+            ],
+            "impactTicks": [
+              48,
+              73,
+              98,
+              123,
+              148
+            ],
+            "intervals": [
+              25,
+              25,
+              25,
+              25
+            ]
+          },
+          "target": "held LMB;25ticks per shot=2.4/s; second shot before first impact",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "clicked empty-ground impact",
+          "value": {
+            "clicked": {
+              "x": 12,
+              "z": 0
+            },
+            "impacts": [
+              {
+                "type": "explosion",
+                "tick": 48,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 73,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 98,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 123,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              },
+              {
+                "type": "explosion",
+                "tick": 148,
+                "defId": "explosion.rocket",
+                "cls": "medium",
+                "fx": "blast.medium",
+                "sourceId": 1,
+                "position": {
+                  "x": 11.999999711812148,
+                  "y": 0,
+                  "z": -4.6411599186058083e-7
+                },
+                "radius": 6
+              }
+            ],
+            "inputs": [
+              {
+                "tick": 0,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 1,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 2,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 3,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 4,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 5,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 6,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 7,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 8,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 9,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 10,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 11,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 12,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 13,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 14,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 15,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 16,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 17,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 18,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 19,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 20,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 21,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 22,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 23,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 24,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 25,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 26,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 27,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 28,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 29,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 30,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 31,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 32,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 33,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 34,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 35,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 36,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 37,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 38,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 39,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 40,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 41,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 42,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 43,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 44,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 45,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 46,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 47,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 48,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 49,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 50,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 51,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 52,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 53,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 54,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 55,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 56,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 57,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 58,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 59,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 60,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 61,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 62,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 63,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 64,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 65,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 66,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 67,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 68,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 69,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 70,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 71,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 72,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 73,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 74,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 75,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 76,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 77,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 78,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 79,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 80,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 81,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 82,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 83,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 84,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 85,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 86,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 87,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 88,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 89,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 90,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 91,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 92,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 93,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 94,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 95,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 96,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 97,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 98,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 99,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 100,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 101,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 102,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 103,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 104,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 105,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 106,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 107,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 108,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 109,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 110,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 111,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 112,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 113,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 114,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 115,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 116,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 117,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 118,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 119,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                },
+                "mouseAttack": true
+              },
+              {
+                "tick": 120,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 121,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 122,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 123,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 124,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 125,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 126,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 127,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 128,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 129,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 130,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 131,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 132,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 133,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 134,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 135,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 136,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 137,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 138,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 139,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 140,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 141,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 142,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 143,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 144,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 145,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 146,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 147,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 148,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 149,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 150,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 151,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 152,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 153,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 154,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 155,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 156,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 157,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 158,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 159,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 160,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 161,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 162,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 163,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 164,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 165,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 166,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 167,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 168,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 169,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 170,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 171,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 172,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 173,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 174,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 175,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 176,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 177,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 178,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 179,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 180,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 181,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 182,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 183,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 184,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 185,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 186,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 187,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 188,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 189,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 190,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 191,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 192,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 193,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 194,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 195,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 196,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 197,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 198,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 199,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 200,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 201,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 202,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 203,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 204,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 205,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 206,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 207,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 208,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 209,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 210,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 211,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 212,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 213,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 214,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 215,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 216,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 217,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 218,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              },
+              {
+                "tick": 219,
+                "aimPoint": {
+                  "x": 11.999999711812148,
+                  "z": -4.6411599186058083e-7
+                }
+              }
+            ]
+          },
+          "target": "actual mouse aimPoint; all empty-ground impacts within0.1m of clicked ground",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "one physical rocket kills24-body three-metre cohort",
+          "value": {
+            "initial": [
+              {
+                "id": 2,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.6,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 14.318221983093764,
+                  "y": 0.7,
+                  "z": 0.6211657082460498,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.385640646055101,
+                  "y": 0.7,
+                  "z": 0.7999999999999999,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.697056274847714,
+                  "y": 0.7,
+                  "z": 1.6970562748477138,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.8,
+                  "y": 0.7,
+                  "z": 1.3856406460551018,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.62116570824605,
+                  "y": 0.7,
+                  "z": 2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.37883429175395,
+                  "y": 0.7,
+                  "z": 2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.200000000000001,
+                  "y": 0.7,
+                  "z": 1.385640646055102,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.302943725152286,
+                  "y": 0.7,
+                  "z": 1.697056274847714,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 12,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.614359353944899,
+                  "y": 0.7,
+                  "z": 0.7999999999999999,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 13,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 9.681778016906236,
+                  "y": 0.7,
+                  "z": 0.6211657082460504,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 14,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.4,
+                  "y": 0.7,
+                  "z": 1.9594348786357652e-16,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 15,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 9.681778016906236,
+                  "y": 0.7,
+                  "z": -0.6211657082460499,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 16,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.614359353944899,
+                  "y": 0.7,
+                  "z": -0.7999999999999996,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 17,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 10.302943725152286,
+                  "y": 0.7,
+                  "z": -1.6970562748477132,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 18,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.2,
+                  "y": 0.7,
+                  "z": -1.3856406460551014,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 19,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 11.37883429175395,
+                  "y": 0.7,
+                  "z": -2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 20,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12,
+                  "y": 0.7,
+                  "z": -1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 21,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.621165708246048,
+                  "y": 0.7,
+                  "z": -2.318221983093764,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 22,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 12.8,
+                  "y": 0.7,
+                  "z": -1.3856406460551018,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 23,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.697056274847714,
+                  "y": 0.7,
+                  "z": -1.6970562748477145,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 24,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 13.385640646055101,
+                  "y": 0.7,
+                  "z": -0.8000000000000007,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 25,
+                "hp": 60,
+                "maxHp": 60,
+                "position": {
+                  "x": 14.318221983093764,
+                  "y": 0.7,
+                  "z": -0.6211657082460518,
+                  "yaw": 0
+                }
+              }
+            ],
+            "killed": [
+              {
+                "id": 2,
+                "hp": 0,
+                "position": {
+                  "x": 14.356657925552017,
+                  "y": 0.7,
+                  "z": -0.2811437607932612,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 3,
+                "hp": 0,
+                "position": {
+                  "x": 15.052719357088712,
+                  "y": 0.7,
+                  "z": 0.5205096851406656,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 4,
+                "hp": 0,
+                "position": {
+                  "x": 14.234729857156925,
+                  "y": 0.7,
+                  "z": 0.6988228499269159,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 5,
+                "hp": 0,
+                "position": {
+                  "x": 14.499049670061588,
+                  "y": 0.7,
+                  "z": 1.8381713864480367,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 6,
+                "hp": 0,
+                "position": {
+                  "x": 13.720825783686166,
+                  "y": 0.7,
+                  "z": 1.4853229611965935,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 7,
+                "hp": 0,
+                "position": {
+                  "x": 13.415718239305326,
+                  "y": 0.7,
+                  "z": 2.7662136083860007,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 8,
+                "hp": 0,
+                "position": {
+                  "x": 12.968937904284914,
+                  "y": 0.7,
+                  "z": 1.9034875340218829,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 9,
+                "hp": 0,
+                "position": {
+                  "x": 11.97775935180561,
+                  "y": 0.7,
+                  "z": 3.151101164916102,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 10,
+                "hp": 0,
+                "position": {
+                  "x": 12.246180405171591,
+                  "y": 0.7,
+                  "z": 1.7700067332788072,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 11,
+                "hp": 0,
+                "position": {
+                  "x": 9.874601067052769,
+                  "y": 0.7,
+                  "z": 2.740291418676707,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 12,
+                "hp": 0,
+                "position": {
+                  "x": 10.888068907564794,
+                  "y": 0.7,
+                  "z": -0.32518757558782174,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 13,
+                "hp": 0,
+                "position": {
+                  "x": 8.75958734789413,
+                  "y": 0.7,
+                  "z": 0.058080332844681684,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 14,
+                "hp": 0,
+                "position": {
+                  "x": 10.278160279201016,
+                  "y": 0.7,
+                  "z": -1.0552708126903996,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 15,
+                "hp": 0,
+                "position": {
+                  "x": 9.262262609338064,
+                  "y": 0.7,
+                  "z": -1.49057488650017,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 16,
+                "hp": 0,
+                "position": {
+                  "x": 10.655555024602169,
+                  "y": 0.7,
+                  "z": -1.766100611258865,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 17,
+                "hp": 0,
+                "position": {
+                  "x": 10.233972743726195,
+                  "y": 0.7,
+                  "z": -2.5527201823268535,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 18,
+                "hp": 0,
+                "position": {
+                  "x": 11.426778594578504,
+                  "y": 0.7,
+                  "z": -2.2426235026764205,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 19,
+                "hp": 0,
+                "position": {
+                  "x": 11.562698527981244,
+                  "y": 0.7,
+                  "z": -3.0687611318867773,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 20,
+                "hp": 0,
+                "position": {
+                  "x": 12.390601491362625,
+                  "y": 0.7,
+                  "z": -2.328891059666093,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 21,
+                "hp": 0,
+                "position": {
+                  "x": 12.990991191625854,
+                  "y": 0.7,
+                  "z": -2.9303054940656956,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 22,
+                "hp": 0,
+                "position": {
+                  "x": 13.329619011377229,
+                  "y": 0.7,
+                  "z": -1.975346996308215,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 23,
+                "hp": 0,
+                "position": {
+                  "x": 14.21080482056519,
+                  "y": 0.7,
+                  "z": -2.1575240724270057,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 24,
+                "hp": 0,
+                "position": {
+                  "x": 14.035575409883599,
+                  "y": 0.7,
+                  "z": -1.2418091384006313,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              },
+              {
+                "id": 25,
+                "hp": 0,
+                "position": {
+                  "x": 14.951891717387731,
+                  "y": 0.7,
+                  "z": -0.9159031198939778,
+                  "yaw": 0
+                },
+                "radius": 0.35
+              }
+            ],
+            "shots": [
+              {
+                "type": "combat.attack",
+                "tick": 7,
+                "attackId": 1,
+                "actionId": "weapon.rocket-launcher",
+                "combo": 0,
+                "sourceId": 1,
+                "side": "LEFT",
+                "position": {
+                  "x": 0,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": -0.1078332601055193
+                },
+                "direction": {
+                  "x": 0.9941916256019201,
+                  "z": 0.10762440050012628
+                }
+              }
+            ]
+          },
+          "target": "24 unmodified60HP regulars initially within3m; one actual shot kills≥20",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "three-metre movement gap in controlled cohort",
+          "value": {
+            "living": []
+          },
+          "target": "empty arena has no static blocker; no living cohort body intersects1.5m-radius gap around clicked ground",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "reviewed night rockets blood and pointblank impact peak",
+          "value": {
+            "reviewPath": "docs/reports/fix55-c/L7-03-review.json",
+            "visual": {
+              "visibleRocket": true,
+              "blastBlood": true,
+              "noWhiteout": true,
+              "pointblankPeakReviewed": true
+            }
+          },
+          "target": "all captures seen, retained sheets hash-valid; actual13/14/16/18tick close explosion frames retain courier/ground without white-out",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/fix55-c/L7-03-physical.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket first-hit detonation",
+          "value": {
+            "point": {
+              "x": 12,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -1.1115519537589818e-7
+            },
+            "impact": {
+              "x": 5.6500000000005635,
+              "y": 0.6111874819617147,
+              "z": 6.280268538738899e-7
+            },
+            "distance": 5.650000000000599,
+            "target": {
+              "id": 2,
+              "hp": 60,
+              "maxHp": 60,
+              "position": {
+                "x": 6,
+                "y": 0.7,
+                "z": 0,
+                "yaw": 0
+              }
+            }
+          },
+          "target": "actual ground click beyond ordinary60HP body; one rocket detonates at first body surface",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket clicked point beyond catalog range",
+          "value": {
+            "point": {
+              "x": 50,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -2.993301967268787e-8
+            },
+            "impact": {
+              "x": 49.9999999095032,
+              "y": 0,
+              "z": 0.0000014966509809255513
+            },
+            "distance": 49.999999909503224
+          },
+          "target": "E29 §5.2 clicked world point is honored, including beyond direction-only catalog range",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        },
+        {
+          "id": "L7-03",
+          "clause": "physical rocket catalog max-range detonation",
+          "value": {
+            "point": {
+              "x": 12,
+              "z": 0
+            },
+            "origin": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0.3205919885488634
+            },
+            "impact": {
+              "x": 33.21671611865588,
+              "y": 0,
+              "z": -11.029495468634401
+            },
+            "distance": 35
+          },
+          "target": "actual Space with no aimPoint; empty-ground detonation at catalog35m range ±0.1m",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json",
+          "level": "L7"
+        }
+      ],
       "historical": {
         "id": "L7-03",
         "level": "L7",
@@ -3863,7 +8829,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L7-04",
