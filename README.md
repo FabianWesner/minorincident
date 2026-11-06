@@ -23,4 +23,4 @@ npm run scene:gate
 npm run qa:threat
 ```
 
-Acceptance reports are generated with `npm run qa:accept -- --level all`. See [the specs index](specs/README.md) for project requirements and [the acceptance guide](docs/reports/fix51-verify/README.md) for evidence and review status.
+Acceptance reports are generated with `npm run qa:accept -- --level all`. See [the specs index](specs/README.md) for project requirements, [the acceptance guide](docs/reports/fix51-verify/README.md) for evidence and review status, and [acceptance review freshness](docs/reports/fix51-r9i/README.md) for review source digests.
