@@ -1,0 +1,41 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "838cde8be51514297c09a2360884c494d47d6fb4",
+  "before": {
+    "row": "L6-06",
+    "status": "NOT CHECKED",
+    "currentStatus": "NOT CHECKED",
+    "reviewDecision": null
+  },
+  "after": {
+    "row": "L6-06",
+    "status": "FAIL",
+    "currentStatus": "FAIL",
+    "reviewDecision": {
+      "row": "L6-06",
+      "status": "FAIL",
+      "reviewer": "Codex/sweep-b",
+      "date": "2026-11-06",
+      "commit": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+      "clauses": [
+        {
+          "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
+          "verdict": "FAIL",
+          "note": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+        }
+      ],
+      "evidence": [
+        {
+          "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
+          "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
+          "what": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+        }
+      ],
+      "freshness": "FRESH",
+      "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+    }
+  },
+  "reviewSha256": "367bd4e06328d28dc9623b6ce5573c0cb48ccea285ca5f2c3bbdc3d0039fd16e",
+  "scope": "Actual fresh source-bound measured FAIL on plain S row was ignored. Fix honors FAIL only; PASS full-scope requirements and exact criteria remain unchanged."
+}
