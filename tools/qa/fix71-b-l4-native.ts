@@ -24,7 +24,7 @@ for(const tier of ['low','high'] as const){
     }
    }
    if(s.phase!=='collapse')return;
-   if(s.director.gapUntil!==gap){gap=s.director.gapUntil;windows.push({start:w.tick,until:gap});}
+   if((s.director.gapUntil??0)!==gap){gap=s.director.gapUntil??0;windows.push({start:w.tick,until:gap});}
    if(previous&&previous.tick+1===w.tick){
     const demand=[...previous.pend];for(const wave of waves.filter(wave=>wave.tick===w.tick))for(const edge of wave.edges)demand[edge]+=wave.count/wave.edges.length;
     const released=demand.map((n,i)=>n-s.pend[i]),added=s.collapseIds.slice(previous.ids);assert.equal(released.reduce((a,b)=>a+b,0),added.length);

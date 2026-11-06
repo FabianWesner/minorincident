@@ -92,9 +92,9 @@ export class AudioEventMapper {
             if (event.type === 'l4.doorBarred') this.host.play('door.gate', {});
             // The cellar is a separate nav island, beyond the live plaza's
             // positional range. Its authored battle pulse must remain audible.
-            for (let shot = 0; shot < 3; shot++) this.host.play('action.weapon.army-mg', { time: t + shot * .12, gain: .32, lowpass: 750, dry: true });
+            for (let shot = 0; shot < 3; shot++) this.host.play('action.weapon.army-mg', { time: t + shot * .12, gain: .32, lowpass: 750, dry: true, priority: 110 });
             const barred = this.host.world.missions?.state.l4?.barredAt ?? event.tick;
-            if (Math.floor((event.tick - barred) / 75) % 3 === 0) this.host.play('explosion.boom', { gain: .22, lowpass: 500, dry: true });
+            if (Math.floor((event.tick - barred) / 75) % 3 === 0) this.host.play('explosion.boom', { gain: .22, lowpass: 500, dry: true, priority: 110 });
             return;
         }
         if (event.type === 'l6.bang') { this.host.play('door.wood', { position: event.position, gain: 1, lowpass: 1800 }); return; }
