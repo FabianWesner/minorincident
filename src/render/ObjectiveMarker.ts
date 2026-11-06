@@ -26,6 +26,10 @@ export class ObjectiveMarker extends Group {
     // Camera pull-backs retain the active waypoint, so guidance survives the reveal.
     this.visible=!this.world.storyLock&&!this.world.l7Departure?.cinematic&&mission?.state.phase==='playing'&&!metroDone&&!!anchor;
     this.scale.setScalar(Math.max(1,zoomScale));
+    // The trigger uses the anchor radius (2 m by default, with authored
+    // exceptions such as the 1.4 m L4 cellar). Keep the visible outer edge
+    // of the torus on that same radius so the interaction cue matches play.
+    this.ring.scale.setScalar((anchor?.radius ?? 2) / (objectiveRingRadius * this.scale.x));
     if(anchor)this.position.set(anchor.x,markerSurfaceY(this.world,anchor),anchor.z);
   }
   dispose():void{this.ring.geometry.dispose();this.arrow.geometry.dispose();this.material.dispose();this.ringMaterial.dispose();this.clear();}
