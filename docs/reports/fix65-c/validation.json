@@ -1,0 +1,218 @@
+{
+  "sourceCommit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
+  "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+  "assignedRows": [
+    {
+      "row": "L7-05",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": 14,
+      "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+      "report": "docs/reports/fix51-verify/L7.json",
+      "sha256": "e2ad387dc11ea32cafa62b8b3ad09f5802e97cbb0e5244aed2ee2555832651a0"
+    },
+    {
+      "row": "L9-02",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": 6,
+      "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+      "report": "docs/reports/fix51-verify/L9.json",
+      "sha256": "adbfc8b174f191ede4aae1d0f2b6a473ca8a0e239978f10972ddd69f0db69452"
+    },
+    {
+      "row": "L9-04",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": 14,
+      "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+      "report": "docs/reports/fix51-verify/L9.json",
+      "sha256": "adbfc8b174f191ede4aae1d0f2b6a473ca8a0e239978f10972ddd69f0db69452"
+    },
+    {
+      "row": "L10-03",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": 86,
+      "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+      "report": "docs/reports/fix51-verify/L10.json",
+      "sha256": "6cba24528a45b9acac03cf08ca06b976d20959123e31692b94761a3b49d9eab0"
+    }
+  ],
+  "gates": {
+    "typecheck": {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "build": {
+      "command": "npm run build:qa",
+      "exitCode": 0
+    },
+    "unit": {
+      "command": "npm test",
+      "exitCode": 0,
+      "host": "isolated remote runner, both slots held",
+      "passed": 106,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 65.379763399
+    },
+    "threat": {
+      "command": "npm run qa:threat",
+      "exitCode": 1,
+      "childExitCode": 124,
+      "seconds": 601.1854975830001,
+      "complete": false,
+      "completedLevels": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "timedOutAt": "L8",
+      "L7PassiveFlags": [
+        "step/corridor:SLOW_FOLLOWER:56",
+        "step/corridor:SLOW_FOLLOWER:61",
+        "step/corridor:SLOW_FOLLOWER:64",
+        "step/corridor:SLOW_FOLLOWER:65",
+        "step/corridor:SLOW_FOLLOWER:71",
+        "step/corridor:SLOW_FOLLOWER:74",
+        "phase/encounters:SLOW_FOLLOWER:56",
+        "phase/encounters:SLOW_FOLLOWER:61",
+        "phase/encounters:SLOW_FOLLOWER:64",
+        "phase/encounters:SLOW_FOLLOWER:65",
+        "phase/encounters:SLOW_FOLLOWER:71",
+        "phase/encounters:SLOW_FOLLOWER:74"
+      ],
+      "zeroFlagGateMet": false,
+      "isolation": "No other owned local check ran concurrently; other lanes were active on this Mac."
+    }
+  },
+  "otherAttempt": "Isolated remote unit suite passes; remote full threat attempt times out at600.9s after L4 and reports L3-06 squad counts/losses FAIL. Retained without claiming a complete gate.",
+  "rawCaptures": {
+    "inspectedAndDeleted": 150,
+    "sheetsInspectedAndDeleted": 12
+  },
+  "stopReason": "Orchestrator explicitly ended the time box; no further fixes or retries. Four assigned rows closed, full threat gate remains open.",
+  "artifacts": [
+    {
+      "file": "docs/reports/fix65-c/validation-logs/local-qa-threat.json",
+      "sha256": "d75ba18104aab579bdfb000fe0cde168d9432e260c94a26133d9b473b35f59eb"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/local-threat-L7.json.gz",
+      "sha256": "acd7bffc6535b4d4c8aadd2ddc05630ef039a9902cc248ec3d681f841c0b716e"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-accept-L10.log.gz",
+      "sha256": "deb117aae38dc6922597d075324019b8340f3d396101e3c17d3daaa72254716a"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-accept-L7.log.gz",
+      "sha256": "dfae26ab4ee7a6fcc0ae9e11bc2dc50765df92ac93593120186bf0f0393d485d"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-accept-L9.log.gz",
+      "sha256": "3b5d567c5c9fb38050cfe86549474fe0e2556e19a797a45c2160a0a46e6d4a91"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-build.log.gz",
+      "sha256": "beb402fbe61b5498111a938b02e76a48f51bc30badb755e0e47562b96fdd3edd"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-census-controls.log.gz",
+      "sha256": "d7c5389312eed1625dbb2860dd0ed950725c16a50e17cbb426e864b5d7f2e7df"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-census.log.gz",
+      "sha256": "134eb3d2071ef789a161f4ecc1ccca75f56801e8c08955cb436f5d0eec4d32b6"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-contact.log.gz",
+      "sha256": "39e30138353a0d729b9666823f43ccb1a9dc7aafce0da52aec1dda109ee9e361"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-final-lint.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-fringe.log.gz",
+      "sha256": "fb0df85f1dcc1fdbf95dad230aa0fbfae7f5da1835dc5eadc3828b1ba59461e2"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-isolated-retry.log.gz",
+      "sha256": "e335f7a3ed86d3822e0ad4e3963fde14c19e3502264d0294191c9e52eb75843c"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-isolated.log.gz",
+      "sha256": "1a6f9c3a132a77e55560b5d381a14631d1052bf84611391e552919159ef7627d"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-l7-pace.log.gz",
+      "sha256": "4f69de4758671183acba2ce577275b518dbc501951b3435000410f50d6ece245"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-l9-native.log.gz",
+      "sha256": "7d4b2742c60fcb570489af3f018b617445c8bd439b5069439247c05501324a21"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-local-threat.log.gz",
+      "sha256": "f51d3ca236cd848b89fcbc8e4eb99ee144e21a24f2b47c08f90bac2f411dbd5b"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-physical-high.log.gz",
+      "sha256": "33b6aada74a74163aea30a93527a922bd0a0fa307c9b6ea785d358a66e4b3f2b"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-physical-low.log.gz",
+      "sha256": "ad562c61f75ff1bf318a13370b7f40eaa7f49b8fdc329a4dfa604a8576b17595"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-qualified-L10.log.gz",
+      "sha256": "c5ac24cb1fc37c484adfca2b906be12c82057efef6ca2dfdc028a1ec009f79a0"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-qualified-L7.log.gz",
+      "sha256": "bdd784bd82f426abd4091e518a004e8dc5e6ee547a047058f38365029f8babf8"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-qualified-L9.log.gz",
+      "sha256": "38cc78b6bb03e50daca0b86c17652ed475ae9743124de5a0379d629db2e6abb0"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-reuse-L10.log.gz",
+      "sha256": "c5ac24cb1fc37c484adfca2b906be12c82057efef6ca2dfdc028a1ec009f79a0"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-reuse-L9.log.gz",
+      "sha256": "38cc78b6bb03e50daca0b86c17652ed475ae9743124de5a0379d629db2e6abb0"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/release-static.log.gz",
+      "sha256": "e2b0de37e809424d8428459f1ba5f23aeb4fc5e17f86a7025d640a6d608878da"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/remote-L3.json.gz",
+      "sha256": "7bf6f923f029b0af666e27166f870577a43a39c3aa558acabe57613d9f136ea8"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/remote-qa-threat.json",
+      "sha256": "d48692a91b7c27ab7937da4735b8a96a21acbbada8835f7948386ba39cc4a0da"
+    },
+    {
+      "file": "docs/reports/fix65-c/validation-logs/remote-test.json",
+      "sha256": "56b62aea104a66ddbfbf682a3f8013bc8d5b21af7f25ca3d1d752bdc5accf2e0"
+    }
+  ]
+}
