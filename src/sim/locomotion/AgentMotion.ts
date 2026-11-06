@@ -148,9 +148,9 @@ export function installAgentMotion(world: SimWorld): void {
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       const response = e.locomotion, blocker = world.solids.blockingBody(e.id);
       // The final collision pass can reject a step after navigation moved.
-      // Clear rejected momentum at a solid corpse so the next route/detour
-      // starts from the resolved motion rather than pushing into it again.
-      if (world.scenario === 'L7' && world.missions?.state.steps.departure?.status === 'active' && e.civilian?.survivor?.mode === 'follow' && response?.updatedAt === world.tick && blocker && solidLargeCorpse(blocker) && distance / FIXED_DT <= .12 && !forced(e, world.tick, world)) {
+      // Clear rejected momentum at a solid corpse or following body so the
+      // next step starts from resolved motion instead of pushing into it again.
+      if (world.scenario === 'L7' && world.missions?.state.steps.departure?.status === 'active' && e.civilian?.survivor?.mode === 'follow' && response?.updatedAt === world.tick && blocker && (solidLargeCorpse(blocker) || blocker.civilian?.survivor?.mode === 'follow') && distance / FIXED_DT <= .12 && !forced(e, world.tick, world)) {
         response.vx = dx / FIXED_DT; response.vz = dz / FIXED_DT; response.ax = response.az = 0;
       }
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;

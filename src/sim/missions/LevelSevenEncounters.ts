@@ -4,7 +4,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters } from '../../data/l7';
-import { bodyDetour, corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 
@@ -264,12 +264,6 @@ export class LevelSevenEncounters {
       // approach's swept corpse detour here too, so a dead Alpha cannot hold
       // the whole group at the corridor objective indefinitely.
       if (!approach.around && w.tick - approach.at >= 30 && (w.tick + e.id) % 15 === 0) approach.around = corpseDetour(w, e, destination);
-      // A resolved living-body contact can wedge two followers at a narrow
-      // corner even while their navigation velocities stay at full speed.
-      // Use the existing swept detour, retaining both complete footprints.
-      const blocker = w.solids.blockingBody(e.id);
-      if (!approach.around && blocker?.civilian?.survivor?.mode === 'follow' && (w.tick + e.id) % 15 === 0)
-        approach.around = bodyDetour(w, e, destination, [blocker]);
       if (approach.around) destination = approach.around[0];
       // Injury remains visible in the carried story state; it must not turn
       // one evacuee into a straggler the player has to babysit.
