@@ -1,0 +1,26 @@
+{
+  "row": "G-18",
+  "status": "NOT CHECKED",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "cells": 520,
+  "scriptInterrupted": 520,
+  "actualAttackStarts": 430,
+  "withoutAttackByRole": {
+    "infected.screamer": 40,
+    "infected.nurse": 40,
+    "infected.riot": 2,
+    "infected.bloated": 2,
+    "infected.firefighter": 2,
+    "infected.armored": 2,
+    "infected.butcher": 2
+  },
+  "limitations": [
+    "Companion immunity/perception and every authored finite-focus arrival policy remain separate; this fixture does not establish full G-18 PASS.",
+    "Player/escort placement and scripted travel are fixture setup, not native campaign route evidence."
+  ],
+  "interpretation": "All520 scripted routes interrupt for nearby perceived targets.430 begin an actual player/escort attack within240 fixture ticks. Support roles screamer/nurse and some L9 escort fixtures do not produce a counted attack. This is not a full authored-policy or companion-perception sign-off.",
+  "evidence": {
+    "file": "docs/reports/sweep-g/G-18-contact.json.gz",
+    "sha256": "de5896317090089f23d34df7ff9744150d89c16c321234c35f7f003b5d0797a2"
+  }
+}
