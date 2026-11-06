@@ -1,0 +1,46 @@
+{
+  "row": "L7-01",
+  "status": "PASS",
+  "reviewer": "Codex fix72-c",
+  "date": "2026-11-06",
+  "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
+  "clauses": [
+    {
+      "clause": "Launcher \u2264 5 m from the exit, taken on approach, no hitch (max frame \u2264 50 ms at pickup and first shot).",
+      "verdict": "PASS",
+      "note": "Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each\u226450ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix72-c/L7-01/low.json",
+      "sha256": "ed4450519d2e7b02d55b3982e912eac15f030924791e58a01aee2cf9c7eff505",
+      "what": "Low uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/high.json",
+      "sha256": "8671220577b628066ea07f29ed21c6826a2f4c40e97389e1cc42a0d583a88401",
+      "what": "High uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/review.json",
+      "sha256": "eda2cecc1b42077e41a0bf8c49e1e01b4c34316f57a5dd1ba50febb046c3e5ad",
+      "what": "All4 current image SHA-256 and personal observations; raw captures deleted."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
+      "sha256": "f526790288bd8ff4d4fa0ddf44fe23801a5a545a25ef28f68abef3b26ae9c5be",
+      "what": "Exclusive shared-pool admission; host load<3 and no foreign build/browser/test processes."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/fault-proof.json",
+      "sha256": "5b0478842f4db1d981f5f0fd84fe7e28c3a2743c53e5fe1160b9853b448112f8",
+      "what": "22 mechanical/timing/provenance faults rejected, unchanged strict50ms boundary."
+    },
+    {
+      "file": "docs/reports/fix72-c/L7-01/quality-order-cause.json",
+      "sha256": "c2f5c9c313ab73c717bec275547752e70b18f0e81c800e1ac24d0d0c628b1fb6",
+      "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
+    }
+  ]
+}

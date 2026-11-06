@@ -719,6 +719,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['l6.breach1', 'l6.breach2'].map(name => ({ clause: `stationary first attack after ${name}`, policy: 'stationary' })),
   ]],
   ['L6-07', ['ordinary retreat route completion', 'retreat player/group windups per minute', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L7-01', [
+    { clause: 'native launcher horizontal distance from night-exit checkpoint', policy: 'complete' },
+    ...['physical launcher approach pickup and first rocket frame gate', 'reviewed actual launcher first-rocket captures'].map(clause => ({ clause, policy: 'physical-pickup' })),
+  ]],
   ['L7-05', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
@@ -750,6 +754,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L10-13', [{ clause: 'release transaction observed prerequisites', policy: 'complete' }, { clause: 'release predicate missing-prerequisite matrix', policy: 'controlled-fixture' }]],
   ['L10-02', ['actual Mega introduction time', 'Mega distance on introduction', 'actual Mega roar and impact introduction events', 'Mega introduction actual body-clear route'].map(clause => ({ clause, policy: 'complete' }))],
   ['L10-03', [
+    { clause: 'same-tick regional count and species composition', policy: 'complete' },
     { clause: 'residential dogs follow actual handgun pickup', policy: 'complete' },
     ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor', 'dispersal-complex'].map(region => ({ clause: `${region} normal local concurrent peak bound`, policy: 'complete' })),
     ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor'].flatMap(region => [

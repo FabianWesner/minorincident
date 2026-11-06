@@ -1,0 +1,41 @@
+--- a/src/render/ActionView.ts
++++ b/src/render/ActionView.ts
+@@ -120,13 +120,24 @@
+    * at `at`, so their courier-fill materials compile behind the loading card instead of on the first equip. */
+   prewarmHeld(at: Vector3): () => void {
+     const group = new Group(); group.name = 'held-weapon-prewarm'; group.position.copy(at);
++    let index = 0;
+     for (const asset of this.assets.values()) {
+       const clone = asset.model.clone(true);
+       clone.traverse(node => { if (node instanceof Mesh) {
+         node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material;
+         node.userData.preRenderShared = true;
+       } });
++      // Separate weapons instead of covering every held material with the
++      // same frontmost model in the loading draw (first L7 launcher equip).
++      clone.position.x += (index % 3 - 1) * 1.2;
++      clone.position.y += Math.floor(index++ / 3) * 1.2;
+       group.add(clone);
++    }
++    // Hidden projectile pools sit at the world origin. Compile their real
++    // fragment pipelines in front of the loading camera before the first shot.
++    for (const [i, source] of [this.projectiles[0], this.projectileExhausts[0]].entries()) {
++      const clone = source.clone(); clone.visible = true;
++      clone.position.set(i * .5, -.5, 0); clone.scale.setScalar(3); group.add(clone);
+     }
+     if (!group.children.length) return () => {};
+     this.add(group); group.updateMatrixWorld(true);
+--- a/src/render/npc/CivilianCrowd.ts
++++ b/src/render/npc/CivilianCrowd.ts
+@@ -672,6 +672,11 @@
+       // authored cast before the loading draw so streamed actors cannot first
+       // create their frozen corpse material after play begins.
+       if (this.world.scenario === 'L3') for (const model of l3CivilianModels) this.loadTier(model, 'lod2');
++      // L7 starts in combat: nearby people can die before their living LOD
++      // changes. Include their actual frozen-body tier in the loading barrier.
++      if (this.world.scenario === 'L7') for (const model of this.nearbyModels(64)) {
++        this.loadTier(model, this.low ? 'lod2' : 'lod1');
++      }
+       await this.ready();
+     }
+     if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);

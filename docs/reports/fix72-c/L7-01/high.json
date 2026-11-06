@@ -1,0 +1,2856 @@
+{
+  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "revision": "fc3c72cdc5e3f1b3928865d479c167cdb619e651",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "toolSha256": "b4e3e4a3d4cd10dcc0bbffd5888829360c5bb7b9bc5a8cd5039ae95aa93ec66f",
+  "probeSha256": "d0321021437018d7c2d87fc454c1bee207177d7cf7ec917bec57cfc1b2f72287",
+  "seed": {
+    "file": "docs/reports/fix51-r10c/L7-high-carried-save.json.gz",
+    "sha256": "d272c8e417a3998eacaa5e8a155e280d166072a38f98f85362e564614ca69390"
+  },
+  "tier": "high",
+  "setup": {
+    "tick": 0,
+    "player": {
+      "x": 273,
+      "y": 4.6049999999999995,
+      "z": 15,
+      "yaw": 0.3205919885488634
+    },
+    "pickup": {
+      "id": 409,
+      "position": {
+        "x": 276,
+        "y": 4.05,
+        "z": 15,
+        "yaw": 0
+      }
+    },
+    "initialRack": [
+      {
+        "id": "weapon.army-mg",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.handgun",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.kick",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.shotgun",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      }
+    ],
+    "backend": "webgl",
+    "quality": "high",
+    "god": false,
+    "driverDetached": true
+  },
+  "result": {
+    "events": [
+      {
+        "type": "pickup.collected",
+        "tick": 14,
+        "sourceId": 1,
+        "pickupId": 409,
+        "side": "RIGHT",
+        "actionId": "weapon.rocket-launcher",
+        "replaced": null,
+        "at": 4208.10000038147,
+        "player": {
+          "x": 273.8050842285156,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": -7.850462293418876e-17
+        },
+        "moving": true
+      },
+      {
+        "type": "combat.attack",
+        "tick": 26,
+        "attackId": 1,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.0871887207031,
+          "y": 4.619999885559082,
+          "z": 15.026885032653809,
+          "yaw": 3.141547435696816
+        },
+        "direction": {
+          "x": -0.9999993740845762,
+          "z": -0.0011188522940681696
+        },
+        "at": 4407.60000038147,
+        "player": {
+          "x": 274.0871887207031,
+          "y": 4.619999885559082,
+          "z": 15.026885032653809,
+          "yaw": 3.141547435696816
+        },
+        "moving": false
+      }
+    ],
+    "inputs": [
+      {
+        "tick": 0,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 1,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 2,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 3,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 4,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 5,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 6,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 7,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 8,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 9,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 10,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 11,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 12,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 13,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 14,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 15,
+        "move": {
+          "x": 0.7071067811865475,
+          "z": 0.7071067811865476
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 16,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 17,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 18,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 19,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 20,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 21,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 22,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 23,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 24,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 25,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 26,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 27,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 28,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 29,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 30,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 31,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 32,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 33,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 34,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 35,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 36,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 37,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 38,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 39,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 40,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 41,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 42,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 43,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 44,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 45,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 46,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 47,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 48,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 49,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 50,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 51,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 52,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 53,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 54,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 55,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 56,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 57,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 58,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 59,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 60,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 61,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 62,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      }
+    ],
+    "beginAt": 3963.9000005722046,
+    "endAt": 5028.900000572205,
+    "pickupId": 409,
+    "frames": [
+      {
+        "at": 21.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999998,
+        "playMs": 0
+      },
+      {
+        "at": 38.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000003,
+        "playMs": 0
+      },
+      {
+        "at": 54.7,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.6,
+        "playMs": 0
+      },
+      {
+        "at": 71.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000003,
+        "playMs": 0
+      },
+      {
+        "at": 88.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 221.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 133.3,
+        "playMs": 0
+      },
+      {
+        "at": 238.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 254.7,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999994,
+        "playMs": 0
+      },
+      {
+        "at": 271.4,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 288.1,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 304.8,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 321.4,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999966,
+        "playMs": 0
+      },
+      {
+        "at": 338,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 354.7,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 371.4,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 388,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 404.7,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 421.4,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 438,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 871.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 433.4,
+        "playMs": 0
+      },
+      {
+        "at": 888,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 921.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.39999999999998,
+        "playMs": 0
+      },
+      {
+        "at": 938.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1004.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.60000000000002,
+        "playMs": 0
+      },
+      {
+        "at": 1071.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1121.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50.100000000000136,
+        "playMs": 0
+      },
+      {
+        "at": 1138,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1154.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1204.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 1221.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1238,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1254.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1271.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1288,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1304.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1321.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1421.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 1454.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.299999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1488.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.399999999999864,
+        "playMs": 0
+      },
+      {
+        "at": 1504.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000136,
+        "playMs": 0
+      },
+      {
+        "at": 1538,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.299999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1554.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1571.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1588,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1604.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1638,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1654.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1671.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1688,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1704.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1721.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1738.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.799999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1754.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000136,
+        "playMs": 0
+      },
+      {
+        "at": 1771.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1788.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 1871.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.20000000000005,
+        "playMs": 0
+      },
+      {
+        "at": 1988,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 116.70000000000005,
+        "playMs": 0
+      },
+      {
+        "at": 2038,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 2121.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.30000000000018,
+        "playMs": 0
+      },
+      {
+        "at": 2204.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.29999999999973,
+        "playMs": 0
+      },
+      {
+        "at": 2288,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2388,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2487.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 99.90000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 133.4000000000001,
+        "playMs": 0
+      },
+      {
+        "at": 2688,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.69999999999982,
+        "playMs": 0
+      },
+      {
+        "at": 2738,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 2837.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 99.90000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2937.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2971.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2987.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3004.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3021.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3038,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3054.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3171.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 116.60000000000036,
+        "playMs": 0
+      },
+      {
+        "at": 3188,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3321.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 133.30000000000018,
+        "playMs": 0
+      },
+      {
+        "at": 3338,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3354.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3371.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3388,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3404.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3421.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.5,
+        "playMs": 0
+      },
+      {
+        "at": 3437.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3454.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3471.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3487.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3504.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3521.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3538,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3554.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3571.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3587.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3604.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3637.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3654.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3671.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3688,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.800000000000182,
+        "playMs": 0
+      },
+      {
+        "at": 3787.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 99.90000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 3804.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3821.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3887.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.70000000000027,
+        "playMs": 0
+      },
+      {
+        "at": 3904.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3921.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3937.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": true,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3954.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": true,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3971.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3988,
+        "level": "L7",
+        "tick": 1,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.010009765625,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4004.5,
+        "level": "L7",
+        "tick": 2,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.0299987792969,
+        "z": 15,
+        "ms": 16.5,
+        "playMs": 16.5
+      },
+      {
+        "at": 4021.3,
+        "level": "L7",
+        "tick": 2,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.0299987792969,
+        "z": 15,
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
+      },
+      {
+        "at": 4037.9,
+        "level": "L7",
+        "tick": 4,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.1000061035156,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 16.59999999999991
+      },
+      {
+        "at": 4054.6,
+        "level": "L7",
+        "tick": 4,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.1000061035156,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4071.2,
+        "level": "L7",
+        "tick": 6,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2099914550781,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 16.59999999999991
+      },
+      {
+        "at": 4087.9,
+        "level": "L7",
+        "tick": 6,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2099914550781,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 16.700000000000273
+      },
+      {
+        "at": 4104.6,
+        "level": "L7",
+        "tick": 7,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2799987792969,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 16.700000000000273
+      },
+      {
+        "at": 4154.6,
+        "level": "L7",
+        "tick": 9,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.4300231933594,
+        "z": 15,
+        "ms": 50,
+        "playMs": 50
+      },
+      {
+        "at": 4187.9,
+        "level": "L7",
+        "tick": 12,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.6550598144531,
+        "z": 15,
+        "ms": 33.29999999999927,
+        "playMs": 33.29999999999927
+      },
+      {
+        "at": 4204.6,
+        "level": "L7",
+        "tick": 13,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.7300720214844,
+        "z": 15,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4221.3,
+        "level": "L7",
+        "tick": 15,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.8800964355469,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4237.9,
+        "level": "L7",
+        "tick": 16,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.9512634277344,
+        "z": 15.009239196777344,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4254.6,
+        "level": "L7",
+        "tick": 16,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.9512634277344,
+        "z": 15.009239196777344,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4271.3,
+        "level": "L7",
+        "tick": 18,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0489807128906,
+        "z": 15.021924018859863,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4287.9,
+        "level": "L7",
+        "tick": 19,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0755310058594,
+        "z": 15.025369644165039,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4304.6,
+        "level": "L7",
+        "tick": 19,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0755310058594,
+        "z": 15.025369644165039,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4321.3,
+        "level": "L7",
+        "tick": 21,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4337.9,
+        "level": "L7",
+        "tick": 22,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4354.6,
+        "level": "L7",
+        "tick": 22,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4371.2,
+        "level": "L7",
+        "tick": 24,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4387.9,
+        "level": "L7",
+        "tick": 24,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4404.5,
+        "level": "L7",
+        "tick": 25,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4421.3,
+        "level": "L7",
+        "tick": 26,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
+      },
+      {
+        "at": 4437.9,
+        "level": "L7",
+        "tick": 28,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4454.6,
+        "level": "L7",
+        "tick": 28,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4471.2,
+        "level": "L7",
+        "tick": 30,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4487.9,
+        "level": "L7",
+        "tick": 30,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4504.6,
+        "level": "L7",
+        "tick": 31,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4521.3,
+        "level": "L7",
+        "tick": 33,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4537.9,
+        "level": "L7",
+        "tick": 34,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4554.6,
+        "level": "L7",
+        "tick": 34,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4571.2,
+        "level": "L7",
+        "tick": 36,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4587.9,
+        "level": "L7",
+        "tick": 36,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4604.6,
+        "level": "L7",
+        "tick": 37,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4621.2,
+        "level": "L7",
+        "tick": 39,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4637.9,
+        "level": "L7",
+        "tick": 39,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4654.6,
+        "level": "L7",
+        "tick": 40,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4671.2,
+        "level": "L7",
+        "tick": 42,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4687.9,
+        "level": "L7",
+        "tick": 42,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4704.6,
+        "level": "L7",
+        "tick": 43,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4721.2,
+        "level": "L7",
+        "tick": 45,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4737.8,
+        "level": "L7",
+        "tick": 45,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4754.5,
+        "level": "L7",
+        "tick": 46,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4771.2,
+        "level": "L7",
+        "tick": 47,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4787.8,
+        "level": "L7",
+        "tick": 48,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4804.5,
+        "level": "L7",
+        "tick": 49,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4821.2,
+        "level": "L7",
+        "tick": 50,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4837.9,
+        "level": "L7",
+        "tick": 51,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4854.6,
+        "level": "L7",
+        "tick": 52,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4871.2,
+        "level": "L7",
+        "tick": 54,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4887.9,
+        "level": "L7",
+        "tick": 54,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4904.6,
+        "level": "L7",
+        "tick": 55,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4921.2,
+        "level": "L7",
+        "tick": 57,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4937.9,
+        "level": "L7",
+        "tick": 57,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4954.5,
+        "level": "L7",
+        "tick": 58,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4971.2,
+        "level": "L7",
+        "tick": 59,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4987.9,
+        "level": "L7",
+        "tick": 60,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5004.6,
+        "level": "L7",
+        "tick": 61,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      }
+    ],
+    "final": {
+      "pickupRemaining": false,
+      "rack": [
+        {
+          "id": "weapon.army-mg",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.handgun",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.kick",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.shotgun",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 51
+        }
+      ]
+    }
+  },
+  "gate": {
+    "distance": 3,
+    "windows": [
+      {
+        "event": "pickup.collected",
+        "tick": 14,
+        "samples": 19,
+        "maxMs": 50
+      },
+      {
+        "event": "combat.attack",
+        "tick": 26,
+        "samples": 22,
+        "maxMs": 16.800000000000182
+      }
+    ],
+    "pass": true
+  },
+  "captures": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793972678373/first-rocket-z0.5.jpg",
+      "sha256": "89cdb902dd39a7ba7004c3595bd190177b01664cbe305dbfbe0ade4ba8166401",
+      "zoom": 0.5
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793972678373/first-rocket-z1.5.jpg",
+      "sha256": "82dbd7d594ac1856c3a421daadea55ebaa29e1040be9550ebb5b3383f32fedeb",
+      "zoom": 1.5
+    }
+  ],
+  "errors": [],
+  "method": "Headless Metal WebGL2, sole quiet context. Authentic carried campaign; actual moving WASD auto-pickup without E, then physical Digit7/ShiftLMB first rocket. Unpaused production clock throughout measurement; no manual stepping, forced render, photos or weapon use before either event. Existing playtest frame probe records every RAF interval. Gate windows cover100ms before through250ms after each actual event; screenshots follow measurement. No actors, damage, timers or caps edited."
+}

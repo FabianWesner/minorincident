@@ -5,6 +5,7 @@ import { crowdLimbParts } from '../assets/crowdParts';
 import { crowdTexture, interleaveTexturedCrowd, crowdSurfaceBindings } from './characters/crowdTexture';
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
+import { isMega } from '../data/megaPresentation';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { l4InfectedArchetypes, l4InfectedLooks } from '../data/l4';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
@@ -721,19 +722,16 @@ export class CrowdView extends Group {
         this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         if (e.corpse) {
-          // PO #98: permanent bodies retain the complete corpse silhouette.
-          // Real blast kills carry mask 31 from the transient dismemberment VFX;
-          // applying it here reduced the intact source to a coloured torso lump.
-          // Use the complete page warmed during load for every death cause.
+          // Start with the intact corpse source; ordinary limb severance is
+          // applied below, while the Mega keeps its complete creature outline.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
           const nearBatch = regularInfectedModels.some(id => id === def.asset) || this.world.scenario === 'L4' && !batch.animal && !alphaLookAssets.includes(def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
           const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
-          // vqa-fix-7 (P1-117): the code above kept applying the blast mask anyway, so every L10 rocket victim froze as a
-          // limbless, headless torso: the red/navy "triangle shards" on the apron. Only a gameplay leg loss (the crawler)
-          // stays on the body; transient blast/gunshot dismemberment lives in the gib VFX, not in the permanent corpse.
-          const mask = this.goreEnabled && b.legLost ? 4 : 0;
+          // vqa-fix-7 (P1-117): permanent corpses keep their body; only a gameplay leg loss (the crawler) stays on it, transient
+          // blast/gunshot dismemberment lives in the gib VFX. The Mega keeps its complete creature silhouette (fix72-c, L10-12).
+          const mask = this.goreEnabled && b.legLost && !isMega(e) ? 4 : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           continue;

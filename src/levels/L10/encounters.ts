@@ -10,6 +10,8 @@ import { infectedDef } from '../../data/infected';
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
 export interface CureEncounter {
   id: string; region: CureRegion; at: Point;
+  /** Separate formations can enter as one regional cohort without moving their stations. */
+  releaseWith?: string;
   /** Low-budget patrol station, after the corridor horde receives its slots. */
   atLow?: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; assault?: boolean;
 }
@@ -21,14 +23,14 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'fringe-patrol', region: 'residential-fringe', at: [862, 80], regular: [6, 4], dogs: 2, alphas: 0, tough: 2 },
   { id: 'fringe-hedges', region: 'residential-fringe', at: [982, 80], regular: [6, 4], dogs: 0, alphas: 0, tough: 2 },
   { id: 'fringe-exit', region: 'residential-fringe', at: [1132, 25], regular: [6, 4], dogs: 0, alphas: 0, tough: 2 },
-  { id: 'depot-workers', region: 'industrial-area', at: [1372, 100], regular: [25, 16], dogs: 2, alphas: 0, tough: 2 },
-  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [4, 2], dogs: 1, alphas: 1, tough: 2 },
+  { id: 'depot-workers', region: 'industrial-area', at: [1372, 100], regular: [25, 16], dogs: 2, alphas: 1, tough: 2 },
+  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [4, 2], dogs: 1, alphas: 0, tough: 2 },
   { id: 'depot-exit', region: 'industrial-area', at: [1682, 100], regular: [4, 3], dogs: 0, alphas: 0, tough: 2 },
   { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [18, 16], dogs: 2, alphas: 1 },
   { id: 'military-column', region: 'military-zone', at: [2112, -75], regular: [18, 14], dogs: 1, alphas: 0 },
   { id: 'military-exit', region: 'military-zone', at: [2252, -75], regular: [18, 10], dogs: 0, alphas: 1 },
   { id: 'research-approach', region: 'research-campus', at: [2617, 45], regular: [22, 22], dogs: 2, alphas: 1 },
-  { id: 'research-lab', region: 'research-campus', at: [2672, 45], regular: [22, 22], dogs: 0, alphas: 0 },
+  { id: 'research-lab', region: 'research-campus', at: [2672, 45], releaseWith: 'research-approach', regular: [22, 22], dogs: 0, alphas: 0 },
   { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [22, 10], dogs: 2, alphas: 1 },
   // The checkpoint bearing is also a playable route. Most travellers cross
   // these open forecourts directly instead of following the winding service
@@ -90,7 +92,10 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // a retreat into the full road groups. Staggered rows retain every slot
     // while leaving the northern verge open for an eastbound escape.
     const militaryPatrol = group.id.startsWith('military-zone-direct-');
-    return { key: `${group.id}:${archetype}:${index}`, archetype,
+    // Moving the industrial Alpha into the first cohort must retain its old
+    // once-only slot, so a carried save cannot admit it a second time.
+    const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;
+    return { key: `${slotOwner}:${archetype}:${index}`, archetype,
       x: at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
       z: at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });

@@ -1,0 +1,2708 @@
+{
+  "sourceHash": "462d42e6755599c9da9217474b7b2464170aa88df3ceaf86de5b8271d2f85e0a",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "revision": "fc3c72cdc5e3f1b3928865d479c167cdb619e651",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "toolSha256": "b4e3e4a3d4cd10dcc0bbffd5888829360c5bb7b9bc5a8cd5039ae95aa93ec66f",
+  "probeSha256": "d0321021437018d7c2d87fc454c1bee207177d7cf7ec917bec57cfc1b2f72287",
+  "seed": {
+    "file": "docs/reports/fix51-r10c/L7-low-carried-save.json.gz",
+    "sha256": "77bb676c7dd072d667c2aaf54477d09a6fa778f47bfb74e7ad1337d6d3bf19b9"
+  },
+  "tier": "low",
+  "setup": {
+    "tick": 0,
+    "player": {
+      "x": 273,
+      "y": 4.6049999999999995,
+      "z": 15,
+      "yaw": 0.3205919885488634
+    },
+    "pickup": {
+      "id": 309,
+      "position": {
+        "x": 276,
+        "y": 4.05,
+        "z": 15,
+        "yaw": 0
+      }
+    },
+    "initialRack": [
+      {
+        "id": "weapon.army-mg",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.handgun",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.kick",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      },
+      {
+        "id": "weapon.shotgun",
+        "magazine": 0,
+        "reserve": "infinite",
+        "charges": 0,
+        "nextCharge": 0,
+        "reloadUntil": 0,
+        "readyAt": 0
+      }
+    ],
+    "backend": "webgl",
+    "quality": "low",
+    "god": false,
+    "driverDetached": true
+  },
+  "result": {
+    "events": [
+      {
+        "type": "pickup.collected",
+        "tick": 14,
+        "sourceId": 1,
+        "pickupId": 309,
+        "side": "RIGHT",
+        "actionId": "weapon.rocket-launcher",
+        "replaced": null,
+        "at": 4809.39999961853,
+        "player": {
+          "x": 273.8050842285156,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": -7.850462293418876e-17
+        },
+        "moving": true
+      },
+      {
+        "type": "combat.attack",
+        "tick": 28,
+        "attackId": 1,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.29339599609375,
+          "y": 4.619999885559082,
+          "z": 15.061939239501953,
+          "yaw": -3.1395079883615984
+        },
+        "direction": {
+          "x": -0.999999793535638,
+          "z": -0.0006425952703745725
+        },
+        "at": 5004.89999961853,
+        "player": {
+          "x": 274.29339599609375,
+          "y": 4.619999885559082,
+          "z": 15.061939239501953,
+          "yaw": -3.1395079883615984
+        },
+        "moving": false
+      }
+    ],
+    "inputs": [
+      {
+        "tick": 0,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 1,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 2,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 3,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 4,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 5,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 6,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 7,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 8,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 9,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 10,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 11,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 12,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 13,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 14,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 15,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 16,
+        "move": {
+          "x": 1,
+          "z": 7.850462293418876e-17
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 17,
+        "move": {
+          "x": 0.7071067811865475,
+          "z": 0.7071067811865476
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 18,
+        "move": {
+          "x": 0.7071067811865475,
+          "z": 0.7071067811865476
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 19,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 20,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 21,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 22,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 23,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 24,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 25,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 26,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 27,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 28,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 29,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": true,
+        "driver": false
+      },
+      {
+        "tick": 30,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 31,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 32,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 33,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 34,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 35,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 36,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 37,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 38,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 39,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 40,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 41,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 42,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 43,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 44,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 45,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 46,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 47,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 48,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 49,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 50,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 51,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 52,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 53,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 54,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 55,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 56,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 57,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 58,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 59,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 60,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 61,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 62,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 63,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 64,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 65,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      }
+    ],
+    "beginAt": 4513.39999961853,
+    "endAt": 5614.800000190735,
+    "pickupId": 309,
+    "frames": [
+      {
+        "at": 21.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.7,
+        "playMs": 0
+      },
+      {
+        "at": 38.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000003,
+        "playMs": 0
+      },
+      {
+        "at": 54.8,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.699999999999996,
+        "playMs": 0
+      },
+      {
+        "at": 71.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.60000000000001,
+        "playMs": 0
+      },
+      {
+        "at": 88.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 104.7,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.60000000000001,
+        "playMs": 0
+      },
+      {
+        "at": 221.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 116.7,
+        "playMs": 0
+      },
+      {
+        "at": 254.8,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 33.400000000000006,
+        "playMs": 0
+      },
+      {
+        "at": 271.4,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999966,
+        "playMs": 0
+      },
+      {
+        "at": 288,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 304.7,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 321.4,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 338.1,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 354.7,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999966,
+        "playMs": 0
+      },
+      {
+        "at": 371.3,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 388,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 404.7,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 421.3,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 438.1,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.80000000000001,
+        "playMs": 0
+      },
+      {
+        "at": 454.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.599999999999966,
+        "playMs": 0
+      },
+      {
+        "at": 871.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 416.7,
+        "playMs": 0
+      },
+      {
+        "at": 888,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 938.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50.10000000000002,
+        "playMs": 0
+      },
+      {
+        "at": 954.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000023,
+        "playMs": 0
+      },
+      {
+        "at": 1038,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.29999999999995,
+        "playMs": 0
+      },
+      {
+        "at": 1121.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 1138.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 1171.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.30000000000018,
+        "playMs": 0
+      },
+      {
+        "at": 1221.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 1238,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1254.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1271.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1288,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1304.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1388,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.29999999999995,
+        "playMs": 0
+      },
+      {
+        "at": 1438,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 1471.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 1488,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1504.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1538,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 1554.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1571.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1588,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1604.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1638,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1721.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.29999999999995,
+        "playMs": 0
+      },
+      {
+        "at": 1821.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100.10000000000014,
+        "playMs": 0
+      },
+      {
+        "at": 1871.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 49.899999999999864,
+        "playMs": 0
+      },
+      {
+        "at": 1971.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2038,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.70000000000005,
+        "playMs": 0
+      },
+      {
+        "at": 2138,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2254.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 116.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 2354.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2454.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2504.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 2621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 116.70000000000027,
+        "playMs": 0
+      },
+      {
+        "at": 2704.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 83.39999999999964,
+        "playMs": 0
+      },
+      {
+        "at": 2737.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.20000000000027,
+        "playMs": 0
+      },
+      {
+        "at": 2754.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 2771.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 2788,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 2804.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 2821.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 2837.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 2887.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 2904.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3121.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 216.70000000000027,
+        "playMs": 0
+      },
+      {
+        "at": 3138,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3154.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3171.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3187.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3204.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3221.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3238,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3254.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3271.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3287.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3304.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3321.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3338,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3354.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3371.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3388,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3404.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3421.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3437.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3454.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3471.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3487.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 4354.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 866.7000000000003,
+        "playMs": 0
+      },
+      {
+        "at": 4371.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 4387.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.599999999999454,
+        "playMs": 0
+      },
+      {
+        "at": 4437.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 50,
+        "playMs": 0
+      },
+      {
+        "at": 4454.5,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000364,
+        "playMs": 0
+      },
+      {
+        "at": 4471.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.800000000000182,
+        "playMs": 0
+      },
+      {
+        "at": 4487.8,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": true,
+        "x": 273,
+        "z": 15,
+        "ms": 16.5,
+        "playMs": 0
+      },
+      {
+        "at": 4504.5,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": true,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 4521.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 4587.9,
+        "level": "L7",
+        "tick": 1,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.010009765625,
+        "z": 15,
+        "ms": 66.69999999999982,
+        "playMs": 66.69999999999982
+      },
+      {
+        "at": 4604.5,
+        "level": "L7",
+        "tick": 5,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.1499938964844,
+        "z": 15,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4621.3,
+        "level": "L7",
+        "tick": 6,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2099914550781,
+        "z": 15,
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
+      },
+      {
+        "at": 4637.9,
+        "level": "L7",
+        "tick": 7,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2799987792969,
+        "z": 15,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4654.5,
+        "level": "L7",
+        "tick": 8,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.3550109863281,
+        "z": 15,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4671.2,
+        "level": "L7",
+        "tick": 9,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.4300231933594,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4687.9,
+        "level": "L7",
+        "tick": 10,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.5050354003906,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4721.2,
+        "level": "L7",
+        "tick": 11,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.5800476074219,
+        "z": 15,
+        "ms": 33.30000000000018,
+        "playMs": 33.30000000000018
+      },
+      {
+        "at": 4787.9,
+        "level": "L7",
+        "tick": 13,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.7300720214844,
+        "z": 15,
+        "ms": 66.69999999999982,
+        "playMs": 66.69999999999982
+      },
+      {
+        "at": 4821.2,
+        "level": "L7",
+        "tick": 17,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0301208496094,
+        "z": 15,
+        "ms": 33.30000000000018,
+        "playMs": 33.30000000000018
+      },
+      {
+        "at": 4837.9,
+        "level": "L7",
+        "tick": 19,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.16864013671875,
+        "z": 15.027716636657715,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4854.5,
+        "level": "L7",
+        "tick": 20,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.2215270996094,
+        "z": 15.04222583770752,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4871.2,
+        "level": "L7",
+        "tick": 21,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.25994873046875,
+        "z": 15.052765846252441,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4887.9,
+        "level": "L7",
+        "tick": 22,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.2839050292969,
+        "z": 15.05933666229248,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4904.5,
+        "level": "L7",
+        "tick": 23,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4921.2,
+        "level": "L7",
+        "tick": 24,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4937.9,
+        "level": "L7",
+        "tick": 25,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4954.5,
+        "level": "L7",
+        "tick": 26,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4971.2,
+        "level": "L7",
+        "tick": 27,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5004.6,
+        "level": "L7",
+        "tick": 28,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 33.400000000000546,
+        "playMs": 33.400000000000546
+      },
+      {
+        "at": 5037.8,
+        "level": "L7",
+        "tick": 30,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 33.19999999999982,
+        "playMs": 33.19999999999982
+      },
+      {
+        "at": 5054.6,
+        "level": "L7",
+        "tick": 31,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
+      },
+      {
+        "at": 5071.1,
+        "level": "L7",
+        "tick": 33,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.5,
+        "playMs": 16.5
+      },
+      {
+        "at": 5087.8,
+        "level": "L7",
+        "tick": 33,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5104.5,
+        "level": "L7",
+        "tick": 34,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5121.2,
+        "level": "L7",
+        "tick": 36,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5137.9,
+        "level": "L7",
+        "tick": 37,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5154.5,
+        "level": "L7",
+        "tick": 38,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5171.2,
+        "level": "L7",
+        "tick": 39,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5187.8,
+        "level": "L7",
+        "tick": 40,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5204.5,
+        "level": "L7",
+        "tick": 40,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5221.2,
+        "level": "L7",
+        "tick": 42,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5237.9,
+        "level": "L7",
+        "tick": 43,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5254.5,
+        "level": "L7",
+        "tick": 44,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5271.2,
+        "level": "L7",
+        "tick": 45,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5287.9,
+        "level": "L7",
+        "tick": 46,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5304.5,
+        "level": "L7",
+        "tick": 47,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5321.2,
+        "level": "L7",
+        "tick": 48,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5337.9,
+        "level": "L7",
+        "tick": 49,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5354.5,
+        "level": "L7",
+        "tick": 50,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5371.2,
+        "level": "L7",
+        "tick": 51,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5387.9,
+        "level": "L7",
+        "tick": 52,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5404.5,
+        "level": "L7",
+        "tick": 53,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5421.1,
+        "level": "L7",
+        "tick": 54,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5437.8,
+        "level": "L7",
+        "tick": 54,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5454.5,
+        "level": "L7",
+        "tick": 55,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5487.8,
+        "level": "L7",
+        "tick": 57,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 33.30000000000018,
+        "playMs": 33.30000000000018
+      },
+      {
+        "at": 5504.5,
+        "level": "L7",
+        "tick": 58,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5521.2,
+        "level": "L7",
+        "tick": 60,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5537.8,
+        "level": "L7",
+        "tick": 61,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5554.5,
+        "level": "L7",
+        "tick": 61,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5571.2,
+        "level": "L7",
+        "tick": 63,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 5587.8,
+        "level": "L7",
+        "tick": 64,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 5604.5,
+        "level": "L7",
+        "tick": 64,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.29339599609375,
+        "z": 15.061939239501953,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      }
+    ],
+    "final": {
+      "pickupRemaining": false,
+      "rack": [
+        {
+          "id": "weapon.army-mg",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.handgun",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.kick",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.shotgun",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 53
+        }
+      ]
+    }
+  },
+  "gate": {
+    "distance": 3,
+    "windows": [
+      {
+        "event": "pickup.collected",
+        "tick": 14,
+        "samples": 16,
+        "maxMs": 66.69999999999982
+      },
+      {
+        "event": "combat.attack",
+        "tick": 28,
+        "samples": 20,
+        "maxMs": 33.400000000000546
+      }
+    ],
+    "pass": false
+  },
+  "captures": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/low-1793971854744/first-rocket-z0.5.jpg",
+      "sha256": "475221b8f518e66b91de4ab25e6a53efdd022a5c76e07fe5c759114a341d3f93",
+      "zoom": 0.5
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/low-1793971854744/first-rocket-z1.5.jpg",
+      "sha256": "b8a8a4434af0f6743168bc819091e837e583655feb65ff29debb43a33d71405d",
+      "zoom": 1.5
+    }
+  ],
+  "errors": [
+    "AssertionError [ERR_ASSERTION]: L7-01 frame gate {\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":16,\"maxMs\":66.69999999999982},{\"event\":\"combat.attack\",\"tick\":28,\"samples\":20,\"maxMs\":33.400000000000546}],\"pass\":false}"
+  ],
+  "method": "Headless Metal WebGL2, sole quiet context. Authentic carried campaign; actual moving WASD auto-pickup without E, then physical Digit7/ShiftLMB first rocket. Unpaused production clock throughout measurement; no manual stepping, forced render, photos or weapon use before either event. Existing playtest frame probe records every RAF interval. Gate windows cover100ms before through250ms after each actual event; screenshots follow measurement. No actors, damage, timers or caps edited."
+}
