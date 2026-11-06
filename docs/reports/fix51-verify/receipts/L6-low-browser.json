@@ -2,74 +2,151 @@
   "version": 1,
   "level": "L6",
   "tier": "low",
-  "sourceHash": "710a965e75362a3a634730b032b1d68d1f840cb9dd52f4d6fd039fa9dfeb0a23",
-  "fixtureHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
-  "browserHash": "e666b3e3159a0c20d2ad9302939e92ba4dd176a8ca764160a98d605e33c1e53b",
-  "backend": "webgl2",
-  "zoom": 1.5,
-  "frameTiming": false,
-  "errors": [],
-  "issues": [],
-  "run": [],
-  "observations": {
-    "fullRoute": false,
-    "method": "Controlled production presentation; ordinary L6 physical runs are separately retained and did not finish.",
-    "captureFiles": [
-      "docs/reports/fix51-r10b/L6-contrast.json",
-      "docs/reports/fix51-r10b/L6-eyes.json"
-    ]
-  },
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
-      "id": "L6-14",
-      "clause": "courier mask contrast against projected2m ring at both underground spots and zooms",
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
       "tier": "low",
-      "policy": "controlled-render-webgl2",
+      "policy": "real-input-webgl2",
       "status": "PASS",
-      "value": [
-        {
-          "spot": "l6-shelter-fails",
-          "zoom": 0.5,
-          "contrast": 3.948104996984981,
-          "pixels": 14776
-        },
-        {
-          "spot": "l6-shelter-fails",
-          "zoom": 1.5,
-          "contrast": 3.9688417302239056,
-          "pixels": 1344
-        },
-        {
-          "spot": "l6-tunnel-retreat",
-          "zoom": 0.5,
-          "contrast": 3.7526775004605795,
-          "pixels": 14863
-        },
-        {
-          "spot": "l6-tunnel-retreat",
-          "zoom": 1.5,
-          "contrast": 3.4855160949804955,
-          "pixels": 1386
-        }
-      ],
-      "target": "at least3:1; low/high; zoom0.5/1.5; both designated spots",
-      "receipt": "docs/reports/fix51-verify/receipts/L6-low-browser.json"
-    },
-    {
-      "id": "L6-14",
-      "clause": "brightest pixels belong to infected eye cores across underground cast",
-      "tier": "low",
-      "policy": "controlled-render-webgl2",
-      "status": "NOT CHECKED",
       "value": {
-        "bodyPixels": 1367,
-        "eyeRectanglePixels": 80,
-        "rectangleUpperBound": 0.23187806679836925,
-        "nonEyePeak": 0.09856516769604269,
-        "reason": "A rectangle upper bound and one model/pose cannot establish actual eye cores as brightest for each infected in both phases."
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
       },
-      "target": "brightest pixels of each infected are its eyes",
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
       "receipt": "docs/reports/fix51-verify/receipts/L6-low-browser.json"
     }
-  ]
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L6",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 266,
+      "simSeconds": 242,
+      "maxNoProgressSeconds": 31.854,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {
+        "weapon.army-mg": 1585,
+        "weapon.fire-axe": 9
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.shotgun"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.shotgun"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter \u00b7 rest while you can",
+          "tick": 21,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected \u00b7 Retreat in 0:36",
+          "tick": 2005,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 243\u00a0m",
+          "tick": 4164,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 242,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              242,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+          "tick": 13179,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.2504936456680298,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L6",
+      "tick": 1279,
+      "x": 3,
+      "z": 0,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+      "captures": [
+        "captures/accept-L6-1279-stuck-navigating.jpg"
+      ],
+      "step": "shelter",
+      "objective": "Look around the shelter \u00b7 rest while you can"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-final-L6-low-webgl2.json",
+    "sha256": "22659e9bd39e4fef8f21a4de69c19371cef03987db2402351cbfb8ad618f32fc"
+  }
 }

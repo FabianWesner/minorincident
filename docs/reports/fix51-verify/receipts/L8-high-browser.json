@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L8",
   "tier": "high",
-  "sourceHash": "05fd085046b1db81befc4b3ec63d90345fa7e5d4b8ef20044ed16c304044e8fb",
-  "fixtureHash": "77d20af48731f5fe2972a715266f8a4515a7f59c09b881f4b3d016a78f8b4660",
-  "browserHash": "77d20af48731f5fe2972a715266f8a4515a7f59c09b881f4b3d016a78f8b4660",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 231,
+      "wallSeconds": 117,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 59.214,
-      "deaths": 3,
+      "maxNoProgressSeconds": 59.766666666666666,
+      "deaths": 0,
       "assists": 0,
       "attacks": {
-        "weapon.rocket-launcher": 46
+        "weapon.rocket-launcher": 6
       },
       "weaponsStart": [
         "weapon.bat",
@@ -72,13 +72,13 @@
         },
         {
           "id": "depart",
-          "text": "The zoo is breached · Wait for everyone to board the armored vehicle · 7/13 aboard · 6 still to board",
-          "tick": 7840,
+          "text": "The zoo is breached \u00b7 Wait for everyone to board the armored vehicle \u00b7 1/13 aboard \u00b7 12 still to board",
+          "tick": 5238,
           "marker": {
             "anchor": "exit",
             "ring": null,
             "drawn": null,
-            "playerY": 1.01876962184906,
+            "playerY": 0.9954344034194946,
             "pinVisible": false
           }
         }
@@ -88,62 +88,24 @@
   "issues": [
     {
       "level": "L8",
-      "tick": 1238,
+      "tick": 1216,
       "x": 0,
       "z": 70,
       "severity": "P2",
       "kind": "stuck-navigating",
       "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
       "captures": [
-        "captures/accept-L8-1238-stuck-navigating.jpg"
+        "captures/accept-L8-1216-stuck-navigating.jpg"
       ],
       "step": "escape",
       "objective": ""
-    },
-    {
-      "level": "L8",
-      "tick": 5909,
-      "x": 96.4,
-      "z": 76.1,
-      "severity": "P3",
-      "kind": "retry",
-      "text": "Mission failed screen: Mission failed",
-      "captures": [
-        "captures/accept-L8-5909-retry.jpg"
-      ],
-      "step": "escape",
-      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
-    },
-    {
-      "level": "L8",
-      "tick": 8187,
-      "x": 96.3,
-      "z": 73.9,
-      "severity": "P3",
-      "kind": "retry",
-      "text": "Mission failed screen: Mission failed",
-      "captures": [
-        "captures/accept-L8-8187-retry.jpg"
-      ],
-      "step": "depart",
-      "objective": "The zoo is breached · Wait for everyone to board the armored vehicle · 10/13 aboard · 3 still to board"
-    },
-    {
-      "level": "L8",
-      "tick": 10149,
-      "x": 96.7,
-      "z": 76.5,
-      "severity": "P3",
-      "kind": "retry",
-      "text": "Mission failed screen: Mission failed",
-      "captures": [
-        "captures/accept-L8-10149-retry.jpg"
-      ],
-      "step": "escape",
-      "objective": "Bring the survivors to the armored vehicle and board · 0 m"
     }
   ],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L8-high-webgl2.json",
+    "sha256": "15750706bde30de8babd4e29c24338da351021c59968151b9edcc4f306397e67"
+  }
 }

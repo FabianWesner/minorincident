@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L10",
   "tier": "low",
-  "sourceHash": "f391528642e59e50e87144a28037c615102c6d8dde589efcaacbe1ec580db3c1",
-  "fixtureHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
-  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -21,10 +21,10 @@
         "immortal": true,
         "frameTiming": false,
         "batches": [
-          "docs/reports/fix51-verify/receipts/L10-low-browser-batch1.json",
-          "docs/reports/fix51-verify/receipts/L10-low-browser-batch2.json",
-          "docs/reports/fix51-verify/receipts/L10-low-browser-batch3.json",
-          "docs/reports/fix51-verify/receipts/L10-low-browser-batch4.json"
+          "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch1.json",
+          "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch2.json",
+          "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch3.json",
+          "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch4.json"
         ]
       },
       "target": "complete ordinary-input route; zero console/page errors; no objective skips",
@@ -39,17 +39,17 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 1463,
-      "simSeconds": 1370,
-      "maxNoProgressSeconds": 16.316666666666666,
+      "wallSeconds": 1481,
+      "simSeconds": 1412,
+      "maxNoProgressSeconds": 16.252,
       "deaths": 0,
-      "assists": 1,
+      "assists": 0,
       "attacks": {
-        "weapon.fire-axe": 12,
-        "weapon.pistol": 98,
+        "weapon.fire-axe": 16,
+        "weapon.pistol": 96,
         "weapon.shotgun": 117,
-        "weapon.army-mg": 912,
-        "weapon.rocket-launcher": 214
+        "weapon.army-mg": 1004,
+        "weapon.rocket-launcher": 249
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -65,7 +65,7 @@
       "steps": [
         {
           "id": "residential-fringe",
-          "text": "Recover the handgun at the checkpoint · 221 m",
+          "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
           "tick": 8,
           "marker": {
             "anchor": "cure-residential",
@@ -85,8 +85,8 @@
         },
         {
           "id": "industrial-area",
-          "text": "Recover the shotgun at the checkpoint · 491 m",
-          "tick": 3677,
+          "text": "Recover the shotgun at the checkpoint \u00b7 491\u00a0m",
+          "tick": 3777,
           "marker": {
             "anchor": "cure-industrial",
             "ring": {
@@ -105,8 +105,8 @@
         },
         {
           "id": "military-zone",
-          "text": "Recover the machine gun at the checkpoint · 600 m",
-          "tick": 13107,
+          "text": "Recover the machine gun at the checkpoint \u00b7 600\u00a0m",
+          "tick": 13863,
           "marker": {
             "anchor": "cure-military",
             "ring": {
@@ -125,8 +125,8 @@
         },
         {
           "id": "research-campus",
-          "text": "Reach the research campus · 611 m",
-          "tick": 25415,
+          "text": "Reach the research campus \u00b7 611\u00a0m",
+          "tick": 26277,
           "marker": {
             "anchor": "cure-research-entry",
             "ring": {
@@ -145,8 +145,8 @@
         },
         {
           "id": "research-campus",
-          "text": "Reach the research campus · 497 m",
-          "tick": 0,
+          "text": "Reach the research campus \u00b7 517\u00a0m",
+          "tick": 18,
           "marker": {
             "anchor": "cure-research-entry",
             "ring": {
@@ -165,8 +165,8 @@
         },
         {
           "id": "research",
-          "text": "Play the research recording · 245 m",
-          "tick": 10788,
+          "text": "Play the research recording \u00b7 245\u00a0m",
+          "tick": 12087,
           "marker": {
             "anchor": "cure-terminal",
             "ring": {
@@ -185,8 +185,8 @@
         },
         {
           "id": "cure",
-          "text": "Pack the cure canister · 8 m",
-          "tick": 16641,
+          "text": "Pack the cure canister \u00b7 8\u00a0m",
+          "tick": 17912,
           "marker": {
             "anchor": "cure-canister",
             "ring": {
@@ -205,8 +205,8 @@
         },
         {
           "id": "research-exit",
-          "text": "Get the cure out of the laboratory · 94 m",
-          "tick": 16858,
+          "text": "Get the cure out of the laboratory \u00b7 94\u00a0m",
+          "tick": 18139,
           "marker": {
             "anchor": "cure-research",
             "ring": {
@@ -225,8 +225,8 @@
         },
         {
           "id": "destroyed-corridor",
-          "text": "Carry the cure down the corridor and grab the rocket launcher · 139 m",
-          "tick": 18774,
+          "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 139\u00a0m",
+          "tick": 19585,
           "marker": {
             "anchor": "cure-corridor",
             "ring": {
@@ -245,8 +245,8 @@
         },
         {
           "id": "dispersal-complex",
-          "text": "Bring the cure to the dispersal complex · 761 m",
-          "tick": 21285,
+          "text": "Bring the cure to the dispersal complex \u00b7 761\u00a0m",
+          "tick": 22136,
           "marker": {
             "anchor": "cure-complex",
             "ring": {
@@ -265,8 +265,8 @@
         },
         {
           "id": "dispersal-complex",
-          "text": "Bring the cure to the dispersal complex · 386 m",
-          "tick": 3,
+          "text": "Bring the cure to the dispersal complex \u00b7 495\u00a0m",
+          "tick": 0,
           "marker": {
             "anchor": "cure-complex",
             "ring": {
@@ -285,8 +285,8 @@
         },
         {
           "id": "install",
-          "text": "Install the cure in the dispersal device · 309 m",
-          "tick": 7023,
+          "text": "Install the cure in the dispersal device \u00b7 312\u00a0m",
+          "tick": 9167,
           "marker": {
             "anchor": "cure-install",
             "ring": {
@@ -305,8 +305,8 @@
         },
         {
           "id": "hold",
-          "text": "Activate the dispersal console · 12 m",
-          "tick": 12196,
+          "text": "Activate the dispersal console \u00b7 12\u00a0m",
+          "tick": 14323,
           "marker": {
             "anchor": "cure-console",
             "ring": {
@@ -325,28 +325,28 @@
         },
         {
           "id": "mega",
-          "text": "Kill the Mega Alpha · 12 m",
-          "tick": 16137,
+          "text": "Kill the Mega Alpha \u00b7 3\u00a0m",
+          "tick": 18199,
           "marker": {
             "anchor": "cure-mega",
             "ring": {
-              "x": 4000.2616089886756,
+              "x": 3991.0681381596028,
               "y": 0.7,
-              "z": -19.407051719484567
+              "z": -24.769164056961444
             },
             "drawn": [
-              4000.26,
+              3991.08,
               0.7,
-              -19.41
+              -24.77
             ],
-            "playerY": 0.7070000171661377,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         },
         {
           "id": "release",
-          "text": "Release the cure at the console · 28 m",
-          "tick": 16798,
+          "text": "Release the cure at the console \u00b7 14\u00a0m",
+          "tick": 18841,
           "marker": {
             "anchor": "cure-console",
             "ring": {
@@ -359,14 +359,14 @@
               0,
               -27
             ],
-            "playerY": 0.7080000042915344,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         },
         {
           "id": "epilogue",
-          "text": "Watch the cure spread · 0/150 s",
-          "tick": 17544,
+          "text": "Watch the cure spread \u00b7 0/150 s",
+          "tick": 19588,
           "marker": {
             "anchor": "cure-console",
             "ring": null,
@@ -377,7 +377,7 @@
         },
         {
           "id": "epilogue",
-          "text": "Watch the cure spread · 149/150 s",
+          "text": "Watch the cure spread \u00b7 136/150 s",
           "tick": 0,
           "marker": {
             "anchor": null,
@@ -390,7 +390,7 @@
         {
           "id": "credits",
           "text": "Minor Incident",
-          "tick": 37,
+          "tick": 825,
           "marker": {
             "anchor": null,
             "ring": null,
@@ -416,15 +416,15 @@
   },
   "batches": [
     {
-      "path": "docs/reports/fix51-verify/receipts/L10-low-browser-batch1.json",
+      "path": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch1.json",
       "batch": {
         "index": 1,
         "yielded": true,
         "startSaveHash": null,
-        "endSaveHash": "613f678bceb6469d442c22e2eff4d4087297ae95853f9703f596799899e2a15d",
+        "endSaveHash": "bbb6962a9f0efec20e307294858d5b78261c8357114d59ded5274f5eb012faba",
         "startSeconds": null,
-        "endSeconds": 459.35,
-        "savePath": "docs/reports/fix51-verify/receipts/L10-low-browser-batch1-save.json.gz"
+        "endSeconds": 467.98333333333335,
+        "savePath": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch1-save.json.gz"
       },
       "run": [
         {
@@ -433,16 +433,16 @@
           "heroine": "female",
           "finished": false,
           "skipped": [],
-          "wallSeconds": 480,
-          "simSeconds": 459,
-          "maxNoProgressSeconds": 5.2,
+          "wallSeconds": 481,
+          "simSeconds": 468,
+          "maxNoProgressSeconds": 5.387,
           "deaths": 0,
           "assists": 0,
           "attacks": {
-            "weapon.fire-axe": 12,
-            "weapon.pistol": 98,
+            "weapon.fire-axe": 16,
+            "weapon.pistol": 96,
             "weapon.shotgun": 117,
-            "weapon.army-mg": 95
+            "weapon.army-mg": 79
           },
           "weaponsStart": [
             "weapon.fire-axe",
@@ -458,7 +458,7 @@
           "steps": [
             {
               "id": "residential-fringe",
-              "text": "Recover the handgun at the checkpoint · 221 m",
+              "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
               "tick": 8,
               "marker": {
                 "anchor": "cure-residential",
@@ -478,8 +478,8 @@
             },
             {
               "id": "industrial-area",
-              "text": "Recover the shotgun at the checkpoint · 491 m",
-              "tick": 3677,
+              "text": "Recover the shotgun at the checkpoint \u00b7 491\u00a0m",
+              "tick": 3777,
               "marker": {
                 "anchor": "cure-industrial",
                 "ring": {
@@ -498,8 +498,8 @@
             },
             {
               "id": "military-zone",
-              "text": "Recover the machine gun at the checkpoint · 600 m",
-              "tick": 13107,
+              "text": "Recover the machine gun at the checkpoint \u00b7 600\u00a0m",
+              "tick": 13863,
               "marker": {
                 "anchor": "cure-military",
                 "ring": {
@@ -518,8 +518,8 @@
             },
             {
               "id": "research-campus",
-              "text": "Reach the research campus · 611 m",
-              "tick": 25415,
+              "text": "Reach the research campus \u00b7 611\u00a0m",
+              "tick": 26277,
               "marker": {
                 "anchor": "cure-research-entry",
                 "ring": {
@@ -541,15 +541,15 @@
       ]
     },
     {
-      "path": "docs/reports/fix51-verify/receipts/L10-low-browser-batch2.json",
+      "path": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch2.json",
       "batch": {
         "index": 2,
         "yielded": true,
-        "startSaveHash": "613f678bceb6469d442c22e2eff4d4087297ae95853f9703f596799899e2a15d",
-        "endSaveHash": "a73cf7aa561bf6e8f85061369fa57683748d6bff8f6ed13967df82f51d36a12c",
-        "startSeconds": 459.35,
-        "endSeconds": 912.4333333333333,
-        "savePath": "docs/reports/fix51-verify/receipts/L10-low-browser-batch2-save.json.gz"
+        "startSaveHash": "bbb6962a9f0efec20e307294858d5b78261c8357114d59ded5274f5eb012faba",
+        "endSaveHash": "4f9d048a39daafe06db27455f79cedefff0d44a076d173f03af2f862e741e5d4",
+        "startSeconds": 467.98333333333335,
+        "endSeconds": 919.6666666666666,
+        "savePath": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch2-save.json.gz"
       },
       "run": [
         {
@@ -558,14 +558,14 @@
           "heroine": "female",
           "finished": false,
           "skipped": [],
-          "wallSeconds": 480,
-          "simSeconds": 453,
-          "maxNoProgressSeconds": 2.15,
+          "wallSeconds": 482,
+          "simSeconds": 452,
+          "maxNoProgressSeconds": 5.078,
           "deaths": 0,
           "assists": 0,
           "attacks": {
-            "weapon.army-mg": 817,
-            "weapon.rocket-launcher": 13
+            "weapon.army-mg": 925,
+            "weapon.rocket-launcher": 43
           },
           "weaponsStart": [
             "weapon.fire-axe",
@@ -584,8 +584,8 @@
           "steps": [
             {
               "id": "research-campus",
-              "text": "Reach the research campus · 497 m",
-              "tick": 0,
+              "text": "Reach the research campus \u00b7 517\u00a0m",
+              "tick": 18,
               "marker": {
                 "anchor": "cure-research-entry",
                 "ring": {
@@ -604,8 +604,8 @@
             },
             {
               "id": "research",
-              "text": "Play the research recording · 245 m",
-              "tick": 10788,
+              "text": "Play the research recording \u00b7 245\u00a0m",
+              "tick": 12087,
               "marker": {
                 "anchor": "cure-terminal",
                 "ring": {
@@ -624,8 +624,8 @@
             },
             {
               "id": "cure",
-              "text": "Pack the cure canister · 8 m",
-              "tick": 16641,
+              "text": "Pack the cure canister \u00b7 8\u00a0m",
+              "tick": 17912,
               "marker": {
                 "anchor": "cure-canister",
                 "ring": {
@@ -644,8 +644,8 @@
             },
             {
               "id": "research-exit",
-              "text": "Get the cure out of the laboratory · 94 m",
-              "tick": 16858,
+              "text": "Get the cure out of the laboratory \u00b7 94\u00a0m",
+              "tick": 18139,
               "marker": {
                 "anchor": "cure-research",
                 "ring": {
@@ -664,8 +664,8 @@
             },
             {
               "id": "destroyed-corridor",
-              "text": "Carry the cure down the corridor and grab the rocket launcher · 139 m",
-              "tick": 18774,
+              "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 139\u00a0m",
+              "tick": 19585,
               "marker": {
                 "anchor": "cure-corridor",
                 "ring": {
@@ -684,8 +684,8 @@
             },
             {
               "id": "dispersal-complex",
-              "text": "Bring the cure to the dispersal complex · 761 m",
-              "tick": 21285,
+              "text": "Bring the cure to the dispersal complex \u00b7 761\u00a0m",
+              "tick": 22136,
               "marker": {
                 "anchor": "cure-complex",
                 "ring": {
@@ -707,15 +707,15 @@
       ]
     },
     {
-      "path": "docs/reports/fix51-verify/receipts/L10-low-browser-batch3.json",
+      "path": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch3.json",
       "batch": {
         "index": 3,
         "yielded": true,
-        "startSaveHash": "a73cf7aa561bf6e8f85061369fa57683748d6bff8f6ed13967df82f51d36a12c",
-        "endSaveHash": "61c8e75aa0f842586cb4d0c206d0dc00368147bbaa0b966d3384513b39cb2a86",
-        "startSeconds": 912.4333333333333,
-        "endSeconds": 1353.8833333333334,
-        "savePath": "docs/reports/fix51-verify/receipts/L10-low-browser-batch3-save.json.gz"
+        "startSaveHash": "4f9d048a39daafe06db27455f79cedefff0d44a076d173f03af2f862e741e5d4",
+        "endSaveHash": "d6c997b406dac2225a98a13ecf1b59aa3e4006f590bd47625b15353ff277845a",
+        "startSeconds": 919.6666666666666,
+        "endSeconds": 1382.1,
+        "savePath": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch3-save.json.gz"
       },
       "run": [
         {
@@ -724,13 +724,13 @@
           "heroine": "female",
           "finished": false,
           "skipped": [],
-          "wallSeconds": 480,
-          "simSeconds": 441,
-          "maxNoProgressSeconds": 4.345,
+          "wallSeconds": 481,
+          "simSeconds": 462,
+          "maxNoProgressSeconds": 2.847,
           "deaths": 0,
-          "assists": 1,
+          "assists": 0,
           "attacks": {
-            "weapon.rocket-launcher": 201
+            "weapon.rocket-launcher": 206
           },
           "weaponsStart": [
             "weapon.fire-axe",
@@ -749,8 +749,8 @@
           "steps": [
             {
               "id": "dispersal-complex",
-              "text": "Bring the cure to the dispersal complex · 386 m",
-              "tick": 3,
+              "text": "Bring the cure to the dispersal complex \u00b7 495\u00a0m",
+              "tick": 0,
               "marker": {
                 "anchor": "cure-complex",
                 "ring": {
@@ -769,8 +769,8 @@
             },
             {
               "id": "install",
-              "text": "Install the cure in the dispersal device · 309 m",
-              "tick": 7023,
+              "text": "Install the cure in the dispersal device \u00b7 312\u00a0m",
+              "tick": 9167,
               "marker": {
                 "anchor": "cure-install",
                 "ring": {
@@ -789,8 +789,8 @@
             },
             {
               "id": "hold",
-              "text": "Activate the dispersal console · 12 m",
-              "tick": 12196,
+              "text": "Activate the dispersal console \u00b7 12\u00a0m",
+              "tick": 14323,
               "marker": {
                 "anchor": "cure-console",
                 "ring": {
@@ -809,28 +809,28 @@
             },
             {
               "id": "mega",
-              "text": "Kill the Mega Alpha · 12 m",
-              "tick": 16137,
+              "text": "Kill the Mega Alpha \u00b7 3\u00a0m",
+              "tick": 18199,
               "marker": {
                 "anchor": "cure-mega",
                 "ring": {
-                  "x": 4000.2616089886756,
+                  "x": 3991.0681381596028,
                   "y": 0.7,
-                  "z": -19.407051719484567
+                  "z": -24.769164056961444
                 },
                 "drawn": [
-                  4000.26,
+                  3991.08,
                   0.7,
-                  -19.41
+                  -24.77
                 ],
-                "playerY": 0.7070000171661377,
+                "playerY": 0.7049999833106995,
                 "pinVisible": true
               }
             },
             {
               "id": "release",
-              "text": "Release the cure at the console · 28 m",
-              "tick": 16798,
+              "text": "Release the cure at the console \u00b7 14\u00a0m",
+              "tick": 18841,
               "marker": {
                 "anchor": "cure-console",
                 "ring": {
@@ -843,14 +843,14 @@
                   0,
                   -27
                 ],
-                "playerY": 0.7080000042915344,
+                "playerY": 0.7049999833106995,
                 "pinVisible": true
               }
             },
             {
               "id": "epilogue",
-              "text": "Watch the cure spread · 0/150 s",
-              "tick": 17544,
+              "text": "Watch the cure spread \u00b7 0/150 s",
+              "tick": 19588,
               "marker": {
                 "anchor": "cure-console",
                 "ring": null,
@@ -864,14 +864,14 @@
       ]
     },
     {
-      "path": "docs/reports/fix51-verify/receipts/L10-low-browser-batch4.json",
+      "path": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch4.json",
       "batch": {
         "index": 4,
         "yielded": false,
-        "startSaveHash": "61c8e75aa0f842586cb4d0c206d0dc00368147bbaa0b966d3384513b39cb2a86",
+        "startSaveHash": "d6c997b406dac2225a98a13ecf1b59aa3e4006f590bd47625b15353ff277845a",
         "endSaveHash": null,
-        "startSeconds": 1353.8833333333334,
-        "endSeconds": 1354.0166666666667,
+        "startSeconds": 1382.1,
+        "endSeconds": 1395.5833333333333,
         "savePath": null
       },
       "run": [
@@ -881,9 +881,9 @@
           "heroine": "female",
           "finished": true,
           "skipped": [],
-          "wallSeconds": 23,
-          "simSeconds": 17,
-          "maxNoProgressSeconds": 16.316666666666666,
+          "wallSeconds": 37,
+          "simSeconds": 30,
+          "maxNoProgressSeconds": 16.252,
           "deaths": 0,
           "assists": 0,
           "attacks": {},
@@ -904,7 +904,7 @@
           "steps": [
             {
               "id": "epilogue",
-              "text": "Watch the cure spread · 149/150 s",
+              "text": "Watch the cure spread \u00b7 136/150 s",
               "tick": 0,
               "marker": {
                 "anchor": null,
@@ -917,7 +917,7 @@
             {
               "id": "credits",
               "text": "Minor Incident",
-              "tick": 37,
+              "tick": 825,
               "marker": {
                 "anchor": null,
                 "ring": null,
@@ -930,5 +930,9 @@
         }
       ]
     }
-  ]
+  ],
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2.json",
+    "sha256": "acff9be64eac43a7a804197204539f323ad7a009d7f4f78c3730ad892f0f7361"
+  }
 }

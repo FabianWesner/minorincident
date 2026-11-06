@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L5",
   "tier": "high",
-  "sourceHash": "e8c033eae5293ec193e2411c608f90c2dc53e6165ece071fd5a31d884ec48ac0",
-  "fixtureHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
-  "browserHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 259,
+      "wallSeconds": 197,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 15.65,
+      "maxNoProgressSeconds": 8.433333333333334,
       "deaths": 0,
-      "assists": 2,
+      "assists": 5,
       "attacks": {
-        "weapon.army-mg": 1285
+        "weapon.army-mg": 1056
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -58,8 +58,8 @@
       "steps": [
         {
           "id": "emerge",
-          "text": "Unbar the cellar door · 4 m",
-          "tick": 11,
+          "text": "Unbar the cellar door \u00b7 4\u00a0m",
+          "tick": 18,
           "marker": {
             "anchor": "l5-brace",
             "ring": {
@@ -79,7 +79,7 @@
         {
           "id": "look",
           "text": "Look for anyone still alive",
-          "tick": 779,
+          "tick": 810,
           "marker": {
             "anchor": "l5-brace",
             "ring": null,
@@ -90,8 +90,8 @@
         },
         {
           "id": "metro",
-          "text": "Lead the survivors down into the Metro · Survivors in 0/1 · 65 m",
-          "tick": 13535,
+          "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 92\u00a0m",
+          "tick": 8231,
           "marker": {
             "anchor": "l5-metro-in",
             "ring": {
@@ -104,7 +104,7 @@
               0.94,
               -48.44
             ],
-            "playerY": 0.7049999833106995,
+            "playerY": 0.8500000238418579,
             "pinVisible": true
           }
         }
@@ -114,5 +114,9 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L5-high-webgl2.json",
+    "sha256": "4c2416f3451c7970cc389684effe862c261555874ff733c06e6f714cae4c1763"
+  }
 }

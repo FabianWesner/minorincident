@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "fixtureHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
-  "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 207,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 8.533333333333333,
+      "wallSeconds": 142,
+      "simSeconds": 131,
+      "maxNoProgressSeconds": 12.082,
       "deaths": 0,
-      "assists": 0,
+      "assists": 1,
       "attacks": {
-        "weapon.rocket-launcher": 59
+        "weapon.rocket-launcher": 49
       },
       "weaponsStart": [
         "weapon.bat",
@@ -59,13 +59,13 @@
       "steps": [
         {
           "id": "rocket",
-          "text": "Recover the rocket launcher beside the exit · 3 m",
-          "tick": 9,
+          "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+          "tick": 6,
           "marker": {
             "anchor": "l7-rocket",
             "ring": {
               "x": 276,
-              "y": 4.619999885559082,
+              "y": 3.9,
               "z": 15
             },
             "drawn": [
@@ -79,13 +79,13 @@
         },
         {
           "id": "corridor",
-          "text": "Bring the group to the evacuation corridor · Group 24/24 nearby · 307 m",
-          "tick": 117,
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+          "tick": 103,
           "marker": {
             "anchor": "l7-corridor-east",
             "ring": {
               "x": -30,
-              "y": 4.619999885559082,
+              "y": 0,
               "z": 50
             },
             "drawn": [
@@ -99,13 +99,13 @@
         },
         {
           "id": "departure",
-          "text": "Get everyone aboard the bus · 46 m",
-          "tick": 10429,
+          "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+          "tick": 5896,
           "marker": {
             "anchor": "l7-bus-boarding",
             "ring": {
               "x": -70.5,
-              "y": 0.8500000238418579,
+              "y": 0,
               "z": 47.5
             },
             "drawn": [
@@ -123,5 +123,9 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L7-low-webgl2.json",
+    "sha256": "556713dfe2f99cc1977e804db7ceeea066711ab649b4cd65529b13be575aed85"
+  }
 }

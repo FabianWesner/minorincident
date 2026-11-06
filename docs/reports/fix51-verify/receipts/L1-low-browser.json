@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L1",
   "tier": "low",
-  "sourceHash": "ecd1759dda68e9c2e894d758abd18fab6b02eb1c91f89daa5d7432320f9f8f81",
-  "fixtureHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
-  "browserHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,9 +33,9 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 160,
-      "simSeconds": 154,
-      "maxNoProgressSeconds": 16.1,
+      "wallSeconds": 165,
+      "simSeconds": 151,
+      "maxNoProgressSeconds": 13.35,
       "deaths": 0,
       "assists": 1,
       "attacks": {},
@@ -47,8 +47,8 @@
       "steps": [
         {
           "id": "pickup",
-          "text": "Pick up the package at the courier depot · 55 m",
-          "tick": 13,
+          "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "tick": 17,
           "marker": {
             "anchor": "parcel-counter",
             "ring": {
@@ -67,8 +67,8 @@
         },
         {
           "id": "deliver",
-          "text": "Deliver the package to the Medical Annex · 106 m",
-          "tick": 958,
+          "text": "Deliver the package to the Medical Annex \u00b7 106\u00a0m",
+          "tick": 1435,
           "marker": {
             "anchor": "lab-door",
             "ring": {
@@ -83,8 +83,8 @@
         },
         {
           "id": "weapon",
-          "text": "Find something to defend yourself · 63 m",
-          "tick": 4908,
+          "text": "Find something to defend yourself \u00b7 62\u00a0m",
+          "tick": 5455,
           "marker": {
             "anchor": "garage-door",
             "ring": {
@@ -103,8 +103,8 @@
         },
         {
           "id": "firestation",
-          "text": "Get inside the fire station · 99 m",
-          "tick": 7239,
+          "text": "Get inside the fire station \u00b7 101\u00a0m",
+          "tick": 6969,
           "marker": {
             "anchor": "fire-bay-trigger",
             "ring": {
@@ -120,23 +120,12 @@
       ]
     }
   ],
-  "issues": [
-    {
-      "level": "L1",
-      "tick": 6741,
-      "x": 25.7,
-      "z": 34.3,
-      "severity": "P2",
-      "kind": "enemy-unhittable",
-      "text": "Infected #175 (chase) 0.7 m away took no damage from 8 s of attacks (hp 51/60)",
-      "captures": [
-        "captures/accept-L1-6741-enemy-unhittable.jpg"
-      ],
-      "step": "weapon",
-      "objective": "Find something to defend yourself · 4 m"
-    }
-  ],
+  "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L1-low-webgl2.json",
+    "sha256": "cf69dcd6fa91a34bdea00a341168ef5a0612bad947d1eadd43a82444f93e33e4"
+  }
 }
