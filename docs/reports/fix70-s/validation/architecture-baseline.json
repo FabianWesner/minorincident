@@ -12,5 +12,15 @@
       "unchangedFromBase": true
     }
   ],
-  "finding": "The unchanged architecture test rejects the unchanged synchronous save-codec import introduced by 7bd7cdf. Save gzip already supplies mtime:0. The correction permits only gzipSync/gunzipSync/strFromU8/strToU8 and only in Save.ts; Worker APIs remain forbidden."
+  "finding": "The unchanged architecture test rejects the unchanged synchronous save-codec import introduced by 7bd7cdf. Save gzip already supplies mtime:0. The correction permits only gzipSync/gunzipSync/strFromU8/strToU8 and only in Save.ts; Worker APIs remain forbidden.",
+  "redGate": {
+    "command": "npm test",
+    "exit": 1,
+    "test": "the sim import graph never reaches renderer, UI, debug or DOM code (only three math classes and Rapier)",
+    "expectedImport": "@dimforge/rapier3d-compat",
+    "actualImport": "three/addons/libs/fflate.module.js",
+    "source": "src/sim/progression/Save.ts:1",
+    "rawLog": "test-results/fix70-s/test-inherited.log",
+    "rawLogSha256": "c9007c80e663a7fdfbb48d0c91007b2146cd72215e89b141e378350ff0cce403"
+  }
 }

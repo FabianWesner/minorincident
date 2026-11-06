@@ -1,0 +1,374 @@
+{
+  "base": "479a75c6bab6530bb816b3794a85aa49de46e76c",
+  "beforeL7HighDeparture71": {
+    "sourceHash": "ccce8d004c7ed82901e407e76c60a70533eea21cb8f25bedb30c25bc4e3793b2",
+    "seeds": [
+      {
+        "seed": 1,
+        "valid": true,
+        "samples": 30,
+        "median": 1.4670034292634149,
+        "groupMedian": 4.501157979458937,
+        "ratio": 0.3259168942654522
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "samples": 27,
+        "median": 1.047105617141525,
+        "groupMedian": 4.345931164150792,
+        "ratio": 0.24093930105911665
+      },
+      {
+        "seed": 3,
+        "valid": false,
+        "samples": 35,
+        "median": 2.5011230264766344,
+        "groupMedian": 2.435143914221026,
+        "ratio": 1.027094543312326
+      }
+    ],
+    "failures": 2
+  },
+  "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "revision": "544b523189e5ca450bbb586461acbdab62bc3317",
+  "levels": {
+    "L5": {
+      "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+      "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+      "freshFailures": [
+        "L5-08"
+      ],
+      "incomplete": [
+        "L5-02",
+        "L5-03",
+        "L5-06",
+        "L5-07",
+        "L5-09",
+        "L5-10",
+        "L5-11",
+        "L5-12",
+        "L5-14"
+      ],
+      "pace": {
+        "low": {
+          "status": "PASS",
+          "rows": 9,
+          "unmeasured": null,
+          "failures": [],
+          "seeds": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": 208.85,
+              "nativeStateHash": "7817b621"
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 192.33333333333334,
+              "nativeStateHash": "a1715e85"
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "time": 189.2,
+              "nativeStateHash": "f18749f1"
+            }
+          ]
+        },
+        "high": {
+          "status": "FAIL",
+          "rows": 9,
+          "unmeasured": null,
+          "failures": [
+            {
+              "phase": "step/look",
+              "id": 28,
+              "seeds": [
+                {
+                  "seed": 1,
+                  "valid": true,
+                  "samples": 44,
+                  "median": 4.192230193812829,
+                  "groupMedian": 4.271706452364544,
+                  "ratio": 0.9813947284444787
+                },
+                {
+                  "seed": 2,
+                  "valid": true,
+                  "samples": 42,
+                  "median": 3.9799905186584397,
+                  "groupMedian": 4.228319577351691,
+                  "ratio": 0.941270035495097
+                },
+                {
+                  "seed": 3,
+                  "valid": true,
+                  "samples": 45,
+                  "median": 3.8412275853032996,
+                  "groupMedian": 4.26082803690862,
+                  "ratio": 0.9015213831746762
+                }
+              ],
+              "measured": 3,
+              "failures": 2,
+              "pass": false
+            }
+          ],
+          "seeds": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": 237.65,
+              "nativeStateHash": "f14b9e54"
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 234.1,
+              "nativeStateHash": "10a5dde1"
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "time": 233.41666666666666,
+              "nativeStateHash": "c22290ed"
+            }
+          ]
+        }
+      },
+      "wait": {
+        "low": {
+          "status": "PASS",
+          "upperBoundPercent": 0.5107741420590582
+        },
+        "high": {
+          "status": "PASS",
+          "upperBoundPercent": 0
+        }
+      },
+      "checkpoints": {
+        "low": {
+          "control": {
+            "observed": "7817b621",
+            "control": "7817b621",
+            "identical": true
+          },
+          "errors": [],
+          "checks": 6
+        },
+        "high": {
+          "control": {
+            "observed": "f14b9e54",
+            "control": "f14b9e54",
+            "identical": true
+          },
+          "errors": [],
+          "checks": 6
+        }
+      },
+      "fixtures": {
+        "low": {
+          "errors": []
+        },
+        "high": {
+          "errors": []
+        }
+      }
+    },
+    "L7": {
+      "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+      "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+      "freshFailures": [],
+      "incomplete": [
+        "L7-01",
+        "L7-02",
+        "L7-03",
+        "L7-06",
+        "L7-07",
+        "L7-08",
+        "L7-09",
+        "L7-11",
+        "L7-12"
+      ],
+      "pace": {
+        "low": {
+          "status": "PASS",
+          "rows": 48,
+          "unmeasured": null,
+          "failures": [],
+          "seeds": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": 138.83333333333334,
+              "nativeStateHash": "30e28540"
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 103.73333333333333,
+              "nativeStateHash": "9f278ff0"
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "time": 102.11666666666666,
+              "nativeStateHash": "95cfe6e0"
+            }
+          ],
+          "departure71": {
+            "phase": "step/departure",
+            "id": 71,
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "samples": 26,
+                "median": 4.599999999999904,
+                "groupMedian": 4.5999999999998895,
+                "ratio": 1.000000000000003
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "samples": 29,
+                "median": 4.6000000000001675,
+                "groupMedian": 4.599999999999887,
+                "ratio": 1.000000000000061
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "samples": 30,
+                "median": 4.600000000000033,
+                "groupMedian": 4.599999999999926,
+                "ratio": 1.0000000000000233
+              }
+            ],
+            "measured": 3,
+            "failures": 0,
+            "pass": true
+          }
+        },
+        "high": {
+          "status": "PASS",
+          "rows": 48,
+          "unmeasured": null,
+          "failures": [],
+          "seeds": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "time": 104.48333333333333,
+              "nativeStateHash": "08b6e3e8"
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "time": 105.93333333333334,
+              "nativeStateHash": "ceb36d4a"
+            },
+            {
+              "seed": 3,
+              "valid": false,
+              "outcome": "tick-budget",
+              "time": 1200,
+              "nativeStateHash": "6312f9a0"
+            }
+          ],
+          "departure71": {
+            "phase": "step/departure",
+            "id": 71,
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "samples": 30,
+                "median": 4.5097902219638355,
+                "groupMedian": 4.504952252616759,
+                "ratio": 1.0010739224470728
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "samples": 28,
+                "median": 4.599999999999907,
+                "groupMedian": 4.5916544125149805,
+                "ratio": 1.0018175556640718
+              },
+              {
+                "seed": 3,
+                "valid": false,
+                "samples": 25,
+                "median": 4.227188604025234,
+                "groupMedian": 1.443872767153407,
+                "ratio": 2.9276738921803545
+              }
+            ],
+            "measured": 2,
+            "failures": 0,
+            "pass": true
+          }
+        }
+      },
+      "wait": {
+        "low": {
+          "status": "PASS",
+          "upperBoundPercent": 0.30812684555141867
+        },
+        "high": {
+          "status": "PASS",
+          "upperBoundPercent": 3.0027932960893855
+        }
+      },
+      "checkpoints": {
+        "low": {
+          "control": {
+            "observed": "30e28540",
+            "control": "30e28540",
+            "identical": true
+          },
+          "errors": [],
+          "checks": 3
+        },
+        "high": {
+          "control": {
+            "observed": "08b6e3e8",
+            "control": "08b6e3e8",
+            "identical": true
+          },
+          "errors": [],
+          "checks": 3
+        }
+      },
+      "fixtures": {
+        "low": {
+          "errors": []
+        },
+        "high": {
+          "errors": []
+        }
+      }
+    }
+  },
+  "collectorControls": {
+    "sourceHash": "91c7f7caae465fef2d57708d13254960795f51b7459fa4077f4f5ea468c61ff3",
+    "observerHash": "6342b92d8f12712340700b34aa6e5142ff0edf05e80a9f278ac9abbea3eb4273",
+    "identical": 9,
+    "scope": "Historical b1f39ca candidate; unchanged collector modules (module hashes retained); only report presentation changes observer fingerprint. Not final game qualification."
+  }
+}
