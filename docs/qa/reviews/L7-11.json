@@ -1,0 +1,51 @@
+{
+  "row": "L7-11",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c6",
+  "date": "2026-11-06",
+  "commit": "0d5ea37a7668562739d002172109f6041164625a",
+  "clauses": [
+    {
+      "clause": "Bus cinematic 6–10 s, bus moves ≥ 30 m, burning skyline shrinks; truck lit (not a black silhouette); gore reads as blood; no map edge in the end shot.",
+      "verdict": "PASS",
+      "note": "Fresh actual physical WASD/mouse runs from native L5/L6 progressed saves, low/high, carry1/4original humans aboard. Both native bus shots run540consecutive ticks/9s and move118.5m with one live1000HP bus throughout. All48frames personally inspected: whole ruined city/fire zone recedes into pink smoke/ash, tower lamps and military truck cab/grille/body visibly lit, red blood distinct among corpses, and no bare map edge in the8/8.5s end views. Bus lower hull is partly cropped in several mid/late frames; the criterion does not require full hull everyframe. Cinematic camera overrides userzoom; no independent zoom-matrix claim. Normal AI/HP/caps; courier protection only. Existing markerWalkKeys fixes sign-only physical steering; high additionally follows a logged authored-map detour along south corridor edge. Every gameplay input through completion is physical, native driver detached. Three failed harness attempts are archived, excluded from qualification. Dedicated consumer rejects all20semantic faults and restores exact evidence. No game/criterion change."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c6/L7-11/low-physical.json.gz",
+      "sha256": "4fd4a160af03f5abac934bd704143f15bc8461507cacaa1055fc9eaa4860dccc",
+      "what": "Current-source actual physical input, every departure tick, stable bus HP/ID/position and half-second frame records."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/high-physical.json.gz",
+      "sha256": "cb0029d27b9454bcd52dc9a9fbbcae456791ab32ddbefc55949b6de7a8c7e37c",
+      "what": "Current-source actual physical input, every departure tick, stable bus HP/ID/position and half-second frame records."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/low-review.json",
+      "sha256": "e3b71dc3d2011e96ffcaf25353e972a16093d4f49edecb76bdca5c84f484fd5c",
+      "what": "Personally inspected all24frames at full-size sheets; exact scene observations/digests retained and raw images deleted."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/high-review.json",
+      "sha256": "47ce0231bcfb03c96545a5a47131d0bdf0f0dcaf07489eda61c787c0653f3e03",
+      "what": "Personally inspected all24frames at full-size sheets; exact scene observations/digests retained and raw images deleted."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/low-producer.mjs",
+      "sha256": "b626d667e966513b612827db889727c44912f0bb1bdad4d263772b368528c6bd",
+      "what": "Exact immutable producer used for this tier."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/high-producer.mjs",
+      "sha256": "cb3ce0609f9375561476daf9d680a41b8e3370abdff97d4fb3a436d83c130aa1",
+      "what": "Exact immutable producer used for this tier."
+    },
+    {
+      "file": "docs/reports/sweep-c6/L7-11/coverage-proof.json",
+      "sha256": "dcd712a633def7a0cb71529eda9de89acfcc6ec8538a7e07de6495ad8dff1a80",
+      "what": "Twenty semantic mutations exercise unchanged dedicated consumer; all reject, original bytes restored."
+    }
+  ]
+}

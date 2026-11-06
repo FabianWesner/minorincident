@@ -10,21 +10,23 @@ Base: `0991b9da04a4ef65e1d0e5d889776c32b461a6ae`. Work list: `docs/reports/sweep
 | L10-03 | Measured FAIL retained | Current-source same-tick local census has no required species/count witness for low industrial, low campus, high industrial or high destroyed corridor. Other regions/tier combinations have witnesses and no upper-bound violations. Spawn experiments made the low complete route time out, so no safe single game fix was clear. Current evidence: `docs/reports/sweep-c5/L10-03/simultaneous-census.json`; review and current-source census are committed in `dae0fe5`. |
 | L7-01 | NOT CHECKED | Requires quiet-window real pickup/first-shot frame gate. |
 | L7-06 | NOT CHECKED | Requires physical exploration of both corridor routes and wrong-way edges, plus reviewed route-clarity captures. |
-| L7-11 | NOT CHECKED | Prior L7-08 frames exist, but the dedicated complete uninterrupted 6–10 s cinematic receipt/consumer was not produced in this lane. |
+| L7-11 | PASS, qualified | Fresh low/high physical runs from progressed L5/L6 saves:540consecutive departure ticks/9s, same live bus moves118.5m, original1/4humans boarded. All48frames personally reviewed: shrinking burning skyline, lit military truck/tower, red blood and no map edge. Dedicated consumer rejects20semantic faults. Native cinematic overrides userzoom; some bus cropping is explicit. |
 | L7-12 | NOT CHECKED | Requires progressed-save physical input at low/high and zoom 0.5/1.5, with destruction/Alpha/player contrast review. |
 | L8-11 | NOT CHECKED | Requires progressed-save physical input at low/high and zoom 0.5/1.5, sanctuary/battle captures and Opus quality pass. |
 | L10-08 | NOT CHECKED | Requires road framing/camera and night readability captures at required zooms. |
 | L10-12 | NOT CHECKED | Native HP threshold fixtures pass; real-input motion/death captures, frame probe and visual corpse review remain. |
 | L10-14 | NOT CHECKED | Native cure measurements pass; complete physical epilogue, mist/event ledger, camera/title/credits review remain. |
 
-L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. Thus two of the ten in-scope rows are resolved, with eight visual/physical-input rows open.
+L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. L7-11 is also qualified current PASS. Three of the ten in-scope rows have current decisions, with seven unchecked rows open.
 
 ## Validation
 
-- `npx tsc --noEmit` — PASS.
-- `npm run lint` — PASS.
+- `npx tsc --noEmit` — PASS, repeated after the dedicated L7-11 consumer.
+- `npm run lint` — PASS, repeated after the L7-11 tools.
 - `npm test -- --maxWorkers=4` — FAIL: 106/107 tests pass. Existing architecture test `tests/shared/architecture.test.ts` rejects `src/sim/progression/Save.ts` importing `three/addons/libs/fflate.module.js`; that import predates this lane (last source commit `7bd7cdf`).
 - Full L10 `qa:accept` low/high, both policies — initial tuning rerun passed L10-11. The final status refresh rechecked all four policy receipts, fixtures and checkpoints and refreshed the acceptance tracker: L10-11 is current PASS, L10-03 is a fresh current FAIL, with remaining L10 criteria incomplete. The CLI exits 1 for those open rows. L10-03 current-source simultaneous census rerun completed, showing the failure above.
-- `npm run qa:threat` — PASS, 474.9 s, zero flags. The complete final gates are not all green: the unit suite has the architecture failure above, and eight physical-input/review rows remain open.
+- `npm run qa:threat` — PASS, 474.9 s, zero flags. The complete final gates are not all green: the unit suite has the architecture failure above, and seven physical-input/review rows remain open.
 
-Per-row commits: L10-11 and L10-03 evidence/review commits are present. Other open rows have no completed evidence to commit.
+Per-row commits: L10-11 and L10-03 evidence/review commits are present; L7-11 qualification is recorded in its dedicated row directory and review. Other open rows have no completed evidence to commit.
+
+L7-11 follow-up: complete L7 native/fixture/checkpoint rerun finishes with L7-11 current PASS and zero fixture/checkpoint errors. The CLI exits1 for L7-09 (owned by fix70-s); seven rows are incomplete. Four previous browser qualifications (L7-02/03/07/08) now have a stale global source hash after the L10-only game change. The old/new L7 native final states and observations match exactly at both tiers/policies; diagnostic proof is retained in the L7-11 row directory. These prior rows were not silently requalified from that limited control evidence.

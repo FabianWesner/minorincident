@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "level": "L7",
+  "tier": "low",
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "fixtureHash": "06884b7b13d2ffb5c51df8b9bdfd7e45b784b840f3ec05c80b85d13fee747de8",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c6/L7-11"
+  },
+  "checks": [
+    {
+      "id": "L7-11",
+      "clause": "continuous physical departure duration and bus displacement",
+      "tier": "low",
+      "policy": "physical-departure",
+      "status": "PASS",
+      "value": {
+        "valid": true,
+        "physical": true,
+        "consecutive": true,
+        "sameBus": true,
+        "seconds": 9,
+        "displacement": 118.5,
+        "firstTick": 5505,
+        "lastTick": 6044,
+        "finishTick": 6044,
+        "busId": 338
+      },
+      "target": "Physical WASD/mouse from actual progressed save; no native driver ticks; full consecutive departure ledger, same live bus, 6–10 seconds and ≥30 metres.",
+      "receipt": "docs/reports/sweep-c6/L7-11/low-physical.json.gz"
+    },
+    {
+      "id": "L7-11",
+      "clause": "reviewed complete cinematic visual strip",
+      "tier": "low",
+      "policy": "physical-departure",
+      "status": "PASS",
+      "value": {
+        "coverage": true,
+        "seen": true,
+        "visuals": [
+          {
+            "clause": "burning skyline shrinks",
+            "pass": true,
+            "note": "Personally compared all half-second frames0..8.5: tower/convoy/fire zone is prominent at2.5..4s and small in smoky city distance by7..8.5s."
+          },
+          {
+            "clause": "military truck lit",
+            "pass": true,
+            "note": "Military truck cab, grille and body read visibly at3..4s beside luminous tower/fires; not a black silhouette."
+          },
+          {
+            "clause": "gore reads as blood",
+            "pass": true,
+            "note": "Red patches, spikes and corpse piles are clear at boarding and0/2.5..3.5s, distinguishable from grey road/rubble."
+          },
+          {
+            "clause": "no map edge in end shot",
+            "pass": true,
+            "note": "All18 cinematic frames inspected; end8/8.5s has roads, fence, buildings and distant smoke/fire, with no bare world cutoff. Bus lower hull is cropped in several frames; no whole-hull claim."
+          }
+        ],
+        "captures": 24
+      },
+      "target": "Personally reviewed half-second strip from 0 through8.5s, each actual frame digest linked to input. Burning skyline shrinks, military truck lit, blood readable, no map edge in end shot.",
+      "receipt": "docs/reports/sweep-c6/L7-11/low-review.json"
+    }
+  ]
+}

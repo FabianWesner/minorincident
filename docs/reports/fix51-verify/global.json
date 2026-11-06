@@ -1,11 +1,12 @@
 {
   "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
   "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
-  "revision": "c41791cd61c1a2af9470a5b0acaea71607973f51",
+  "revision": "0d5ea37a7668562739d002172109f6041164625a",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T09:21:52.591Z",
+  "generatedAt": "2026-11-06T09:43:41.587Z",
   "levels": [
+    "L7",
     "L10"
   ],
   "rows": [
@@ -164,9 +165,13 @@
       "id": "G-05",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "fix51-perf2 scoped PASS (STALE): All 20 requested native windows meet p95 <=PROD+1 ms and relative max +1 frame. Whole row NOT CHECKED. low/complete native concurrent infected peak (no frame/performance measurement): 95 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 95 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 190 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 190 (target 0 ≤ value ≤ 200; PASS)",
+      "value": "fix51-perf2 scoped PASS (STALE): All 20 requested native windows meet p95 <=PROD+1 ms and relative max +1 frame. Whole row NOT CHECKED. low/complete native concurrent infected peak (no frame/performance measurement): 100 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 100 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 200 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 200 (target 0 ≤ value ≤ 200; PASS); low/complete native concurrent infected peak (no frame/performance measurement): 95 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 95 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 190 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 190 (target 0 ≤ value ≤ 200; PASS)",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -176,6 +181,50 @@
       ],
       "expected": "Frame p95 **≤ 16.7 ms** desktop high, **≤ 33.3 ms** low/phone profile at each level's peak scene; draw calls ≤ 600 / 300, triangles ≤ 1.5 M / 500 k, sim p95 ≤ 4 / 6 ms, heap ≤ 400 / 250 MB, infected ≤ 200 / 100.",
       "checks": [
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 200,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-05",
+          "clause": "native concurrent infected peak (no frame/performance measurement)",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 200,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
         {
           "id": "G-05",
           "clause": "native concurrent infected peak (no frame/performance measurement)",
@@ -287,9 +336,13 @@
       "id": "G-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":7964,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":9908,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":10357,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3828,\"maxDisplacement\":0},{\"id… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":8185,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":10279,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":11454,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3867,\"maxDisplacement\":0},{\"i… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":7964,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":9989,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":10319,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3872,\"maxDisplacement\":0},{\"id… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":8109,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":10372,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":11138,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3905,\"maxDisplacement\":0},{\"i… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Current L1 routeCue remains1.6m ahead of heroine and steers next walkable leg. Over54 physical-input ticks its world position changes2.997m low/2.915m high while the depot destination ring moves0m. All six original-size frames inspected. L4 cellar fix alone did not close G08.",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l7-rocket\",\"x\":276,\"z\":15,\"samples\":13,\"maxDisplacement\":0},{\"id\":\"l7-corridor-east\",\"x\":-30,\"z\":50,\"samples\":4378,\"maxDisplacement\":0},{\"id\":\"l7-bus-boarding\",\"x\":-70.5,\"z\":47.5,\"samples\":1988,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"rocket\",\"marker\":\"l7-rocket\",\"x\":276,\"z\":15},{\"tick\":14,\"step\":\"corridor\",\"marker\":\"l7-corridor-east\",\"x\":-30,\"z\":50},{\"tick\":4392,\"step… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l7-rocket\",\"x\":276,\"z\":15,\"samples\":13,\"maxDisplacement\":0},{\"id\":\"l7-corridor-east\",\"x\":-30,\"z\":50,\"samples\":14387,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"rocket\",\"marker\":\"l7-rocket\",\"x\":276,\"z\":15},{\"tick\":14,\"step\":\"corridor\",\"marker\":\"l7-corridor-east\",\"x\":-30,\"z\":50}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l7-rocket\",\"x\":276,\"z\":15,\"samples\":13,\"maxDisplacement\":0},{\"id\":\"l7-corridor-east\",\"x\":-30,\"z\":50,\"samples\":4377,\"maxDisplacement\":0},{\"id\":\"l7-bus-boarding\",\"x\":-70.5,\"z\":47.5,\"samples\":2096,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"rocket\",\"marker\":\"l7-rocket\",\"x\":276,\"z\":15},{\"tick\":14,\"step\":\"corridor\",\"marker\":\"l7-corridor-east\",\"x\":-30,\"z\":50},{\"tick\":4391,\"step… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l7-rocket\",\"x\":276,\"z\":15,\"samples\":13,\"maxDisplacement\":0},{\"id\":\"l7-corridor-east\",\"x\":-30,\"z\":50,\"samples\":14387,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"rocket\",\"marker\":\"l7-rocket\",\"x\":276,\"z\":15},{\"tick\":14,\"step\":\"corridor\",\"marker\":\"l7-corridor-east\",\"x\":-30,\"z\":50}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":7964,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":9908,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":10357,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3828,\"maxDisplacement\":0},{\"id… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":8185,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":10279,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":11454,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3867,\"maxDisplacement\":0},{\"i… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":7964,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":9989,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":10319,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3872,\"maxDisplacement\":0},{\"id… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"cure-residential\",\"x\":767,\"z\":25,\"samples\":3496,\"maxDisplacement\":0},{\"id\":\"cure-industrial\",\"x\":1257,\"z\":25,\"samples\":8109,\"maxDisplacement\":0},{\"id\":\"cure-military\",\"x\":1857,\"z\":25,\"samples\":10372,\"maxDisplacement\":0},{\"id\":\"cure-research-entry\",\"x\":2467,\"z\":-5,\"samples\":11138,\"maxDisplacement\":0},{\"id\":\"cure-terminal\",\"x\":2707,\"z\":41.25,\"samples\":3905,\"maxDisplacement\":0},{\"i… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Current L1 routeCue remains1.6m ahead of heroine and steers next walkable leg. Over54 physical-input ticks its world position changes2.997m low/2.915m high while the depot destination ring moves0m. All six original-size frames inspected. L4 cellar fix alone did not close G08.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -299,6 +352,220 @@
       ],
       "expected": "**Markers only at fixed destinations / action points.** No ring or marker moves with the player or the group; no route steering; HUD arrow, distance and ring point at the real destination (distance = destination, not next waypoint, Q-277). PO: \"Checkpoint should not move with me. Checkpoint should always be in places where I need to go to reach the level end or trigger some action.\" / \"let the user find the way by themselves. You just show the final checkpoint\".",
       "checks": [
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "l7-rocket",
+                "x": 276,
+                "z": 15,
+                "samples": 13,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-corridor-east",
+                "x": -30,
+                "z": 50,
+                "samples": 4378,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-bus-boarding",
+                "x": -70.5,
+                "z": 47.5,
+                "samples": 1988,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "rocket",
+                "marker": "l7-rocket",
+                "x": 276,
+                "z": 15
+              },
+              {
+                "tick": 14,
+                "step": "corridor",
+                "marker": "l7-corridor-east",
+                "x": -30,
+                "z": 50
+              },
+              {
+                "tick": 4392,
+                "step": "departure",
+                "marker": "l7-bus-boarding",
+                "x": -70.5,
+                "z": 47.5
+              },
+              {
+                "tick": 6380,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "l7-rocket",
+                "x": 276,
+                "z": 15,
+                "samples": 13,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-corridor-east",
+                "x": -30,
+                "z": 50,
+                "samples": 14387,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "rocket",
+                "marker": "l7-rocket",
+                "x": 276,
+                "z": 15
+              },
+              {
+                "tick": 14,
+                "step": "corridor",
+                "marker": "l7-corridor-east",
+                "x": -30,
+                "z": 50
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "l7-rocket",
+                "x": 276,
+                "z": 15,
+                "samples": 13,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-corridor-east",
+                "x": -30,
+                "z": 50,
+                "samples": 4377,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-bus-boarding",
+                "x": -70.5,
+                "z": 47.5,
+                "samples": 2096,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "rocket",
+                "marker": "l7-rocket",
+                "x": 276,
+                "z": 15
+              },
+              {
+                "tick": 14,
+                "step": "corridor",
+                "marker": "l7-corridor-east",
+                "x": -30,
+                "z": 50
+              },
+              {
+                "tick": 4391,
+                "step": "departure",
+                "marker": "l7-bus-boarding",
+                "x": -70.5,
+                "z": 47.5
+              },
+              {
+                "tick": 6487,
+                "step": "",
+                "marker": null
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-08",
+          "clause": "fixed anchor positions during the observed native route",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "anchors": [
+              {
+                "id": "l7-rocket",
+                "x": 276,
+                "z": 15,
+                "samples": 13,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l7-corridor-east",
+                "x": -30,
+                "z": 50,
+                "samples": 14387,
+                "maxDisplacement": 0
+              }
+            ],
+            "changes": [
+              {
+                "tick": 1,
+                "step": "rocket",
+                "marker": "l7-rocket",
+                "x": 276,
+                "z": 15
+              },
+              {
+                "tick": 14,
+                "step": "corridor",
+                "marker": "l7-corridor-east",
+                "x": -30,
+                "z": 50
+              }
+            ]
+          },
+          "target": "fixed action points; reused gate/boss anchors require a position trajectory",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
         {
           "id": "G-08",
           "clause": "fixed anchor positions during the observed native route",
@@ -1179,9 +1446,15 @@
       "id": "G-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":14,\"id\":21,\"item\":\"weapon.rocket-launcher\",\"collector\":1,\"distance\":2.194915771484375,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":14,\"id\":21,\"item\":\"weapon.rocket-launcher\",\"collector\":1,\"distance\":2.194915771484375,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":14,\"id\":21,\"item\":\"weapon.rocket-launcher\",\"collector\":1,\"distance\":2.194915771484375,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":14,\"id\":21,\"item\":\"weapon.rocket-launcher\",\"collector\":1,\"distance\":2.194915771484375,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); low/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -1191,6 +1464,146 @@
       ],
       "expected": "Pickups (weapons, medkits, headlamp, rocket) are taken **on approach** (≤ 1.5 m ground, ≤ 2.2 m shelf), no E/click/standing still. PO: \"You should just take it when I come close to it\".",
       "checks": [
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 14,
+              "id": 21,
+              "item": "weapon.rocket-launcher",
+              "collector": 1,
+              "distance": 2.194915771484375,
+              "shelf": true,
+              "interact": false,
+              "speed": 0
+            }
+          ],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 14,
+              "id": 21,
+              "item": "weapon.rocket-launcher",
+              "collector": 1,
+              "distance": 2.194915771484375,
+              "shelf": true,
+              "interact": false,
+              "speed": 0
+            }
+          ],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 14,
+              "id": 21,
+              "item": "weapon.rocket-launcher",
+              "collector": 1,
+              "distance": 2.194915771484375,
+              "shelf": true,
+              "interact": false,
+              "speed": 0
+            }
+          ],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "observed approach collection distances; E-free causality needs an input fixture",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 14,
+              "id": 21,
+              "item": "weapon.rocket-launcher",
+              "collector": 1,
+              "distance": 2.194915771484375,
+              "shelf": true,
+              "interact": false,
+              "speed": 0
+            }
+          ],
+          "target": "ground ≤1.5 m; shelf ≤2.2 m",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
+        {
+          "id": "G-10",
+          "clause": "isolated ground/shelf weapon approach with E continuously false",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-10",
+          "clause": "isolated ground/shelf weapon approach with E continuously false",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+          "level": "L7"
+        },
         {
           "id": "G-10",
           "clause": "observed approach collection distances; E-free causality needs an input fixture",
@@ -1302,9 +1715,15 @@
       "id": "G-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS) Manual review PASS (STALE, sweep-g/Codex): All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior.",
+      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS) Manual review PASS (STALE, sweep-g/Codex): All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -1321,6 +1740,102 @@
       ],
       "expected": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
       "checks": [
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "duplicate pickup transactions since the last restore",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [],
+          "target": "zero positive entity-ID duplicates on the same timeline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
+        {
+          "id": "G-11",
+          "clause": "pickup remains removed for 120 ticks after transaction",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one transaction and no original entity",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-11",
+          "clause": "pickup remains removed for 120 ticks after transaction",
+          "value": [
+            {
+              "shelf": false,
+              "distance": 1.4949994087219238,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            },
+            {
+              "shelf": true,
+              "distance": 2.169999837875366,
+              "ePressed": false,
+              "collected": 1,
+              "originalEntityRemaining": false
+            }
+          ],
+          "target": "one transaction and no original entity",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+          "level": "L7"
+        },
         {
           "id": "G-11",
           "clause": "duplicate pickup transactions since the last restore",
@@ -1491,9 +2006,11 @@
       "id": "G-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS) Manual review PASS (STALE, sweep-g/Codex): 140 exact group-size identity/count samples (1–35 across both renderers and qualities) pass. All17 captures inspected; separate compact pips at35/6 and full bars at5/1. Negative render suppression removes every bar and is detected. Actual L6 roster plus L7 fallback models; this qualifies shared follower-bar renderer in view, campaign occluders remain G-07.",
-      "automatedComplete": false,
+      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS) Manual review PASS (STALE, sweep-g/Codex): 140 exact group-size identity/count samples (1–35 across both renderers and qualities) pass. All17 captures inspected; separate compact pips at35/6 and full bars at5/1. Negative render suppression removes every bar and is detected. Actual L6 roster plus L7 fallback models; this qualifies shared follower-bar renderer in view, campaign occluders remain G-07.",
+      "automatedComplete": true,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
         "docs/reports/sweep-g/final-cue/G-12-webgl2-high.json",
@@ -1510,6 +2027,34 @@
       ],
       "expected": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
       "checks": [
+        {
+          "id": "G-12",
+          "clause": "35-follower production eligibility and cap",
+          "value": {
+            "eligible": 35,
+            "cap": "Infinity"
+          },
+          "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-12",
+          "clause": "35-follower production eligibility and cap",
+          "value": {
+            "eligible": 35,
+            "cap": "Infinity"
+          },
+          "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+          "level": "L7"
+        },
         {
           "id": "G-12",
           "clause": "35-follower production eligibility and cap",
@@ -1547,7 +2092,7 @@
         "evidence": [],
         "method": "NEXT: Run tools/qa/l6-retreat-bars.ts and count eligible on-screen follower IDs against HealthBars.snapshot at group sizes 1,5,24,29,35, including healthy/injured and overlapping poses; require a visible bar for every eligible follower."
       },
-      "remaining": "Render and inspect all35 following health bars simultaneously; production eligibility/cap is measured, pixels remain open.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
@@ -1631,10 +2176,12 @@
     {
       "id": "G-13",
       "status": "FAIL",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":79740,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":79740,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":76740,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":99,\"escortTicks\":76740,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review FAIL (STALE, sweep-g/Codex): Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "currentStatus": "FAIL",
+      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/corridor\",\"id\":51,\"samples\":140,\"median\":4.500033748120395,\"groupMedian\":4.499827350201276,\"ratio\":1.0000458679640476},{\"phase\":\"step/corridor\",\"id\":52,\"samples\":140,\"median\":4.49981689453125,\"groupMedian\":4.499827350201276,\"ratio\":0.9999976764286245},{\"phase\":\"step/corridor\",\"id\":53,\"samples\":140,\"median\":4.500024173378234,\"groupMedian\":4.499827350201276,\"ratio\":1.0000437401619309… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; FAIL); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/corridor\",\"id\":51,\"samples\":143,\"median\":4.4998583694427134,\"groupMedian\":4.4999131418871015,\"ratio\":0.9999878281107522},{\"phase\":\"step/corridor\",\"id\":52,\"samples\":143,\"median\":4.499865933483989,\"groupMedian\":4.4999131418871015,\"ratio\":0.9999895090412583},{\"phase\":\"step/corridor\",\"id\":53,\"samples\":143,\"median\":4.49997836544093,\"groupMedian\":4.4999131418871015,\"ratio\":1.000014494402… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; FAIL) Manual review FAIL (STALE, sweep-g/Codex): Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
@@ -1650,6 +2197,1082 @@
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/corridor",
+              "id": 51,
+              "samples": 140,
+              "median": 4.500033748120395,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000458679640476
+            },
+            {
+              "phase": "step/corridor",
+              "id": 52,
+              "samples": 140,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 53,
+              "samples": 140,
+              "median": 4.500024173378234,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000437401619309
+            },
+            {
+              "phase": "step/corridor",
+              "id": 54,
+              "samples": 143,
+              "median": 4.49981689540607,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976766230364
+            },
+            {
+              "phase": "step/corridor",
+              "id": 55,
+              "samples": 143,
+              "median": 4.499837804996482,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000023233769637
+            },
+            {
+              "phase": "step/corridor",
+              "id": 56,
+              "samples": 143,
+              "median": 4.499866549989848,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000087113983542
+            },
+            {
+              "phase": "step/corridor",
+              "id": 57,
+              "samples": 143,
+              "median": 4.499987490917244,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000355881911693
+            },
+            {
+              "phase": "step/corridor",
+              "id": 58,
+              "samples": 143,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 59,
+              "samples": 143,
+              "median": 4.4996694780566395,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999649159551357
+            },
+            {
+              "phase": "step/corridor",
+              "id": 60,
+              "samples": 143,
+              "median": 4.500044685305979,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.000048298542986
+            },
+            {
+              "phase": "step/corridor",
+              "id": 61,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 62,
+              "samples": 146,
+              "median": 4.499816894535513,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764295719
+            },
+            {
+              "phase": "step/corridor",
+              "id": 63,
+              "samples": 143,
+              "median": 4.5025543643501145,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.000606026395372
+            },
+            {
+              "phase": "step/corridor",
+              "id": 64,
+              "samples": 146,
+              "median": 4.499881773418293,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000120945122517
+            },
+            {
+              "phase": "step/corridor",
+              "id": 65,
+              "samples": 146,
+              "median": 4.500019195148342,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000426338461759
+            },
+            {
+              "phase": "step/corridor",
+              "id": 66,
+              "samples": 146,
+              "median": 4.49998742269957,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000355730311048
+            },
+            {
+              "phase": "step/corridor",
+              "id": 67,
+              "samples": 146,
+              "median": 4.499816894567914,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764367723
+            },
+            {
+              "phase": "step/corridor",
+              "id": 68,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 69,
+              "samples": 146,
+              "median": 4.499987422699539,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.000035573031098
+            },
+            {
+              "phase": "step/corridor",
+              "id": 70,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 71,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 72,
+              "samples": 146,
+              "median": 4.499862793872353,
+              "groupMedian": 4.499827350201276,
+              "ratio": 1.0000078766735518
+            },
+            {
+              "phase": "step/corridor",
+              "id": 73,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/corridor",
+              "id": 74,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499827350201276,
+              "ratio": 0.9999976764286245
+            },
+            {
+              "phase": "step/departure",
+              "id": 51,
+              "samples": 26,
+              "median": 4.018811746228698,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.897279971576657
+            },
+            {
+              "phase": "step/departure",
+              "id": 52,
+              "samples": 24,
+              "median": 4.517366808321773,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0085923445346752
+            },
+            {
+              "phase": "step/departure",
+              "id": 53,
+              "samples": 23,
+              "median": 4.600000000000046,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0270418546292814
+            },
+            {
+              "phase": "step/departure",
+              "id": 54,
+              "samples": 28,
+              "median": 4.110297837728136,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9177060683345626
+            },
+            {
+              "phase": "step/departure",
+              "id": 55,
+              "samples": 27,
+              "median": 4.500306909649473,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0047833814972433
+            },
+            {
+              "phase": "step/departure",
+              "id": 56,
+              "samples": 25,
+              "median": 4.600025561906373,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0270475618352992
+            },
+            {
+              "phase": "step/departure",
+              "id": 57,
+              "samples": 26,
+              "median": 4.321381661974034,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9648347471032032
+            },
+            {
+              "phase": "step/departure",
+              "id": 58,
+              "samples": 27,
+              "median": 4.5010523716816015,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0049498207815983
+            },
+            {
+              "phase": "step/departure",
+              "id": 59,
+              "samples": 29,
+              "median": 2.0397771295766693,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.4554209752588682
+            },
+            {
+              "phase": "step/departure",
+              "id": 60,
+              "samples": 28,
+              "median": 4.482321631073469,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0007678089179555
+            },
+            {
+              "phase": "step/departure",
+              "id": 61,
+              "samples": 28,
+              "median": 4.475443778906733,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9992321910820446
+            },
+            {
+              "phase": "step/departure",
+              "id": 62,
+              "samples": 27,
+              "median": 4.438012440742407,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.990874897393013
+            },
+            {
+              "phase": "step/departure",
+              "id": 63,
+              "samples": 28,
+              "median": 4.410997939236843,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9848433704955871
+            },
+            {
+              "phase": "step/departure",
+              "id": 64,
+              "samples": 27,
+              "median": 4.599999999999923,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0270418546292541
+            },
+            {
+              "phase": "step/departure",
+              "id": 65,
+              "samples": 28,
+              "median": 1.8725523657630232,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.418084707526888
+            },
+            {
+              "phase": "step/departure",
+              "id": 66,
+              "samples": 27,
+              "median": 4.485683344868831,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0015183786508082
+            },
+            {
+              "phase": "step/departure",
+              "id": 67,
+              "samples": 28,
+              "median": 3.8613548145835015,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.8621245674242403
+            },
+            {
+              "phase": "step/departure",
+              "id": 68,
+              "samples": 28,
+              "median": 2.0530452598461943,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.45838335028484123
+            },
+            {
+              "phase": "step/departure",
+              "id": 69,
+              "samples": 27,
+              "median": 4.529741901224087,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.011355331135893
+            },
+            {
+              "phase": "step/departure",
+              "id": 70,
+              "samples": 28,
+              "median": 4.437233225756323,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9907009220876951
+            },
+            {
+              "phase": "step/departure",
+              "id": 71,
+              "samples": 28,
+              "median": 4.546144613862391,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.015017564268283
+            },
+            {
+              "phase": "step/departure",
+              "id": 72,
+              "samples": 29,
+              "median": 4.4335196723024275,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 0.9898717971254009
+            },
+            {
+              "phase": "step/departure",
+              "id": 73,
+              "samples": 27,
+              "median": 4.599999999999821,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.0270418546292313
+            },
+            {
+              "phase": "step/departure",
+              "id": 74,
+              "samples": 28,
+              "median": 4.503185640134094,
+              "groupMedian": 4.4788827049901005,
+              "ratio": 1.00542611556157
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5839,
+            "stationaryFarTicks": 327,
+            "upperBoundPercent": 5.600274019523891,
+            "followers": [
+              {
+                "id": 20,
+                "escortTicks": 5239,
+                "stationaryFarTicks": 207
+              },
+              {
+                "id": 51,
+                "escortTicks": 5608,
+                "stationaryFarTicks": 168
+              },
+              {
+                "id": 52,
+                "escortTicks": 5287,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 53,
+                "escortTicks": 5272,
+                "stationaryFarTicks": 4
+              },
+              {
+                "id": 54,
+                "escortTicks": 5593,
+                "stationaryFarTicks": 234
+              },
+              {
+                "id": 55,
+                "escortTicks": 5367,
+                "stationaryFarTicks": 78
+              },
+              {
+                "id": 56,
+                "escortTicks": 5352,
+                "stationaryFarTicks": 68
+              },
+              {
+                "id": 57,
+                "escortTicks": 5548,
+                "stationaryFarTicks": 124
+              },
+              {
+                "id": 58,
+                "escortTicks": 5500,
+                "stationaryFarTicks": 99
+              },
+              {
+                "id": 59,
+                "escortTicks": 5713,
+                "stationaryFarTicks": 323
+              },
+              {
+                "id": 60,
+                "escortTicks": 5623,
+                "stationaryFarTicks": 140
+              },
+              {
+                "id": 61,
+                "escortTicks": 5638,
+                "stationaryFarTicks": 152
+              },
+              {
+                "id": 62,
+                "escortTicks": 5518,
+                "stationaryFarTicks": 90
+              },
+              {
+                "id": 63,
+                "escortTicks": 5653,
+                "stationaryFarTicks": 284
+              },
+              {
+                "id": 64,
+                "escortTicks": 5485,
+                "stationaryFarTicks": 90
+              },
+              {
+                "id": 65,
+                "escortTicks": 5698,
+                "stationaryFarTicks": 310
+              },
+              {
+                "id": 66,
+                "escortTicks": 5533,
+                "stationaryFarTicks": 100
+              },
+              {
+                "id": 67,
+                "escortTicks": 5668,
+                "stationaryFarTicks": 181
+              },
+              {
+                "id": 68,
+                "escortTicks": 5683,
+                "stationaryFarTicks": 294
+              },
+              {
+                "id": 69,
+                "escortTicks": 5382,
+                "stationaryFarTicks": 81
+              },
+              {
+                "id": 70,
+                "escortTicks": 5578,
+                "stationaryFarTicks": 118
+              },
+              {
+                "id": 71,
+                "escortTicks": 5563,
+                "stationaryFarTicks": 110
+              },
+              {
+                "id": 72,
+                "escortTicks": 5728,
+                "stationaryFarTicks": 319
+              },
+              {
+                "id": 73,
+                "escortTicks": 5397,
+                "stationaryFarTicks": 94
+              },
+              {
+                "id": 74,
+                "escortTicks": 5743,
+                "stationaryFarTicks": 293
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/corridor",
+              "id": 51,
+              "samples": 143,
+              "median": 4.4998583694427134,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999878281107522
+            },
+            {
+              "phase": "step/corridor",
+              "id": 52,
+              "samples": 143,
+              "median": 4.499865933483989,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999895090412583
+            },
+            {
+              "phase": "step/corridor",
+              "id": 53,
+              "samples": 143,
+              "median": 4.49997836544093,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000144944028413
+            },
+            {
+              "phase": "step/corridor",
+              "id": 54,
+              "samples": 143,
+              "median": 4.499987485270074,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000165210706582
+            },
+            {
+              "phase": "step/corridor",
+              "id": 55,
+              "samples": 143,
+              "median": 4.499838326209072,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999833739728589
+            },
+            {
+              "phase": "step/corridor",
+              "id": 56,
+              "samples": 143,
+              "median": 4.499987485202748,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000165210556966
+            },
+            {
+              "phase": "step/corridor",
+              "id": 57,
+              "samples": 143,
+              "median": 4.500001954072124,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000197364220647
+            },
+            {
+              "phase": "step/corridor",
+              "id": 58,
+              "samples": 143,
+              "median": 4.499901961615812,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999975154473127
+            },
+            {
+              "phase": "step/corridor",
+              "id": 59,
+              "samples": 143,
+              "median": 4.499924322158391,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000024845526874
+            },
+            {
+              "phase": "step/corridor",
+              "id": 60,
+              "samples": 146,
+              "median": 4.499989110755541,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.000016882296623
+            },
+            {
+              "phase": "step/corridor",
+              "id": 61,
+              "samples": 146,
+              "median": 4.499821454497387,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999796246312266
+            },
+            {
+              "phase": "step/corridor",
+              "id": 62,
+              "samples": 143,
+              "median": 4.5000447293807095,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.000029242229674
+            },
+            {
+              "phase": "step/corridor",
+              "id": 63,
+              "samples": 146,
+              "median": 4.499819733982108,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999792422871181
+            },
+            {
+              "phase": "step/corridor",
+              "id": 64,
+              "samples": 146,
+              "median": 4.499992130375339,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.000017553336197
+            },
+            {
+              "phase": "step/corridor",
+              "id": 65,
+              "samples": 146,
+              "median": 4.49998628709041,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.000016254803371
+            },
+            {
+              "phase": "step/corridor",
+              "id": 66,
+              "samples": 146,
+              "median": 4.499819748533898,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999792455209116
+            },
+            {
+              "phase": "step/corridor",
+              "id": 67,
+              "samples": 146,
+              "median": 4.499829222094971,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999813507973411
+            },
+            {
+              "phase": "step/corridor",
+              "id": 68,
+              "samples": 146,
+              "median": 4.499929134587291,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000035540019743
+            },
+            {
+              "phase": "step/corridor",
+              "id": 69,
+              "samples": 146,
+              "median": 4.499819748533937,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999792455209201
+            },
+            {
+              "phase": "step/corridor",
+              "id": 70,
+              "samples": 146,
+              "median": 4.499819776334618,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999792516989686
+            },
+            {
+              "phase": "step/corridor",
+              "id": 71,
+              "samples": 146,
+              "median": 4.499987450204043,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000165132780563
+            },
+            {
+              "phase": "step/corridor",
+              "id": 72,
+              "samples": 146,
+              "median": 4.499819748533976,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999792455209288
+            },
+            {
+              "phase": "step/corridor",
+              "id": 73,
+              "samples": 146,
+              "median": 4.499829218877348,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 0.9999813500823
+            },
+            {
+              "phase": "step/corridor",
+              "id": 74,
+              "samples": 146,
+              "median": 4.500042974553825,
+              "groupMedian": 4.4999131418871015,
+              "ratio": 1.0000288522606169
+            },
+            {
+              "phase": "step/departure",
+              "id": 51,
+              "samples": 28,
+              "median": 4.478535070436763,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9949739802234416
+            },
+            {
+              "phase": "step/departure",
+              "id": 52,
+              "samples": 27,
+              "median": 4.486150580256359,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9966658803643275
+            },
+            {
+              "phase": "step/departure",
+              "id": 53,
+              "samples": 26,
+              "median": 4.599999999999947,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.021959242708671
+            },
+            {
+              "phase": "step/departure",
+              "id": 54,
+              "samples": 28,
+              "median": 4.501087948245143,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9999844415116924
+            },
+            {
+              "phase": "step/departure",
+              "id": 55,
+              "samples": 27,
+              "median": 4.5999999999999135,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086635
+            },
+            {
+              "phase": "step/departure",
+              "id": 56,
+              "samples": 26,
+              "median": 4.600000000000016,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086863
+            },
+            {
+              "phase": "step/departure",
+              "id": 57,
+              "samples": 28,
+              "median": 4.599999999999852,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.02195924270865
+            },
+            {
+              "phase": "step/departure",
+              "id": 58,
+              "samples": 25,
+              "median": 4.59999999999981,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086404
+            },
+            {
+              "phase": "step/departure",
+              "id": 59,
+              "samples": 28,
+              "median": 4.599999999999943,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086701
+            },
+            {
+              "phase": "step/departure",
+              "id": 60,
+              "samples": 28,
+              "median": 4.599999999999922,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086654
+            },
+            {
+              "phase": "step/departure",
+              "id": 61,
+              "samples": 27,
+              "median": 4.599999999999974,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.021959242708677
+            },
+            {
+              "phase": "step/departure",
+              "id": 62,
+              "samples": 28,
+              "median": 4.492151319151316,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.997999034837541
+            },
+            {
+              "phase": "step/departure",
+              "id": 63,
+              "samples": 28,
+              "median": 4.501228010672731,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0000155584883077
+            },
+            {
+              "phase": "step/departure",
+              "id": 64,
+              "samples": 28,
+              "median": 4.599999999999943,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086701
+            },
+            {
+              "phase": "step/departure",
+              "id": 65,
+              "samples": 28,
+              "median": 4.599999999999883,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086568
+            },
+            {
+              "phase": "step/departure",
+              "id": 66,
+              "samples": 28,
+              "median": 4.443889107940825,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.987276858137515
+            },
+            {
+              "phase": "step/departure",
+              "id": 67,
+              "samples": 28,
+              "median": 4.6000000000000005,
+              "groupMedian": 4.501157979458937,
+              "ratio": 1.0219592427086828
+            },
+            {
+              "phase": "step/departure",
+              "id": 68,
+              "samples": 28,
+              "median": 1.9781422954723804,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.43947408744586286
+            },
+            {
+              "phase": "step/departure",
+              "id": 69,
+              "samples": 28,
+              "median": 4.4998260179001,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9997040846900029
+            },
+            {
+              "phase": "step/departure",
+              "id": 70,
+              "samples": 30,
+              "median": 1.7159661107596822,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.3812277015360279
+            },
+            {
+              "phase": "step/departure",
+              "id": 71,
+              "samples": 30,
+              "median": 1.4670034292634149,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.3259168942654522
+            },
+            {
+              "phase": "step/departure",
+              "id": 72,
+              "samples": 28,
+              "median": 4.49871780806496,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9994578791935069
+            },
+            {
+              "phase": "step/departure",
+              "id": 73,
+              "samples": 28,
+              "median": 4.495328735250395,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.9987049456528422
+            },
+            {
+              "phase": "step/departure",
+              "id": 74,
+              "samples": 31,
+              "median": 2.3914058730869976,
+              "groupMedian": 4.501157979458937,
+              "ratio": 0.53128681197154
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 5946,
+            "stationaryFarTicks": 666,
+            "upperBoundPercent": 11.200807265388496,
+            "followers": [
+              {
+                "id": 20,
+                "escortTicks": 5346,
+                "stationaryFarTicks": 665
+              },
+              {
+                "id": 51,
+                "escortTicks": 5424,
+                "stationaryFarTicks": 59
+              },
+              {
+                "id": 52,
+                "escortTicks": 5198,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 53,
+                "escortTicks": 5183,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 54,
+                "escortTicks": 5379,
+                "stationaryFarTicks": 36
+              },
+              {
+                "id": 55,
+                "escortTicks": 5213,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 56,
+                "escortTicks": 5168,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 57,
+                "escortTicks": 5228,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 58,
+                "escortTicks": 5153,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 59,
+                "escortTicks": 5243,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 60,
+                "escortTicks": 5258,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 61,
+                "escortTicks": 5273,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 62,
+                "escortTicks": 5288,
+                "stationaryFarTicks": 1
+              },
+              {
+                "id": 63,
+                "escortTicks": 5353,
+                "stationaryFarTicks": 20
+              },
+              {
+                "id": 64,
+                "escortTicks": 5303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 65,
+                "escortTicks": 5318,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 66,
+                "escortTicks": 5483,
+                "stationaryFarTicks": 152
+              },
+              {
+                "id": 67,
+                "escortTicks": 5333,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 68,
+                "escortTicks": 5696,
+                "stationaryFarTicks": 361
+              },
+              {
+                "id": 69,
+                "escortTicks": 5394,
+                "stationaryFarTicks": 27
+              },
+              {
+                "id": 70,
+                "escortTicks": 5835,
+                "stationaryFarTicks": 475
+              },
+              {
+                "id": 71,
+                "escortTicks": 5820,
+                "stationaryFarTicks": 425
+              },
+              {
+                "id": 72,
+                "escortTicks": 5439,
+                "stationaryFarTicks": 86
+              },
+              {
+                "id": 73,
+                "escortTicks": 5409,
+                "stationaryFarTicks": 57
+              },
+              {
+                "id": 74,
+                "escortTicks": 5850,
+                "stationaryFarTicks": 496
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
         {
           "id": "G-13",
           "clause": "each observed follower median versus its phase group median",
@@ -1727,7 +3350,7 @@
         ],
         "method": "Inspect qualified civilian followerSpeeds records, excluding companion-only records and grabbed/bitten/knocked-down samples; compare each median with its phase group median. The94.8% result is a borderline strict-target miss, not proof of large visible babysitting."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: **No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "remaining": "Fix measured individual pace failures; measure exact player waiting with one follower>10m behind (current waiting value is only an upper bound).",
       "reviewDecision": {
         "row": "G-13",
         "status": "FAIL",
@@ -1935,9 +3558,13 @@
       "id": "G-16",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); low/stationary weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); high/complete weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); high/stationary weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS)",
+      "value": "low/complete weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); low/stationary weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); high/complete weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); high/stationary weapons offered in the ordinary initial racks: [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"] (target subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]; PASS); low/complete weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); low/stationary weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); high/complete weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS); high/stationary weapons offered in the ordinary initial racks: [\"weapon.fire-axe\"] (target exactly [axe]; PASS)",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -1945,6 +3572,74 @@
       ],
       "expected": "The weapon rack at level start offers only the weapons the story has given by that level: L1 none (bat in L1), L2 +axe, L3 +handgun, L4 +MG, L5 +shotgun, L6 none new, L7 +rocket, L8 none, L9 driving, L10 axe only.",
       "checks": [
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-16",
+          "clause": "weapons offered in the ordinary initial racks",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
         {
           "id": "G-16",
           "clause": "weapons offered in the ordinary initial racks",
@@ -2123,9 +3818,13 @@
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":79741} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":74562} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":76741} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":73014} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[20],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":6380} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[20],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[20],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":6487} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[20],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); low/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":79741} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":74562} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":76741} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[99],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":73014} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -2133,6 +3832,82 @@
       ],
       "expected": "Corgi: never damaged, no HP bar, never targeted, never inside geometry or a vehicle hull, inside with the player when a door/shutter closes.",
       "checks": [
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              20
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 6380
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              20
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 14400
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              20
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 6487
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-19",
+          "clause": "corgi health and real infected attack targets",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              20
+            ],
+            "targeted": 0,
+            "hit": 0,
+            "minimumHealthFraction": 1,
+            "samples": 14400
+          },
+          "target": "health fraction=1; zero target windups and damaging hits",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
         {
           "id": "G-19",
           "clause": "corgi health and real infected attack targets",
@@ -2224,9 +3999,13 @@
       "id": "G-20",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts.",
+      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED) Manual review FAIL (STALE, sweep-g/Codex): Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
@@ -2236,6 +4015,50 @@
       ],
       "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
       "checks": [
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L7",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "G-20",
+          "clause": "engaged run-out duration and invulnerability",
+          "level": "L7",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": null,
+          "target": "300 ticks ±1; invulnerability through deadline",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        },
         {
           "id": "G-20",
           "clause": "engaged run-out duration and invulnerability",
@@ -2324,14 +4147,592 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8530a3ef4507ead615da51667a1689f90838e04b801a12bc5a15787ce963f298\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b0414fab9ed0885ea3b02b22d7f75fd63b13b6ef6b8528dc9165ea7222e1161f\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f92830729dcfc8c3ffbc71a93843d16b5e5e958db2af97bee0a498c491d788ed\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"835a1b8e0089820059a66ea77d403af40b074ba171a74b9c4dc14616ac5e5e71\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6344ca64017f4a64cde74870b75f937b1280c307c0def263eb78dc567a026b1c\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"71d6853c99c87fb78ab783b4c9e1cac1addbf16fa66f11890ad920c91f847c29\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"0352d8f7d1b253e21533a72dedf11fd4f8e6ea99bfd6fc20765537d7e0275673\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"51d218f749ca27f2c86a4d58e7e94d629a130aac298f05266111ca18632d5d1b\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"33a011ca584e41e18d48f51767ac5033527412a49034cb78372382ac6f381b22\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1073793482108796},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"15441ba791bce9a99cc6912877d3ed58c520f4e133d07ecf026a4104100eb267\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"798e558b890b895c878e66748e50311598556e0d9a6190e0b7ab2c25091503c0\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"977836f5315c84597eec42da4266ec59116cb65715bfb751b88397f13dd791c5\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":1.8251043866703456,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d428f49214c3b53e510327fcd262167c20227fa5bed134c40c4aec1ad2dd4013\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"496dbfe6b41e09f51b349fe189c33be18460159266546c060d5677df72208f53\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.93955913418426},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"67052a9be365c4b77166049e48d00b1a929c967307586d1a78009bd6eaee072a\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.59774398803711,\"y\":0.7099999785423279,\"z\":47.50360107421875,\"yaw\":-3.0625632641309886},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e63f91c1fce7b11b1920787a0b592e510a350890de6c1cce4c1e9eb8a7c2458f\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"452287b096fd279c425a419a1d68e1e6704890566b83877e3053d2cbef655fc5\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.9394476598533013},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"wea… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"851f2bad5596a0eacb9f450a7ad7c8195dd493dd61836e8e37f978b67c90beda\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.596355438232422,\"y\":0.7099999785423279,\"z\":47.503623962402344,\"yaw\":-3.2345253317707976},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"582b63f199e32d650f16618e8107987b8eb205881e60e22182ca112df1d63dfb\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1255d975424e4d80f02aa0b1999b95244fa2689953a0e6e2a1b779296d2b4dae\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fa796c8cef50cf7a26ce9555ba3289059285ac8aaa54a5ae8d3c4f5baf36c72d\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1256.1455078125,\"y\":0.7099999785423279,\"z\":25.00066375732422,\"yaw\":0.0007763323738346474},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8530a3ef4507ead615da51667a1689f90838e04b801a12bc5a15787ce963f298\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b0414fab9ed0885ea3b02b22d7f75fd63b13b6ef6b8528dc9165ea7222e1161f\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045348167419434,\"yaw\":6.260051874737855},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pis… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f92830729dcfc8c3ffbc71a93843d16b5e5e958db2af97bee0a498c491d788ed\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"835a1b8e0089820059a66ea77d403af40b074ba171a74b9c4dc14616ac5e5e71\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.140625,\"y\":0.7099999785423279,\"z\":-4.997618198394775,\"yaw\":0.001281129000599443},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6344ca64017f4a64cde74870b75f937b1280c307c0def263eb78dc567a026b1c\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"71d6853c99c87fb78ab783b4c9e1cac1addbf16fa66f11890ad920c91f847c29\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":2.316600221526681,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.roc… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-crash: {\"checkpoint\":\"cure-crash\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f\",\"damage\":100,\"expected\":{\"id\":\"cure-crash\",\"anchor\":{\"x\":547,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\"]},\"followers\":[],\"pickups\":[],\"removedPickups\":[],\"cure\":false,\"bossHp… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-residential: {\"checkpoint\":\"cure-residential\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397\",\"damage\":100,\"expected\":{\"id\":\"cure-residential\",\"anchor\":{\"x\":765.1019897460938,\"y\":0.7099999785423279,\"z\":24.9973201751709,\"yaw\":-0.0014114016489564245},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-industrial: {\"checkpoint\":\"cure-industrial\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0\",\"damage\":100,\"expected\":{\"id\":\"cure-industrial\",\"anchor\":{\"x\":1255.7462158203125,\"y\":0.7099999785423279,\"z\":25.001005172729492,\"yaw\":0.0008009874263119481},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pist… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-military: {\"checkpoint\":\"cure-military\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"0352d8f7d1b253e21533a72dedf11fd4f8e6ea99bfd6fc20765537d7e0275673\",\"damage\":100,\"expected\":{\"id\":\"cure-military\",\"anchor\":{\"x\":1855.1417236328125,\"y\":0.7099999785423279,\"z\":25.002906799316406,\"yaw\":0.0015637813230164155},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research-entry: {\"checkpoint\":\"cure-research-entry\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"51d218f749ca27f2c86a4d58e7e94d629a130aac298f05266111ca18632d5d1b\",\"damage\":100,\"expected\":{\"id\":\"cure-research-entry\",\"anchor\":{\"x\":2465.0400390625,\"y\":0.7099999785423279,\"z\":-5.045322895050049,\"yaw\":-0.023120551286383816},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-research: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"33a011ca584e41e18d48f51767ac5033527412a49034cb78372382ac6f381b22\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.1073793482108796},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-corridor: {\"checkpoint\":\"cure-corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"15441ba791bce9a99cc6912877d3ed58c520f4e133d07ecf026a4104100eb267\",\"damage\":100,\"expected\":{\"id\":\"cure-corridor\",\"anchor\":{\"x\":2935.12109375,\"y\":0.7099999785423279,\"z\":-4.9975690841674805,\"yaw\":0.001293703592262905},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-complex: {\"checkpoint\":\"cure-complex\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"798e558b890b895c878e66748e50311598556e0d9a6190e0b7ab2c25091503c0\",\"damage\":100,\"expected\":{\"id\":\"cure-complex\",\"anchor\":{\"x\":3695.0439453125,\"y\":0.7099999785423279,\"z\":-24.97415542602539,\"yaw\":0.0132116441097695},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.a… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L10/cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"977836f5315c84597eec42da4266ec59116cb65715bfb751b88397f13dd791c5\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":4002,\"y\":0,\"z\":-27,\"yaw\":1.8251043866703456,\"radius\":2},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\",\"weapon.ro… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+        "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
         "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
         "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
       ],
       "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist.",
       "checks": [
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/night-exit",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "night-exit",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "d428f49214c3b53e510327fcd262167c20227fa5bed134c40c4aec1ad2dd4013",
+            "damage": 100,
+            "expected": {
+              "id": "night-exit",
+              "anchor": {
+                "x": 273,
+                "y": 4.6049999999999995,
+                "z": 15,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [
+                21
+              ],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "night-exit",
+              "position": {
+                "x": 273,
+                "z": 15
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/rocket",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "rocket",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "496dbfe6b41e09f51b349fe189c33be18460159266546c060d5677df72208f53",
+            "damage": 100,
+            "expected": {
+              "id": "rocket",
+              "anchor": {
+                "x": 273.8050842285156,
+                "y": 4.619999885559082,
+                "z": 15,
+                "yaw": -1.93955913418426
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "rocket",
+              "position": {
+                "x": 273.8050842285156,
+                "z": 15
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/corridor",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "corridor",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "67052a9be365c4b77166049e48d00b1a929c967307586d1a78009bd6eaee072a",
+            "damage": 100,
+            "expected": {
+              "id": "corridor",
+              "anchor": {
+                "x": -24.59774398803711,
+                "y": 0.7099999785423279,
+                "z": 47.50360107421875,
+                "yaw": -3.0625632641309886
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "corridor",
+              "position": {
+                "x": -24.59774398803711,
+                "z": 47.50360107421875
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/night-exit",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "night-exit",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "e63f91c1fce7b11b1920787a0b592e510a350890de6c1cce4c1e9eb8a7c2458f",
+            "damage": 100,
+            "expected": {
+              "id": "night-exit",
+              "anchor": {
+                "x": 273,
+                "y": 4.6049999999999995,
+                "z": 15,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [
+                21
+              ],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "night-exit",
+              "position": {
+                "x": 273,
+                "z": 15
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/rocket",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "rocket",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "452287b096fd279c425a419a1d68e1e6704890566b83877e3053d2cbef655fc5",
+            "damage": 100,
+            "expected": {
+              "id": "rocket",
+              "anchor": {
+                "x": 273.8050842285156,
+                "y": 4.619999885559082,
+                "z": 15,
+                "yaw": -1.9394476598533013
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "rocket",
+              "position": {
+                "x": 273.8050842285156,
+                "z": 15
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L7/corridor",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "corridor",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "851f2bad5596a0eacb9f450a7ad7c8195dd493dd61836e8e37f978b67c90beda",
+            "damage": 100,
+            "expected": {
+              "id": "corridor",
+              "anchor": {
+                "x": -24.596355438232422,
+                "y": 0.7099999785423279,
+                "z": 47.503623962402344,
+                "yaw": -3.2345253317707976
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followers": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "corridor",
+              "position": {
+                "x": -24.596355438232422,
+                "z": 47.503623962402344
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.handgun",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.rocket-launcher"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+          "level": "L7"
+        },
         {
           "id": "G-21",
           "clause": "mortal checkpoint restore at L10/cure-crash",
@@ -3829,9 +6230,11 @@
       "id": "G-24",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (STALE, sweep-g/Codex): All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim.",
+      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (STALE, sweep-g/Codex): All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
         "docs/reports/sweep-g/final-cue/G-24-webgl2-high.json",
@@ -3848,6 +6251,126 @@
       ],
       "expected": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
       "checks": [
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+          "level": "L7"
+        },
         {
           "id": "G-24",
           "clause": "production enemy-bar eligibility at distance/health boundaries",

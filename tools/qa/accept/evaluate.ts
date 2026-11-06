@@ -718,6 +718,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
   ]],
   ['L7-08', ['initial admitted final horde census with canonical control','physical rocket-cleared disc used by living carried human','reviewed physical corridor strips'].map(clause=>({clause,policy:'physical-corridor'}))],
+  ['L7-11', ['continuous physical departure duration and bus displacement', 'reviewed complete cinematic visual strip'].map(clause => ({ clause, policy: 'physical-departure' }))],
   ['L7-03', ['physical rocket cadence and overlapping flight','clicked empty-ground impact','one physical rocket kills24-body three-metre cohort','three-metre movement gap in controlled cohort','reviewed night rockets blood and pointblank impact peak','physical rocket first-hit detonation','physical rocket catalog max-range detonation'].map(clause=>({clause,policy:'real-input-webgl2'}))],
   ['L7-04', ['actual resident and later regular admissions', 'actual resident and later Alpha admissions', 'concurrent cap'].map(clause => ({ clause, policy: 'complete' }))],
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
