@@ -330,6 +330,10 @@ export class LevelSevenEncounters {
       }
       step = next;
     }
+    // Contact can push a follower away from the small escape route after it
+    // was planned. A blocked leg must release ownership back to normal
+    // navigation, rather than claiming the survivor forever without moving.
+    if (step <= 1e-6) { this.pocketRoutes.delete(e.id); return false; }
     // This is continuous, swept locomotion, including the tight rounded
     // corners that the square-margin route grid cannot represent.
     w.solids.wrote(e, 'l7.pocket-walk'); delete e.locomotion;
