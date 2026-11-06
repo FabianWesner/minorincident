@@ -1,0 +1,168 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "8c10e2cc6487151a24969dcea563c60d08e73f56",
+  "cases": [
+    {
+      "tier": "low",
+      "fault": "actual original",
+      "observed": {
+        "valid": true,
+        "transport": true,
+        "clock": true,
+        "ms": 3833.699999809265
+      }
+    },
+    {
+      "tier": "low",
+      "fault": "synthetic exact6000ms boundary",
+      "accepted": true
+    },
+    {
+      "tier": "low",
+      "fault": "6000.01ms",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "zero duration",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "negative duration",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "NaN duration",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "different APC",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "healed durability",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "missing driver",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "inactive APC",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "lost passenger",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "unseated passenger",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "unreviewed capture",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "loading card still shown",
+      "rejected": true
+    },
+    {
+      "tier": "low",
+      "fault": "wrong runtime tier",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "actual original",
+      "observed": {
+        "valid": true,
+        "transport": true,
+        "clock": true,
+        "ms": 3709.6000003814697
+      }
+    },
+    {
+      "tier": "high",
+      "fault": "synthetic exact6000ms boundary",
+      "accepted": true
+    },
+    {
+      "tier": "high",
+      "fault": "6000.01ms",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "zero duration",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "negative duration",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "NaN duration",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "different APC",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "healed durability",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "missing driver",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "inactive APC",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "lost passenger",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "unseated passenger",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "unreviewed capture",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "loading card still shown",
+      "rejected": true
+    },
+    {
+      "tier": "high",
+      "fault": "wrong runtime tier",
+      "rejected": true
+    }
+  ],
+  "method": "Pure consumer controls only; synthetic boundary/counterexamples are never game measurements. Actual proof files unchanged."
+}

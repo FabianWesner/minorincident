@@ -775,6 +775,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['actual passenger door-entry spacing', 'living infected remaining when boarding has finished', 'offscreen stalled boarding recovery after20s'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
   ['L8-05', ['actual admitted Alphas over observed route','concurrent cap','unprotected local-threat victim class coverage','all five same-ID species convert after actual bites'].map(clause=>({clause,policy:'complete'}))],
+  ['L8-10', ['production L8 to L9 handover first frame within6s', 'actual physical departure APC identity durability and seats retained'].map(clause => ({ clause, policy: 'production-handover' }))],
   ['L8-09', [
     { clause: 'every living native group identity seated', policy: 'complete' },
     ...['actual complete passenger identity boarding and wait gate', 'every outside waiting healthy survivor has production radar guidance', 'actual departure APC is unarmed'].map(clause => ({ clause, policy: 'boarding-sweep' })),
