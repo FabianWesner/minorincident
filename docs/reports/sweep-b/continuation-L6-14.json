@@ -1,0 +1,61 @@
+{
+  "row": "L6-14",
+  "status": "FAIL",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "gameChanged": false,
+  "commands": [
+    {
+      "command": "SCENE_PORT=3368 node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62",
+      "exitCode": 0
+    },
+    {
+      "command": "SCENE_PORT=3368 node --import tsx/esm tools/qa/sweep-b-l6-readability.ts high tunnel 62",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 tools/qa/sweep-b-l6-readability.py",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run qa:accept -- --level L6 --reuse --skip-browser",
+      "exitCode": 1,
+      "reason": "5 measured FAIL/0 NOT CHECKED retained"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    }
+  ],
+  "logs": [
+    {
+      "file": "test-results/sweep-b/L6-readability-low-tunnel-62-repeat.log",
+      "sha256": "8fb4e23ee5559c367e82d12a85cf245eae36979cbbc088582f7e84501de80960",
+      "text": "[scene] starting vite dev on http://127.0.0.1:3368\nlow tunnel low low false true true 1\n"
+    },
+    {
+      "file": "test-results/sweep-b/L6-readability-high-tunnel-62-repeat.log",
+      "sha256": "c1a1d190309a226500c7bfbffeb01db7c548cbf813f35bc4f3a36da013a88e5b",
+      "text": "[scene] starting vite dev on http://127.0.0.1:3368\nhigh tunnel high high false true true 1\n"
+    },
+    {
+      "file": "test-results/sweep-b/L6-readability-accept-final.log",
+      "sha256": "cff2131b478874427f63e80dfc1c1bcbdf6484f71cb1bb9cb240ae81585e202c",
+      "text": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L6 --reuse --skip-browser\n\n[qa:accept] L6 low/complete: reuse matching receipt\n[qa:accept] L6 low/stationary: reuse matching receipt\n[qa:accept] L6 high/complete: reuse matching receipt\n[qa:accept] L6 high/stationary: reuse matching receipt\n[qa:accept] L6 low/fixtures: 8 clauses, 0 errors\n[qa:accept] L6 high/fixtures: 8 clauses, 0 errors\n[qa:accept] L6 low/checkpoints: 7 clauses; control identical; 0 errors\n[qa:accept] L6 high/checkpoints: 7 clauses; control identical; 0 errors\n[qa:accept] L6: 5 fresh failing rows; 0 incomplete rows; docs/reports/fix51-verify/L6.json\n"
+    },
+    {
+      "file": "test-results/sweep-b/readability-final-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    {
+      "file": "test-results/sweep-b/readability-final-lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "text": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    }
+  ],
+  "rawCaptureFilesRemaining": 0
+}

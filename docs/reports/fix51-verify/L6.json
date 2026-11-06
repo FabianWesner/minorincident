@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T02:10:14.824Z",
+  "generatedAt": "2026-11-06T02:27:04.481Z",
   "policies": [
     {
       "tier": "low",
@@ -20913,11 +20913,16 @@
     },
     {
       "id": "L6-14",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Courier is readable within dark tunnel light pools at both zooms. No calibrated3:1 contrast or brightest-eye pixel measurement was made.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/sweep-b): Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS. Courier is readable within dark tunnel light pools at both zooms. No calibrated3:1 contrast or brightest-eye pixel measurement was made.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-b/L6-14-proof.json",
+        "docs/reports/sweep-b/L6-readability-capture-review.json",
+        "docs/reports/sweep-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
+        "docs/reports/sweep-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz"
+      ],
       "expected": "Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels.",
       "checks": [],
       "historical": {
@@ -20930,7 +20935,45 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient.",
+      "reviewDecision": {
+        "row": "L6-14",
+        "status": "FAIL",
+        "reviewer": "Codex/sweep-b",
+        "date": "2026-11-06",
+        "commit": "03f2cbda1a11e2678eb6f47166398d96b0b5ba7d",
+        "clauses": [
+          {
+            "clause": "Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels.",
+            "verdict": "FAIL",
+            "note": "Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-b/L6-14-proof.json",
+            "sha256": "c51b2a8715196a524edcb70a6a2921de3585203207bc0c8f886a5a4df2471ae2",
+            "what": "Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-readability-capture-review.json",
+            "sha256": "c974ca345842d17450b99c49ec7f7cb272bc9f3b7a67ba73b8836249c77057cf",
+            "what": "Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
+            "sha256": "465ff5b68d9a0293cf571462228031ad944b026089cdd5a91faa2a88279fe430",
+            "what": "Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS."
+          },
+          {
+            "file": "docs/reports/sweep-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
+            "sha256": "8abfc0ac2b9d2dd700e7cb49d9ea9343507a92551dc02a6bafddde5b557910b1",
+            "what": "Both actual low/high render tiers: authored l6-tunnel-retreat at110/15, production second-breach emergency state and actually collected headlamp. Original first-breach actor62 (npc.civilian-elderly) has ten resolved eye pixels; maximum eye relative luminance is0.24487004 low /0.23464440 high, below forehead pixel(772,384), RGB175/125/98, luminance0.24663033 at both tiers. The forehead is0.719% brighter at low and5.108% brighter at high. This strict numeric counterexample is not a large subjective visibility failure. Forehead is9.055px from the closest eye, beyond a2px excluded eye-edge margin. Every masked body pixel is bitwise identical in an independent repeated native PNG after restoring all probe materials at both tiers. Courier-maskP90 against actual2m ground ring exceeds3:1 (both .02 and .05 offsets reported). A different actual runner57 passes the eye comparison; the occluded shelter actor is explicitly inconclusive. Production instance-slot masks preserve source pose/mask nodes and keep other geometry depth-tested. Earlier infectedIdPass omitted NPC-skinned actors and was rejected, not repaired in game source. The measured forehead counterexample closes FAIL; all other looks/poses, the full shelter eye clause and a full route are not promoted to PASS."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
+      }
     }
   ]
 }

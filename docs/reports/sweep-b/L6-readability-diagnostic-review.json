@@ -1,0 +1,63 @@
+{
+  "images": 10,
+  "reviewer": "Codex/sweep-b",
+  "sheet": "test-results/sweep-b/L6-readability-diagnostic-sheet.jpg",
+  "sheetSha256": "4f5db7086083e11daef2b8aef5c017e9ecb3b9fa2c6caba716f0c38ae8fe7679",
+  "observation": "All10 captures inspected. Both native tunnel frames show bright orange/white courier and dark infected with small red eyes. Hidden-courier pairs preserve environment, magenta ID marks courier; black/white eye pairs resolve the eye islands. These are initial main-power-on tunnel diagnostics, not a full L6-14 scope; no comparison against lamps or courier is an eye failure because the source requires eyes brightest within each infected. Raw PNGs removed after inspection and hashes.",
+  "rows": [
+    {
+      "tier": "low",
+      "ledger": "docs/reports/sweep-b/L6-readability-low-diagnostic.json.gz",
+      "sha256": "10139abbd450187b011e38f5ce8b2ead1e5ff3a8f346014f6943b7aa81025b47",
+      "captures": [
+        {
+          "file": "test-results/sweep-b/L6-readability-low/captures/native.png",
+          "sha256": "0e405bf4abfd24fe2cb349609508c4f316a886ec1c4696a52072f680ac47939a"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low/captures/courier-hidden.png",
+          "sha256": "236e257c42eb48558d71632d94fa26c8696b1e1dfe002f30b386c1a1f77099ef"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low/captures/courier-id.png",
+          "sha256": "453103e213d9efd1d7f91e01408c76c4df61654fa3f4793b27df5a1d579486b5"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low/captures/eyes-black.png",
+          "sha256": "cf430285c7dc31431d34b25b8a7ca05a0106fe82a77d2353b0a0b8826179c192"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low/captures/eyes-white.png",
+          "sha256": "9ad350b9dd5307ab628cdc1e581355eda49108373a8aecabd298137caeb97819"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "ledger": "docs/reports/sweep-b/L6-readability-high-diagnostic.json.gz",
+      "sha256": "57bd5be64908931a6dc39c00fb065fe3dff21aa56e890cf8832a621eda31d1f8",
+      "captures": [
+        {
+          "file": "test-results/sweep-b/L6-readability-high/captures/native.png",
+          "sha256": "57856b979b3b73fd0cd0c99a1ec3ea4ee2605838cd1c43039d0e7ed50dd95780"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-high/captures/courier-hidden.png",
+          "sha256": "07e3b7b9bd14e54eaa48d59c1b65afec45e575670dfca68d3db361e0bcfb1718"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-high/captures/courier-id.png",
+          "sha256": "07d0b62c1d0c00bf46083fbe91bd8578993b61ea2462d1a9f690c3782ac93fd4"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-high/captures/eyes-black.png",
+          "sha256": "1a9dc48646394ce0b5aacf1e3d7af026a15dc96d8e841bb8c09bd63bdc96ed74"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-high/captures/eyes-white.png",
+          "sha256": "bc158d82977f2b6f5dcc76f9e89f29bf7eab1c58ef63fcd7e9b5b5f0be0bb840"
+        }
+      ]
+    }
+  ]
+}

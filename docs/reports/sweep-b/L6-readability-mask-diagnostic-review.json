@@ -1,0 +1,69 @@
+{
+  "images": 12,
+  "reviewer": "Codex/sweep-b",
+  "sheet": "test-results/sweep-b/L6-readability-body-mask-rejected.jpg",
+  "sheetSha256": "7804dab47ad508150a399671fb3c78392c011333fd30fba7bc8cebe4dea22144",
+  "observation": "All12 captures inspected. Actual emergency/headlamp tunnel and shelter views, native courier bright; courier hidden/ID passes agree. Eye black/white resolves actual eyes. Existing infectedIdPass misses NPC-skinned infected (black at selected body in tunnel, only two unrelated magenta shapes in shelter), so it cannot provide this actors body mask. These are diagnostic masks, not a full row verdict. Raw PNGs deleted after hashes/review.",
+  "rows": [
+    {
+      "ledger": "docs/reports/sweep-b/L6-readability-low-tunnel-mask-diagnostic.json.gz",
+      "sha256": "254541743f48938145f23eb887e84aa5630aebfb9be4e0419a9e90ff78e2702c",
+      "captures": [
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/native.png",
+          "sha256": "f614bc408c8c2ac242ac7c466cc224bfaf2513520ddf7039907a780ccf986d8a"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/courier-hidden.png",
+          "sha256": "8417a05cad293a27a63d5ad2c80df2275e2527e5e2aea26cf97f7a58311c236c"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/courier-id.png",
+          "sha256": "5258588dbbc82cd5a3acc2dd7744e55e96aae943e394edb031d0fed26f62bd5e"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/infected-id.png",
+          "sha256": "b33326b72247e7febf524ceb582a427f8a49d252ab11ea3ed282fec878699238"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/eyes-black.png",
+          "sha256": "2296280d126a1427f0f5086310a2c2b4828903d90a5344a148e585e151ef59fa"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-tunnel/captures/eyes-white.png",
+          "sha256": "7f2f38b8d1c62116319536b18411a8052693861f445705f389fbec3dcac0cfb1"
+        }
+      ]
+    },
+    {
+      "ledger": "docs/reports/sweep-b/L6-readability-low-shelter-mask-diagnostic.json.gz",
+      "sha256": "e8f008e9ddcf8f261af9029488c7e75a4e274efa7d516c0cfbfa2afc2610a851",
+      "captures": [
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/native.png",
+          "sha256": "7e1c4e31e6b613727866a50580ca8ee144908335a34de743a04824ea862475f5"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/courier-hidden.png",
+          "sha256": "1734320be3c134b8fb5f49d5f9430246142526448b2ff8c34bf20920c36709db"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/courier-id.png",
+          "sha256": "572424e194a9f40a5dbaf6790227a86db1352de7010aff66c46113a2786996ab"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/infected-id.png",
+          "sha256": "f47bd973c46ce41b5db549ad2d4ba94b9f222d7413160fd1491551025fa762ae"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/eyes-black.png",
+          "sha256": "88a5af981a46b91e560d77c5e33aea567fb1037d770f68d4ac23a25effc788da"
+        },
+        {
+          "file": "test-results/sweep-b/L6-readability-low-shelter/captures/eyes-white.png",
+          "sha256": "3466affa6ee045ddf94d95b85837073d8d400599a28156bb6dc9f381c15dd804"
+        }
+      ]
+    }
+  ]
+}

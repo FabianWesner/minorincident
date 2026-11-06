@@ -186,6 +186,12 @@
       "status": "PASS",
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "checks": 4
+    },
+    {
+      "id": "L6-14",
+      "status": "FAIL",
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient.",
+      "checks": 0
     }
   ],
   "stillOpen": [
@@ -217,12 +223,6 @@
       "id": "L5-10",
       "status": "NOT CHECKED",
       "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L5 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Armed survivors hold the gun in the hand; the corgi never fetches street weapons; no weapon respawns under the player.",
-      "checks": 0
-    },
-    {
-      "id": "L6-14",
-      "status": "NOT CHECKED",
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Measure actual courier/background luminance contrast in underground captures at both quality tiers, and identify the brightest infected-eye pixels; a subjective readability score is insufficient.",
       "checks": 0
     }
   ],
