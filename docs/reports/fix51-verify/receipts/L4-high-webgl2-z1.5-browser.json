@@ -266,6 +266,595 @@
       },
       "target": "actual pickup, gun/turn, live positive-gain klaxon voices and first living admissions share one simulation tick",
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual cellar entrant roster",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "anchor": {
+          "x": 75.3,
+          "z": -6.4,
+          "radius": 2,
+          "yaw": 0
+        },
+        "entry": {
+          "x": -79.29999999999998,
+          "z": -45.2801,
+          "radius": 1.4,
+          "yaw": -1.5707963267948966
+        },
+        "player": {
+          "x": 75.3,
+          "y": 0.7049999833106995,
+          "z": -6.4,
+          "yaw": 2.356194490192345
+        },
+        "doorway": {
+          "x": -79.29999999999998,
+          "z": -45.2801,
+          "yaw": -1.5707963267948966
+        },
+        "actors": [
+          {
+            "id": 1,
+            "archetype": "player.survivor",
+            "companion": false,
+            "x": 75.3,
+            "y": 0.7049999833106995,
+            "z": -6.4,
+            "pendingAdmission": false
+          },
+          {
+            "id": 29,
+            "archetype": "char.corgi",
+            "companion": true,
+            "x": 76.5,
+            "y": 0.3,
+            "z": -7,
+            "pendingAdmission": false
+          }
+        ]
+      },
+      "target": "only player and corgi, no pending admissions",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "decoded low-pass battle audible after barring",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "barTick": 14991,
+        "first": {
+          "tick": 14992,
+          "time": 287.1786666666667,
+          "state": "running",
+          "rms": 0.003540262939985388,
+          "peak": 0.009557023644447327
+        },
+        "last": {
+          "tick": 15407,
+          "time": 294.31466666666665,
+          "state": "running",
+          "rms": 0.01383742906990018,
+          "peak": 0.05757734924554825
+        },
+        "spanSeconds": 6.916666666666667,
+        "maximumGap": 0.7833333333333333,
+        "voices": [
+          {
+            "id": 18547,
+            "cue": "action.weapon.army-mg",
+            "tick": 14991,
+            "filter": 750,
+            "gain": 0.29985472559928894
+          },
+          {
+            "id": 18548,
+            "cue": "action.weapon.army-mg",
+            "tick": 14991,
+            "filter": 750,
+            "gain": 0.328821063041687
+          },
+          {
+            "id": 18549,
+            "cue": "action.weapon.army-mg",
+            "tick": 14991,
+            "filter": 750,
+            "gain": 0.3187674880027771
+          },
+          {
+            "id": 18550,
+            "cue": "explosion.boom",
+            "tick": 14991,
+            "filter": 500,
+            "gain": 0.14446845650672913
+          },
+          {
+            "id": 18651,
+            "cue": "action.weapon.army-mg",
+            "tick": 15067,
+            "filter": 750,
+            "gain": 0.31584399938583374
+          },
+          {
+            "id": 18652,
+            "cue": "action.weapon.army-mg",
+            "tick": 15067,
+            "filter": 750,
+            "gain": 0.2970811426639557
+          },
+          {
+            "id": 18653,
+            "cue": "action.weapon.army-mg",
+            "tick": 15067,
+            "filter": 750,
+            "gain": 0.28856247663497925
+          },
+          {
+            "id": 18743,
+            "cue": "action.weapon.army-mg",
+            "tick": 15141,
+            "filter": 750,
+            "gain": 0.3335435390472412
+          },
+          {
+            "id": 18744,
+            "cue": "action.weapon.army-mg",
+            "tick": 15141,
+            "filter": 750,
+            "gain": 0.2998667061328888
+          },
+          {
+            "id": 18745,
+            "cue": "action.weapon.army-mg",
+            "tick": 15141,
+            "filter": 750,
+            "gain": 0.319240003824234
+          },
+          {
+            "id": 18833,
+            "cue": "action.weapon.army-mg",
+            "tick": 15216,
+            "filter": 750,
+            "gain": 0.323182612657547
+          },
+          {
+            "id": 18834,
+            "cue": "action.weapon.army-mg",
+            "tick": 15216,
+            "filter": 750,
+            "gain": 0.32558751106262207
+          },
+          {
+            "id": 18835,
+            "cue": "action.weapon.army-mg",
+            "tick": 15216,
+            "filter": 750,
+            "gain": 0.28695106506347656
+          },
+          {
+            "id": 18836,
+            "cue": "explosion.boom",
+            "tick": 15216,
+            "filter": 500,
+            "gain": 0.14283622801303864
+          },
+          {
+            "id": 18921,
+            "cue": "action.weapon.army-mg",
+            "tick": 15291,
+            "filter": 750,
+            "gain": 0.30509066581726074
+          },
+          {
+            "id": 18922,
+            "cue": "action.weapon.army-mg",
+            "tick": 15291,
+            "filter": 750,
+            "gain": 0.3185342252254486
+          },
+          {
+            "id": 18923,
+            "cue": "action.weapon.army-mg",
+            "tick": 15291,
+            "filter": 750,
+            "gain": 0.33721402287483215
+          },
+          {
+            "id": 19035,
+            "cue": "action.weapon.army-mg",
+            "tick": 15366,
+            "filter": 750,
+            "gain": 0.3317427933216095
+          },
+          {
+            "id": 19036,
+            "cue": "action.weapon.army-mg",
+            "tick": 15366,
+            "filter": 750,
+            "gain": 0.3387453258037567
+          },
+          {
+            "id": 19037,
+            "cue": "action.weapon.army-mg",
+            "tick": 15366,
+            "filter": 750,
+            "gain": 0.3180783987045288
+          }
+        ],
+        "audioSettings": {
+          "browserOutputMuted": true,
+          "state": "running",
+          "unlocked": true,
+          "background": false,
+          "muted": false,
+          "master": 2,
+          "output": 1,
+          "voices": 8,
+          "voiceLimit": 32,
+          "music": {
+            "level": "L5",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": null,
+              "peak": false,
+              "transitions": [],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L4",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "tension",
+                  "file": "tension-L4",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "aftermath",
+                  "file": "aftermath",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 1.046666666666681,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "buses": {
+            "music": 0.3981071710586548,
+            "weapons": 1,
+            "impacts": 1,
+            "vehicles": 1,
+            "props": 1,
+            "gore": 1,
+            "telegraph": 1,
+            "ambience": 0.9938422441482544,
+            "dialogue": 1,
+            "barks": 1,
+            "ui": 1
+          },
+          "errors": [],
+          "cues": [
+            {
+              "cue": "dialogue.radio",
+              "variant": "dialogue.radio",
+              "time": 297.43466666666666,
+              "tick": 0,
+              "gain": 0.044167015701532364,
+              "rate": 1,
+              "lowpass": 20000,
+              "voice": 19095
+            },
+            {
+              "cue": "horde.loop.grass",
+              "variant": "horde.loop.grass",
+              "time": 297.872,
+              "tick": 12,
+              "sourceId": 100000,
+              "position": {
+                "id": 0,
+                "x": 51.333333333333336,
+                "z": -16,
+                "count": 3
+              },
+              "gain": 0.07632036507129669,
+              "rate": 0.9796608090400696,
+              "lowpass": 20000,
+              "voice": 19096
+            },
+            {
+              "cue": "horde.loop.grass",
+              "variant": "horde.loop.grass",
+              "time": 297.872,
+              "tick": 12,
+              "sourceId": 100001,
+              "position": {
+                "id": 1,
+                "x": 58,
+                "z": 16,
+                "count": 1
+              },
+              "gain": 0.07632036507129669,
+              "rate": 0.981606662273407,
+              "lowpass": 20000,
+              "voice": 19097
+            },
+            {
+              "cue": "horde.loop.grass",
+              "variant": "horde.loop.grass",
+              "time": 297.872,
+              "tick": 12,
+              "sourceId": 100002,
+              "position": {
+                "id": 2,
+                "x": 56,
+                "z": 2,
+                "count": 5
+              },
+              "gain": 0.07632036507129669,
+              "rate": 1.0279557704925537,
+              "lowpass": 20000,
+              "voice": 19098
+            },
+            {
+              "cue": "bed.wind",
+              "variant": "bed.wind",
+              "time": 297.904,
+              "tick": 14,
+              "gain": 0.02852807752788067,
+              "rate": 0.9742308855056763,
+              "lowpass": 20000,
+              "voice": 19099
+            },
+            {
+              "cue": "bed.fire",
+              "variant": "bed.fire",
+              "time": 297.904,
+              "tick": 14,
+              "gain": 0.02852807752788067,
+              "rate": 0.9890089631080627,
+              "lowpass": 20000,
+              "voice": 19100
+            },
+            {
+              "cue": "infected.hurt",
+              "variant": "infected.hurt",
+              "time": 298.66133333333335,
+              "tick": 60,
+              "sourceId": 254,
+              "position": {
+                "x": 12.05764688885536,
+                "z": -12.256230829977628,
+                "y": 0.7,
+                "yaw": 1.2350899475536552
+              },
+              "gain": 0.23533910512924194,
+              "rate": 0.9660122990608215,
+              "lowpass": 20000,
+              "voice": 19101
+            },
+            {
+              "cue": "gore.squelch",
+              "variant": "gore.squelch.v2",
+              "time": 298.66133333333335,
+              "tick": 60,
+              "sourceId": 72,
+              "position": {
+                "x": 12.05764688885536,
+                "z": -12.256230829977628,
+                "y": 0.7,
+                "yaw": 1.2350899475536552
+              },
+              "gain": 0.18026359379291534,
+              "rate": 0.9735692143440247,
+              "lowpass": 20000,
+              "voice": 19102
+            },
+            {
+              "cue": "infected.hurt",
+              "variant": "infected.hurt.v2",
+              "time": 298.66133333333335,
+              "tick": 60,
+              "sourceId": 292,
+              "position": {
+                "x": -12.069070595961412,
+                "z": 7.960547863050709,
+                "y": 0.75,
+                "yaw": -1.1237167822097516
+              },
+              "gain": 0.1989356130361557,
+              "rate": 0.9496221542358398,
+              "lowpass": 20000,
+              "voice": 19103
+            },
+            {
+              "cue": "gore.squelch",
+              "variant": "gore.squelch",
+              "time": 298.66133333333335,
+              "tick": 60,
+              "sourceId": 73,
+              "position": {
+                "x": -12.069070595961412,
+                "z": 7.960547863050709,
+                "y": 0.75,
+                "yaw": -1.1237167822097516
+              },
+              "gain": 0.1893836110830307,
+              "rate": 1.0034821033477783,
+              "lowpass": 20000,
+              "voice": 19104
+            }
+          ],
+          "clusters": [
+            {
+              "id": 0,
+              "x": 51.21227828362097,
+              "z": -16.377668471651372,
+              "count": 3
+            },
+            {
+              "id": 1,
+              "x": 57.84973131754599,
+              "z": 16.249400812038882,
+              "count": 1
+            },
+            {
+              "id": 2,
+              "x": 55.87556308136122,
+              "z": 2.087214949578724,
+              "count": 5
+            }
+          ],
+          "captions": []
+        },
+        "input": "docs/reports/sweep-b/L4-high-z1.5-ledger.json.gz",
+        "inputSha256": "e755953d65635a8b895508227f3b9077b46ff5165159e9be9209ad9969192790",
+        "audioPath": "test-results/vqa-1b/sweep-b-L4-high-z1.5/sweep-b-L4-high-z1.5-audio.json",
+        "audioSha256": "b19d11a6f2fc78294cc7d2daf1dbd2810cb47a5ae860fd01d8e50e825ebd2a9c"
+      },
+      "target": "decoded RMS≥0.001 spans≥6sim seconds; gaps≤1.5s; positive-gain voices filtered≤750Hz in live graph",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual same-basement L5 handover",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "outgoing": {
+          "anchor": {
+            "x": 75.3,
+            "z": -6.4,
+            "radius": 2,
+            "yaw": 0
+          },
+          "entry": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "radius": 1.4,
+            "yaw": -1.5707963267948966
+          },
+          "player": {
+            "x": 75.3,
+            "y": 0.7049999833106995,
+            "z": -6.4,
+            "yaw": 2.356194490192345
+          },
+          "doorway": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "yaw": -1.5707963267948966
+          },
+          "actors": [
+            {
+              "id": 1,
+              "archetype": "player.survivor",
+              "companion": false,
+              "x": 75.3,
+              "y": 0.7049999833106995,
+              "z": -6.4,
+              "pendingAdmission": false
+            },
+            {
+              "id": 29,
+              "archetype": "char.corgi",
+              "companion": true,
+              "x": 76.5,
+              "y": 0.3,
+              "z": -7,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        "incoming": {
+          "anchor": {
+            "x": 75.3,
+            "z": -5.4,
+            "radius": 2,
+            "yaw": 0
+          },
+          "entry": {
+            "x": -79.29999999999998,
+            "z": -45.2801,
+            "radius": 2,
+            "yaw": -1.5707963267948966
+          },
+          "player": {
+            "x": 75.3,
+            "y": 0.705,
+            "z": -5.4,
+            "yaw": 0.3205919885488634
+          },
+          "actors": [
+            {
+              "id": 1,
+              "archetype": "player.survivor",
+              "companion": false,
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "pendingAdmission": false
+            },
+            {
+              "id": 18,
+              "archetype": "char.corgi",
+              "companion": true,
+              "x": 76.03806023374436,
+              "y": 0.3,
+              "z": -6.191341716182545,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      },
+      "target": "same doorway, interior within2m; courier and corgi inside",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "reviewed visible companion in cellar",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "file": "docs/reports/sweep-b/L4-capture-review.json",
+        "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
+        "routeZoom": 1.5
+      },
+      "target": "courier/corgi inspected in actual cellar at both photo zooms and qualities",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json"
     }
   ],
   "observations": {
