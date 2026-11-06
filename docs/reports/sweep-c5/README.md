@@ -29,6 +29,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 | L8-07 | current PASS;46 physical points/tier through all10 exits to fixed APC,44 reviewed frames;1.25m clearance and16 checker faults |
 | L8-09 | current PASS; actual carried humans/corgi seated,2647 native boarding ticks,17742 human radar samples with0 missing pins; unarmed APC and12 fault controls |
 | L8-10 | current PASS; established physical-save handover diagnostic3.834/3.710s, same APC IDs700/800 at980/930HP;4 final frames reviewed and26 fault controls |
+| L9-02 | current PASS; native2x6/3x6/6x8 with2 Alphas, six physical detours≥24.54m;28 final frames reviewed,9 native and48 physical fault controls |
 
 ## Still open rows
 
@@ -48,7 +49,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L8-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents). |
 | L8-11 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus "is it stunning?" pass. |
 | L9-01 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. |
-| L9-02 | NOT CHECKED | NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas. |
 | L9-03 | NOT CHECKED | Historical road-presence FAIL is retained. Current source still needs all prescribed physical driving routes and camera-body interval evidence at both tiers. |
 | L9-04 | NOT CHECKED | NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers. |
 | L9-05 | NOT CHECKED | NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash. |
@@ -63,6 +63,8 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L10-14 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits. |
 
 ## Evidence and gates
+
+Current QA-only checkpoint: `npx tsc --noEmit`, `npm run lint`, and `npm test -- --maxWorkers=4` pass (107 tests,27 files). This is not the final gate run; scoped final acceptance and `qa:threat` remain required.
 
 Row-specific commits:
 
@@ -79,4 +81,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 24. Current PASS rows listed above: 23. No game code was changed. Perf work was not performed.
+Open current rows: 23. Current PASS rows listed above: 24. No game code was changed. Perf work was not performed.
