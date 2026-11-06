@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
-import type { FixtureReceipt } from './fixtures';
+import { fixtureHash, type FixtureReceipt } from './fixtures';
 import { atomicJson, reportRoot } from './report';
 import { evidenceIsArchivedOrMatches } from './reviews';
 type Tick = { tick: number; elapsed: number; radius: number; god: boolean; phase: string; epilogueTicks: number; player: { x: number; z: number; hp: number }; corgi: { id: number; hp: number } };
@@ -34,7 +34,7 @@ export function l10EpilogueReceipts(sourceHash: string, browserHash: string): { 
     const fixtureFile = `${root}/${tier}-species-fixture.json`, fixture = JSON.parse(readFileSync(fixtureFile, 'utf8')) as FixtureReceipt;
     const species = fixture.checks.find(c => c.id === 'L10-14' && c.clause === 'cure native species mortality and healthy immunity');
     const value = species?.value as { species: { role: string; reached: number; dead: number; hp: number }[]; healthyChecked: number; harmed: unknown[] } | undefined;
-    const allSpecies = fixture.sourceHash === sourceHash && !fixture.errors.length && species?.status === 'PASS' && !!value && value.healthyChecked >= 37 && !value.harmed.length &&
+    const allSpecies = fixture.fixtureHash === fixtureHash() && fixture.sourceHash === sourceHash && !fixture.errors.length && species?.status === 'PASS' && !!value && value.healthyChecked >= 37 && !value.harmed.length &&
       ['runner', 'dog', 'alpha', 'lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].every(role => value.species.some(s => s.role === role && s.reached > 0 && s.dead >= s.reached && s.dead - s.reached <= 1 && s.hp <= 0));
     const seen = review.sourceHash === sourceHash && review.browserHash === browserHash && review.allPersonallyReviewed && v?.inputSha256 === sha(readFileSync(file)) &&
       a.captures.every(c => v.captures.some(r => r.file === c.file && r.sha256 === c.sha256 && r.seen.trim()) && evidenceIsArchivedOrMatches(c.file, c.sha256));

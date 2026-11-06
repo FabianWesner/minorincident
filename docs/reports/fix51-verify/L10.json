@@ -5,7 +5,7 @@
   "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T11:07:32.440Z",
+  "generatedAt": "2026-11-06T11:31:49.472Z",
   "policies": [
     {
       "tier": "low",
@@ -7681,13 +7681,23 @@
     },
     {
       "id": "L10-12",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); low/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS); high/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); high/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); low/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS); high/controlled-fixture Mega conventional damage floor: {\"hp\":3000,\"remaining\":[2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700,2700]} (target never below90% HP; PASS); high/controlled-fixture Mega direct rocket9/10 HP threshold: {\"hp\":3000,\"remaining\":[2700,2400,2100,1800,1500,1200,900,600,300,0]} (target survives9; dies on10; PASS) Manual review FAIL (FRESH, Codex sweep-c6): Current native HP fixtures PASS: conventional floor90%, direct rocket9survives/10dies. Fresh actual physical fight at both tiers kills same persistent Mega119/122; natural slam3.195/2.980m and charge5.983/5.588m observed, no observed move begins beyond12m. Grab and exact boundary matrix remain unmeasured.92fight/death,92exploration and12corpse approach frames personally reviewed, rawhash verified/deleted. Settled original corpse remains drawn death-back phase1; physical approach reaches1.8m from simbody, yet no complete Mega creature silhouette reads in either tier: black blast marks/pale spiky remnant and camera cropping dominate. This is a measured visual FAIL at these poses. Root cause could include render-layout displacement, blast/debris masking or severance; no single safe game fix established. No whole-row PASS claimed: ≤200ms fight/death frame gate remains NOT CHECKED under explicit no-perf-timing brief and pending quiet-window clarification. Courier god only; normal live actors/caps, actual WASD/ShiftLMB; E suppressed so cure is not released.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+        "docs/reports/sweep-c6/L10-12/review.json",
+        "docs/reports/sweep-c6/L10-12/frame-manifest.json",
+        "docs/reports/sweep-c6/L10-12/low-physical.json.gz",
+        "docs/reports/sweep-c6/L10-12/high-physical.json.gz",
+        "docs/reports/sweep-c6/L10-12/low-corpse-physical.json.gz",
+        "docs/reports/sweep-c6/L10-12/high-corpse-physical.json.gz",
+        "docs/reports/sweep-c6/L10-12/death-producer.mjs",
+        "docs/reports/sweep-c6/L10-12/corpse-producer.mjs",
+        "docs/reports/sweep-c6/L10-12/low-hp-fixtures.json",
+        "docs/reports/sweep-c6/L10-12/high-hp-fixtures.json"
       ],
       "expected": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature.",
       "checks": [
@@ -7823,7 +7833,80 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres.",
+      "review": {
+        "tag": "O",
+        "instruction": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature.",
+        "clause": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature."
+      },
+      "reviewDecision": {
+        "row": "L10-12",
+        "status": "FAIL",
+        "reviewer": "Codex sweep-c6",
+        "date": "2026-11-06",
+        "commit": "645c32e8748939dcce39fde7340839f3f2032132",
+        "clauses": [
+          {
+            "clause": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature.",
+            "verdict": "FAIL",
+            "note": "Current native HP fixtures PASS: conventional floor90%, direct rocket9survives/10dies. Fresh actual physical fight at both tiers kills same persistent Mega119/122; natural slam3.195/2.980m and charge5.983/5.588m observed, no observed move begins beyond12m. Grab and exact boundary matrix remain unmeasured.92fight/death,92exploration and12corpse approach frames personally reviewed, rawhash verified/deleted. Settled original corpse remains drawn death-back phase1; physical approach reaches1.8m from simbody, yet no complete Mega creature silhouette reads in either tier: black blast marks/pale spiky remnant and camera cropping dominate. This is a measured visual FAIL at these poses. Root cause could include render-layout displacement, blast/debris masking or severance; no single safe game fix established. No whole-row PASS claimed: ≤200ms fight/death frame gate remains NOT CHECKED under explicit no-perf-timing brief and pending quiet-window clarification. Courier god only; normal live actors/caps, actual WASD/ShiftLMB; E suppressed so cure is not released."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c6/L10-12/review.json",
+            "sha256": "573e5fa44dd37042069f29b8c7e535e26e77d4d05a6697bd3ded9b253de6f4d8",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/frame-manifest.json",
+            "sha256": "e1e4d1c9d122867ef542ad08d028f9af5bcbe4bf418fa2edbbce8769eba2ec47",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/low-physical.json.gz",
+            "sha256": "45a3a5a5b0258e1b44bd21257bccb86e83132ed123eb48bd771f82051f75a253",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/high-physical.json.gz",
+            "sha256": "b08fd6c0c99b3cac212047e504ee7df86c81137d92fa72000c7f3938d70b00f8",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/low-corpse-physical.json.gz",
+            "sha256": "9bfac7ed7acd9cc0002339d7f08fdf7734c0387ed9d73df5f5083c16a9f6dd8c",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/high-corpse-physical.json.gz",
+            "sha256": "2185b6504b379237c96fb24146773dc082797de238dfb4268e31c5f6f6f3d924",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/death-producer.mjs",
+            "sha256": "7032c0f65fe60a44b8689fd3714e5c124f8e55ae63768ed450abb9b50bb71e3e",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/corpse-producer.mjs",
+            "sha256": "910b9761ca3164029bda765b99b490cdf8d75930cef585025436d24e325946fa",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/low-hp-fixtures.json",
+            "sha256": "ff9de9446622e6d5c10679e1f060d0820ffa79ef9491f42f22d8bd42d3cd0816",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          },
+          {
+            "file": "docs/reports/sweep-c6/L10-12/high-hp-fixtures.json",
+            "sha256": "45763e6e9e5418d940f2f948e0e91bed06de596cbd55c2b63f0f490a6d94b1c0",
+            "what": "Current actual physical fight/death/corpse input, exact producer, personally reviewed frame digests or independent native HP thresholds."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+      }
     },
     {
       "id": "L10-13",
@@ -8375,8 +8458,9 @@
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
-        "tag": "P",
-        "instruction": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits."
+        "tag": "O",
+        "instruction": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits.",
+        "clause": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits."
       },
       "reviewDecision": {
         "row": "L10-14",
@@ -8404,7 +8488,7 @@
           },
           {
             "file": "docs/reports/sweep-c6/L10-14/coverage-proof.json",
-            "sha256": "2155de6fd4ee9e80d5332fdbd609fb905e900d195a8bb30f6f2774f5d3b8c8aa",
+            "sha256": "62867a1f165db3e3540b424d9b6ac658ed43ed2dd487ec57faecb6a3c7ab7cae",
             "what": "Current physical epilogue ledger, exact producer, personally reviewed frames, independent species fixture or semantic controls."
           },
           {

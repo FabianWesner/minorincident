@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-06T11:45:15.173778+00:00",
+  "method": "Sequential lane-local gates. Native L8/L9 refresh ran beforehand; no other test/browser job in this lane during these gates. qa:threat zero flags. Other lanes on shared Mac remain independent.",
+  "runs": [
+    {
+      "gate": "L9-refresh",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L9",
+        "--skip-browser",
+        "--tier",
+        "both",
+        "--policy",
+        "both"
+      ],
+      "exitCode": 1,
+      "log": "docs/reports/sweep-c6/validation/L9-refresh.log",
+      "sha256": "e702e2b42150fc11d11e1b9fdb687f16c2b209565302665f3933e9f930b12262",
+      "note": "Fresh native complete/stationary both tiers, zero fixture/checkpoint errors, exit1 for incomplete browser qualifications."
+    },
+    {
+      "gate": "L8-refresh",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L8",
+        "--skip-browser",
+        "--tier",
+        "both",
+        "--policy",
+        "both"
+      ],
+      "exitCode": 1,
+      "log": "docs/reports/sweep-c6/validation/L8-refresh.log",
+      "sha256": "5a7e8ced1a47806daf28ef03fd60e62f719b1fd7b33ad8a6ea756fda25db2e0a",
+      "note": "Fresh native complete/stationary both tiers, zero fixture/checkpoint errors, exit1 for incomplete browser qualifications."
+    },
+    {
+      "gate": "L7-refresh",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L7",
+        "--reuse",
+        "--skip-browser",
+        "--tier",
+        "both",
+        "--policy",
+        "both"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 5.2,
+      "log": "docs/reports/sweep-c6/validation/L7-refresh.log",
+      "sha256": "4079ae23e5b52dc104bf31116e981eb3e29cf7b93b2754439d9045daf07b9304"
+    },
+    {
+      "gate": "L10-refresh",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L10",
+        "--reuse",
+        "--skip-browser",
+        "--tier",
+        "both",
+        "--policy",
+        "both"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 6.1,
+      "log": "docs/reports/sweep-c6/validation/L10-refresh.log",
+      "sha256": "450158c7ba5cf04380416c4f05de6db2e7060d157a5f4e8bd7854d9a631133eb"
+    },
+    {
+      "gate": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 75.1,
+      "log": "docs/reports/sweep-c6/validation/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 40.4,
+      "log": "docs/reports/sweep-c6/validation/lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "gate": "unit",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 85.2,
+      "log": "docs/reports/sweep-c6/validation/unit.log",
+      "sha256": "7c35cd4b2d759a160b7b1267dd8318cd64866cb6a8bb54f1eb6e3b64bfe30be6"
+    },
+    {
+      "gate": "threat",
+      "command": [
+        "npm",
+        "run",
+        "qa:threat"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 601.1,
+      "log": "docs/reports/sweep-c6/validation/threat.log",
+      "sha256": "2f9d0c755679dbb8c2a286fb73cb7146b2c76c768f1ead361b747b1fc3c25837"
+    }
+  ],
+  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "outcome": "NOT GREEN: typecheck/lint PASS; unit105/107 (baseline fflate architecture violation plus L4 contact timeout); final zero-flag threat run reachedL8, zero passive flags throughL7, then597sreservation/600sbudget timeout. Earlier same-game-source run passed474.9s; final attempt not reported PASS.",
+  "blockers": [
+    "L7-01 \u226450ms timing exception/quiet window under explicit no-perf-timing brief; L10-12 \u2264200ms timing also remains unmeasured.",
+    "L8-11 required Opus stunning\u22657 verdict."
+  ]
+}
