@@ -1,0 +1,67 @@
+{
+  "row": "L4-10",
+  "status": "NOT CHECKED",
+  "sourceHash": "289917b183f336a36236fca86fc6da81bd0d424e7365929ea53783d555bed95b",
+  "producerSha256": "6a264b0e8dbeb2c6078480326a4389fdb3cc08708b2857b4f337c579ac4521da",
+  "ledger": "docs/reports/sweep-b/L4-tank-clearance.json.gz",
+  "ledgerSha256": "4f67bbee3c1853bed3d9431d8052dd115a5767c917d18ff4e7e18008640fa439",
+  "observation": "Current-source native L4 complete routes at both tiers preserve canonical hashes. Every ordinary and forced tank impact clears every registered living player/ally by at least15m; ordinary 8–12s cadence remains within bounds. The fuel-truck move resolves the measured clearance defect. Current-source renderer review of the moved truck and blast scene could not be captured because sandbox networking denied Vite bind with EPERM; full row remains NOT CHECKED.",
+  "rows": [
+    {
+      "tier": "low",
+      "finalHash": "74c33a4b",
+      "canonicalHash": "74c33a4b",
+      "shots": 14,
+      "warShots": 13,
+      "forcedTarget": {
+        "x": 34,
+        "z": -9.5
+      },
+      "forcedMinClearance": 21.19459171319748,
+      "ordinaryMinClearance": 15.287675471615561,
+      "intervals": [
+        11.383333333333333,
+        10.666666666666666,
+        10.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.766666666666667,
+        11.45,
+        11.516666666666667,
+        10.55,
+        9.2,
+        9.45,
+        8.016666666666667
+      ]
+    },
+    {
+      "tier": "high",
+      "finalHash": "be55888c",
+      "canonicalHash": "be55888c",
+      "shots": 16,
+      "warShots": 15,
+      "forcedTarget": {
+        "x": 34,
+        "z": -9.5
+      },
+      "forcedMinClearance": 18.954684522907446,
+      "ordinaryMinClearance": 15.769746464789455,
+      "intervals": [
+        8.133333333333333,
+        9.533333333333333,
+        8.35,
+        9.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.766666666666667,
+        11.45,
+        11.433333333333334,
+        9.65,
+        8.116666666666667,
+        10.5,
+        8.016666666666667,
+        10.916666666666666
+      ]
+    }
+  ]
+}
