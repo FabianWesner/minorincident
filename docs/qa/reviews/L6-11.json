@@ -3,19 +3,29 @@
   "status": "FAIL",
   "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "5a65a86db8c04f8d7f1335204f8a1caa0da72215",
+  "commit": "382a5b413b898207d9a41115681d1febc6805e02",
   "clauses": [
     {
-      "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
+      "clause": "Covering matters: `evade-only` \u2264 30 % out, `complete` \u2265 60 %.",
       "verdict": "FAIL",
-      "note": "Fresh current-source ordinary mortal runs: complete finishes at both tiers with1 out of29 (3.448%), below60%; each ledger balances29=1 out+28 lost and final hashes match canonical controls. Evade-only times out at600 sim seconds with13 courier deaths at both tiers, so no evade result percentage is assigned. The complete-policy counterexample is sufficient to retain FAIL."
+      "note": "Current-source complete routes at both tiers still save1/29 and match canonical final-state hashes. All28 actual group bites per tier occur beyond26m weapon range; the first is59.5m from the courier. No ignored visible in-range biter was found. Two local column-pause trials were rejected and reverted: gate-only saves1/29; continuous tail-cover limit saves4/29, still below60%. This complete-policy counterexample independently retains FAIL; no evade outcome percentage is inferred."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L6-11-protection.json",
-      "sha256": "f8b89de70a3ae90dd24f91d827647228238b02fc2cc8b5a49c6bf4a77a651258",
-      "what": "Fresh source-hashed low/high mortal policies with balanced result and survivor ledgers; complete saves1/29 at both tiers and matches canonical hashes, evade-only is incomplete at the600-second limit."
+      "file": "docs/reports/fix67-b/l6-cover-before.json.gz",
+      "sha256": "b7954e7b03375c7ded74388da21e6109b795a9480edbf990a110ce0f388aa61e",
+      "what": "Current-source complete routes at both tiers still save1/29 and match canonical final-state hashes. All28 actual group bites per tier occur beyond26m weapon range; the first is59.5m from the courier. No ignored visible in-range biter was found. Two local column-pause trials were rejected and reverted: gate-only saves1/29; continuous tail-cover limit saves4/29, still below60%. This complete-policy counterexample independently retains FAIL; no evade outcome percentage is inferred."
+    },
+    {
+      "file": "docs/reports/fix67-b/l6-cover-before-summary.json",
+      "sha256": "4ce95206babe64cfc0baa688ad45356bc9e896c9d0619531650f71413e58ec35",
+      "what": "Current-source complete routes at both tiers still save1/29 and match canonical final-state hashes. All28 actual group bites per tier occur beyond26m weapon range; the first is59.5m from the courier. No ignored visible in-range biter was found. Two local column-pause trials were rejected and reverted: gate-only saves1/29; continuous tail-cover limit saves4/29, still below60%. This complete-policy counterexample independently retains FAIL; no evade outcome percentage is inferred."
+    },
+    {
+      "file": "docs/reports/fix67-b/L6-11-diagnosis.json",
+      "sha256": "f8d20e85e6d4b4fa5a318d327c964718aeeac0e88f4ff88bc34554e354bf610b",
+      "what": "Current-source complete routes at both tiers still save1/29 and match canonical final-state hashes. All28 actual group bites per tier occur beyond26m weapon range; the first is59.5m from the courier. No ignored visible in-range biter was found. Two local column-pause trials were rejected and reverted: gate-only saves1/29; continuous tail-cover limit saves4/29, still below60%. This complete-policy counterexample independently retains FAIL; no evade outcome percentage is inferred."
     }
   ]
 }
