@@ -3,29 +3,19 @@
   "status": "PASS",
   "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "be991818d6ae4cf5e31ce6c64780d62eb8a9da8a",
+  "commit": "ebc1ebf040cfafb546bc3d7aca0b09950449a011",
   "clauses": [
     {
       "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) and reach the tracks; reachable \u2265 95%; none stand harmless behind the platform/gate line.",
       "verdict": "PASS",
-      "note": "Fresh low/high mortal native complete routes log exactly 2 wave-4 arrivals at each authored door 2, 5, 3, 6, 4, 7 (12 total); all six entry quotas reach zero. Spawn coordinates are 2.4 m from track center z=15. In the low-tier passive retreat sample, all 30 active infected are reachable and max sustained blocked time is 0 s."
+      "note": "Both current-source mortal complete routes admit exactly two at each of six alternating doors. Every one of the 12 identities reaches the authored track polygon, has a path at birth, and is later downed. Each tier has381 near-player path samples, zero failures (100%). Every-tick geometry observer preserves canonical complete world hash: low4a1802d3/high10d0a475. Earlier spawn-coordinate inference is superseded by this actor trajectory proof."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
-      "sha256": "0c87ec0784b1bb652fe17e673abddb93afdc8b6d4a019b204486f08e5c1e26d9",
-      "what": "Fresh low mortal native complete route; wave-4 spawnLog grouped by all six authored side entries. Each door has exactly two actual infected identities at the track-side entry coordinates; all entry quotas are exhausted."
-    },
-    {
-      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-      "sha256": "3bb497966d1c82ac296b6114bac6fbc90026a45c23dc93ee32260c8b093b2637",
-      "what": "Fresh high mortal native complete route; wave-4 spawnLog grouped by all six authored side entries. Each door has exactly two actual infected identities at the track-side entry coordinates; all entry quotas are exhausted."
-    },
-    {
-      "file": "docs/reports/fix71-b/baseline.json",
-      "sha256": "9bf044c520a399349de0cacf1eabe657cd9af634b6ccd400857946e55477d5de",
-      "what": "Fresh isolated low native L6 threat audit: the sampled retreat population is 30/30 reachable; maximum sustained blocked time is 0 s. The two flags are diagnostic partial-level and main-source provenance flags, not L6 acceptance failures."
+      "file": "docs/reports/fix71-b/L6-06-trajectories.json.gz",
+      "sha256": "9d88b0dcec15624ce5d997a4dbcf19954a9fd3a77f43cc65b9b34923f326c9b9",
+      "what": "Both current-source mortal complete routes admit exactly two at each of six alternating doors. Every one of the 12 identities reaches the authored track polygon, has a path at birth, and is later downed. Each tier has381 near-player path samples, zero failures (100%). Every-tick geometry observer preserves canonical complete world hash: low4a1802d3/high10d0a475. Earlier spawn-coordinate inference is superseded by this actor trajectory proof."
     }
   ]
 }
