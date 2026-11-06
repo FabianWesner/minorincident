@@ -1,37 +1,37 @@
 {
   "row": "L10-11",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c5",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c6",
   "date": "2026-11-06",
-  "commit": "ef01b8b04de57f5ec27533d309dfb9b66de6751b",
+  "commit": "8ebb570e57811d994276b020a1d0fd0f18840c89",
   "clauses": [
     {
       "clause": "Assault: infected at the capped peak (140\u2013190 / 75\u201395), reachable \u2265 90 %, attacks on player \u2265 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120\u2013160 s, by walking; no relocation).",
-      "verdict": "FAIL",
-      "note": "Current-source full 240-second native hold in both tiers: Mega crosses the 25 m arena at +57.7833 s low / +56.4500 s high, outside the unchanged 120\u2013160 s by-walking target. Both tiers reach capped peaks 95/190, exceed 8 attacks/min (mega phase 1238.11/1194.11), and have 100% bounded-path reachability. Each run retains one Mega ID, zero scheduled relocations and canonical final-state identity. This is a measured arrival-time FAIL; no timer, cap, criterion or game change."
+      "verdict": "PASS",
+      "note": "Fresh native four-minute holds at both tiers, following the final-approach speed correction. The Mega crosses the 25 m arena at +150.45 s low / +132.45 s high. Both holds reach their capped peaks (95/190), remain 100% bounded-path reachable, exceed 8 player attacks/min, retain one persistent Mega ID and record zero scheduled relocations. Full competent controls pass at both tiers; the code change adjusts only hidden far final-route movement speed. No teleport, timer, cap, or criterion change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-hold.json",
-      "sha256": "30547f83b2c3957f2a17a43be6fd21b96c8c862a0d8f7b994aabd0445093b76e",
-      "what": "Exact-source four-minute hold, arena-arrival and persistent-identity evidence for both tiers."
+      "file": "docs/reports/fix51-r10c/l10-hold-proof.json",
+      "sha256": "7df70a0964509a8471fe3e37cc9cefd66193502065183b8050049ea3fec6c5f5",
+      "what": "Current native 240-second low/high holds; arrival times 150.45/132.45 s, capped peaks, reachability, persistent identity and zero scheduled relocations."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
-      "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
-      "what": "Current-source low stationary final-state control."
+      "file": "docs/reports/fix51-verify/L10.json",
+      "sha256": "88e87385dc8ab46c4c27f65d76ef26d9527dd88cefda8de2a07eb5223713e0e8",
+      "what": "Fresh full L10 acceptance rerun at both tiers and policies; L10-11 automated clauses PASS."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-      "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
-      "what": "Current-source high stationary final-state control."
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "58139034ceaabce15c2b3c27dfffe222afd6792d995e04a59365527f8987694c",
+      "what": "Low-tier competent native control, completed route and matching final state."
     },
     {
-      "file": "docs/reports/fix55-c/L10-11-boundaries.json",
-      "sha256": "79e8cabc4f9cfe8f808a8df9428886782801eb7baacc8fa1f34f7582b6341a00",
-      "what": "Ten exact-boundary and missing-evidence controls (119.99/120/160/160.01 seconds and absent proof)."
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "e52449cea4498bef15a3be26fe8e93808c2b0c823bc24d8771f3a7e7204cf7ee",
+      "what": "High-tier competent native control, completed route and matching final state."
     }
   ],
-  "notes": "The current measured FAIL is retained for explicit review; no acceptance target or timing was changed."
+  "notes": "Fresh exact-criterion review supersedes the earlier arrival-time FAIL. Values are measured against the unchanged 120\u2013160 s target."
 }
