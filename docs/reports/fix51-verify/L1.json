@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L1",
-  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
-  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T06:43:36.710Z",
+  "generatedAt": "2026-11-06T12:00:58.476Z",
   "policies": [
     {
       "tier": "low",
@@ -639,7 +639,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -970,7 +970,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -1111,14 +1111,14 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":6090,\"stationaryFarTicks\":1023,\"upperBoundPercent\":16.798029556650246,\"followers\":[{\"id\":83,\"escortTicks\":6090,\"stationaryFarTicks\":1023}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":6090,\"stationaryFarTicks\":1023,\"upperBoundPercent\":16.798029556650246,\"followers\":[{\"id\":83,\"escortTicks\":6090,\"stationaryFarTicks\":1023}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review PASS (FRESH, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":6090,\"stationaryFarTicks\":1023,\"upperBoundPercent\":16.798029556650246,\"followers\":[{\"id\":83,\"escortTicks\":6090,\"stationaryFarTicks\":1023}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":6090,\"stationaryFarTicks\":1023,\"upperBoundPercent\":16.798029556650246,\"followers\":[{\"id\":83,\"escortTicks\":6090,\"stationaryFarTicks\":1023}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
@@ -1133,6 +1133,7 @@
         "docs/reports/fix68-g/G-13-final-source.json",
         "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
         "docs/reports/fix68-g/threat-final/manifest.json",
+        "docs/reports/fix68-g/L3-retirement-fix.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -1220,7 +1221,7 @@
         "status": "PASS",
         "reviewer": "fix68-g/Codex",
         "date": "2026-11-06",
-        "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
@@ -1276,23 +1277,31 @@
           },
           {
             "file": "docs/reports/fix68-g/G-13-final-source.json",
-            "sha256": "4745a9359b95895dd5bb178230a7b73e69fd5bd8ea975a622699fa1c3469effc",
+            "sha256": "288c720cfb683f40371aa07e34c7404e8ef15aa982ea2f4843f1a4a24e1b31c5",
             "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
             "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
-            "sha256": "fdbf3218bfdd5da05edcdf741163015873c1db642fa3444f52b03ab69705c2ff",
+            "sha256": "2074090064937eeb357bf9e167ac16cedf424dd902835343cb48efd45f04b4e1",
             "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
             "file": "docs/reports/fix68-g/threat-final/manifest.json",
             "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
             "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+            "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+            "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
           }
         ],
-        "notes": "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "notes": [
+          "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -1367,7 +1376,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -1515,7 +1524,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -2294,7 +2303,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -2382,7 +2391,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -2470,7 +2479,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     }
   ],
@@ -2718,7 +2727,7 @@
         ],
         "notes": "This is the source criterion’s simulation check. Animals are excluded from human count; even that stricter census meets50–60. Existing whole-native-run census53/60 also passes.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -2836,7 +2845,7 @@
         ],
         "notes": "Native complete InputFrames only reach pickup, then no injected input. Current scene does not qualify unassisted navigation. No performance timing.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -3056,7 +3065,7 @@
         ],
         "notes": "Before receipt proves ignored stale visual review. Add exact-clause mapping only; no game/criterion change. No physical-route or performance claim. Prior PROD source0c410e111 is comparison only.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -3656,7 +3665,7 @@
         ],
         "notes": "Fresh ordinary complete InputFrames in real pooled headless browsers; both renderers and qualities. Every-tick six-second ledger. Fixed presentation-only doorway inspection pose; zoom1.5 setting does not qualify alternate gameplay framing. No relocation, protection or performance timing. Native actual crossing/heading proof remains independent.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -8168,7 +8177,7 @@
         ],
         "notes": "No game change. Native encounter trials are mortal and have no spawn/relocation/protection. Separate browser tour is protected only for visual observation; it does not supply the80percent count.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -8394,7 +8403,7 @@
         ],
         "notes": "No game change. Native complete input prefix obtains parcel only; all bike tests use physical page.keyboard WASD/E. Explicit read-only coordinate assistance means these are not screen-only navigation proof. No performance timing.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -9076,7 +9085,7 @@
         ],
         "notes": "Read-only coordinate assistance explicitly declared, native input only for ordinary parcel pickup prefix. No teleport, navigation injection, protection or objective skip. No unassisted readability or frame-performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -9548,7 +9557,7 @@
         ],
         "notes": "No game changes. Native source unchanged; first native command completed trajectories but failed reading sparse historical baseline; exact git object restored and full probe rerun successfully. Camera-only inspection disclosed, no fake mortal or unassisted-navigation claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -9642,7 +9651,7 @@
         ],
         "notes": "Incoming courier damage suppressed for mechanical presentation only, infected AI untouched. Visible Get-in text is qualified; no recorded Get-in voice or mortal difficulty claim. No game/criterion change.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
@@ -9700,7 +9709,7 @@
         ],
         "notes": "Only the fresh first run decides the threshold. Excluded diagnostics are disclosed in the lane README. A physical-input replay reached a different ordinary pose; its9-action scoped follow-up is not stitched to this run or counted toward timing, and the unused replay feature was reverted. No counts, timers, caps or criterion changed. Raw images deleted after SHA/observation recording.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "d9914996a97c6e9ec8e014d7adef1123b9b4d0f9"
       }
     },
     {
