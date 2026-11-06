@@ -542,9 +542,6 @@ export class CrowdView extends Group {
       // every combat scene so the first settled blast victims cannot link it
       // synchronously during play. Waiting for this batch also guarantees the
       // intact corpse geometry exists before the loading draw.
-      // The first L10 blast settles a whole cast at once. Warm its existing
-      // all-limb mask too, rather than baking dozens of small pages in one frame.
-      const blastParts = this.world.scenario === 'L10' && !this.low ? crowdLimbParts(!!model.getObjectByName('legFL')).flat() : undefined;
       if (lod === 'lod2' || alpha && lod === 'lod0') {
         // vqa-fix-3 (Q-124): the Mega falls face down like the Alpha. Its side fall read as a red lump at the game camera; prone,
         // the splayed legs, arms and spine ridge read as a fallen giant.
@@ -553,13 +550,11 @@ export class CrowdView extends Group {
         for (const death of deaths) {
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
           this.staticCorpses.prepare(`${key}:${death}:0`, source, material, corpseClip, frame);
-          if (blastParts) this.staticCorpses.prepare(`${key}:${death}:31`, source, material, corpseClip, frame, false, blastParts);
         }
       }
       if (lod === 'lod1' && (regularInfectedModels.some(id => id === asset) || this.world.scenario === 'L4' && human && !alpha)) for (const death of corpsePoses) {
         const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
         this.staticCorpses.prepare(`${key}:${death}:0:near`, mesh.geometry, material, baked.clip, frame, true);
-        if (blastParts) this.staticCorpses.prepare(`${key}:${death}:31:near`, mesh.geometry, material, baked.clip, frame, true, blastParts);
       }
   }
   private modelKey(id: string): string | undefined {
@@ -735,7 +730,10 @@ export class CrowdView extends Group {
           const nearBatch = regularInfectedModels.some(id => id === def.asset) || this.world.scenario === 'L4' && !batch.animal && !alphaLookAssets.includes(def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
           const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
-          const mask = this.goreEnabled ? (feedback?.mask ?? 0) | (b.legLost ? 4 : 0) : 0;
+          // vqa-fix-7 (P1-117): the code above kept applying the blast mask anyway, so every L10 rocket victim froze as a
+          // limbless, headless torso: the red/navy "triangle shards" on the apron. Only a gameplay leg loss (the crawler)
+          // stays on the body; transient blast/gunshot dismemberment lives in the gib VFX, not in the permanent corpse.
+          const mask = this.goreEnabled && b.legLost ? 4 : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           continue;
