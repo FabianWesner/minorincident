@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:36:03.062Z",
+  "generatedAt": "2026-11-06T03:41:23.448Z",
   "policies": [
     {
       "tier": "low",
@@ -6525,14 +6525,725 @@
       "id": "L10-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[119],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS); high/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[122],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS) Manual review FAIL (STALE, Codex fix53-c): Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification.",
+      "value": "low/complete observed ordinary cruise ratio to nominal player run: {\"ratio\":0.6999999999970896,\"samples\":734} (target 0.7× run ±2%; ordinary moving far-pursuit samples exclude specials; PASS); low/complete continuous same-ID pursuit without LOS or teleport: {\"ids\":[119],\"maxStepMetres\":0.40000000000028435,\"longestFarStallSeconds\":0,\"blindMovingSamples\":450,\"relocations\":[{\"tick\":60977,\"writer\":\"special.swept-contact\",\"metres\":0.04798806900016943},{\"tick\":60978,\"writer\":\"special.swept-contact\",\"metres\":0.13587734778025157},{\"tick\":60979,\"writer\":\"special.swept-contact\",\"metres\":0.13363519148707292},{\"tick\":60980,\"writer\":\"special.swept-contact\",\"metre… (full values in JSON) (target one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s; PASS); low/complete actual paired roar/impact intervals: {\"gaps\":[28.066666666666666,20,25.733333333333334,22.933333333333334,21.233333333333334,25.883333333333333,25.066666666666666,27.083333333333332,27.466666666666665,22.716666666666665,26.766666666666666,22.466666666666665,28.366666666666667,29.033333333333335,32.05,30.15,27.85,30.45,31.433333333333334,21.25,29.316666666666666,24.933333333333334,29.433333333333334,26.316666666666666,33.55,21.8833333… (full values in JSON) (target nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate; PASS); low/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[119],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS); high/complete observed ordinary cruise ratio to nominal player run: {\"ratio\":0.6999999999970896,\"samples\":712} (target 0.7× run ±2%; ordinary moving far-pursuit samples exclude specials; PASS); high/complete continuous same-ID pursuit without LOS or teleport: {\"ids\":[122],\"maxStepMetres\":0.4519557679316073,\"longestFarStallSeconds\":0,\"blindMovingSamples\":469,\"relocations\":[],\"nonContactRelocations\":[]} (target one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s; PASS); high/complete actual paired roar/impact intervals: {\"gaps\":[28.066666666666666,20,25.733333333333334,22.933333333333334,21.233333333333334,25.883333333333333,25.066666666666666,27.083333333333332,27.466666666666665,22.716666666666665,26.766666666666666,22.466666666666665,28.366666666666667,29.033333333333335,32.05,30.15,27.85,30.45,31.433333333333334,21.25,29.316666666666666,24.933333333333334,29.433333333333334,26.316666666666666,33.55,21.8833333… (full values in JSON) (target nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate; PASS); high/stationary persistent Mega identity without scheduled replacement or teleport: {\"ids\":[122],\"relocations\":[]} (target one persistent ID; zero scheduled relocations (E32-AC21); PASS) Manual review FAIL (STALE, Codex fix53-c): Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix56-c/L10-pursuit.json",
         "docs/reports/fix51-verify/receipts/L10-hold.json",
         "docs/reports/fix53-c/L10-hold-before.json"
       ],
       "expected": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 6× catch-up on the final delivery approach, vqa-fix-2) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
       "checks": [
+        {
+          "id": "L10-07",
+          "clause": "observed ordinary cruise ratio to nominal player run",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ratio": 0.6999999999970896,
+            "samples": 734
+          },
+          "target": "0.7× run ±2%; ordinary moving far-pursuit samples exclude specials",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "continuous same-ID pursuit without LOS or teleport",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              119
+            ],
+            "maxStepMetres": 0.40000000000028435,
+            "longestFarStallSeconds": 0,
+            "blindMovingSamples": 450,
+            "relocations": [
+              {
+                "tick": 60977,
+                "writer": "special.swept-contact",
+                "metres": 0.04798806900016943
+              },
+              {
+                "tick": 60978,
+                "writer": "special.swept-contact",
+                "metres": 0.13587734778025157
+              },
+              {
+                "tick": 60979,
+                "writer": "special.swept-contact",
+                "metres": 0.13363519148707292
+              },
+              {
+                "tick": 60980,
+                "writer": "special.swept-contact",
+                "metres": 0.13106236172744679
+              },
+              {
+                "tick": 60981,
+                "writer": "special.swept-contact",
+                "metres": 0.12811849112201742
+              },
+              {
+                "tick": 60982,
+                "writer": "special.swept-contact",
+                "metres": 0.12476100858585684
+              },
+              {
+                "tick": 60983,
+                "writer": "special.swept-contact",
+                "metres": 0.12094594267236672
+              },
+              {
+                "tick": 60984,
+                "writer": "special.swept-contact",
+                "metres": 0.11662906097017905
+              },
+              {
+                "tick": 60985,
+                "writer": "special.swept-contact",
+                "metres": 0.11176738815020243
+              },
+              {
+                "tick": 60986,
+                "writer": "special.swept-contact",
+                "metres": 0.10632112432949825
+              },
+              {
+                "tick": 60987,
+                "writer": "special.swept-contact",
+                "metres": 0.10025595107736818
+              },
+              {
+                "tick": 60988,
+                "writer": "special.swept-contact",
+                "metres": 0.09354566372336974
+              },
+              {
+                "tick": 60989,
+                "writer": "special.swept-contact",
+                "metres": 0.08617500712186502
+              }
+            ],
+            "nonContactRelocations": []
+          },
+          "target": "one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "actual paired roar/impact intervals",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "gaps": [
+              28.066666666666666,
+              20,
+              25.733333333333334,
+              22.933333333333334,
+              21.233333333333334,
+              25.883333333333333,
+              25.066666666666666,
+              27.083333333333332,
+              27.466666666666665,
+              22.716666666666665,
+              26.766666666666666,
+              22.466666666666665,
+              28.366666666666667,
+              29.033333333333335,
+              32.05,
+              30.15,
+              27.85,
+              30.45,
+              31.433333333333334,
+              21.25,
+              29.316666666666666,
+              24.933333333333334,
+              29.433333333333334,
+              26.316666666666666,
+              33.55,
+              21.883333333333333,
+              21.833333333333332,
+              21.733333333333334,
+              20.433333333333334,
+              34.1,
+              31.45,
+              27.916666666666668,
+              26.416666666666668,
+              23.5
+            ],
+            "events": [
+              {
+                "type": "mega.cue",
+                "tick": 5401,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 119.37333755479696
+              },
+              {
+                "type": "mega.cue",
+                "tick": 5401,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 119.37333755479696
+              },
+              {
+                "type": "mega.cue",
+                "tick": 7085,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 175.64438883562948
+              },
+              {
+                "type": "mega.cue",
+                "tick": 7085,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 175.64438883562948
+              },
+              {
+                "type": "mega.cue",
+                "tick": 8285,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 207.04831563989958
+              },
+              {
+                "type": "mega.cue",
+                "tick": 8285,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 207.04831563989958
+              },
+              {
+                "type": "mega.cue",
+                "tick": 9829,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 207.1307305552826
+              },
+              {
+                "type": "mega.cue",
+                "tick": 9829,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 207.1307305552826
+              },
+              {
+                "type": "mega.cue",
+                "tick": 11205,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 226.76437508738601
+              },
+              {
+                "type": "mega.cue",
+                "tick": 11205,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 226.76437508738601
+              },
+              {
+                "type": "mega.cue",
+                "tick": 12479,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 239.91798360359536
+              },
+              {
+                "type": "mega.cue",
+                "tick": 12479,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 239.91798360359536
+              },
+              {
+                "type": "mega.cue",
+                "tick": 14032,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 255.28642040574664
+              },
+              {
+                "type": "mega.cue",
+                "tick": 14032,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 255.28642040574664
+              },
+              {
+                "type": "mega.cue",
+                "tick": 15536,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 276.56876162510645
+              },
+              {
+                "type": "mega.cue",
+                "tick": 15536,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 276.56876162510645
+              },
+              {
+                "type": "mega.cue",
+                "tick": 17161,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 318.486186845888
+              },
+              {
+                "type": "mega.cue",
+                "tick": 17161,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 318.486186845888
+              },
+              {
+                "type": "mega.cue",
+                "tick": 18809,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 388.9721621431839
+              },
+              {
+                "type": "mega.cue",
+                "tick": 18809,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 388.9721621431839
+              },
+              {
+                "type": "mega.cue",
+                "tick": 20172,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 345.0022419484862
+              },
+              {
+                "type": "mega.cue",
+                "tick": 20172,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 345.0022419484862
+              },
+              {
+                "type": "mega.cue",
+                "tick": 21778,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 368.16107133732095
+              },
+              {
+                "type": "mega.cue",
+                "tick": 21778,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 368.16107133732095
+              },
+              {
+                "type": "mega.cue",
+                "tick": 23126,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 334.53307449397255
+              },
+              {
+                "type": "mega.cue",
+                "tick": 23126,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 334.53307449397255
+              },
+              {
+                "type": "mega.cue",
+                "tick": 24828,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 351.4934233868648
+              },
+              {
+                "type": "mega.cue",
+                "tick": 24828,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 351.4934233868648
+              },
+              {
+                "type": "mega.cue",
+                "tick": 26570,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 412.5068779326373
+              },
+              {
+                "type": "mega.cue",
+                "tick": 26570,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 412.5068779326373
+              },
+              {
+                "type": "mega.cue",
+                "tick": 28493,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 445.0851262666949
+              },
+              {
+                "type": "mega.cue",
+                "tick": 28493,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 445.0851262666949
+              },
+              {
+                "type": "mega.cue",
+                "tick": 30302,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 499.0636105579116
+              },
+              {
+                "type": "mega.cue",
+                "tick": 30302,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 499.0636105579116
+              },
+              {
+                "type": "mega.cue",
+                "tick": 31973,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 522.3810569229539
+              },
+              {
+                "type": "mega.cue",
+                "tick": 31973,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 522.3810569229539
+              },
+              {
+                "type": "mega.cue",
+                "tick": 33800,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 511.27381497016916
+              },
+              {
+                "type": "mega.cue",
+                "tick": 33800,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 511.27381497016916
+              },
+              {
+                "type": "mega.cue",
+                "tick": 35686,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 537.6892686480983
+              },
+              {
+                "type": "mega.cue",
+                "tick": 35686,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 537.6892686480983
+              },
+              {
+                "type": "mega.cue",
+                "tick": 36961,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 550.7140421595557
+              },
+              {
+                "type": "mega.cue",
+                "tick": 36961,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 550.7140421595557
+              },
+              {
+                "type": "mega.cue",
+                "tick": 38720,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 480.6320348183592
+              },
+              {
+                "type": "mega.cue",
+                "tick": 38720,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 480.6320348183592
+              },
+              {
+                "type": "mega.cue",
+                "tick": 40216,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 188.85264702575677
+              },
+              {
+                "type": "mega.cue",
+                "tick": 40216,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 188.85264702575677
+              },
+              {
+                "type": "mega.cue",
+                "tick": 41982,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.80751688492958
+              },
+              {
+                "type": "mega.cue",
+                "tick": 41982,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.80751688492958
+              },
+              {
+                "type": "mega.cue",
+                "tick": 43561,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.9482966145384
+              },
+              {
+                "type": "mega.cue",
+                "tick": 43561,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.9482966145384
+              },
+              {
+                "type": "mega.cue",
+                "tick": 45574,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.809973228345
+              },
+              {
+                "type": "mega.cue",
+                "tick": 45574,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.809973228345
+              },
+              {
+                "type": "mega.cue",
+                "tick": 46887,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 200.00117341089052
+              },
+              {
+                "type": "mega.cue",
+                "tick": 46887,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 200.00117341089052
+              },
+              {
+                "type": "mega.cue",
+                "tick": 48197,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.92886593391793
+              },
+              {
+                "type": "mega.cue",
+                "tick": 48197,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.92886593391793
+              },
+              {
+                "type": "mega.cue",
+                "tick": 49501,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 180.98929393150257
+              },
+              {
+                "type": "mega.cue",
+                "tick": 49501,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 180.98929393150257
+              },
+              {
+                "type": "mega.cue",
+                "tick": 50727,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 168.69009631303757
+              },
+              {
+                "type": "mega.cue",
+                "tick": 50727,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 168.69009631303757
+              },
+              {
+                "type": "mega.cue",
+                "tick": 52773,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.97193572791778
+              },
+              {
+                "type": "mega.cue",
+                "tick": 52773,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.97193572791778
+              },
+              {
+                "type": "mega.cue",
+                "tick": 54660,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.958593181787
+              },
+              {
+                "type": "mega.cue",
+                "tick": 54660,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.958593181787
+              },
+              {
+                "type": "mega.cue",
+                "tick": 56335,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.90148944068702
+              },
+              {
+                "type": "mega.cue",
+                "tick": 56335,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.90148944068702
+              },
+              {
+                "type": "mega.cue",
+                "tick": 57920,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 129.4505807128116
+              },
+              {
+                "type": "mega.cue",
+                "tick": 57920,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 129.4505807128116
+              },
+              {
+                "type": "mega.cue",
+                "tick": 59330,
+                "sourceId": 119,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 85.36469058500738
+              },
+              {
+                "type": "mega.cue",
+                "tick": 59330,
+                "sourceId": 119,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 85.36469058500738
+              }
+            ]
+          },
+          "target": "nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
+        },
         {
           "id": "L10-07",
           "clause": "persistent Mega identity without scheduled replacement or teleport",
@@ -6548,6 +7259,667 @@
           },
           "target": "one persistent ID; zero scheduled relocations (E32-AC21)",
           "receipt": "docs/reports/fix51-verify/receipts/L10-hold.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "observed ordinary cruise ratio to nominal player run",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ratio": 0.6999999999970896,
+            "samples": 712
+          },
+          "target": "0.7× run ±2%; ordinary moving far-pursuit samples exclude specials",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "continuous same-ID pursuit without LOS or teleport",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "ids": [
+              122
+            ],
+            "maxStepMetres": 0.4519557679316073,
+            "longestFarStallSeconds": 0,
+            "blindMovingSamples": 469,
+            "relocations": [],
+            "nonContactRelocations": []
+          },
+          "target": "one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
+        },
+        {
+          "id": "L10-07",
+          "clause": "actual paired roar/impact intervals",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "gaps": [
+              28.066666666666666,
+              20,
+              25.733333333333334,
+              22.933333333333334,
+              21.233333333333334,
+              25.883333333333333,
+              25.066666666666666,
+              27.083333333333332,
+              27.466666666666665,
+              22.716666666666665,
+              26.766666666666666,
+              22.466666666666665,
+              28.366666666666667,
+              29.033333333333335,
+              32.05,
+              30.15,
+              27.85,
+              30.45,
+              31.433333333333334,
+              21.25,
+              29.316666666666666,
+              24.933333333333334,
+              29.433333333333334,
+              26.316666666666666,
+              33.55,
+              21.883333333333333,
+              21.833333333333332,
+              21.733333333333334,
+              20.433333333333334,
+              34.1,
+              31.45,
+              27.916666666666668,
+              26.416666666666668,
+              23.5,
+              27.25
+            ],
+            "events": [
+              {
+                "type": "mega.cue",
+                "tick": 5401,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 118.9586452170241
+              },
+              {
+                "type": "mega.cue",
+                "tick": 5401,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 118.9586452170241
+              },
+              {
+                "type": "mega.cue",
+                "tick": 7085,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 174.99669704385326
+              },
+              {
+                "type": "mega.cue",
+                "tick": 7085,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 174.99669704385326
+              },
+              {
+                "type": "mega.cue",
+                "tick": 8285,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 210.8928222540101
+              },
+              {
+                "type": "mega.cue",
+                "tick": 8285,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 210.8928222540101
+              },
+              {
+                "type": "mega.cue",
+                "tick": 9829,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 213.89884784126028
+              },
+              {
+                "type": "mega.cue",
+                "tick": 9829,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 213.89884784126028
+              },
+              {
+                "type": "mega.cue",
+                "tick": 11205,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 242.15849417942817
+              },
+              {
+                "type": "mega.cue",
+                "tick": 11205,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 242.15849417942817
+              },
+              {
+                "type": "mega.cue",
+                "tick": 12479,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 240.43103796768423
+              },
+              {
+                "type": "mega.cue",
+                "tick": 12479,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 240.43103796768423
+              },
+              {
+                "type": "mega.cue",
+                "tick": 14032,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 280.19619465121673
+              },
+              {
+                "type": "mega.cue",
+                "tick": 14032,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 280.19619465121673
+              },
+              {
+                "type": "mega.cue",
+                "tick": 15536,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 307.8508973540791
+              },
+              {
+                "type": "mega.cue",
+                "tick": 15536,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 307.8508973540791
+              },
+              {
+                "type": "mega.cue",
+                "tick": 17161,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 334.2603192650574
+              },
+              {
+                "type": "mega.cue",
+                "tick": 17161,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 334.2603192650574
+              },
+              {
+                "type": "mega.cue",
+                "tick": 18809,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 428.22155410503234
+              },
+              {
+                "type": "mega.cue",
+                "tick": 18809,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 428.22155410503234
+              },
+              {
+                "type": "mega.cue",
+                "tick": 20172,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 386.2651388702178
+              },
+              {
+                "type": "mega.cue",
+                "tick": 20172,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 386.2651388702178
+              },
+              {
+                "type": "mega.cue",
+                "tick": 21778,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 412.83549235044393
+              },
+              {
+                "type": "mega.cue",
+                "tick": 21778,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 412.83549235044393
+              },
+              {
+                "type": "mega.cue",
+                "tick": 23126,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 380.0137044443723
+              },
+              {
+                "type": "mega.cue",
+                "tick": 23126,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 380.0137044443723
+              },
+              {
+                "type": "mega.cue",
+                "tick": 24828,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 399.9967514025558
+              },
+              {
+                "type": "mega.cue",
+                "tick": 24828,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 399.9967514025558
+              },
+              {
+                "type": "mega.cue",
+                "tick": 26570,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 429.7298500469486
+              },
+              {
+                "type": "mega.cue",
+                "tick": 26570,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 429.7298500469486
+              },
+              {
+                "type": "mega.cue",
+                "tick": 28493,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 506.1873173996403
+              },
+              {
+                "type": "mega.cue",
+                "tick": 28493,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 506.1873173996403
+              },
+              {
+                "type": "mega.cue",
+                "tick": 30302,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 505.9609348074557
+              },
+              {
+                "type": "mega.cue",
+                "tick": 30302,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 505.9609348074557
+              },
+              {
+                "type": "mega.cue",
+                "tick": 31973,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 586.9510077605777
+              },
+              {
+                "type": "mega.cue",
+                "tick": 31973,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 586.9510077605777
+              },
+              {
+                "type": "mega.cue",
+                "tick": 33800,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 580.312722312365
+              },
+              {
+                "type": "mega.cue",
+                "tick": 33800,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 580.312722312365
+              },
+              {
+                "type": "mega.cue",
+                "tick": 35686,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 610.7787107259245
+              },
+              {
+                "type": "mega.cue",
+                "tick": 35686,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 610.7787107259245
+              },
+              {
+                "type": "mega.cue",
+                "tick": 36961,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 632.3624653142376
+              },
+              {
+                "type": "mega.cue",
+                "tick": 36961,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 632.3624653142376
+              },
+              {
+                "type": "mega.cue",
+                "tick": 38720,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 523.4389954624937
+              },
+              {
+                "type": "mega.cue",
+                "tick": 38720,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 523.4389954624937
+              },
+              {
+                "type": "mega.cue",
+                "tick": 40216,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 258.0802464145223
+              },
+              {
+                "type": "mega.cue",
+                "tick": 40216,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 258.0802464145223
+              },
+              {
+                "type": "mega.cue",
+                "tick": 41982,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "distant",
+                "distance": 200.01774289195248
+              },
+              {
+                "type": "mega.cue",
+                "tick": 41982,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "distant",
+                "distance": 200.01774289195248
+              },
+              {
+                "type": "mega.cue",
+                "tick": 43561,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.8307408829962
+              },
+              {
+                "type": "mega.cue",
+                "tick": 43561,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.8307408829962
+              },
+              {
+                "type": "mega.cue",
+                "tick": 45574,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.78007680585546
+              },
+              {
+                "type": "mega.cue",
+                "tick": 45574,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.78007680585546
+              },
+              {
+                "type": "mega.cue",
+                "tick": 46887,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.8769656393056
+              },
+              {
+                "type": "mega.cue",
+                "tick": 46887,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.8769656393056
+              },
+              {
+                "type": "mega.cue",
+                "tick": 48197,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.91271511469577
+              },
+              {
+                "type": "mega.cue",
+                "tick": 48197,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.91271511469577
+              },
+              {
+                "type": "mega.cue",
+                "tick": 49501,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 186.23787390996984
+              },
+              {
+                "type": "mega.cue",
+                "tick": 49501,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 186.23787390996984
+              },
+              {
+                "type": "mega.cue",
+                "tick": 50727,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 166.66780669063985
+              },
+              {
+                "type": "mega.cue",
+                "tick": 50727,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 166.66780669063985
+              },
+              {
+                "type": "mega.cue",
+                "tick": 52773,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.99292838818445
+              },
+              {
+                "type": "mega.cue",
+                "tick": 52773,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.99292838818445
+              },
+              {
+                "type": "mega.cue",
+                "tick": 54660,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.97468910802812
+              },
+              {
+                "type": "mega.cue",
+                "tick": 54660,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.97468910802812
+              },
+              {
+                "type": "mega.cue",
+                "tick": 56335,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 199.76841386920586
+              },
+              {
+                "type": "mega.cue",
+                "tick": 56335,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 199.76841386920586
+              },
+              {
+                "type": "mega.cue",
+                "tick": 57920,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 146.74863190877463
+              },
+              {
+                "type": "mega.cue",
+                "tick": 57920,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 146.74863190877463
+              },
+              {
+                "type": "mega.cue",
+                "tick": 59330,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "approaching",
+                "distance": 87.50113294528059
+              },
+              {
+                "type": "mega.cue",
+                "tick": 59330,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "approaching",
+                "distance": 87.50113294528059
+              },
+              {
+                "type": "mega.cue",
+                "tick": 60965,
+                "sourceId": 122,
+                "kind": "roar",
+                "band": "near",
+                "distance": 18.923399525527174
+              },
+              {
+                "type": "mega.cue",
+                "tick": 60965,
+                "sourceId": 122,
+                "kind": "impact",
+                "band": "near",
+                "distance": 18.923399525527174
+              }
+            ]
+          },
+          "target": "nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate",
+          "receipt": "docs/reports/fix56-c/L10-pursuit.json"
         },
         {
           "id": "L10-07",
