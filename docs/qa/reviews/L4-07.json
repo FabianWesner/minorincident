@@ -1,21 +1,21 @@
 {
   "row": "L4-07",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "c588315a96eb07fa312d9612f1b8b370403eda48",
+  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
   "clauses": [
     {
       "clause": "combat: reachable \u2265 90 % (no clumps locked at sheds/walls); passive first attack \u2264 10 s (measured 4.87 s); passive attacks \u2265 6/min (tune). PO: \"they are not attacking me\" / \"The Zombies are somehow locked there\". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap.",
       "verdict": "FAIL",
-      "note": "Both-tier complete/passive policies retain actual windup and bounded-path ledgers. High complete minimum reachable share89.1892% fails90%; low complete96%, passive98.63/98.68% pass. Passive first attacks9.333/7.367s pass10s. The stronger no-permanent-trap clause remains unproven (blocked IDs retained); FAIL is established independently by high complete reachability."
+      "note": "Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/rows/L4-07.json",
-      "sha256": "3db2303515087b97d226dbed82e84e2e1dfd2661c5e2e42fbe17f84690d5e24a",
-      "what": "Both-tier complete/passive policies retain actual windup and bounded-path ledgers. High complete minimum reachable share89.1892% fails90%; low complete96%, passive98.63/98.68% pass. Passive first attacks9.333/7.367s pass10s. The stronger no-permanent-trap clause remains unproven (blocked IDs retained); FAIL is established independently by high complete reachability."
+      "file": "docs/reports/fix67-b/L4-07-recheck.json",
+      "sha256": "c2dc0b94cf4c3bc660fb88a458baa46df63599c55ca6e0016e6a82022c40208a",
+      "what": "Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred."
     }
   ],
   "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."

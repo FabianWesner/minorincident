@@ -90,9 +90,11 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 
 /** The runner formerly near the new cellar exit patrols Lakeshore instead, keeping the relocated opening quiet.
  * Fixed infected starts are scattered in singles with a few authored pairs; low tier takes the first 100. */
-const l5AuthoredWanderers: readonly { at: P; n: number; alpha?: boolean }[] = [
+const l5AuthoredWanderers: readonly { at: P; lowAt?: P; n: number; alpha?: boolean }[] = [
   { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
-  { at: [-26, 40], n: 2 }, { at: [-40, -37.4], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
+  { at: [-26, 40], n: 2 },
+  // Low population uses the open northern street approach; high keeps its frontage.
+  { at: [-40, -37.4], lowAt: [-42, -41.5], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [10, 13], n: 1 },
   // PO 10-20 ("L5 feels quite empty"): retain these nine original lone shamblers.
   { at: [-46, -37.5], n: 1 }, { at: [36, -37.4], n: 1 }, { at: [-12, 43.6], n: 1 }, { at: [40, 28.5], n: 1 }, { at: [14, -24], n: 1 },
@@ -121,7 +123,7 @@ const l5StreetSingles = [...Array.from({ length: 296 }, (_, i) => {
   return { at: [l5StreetColumns[Math.floor(n / 24)], -46 + n % 24 * 4] as P, n: 1, spread: true };
 })].filter(({ at }) => l5ProtectedSpots.every(p => Math.hypot(p[0] - at[0], p[1] - at[1]) >= 8));
 const l5RescueStreetSingles = l5Survivors.flatMap(s => [-1, 1].map(side => ({ at: [s.ringAt[0] + side * 4.5, s.ringAt[1]] as P, n: 1, spread: true })));
-export const l5Wanderers: readonly { at: P; n: number; alpha?: boolean; spread?: boolean }[] = [...l5AuthoredWanderers, ...l5RescueStreetSingles, ...l5StreetSingles];
+export const l5Wanderers: readonly { at: P; lowAt?: P; n: number; alpha?: boolean; spread?: boolean }[] = [...l5AuthoredWanderers, ...l5RescueStreetSingles, ...l5StreetSingles];
 
 /** Fires still burning (E27 hazards: flame cards, ground light and a smoke column) and smoke columns of fires deep inside blocks. */
 export const l5Fires: readonly { at: P; r: number; deep?: boolean }[] = [

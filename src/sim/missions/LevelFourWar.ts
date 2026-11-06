@@ -746,8 +746,8 @@ export class LevelFourWar {
     }
   }
   /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
-  private spawnRoom(keep = 0): boolean {
-    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0);
+  private spawnRoom(keep = 0, slots = 1): boolean {
+    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0) - slots + 1;
     if (!(limit > 0)) return false;
     let count = 0;
     for (const e of this.world.entities.iterate()) if ((!e.hidden || this.low) && e.health.current > 0 && (e.infected || e.civilian) && ++count >= limit) return false;
@@ -878,7 +878,7 @@ export class LevelFourWar {
       .sort((a, b) => dist(a.at, player) - dist(b.at, player));
     while (s.alarmPending > 0 && mouths.length) {
       // The alarm uses the same small exterior groups as the later streets.
-      // Nine/eighteen authored bodies leave in threes, never one bulk spawn.
+      // The authored alarm bodies leave in threes, never one bulk spawn.
       const mouth = mouths[Math.floor(s.alarmCursor / 3) % mouths.length];
       const lane = s.alarmCursor % 3, row = Math.floor(s.alarmCursor / (mouths.length * 3));
       const at = this.snap({ x: mouth.at.x + (lane - 1) * .9, z: mouth.at.z + row * .8 }, .45);
@@ -890,6 +890,13 @@ export class LevelFourWar {
     }
     return ids;
   }
+  private emergenceRoom(push = false, headroom: number = this.headroom(), reservedSlot = false): number {
+    const ai = this.infected;
+    const reserved = Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
+    const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
+    const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
+    return Math.max(0, Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve - ai.director.count);
+  }
   private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false, roster: readonly string[] = l4InfectedArchetypes): number {
     const { world } = this.mission, ai = this.infected;
     // Every authored pressure path shares this guard, including collapse-director flanks.
@@ -898,11 +905,7 @@ export class LevelFourWar {
     // Callers keep their pending count when no source is safe, so the group is
     // retried at a later eligible mouth instead of being dropped.
     if (!(ai.director.offscreen(at) || ai.director.occluded(at))) return 0;
-    const reserved = Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
-    const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
-    const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve;
-    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
+    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || !this.emergenceRoom(push, headroom, reservedSlot) || !ai.pool.length || this.inGap(at)) return 0;
     // These arrivals were already infected before entering the district.
     // Use the existing infected pool/model batches; real camp civilians still
     // turn in place with their own identity, clothes and accessories.
@@ -1006,7 +1009,13 @@ export class LevelFourWar {
           ? dist(a.at, p) - dist(b.at, p) || dist(a.at, { x: intended[0], z: intended[1] }) - dist(b.at, { x: intended[0], z: intended[1] }) || a.k - b.k
           : dist(a.at, { x: intended[0], z: intended[1] }) - dist(b.at, { x: intended[0], z: intended[1] }) || a.k - b.k);
       for (const { k, at } of eligible) {
-        const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`), size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)));
+        const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`);
+        const headroom = Math.max(this.headroom(), this.streetReserve() + groupReserve);
+        let size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)), this.emergenceRoom(false, headroom), ai.pool.length);
+        while (size >= w.group[0] && !this.spawnRoom(this.low ? 0 : ai.director.reserved, size)) size--;
+        // Keep the quota pending until a real small group fits. A single free
+        // slot or final one-body remainder must not consume the cohort cadence.
+        if (size < w.group[0]) continue;
         const defenders = this.liveSoldiers(), soldiers = defenders.filter(x => this.insideRing(x.transform));
         const soldier = soldiers.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
         // Keep half the cohorts on the courier; send the other half to an
@@ -1018,7 +1027,7 @@ export class LevelFourWar {
             : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
         let admitted = 0;
         for (let g = 0; g < size; g++) {
-          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }, false, Math.max(this.headroom(), this.streetReserve() + groupReserve)); if (!id) break;
+          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }, false, headroom); if (!id) break;
           admitted++;
           if (flank && target.id === flank.id) world.entities.get(id)!.infected!.l4FlankTarget = flank.id;
           s.pend[i]--; s.emergedIds.push(id); s.origin[id] = k;

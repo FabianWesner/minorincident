@@ -1,0 +1,30 @@
+{
+  "trialOnly": true,
+  "lowAlarm": 12,
+  "seconds": 65,
+  "policy": "complete then release controls in war, same as native stationary",
+  "census": {
+    "tier": "low",
+    "holdComplete": false,
+    "firstBreachLevelSeconds": 52.71666666666667,
+    "firstBreachAfterTurnSeconds": 19.9,
+    "aliveAtFirstBreach": 62,
+    "peakAlive": 75,
+    "peakPlazaAlive": 71,
+    "minPlazaAliveAfter45Seconds": null,
+    "samplesAfter45Seconds": 0,
+    "arrivalEdges": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "threeDirectionsAtLeast60Degrees": true,
+    "maxGroupAtOneSourcePerTick": 5,
+    "firstAttackSeconds": 8.283333333333333,
+    "lineBreakAfterTurnSeconds": null
+  },
+  "note": "Exploratory isolated-process config override, not a source-qualified acceptance receipt. Existing low alarm9 is overridden to12, run stops65sim seconds. Final full hold required."
+}

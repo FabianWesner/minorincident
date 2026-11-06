@@ -1,0 +1,26 @@
+{
+  "row": "L4-05",
+  "status": "FAIL",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "5203fa9e3035d8d79e90263fcbbe299671a0fde5",
+  "clauses": [
+    {
+      "clause": "Infected arrive from \u2265 3 street edges \u2265 60\u00b0 apart and through wall breaches, staggered groups of 2\u20135 (not bulk); **none from tents/inside buildings**.",
+      "verdict": "FAIL",
+      "note": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L4-05-proof.json",
+      "sha256": "81cc834b360aefa10d3140d6d3581dcb039cced3e96d14e1371b0807f8d32142",
+      "what": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+    },
+    {
+      "file": "docs/reports/sweep-b/L4-cohorts.json.gz",
+      "sha256": "12bc9b2a5f268723eed3377c0812c09f71fa5d71316e63138847c88a53293ab9",
+      "what": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+    }
+  ]
+}

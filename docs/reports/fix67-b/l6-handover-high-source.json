@@ -1,0 +1,44 @@
+{
+  "sourceHash": "ef2aed8867a9170a6be806a440f413c66e12404109f59d726afc18d82c3728c2",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "d666e4893913e0cd1416815a1b5b56cdf10cfc78",
+  "run": {
+    "level": "L5",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 233.85,
+    "deaths": 1,
+    "kills": 112,
+    "damageTaken": 175,
+    "failures": {
+      "player-died": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "emerge",
+        "t": 1
+      },
+      {
+        "id": "look",
+        "t": 187.08333333333334
+      },
+      {
+        "id": "metro",
+        "t": 233.85
+      }
+    ],
+    "furthestObjective": "metro",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 376,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  }
+}

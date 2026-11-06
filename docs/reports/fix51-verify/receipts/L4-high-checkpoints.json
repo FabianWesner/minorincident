@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "arrival",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "cf981ff64741e0e651abeff57b6ab8a61ff1b1b815985e4e4acfe417f08cea81",
+        "snapshotSha256": "276c9089e955f9f3052e6d0acdae4d0ca4a12e70d9ddd8b3a6ffc43a5d8c2796",
         "damage": 100,
         "expected": {
           "id": "arrival",
@@ -99,7 +99,7 @@
       "value": {
         "checkpoint": "turn",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "28e8fb80a9be7957b1b0a04ece5133298d9e02bd889bdaf8c2eafcb46b4e141d",
+        "snapshotSha256": "2487cc3128a5f9e3706dd7e142307be8a1e85459eb7362f7b592b62c714699ea",
         "damage": 100,
         "expected": {
           "id": "turn",
@@ -178,15 +178,15 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "cfee38453532fd1dfdbcbfd6840a588586193fc9393df011fbae24695164a95e",
+        "snapshotSha256": "33c6acac1a33f3202724fddb7bfe5a8b52821ba1667474905d5291aaeb57bd1a",
         "damage": 100,
         "expected": {
           "id": "line-1",
           "anchor": {
             "x": -20,
-            "y": 0.7100002765655518,
+            "y": 0.7049999833106995,
             "z": -2,
-            "yaw": 2.53062810869592
+            "yaw": -3.1396797605968922
           },
           "gates": {},
           "racks": {
@@ -199,8 +199,6 @@
           },
           "followers": [],
           "pickups": [
-            127,
-            128,
             129,
             130,
             131,
@@ -215,7 +213,7 @@
             140
           ],
           "removedPickups": [
-            126
+            128
           ],
           "cure": false
         },
@@ -253,11 +251,11 @@
       "clause": "mortal checkpoint restore at L4/nests",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "bf4181e9dc5a3f8ea1423e0489e251a2f21fb77ee540c18d6c9644fd8d5e7933",
+        "snapshotSha256": "e15ff97392cafcb9f26f455b832e392d963c53ad3f561d0bbc114523516a3a54",
         "damage": 100,
         "expected": {
           "id": "nests",
@@ -265,7 +263,7 @@
             "x": -9.8,
             "y": 0.7099999785423279,
             "z": -16.5,
-            "yaw": 1.6856249444955436
+            "yaw": 2.769143013423666
           },
           "gates": {},
           "racks": {
@@ -278,8 +276,6 @@
           },
           "followers": [],
           "pickups": [
-            127,
-            128,
             129,
             130,
             131,
@@ -294,15 +290,15 @@
             140
           ],
           "removedPickups": [
-            126
+            128
           ],
           "cure": false
         },
         "observed": {
           "id": "nests",
           "position": {
-            "x": -11,
-            "z": 16
+            "x": -9.8,
+            "z": -16.5
           },
           "gates": {},
           "racks": {
@@ -320,7 +316,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 32.52214630063643,
+        "positionError": 0,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -336,7 +332,7 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "299f9aa57a20a52124a7dfd7ede86d837426d364a6f0d2ea599a2596aaa5d73e",
+        "snapshotSha256": "0f010c803b921afd43989de64cc0ebf5e51ec72bef72cb96dbe9e46ae3593b34",
         "damage": 100,
         "expected": {
           "id": "armor",
@@ -344,7 +340,7 @@
             "x": -11,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": 2.941366768213776
+            "yaw": 2.854637406610814
           },
           "gates": {},
           "racks": {
@@ -357,9 +353,6 @@
           },
           "followers": [],
           "pickups": [
-            127,
-            128,
-            129,
             130,
             131,
             132,
@@ -373,7 +366,7 @@
             140
           ],
           "removedPickups": [
-            126
+            129
           ],
           "cure": false
         },
@@ -415,7 +408,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "ada83c6b78e4741a269539e3c51cbbec1a0447bc1344893ab8b3eadd27016d3e",
+        "snapshotSha256": "02ac6ea0d0c5839e8a38ca0fe938972196b77fa094a5260f6cf1ed45a009feee",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -423,7 +416,7 @@
             "x": -4,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": 2.9841817422750307
+            "yaw": -3.1386299995505254
           },
           "gates": {},
           "racks": {
@@ -436,9 +429,6 @@
           },
           "followers": [],
           "pickups": [
-            127,
-            128,
-            129,
             130,
             131,
             132,
@@ -452,7 +442,7 @@
             140
           ],
           "removedPickups": [
-            126
+            129
           ],
           "cure": false
         },
@@ -488,8 +478,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "6f55579b",
-    "control": "6f55579b",
+    "observed": "28229920",
+    "control": "28229920",
     "identical": true
   }
 }

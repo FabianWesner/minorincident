@@ -1,0 +1,26 @@
+{
+  "sourceHash": "4037c7440d3e6094f446910b5c16e2fbefa51476a0c3dd65f2dcd31c253ca39a",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "8210b0f6c1f2cf1c12102c565a468ed9890aa677",
+  "row": "L5-12",
+  "result": "SCOPED PASS: renderer submissions; compound row remains FAIL",
+  "producer": "tools/qa/fix67-b-l5-metro.ts",
+  "producerSha256": "96184bca603d1d5c0a98cc6b6083ca13dcf5e0b0fcd9f3b560d601fb99ad5933",
+  "rows": [
+    {
+      "tier": "low",
+      "peakDrawn": 24,
+      "peakFeetAndHeadInFrame": 21,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "peakDrawn": 24,
+      "peakFeetAndHeadInFrame": 21,
+      "errors": []
+    }
+  ],
+  "scope": "Ordinary mortal completed routes, actual low/high renderer, existing three-second arrival period, fixed game-camera angle and player zoom. 24 submitted and 21 fully projected identities is not proof of 21 unoccluded pixels; HUD/edge occlusion remains. Personally inspected all eight captures. Closed views show overlapping followers at the shutter, so the compound row remains FAIL. No counts or timers changed.",
+  "ledger": "docs/reports/fix67-b/l5-metro-ledger.json.gz",
+  "ledgerSha256": "23faf2422ef7f2c15d93c62a3ba5d95c193ff3e1853ad1d67fe94c87f3024171"
+}

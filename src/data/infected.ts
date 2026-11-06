@@ -2,7 +2,7 @@ import { l1v2 } from './l1v2';
 /** PO 10-10: every infected spawns with 50% more HP. */
 export const INFECTED_TOUGHNESS = 1.5;
 /** L4 riot shield response: front shots chip, build strain, then expose the bearer briefly. */
-export const riotShieldResponse = { chipFraction: .18, faceHalfAngleDeg: 35, breakStress: 350, breakTicks: 90, recoilM: .08 } as const;
+export const riotShieldResponse = { chipFraction: .18, faceHalfAngleDeg: 35, breakStress: 80, breakTicks: 90, recoilM: .08 } as const;
 /** Infected balance in metres/seconds/HP, from concept §7. Human roles and animals share one brain. */
 export interface InfectedDef {
   /** Shared world-space health bar; healthy animals never qualify. */

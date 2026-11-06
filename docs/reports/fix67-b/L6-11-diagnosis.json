@@ -1,0 +1,21 @@
+{
+  "row": "L6-11",
+  "status": "FAIL",
+  "observation": "Current actual complete-policy bites all occur beyond weapon range; first is59.5m from courier. A visible in-range biter-priority bug was not found. Two unchanged-count/cap experiments with the existing12m cover distance failed to meet60% survivors: gate-only still1/29; continuous column wait4/29 and292.4sim seconds. Both source trials were reverted. Current game and benchmark retain their prior values; further work needs a retreat/combat design change beyond this local pause condition.",
+  "trace": "docs/reports/fix67-b/l6-cover-before.json.gz",
+  "traceSha256": "b7954e7b03375c7ded74388da21e6109b795a9480edbf990a110ce0f388aa61e",
+  "trials": [
+    {
+      "scope": "At gates only: pause when courier is more than existing12m cover distance behind column tail.",
+      "sha256": "28e7ce4f4cba6071fe9fc927774de74492ddab737e188589f89b9a6c2cd0ac7d",
+      "output": "low {\"run\":{\"level\":\"L6\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":278.71666666666664,\"deaths\":0,\"kills\":26,\"damageTaken\":90,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"shelter\",\"t\":33.2},{\"id\":\"stop\",\"t\":69.21666666666667},{\"id\":\"retreat\",\"t\":269.15},{\"id\":\"exit\",\"t\":278.71666666666664}],\"furthestObjective\":\"exit\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":147,\"deferred\":0,\"requests\":[],\"offenders\":[]}},\"result\":{\"in\":29,\"out\":1,\"lost\":28}}\nhigh {\"run\":{\"level\":\"L6\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":278.71666666666664,\"deaths\":0,\"kills\":26,\"damageTaken\":90,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"shelter\",\"t\":33.2},{\"id\":\"stop\",\"t\":69.21666666666667},{\"id\":\"retreat\",\"t\":269.15},{\"id\":\"exit\",\"t\":278.71666666666664}],\"furthestObjective\":\"exit\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":147,\"deferred\":0,\"requests\":[],\"offenders\":[]}},\"result\":{\"in\":29,\"out\":1,\"lost\":28}}\n",
+      "retained": false
+    },
+    {
+      "scope": "Throughout retreat: pause when courier is more than existing12m cover distance behind column tail.",
+      "sha256": "2cf8c9f34682fbb59f5eb7f3e9fb426c44372a32c977db61a20f276ce1301e3c",
+      "output": "low {\"run\":{\"level\":\"L6\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":292.4,\"deaths\":0,\"kills\":33,\"damageTaken\":120,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"shelter\",\"t\":33.2},{\"id\":\"stop\",\"t\":69.21666666666667},{\"id\":\"retreat\",\"t\":283.01666666666665},{\"id\":\"exit\",\"t\":292.4}],\"furthestObjective\":\"exit\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":144,\"deferred\":0,\"requests\":[],\"offenders\":[]}},\"result\":{\"in\":29,\"out\":4,\"lost\":25}}\nhigh {\"run\":{\"level\":\"L6\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":292.4,\"deaths\":0,\"kills\":33,\"damageTaken\":120,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"shelter\",\"t\":33.2},{\"id\":\"stop\",\"t\":69.21666666666667},{\"id\":\"retreat\",\"t\":283.01666666666665},{\"id\":\"exit\",\"t\":292.4}],\"furthestObjective\":\"exit\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":144,\"deferred\":0,\"requests\":[],\"offenders\":[]}},\"result\":{\"in\":29,\"out\":4,\"lost\":25}}\n",
+      "retained": false
+    }
+  ]
+}

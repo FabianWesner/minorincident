@@ -1,5 +1,6 @@
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
+import { l5 as l5Config } from '../data/l5';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { l2RescueView } from '../data/l2';
@@ -720,6 +721,12 @@ export class GameView implements Lifecycle {
         }
         const pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
         if (!metro.shutterAt && pet?.companion && !pet.hidden) { x += pet.transform.x; z += pet.transform.z; n++; }
+        // Introduce the waiting community during its existing three-second
+        // arrival view, keeping the same game-camera angle and player zoom.
+        if (!metro.shutterAt && this.world.tick < metro.metroAt + l5Config.metro.occupantViewS * 60) for (const id of metro.stationIds) {
+          const resident = this.world.entities.get(id);
+          if (resident && !resident.hidden) { x += resident.transform.x; z += resident.transform.z; n++; }
+        }
         // Group centre (stragglers still on the street), then just inside the shutter (leaf and the group behind it); the courier
         // stays within a quarter radius of that target.
         x = metro.shutterAt ? door.x : x / n; z = metro.shutterAt ? door.z - 1.2 : z / n;

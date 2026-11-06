@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "arrival",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "d5826fec37a3088e7e20cd358c49494743ba0c18228a8780a0b2c8da9ce4b766",
+        "snapshotSha256": "e52fe8f0ac03171d324f84c6b7a2212a972371cb519fde23238f13fd74531028",
         "damage": 100,
         "expected": {
           "id": "arrival",
@@ -99,7 +99,7 @@
       "value": {
         "checkpoint": "turn",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "52ad449520ad4341523b5a19b60c4060fc7194704b069f15c7e88cc082007986",
+        "snapshotSha256": "444df4b472cc85078eba9db380f7160d23133f3d4377e3ff7ce17b8610887d08",
         "damage": 100,
         "expected": {
           "id": "turn",
@@ -178,7 +178,7 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "5c0da218e1bc1c95c722aaf4ebeaa4d77fda117a6a819faa78d6a57357d57617",
+        "snapshotSha256": "cf5259259ab9dcdfb2be1929d358279b65fce549901f2ffc8eeaee341f9c61f0",
         "damage": 100,
         "expected": {
           "id": "line-1",
@@ -186,7 +186,7 @@
             "x": -20,
             "y": 0.7099999785423279,
             "z": -2,
-            "yaw": -2.4756490974200283
+            "yaw": -1.6347464801305447
           },
           "gates": {},
           "racks": {
@@ -257,7 +257,7 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "06f45f18d752ecc88cf5688e7d80ae8617132bd5864dc8b176232001d689c754",
+        "snapshotSha256": "f75a4f6d7c5de8f50d583eed6365436165caf9ba91803589dc71fe665a6b707e",
         "damage": 100,
         "expected": {
           "id": "nests",
@@ -265,7 +265,7 @@
             "x": -11,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": -1.5813684257463219
+            "yaw": -2.8204642566675706
           },
           "gates": {},
           "racks": {
@@ -336,15 +336,15 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "9ce89d070d4a513d3fb01ba3b98c6ebdbd562080350abb25f9baf169540e2ea3",
+        "snapshotSha256": "b59595055e564ebaa11ad508c7aa1bdc31ef3c0328e90051bfedccdf803cf9f8",
         "damage": 100,
         "expected": {
           "id": "armor",
           "anchor": {
             "x": -11,
-            "y": 0.7099999785423279,
+            "y": 0.7049990296363831,
             "z": 16,
-            "yaw": -1.3463819745651129
+            "yaw": -1.49486363813472
           },
           "gates": {},
           "racks": {
@@ -381,7 +381,7 @@
           "id": "armor",
           "position": {
             "x": -11,
-            "z": 16.75
+            "z": 16
           },
           "gates": {},
           "racks": {
@@ -399,7 +399,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0.75,
+        "positionError": 0,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -415,7 +415,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "a3bd77456daa8cf561dd4245cf36398d3de658f662411719252af81bc9f37ffb",
+        "snapshotSha256": "ebad72575308d7383601457affc1fdaffccce03a40a8ba26dc0410f68901ddad",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -423,7 +423,7 @@
             "x": -4,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": -2.70162571470151
+            "yaw": -1.1975038270032965
           },
           "gates": {},
           "racks": {
@@ -488,8 +488,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "1a99e716",
-    "control": "1a99e716",
+    "observed": "f218248e",
+    "control": "f218248e",
     "identical": true
   }
 }

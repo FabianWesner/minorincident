@@ -1,0 +1,228 @@
+{
+  "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
+  "codeCommit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "status": "UNRESOLVED INTRODUCED REGRESSION",
+  "row": "L5-05",
+  "baselineMinimumBoundedPercent": 100,
+  "finalMinimumBoundedPercent": 87.5,
+  "targetMinimumPercent": 90,
+  "isolation": [
+    {
+      "trial": "old-truck-only",
+      "minimumBoundedPercent": 100
+    },
+    {
+      "trial": "old-spread-only",
+      "minimumBoundedPercent": 87.5
+    }
+  ],
+  "currentChecks": [
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 149.76666666666668,
+        "playerWindups": 8,
+        "groupWindups": 0,
+        "attacksPerMinute": 3.2049855330514134
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 3.2049855330514134,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": 87.5,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5.462110198498627,
+      "target": "1 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 228.35,
+        "playerWindups": 762,
+        "groupWindups": 0,
+        "attacksPerMinute": 200.2189621195533
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 0.18333333333333332,
+        "windowSeconds": 228.35
+      },
+      "target": "\u226420 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 200.2189621195533,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 165.33333333333334,
+        "playerWindups": 12,
+        "groupWindups": 0,
+        "attacksPerMinute": 4.354838709677419
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.354838709677419,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 8.502462039178354,
+      "target": "1 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 228.35,
+        "playerWindups": 974,
+        "groupWindups": 0,
+        "attacksPerMinute": 255.92292533391722
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 0.2,
+        "windowSeconds": 228.35
+      },
+      "target": "\u226420 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 255.92292533391722,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    }
+  ],
+  "evidence": {
+    "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+    "sha256": "7373476156eb73d47b7ffe6f45068328640fdd9d21e4d25748163e7c971a05d0"
+  },
+  "next": "Repair the relocated-crater navigation/placement effect while preserving tank clearance and L5 pressure. The fuel-truck changes are not merge-ready as a complete fix."
+}

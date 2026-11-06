@@ -1,31 +1,31 @@
 {
   "row": "L6-12",
-  "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "63aabdf0f84e2366e0ed026435a47ed53c91c701",
+  "commit": "e7db9a4bf1f46f3fb3906655f8888ffe32fe6308",
   "clauses": [
     {
       "clause": "Northgate is solid when closed and drawn open when passable; night caption \"Night. Still alive.\"; end shot frames the scene; result counts match the objective.",
-      "verdict": "FAIL",
-      "note": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+      "verdict": "PASS",
+      "note": "Both qualities: actual production closed/open Rapier capsule probes pass. Personally reviewed all12 current WebGL2 exit-fixture frames: passage is drawn open before closure; silver closed leaf appears at closure; Night. Still alive. is readable; settled end shot frames courier and exit street. Active game clock runs uninterrupted until actual result, whose displayed29 out /29 in /0 lost agrees with all29 original fixture identities. No real-route rescue-rate claim: this is an explicit exit fixture; the numeric result and native complete accounting are distinct from L6-11 protection."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L6-12-proof.json",
-      "sha256": "99f05a4401026ff56b1a49bba0692d19f41df7690e3bc0ba0583cf3a4ce6192a",
-      "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+      "file": "docs/reports/fix67-b/L6-12-qualification.json",
+      "sha256": "edeaf2d27c7e5a34f9a10224c8e85b2881d10d4b4af3d3d1aeea993bd98b8413",
+      "what": "Both qualities: actual production closed/open Rapier capsule probes pass. Personally reviewed all12 current WebGL2 exit-fixture frames: passage is drawn open before closure; silver closed leaf appears at closure; Night. Still alive. is readable; settled end shot frames courier and exit street. Active game clock runs uninterrupted until actual result, whose displayed29 out /29 in /0 lost agrees with all29 original fixture identities. No real-route rescue-rate claim: this is an explicit exit fixture; the numeric result and native complete accounting are distinct from L6-11 protection."
+    },
+    {
+      "file": "docs/reports/fix67-b/northgate-active-ledger.json.gz",
+      "sha256": "ecc5ab6bde12109089bf299a8ae8ede287439fe371478e51890cda70e2f12871",
+      "what": "Original active-clock browser state/capture ledger at both tiers."
     },
     {
       "file": "docs/reports/sweep-b/L6-northgate.json",
-      "sha256": "e97b825ff46792700514a05254c6fe6fb8e0191c6196a5b9d262dd9bbd0fede6",
-      "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
-    },
-    {
-      "file": "docs/reports/sweep-b/L6-render-initial-review.json",
-      "sha256": "e4d0e2d421c4226edc0736a828d9ce831be6ee253230f9a12c88344ec634a949",
-      "what": "Both tiers: actual production Northgate closure creates a slab spanning worldy0\u20132.5m while the supported exit body centre is4.62m. The production Rapier player capsule traverses the full requested6m across x258 both before and after actual gate closure. The native fixture retains every original29-person identity; production controller, not a test-spawned leaf, creates the gate. Reviewed browser frames draw its closed leaf and the Night. Still alive caption, confirming a visual/collision mismatch. Capsule computation bypasses cinematic input locking only. This counterexample closes FAIL; end-camera and full-route result clauses are not promoted to PASS."
+      "sha256": "56175da8af0198b0cd2f81c0b0602073429d041a94b60441e2371b88021b786a",
+      "what": "Production mission closure and real Rapier capsule before/after sweep at both tiers."
     }
   ]
 }

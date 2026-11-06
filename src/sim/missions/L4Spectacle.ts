@@ -197,7 +197,7 @@ export class L4Spectacle {
     const truck = this.world.entities.get(s.fuelId);
     if (truck) { truck.hidden = true; const crater = spawnSetPiece(this.world, 'decay.fuel-truck-crater', { ...l4FuelCrater, y: .7 }); s.craterId = crater.id; }
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: 900_450, blocked: false, wall: { x: f.x, y: 1, z: f.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
-    this.shatter({ x: f.x, z: f.z }, 48);
+    this.shatter({ x: f.x, z: f.z }, 60);
   }
   /** Shockwave glass: a broken-glass decal at every frontage within `radius` of a blast (once per frontage, at most 16). */
   shatter(at: Point, radius: number): void {

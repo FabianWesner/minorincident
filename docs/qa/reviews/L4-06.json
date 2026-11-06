@@ -1,21 +1,21 @@
 {
   "row": "L4-06",
-  "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "4321c37573da59b9e1dcf7d1610f67ed370be0bd",
+  "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
   "clauses": [
     {
       "clause": "**Horde present:** first breach into the plaza at ~45 s (level clock, \u00b115 s) with \u2265 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza \u2265 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
-      "verdict": "FAIL",
-      "note": "Both-tier passive census measured: first physical breach52.7167s; low58 alive fails unchanged minimum60, high65 passes. Sustained post45s plaza minima65/72 pass minimum40. No tuning or criterion change; whole row FAIL on low breach census."
+      "verdict": "PASS",
+      "note": "Final source: both stationary policies complete190s. First breach52.716667s,61 low/66 high alive; sustained plaza minima66/66. Original low59 fails\u226560. Alarm9\u219218; caps/timers/criteria unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/rows/L4-06.json",
-      "sha256": "9a350201ea858a9f38b256b3a50ef0c15325639a2fd8e53346d9c9816a7a2864",
-      "what": "Both-tier passive census measured: first physical breach52.7167s; low58 alive fails unchanged minimum60, high65 passes. Sustained post45s plaza minima65/72 pass minimum40. No tuning or criterion change; whole row FAIL on low breach census."
+      "file": "docs/reports/fix67-b/final-qualification.json",
+      "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
+      "what": "Final source: both stationary policies complete190s. First breach52.716667s,61 low/66 high alive; sustained plaza minima66/66. Original low59 fails\u226560. Alarm9\u219218; caps/timers/criteria unchanged."
     }
   ],
   "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
