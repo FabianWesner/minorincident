@@ -3767,7 +3767,7 @@
   ],
   "limits": [
     "No whole-row zero-defect sign-off: scripted transitions override requested zooms; two L6 low exit images are black transition frames.",
-    "L10 high first branch stops at research campus; one production-save retry is pending.",
+    "L10 high retry reaches actual cure release and137s epilogue but production-save Resume fails localStorage quota; whole console route remains incomplete.",
     "Every used vehicle transition/occluder pose is not continuously rendered/inspected."
   ],
   "poReview": [
@@ -3780,6 +3780,512 @@
       "tag": "P",
       "file": "test-results/sweep-g/G-25-final-L6-low-webgl2/captures/accept-L6-shelter-t627-low-z1-5.jpg",
       "what": "Strong gold foreground contour at wide shelter/night views makes courier pale; source courierDepth intentionally adds emissive gold contour. Needs judgement against original pale-in-fog finding."
+    }
+  ],
+  "retryEvidence": [
+    {
+      "captureManifest": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch2-captures.json",
+      "sha256": "3d37be8298d25552511a52f20301725a3c1c57ab69ba7f37b287fe8b765d5c35",
+      "frames": [
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-checkpoint-yield.json",
+          "tick": 27752,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-cure-t18696-high-z0-5.json",
+          "tick": 18696,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-cure-t18696-high-z1-5.json",
+          "tick": 18696,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-destroyed-corridor-t20304-high-z0-5.json",
+          "tick": 20304,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-destroyed-corridor-t20304-high-z1-5.json",
+          "tick": 20304,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-dispersal-complex-t22804-high-z0-5.json",
+          "tick": 22804,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-dispersal-complex-t22804-high-z1-5.json",
+          "tick": 22804,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-dispersal-complex-t26425-high-z0-5.json",
+          "tick": 26426,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-dispersal-complex-t26425-high-z1-5.json",
+          "tick": 26426,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t11435-high-z0-5.json",
+          "tick": 11435,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t11435-high-z1-5.json",
+          "tick": 11435,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t4219-high-z0-5.json",
+          "tick": 4219,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t4219-high-z1-5.json",
+          "tick": 4219,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t609-high-z0-5.json",
+          "tick": 610,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t609-high-z1-5.json",
+          "tick": 610,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t7825-high-z0-5.json",
+          "tick": 7826,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-campus-t7825-high-z1-5.json",
+          "tick": 7826,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-exit-t18896-high-z0-5.json",
+          "tick": 18896,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-exit-t18896-high-z1-5.json",
+          "tick": 18896,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-t12999-high-z0-5.json",
+          "tick": 12999,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-t12999-high-z1-5.json",
+          "tick": 12999,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-t16601-high-z0-5.json",
+          "tick": 16601,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-research-t16601-high-z1-5.json",
+          "tick": 16601,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t1.json",
+          "tick": 16,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t10845.json",
+          "tick": 10848,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t13557.json",
+          "tick": 13560,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t16260.json",
+          "tick": 16264,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t18980.json",
+          "tick": 18983,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t21688.json",
+          "tick": 21691,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t24402.json",
+          "tick": 24411,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t27104.json",
+          "tick": 27107,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t2719.json",
+          "tick": 2722,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t5425.json",
+          "tick": 5428,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch2/captures/accept-L10-t8130.json",
+          "tick": 8134,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        }
+      ],
+      "observation": "All saved photos reviewed; sampled heroine/corgi connected, heavy golden silhouette during crowd occlusion. No whole-row zero-defect sign-off."
+    },
+    {
+      "captureManifest": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3-captures.json",
+      "sha256": "df839fcfdd5e7db45ba3dcf553817235b92d4162854acd9fd64df49b364e989b",
+      "frames": [
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-checkpoint-yield.json",
+          "tick": 27991,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t4225-high-z0-5.json",
+          "tick": 4225,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t4225-high-z1-5.json",
+          "tick": 4225,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t618-high-z0-5.json",
+          "tick": 618,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t618-high-z1-5.json",
+          "tick": 618,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t7830-high-z0-5.json",
+          "tick": 7831,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-dispersal-complex-t7830-high-z1-5.json",
+          "tick": 7831,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t19756-high-z0-5.json",
+          "tick": 19758,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t19756-high-z1-5.json",
+          "tick": 19758,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t23359-high-z0-5.json",
+          "tick": 23360,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t23359-high-z1-5.json",
+          "tick": 23360,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t26972-high-z0-5.json",
+          "tick": 26973,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-epilogue-t26972-high-z1-5.json",
+          "tick": 26973,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-hold-t13709-high-z0-5.json",
+          "tick": 13709,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-hold-t13709-high-z1-5.json",
+          "tick": 13709,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-hold-t17321-high-z0-5.json",
+          "tick": 17328,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-hold-t17321-high-z1-5.json",
+          "tick": 17328,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-install-t12201-high-z0-5.json",
+          "tick": 12201,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-install-t12201-high-z1-5.json",
+          "tick": 12201,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-install-t8598-high-z0-5.json",
+          "tick": 8598,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-install-t8598-high-z1-5.json",
+          "tick": 8598,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-mega-t17566-high-z0-5.json",
+          "tick": 17571,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-mega-t17566-high-z1-5.json",
+          "tick": 17571,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-release-t18506-high-z0-5.json",
+          "tick": 18509,
+          "quality": "high",
+          "actualZoom": 0.5,
+          "targetZoom": 0.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-release-t18506-high-z1-5.json",
+          "tick": 18509,
+          "quality": "high",
+          "actualZoom": 1.5,
+          "targetZoom": 1.5
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t10853.json",
+          "tick": 10856,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t13585.json",
+          "tick": 13588,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t16286.json",
+          "tick": 16295,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t19044.json",
+          "tick": 19049,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t21756.json",
+          "tick": 21762,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t24458.json",
+          "tick": 24463,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t27173.json",
+          "tick": 27178,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t2721.json",
+          "tick": 2727,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t4.json",
+          "tick": 7,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t5429.json",
+          "tick": 5432,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        },
+        {
+          "file": "test-results/sweep-g/G-25-retry-L10-high-webgl2/batch3/captures/accept-L10-t8138.json",
+          "tick": 8141,
+          "quality": "high",
+          "actualZoom": 1.5000000000000002,
+          "targetZoom": 1.5000000000000002
+        }
+      ],
+      "observation": "All saved photos reviewed; sampled heroine/corgi connected, heavy golden silhouette during crowd occlusion. No whole-row zero-defect sign-off."
     }
   ]
 }
