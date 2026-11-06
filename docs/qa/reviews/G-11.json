@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "sweep-g/Codex",
   "date": "2026-11-06",
-  "commit": "ff10a70b0aa13136f9c9adfba21d0ed334d1715f",
+  "commit": "d6945beba8e279996e878593305b5806db9386e3",
   "clauses": [
     {
       "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
@@ -12,6 +12,21 @@
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-high.json",
+      "sha256": "4acf8341653c6c8439e0c70463a4dfe0e446878fd49bb305da71f436143f42ef",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-low.json",
+      "sha256": "be46ae710bb67ba3432952335a205d04ebecbf97cad7f07ced9faf6e868753ed",
+      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-11-final-captures.json",
+      "sha256": "3fda6e214c4703366675a6dbd79ef5895001fcf6d229442251a2573112aa12b6",
+      "what": "All four original frames viewed: yellow ring only around courier pickup; survivor-only handgun has no ring. Courier pickup absent after collection/return, survivor-only item remains. Native collection ledger retained."
+    },
     {
       "file": "docs/reports/sweep-g/G-11-webgl2-high.json",
       "sha256": "5d8d4632d508f4cdda17f857f8fe31be86a9ecdaf1906cf62e47d54684aff053",
@@ -33,5 +48,5 @@
       "what": "webgpu/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
     }
   ],
-  "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim."
+  "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
 }
