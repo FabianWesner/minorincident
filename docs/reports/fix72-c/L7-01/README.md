@@ -1,24 +1,28 @@
-# L7-01 — measured first-action timing FAIL
+# L7-01 — pickup and first physical rocket PASS
 
-The row remains open. Moving auto-pickup and the first physical rocket both work in both tiers, but the unchanged50ms frame gate fails in the authorized narrow quiet slot. No broad performance run or tuning was performed.
+The unchanged50ms quiet event gate passes after restoring the carried quality before asset loading and pipeline warm-up.
 
 | Tier | Auto-pickup max frame | First-shot max frame | Result |
 |---|---:|---:|---|
-| low | 749.9ms | 233.3ms | FAIL |
-| high | 33.4ms | 100ms | FAIL |
+| low |49.9ms|16.8ms|PASS|
+| high |50.0ms|16.8ms|PASS|
 
-The exclusive quiet runner admitted the slot with load below3 and no foreign browser/build/Blender/Vitest jobs. Both contexts ran sequentially through the shared headless browser pool, WebGL2/Metal. Each used the authentic carried campaign, ordinary unpaused production clock and real WASD auto-pickup without E, then Digit7/ShiftLMB. The launcher starts3m from the carried exit; actual collection is within2.2m. No god mode, bot driver, actor/HP/mission edits, manual simulation stepping, screenshot or forced render occurs before measurement. Every RAF interval and sampled physical input is retained in `low.json`/`high.json` with seed, source, producer and frame-probe digests.
+`Game.loadLevel` read the carried save quality to prepare NPCs, but did not restore it to the Quality controller. `GameUI.loaded()` applied that setting after warming assets. A carried low save could therefore warm the high-tier moon/light graph and replace it at the first playable frames. The final four-line fix restores the carried tier before that work. No authored populations, caps, damage, clocks, effects or frame thresholds change.
 
-Windows intersect100ms before through250ms after each actual event. Low’s749.9ms startup interval ends immediately before pickup, but a116.7ms interval also intersects actual pickup: the failure is not solely the first resumed frame. High pickup passes, while the first-shot window contains a100ms interval. No best-of retry or event-window narrowing was used. Normal loading already prewarms every loaded held weapon (including ground pickups) and projectile/VFX variants; no small safe missing-warmup cause was isolated. The measured FAIL remains instead of speculative game/performance changes.
+`quality-order-cause.json` pairs the same material ID/version, material/geometry cache keys and HDR context during loading and gameplay. The loading sun is visible; gameplay hides it and changes the dynamic key. Held-weapon swatches, height-step faces and blast materials then build again. The retained `loading-diagnostic/` is read-only node-builder logging plus short view-update timings around the same two actions. This gives a specific ordering cause, without a broad performance run.
 
-I personally viewed all4 images before deleting the raw JPEGs. Tight views show the courier holding the green launcher beside the wrecked army truck, Corgi and armed followers. Wide views also show the actual orange blast/shockwave among infected. HUD shows Rocket Launcher and100/100health; lower center has the briefing caption. The images establish presentation, not frame timing. `review.json` records each exact SHA and observation.
+## Physical receipt
 
-`l7-pickup-receipts.ts` adds the previously missing current-source physical/event-frame coverage to `qa:accept`, plus exact capture review checks. `fix72-c-l7-proof.mjs` rejects22 synthetic timing/mechanics/provenance counterexamples;50ms passes and50.01ms fails. Synthetic controls never replace the original measurements. The producer’s retained gate assertion is explicitly distinguished from a collection error; it remains a FAIL. Both fresh native L7 completion routes and all6 checkpoint checks pass; unrelated L7-09 remains failing.
+The exclusive quiet runner admits the slot at load<3 with no foreign browser/build/Blender/Vitest work. Both contexts run sequentially through the shared headless browser pool with WebGL2/Metal. Each restores its authentic carried campaign, uses ordinary unpaused production timing and real WASD auto-pickup without E, then Digit7/ShiftLMB. The launcher starts3m from the carried exit; collection is within2.2m. No god mode, bot driver, actor/HP/mission writes, manual simulation stepping, screenshot or forced render occurs before measurement.
 
-Next: diagnose the recorded first-action intervals using material/build and render-phase evidence in another authorized quiet slot, fix the proven game cause if small, then repeat the same gate and whole L7/L10 groups. This is not a closed L7-01 or a broad performance sign-off.
+Every RAF interval and sampled physical input is retained in `low.json`/`high.json`, with seed/source/producer/frame-probe SHA-256. The identical event windows intersect100ms before through250ms after each actual event. There is no50.1ms tolerance. `l7-pickup-receipts.ts` recomputes both event maxima and requires current provenance, actual moving collection, no E, original pickup removed, launcher in rack and a later physical rocket event.
 
-## Follow-up diagnosis (does not replace the original FAIL)
+I personally inspected all4 final captures. Tight views show the courier holding the green launcher next to the wrecked truck, Corgi and armed followers. Wide views also show the first orange blast/shockwave among infected. HUD says Rocket Launcher with100/100HP; the briefing caption overlays the lower center. Each exact image digest and observation is in `review.json`. Every raw JPEG was deleted after inspection and hash verification. Images establish presentation; intervals establish timing.
 
-A second short exclusive quiet physical-action probe adds only the existing renderer node-builder callback and view-update duration logging; it creates no screenshots and does not alter actors, inputs, warm-up or game code. It waits behind sweep-a3 in the shared pool, then receives quiet admission. Diagnostic receipts and exact producer digest are in `diagnostic/`; conditions in `diagnostic-admission.json`.
+The22 synthetic timing/mechanics/provenance fault controls pass, including50ms PASS /50.01ms FAIL. Synthetic intervals never replace measurements.
 
-The diagnostic still fails: low pickup/shot maxima50.1/50.1ms; high66.7/16.8ms. These instrumented values are not substituted for the original uninstrumented result. Low logs two late held-weapon swatches immediately after pickup (tick15), plus earlier/later ordinary corpse pages, accessories and blast/basic materials. High logs two ordinary corpse-page builds at tick8 before pickup14. This does not establish that the two separate rocket-body/exhaust meshes alone cause the gate failure. No speculative warm-up/light-list change was made; broad performance remains outside this brief. The original FAIL is retained.
+## Retained failures and rejected experiments
+
+`initial-fail/` preserves the original uninstrumented FAIL: low749.9/233.3ms, high33.4/100ms. `diagnostic/` and `diagnostic-mask/` retain subsequent narrow shader diagnoses. `warm-attempt/` records the unsuccessful tentative renderer change (low66.7/33.4ms, high50/16.8ms), with all4 captures personally reviewed and raw images deleted. `warm-diagnostic/` confirms that trial left the same late builds. Separating loading weapon clones, adding projectile clones, and staging nearby corpse LODs were removed completely. Only the loading quality ordering fix remains in the game.
+
+The final measurement is the first uninstrumented pair after the proved ordering fix, using the unchanged producer. The earlier failures are not discarded or selected out as a best-of sample. This is the requested narrow first-action qualification; no broad performance matrix or worst-of-N claim is made.

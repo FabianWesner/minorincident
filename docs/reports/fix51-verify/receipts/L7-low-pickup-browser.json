@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
   "fixtureHash": "5538445d7cec72bcc6a2065b7649668cb85127f42b4e30c1b5c09355bbc86953",
   "errors": [],
   "checks": [
@@ -11,7 +11,7 @@
       "clause": "physical launcher approach pickup and first rocket frame gate",
       "tier": "low",
       "policy": "physical-pickup",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "valid": true,
         "mechanics": true,
@@ -20,19 +20,19 @@
           {
             "event": "pickup.collected",
             "tick": 14,
-            "samples": 12,
+            "samples": 20,
             "valid": true,
-            "maxMs": 749.9000000000015
+            "maxMs": 49.899999999999636
           },
           {
             "event": "combat.attack",
-            "tick": 38,
-            "samples": 7,
+            "tick": 26,
+            "samples": 22,
             "valid": true,
-            "maxMs": 233.29999999999927
+            "maxMs": 16.800000000000182
           }
         ],
-        "frameGate": false
+        "frameGate": true
       },
       "target": "Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.",
       "receipt": "docs/reports/fix72-c/L7-01/low.json"

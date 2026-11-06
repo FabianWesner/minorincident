@@ -8,7 +8,7 @@ const identity = provenance(), bh = browserHash(), cases = [];
 for (const tier of ['low', 'high']) {
   const d = JSON.parse(readFileSync(`docs/reports/fix72-c/L7-01/${tier}.json`));
   const check = value => measurePickup(value, identity.sourceHash, bh);
-  const baseline = check(d); assert(baseline.valid && baseline.mechanics && !baseline.frameGate);
+  const baseline = check(d); assert(baseline.valid && baseline.mechanics && baseline.frameGate);
   const event = d.result.events.find(e => e.type === 'pickup.collected' && e.actionId === 'weapon.rocket-launcher');
   const frameIndex = d.result.frames.findIndex(f => f.playMs > 0 && f.at >= event.at && f.at - f.ms <= event.at + 250);
   assert(frameIndex >= 0);

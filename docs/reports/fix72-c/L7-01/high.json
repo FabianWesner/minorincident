@@ -1,7 +1,7 @@
 {
-  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
   "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
-  "revision": "3a0d07af852e6401babe2e4ef4e06e5110f66ff4",
+  "revision": "fc3c72cdc5e3f1b3928865d479c167cdb619e651",
   "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
   "toolSha256": "b4e3e4a3d4cd10dcc0bbffd5888829360c5bb7b9bc5a8cd5039ae95aa93ec66f",
   "probeSha256": "d0321021437018d7c2d87fc454c1bee207177d7cf7ec917bec57cfc1b2f72287",
@@ -80,7 +80,7 @@
         "side": "RIGHT",
         "actionId": "weapon.rocket-launcher",
         "replaced": null,
-        "at": 5540.10000038147,
+        "at": 4208.10000038147,
         "player": {
           "x": 273.8050842285156,
           "y": 4.619999885559082,
@@ -91,7 +91,7 @@
       },
       {
         "type": "combat.attack",
-        "tick": 25,
+        "tick": 26,
         "attackId": 1,
         "actionId": "weapon.rocket-launcher",
         "combo": 0,
@@ -101,18 +101,18 @@
           "x": 274.0871887207031,
           "y": 4.619999885559082,
           "z": 15.026885032653809,
-          "yaw": 3.141413673146081
+          "yaw": 3.141547435696816
         },
         "direction": {
-          "x": -0.9999994825753504,
-          "z": -0.0010172752977528178
+          "x": -0.9999993740845762,
+          "z": -0.0011188522940681696
         },
-        "at": 5708.900000572205,
+        "at": 4407.60000038147,
         "player": {
           "x": 274.0871887207031,
           "y": 4.619999885559082,
           "z": 15.026885032653809,
-          "yaw": 3.141413673146081
+          "yaw": 3.141547435696816
         },
         "moving": false
       }
@@ -305,7 +305,7 @@
           "z": 0
         },
         "interact": false,
-        "mouseAttack": true,
+        "mouseAttack": false,
         "driver": false
       },
       {
@@ -375,7 +375,7 @@
           "z": 0
         },
         "interact": false,
-        "mouseAttack": false,
+        "mouseAttack": true,
         "driver": false
       },
       {
@@ -727,14 +727,58 @@
         "interact": false,
         "mouseAttack": false,
         "driver": false
+      },
+      {
+        "tick": 61,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
+      },
+      {
+        "tick": 62,
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "interact": false,
+        "mouseAttack": false,
+        "driver": false
       }
     ],
-    "beginAt": 5278.700000762939,
-    "endAt": 6323.900000572205,
+    "beginAt": 3963.9000005722046,
+    "endAt": 5028.900000572205,
     "pickupId": 409,
     "frames": [
       {
-        "at": 21.8,
+        "at": 21.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.599999999999998,
+        "playMs": 0
+      },
+      {
+        "at": 38.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000003,
+        "playMs": 0
+      },
+      {
+        "at": 54.7,
         "level": null,
         "tick": -1,
         "phase": null,
@@ -746,19 +790,7 @@
         "playMs": 0
       },
       {
-        "at": 38.5,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 16.7,
-        "playMs": 0
-      },
-      {
-        "at": 55.2,
+        "at": 71.4,
         "level": null,
         "tick": -1,
         "phase": null,
@@ -770,7 +802,43 @@
         "playMs": 0
       },
       {
-        "at": 71.8,
+        "at": 88.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 221.4,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 133.3,
+        "playMs": 0
+      },
+      {
+        "at": 238.1,
+        "level": null,
+        "tick": -1,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 254.7,
         "level": null,
         "tick": -1,
         "phase": null,
@@ -782,79 +850,7 @@
         "playMs": 0
       },
       {
-        "at": 88.5,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 16.700000000000003,
-        "playMs": 0
-      },
-      {
-        "at": 105.1,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 16.599999999999994,
-        "playMs": 0
-      },
-      {
-        "at": 221.8,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 116.70000000000002,
-        "playMs": 0
-      },
-      {
-        "at": 238.5,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 16.69999999999999,
-        "playMs": 0
-      },
-      {
-        "at": 255.2,
-        "level": null,
-        "tick": -1,
-        "phase": null,
-        "loading": true,
-        "paused": true,
-        "x": 0,
-        "z": 0,
-        "ms": 16.69999999999999,
-        "playMs": 0
-      },
-      {
-        "at": 271.8,
-        "level": null,
-        "tick": 0,
-        "phase": null,
-        "loading": false,
-        "paused": false,
-        "x": 0,
-        "z": 0,
-        "ms": 16.600000000000023,
-        "playMs": 0
-      },
-      {
-        "at": 288.5,
+        "at": 271.4,
         "level": null,
         "tick": 0,
         "phase": null,
@@ -866,7 +862,19 @@
         "playMs": 0
       },
       {
-        "at": 305.2,
+        "at": 288.1,
+        "level": null,
+        "tick": 0,
+        "phase": null,
+        "loading": false,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 304.8,
         "level": null,
         "tick": 0,
         "phase": null,
@@ -878,7 +886,7 @@
         "playMs": 0
       },
       {
-        "at": 321.9,
+        "at": 321.4,
         "level": null,
         "tick": 0,
         "phase": null,
@@ -886,11 +894,11 @@
         "paused": false,
         "x": 0,
         "z": 0,
-        "ms": 16.69999999999999,
+        "ms": 16.599999999999966,
         "playMs": 0
       },
       {
-        "at": 338.5,
+        "at": 338,
         "level": "empty",
         "tick": 0,
         "phase": null,
@@ -902,43 +910,7 @@
         "playMs": 0
       },
       {
-        "at": 355.1,
-        "level": "empty",
-        "tick": 0,
-        "phase": null,
-        "loading": true,
-        "paused": false,
-        "x": 0,
-        "z": 0,
-        "ms": 16.600000000000023,
-        "playMs": 0
-      },
-      {
-        "at": 371.9,
-        "level": "empty",
-        "tick": 0,
-        "phase": null,
-        "loading": true,
-        "paused": false,
-        "x": 0,
-        "z": 0,
-        "ms": 16.799999999999955,
-        "playMs": 0
-      },
-      {
-        "at": 388.5,
-        "level": "empty",
-        "tick": 0,
-        "phase": null,
-        "loading": true,
-        "paused": false,
-        "x": 0,
-        "z": 0,
-        "ms": 16.600000000000023,
-        "playMs": 0
-      },
-      {
-        "at": 405.2,
+        "at": 354.7,
         "level": "empty",
         "tick": 0,
         "phase": null,
@@ -950,19 +922,31 @@
         "playMs": 0
       },
       {
-        "at": 421.8,
+        "at": 371.4,
         "level": "empty",
         "tick": 0,
         "phase": null,
         "loading": true,
-        "paused": true,
+        "paused": false,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 388,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": false,
         "x": 0,
         "z": 0,
         "ms": 16.600000000000023,
         "playMs": 0
       },
       {
-        "at": 438.5,
+        "at": 404.7,
         "level": "empty",
         "tick": 0,
         "phase": null,
@@ -974,7 +958,19 @@
         "playMs": 0
       },
       {
-        "at": 455.1,
+        "at": 421.4,
+        "level": "empty",
+        "tick": 0,
+        "phase": null,
+        "loading": true,
+        "paused": true,
+        "x": 0,
+        "z": 0,
+        "ms": 16.69999999999999,
+        "playMs": 0
+      },
+      {
+        "at": 438,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -986,7 +982,7 @@
         "playMs": 0
       },
       {
-        "at": 905.1,
+        "at": 871.4,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -994,11 +990,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 450,
+        "ms": 433.4,
         "playMs": 0
       },
       {
-        "at": 921.8,
+        "at": 888,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1006,11 +1002,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999932,
+        "ms": 16.600000000000023,
         "playMs": 0
       },
       {
-        "at": 955.2,
+        "at": 921.4,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1018,47 +1014,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 33.40000000000009,
+        "ms": 33.39999999999998,
         "playMs": 0
       },
       {
-        "at": 971.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 1038.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 66.60000000000014,
-        "playMs": 0
-      },
-      {
-        "at": 1105.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 66.69999999999982,
-        "playMs": 0
-      },
-      {
-        "at": 1121.8,
+        "at": 938.1,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1070,7 +1030,7 @@
         "playMs": 0
       },
       {
-        "at": 1155.1,
+        "at": 1004.7,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1078,35 +1038,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 33.299999999999955,
+        "ms": 66.60000000000002,
         "playMs": 0
       },
       {
-        "at": 1171.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1188.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1255.1,
+        "at": 1071.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1118,7 +1054,7 @@
         "playMs": 0
       },
       {
-        "at": 1271.8,
+        "at": 1121.4,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1126,143 +1062,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.700000000000045,
+        "ms": 50.100000000000136,
         "playMs": 0
       },
       {
-        "at": 1288.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1305.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1321.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1338.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1371.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 33.299999999999955,
-        "playMs": 0
-      },
-      {
-        "at": 1471.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 100,
-        "playMs": 0
-      },
-      {
-        "at": 1505.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 33.299999999999955,
-        "playMs": 0
-      },
-      {
-        "at": 1521.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1538.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1571.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 33.299999999999955,
-        "playMs": 0
-      },
-      {
-        "at": 1588.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1605.1,
+        "at": 1138,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1274,43 +1078,7 @@
         "playMs": 0
       },
       {
-        "at": 1621.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1638.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.799999999999955,
-        "playMs": 0
-      },
-      {
-        "at": 1655.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 1671.8,
+        "at": 1154.7,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -1322,727 +1090,7 @@
         "playMs": 0
       },
       {
-        "at": 1688.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1705.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1721.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1738.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1755.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1771.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1788.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1805.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1821.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1838.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1855.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 1871.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1888.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1905.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1921.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1938.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 1955.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 1971.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 1988.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 2005.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2021.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000045,
-        "playMs": 0
-      },
-      {
-        "at": 2038.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000136,
-        "playMs": 0
-      },
-      {
-        "at": 2055.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2071.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2088.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2105.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2121.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2138.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2155.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2171.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2188.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2205.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2221.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2238.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2255.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2271.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2288.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2305.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2321.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2338.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 2355.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2371.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 2388.5,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 2471.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.19999999999982,
-        "playMs": 0
-      },
-      {
-        "at": 2571.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 100,
-        "playMs": 0
-      },
-      {
-        "at": 2638.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 66.70000000000027,
-        "playMs": 0
-      },
-      {
-        "at": 2721.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.29999999999973,
-        "playMs": 0
-      },
-      {
-        "at": 2805.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.40000000000009,
-        "playMs": 0
-      },
-      {
-        "at": 2888.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.30000000000018,
-        "playMs": 0
-      },
-      {
-        "at": 3005.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 116.69999999999982,
-        "playMs": 0
-      },
-      {
-        "at": 3105,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 99.90000000000009,
-        "playMs": 0
-      },
-      {
-        "at": 3205.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 100.09999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 3288.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.30000000000018,
-        "playMs": 0
-      },
-      {
-        "at": 3305.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 3321.8,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 3405.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 83.29999999999973,
-        "playMs": 0
-      },
-      {
-        "at": 3505.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 100,
-        "playMs": 0
-      },
-      {
-        "at": 3538.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 33.30000000000018,
-        "playMs": 0
-      },
-      {
-        "at": 3555.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 3571.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.59999999999991,
-        "playMs": 0
-      },
-      {
-        "at": 3621.7,
+        "at": 1204.7,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2054,31 +1102,7 @@
         "playMs": 0
       },
       {
-        "at": 3638.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 3655.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 3671.7,
+        "at": 1221.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2090,7 +1114,7 @@
         "playMs": 0
       },
       {
-        "at": 3688.3,
+        "at": 1238,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2098,11 +1122,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 16.700000000000045,
         "playMs": 0
       },
       {
-        "at": 3805,
+        "at": 1254.7,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2110,47 +1134,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 116.69999999999982,
+        "ms": 16.700000000000045,
         "playMs": 0
       },
       {
-        "at": 3821.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 3838.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.700000000000273,
-        "playMs": 0
-      },
-      {
-        "at": 3855.1,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 3871.7,
+        "at": 1271.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2162,7 +1150,7 @@
         "playMs": 0
       },
       {
-        "at": 3888.3,
+        "at": 1288,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2170,11 +1158,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 16.700000000000045,
         "playMs": 0
       },
       {
-        "at": 3905,
+        "at": 1304.7,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2182,11 +1170,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 16.700000000000045,
         "playMs": 0
       },
       {
-        "at": 3921.7,
+        "at": 1321.4,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2194,11 +1182,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 16.700000000000045,
         "playMs": 0
       },
       {
-        "at": 3938.4,
+        "at": 1421.4,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2206,11 +1194,71 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.700000000000273,
+        "ms": 100,
         "playMs": 0
       },
       {
-        "at": 3955,
+        "at": 1454.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.299999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1488.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.399999999999864,
+        "playMs": 0
+      },
+      {
+        "at": 1504.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000136,
+        "playMs": 0
+      },
+      {
+        "at": 1538,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.299999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1554.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1571.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2222,7 +1270,151 @@
         "playMs": 0
       },
       {
-        "at": 3971.7,
+        "at": 1588,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1604.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1638,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1654.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1671.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1688,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1704.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 1721.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1738.1,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.799999999999955,
+        "playMs": 0
+      },
+      {
+        "at": 1754.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.600000000000136,
+        "playMs": 0
+      },
+      {
+        "at": 1771.4,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000045,
+        "playMs": 0
+      },
+      {
+        "at": 1788.1,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2234,7 +1426,7 @@
         "playMs": 0
       },
       {
-        "at": 4621.6,
+        "at": 1871.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2242,11 +1434,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 649.9000000000005,
+        "ms": 83.20000000000005,
         "playMs": 0
       },
       {
-        "at": 4638.3,
+        "at": 1988,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2254,11 +1446,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 116.70000000000005,
         "playMs": 0
       },
       {
-        "at": 4655,
+        "at": 2038,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2266,11 +1458,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 50,
         "playMs": 0
       },
       {
-        "at": 4671.7,
+        "at": 2121.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2278,11 +1470,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 83.30000000000018,
         "playMs": 0
       },
       {
-        "at": 4688.3,
+        "at": 2204.6,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2290,11 +1482,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 83.29999999999973,
         "playMs": 0
       },
       {
-        "at": 4705,
+        "at": 2288,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2302,11 +1494,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 83.40000000000009,
         "playMs": 0
       },
       {
-        "at": 4721.6,
+        "at": 2388,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2314,11 +1506,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 100,
         "playMs": 0
       },
       {
-        "at": 4738.3,
+        "at": 2487.9,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2326,11 +1518,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 99.90000000000009,
         "playMs": 0
       },
       {
-        "at": 4755,
+        "at": 2621.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2338,215 +1530,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.699999999999818,
+        "ms": 133.4000000000001,
         "playMs": 0
       },
       {
-        "at": 4771.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4788.3,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 4805,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4821.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4838.3,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 4855,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4871.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4888.3,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 4905,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4921.6,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 4938.4,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.799999999999272,
-        "playMs": 0
-      },
-      {
-        "at": 4955,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 4971.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 4988.3,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 5005,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 5121.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 116.69999999999982,
-        "playMs": 0
-      },
-      {
-        "at": 5138.3,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": true,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 0
-      },
-      {
-        "at": 5205,
+        "at": 2688,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2558,7 +1546,7 @@
         "playMs": 0
       },
       {
-        "at": 5221.6,
+        "at": 2738,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2566,11 +1554,59 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 50,
         "playMs": 0
       },
       {
-        "at": 5238.3,
+        "at": 2837.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 99.90000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2937.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 100,
+        "playMs": 0
+      },
+      {
+        "at": 2971.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 33.40000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 2987.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3004.6,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2582,7 +1618,427 @@
         "playMs": 0
       },
       {
-        "at": 5255,
+        "at": 3021.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3038,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3054.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3171.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 116.60000000000036,
+        "playMs": 0
+      },
+      {
+        "at": 3188,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3321.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 133.30000000000018,
+        "playMs": 0
+      },
+      {
+        "at": 3338,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3354.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3371.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3388,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3404.7,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3421.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.5,
+        "playMs": 0
+      },
+      {
+        "at": 3437.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3454.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3471.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3487.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3504.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3521.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3538,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3554.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3571.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3587.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3604.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3621.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3637.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3654.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3671.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3688,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.800000000000182,
+        "playMs": 0
+      },
+      {
+        "at": 3787.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 99.90000000000009,
+        "playMs": 0
+      },
+      {
+        "at": 3804.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3821.2,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3887.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 66.70000000000027,
+        "playMs": 0
+      },
+      {
+        "at": 3904.6,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.699999999999818,
+        "playMs": 0
+      },
+      {
+        "at": 3921.3,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": true,
+        "paused": false,
+        "x": 273,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 0
+      },
+      {
+        "at": 3937.9,
+        "level": "L7",
+        "tick": 0,
+        "phase": "playing",
+        "loading": false,
+        "paused": true,
+        "x": 273,
+        "z": 15,
+        "ms": 16.59999999999991,
+        "playMs": 0
+      },
+      {
+        "at": 3954.6,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2594,19 +2050,7 @@
         "playMs": 0
       },
       {
-        "at": 5271.7,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": false,
-        "paused": true,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 0
-      },
-      {
-        "at": 5288.3,
+        "at": 3971.3,
         "level": "L7",
         "tick": 0,
         "phase": "playing",
@@ -2614,23 +2058,11 @@
         "paused": false,
         "x": 273,
         "z": 15,
-        "ms": 16.600000000000364,
+        "ms": 16.700000000000273,
         "playMs": 0
       },
       {
-        "at": 5305,
-        "level": "L7",
-        "tick": 0,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 273,
-        "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
-      },
-      {
-        "at": 5321.6,
+        "at": 3988,
         "level": "L7",
         "tick": 1,
         "phase": "playing",
@@ -2638,11 +2070,11 @@
         "paused": false,
         "x": 273.010009765625,
         "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
       },
       {
-        "at": 5338.3,
+        "at": 4004.5,
         "level": "L7",
         "tick": 2,
         "phase": "playing",
@@ -2650,23 +2082,23 @@
         "paused": false,
         "x": 273.0299987792969,
         "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.5,
+        "playMs": 16.5
       },
       {
-        "at": 5354.9,
+        "at": 4021.3,
         "level": "L7",
-        "tick": 3,
+        "tick": 2,
         "phase": "playing",
         "loading": false,
         "paused": false,
-        "x": 273.05999755859375,
+        "x": 273.0299987792969,
         "z": 15,
-        "ms": 16.599999999999454,
-        "playMs": 16.599999999999454
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
       },
       {
-        "at": 5371.6,
+        "at": 4037.9,
         "level": "L7",
         "tick": 4,
         "phase": "playing",
@@ -2674,23 +2106,23 @@
         "paused": false,
         "x": 273.1000061035156,
         "z": 15,
-        "ms": 16.700000000000728,
-        "playMs": 16.700000000000728
+        "ms": 16.59999999999991,
+        "playMs": 16.59999999999991
       },
       {
-        "at": 5388.3,
+        "at": 4054.6,
         "level": "L7",
-        "tick": 5,
+        "tick": 4,
         "phase": "playing",
         "loading": false,
         "paused": false,
-        "x": 273.1499938964844,
+        "x": 273.1000061035156,
         "z": 15,
         "ms": 16.699999999999818,
         "playMs": 16.699999999999818
       },
       {
-        "at": 5405,
+        "at": 4071.2,
         "level": "L7",
         "tick": 6,
         "phase": "playing",
@@ -2698,11 +2130,23 @@
         "paused": false,
         "x": 273.2099914550781,
         "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.59999999999991,
+        "playMs": 16.59999999999991
       },
       {
-        "at": 5421.7,
+        "at": 4087.9,
+        "level": "L7",
+        "tick": 6,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 273.2099914550781,
+        "z": 15,
+        "ms": 16.700000000000273,
+        "playMs": 16.700000000000273
+      },
+      {
+        "at": 4104.6,
         "level": "L7",
         "tick": 7,
         "phase": "playing",
@@ -2710,11 +2154,11 @@
         "paused": false,
         "x": 273.2799987792969,
         "z": 15,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.700000000000273,
+        "playMs": 16.700000000000273
       },
       {
-        "at": 5438.3,
+        "at": 4154.6,
         "level": "L7",
         "tick": 9,
         "phase": "playing",
@@ -2722,35 +2166,23 @@
         "paused": false,
         "x": 273.4300231933594,
         "z": 15,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 50,
+        "playMs": 50
       },
       {
-        "at": 5471.6,
+        "at": 4187.9,
         "level": "L7",
-        "tick": 9,
+        "tick": 12,
         "phase": "playing",
         "loading": false,
         "paused": false,
-        "x": 273.4300231933594,
+        "x": 273.6550598144531,
         "z": 15,
-        "ms": 33.30000000000018,
-        "playMs": 33.30000000000018
+        "ms": 33.29999999999927,
+        "playMs": 33.29999999999927
       },
       {
-        "at": 5505,
-        "level": "L7",
-        "tick": 11,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 273.5800476074219,
-        "z": 15,
-        "ms": 33.399999999999636,
-        "playMs": 33.399999999999636
-      },
-      {
-        "at": 5538.3,
+        "at": 4204.6,
         "level": "L7",
         "tick": 13,
         "phase": "playing",
@@ -2758,11 +2190,11 @@
         "paused": false,
         "x": 273.7300720214844,
         "z": 15,
-        "ms": 33.30000000000018,
-        "playMs": 33.30000000000018
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5555,
+        "at": 4221.3,
         "level": "L7",
         "tick": 15,
         "phase": "playing",
@@ -2774,7 +2206,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5571.6,
+        "at": 4237.9,
         "level": "L7",
         "tick": 16,
         "phase": "playing",
@@ -2782,23 +2214,23 @@
         "paused": false,
         "x": 273.9512634277344,
         "z": 15.009239196777344,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
       },
       {
-        "at": 5588.3,
+        "at": 4254.6,
         "level": "L7",
-        "tick": 17,
+        "tick": 16,
         "phase": "playing",
         "loading": false,
         "paused": false,
-        "x": 274.007568359375,
-        "z": 15.016547203063965,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "x": 273.9512634277344,
+        "z": 15.009239196777344,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5605,
+        "at": 4271.3,
         "level": "L7",
         "tick": 18,
         "phase": "playing",
@@ -2810,7 +2242,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5621.6,
+        "at": 4287.9,
         "level": "L7",
         "tick": 19,
         "phase": "playing",
@@ -2818,23 +2250,23 @@
         "paused": false,
         "x": 274.0755310058594,
         "z": 15.025369644165039,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
       },
       {
-        "at": 5638.3,
+        "at": 4304.6,
         "level": "L7",
-        "tick": 20,
+        "tick": 19,
         "phase": "playing",
         "loading": false,
         "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "x": 274.0755310058594,
+        "z": 15.025369644165039,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5655,
+        "at": 4321.3,
         "level": "L7",
         "tick": 21,
         "phase": "playing",
@@ -2846,7 +2278,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5671.6,
+        "at": 4337.9,
         "level": "L7",
         "tick": 22,
         "phase": "playing",
@@ -2854,23 +2286,35 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
       },
       {
-        "at": 5688.3,
+        "at": 4354.6,
         "level": "L7",
-        "tick": 23,
+        "tick": 22,
         "phase": "playing",
         "loading": false,
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5705,
+        "at": 4371.2,
+        "level": "L7",
+        "tick": 24,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4387.9,
         "level": "L7",
         "tick": 24,
         "phase": "playing",
@@ -2882,7 +2326,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5721.7,
+        "at": 4404.5,
         "level": "L7",
         "tick": 25,
         "phase": "playing",
@@ -2890,35 +2334,23 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
-      },
-      {
-        "at": 5738.3,
-        "level": "L7",
-        "tick": 27,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
         "ms": 16.600000000000364,
         "playMs": 16.600000000000364
       },
       {
-        "at": 5755,
+        "at": 4421.3,
         "level": "L7",
-        "tick": 27,
+        "tick": 26,
         "phase": "playing",
         "loading": false,
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.800000000000182,
+        "playMs": 16.800000000000182
       },
       {
-        "at": 5771.6,
+        "at": 4437.9,
         "level": "L7",
         "tick": 28,
         "phase": "playing",
@@ -2926,23 +2358,35 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
       },
       {
-        "at": 5788.3,
+        "at": 4454.6,
         "level": "L7",
-        "tick": 29,
+        "tick": 28,
         "phase": "playing",
         "loading": false,
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5805,
+        "at": 4471.2,
+        "level": "L7",
+        "tick": 30,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4487.9,
         "level": "L7",
         "tick": 30,
         "phase": "playing",
@@ -2954,7 +2398,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5905,
+        "at": 4504.6,
         "level": "L7",
         "tick": 31,
         "phase": "playing",
@@ -2962,25 +2406,13 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 100,
-        "playMs": 100
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 5921.6,
+        "at": 4521.3,
         "level": "L7",
-        "tick": 37,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
-      },
-      {
-        "at": 5938.3,
-        "level": "L7",
-        "tick": 38,
+        "tick": 33,
         "phase": "playing",
         "loading": false,
         "paused": false,
@@ -2990,7 +2422,79 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5955,
+        "at": 4537.9,
+        "level": "L7",
+        "tick": 34,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4554.6,
+        "level": "L7",
+        "tick": 34,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4571.2,
+        "level": "L7",
+        "tick": 36,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4587.9,
+        "level": "L7",
+        "tick": 36,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4604.6,
+        "level": "L7",
+        "tick": 37,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4621.2,
+        "level": "L7",
+        "tick": 39,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4637.9,
         "level": "L7",
         "tick": 39,
         "phase": "playing",
@@ -3002,7 +2506,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 5971.7,
+        "at": 4654.6,
         "level": "L7",
         "tick": 40,
         "phase": "playing",
@@ -3010,35 +2514,35 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
+      },
+      {
+        "at": 4671.2,
+        "level": "L7",
+        "tick": 42,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
+      },
+      {
+        "at": 4687.9,
+        "level": "L7",
+        "tick": 42,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
         "ms": 16.699999999999818,
         "playMs": 16.699999999999818
       },
       {
-        "at": 5988.2,
-        "level": "L7",
-        "tick": 42,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.5,
-        "playMs": 16.5
-      },
-      {
-        "at": 6005,
-        "level": "L7",
-        "tick": 42,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.800000000000182,
-        "playMs": 16.800000000000182
-      },
-      {
-        "at": 6021.6,
+        "at": 4704.6,
         "level": "L7",
         "tick": 43,
         "phase": "playing",
@@ -3046,23 +2550,11 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.600000000000364,
-        "playMs": 16.600000000000364
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       },
       {
-        "at": 6038.3,
-        "level": "L7",
-        "tick": 44,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
-      },
-      {
-        "at": 6054.9,
+        "at": 4721.2,
         "level": "L7",
         "tick": 45,
         "phase": "playing",
@@ -3074,33 +2566,21 @@
         "playMs": 16.599999999999454
       },
       {
-        "at": 6071.7,
+        "at": 4737.8,
+        "level": "L7",
+        "tick": 45,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4754.5,
         "level": "L7",
         "tick": 46,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.800000000000182,
-        "playMs": 16.800000000000182
-      },
-      {
-        "at": 6088.2,
-        "level": "L7",
-        "tick": 48,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.5,
-        "playMs": 16.5
-      },
-      {
-        "at": 6104.9,
-        "level": "L7",
-        "tick": 48,
         "phase": "playing",
         "loading": false,
         "paused": false,
@@ -3110,7 +2590,31 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 6121.6,
+        "at": 4771.2,
+        "level": "L7",
+        "tick": 47,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4787.8,
+        "level": "L7",
+        "tick": 48,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.600000000000364,
+        "playMs": 16.600000000000364
+      },
+      {
+        "at": 4804.5,
         "level": "L7",
         "tick": 49,
         "phase": "playing",
@@ -3118,11 +2622,11 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.700000000000728,
-        "playMs": 16.700000000000728
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
       },
       {
-        "at": 6138.2,
+        "at": 4821.2,
         "level": "L7",
         "tick": 50,
         "phase": "playing",
@@ -3130,11 +2634,11 @@
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.599999999999454,
-        "playMs": 16.599999999999454
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
       },
       {
-        "at": 6154.9,
+        "at": 4837.9,
         "level": "L7",
         "tick": 51,
         "phase": "playing",
@@ -3146,7 +2650,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 6171.6,
+        "at": 4854.6,
         "level": "L7",
         "tick": 52,
         "phase": "playing",
@@ -3158,19 +2662,7 @@
         "playMs": 16.700000000000728
       },
       {
-        "at": 6188.3,
-        "level": "L7",
-        "tick": 53,
-        "phase": "playing",
-        "loading": false,
-        "paused": false,
-        "x": 274.0871887207031,
-        "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
-      },
-      {
-        "at": 6204.9,
+        "at": 4871.2,
         "level": "L7",
         "tick": 54,
         "phase": "playing",
@@ -3182,7 +2674,19 @@
         "playMs": 16.599999999999454
       },
       {
-        "at": 6221.6,
+        "at": 4887.9,
+        "level": "L7",
+        "tick": 54,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.699999999999818,
+        "playMs": 16.699999999999818
+      },
+      {
+        "at": 4904.6,
         "level": "L7",
         "tick": 55,
         "phase": "playing",
@@ -3194,19 +2698,19 @@
         "playMs": 16.700000000000728
       },
       {
-        "at": 6238.3,
+        "at": 4921.2,
         "level": "L7",
-        "tick": 56,
+        "tick": 57,
         "phase": "playing",
         "loading": false,
         "paused": false,
         "x": 274.0871887207031,
         "z": 15.026885032653809,
-        "ms": 16.699999999999818,
-        "playMs": 16.699999999999818
+        "ms": 16.599999999999454,
+        "playMs": 16.599999999999454
       },
       {
-        "at": 6255,
+        "at": 4937.9,
         "level": "L7",
         "tick": 57,
         "phase": "playing",
@@ -3218,7 +2722,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 6271.6,
+        "at": 4954.5,
         "level": "L7",
         "tick": 58,
         "phase": "playing",
@@ -3230,7 +2734,7 @@
         "playMs": 16.600000000000364
       },
       {
-        "at": 6288.3,
+        "at": 4971.2,
         "level": "L7",
         "tick": 59,
         "phase": "playing",
@@ -3242,7 +2746,7 @@
         "playMs": 16.699999999999818
       },
       {
-        "at": 6305,
+        "at": 4987.9,
         "level": "L7",
         "tick": 60,
         "phase": "playing",
@@ -3252,6 +2756,18 @@
         "z": 15.026885032653809,
         "ms": 16.699999999999818,
         "playMs": 16.699999999999818
+      },
+      {
+        "at": 5004.6,
+        "level": "L7",
+        "tick": 61,
+        "phase": "playing",
+        "loading": false,
+        "paused": false,
+        "x": 274.0871887207031,
+        "z": 15.026885032653809,
+        "ms": 16.700000000000728,
+        "playMs": 16.700000000000728
       }
     ],
     "final": {
@@ -3300,7 +2816,7 @@
           "charges": 0,
           "nextCharge": 0,
           "reloadUntil": 0,
-          "readyAt": 50
+          "readyAt": 51
         }
       ]
     }
@@ -3312,31 +2828,29 @@
         "event": "pickup.collected",
         "tick": 14,
         "samples": 19,
-        "maxMs": 33.399999999999636
+        "maxMs": 50
       },
       {
         "event": "combat.attack",
-        "tick": 25,
-        "samples": 17,
-        "maxMs": 100
+        "tick": 26,
+        "samples": 22,
+        "maxMs": 16.800000000000182
       }
     ],
-    "pass": false
+    "pass": true
   },
   "captures": [
     {
-      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793970240730/first-rocket-z0.5.jpg",
-      "sha256": "f203230114109178a52f2ac72fa4cedc443f52a448628d48cc6e305609879984",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793972678373/first-rocket-z0.5.jpg",
+      "sha256": "89cdb902dd39a7ba7004c3595bd190177b01664cbe305dbfbe0ade4ba8166401",
       "zoom": 0.5
     },
     {
-      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793970240730/first-rocket-z1.5.jpg",
-      "sha256": "8a3c8f599c8239305b21de102f50a3180c7455e24bbd05cadaab71ae0672be2f",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c/test-results/fix72-c/L7-01/high-1793972678373/first-rocket-z1.5.jpg",
+      "sha256": "82dbd7d594ac1856c3a421daadea55ebaa29e1040be9550ebb5b3383f32fedeb",
       "zoom": 1.5
     }
   ],
-  "errors": [
-    "AssertionError [ERR_ASSERTION]: L7-01 frame gate {\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"maxMs\":33.399999999999636},{\"event\":\"combat.attack\",\"tick\":25,\"samples\":17,\"maxMs\":100}],\"pass\":false}"
-  ],
+  "errors": [],
   "method": "Headless Metal WebGL2, sole quiet context. Authentic carried campaign; actual moving WASD auto-pickup without E, then physical Digit7/ShiftLMB first rocket. Unpaused production clock throughout measurement; no manual stepping, forced render, photos or weapon use before either event. Existing playtest frame probe records every RAF interval. Gate windows cover100ms before through250ms after each actual event; screenshots follow measurement. No actors, damage, timers or caps edited."
 }
