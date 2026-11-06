@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:28:03.133Z",
+  "generatedAt": "2026-11-06T03:32:21.844Z",
   "policies": [
     {
       "tier": "low",
@@ -5743,16 +5743,16 @@
     },
     {
       "id": "L10-04",
-      "status": "FAIL",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); low/complete residential-fringe player windups per minute: 8.404284537215052 (target 2 ≤ value ≤ Infinity; PASS); low/complete industrial-area player windups per minute: 8.37887067395264 (target 4 ≤ value ≤ Infinity; PASS); low/complete military-zone player windups per minute: 13.551230260741828 (target 4 ≤ value ≤ Infinity; PASS); low/complete research-campus player windups per minute: 29.631565194669452 (target 4 ≤ value ≤ Infinity; PASS); low/complete destroyed-corridor player windups per minute: 5.601369223587988 (target 4 ≤ value ≤ Infinity; PASS); low/complete dispersal-complex player windups per minute: 38.99825276645311 (target 4 ≤ value ≤ Infinity; PASS); high/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); high/complete residential-fringe player windups per minute: 11.361141602634468 (target 2 ≤ value ≤ Infinity; PASS); high/complete industrial-area player windups per minute: 19.52395299789093 (target 4 ≤ value ≤ Infinity; PASS); high/complete military-zone player windups per minute: 18.90547263681592 (target 4 ≤ value ≤ Infinity; PASS); high/complete research-campus player windups per minute: 44.70314318975553 (target 4 ≤ value ≤ Infinity; PASS); high/complete destroyed-corridor player windups per minute: 5.317577548005908 (target 4 ≤ value ≤ Infinity; PASS); high/complete dispersal-complex player windups per minute: 114.88968701898409 (target 4 ≤ value ≤ Infinity; PASS) Manual review PASS (STALE, Codex sweep-c3): Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1–R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion. Open prior FAIL: Low native complete: residential-fringe58.3 s with0 attacks; industrial-area131.9 s with0; military-zone0.36/min; research-campus1.73/min. R1/R2 are crossable with zero windups, contrary to the explicit criterion. Passive-route R1 also records0 and R2 1.36/min; the gate checks finale hold rather than this entire regional row.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); low/complete residential-fringe player windups per minute: 8.404284537215052 (target 2 ≤ value ≤ Infinity; PASS); low/complete industrial-area player windups per minute: 8.37887067395264 (target 4 ≤ value ≤ Infinity; PASS); low/complete military-zone player windups per minute: 13.551230260741828 (target 4 ≤ value ≤ Infinity; PASS); low/complete research-campus player windups per minute: 29.631565194669452 (target 4 ≤ value ≤ Infinity; PASS); low/complete destroyed-corridor player windups per minute: 5.601369223587988 (target 4 ≤ value ≤ Infinity; PASS); low/complete dispersal-complex player windups per minute: 38.99825276645311 (target 4 ≤ value ≤ Infinity; PASS); low/complete crash-outskirts bounded-path reachability: {\"pathSamples\":60,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete residential-fringe bounded-path reachability: {\"pathSamples\":72,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete industrial-area bounded-path reachability: {\"pathSamples\":256,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete military-zone bounded-path reachability: {\"pathSamples\":128,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete research-campus bounded-path reachability: {\"pathSamples\":144,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete destroyed-corridor bounded-path reachability: {\"pathSamples\":221,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); low/complete dispersal-complex bounded-path reachability: {\"pathSamples\":188,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete crash-outskirts player windups per minute: 7.269056032306915 (target 2 ≤ value ≤ Infinity; PASS); high/complete residential-fringe player windups per minute: 11.361141602634468 (target 2 ≤ value ≤ Infinity; PASS); high/complete industrial-area player windups per minute: 19.52395299789093 (target 4 ≤ value ≤ Infinity; PASS); high/complete military-zone player windups per minute: 18.90547263681592 (target 4 ≤ value ≤ Infinity; PASS); high/complete research-campus player windups per minute: 44.70314318975553 (target 4 ≤ value ≤ Infinity; PASS); high/complete destroyed-corridor player windups per minute: 5.317577548005908 (target 4 ≤ value ≤ Infinity; PASS); high/complete dispersal-complex player windups per minute: 114.88968701898409 (target 4 ≤ value ≤ Infinity; PASS); high/complete crash-outskirts bounded-path reachability: {\"pathSamples\":35,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete residential-fringe bounded-path reachability: {\"pathSamples\":144,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete industrial-area bounded-path reachability: {\"pathSamples\":277,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete military-zone bounded-path reachability: {\"pathSamples\":138,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete research-campus bounded-path reachability: {\"pathSamples\":133,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete destroyed-corridor bounded-path reachability: {\"pathSamples\":228,\"minimumPercent\":100} (target ≥90%; read-only canonical-state control identical; PASS); high/complete dispersal-complex bounded-path reachability: {\"pathSamples\":234,\"minimumPercent\":94.73684210526315} (target ≥90%; read-only canonical-state control identical; PASS) Manual review PASS (FRESH, Codex sweep-c5): Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27–39.00/min; high 7.27–114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5× direct distance. No actor/input/RNG changes. Requalified prior FAIL: Low native complete: residential-fringe58.3 s with0 attacks; industrial-area131.9 s with0; military-zone0.36/min; research-campus1.73/min. R1/R2 are crossable with zero windups, contrary to the explicit criterion. Passive-route R1 also records0 and R2 1.36/min; the gate checks finale hold rather than this entire regional row.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L10-regional-reach.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
-        "docs/reports/sweep-c3/L10-04/l10-region-reach-proof.json.gz",
-        "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-        "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+        "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks.",
@@ -5836,6 +5836,104 @@
         },
         {
           "id": "L10-04",
+          "clause": "crash-outskirts bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 60,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "residential-fringe bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 72,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "industrial-area bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 256,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "military-zone bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 128,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "research-campus bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 144,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "destroyed-corridor bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 221,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "dispersal-complex bounded-path reachability",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 188,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
           "clause": "crash-outskirts player windups per minute",
           "level": "L10",
           "tier": "high",
@@ -5910,6 +6008,104 @@
           "value": 114.88968701898409,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "crash-outskirts bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 35,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "residential-fringe bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 144,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "industrial-area bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 277,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "military-zone bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 138,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "research-campus bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 133,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "destroyed-corridor bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 228,
+            "minimumPercent": 100
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
+        },
+        {
+          "id": "L10-04",
+          "clause": "dispersal-complex bounded-path reachability",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "pathSamples": 234,
+            "minimumPercent": 94.73684210526315
+          },
+          "target": "≥90%; read-only canonical-state control identical",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-regional-reach.json"
         }
       ],
       "historical": {
@@ -5922,39 +6118,49 @@
         ],
         "method": "Inspect every step/* phase in the unchanged-source complete and passive native ledgers, using actual infected.attack windups rather than damage/kills or spawn counts. No inference from a skilled zero-damage run is used. NEXT: independent stationary passive and competent per-region probes at both tiers, after fixing regional contact."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks.",
+      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
       "reviewDecision": {
         "row": "L10-04",
         "status": "PASS",
-        "reviewer": "Codex sweep-c3",
-        "date": "2026-11-05",
-        "commit": "1abbb0e54627a41f5a8c984d2dd494f56725fdad",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "7314277ffc656d91d38dcaa5e8a0581aeade8bbc",
         "clauses": [
           {
             "clause": "combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks.",
             "verdict": "PASS",
-            "note": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1–R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+            "note": "Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27–39.00/min; high 7.27–114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5× direct distance. No actor/input/RNG changes."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c3/L10-04/l10-region-reach-proof.json.gz",
-            "sha256": "db904986e7d7fe86516f828e0cda7e7d538c818e8598a769eaf6e6363868016f",
-            "what": "Fresh ordinary native competent routes at both tiers: all seven geographic regions have actual player windups above unchanged 2/min R1–R2 and 4/min R3+ bounds, no zero-attack region. Every30ticks, all living infected within30m including pending admissions use body-clear paths bounded by2.5 times direct distance; minima100% except high finale98.947%. Independent canonical final states identical. All28 checks PASS. Exact original producer bytes promoted to recognized consumer, no hash rebinding or checker/game change. This is the required native regional combat/path qualification, not a claim of whole physical campaign completion."
+            "file": "docs/reports/fix51-verify/receipts/L10-regional-reach.json",
+            "sha256": "e0c07f3f77780ad5c7d683b6690eb387fa38f88ab74b2598f386ebd6b3b81827",
+            "what": "Exact-source both-tier regional reach and player-rate proof with unchanged canonical controls."
           },
           {
-            "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-            "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
-            "what": "Immutable current original native complete route; exact source/observer hashes."
+            "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "sha256": "ba12b2682ccd3073e9c46f3e11d451e66fe91f13b1300f7df4cb1c850bedc180",
+            "what": "Current-source low complete campaign control."
           },
           {
-            "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
-            "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
-            "what": "Immutable current original native complete route; exact source/observer hashes."
+            "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
+            "what": "Current-source low stationary campaign control."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "sha256": "e8598f59d5bf0319a1c9f510e65ca7746849fc2c72a190c689d0e00e3305454d",
+            "what": "Current-source high complete campaign control."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
+            "what": "Current-source high stationary campaign control."
           }
         ],
-        "notes": "Original current-source producer, measured unchanged criterion.",
-        "freshness": "STALE",
+        "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim.",
+        "freshness": "FRESH",
         "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
