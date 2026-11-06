@@ -1,26 +1,31 @@
 {
   "row": "L4-12",
-  "status": "FAIL",
+  "status": "PASS",
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
+  "commit": "166205b9600ebef710ec16709af5e36648170bc0",
   "clauses": [
     {
       "clause": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
-      "verdict": "FAIL",
-      "note": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
+      "verdict": "PASS",
+      "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: full-rate nearest20 war census passes>=4 looks at every measured tick, low10679/high10715 checks, minimum4 both. Existing inf.firefighter and npc.firefighter-alive bodies share the unchanged firefighter archetype. Full canonical gameplay state hashes after omitting only cosmetic infected.model match baseline (low17026cfd/high1995724f); all route stats, admissions, populations and recorded actor positions are deeply identical. Both distinct infected body batches draw together in130 low/139 high renderer samples, and all16 frames were personally inspected. No counts, stats, timers, caps or criteria lowered."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix73-b/L4-native-summary.json",
-      "sha256": "8b664c0055b7288d431106849120c8f0da865acf0f90dc641566c7f30f80e79a",
-      "what": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match the current qa:accept state hashes (low c3184e26; high 0bef7d9f). Every-tick nearest-20 census: low 10,679 checks, high 10,715; minimum distinct looks is 3 in both. Counterexamples: low tick 4328; high tick 7580. Criterion remains FAIL at >=4 looks. A player-centered archetype-balancing trial was reverted after current acceptance showed L4-06 high stationary regression (55 at first breach vs minimum 60) and a mission failure. No game fix qualified."
+      "file": "docs/reports/fix73-b/L4-look-equivalence.json",
+      "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a",
+      "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: full-rate nearest20 war census passes>=4 looks at every measured tick, low10679/high10715 checks, minimum4 both. Existing inf.firefighter and npc.firefighter-alive bodies share the unchanged firefighter archetype. Full canonical gameplay state hashes after omitting only cosmetic infected.model match baseline (low17026cfd/high1995724f); all route stats, admissions, populations and recorded actor positions are deeply identical. Both distinct infected body batches draw together in130 low/139 high renderer samples, and all16 frames were personally inspected. No counts, stats, timers, caps or criteria lowered."
     },
     {
-      "file": "docs/reports/fix71-b/L4-release-capture-review.json",
-      "sha256": "86757acf1f1404b6067a5fddb58a00063d564bf990e066d8b8adba65a43b0c6d",
-      "what": "Personally reviewed final-source rendered frames, hashes and observations; images deleted after review."
+      "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
+      "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c",
+      "what": "Complete current-source census/admission observer data, both native routes."
+    },
+    {
+      "file": "docs/reports/fix73-b/L4-17-render-review.json",
+      "sha256": "6f79ea4950bf57cff56d452b35274477abc0ea33dc7e6b8058a9e955de9ed0af",
+      "what": "All16 inspected frames plus actual simultaneous body-batch identities; distinct slim and bulky responder looks."
     }
   ]
 }
