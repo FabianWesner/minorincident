@@ -1,64 +1,157 @@
 {
   "row": "L4-17",
   "status": "FAIL",
+  "appearanceScope": {
+    "row": "L4-12",
+    "status": "PASS",
+    "note": "Two different registered firefighter assets are visibly distinct and simultaneously drawn by the infected renderer at both tiers. Full-war census and gameplay equivalence are recorded separately."
+  },
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "gameCommit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
-  "method": "Shared browser pool; headless Metal WebGL2; production mortal complete-bot route from L4 start. 184 rendered sim-second samples per tier through 150.183 seconds of war. Actual frozen vertices projected through instance/world matrices; airborne blast flights excluded. Every one of 16 final-source captures personally inspected, hashes preserved, raw JPEGs deleted afterward. No whole-route, continuous player-depth, or universal limb qualification.",
+  "gameCommit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "method": "Shared browser pool; headless Metal WebGL2; production mortal complete-bot route from L4 start. 184 rendered sim-second samples per tier through150.183 seconds of war. Actual frozen vertices projected through instance/world matrices; airborne blast flights excluded. All16 final-source captures personally inspected, hashes preserved, JPEGs deleted afterward. No whole-route, continuous player-depth or universal limb qualification.",
   "tiers": [
     {
       "tier": "low",
-      "sourceHash": "75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6",
+      "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
       "receipt": "docs/reports/fix73-b/L4-17-low-render.json.gz",
-      "sha256": "6e88749ebf676975005f3963d9bd67f839d63e0b42c6589155c83807a4fe3bdd",
+      "sha256": "1293679be0fa11953a24195c1fa0f672a125be611d5596cb1506de85cc8e9dd8",
       "sampleCount": 184,
       "warSeconds": 150.18333333333334,
-      "maxFrozenVertexTopM": 1.7037132501602172,
+      "maxFrozenVertexTopM": 1.6994463920593261,
       "worst": {
-        "tick": 9420,
+        "tick": 10980,
         "phase": "war",
-        "warSeconds": 124.18333333333334,
+        "warSeconds": 150.18333333333334,
         "actualTier": "low",
         "renderTier": "low",
         "backend": "webgl",
         "audit": {
-          "count": 174,
+          "count": 189,
           "sunkPairs": 0,
-          "heapPairs": 233,
+          "heapPairs": 275,
           "repeatedPairs": 0,
-          "maxDisplacementM": 5.500000000000002,
-          "maxLiftM": 0.43999999999999995,
-          "courierClear": false
+          "maxDisplacementM": 5.500000000000001,
+          "maxLiftM": 0.49,
+          "courierClear": true
         },
-        "layoutEnvelopeTopM": 0.6599999999999999,
-        "maxRenderedTopM": 1.7037132501602172,
-        "frozenBodies": 178,
+        "layoutEnvelopeTopM": 0.71,
+        "maxRenderedTopM": 1.6994463920593261,
+        "frozenBodies": 215,
         "worst": {
-          "id": 304,
-          "x": -19.60649299621582,
+          "id": 395,
+          "x": -21.05257225036621,
           "y": 0.49000000953674316,
-          "z": -5.301366329193115,
-          "top": 1.7037132501602172,
-          "mesh": "corpses:infected.riot:death-side:0:near",
-          "vertices": 3465
+          "z": -0.3738701343536377,
+          "top": 1.6994463920593261,
+          "mesh": "corpses:infected.riot:death-side:0",
+          "vertices": 1643
         },
+        "nearest20Looks": {
+          "count": 20,
+          "models": {
+            "infected.crawler": 4,
+            "infected.alpha": 2,
+            "infected.riot": 6,
+            "npc.national-guard": 2,
+            "inf.common-worker": 1,
+            "infected.firefighter": 1,
+            "npc.civilian-woman-a": 2,
+            "npc.civilian-woman-b": 2
+          }
+        },
+        "renderedLookBatches": [
+          {
+            "id": "infected.runner",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-b",
+            "lod": "lod1",
+            "instances": 3
+          },
+          {
+            "id": "npc.civilian-woman-b",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-woman-b",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "npc.civilian-man-a",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-a",
+            "lod": "lod1",
+            "instances": 3
+          },
+          {
+            "id": "npc.civilian-elderly",
+            "lod": "lod2",
+            "instances": 2
+          },
+          {
+            "id": "npc.firefighter-alive",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "inf.crawler",
+            "lod": "lod2",
+            "instances": 3
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod1",
+            "instances": 3
+          },
+          {
+            "id": "infected.riot",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "inf.firefighter",
+            "lod": "lod2",
+            "instances": 1
+          }
+        ],
         "player": {
-          "x": -15.611954689025879,
-          "y": 0.7099999785423279,
-          "z": -0.6234301328659058,
-          "yaw": -1.8089635896484013
+          "x": -11.127792358398438,
+          "y": 0.7049999833106995,
+          "z": 14.78084945678711,
+          "yaw": 2.751061482970318
         },
         "deaths": 5,
         "descendAt": 0
       },
       "maxRootLiftM": 0.49,
+      "appearanceVerification": {
+        "bothFirefighterBodiesDrawnSamples": 130,
+        "firstBothTick": 2400,
+        "bodyBatches": [
+          "inf.firefighter",
+          "npc.firefighter-alive"
+        ]
+      },
       "errors": []
     },
     {
       "tier": "high",
-      "sourceHash": "75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6",
+      "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
       "receipt": "docs/reports/fix73-b/L4-17-high-render.json.gz",
-      "sha256": "ab09a43254ad0d46b12bf3bfcfb1b85feffcd1dc4f7d1da005d292e66d5d2d92",
+      "sha256": "895cfac7492e6737ef5320f2d3ec108780eefffe7c22cec41e1165cc22e9296e",
       "sampleCount": 184,
       "warSeconds": 150.18333333333334,
       "maxFrozenVertexTopM": 1.5050501346588134,
@@ -70,11 +163,11 @@
         "renderTier": "high",
         "backend": "webgl",
         "audit": {
-          "count": 193,
+          "count": 192,
           "sunkPairs": 0,
-          "heapPairs": 192,
+          "heapPairs": 214,
           "repeatedPairs": 0,
-          "maxDisplacementM": 5.500000000000001,
+          "maxDisplacementM": 5.5,
           "maxLiftM": 0.43999999999999995,
           "courierClear": true
         },
@@ -82,14 +175,77 @@
         "maxRenderedTopM": 1.5050501346588134,
         "frozenBodies": 229,
         "worst": {
-          "id": 468,
-          "x": -16.57772445678711,
+          "id": 424,
+          "x": -16.380544662475586,
           "y": 0.49000000953674316,
-          "z": 3.1903624534606934,
+          "z": -4.49964714050293,
           "top": 1.5050501346588134,
-          "mesh": "corpses:npc.civilian-man-b:death-crumple:0:acc.hat-flat-cap/-1/0",
-          "vertices": 1191
+          "mesh": "corpses:npc.civilian-man-b:death-crumple:0/-1/-1",
+          "vertices": 1107
         },
+        "nearest20Looks": {
+          "count": 20,
+          "models": {
+            "npc.firefighter-alive": 4,
+            "infected.riot": 8,
+            "infected.hazmat": 4,
+            "infected.firefighter": 2,
+            "npc.civilian-woman-a": 1,
+            "infected.alpha": 1
+          }
+        },
+        "renderedLookBatches": [
+          {
+            "id": "infected.runner",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-woman-a",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-b",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-a",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "infected.riot",
+            "lod": "lod1",
+            "instances": 10
+          },
+          {
+            "id": "npc.firefighter-alive",
+            "lod": "lod1",
+            "instances": 6
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod1",
+            "instances": 8
+          },
+          {
+            "id": "inf.crawler",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "inf.firefighter",
+            "lod": "lod1",
+            "instances": 4
+          },
+          {
+            "id": "inf.alpha-hoodie",
+            "lod": "lod1",
+            "instances": 1
+          }
+        ],
         "player": {
           "x": -8.854365348815918,
           "y": 0.7049999833106995,
@@ -100,20 +256,28 @@
         "descendAt": 0
       },
       "maxRootLiftM": 0.43999999999999995,
+      "appearanceVerification": {
+        "bothFirefighterBodiesDrawnSamples": 139,
+        "firstBothTick": 2640,
+        "bodyBatches": [
+          "inf.firefighter",
+          "npc.firefighter-alive"
+        ]
+      },
       "errors": []
     }
   ],
   "captures": [
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z0.5-route.jpg",
-      "sha256": "3c78194a7d13afb1c77b472fc833b59b0570341caed83e149875c459304bf300",
+      "sha256": "96ba4a8fc7566449b95575d24caf6987bcb87297bd18a8688d05443b2135d0dd",
       "tier": "low",
       "reason": "tall-pile",
       "zoom": 0.5,
       "view": "ordinary follow",
       "tick": 5220,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier is visible at center beside the corgi, amid fallen and active figures. No body drawn over the courier is identified in this frame."
+      "what": "Courier is visible beside the corgi amid active and fallen figures. Wider view includes civilians, riot shields and several responder shapes; no corpse covering the courier identified."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z0.5-pile.jpg",
@@ -124,18 +288,18 @@
       "view": "render-only heap detail; courier unmoved",
       "tick": 5220,
       "reviewer": "Codex/fix73-b",
-      "what": "Purple-clothed civilian body bent forward near a curb and lamp post. Compact pose; no obvious extreme limb stretch in these early detail views."
+      "what": "Purple-clothed civilian body bent forward near a curb and lamp post, compact rather than a tall stacked column. No obvious extreme limb stretch isolated in this early detail."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z1.5-route.jpg",
-      "sha256": "21563d7bf3d55b1dce65c4a534be3d6cdc3cb1279deb6b8a885368e301c99ca0",
+      "sha256": "7952652a4c95219de509bc7ebc0c41e22090ca9fc9744f48b8773b964631a942",
       "tier": "low",
       "reason": "tall-pile",
       "zoom": 1.5,
       "view": "ordinary follow",
       "tick": 5220,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier is visible at center beside the corgi, amid fallen and active figures. No body drawn over the courier is identified in this frame."
+      "what": "Courier is visible beside the corgi amid active and fallen figures. Wider view includes civilians, riot shields and several responder shapes; no corpse covering the courier identified."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/tall-pile-z1.5-pile.jpg",
@@ -146,51 +310,51 @@
       "view": "render-only heap detail; courier unmoved",
       "tick": 5220,
       "reviewer": "Codex/fix73-b",
-      "what": "Purple-clothed civilian body bent forward near a curb and lamp post. Compact pose; no obvious extreme limb stretch in these early detail views."
+      "what": "Purple-clothed civilian body bent forward near a curb and lamp post, compact rather than a tall stacked column. No obvious extreme limb stretch isolated in this early detail."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z0.5-route.jpg",
-      "sha256": "09f0550dd58eafcf7ab1d3898fdd2db7120ae13718c57e73590768e84046923a",
+      "sha256": "3d8558916bc95d5c4bd27e0e533b060a4255f1d900425bac37e1a6478166fe35",
       "tier": "low",
       "reason": "war-120",
       "zoom": 0.5,
       "view": "ordinary follow",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier remains visible in the central follow view, with a visible outline in the wide frame. Fallen bodies crowd the surrounding ground; no corpse covering the courier is identified in this frame."
+      "what": "Courier remains visible in the central follow view and has a visible outline in the wider frame. Varied uniform/civilian silhouettes surround the courier; nearby bodies are cut away by the visibility effect. No continuous depth claim is made."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z0.5-pile.jpg",
-      "sha256": "3e16f9ce5b0a3876e0198f7ad18e8df6f113dc9753625dd12ba93ac329b0f30e",
+      "sha256": "78390c3aa04486544f72f5157323b1364842eed1b7312e6445e4ca6150503f57",
       "tier": "low",
       "reason": "war-120",
       "zoom": 0.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Bunched responder bodies beside the bus; raised legs and overlapping body surfaces are visible. No definite stretched corpse limb is isolated in these detail frames. Wider detail shows a dense field across the plaza."
+      "what": "Crowded responder field beside the checkpoint. The close detail shows slim yellow-coated, red-helmet responders among the bulkier pale-faced/yellow tank-wearing bodies; the assets are visibly different. Both infected body batches are active in the receipt. Raised limbs and overlapping surfaces remain; no universal corpse-shape PASS."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z1.5-route.jpg",
-      "sha256": "69126a8bc211f5583d41e34f7808c418531c0b204940b114e84703e2cffa907a",
+      "sha256": "8dca177604ffbcfed991c2fb41c5791745c9a2bb99f2d8158c54df6d30122ae2",
       "tier": "low",
       "reason": "war-120",
       "zoom": 1.5,
       "view": "ordinary follow",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier remains visible in the central follow view, with a visible outline in the wide frame. Fallen bodies crowd the surrounding ground; no corpse covering the courier is identified in this frame."
+      "what": "Courier remains visible in the central follow view and has a visible outline in the wider frame. Varied uniform/civilian silhouettes surround the courier; nearby bodies are cut away by the visibility effect. No continuous depth claim is made."
     },
     {
       "file": "test-results/fix71-b/corpses-final-low/captures/war-120-z1.5-pile.jpg",
-      "sha256": "996ca4692e3b96bff10e149a4a72b76be642c34cf62e324620f63c5928c87ac5",
+      "sha256": "2b2d821041a1fc83e822f1a6de42b3c83df10fb04ecf11fc2a61111498f691f9",
       "tier": "low",
       "reason": "war-120",
       "zoom": 1.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Bunched responder bodies beside the bus; raised legs and overlapping body surfaces are visible. No definite stretched corpse limb is isolated in these detail frames. Wider detail shows a dense field across the plaza."
+      "what": "Crowded responder field beside the checkpoint. The close detail shows slim yellow-coated, red-helmet responders among the bulkier pale-faced/yellow tank-wearing bodies; the assets are visibly different. Both infected body batches are active in the receipt. Raised limbs and overlapping surfaces remain; no universal corpse-shape PASS."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z0.5-route.jpg",
@@ -201,84 +365,84 @@
       "view": "ordinary follow",
       "tick": 2820,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier, corgi, and allies are clearly visible in the opening battle. Bodies beside the supply crate do not cover the courier."
+      "what": "Courier, corgi and allies remain clear in the opening battle. Slender responder and bulky uniform bodies appear in the wider view. Bodies beside the supply crate do not cover the courier."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z0.5-pile.jpg",
-      "sha256": "b5e02a45e1d7e15811bb203a5f9cc3765c8972f9eff2ae2f7ab0e8ae85acd510",
+      "sha256": "766affa11db940186533a26bf8c31e3b5af3a9db281466708894400b34e1f8cd",
       "tier": "high",
       "reason": "tall-pile",
       "zoom": 0.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 2820,
       "reviewer": "Codex/fix73-b",
-      "what": "Responders lie bunched near the checkpoint chairs and sign, with raised boots and a forward-bent body. Courier is outside this camera detail."
+      "what": "Responders lie bunched near checkpoint chairs and a sign, with raised boots and a forward-bent body. Courier is outside this camera detail."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z1.5-route.jpg",
-      "sha256": "30dc8783592b45b01fdd4bf220675dbc6f653b6dee3d890fdb3bd90a6c848661",
+      "sha256": "2e079930c4f8c8d5a1e30831f72c92e2c662f4c76275e994c9dbb2d06f7f44c3",
       "tier": "high",
       "reason": "tall-pile",
       "zoom": 1.5,
       "view": "ordinary follow",
       "tick": 2820,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier, corgi, and allies are clearly visible in the opening battle. Bodies beside the supply crate do not cover the courier."
+      "what": "Courier, corgi and allies remain clear in the opening battle. Slender responder and bulky uniform bodies appear in the wider view. Bodies beside the supply crate do not cover the courier."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/tall-pile-z1.5-pile.jpg",
-      "sha256": "9ba28fce8c241f5593f5fa7dc29cd9db8a35d193ba4e80346e6173b467b1ccd3",
+      "sha256": "720e32977a2abf39e3e935f57f623c052b4a860eabdadbb394f273e11afca8dd",
       "tier": "high",
       "reason": "tall-pile",
       "zoom": 1.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 2820,
       "reviewer": "Codex/fix73-b",
-      "what": "Responders lie bunched near the checkpoint chairs and sign, with raised boots and a forward-bent body. Courier is outside this camera detail."
+      "what": "Responders lie bunched near checkpoint chairs and a sign, with raised boots and a forward-bent body. Courier is outside this camera detail."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z0.5-route.jpg",
-      "sha256": "b94217b1dd1d043feb99a3707bdd4fa4a76b8f42ec0247b80d017de8595eaba2",
+      "sha256": "639949dc4d607e406dcbfc96c0c13abd6c198b2fd60ec21d0b30ab38434d0a72",
       "tier": "high",
       "reason": "war-120",
       "zoom": 0.5,
       "view": "ordinary follow",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier remains visible amid the crowd. Several nearby figures have sharp elongated torso/arm-looking polygons; no universal player-depth or limb PASS is inferred."
+      "what": "Courier remains visible amid the dense mixed crowd. Firefighter, hazmat, riot and civilian bodies are visually different; sharp elongated polygons on nearby figures prevent a universal limb PASS."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z0.5-pile.jpg",
-      "sha256": "1cb40a3235f7c1724bc28d3c3c10cf9ff34a2f25ecdfe1b30b183951d29ae6e2",
+      "sha256": "31d0ec915586f3e003fe6fb44b3fdc384e9dd40eaa8de1033859ad9718376bbf",
       "tier": "high",
       "reason": "war-120",
       "zoom": 0.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Large grey prone bodies beside tents and dense responder bodies nearby. Angular strips appear on surrounding figures; this image does not isolate a corpse-only cause. Wider view shows the dense plaza field."
+      "what": "Large grey prone bodies beside tents; nearby slim yellow-uniform red-helmet responders contrast with the bulkier infected firefighter bodies. Both real infected batches are drawn. Angular surfaces on surrounding figures are visible without a corpse-only attribution."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z1.5-route.jpg",
-      "sha256": "20b3bd722d3a99bce995c553834dc4a015ac486a0fdf921f1a83289e088b7da1",
+      "sha256": "9fad75227c9752e85efdbe33bfb350e5ea78f820f0b7524bcf6779543e45ba9c",
       "tier": "high",
       "reason": "war-120",
       "zoom": 1.5,
       "view": "ordinary follow",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Courier remains visible amid the crowd. Several nearby figures have sharp elongated torso/arm-looking polygons; no universal player-depth or limb PASS is inferred."
+      "what": "Courier remains visible amid the dense mixed crowd. Firefighter, hazmat, riot and civilian bodies are visually different; sharp elongated polygons on nearby figures prevent a universal limb PASS."
     },
     {
       "file": "test-results/fix71-b/corpses-final-high/captures/war-120-z1.5-pile.jpg",
-      "sha256": "a857601092a614db98ecc725536f9102003721feb5e38990055a9dc8f3b799b4",
+      "sha256": "bb1b42fa9db0593c90db1cbb89cf859528e5c223de53f4322349efadbc1ed7fc",
       "tier": "high",
       "reason": "war-120",
       "zoom": 1.5,
       "view": "render-only heap detail; courier unmoved",
       "tick": 9180,
       "reviewer": "Codex/fix73-b",
-      "what": "Large grey prone bodies beside tents and dense responder bodies nearby. Angular strips appear on surrounding figures; this image does not isolate a corpse-only cause. Wider view shows the dense plaza field."
+      "what": "Large grey prone bodies beside tents; nearby slim yellow-uniform red-helmet responders contrast with the bulkier infected firefighter bodies. Both real infected batches are drawn. Angular surfaces on surrounding figures are visible without a corpse-only attribution."
     }
   ]
 }
