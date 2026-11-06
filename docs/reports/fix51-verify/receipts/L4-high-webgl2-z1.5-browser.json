@@ -1286,6 +1286,39 @@
       },
       "target": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout.",
       "receipt": "docs/reports/sweep-b/L4-17-proof.json"
+    },
+    {
+      "id": "L4-11",
+      "clause": "mortal live frontal MG riot duel across point-blank and long ranges",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "tier": "high",
+        "longRangeCounterexamples": [
+          {
+            "startDistance": 20,
+            "firstDamageTick": 32,
+            "incapacitatedTick": 596,
+            "firstDamageToIncapacitationS": 9.4,
+            "fightStartToIncapacitationS": 9.933333333333334,
+            "playerHp": 100,
+            "initialFrontalChip": 2.52
+          },
+          {
+            "startDistance": 26,
+            "firstDamageTick": 76,
+            "incapacitatedTick": 838,
+            "firstDamageToIncapacitationS": 12.7,
+            "fightStartToIncapacitationS": 13.966666666666667,
+            "playerHp": 100,
+            "initialFrontalChip": 2.52
+          }
+        ],
+        "allSixMortalDuelsWon": true
+      },
+      "target": "Frontal MG incapacitates\u22646s; no solo riot downs a continuously firing full-HP courier",
+      "receipt": "docs/reports/sweep-b/L4-11-proof.json"
     }
   ],
   "observations": {
