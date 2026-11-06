@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L5",
-  "sourceHash": "ac3c744520ec8043bfb75ce0e832f6e07024aa2ac05ed9aba5ae161cfad018f4",
-  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "observerHash": "9954946cd2baca7001d78c0fc904daf6ce44ee5e925c624cdfe83a2c825894f9",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T08:52:04.988Z",
+  "generatedAt": "2026-11-06T12:15:42.846Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json"
     }
   ],
   "globals": [
@@ -539,7 +553,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -924,7 +938,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -1065,7 +1079,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -1451,7 +1465,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -1526,7 +1540,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -1694,7 +1708,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -3298,21 +3312,62 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
       "id": "G-25",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "value": "low/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS); high/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS) Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L5-low-browser.json",
+        "docs/reports/fix51-verify/receipts/L5-high-browser.json",
         "docs/reports/batch51-qa/quality-repro.json",
         "docs/reports/batch51-qa/gates/visual-L4.log"
       ],
       "expected": "Zero console errors over a full real-input play-through of the level.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json",
+          "level": "L5"
+        },
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json",
+          "level": "L5"
+        }
+      ],
       "historical": {
         "id": "G-25",
         "level": "global",
@@ -3386,7 +3441,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -3474,7 +3529,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     }
   ],
@@ -4357,7 +4412,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -5235,7 +5290,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -5360,7 +5415,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -5461,7 +5516,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     },
     {
@@ -10925,7 +10980,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "e5669218dbc46f4755a618ca6f930b1d82ce752c"
+        "latestRelevantCommit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5"
       }
     }
   ]

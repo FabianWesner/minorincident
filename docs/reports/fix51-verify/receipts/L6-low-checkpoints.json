@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L6",
   "tier": "low",
-  "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
-  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "shelter",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "716719434fb86443042c90e4a0334061c39edc20d40145025f3dccd04ac760c4",
+        "snapshotSha256": "ce25bf0ae111d0afdb477585788e41e4c78a1286e4720d875d74597dd2639fc6",
         "damage": 100,
         "expected": {
           "id": "shelter",
@@ -117,7 +117,7 @@
       "value": {
         "checkpoint": "abandon",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "0a13c3b48f39eb11ee2086b87ea4bd492a42fe9d24b5f571738abafcaa5a5b54",
+        "snapshotSha256": "e8d80d4b782fc493c5699f8d472c4c3535c1b03623b586965bb5094bc262ace0",
         "damage": 100,
         "expected": {
           "id": "abandon",
@@ -125,7 +125,7 @@
             "x": 0.33253079652786255,
             "y": 1.3200000524520874,
             "z": 3.5566253662109375,
-            "yaw": 0.07806089859402861
+            "yaw": 2.5796079390435986
           },
           "gates": {},
           "racks": {
@@ -165,8 +165,6 @@
             37,
             38,
             39,
-            40,
-            41,
             42,
             43,
             44
@@ -219,15 +217,15 @@
       "value": {
         "checkpoint": "gate-90",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "37161ff229efa194717be67cb97cd61a5375de9016fca5d8c93cabc4facd7e35",
+        "snapshotSha256": "31fc8f45a4ad49db08acd0c6376508713c2af78da9b44e6c06443d85e067e616",
         "damage": 100,
         "expected": {
           "id": "gate-90",
           "anchor": {
             "x": 92.4,
-            "y": 1.2699999809265137,
+            "y": 1.5626236200332642,
             "z": 17.3,
-            "yaw": -2.222437044336255
+            "yaw": 2.30727488503891
           },
           "gates": {},
           "racks": {
@@ -267,8 +265,6 @@
             37,
             38,
             39,
-            40,
-            41,
             42,
             43,
             44
@@ -282,8 +278,108 @@
         "observed": {
           "id": "gate-90",
           "position": {
-            "x": 92.4,
+            "x": 92.65,
             "z": 17.3
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0.25,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L6/mid-tunnel",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "mid-tunnel",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "193f507aafc33401c45b762442911b9e6ba89f0731bd69bc41a4c374344775fe",
+        "damage": 100,
+        "expected": {
+          "id": "mid-tunnel",
+          "anchor": {
+            "x": 150.00180053710938,
+            "y": 1.2699999809265137,
+            "z": 15.071858406066895,
+            "yaw": 0.5053709560749428
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            42,
+            43,
+            44
+          ],
+          "pickups": [
+            56
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "mid-tunnel",
+          "position": {
+            "x": 150.00180053710938,
+            "z": 15.071858406066895
           },
           "gates": {},
           "racks": {
@@ -321,15 +417,15 @@
       "value": {
         "checkpoint": "gate-150",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "147b4a02ad03b7bac2f6a5fa865df9762a64ac8d6033136c53c4872a8a815dc8",
+        "snapshotSha256": "9373d01a571734268541bd2f6fd20fe467d61c6eb05cc89327a8d06c10ebb010",
         "damage": 100,
         "expected": {
           "id": "gate-150",
           "anchor": {
             "x": 152.4,
-            "y": 1.2699999809265137,
+            "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": 0.009049655851280777
+            "yaw": -0.011956949392807614
           },
           "gates": {},
           "racks": {
@@ -351,12 +447,25 @@
             19,
             20,
             21,
+            22,
+            23,
             24,
+            25,
+            26,
             27,
+            28,
+            29,
             30,
             31,
+            32,
+            33,
             34,
-            41,
+            35,
+            36,
+            37,
+            38,
+            39,
+            42,
             43,
             44
           ],
@@ -401,93 +510,6 @@
     },
     {
       "id": "G-21",
-      "clause": "mortal checkpoint restore at L6/mid-tunnel",
-      "tier": "low",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "mid-tunnel",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "be142b977f1475b22696e0216e44dcad4cb0a1acb542506be01e21b4cd91053c",
-        "damage": 100,
-        "expected": {
-          "id": "mid-tunnel",
-          "anchor": {
-            "x": 150.05679321289062,
-            "y": 1.2699999809265137,
-            "z": 15.467565536499023,
-            "yaw": -0.23242477429166905
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
-            ],
-            "RIGHT": [
-              "weapon.army-mg",
-              "weapon.handgun",
-              "weapon.kick",
-              "weapon.shotgun"
-            ]
-          },
-          "followers": [
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            24,
-            27,
-            30,
-            31,
-            34,
-            41,
-            43,
-            44
-          ],
-          "pickups": [
-            56
-          ],
-          "removedPickups": [],
-          "cure": false
-        },
-        "observed": {
-          "id": "mid-tunnel",
-          "position": {
-            "x": 150.05679321289062,
-            "z": 15.467565536499023
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
-            ],
-            "RIGHT": [
-              "weapon.army-mg",
-              "weapon.handgun",
-              "weapon.kick",
-              "weapon.shotgun"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": false,
-          "bossMode": null,
-          "bossHp": null
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json"
-    },
-    {
-      "id": "G-21",
       "clause": "mortal checkpoint restore at L6/gate-210",
       "tier": "low",
       "policy": "checkpoint-death-fixture",
@@ -495,15 +517,15 @@
       "value": {
         "checkpoint": "gate-210",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "c4911e806c273a9b4d8e5b181256b0e5eae815508a43381c16e32ad0b603d5fa",
+        "snapshotSha256": "1fe1146fc05b4e2dbf8ff1ec29e761e13e23f1fdcea9e5f9e8abf9e8af758b2f",
         "damage": 100,
         "expected": {
           "id": "gate-210",
           "anchor": {
             "x": 212.4,
-            "y": 1.2699999809265137,
+            "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": -2.2417624525804976
+            "yaw": 0.013905274055640182
           },
           "gates": {},
           "racks": {
@@ -525,12 +547,25 @@
             19,
             20,
             21,
+            22,
+            23,
             24,
+            25,
+            26,
             27,
+            28,
+            29,
             30,
             31,
+            32,
+            33,
             34,
-            41,
+            35,
+            36,
+            37,
+            38,
+            39,
+            42,
             43,
             44
           ],
@@ -582,15 +617,15 @@
       "value": {
         "checkpoint": "exit-platform",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "eb7cddfa7bfcfb581141001bafbab862c2fefd71adcca65fba21c08767504e0c",
+        "snapshotSha256": "f984f6985e1d19435b9a53ccbe284e6376a42357e6ea369f86c62e7b1f0f8af8",
         "damage": 100,
         "expected": {
           "id": "exit-platform",
           "anchor": {
-            "x": 240.0235137939453,
-            "y": 1.2699999809265137,
-            "z": 15.196158409118652,
-            "yaw": 0.033228387872957454
+            "x": 246.490234375,
+            "y": 1.3200000524520874,
+            "z": 14.947402954101562,
+            "yaw": -3.007988996818366
           },
           "gates": {},
           "racks": {
@@ -606,17 +641,31 @@
             ]
           },
           "followers": [
+            16,
             17,
             18,
             19,
             20,
             21,
+            22,
+            23,
             24,
+            25,
+            26,
             27,
+            28,
+            29,
             30,
             31,
+            32,
+            33,
             34,
-            41,
+            35,
+            36,
+            37,
+            38,
+            39,
+            42,
             43,
             44
           ],
@@ -629,8 +678,8 @@
         "observed": {
           "id": "exit-platform",
           "position": {
-            "x": 240.0235137939453,
-            "z": 15.196158409118652
+            "x": 246.490234375,
+            "z": 14.947402954101562
           },
           "gates": {},
           "racks": {
@@ -662,8 +711,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "91b3ff42",
-    "control": "91b3ff42",
+    "observed": "4a1802d3",
+    "control": "4a1802d3",
     "identical": true
   }
 }

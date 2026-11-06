@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
-  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
-  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 277,
+      "wallSeconds": 276,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 11.816666666666666,
+      "maxNoProgressSeconds": 11.765,
       "deaths": 0,
-      "assists": 0,
+      "assists": 1,
       "attacks": {
-        "weapon.army-mg": 1285
+        "weapon.army-mg": 1450
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -59,8 +59,8 @@
       "steps": [
         {
           "id": "ride",
-          "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
-          "tick": 12,
+          "text": "Ride into Fairhaven with the convoy · 57 m",
+          "tick": 15,
           "marker": {
             "anchor": "l4-plaza",
             "ring": {
@@ -75,8 +75,8 @@
         },
         {
           "id": "quartermaster",
-          "text": "Report to the quartermaster \u00b7 9\u00a0m",
-          "tick": 1914,
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1829,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": {
@@ -95,8 +95,8 @@
         },
         {
           "id": "hold",
-          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
-          "tick": 2308,
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2174,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
@@ -107,8 +107,8 @@
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 75\u00a0m",
-          "tick": 13296,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 66 m",
+          "tick": 13590,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -127,8 +127,8 @@
         },
         {
           "id": "bar",
-          "text": "Bar the cellar door \u00b7 5\u00a0m",
-          "tick": 14775,
+          "text": "Bar the cellar door · 5 m",
+          "tick": 14930,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -147,8 +147,8 @@
         },
         {
           "id": "wait",
-          "text": "Stay down \u00b7 0:07 remaining",
-          "tick": 14912,
+          "text": "Stay down · 0:07 remaining",
+          "tick": 15069,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,
@@ -163,9 +163,5 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5,
-  "sweepEvidence": {
-    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L4-low-webgl2.json",
-    "sha256": "358b70edf15126cf8eb65d5d7122556c3ef83a3fc0afc38b2286e73d09e24ee6"
-  }
+  "zoom": 1.5
 }
