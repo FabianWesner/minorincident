@@ -1,0 +1,370 @@
+{
+  "sourceHash": "8f7429dbcecce6bfd68b2e7962102c4b0820da51f6afca55b3324220c64bc642",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "revision": "06dab81541e27d84387db20ce2ad617988ae127e",
+  "simulationHash": "f1811f852e3222f9b3ba3f1cef9eac2e82a71d1c9f74e89ef760837e9b456c3c",
+  "toolSha256": "dce25018df38a5a066b129d50b8ad428a32cff0ae61676cb22c77162dec4a911",
+  "method": "Read-only snapshot of canonical240s stationary native hold when persistent Mega naturally enters18m; full final state hash identical to independent native stationary control. Production saveResume plus exact arsenal, no actor writes or relocation. Subsequent browser input is physical.",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 1247.5833333333333,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 194.7
+          },
+          {
+            "id": "military-zone",
+            "t": 364.01666666666665
+          },
+          {
+            "id": "research-campus",
+            "t": 540.35
+          },
+          {
+            "id": "research",
+            "t": 605.4333333333333
+          },
+          {
+            "id": "cure",
+            "t": 607.0166666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 630.2333333333333
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 670.2
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 926.55
+          },
+          {
+            "id": "install",
+            "t": 1005.2833333333333
+          },
+          {
+            "id": "hold",
+            "t": 1067.6
+          }
+        ],
+        "furthestObjective": "mega",
+        "activeObjectives": [
+          "mega"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "mega",
+          "detail": "tick-budget: Kill the Mega Alpha",
+          "player": {
+            "x": 4003.21923828125,
+            "z": -27.777355194091797
+          },
+          "distance": 6.518916746669266,
+          "actors": {}
+        },
+        "cureReleases": 0,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 8.483333333333334,
+            "combatSeconds": 57.549999999998015,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 125.29999999999417,
+            "travelSeconds": 0,
+            "combatSeconds": 125.29999999999417,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.1016731806161
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 168.5166666666929,
+            "travelSeconds": 0,
+            "combatSeconds": 168.5166666666929,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1779042507977
+          },
+          {
+            "id": "military-zone",
+            "seconds": 185.36666666670632,
+            "travelSeconds": 0,
+            "combatSeconds": 185.36666666670632,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.1085993218784
+          },
+          {
+            "id": "research-campus",
+            "seconds": 132.0666666666639,
+            "travelSeconds": 0,
+            "combatSeconds": 132.0666666666639,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.3600049260192
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 255.5666666667622,
+            "travelSeconds": 0,
+            "combatSeconds": 255.5666666667622,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.0886814941996
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 314.70000000004245,
+            "travelSeconds": 0,
+            "combatSeconds": 72.41666666666384,
+            "interactionSeconds": 0,
+            "holdSeconds": 242.28333333341828,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 346.8288631639103
+          }
+        ],
+        "maxConcurrentInfected": 95,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 218,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "ac58a915",
+      "controlIdentical": true,
+      "seeds": [
+        {
+          "stage": "charge",
+          "file": "docs/reports/fix72-c/L10-12/low-close-save.json.gz",
+          "sha256": "7b61e5539f0877a518c9fdf97a1e2cdbab962017e89d7afbecf6894fbc39658c",
+          "tick": 69350
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 1239.8666666666666,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 193.43333333333334
+          },
+          {
+            "id": "military-zone",
+            "t": 378.05
+          },
+          {
+            "id": "research-campus",
+            "t": 555.7833333333333
+          },
+          {
+            "id": "research",
+            "t": 623.5333333333333
+          },
+          {
+            "id": "cure",
+            "t": 625.0166666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 645.75
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 688.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 913.8333333333334
+          },
+          {
+            "id": "install",
+            "t": 997.5666666666667
+          },
+          {
+            "id": "hold",
+            "t": 1059.8833333333334
+          }
+        ],
+        "furthestObjective": "mega",
+        "activeObjectives": [
+          "mega"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "mega",
+          "detail": "tick-budget: Kill the Mega Alpha",
+          "player": {
+            "x": 4002.390380859375,
+            "z": -28.302215576171875
+          },
+          "distance": 3.8941558452439113,
+          "actors": {}
+        },
+        "cureReleases": 0,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 8.483333333333334,
+            "combatSeconds": 57.549999999998015,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 123.36666666666095,
+            "travelSeconds": 0,
+            "combatSeconds": 123.36666666666095,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0935219115884
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 183.9833333333719,
+            "travelSeconds": 0,
+            "combatSeconds": 183.9833333333719,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1995126169793
+          },
+          {
+            "id": "military-zone",
+            "seconds": 189.01666666670923,
+            "travelSeconds": 0,
+            "combatSeconds": 189.01666666670923,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.2058436376429
+          },
+          {
+            "id": "research-campus",
+            "seconds": 133.78333333333194,
+            "travelSeconds": 0,
+            "combatSeconds": 133.78333333333194,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.2784110223291
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 222.5166666667359,
+            "travelSeconds": 0,
+            "combatSeconds": 222.5166666667359,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 964.9954002837735
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 321.13333333336993,
+            "travelSeconds": 0,
+            "combatSeconds": 78.84999999999681,
+            "interactionSeconds": 0,
+            "holdSeconds": 242.28333333341828,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 352.99738364416567
+          }
+        ],
+        "maxConcurrentInfected": 190,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 470,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "6f62f16b",
+      "controlIdentical": true,
+      "seeds": [
+        {
+          "stage": "charge",
+          "file": "docs/reports/fix72-c/L10-12/high-close-save.json.gz",
+          "sha256": "a854567a5a1c5a98ab9748b9a2451191d277de073810555fca7488d2d6c4a9c0",
+          "tick": 66890
+        }
+      ]
+    }
+  ]
+}

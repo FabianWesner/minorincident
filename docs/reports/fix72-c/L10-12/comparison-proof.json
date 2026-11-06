@@ -1,0 +1,71 @@
+{
+  "scope": "Repaired corpse readability clause only; no whole L10-12 frame-time/grab-boundary qualification.",
+  "rows": [
+    {
+      "tier": "low",
+      "sameSeed": true,
+      "sameSimulationHash": "f1811f852e3222f9b3ba3f1cef9eac2e82a71d1c9f74e89ef760837e9b456c3c",
+      "samePhysicalCommandPrefix": true,
+      "sameMegaId": 119,
+      "sameDeathPosition": {
+        "x": 4003.118155996442,
+        "y": 0.7,
+        "z": -22.9862935423274,
+        "yaw": -2.665774749086595
+      },
+      "before": {
+        "sourceHash": "8f7429dbcecce6bfd68b2e7962102c4b0820da51f6afca55b3324220c64bc642",
+        "geometry": {
+          "vertices": 7865,
+          "indices": 16119
+        },
+        "file": "docs/reports/fix72-c/L10-12/before/low-corpse-physical.json.gz",
+        "sha256": "9b4ac197ecd3351fe542565b31c0587174c5b06b52ddc2c8e25912d2bff99077"
+      },
+      "after": {
+        "sourceHash": "f285ee3395fbd2bed0d16d86f26419df82d87d9b83a576275c82c21076947c55",
+        "geometry": {
+          "vertices": 18375,
+          "indices": 46338
+        },
+        "file": "docs/reports/fix72-c/L10-12/after/low-corpse-physical.json.gz",
+        "sha256": "9579ff9b3174b0284aaa7e28d240da148f643afc4e0abb69698703a8b04670ee"
+      },
+      "rawSeveranceBits": 31,
+      "visualClause": "PASS at wide gameplay zoom; head, limbs and pale dorsal silhouette retained. Tight zoom crops the full boss and is not claimed to show every part."
+    },
+    {
+      "tier": "high",
+      "sameSeed": true,
+      "sameSimulationHash": "f1811f852e3222f9b3ba3f1cef9eac2e82a71d1c9f74e89ef760837e9b456c3c",
+      "samePhysicalCommandPrefix": true,
+      "sameMegaId": 122,
+      "sameDeathPosition": {
+        "x": 4008.769913245534,
+        "y": 0.7,
+        "z": -29.507319604916447,
+        "yaw": -1.0911547742582277
+      },
+      "before": {
+        "sourceHash": "8f7429dbcecce6bfd68b2e7962102c4b0820da51f6afca55b3324220c64bc642",
+        "geometry": {
+          "vertices": 7865,
+          "indices": 16119
+        },
+        "file": "docs/reports/fix72-c/L10-12/before/high-corpse-physical.json.gz",
+        "sha256": "150dedc78105e009a3a1e97f250f807d54e241b79752127ab48f6952bc35a06d"
+      },
+      "after": {
+        "sourceHash": "f285ee3395fbd2bed0d16d86f26419df82d87d9b83a576275c82c21076947c55",
+        "geometry": {
+          "vertices": 18375,
+          "indices": 46338
+        },
+        "file": "docs/reports/fix72-c/L10-12/after/high-corpse-physical.json.gz",
+        "sha256": "d3d45140b4c59cb24bc90a687aff1286cd6c108dd70579debabab6e80a6951e0"
+      },
+      "rawSeveranceBits": 31,
+      "visualClause": "PASS at wide gameplay zoom; head, limbs and pale dorsal silhouette retained. Tight zoom crops the full boss and is not claimed to show every part."
+    }
+  ]
+}
