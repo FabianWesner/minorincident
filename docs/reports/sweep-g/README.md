@@ -1,6 +1,6 @@
 # sweep-g — global acceptance sweep
 
-**Continuation:** G-25 persistence fix implemented after the first handoff; fresh whole-group qualification is in progress. The status table and gate archive below describe the prior `9ac18b3e…` source until the new matrix completes. [Lossless failing-save proof](G-25-save-codec-proof.json) preserves both snapshots and all entities/seams.
+**Continuation:** G-25 persistence fix implemented after the first handoff; native browser quota/Settings/reload proof now passes with zero errors, and fresh whole-group qualification is in progress. The status table and gate archive below describe the prior `9ac18b3e…` source until the new matrix completes. [Lossless failing-save proof](G-25-save-codec-proof.json) preserves both snapshots and all entities/seams.
 
 **NO-GO: open failures and incomplete coverage remain.** This is the bounded sweep requested for G-06–G-26, based on `f807c966c610489eb1f8fb4182f164485bd5dc87`. Every assigned row was investigated; a partial fixture is never a whole-row PASS. G-01–G-05 performance and G-27 are outside this brief. Nothing was pushed or deployed.
 

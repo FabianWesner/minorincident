@@ -1,0 +1,65 @@
+{
+  "sourceHash": "8e400302a231cae93f92785b2d9d2a214cc7c458de05aff25045141f4aa3740e",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "7bd7cdfeb943a1748614ee7c614b8c357feaa82b",
+  "method": "Exact prior oversized production save, native localStorage quota, ordinary L10 menu Resume and Settings save, reload. No quota override or state trimming.",
+  "savePath": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3-save.json.gz",
+  "originalSaveHash": "f175542f6474d6a70afd50657815471fd8b0504e4a39c2614687aa67e1e1441b",
+  "errors": [],
+  "captures": [
+    {
+      "file": "test-results/sweep-g/G-25-save-browser/resumed.jpg",
+      "sha256": "7122fc13d2d505b127e13a3c49bd2065b27661573568f0dbf6e572627c4ec8b2",
+      "reviewed": true,
+      "observation": "Original1280x720 frame inspected: actual high WebGL L10 paused epilogue at138/150s after native Resume, debug overlay build7bd7cdf,1131 visible corpse entities recorded, heroine/corgi status and dispersal environment render. Storage/reload proof is separate from full-level console completion."
+    }
+  ],
+  "nativeStorageRoundTrip": {
+    "exact": true,
+    "encodedCodeUnits": 1577123
+  },
+  "productionSettingsSave": {
+    "encodedCodeUnits": 1577540,
+    "campaignHash": "eb867b191d7a2895a2f611a44ce8ef8f951ed02c4044c7ecaead6280a5246443",
+    "exactStoredCampaignJson": true,
+    "checkpointEntityCount": 1134,
+    "currentEntityCount": 1141,
+    "backend": "webgl",
+    "epilogue": {
+      "phase": "playable",
+      "phaseTicks": 0,
+      "survivors": [
+        1619,
+        1620,
+        1621,
+        1622,
+        1623,
+        1624
+      ],
+      "approaching": [
+        1613,
+        1614,
+        1615,
+        1616,
+        1617,
+        1618
+      ],
+      "groupsAuthored": true
+    }
+  },
+  "reloadExact": true,
+  "rejectedHarnessAttempts": [
+    {
+      "file": "docs/reports/sweep-g/G-25-save-browser-rejected-predicate.json",
+      "why": "Probe waited for nonexistent state.l10 instead of state.epilogue; native storage round-trip already exact. No game error."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-25-save-browser-rejected-loading.json",
+      "why": "Escape sent before loading overlay finished. Corrected to wait for visible native Pause button; no game error."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-25-save-browser-rejected-negative-zero.json",
+      "why": "Strict JS deep equality distinguished -0 from JSON-restored0. Existing and new save formats both serialize JSON; corrected comparison hashes exact JSON and retains all snapshot fields."
+    }
+  ]
+}
