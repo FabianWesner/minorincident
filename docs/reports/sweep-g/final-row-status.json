@@ -1,0 +1,174 @@
+{
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "qualification": "Current evidence distinguished from retained historical failures. Detailed observations and uncovered clauses are in README and per-row evidence.",
+  "rows": [
+    {
+      "id": "G-06",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Review real-input captures for every level at low/high and zoom 0.5/1.5, including every used vehicle and critical occluders; inspect full-size crops of suspected defects."
+    },
+    {
+      "id": "G-07",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "tools/qa/visual-p1-captures.ts --phase after --backend webgpu --only bounds-l7,vehicle-l2,canopy-l8; full-size critical frame review plus final per-level sheets. NEXT: real-input near-camera fences, horde and corpse occlusion at every critical route pose."
+    },
+    {
+      "id": "G-08",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "Compare HUD arrow, distance and ring with each real destination; distinguish fixed-gate handoffs and Mega intro from player-following markers."
+    },
+    {
+      "id": "G-09",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+    },
+    {
+      "id": "G-10",
+      "startingStatus": "PASS",
+      "finalStatus": "PASS",
+      "currentStatus": "PASS",
+      "expectedUnchanged": true,
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-11",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "PASS",
+      "currentStatus": "PASS",
+      "expectedUnchanged": true,
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-12",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "PASS",
+      "currentStatus": "PASS",
+      "expectedUnchanged": true,
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-13",
+      "startingStatus": "FAIL",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "Fix measured individual pace failures; measure exact player waiting with one follower>10m behind (current waiting value is only an upper bound)."
+    },
+    {
+      "id": "G-14",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Add a read-only permanent-corpse ID/lifetime ledger to the full real-input runs; revisit corpses at level end and review pile height, floating bodies and stretched limbs."
+    },
+    {
+      "id": "G-15",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+    },
+    {
+      "id": "G-16",
+      "startingStatus": "PASS",
+      "finalStatus": "PASS",
+      "currentStatus": "PASS",
+      "expectedUnchanged": true,
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-17",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "Read-only moving-runner pose observer plus inspected final sheet. NEXT: moving low-quality frame strips for every body/variant in wander/chase, including all seven L10 runner variants; inspect feet/legs and require lean <=42 degrees."
+    },
+    {
+      "id": "G-18",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+    },
+    {
+      "id": "G-19",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "Inspect no corgi HP bar, geometry/hull clearance and inside-door/shutter placement; native target/damage/health samples are measured."
+    },
+    {
+      "id": "G-20",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
+    },
+    {
+      "id": "G-21",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists."
+    },
+    {
+      "id": "G-22",
+      "startingStatus": "FAIL",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "Fix cited no-contact/late attack cohorts; add bounded paths and validate every announced threat against its actual announcement clock."
+    },
+    {
+      "id": "G-23",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run."
+    },
+    {
+      "id": "G-24",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "PASS",
+      "currentStatus": "PASS",
+      "expectedUnchanged": true,
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+    },
+    {
+      "id": "G-25",
+      "startingStatus": "FAIL",
+      "finalStatus": "FAIL",
+      "currentStatus": "NOT CHECKED",
+      "expectedUnchanged": true,
+      "remaining": "Complete physical WASD/mouse playthroughs at both qualities for all10 levels; native completion is not browser console qualification."
+    },
+    {
+      "id": "G-26",
+      "startingStatus": "NOT CHECKED",
+      "finalStatus": "FAIL",
+      "currentStatus": "FAIL",
+      "expectedUnchanged": true,
+      "remaining": "NEXT: Run current-source character/accessory/held-prop and live-seat Scene Lab matrices for every adult body and routine, comparing actual heights with the heroine; review full-size images."
+    }
+  ]
+}

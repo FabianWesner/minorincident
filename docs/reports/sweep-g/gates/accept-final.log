@@ -1,0 +1,136 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level all --reuse --skip-browser
+
+[qa:accept] L1 low/complete: reuse matching receipt
+[qa:accept] L1 low/stationary: reuse matching receipt
+[qa:accept] L1 high/complete: reuse matching receipt
+[qa:accept] L1 high/stationary: reuse matching receipt
+[qa:accept] L1 low/fixtures: 16 clauses, 0 errors
+[qa:accept] L1 high/fixtures: 16 clauses, 0 errors
+[qa:accept] L1 low/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept] L1 high/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept] L1: 0 fresh failing rows; 12 incomplete rows; docs/reports/fix51-verify/L1.json
+[qa:accept] L2 low/complete: reuse matching receipt
+[qa:accept] L2 low/stationary: reuse matching receipt
+[qa:accept] L2 high/complete: reuse matching receipt
+[qa:accept] L2 high/stationary: reuse matching receipt
+[qa:accept] L2 low/fixtures: 28 clauses, 0 errors
+[qa:accept] L2 high/fixtures: 28 clauses, 0 errors
+[qa:accept] L2 low/checkpoints: 4 clauses; control identical; 0 errors
+[qa:accept] L2 high/checkpoints: 4 clauses; control identical; 0 errors
+[qa:accept] L2: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L2.json
+[qa:accept] L3 low/complete: reuse matching receipt
+[qa:accept] L3 low/stationary: reuse matching receipt
+[qa:accept] L3 high/complete: reuse matching receipt
+[qa:accept] L3 high/stationary: reuse matching receipt
+[qa:accept] L3 low/fixtures: 21 clauses, 0 errors
+[qa:accept] L3 high/fixtures: 21 clauses, 0 errors
+[qa:accept] L3 low/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L3 high/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L3: 1 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L3.json
+[qa:accept] L4 low/complete: reuse matching receipt
+[qa:accept] L4 low/stationary: reuse matching receipt
+[qa:accept] L4 high/complete: reuse matching receipt
+[qa:accept] L4 high/stationary: reuse matching receipt
+[qa:accept] L4 low/fixtures: 10 clauses, 0 errors
+[qa:accept] L4 high/fixtures: 10 clauses, 0 errors
+[qa:accept] L4 low/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L4 high/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L4: 1 fresh failing rows; 14 incomplete rows; docs/reports/fix51-verify/L4.json
+[qa:accept] L5 low/complete: reuse matching receipt
+[qa:accept] L5 low/stationary: reuse matching receipt
+[qa:accept] L5 high/complete: reuse matching receipt
+[qa:accept] L5 high/stationary: reuse matching receipt
+[qa:accept] L5 low/fixtures: 10 clauses, 0 errors
+[qa:accept] L5 high/fixtures: 10 clauses, 0 errors
+[qa:accept] L5 low/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L5 high/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L5: 1 fresh failing rows; 9 incomplete rows; docs/reports/fix51-verify/L5.json
+[qa:accept] L6 low/complete: reuse matching receipt
+[qa:accept] L6 low/stationary: reuse matching receipt
+[qa:accept] L6 high/complete: reuse matching receipt
+[qa:accept] L6 high/stationary: reuse matching receipt
+[qa:accept] L6 low/fixtures: 8 clauses, 0 errors
+[qa:accept] L6 high/fixtures: 8 clauses, 0 errors
+[qa:accept] L6 low/checkpoints: 7 clauses; control identical; 0 errors
+[qa:accept] L6 high/checkpoints: 7 clauses; control identical; 0 errors
+[qa:accept] L6: 0 fresh failing rows; 9 incomplete rows; docs/reports/fix51-verify/L6.json
+[qa:accept] L7 low/complete: reuse matching receipt
+[qa:accept] L7 low/stationary: reuse matching receipt
+[qa:accept] L7 high/complete: reuse matching receipt
+[qa:accept] L7 high/stationary: reuse matching receipt
+[qa:accept] L7 low/fixtures: 8 clauses, 0 errors
+[qa:accept] L7 high/fixtures: 8 clauses, 0 errors
+[qa:accept] L7 low/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept] L7 high/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept] L7: 1 fresh failing rows; 9 incomplete rows; docs/reports/fix51-verify/L7.json
+[qa:accept] L8 low/complete: native global and level observation
+[qa:accept] L8 low/complete: complete
+[qa:accept] L8 low/stationary: native global and level observation
+[qa:accept] L8 low/stationary: tick-budget
+[qa:accept] L8 high/complete: native global and level observation
+[qa:accept] L8 high/complete: complete
+[qa:accept] L8 high/stationary: native global and level observation
+[qa:accept] L8 high/stationary: tick-budget
+[qa:accept] L8 low/fixtures: 4 clauses, 0 errors
+[qa:accept] L8 high/fixtures: 4 clauses, 0 errors
+[qa:accept:checkpoint] L8 low/sanctuary: PASS
+[qa:accept:checkpoint] L8 low/breach: PASS
+[qa:accept:checkpoint] L8 low/escape-route: PASS
+[qa:accept] L8 low/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L8 high/sanctuary: PASS
+[qa:accept:checkpoint] L8 high/breach: PASS
+[qa:accept:checkpoint] L8 high/escape-route: PASS
+[qa:accept] L8 high/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept] L8: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L8.json
+[qa:accept] L9 low/complete: native global and level observation
+[qa:accept] L9 low/complete: complete
+[qa:accept] L9 low/stationary: native global and level observation
+[qa:accept] L9 low/stationary: complete
+[qa:accept] L9 high/complete: native global and level observation
+[qa:accept] L9 high/complete: complete
+[qa:accept] L9 high/stationary: native global and level observation
+[qa:accept] L9 high/stationary: complete
+[campaign] selected action weapon.rocket-launcher unavailable (scripted crossing arsenal loss); falling back to weapon.fire-axe
+[qa:accept] L9 low/fixtures: 5 clauses, 0 errors
+[campaign] selected action weapon.rocket-launcher unavailable (scripted crossing arsenal loss); falling back to weapon.fire-axe
+[qa:accept] L9 high/fixtures: 5 clauses, 0 errors
+[qa:accept:checkpoint] L9 low/crossing-start: PASS
+[qa:accept:checkpoint] L9 low/outskirts-approach: PASS
+[qa:accept] L9 low/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L9 high/crossing-start: PASS
+[qa:accept:checkpoint] L9 high/outskirts-approach: PASS
+[qa:accept] L9 high/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept] L9: 0 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L9.json
+[qa:accept] L10 low/complete: native global and level observation
+[qa:accept] L10 low/complete: complete
+[qa:accept] L10 low/stationary: native global and level observation
+[qa:accept] L10 low/stationary: tick-budget
+[qa:accept] L10 high/complete: native global and level observation
+[qa:accept] L10 high/complete: complete
+[qa:accept] L10 high/stationary: native global and level observation
+[qa:accept] L10 high/stationary: tick-budget
+[qa:accept] L10 low/fixtures: 16 clauses, 0 errors
+[qa:accept] L10 high/fixtures: 16 clauses, 0 errors
+[qa:accept:checkpoint] L10 low/cure-crash: PASS
+[qa:accept:checkpoint] L10 low/cure-residential: PASS
+[qa:accept:checkpoint] L10 low/cure-industrial: PASS
+[qa:accept:checkpoint] L10 low/cure-military: PASS
+[qa:accept:checkpoint] L10 low/cure-research-entry: PASS
+[qa:accept:checkpoint] L10 low/cure-research: PASS
+[qa:accept:checkpoint] L10 low/cure-corridor: PASS
+[qa:accept:checkpoint] L10 low/cure-complex: PASS
+[qa:accept:checkpoint] L10 low/cure-disperse-ready: PASS
+[qa:accept] L10 low/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L10 high/cure-crash: PASS
+[qa:accept:checkpoint] L10 high/cure-residential: PASS
+[qa:accept:checkpoint] L10 high/cure-industrial: PASS
+[qa:accept:checkpoint] L10 high/cure-military: PASS
+[qa:accept:checkpoint] L10 high/cure-research-entry: PASS
+[qa:accept:checkpoint] L10 high/cure-research: PASS
+[qa:accept:checkpoint] L10 high/cure-corridor: PASS
+[qa:accept:checkpoint] L10 high/cure-complex: PASS
+[qa:accept:checkpoint] L10 high/cure-disperse-ready: PASS
+[qa:accept] L10 high/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept] L10: 1 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L10.json

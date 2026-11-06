@@ -1,0 +1,15 @@
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-g
+
+
+ Test Files  27 passed (27)
+      Tests  107 passed (107)
+   Start at  03:12:26
+   Duration  28.07s (tests 86%, transform 7%, import 6%, setup 1%)
+
+[test-budget] test: 31.0 s (budget 240 s)
