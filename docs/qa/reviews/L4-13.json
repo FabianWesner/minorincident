@@ -3,19 +3,24 @@
   "status": "FAIL",
   "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
+  "commit": "166205b9600ebef710ec16709af5e36648170bc0",
   "clauses": [
     {
       "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "verdict": "FAIL",
-      "note": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL. Census immediately before the first miss is79/80 living low and120/120 high; existing cap saturation is part of the sustained admission problem."
+      "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix73-b/L4-native-summary.json",
-      "sha256": "8b664c0055b7288d431106849120c8f0da865acf0f90dc641566c7f30f80e79a",
-      "what": "Current sourceHash 75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6. Full-rate native complete routes match current qa:accept hashes (low c3184e26; high 0bef7d9f). First collapse windows pass low 2/2/2 at tick12889 and high 3/3/3 at tick12925. Later collapse quota windows still miss: low 23/56 (first miss tick28009, 1/1/1 vs 2 per edge); high 5/9 (first miss tick15085, edge 6 admits 0/3). Caps and clocks unchanged; row remains FAIL. Census immediately before the first miss is79/80 living low and120/120 high; existing cap saturation is part of the sustained admission problem."
+      "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
+      "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c",
+      "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
+    },
+    {
+      "file": "docs/reports/fix73-b/L4-look-equivalence.json",
+      "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a",
+      "what": "Deep equality proves all collapse quota/admission/population data unchanged by appearance-only fix."
     }
   ]
 }
