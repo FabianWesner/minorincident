@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "431013dc92a8341006a871dcb552c23fcfb064ba1a84cbe3fbcc9914fb812dfe",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T06:08:51.394Z",
+  "generatedAt": "2026-11-06T06:10:58.228Z",
   "policies": [
     {
       "tier": "low",
@@ -61,6 +61,13 @@
       "policy": "controlled-fixtures",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-L9-04-routes.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-low-physical-detours.json"
     },
     {
@@ -90,6 +97,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-high-group-census.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-L9-04-routes.json"
     },
     {
       "tier": "high",
@@ -7275,16 +7289,19 @@
     },
     {
       "id": "L9-04",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/controlled-fixture safe route retains more durability than risky shortcut: {\"safe\":1000,\"shortcut\":830} (target both routes complete; safe pre-crash durability strictly greater; PASS); low/controlled-fixture shortcut durability billing per unique contact onset: [{\"type\":\"vehicle.durability-hit\",\"tick\":1191,\"sourceId\":667,\"targetId\":716,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1241,\"sourceId\":667,\"targetId\":717,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1988,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"con… (full values in JSON) (target nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge; PASS); high/controlled-fixture safe route retains more durability than risky shortcut: {\"safe\":1000,\"shortcut\":940} (target both routes complete; safe pre-crash durability strictly greater; PASS); high/controlled-fixture shortcut durability billing per unique contact onset: [{\"type\":\"vehicle.durability-hit\",\"tick\":1162,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1943,\"sourceId\":667,\"targetId\":760,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1954,\"sourceId\":667,\"targetId\":758,\"source\":\"contact\",\"con… (full values in JSON) (target nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/controlled-fixture safe route retains more durability than risky shortcut: {\"safe\":1000,\"shortcut\":830} (target both routes complete; safe pre-crash durability strictly greater; PASS); low/controlled-fixture shortcut durability billing per unique contact onset: [{\"type\":\"vehicle.durability-hit\",\"tick\":1191,\"sourceId\":667,\"targetId\":716,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1241,\"sourceId\":667,\"targetId\":717,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1988,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"con… (full values in JSON) (target nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge; PASS); low/controlled-fixture stopped-surround attacks deal10 damage after at least0.6s windup: {\"windups\":[{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":669,\"attackId\":1,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":670,\"attackId\":2,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":671,\"attackId\":3,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":672,\"attackId\":4,\"hitAt\":37},{\"ty… (full values in JSON) (target at least one actual attack hit; every hit has its matching actual windup, ≥36 ticks lead, and exactly10 durability damage; PASS); low/real-input-webgl2 physical matched safe route retains more durability than shortcut: {\"validPair\":true,\"safe\":990,\"shortcut\":860} (target same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater; PASS); low/real-input-webgl2 physical route contact and attack billing: [{\"type\":\"vehicle.durability-hit\",\"tick\":6903,\"sourceId\":667,\"targetId\":1006,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990,\"target\":{\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":407.31877371519863,\"y\":0.702,\"z\":-130.64960646215684,\"yaw\":8.201027375233362},\"state\":\"chase\",\"group\":\"road-wanderer-4\"}},{\"type\":\"vehicle.durability-hit\",\"tick\":1207,\"sourceId\":667,\"t… (full values in JSON) (target nonempty actual hit ledger; ten damage per unique contact/attack transaction; PASS); high/controlled-fixture safe route retains more durability than risky shortcut: {\"safe\":1000,\"shortcut\":940} (target both routes complete; safe pre-crash durability strictly greater; PASS); high/controlled-fixture shortcut durability billing per unique contact onset: [{\"type\":\"vehicle.durability-hit\",\"tick\":1162,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1943,\"sourceId\":667,\"targetId\":760,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1954,\"sourceId\":667,\"targetId\":758,\"source\":\"contact\",\"con… (full values in JSON) (target nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge; PASS); high/controlled-fixture stopped-surround attacks deal10 damage after at least0.6s windup: {\"windups\":[{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":669,\"attackId\":1,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":670,\"attackId\":2,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":671,\"attackId\":3,\"hitAt\":37},{\"type\":\"vehicle.attack-windup\",\"tick\":1,\"sourceId\":667,\"targetId\":672,\"attackId\":4,\"hitAt\":37},{\"ty… (full values in JSON) (target at least one actual attack hit; every hit has its matching actual windup, ≥36 ticks lead, and exactly10 durability damage; PASS); high/real-input-webgl2 physical matched safe route retains more durability than shortcut: {\"validPair\":true,\"safe\":990,\"shortcut\":900} (target same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater; PASS); high/real-input-webgl2 physical route contact and attack billing: [{\"type\":\"vehicle.durability-hit\",\"tick\":6891,\"sourceId\":667,\"targetId\":1022,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990,\"target\":{\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":404.7135056459553,\"y\":0.702,\"z\":-133.27495377944678,\"yaw\":2.1896855314738075},\"state\":\"chase\",\"group\":\"road-wanderer-4\"}},{\"type\":\"vehicle.durability-hit\",\"tick\":1201,\"sourceId\":667,\"t… (full values in JSON) (target nonempty actual hit ledger; ten damage per unique contact/attack transaction; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
         "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L9-high-complete.json",
         "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
-        "docs/reports/fix55-c/L9-native.json"
+        "docs/reports/fix55-c/L9-native.json",
+        "docs/reports/sweep-c3/L9-04/stopped-contact.json.gz",
+        "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz",
+        "docs/reports/sweep-c5/L9-04/L9-04-high-physical.json.gz"
       ],
       "expected": "Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut.",
       "checks": [
@@ -7547,6 +7564,948 @@
         },
         {
           "id": "L9-04",
+          "clause": "stopped-surround attacks deal10 damage after at least0.6s windup",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "value": {
+            "windups": [
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 1,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 2,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 3,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 4,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 5,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 6,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 7,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 8,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 9,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 10,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 11,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 12,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 13,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 14,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 15,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 16,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 17,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 480,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 18,
+                "hitAt": 516
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 481,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 19,
+                "hitAt": 517
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 481,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 20,
+                "hitAt": 517
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 577,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 21,
+                "hitAt": 613
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 577,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 22,
+                "hitAt": 613
+              }
+            ],
+            "matched": [
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 1,
+                  "before": 1000,
+                  "after": 990
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "attackId": 1,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 2,
+                  "before": 990,
+                  "after": 980
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 2,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 3,
+                  "before": 980,
+                  "after": 970
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 3,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 4,
+                  "before": 970,
+                  "after": 960
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 4,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 5,
+                  "before": 960,
+                  "after": 950
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "attackId": 5,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 6,
+                  "before": 950,
+                  "after": 940
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 6,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 7,
+                  "before": 940,
+                  "after": 930
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 7,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 8,
+                  "before": 930,
+                  "after": 920
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 8,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 9,
+                  "before": 920,
+                  "after": 910
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 9,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 10,
+                  "before": 910,
+                  "after": 900
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 10,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 11,
+                  "before": 900,
+                  "after": 890
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 11,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 12,
+                  "before": 890,
+                  "after": 880
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 12,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 13,
+                  "before": 880,
+                  "after": 870
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 13,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 14,
+                  "before": 870,
+                  "after": 860
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 14,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 421,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 15,
+                  "before": 860,
+                  "after": 850
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 385,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 15,
+                  "hitAt": 421
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 421,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 16,
+                  "before": 850,
+                  "after": 840
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 385,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 16,
+                  "hitAt": 421
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 517,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 19,
+                  "before": 840,
+                  "after": 830
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 481,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 19,
+                  "hitAt": 517
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 517,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 20,
+                  "before": 830,
+                  "after": 820
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 481,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 20,
+                  "hitAt": 517
+                }
+              }
+            ]
+          },
+          "target": "at least one actual attack hit; every hit has its matching actual windup, ≥36 ticks lead, and exactly10 durability damage",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c3/L9-04/stopped-contact.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-04",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "value": {
+            "validPair": true,
+            "safe": 990,
+            "shortcut": 860
+          },
+          "target": "same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-04",
+          "clause": "physical route contact and attack billing",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6903,
+              "sourceId": 667,
+              "targetId": 1006,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 407.31877371519863,
+                  "y": 0.702,
+                  "z": -130.64960646215684,
+                  "yaw": 8.201027375233362
+                },
+                "state": "chase",
+                "group": "road-wanderer-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1207,
+              "sourceId": 667,
+              "targetId": 721,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -300.49467859610826,
+                  "y": 0.706,
+                  "z": -21.698671471995073,
+                  "yaw": 4.646030435992758
+                },
+                "state": "wander",
+                "group": "dry-shortcut-1"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1229,
+              "sourceId": 667,
+              "targetId": 722,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -298.60947178792446,
+                  "y": 0.706,
+                  "z": -23.240805970996718,
+                  "yaw": -0.15922710534868145
+                },
+                "state": "wander",
+                "group": "dry-shortcut-1"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1278,
+              "sourceId": 667,
+              "targetId": 718,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 980,
+              "after": 970,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -291.6637286608111,
+                  "y": 0.706,
+                  "z": -20.69254455213322,
+                  "yaw": 2.1467432130749096
+                },
+                "state": "attack",
+                "group": "dry-shortcut-1"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1974,
+              "sourceId": 667,
+              "targetId": 754,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 970,
+              "after": 960,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -159.80507308344912,
+                  "y": 0.706,
+                  "z": -31.86180591892732,
+                  "yaw": 2.5178586640182687
+                },
+                "state": "wander",
+                "group": "dry-shortcut-2"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1988,
+              "sourceId": 667,
+              "targetId": 750,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 960,
+              "after": 950,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -155.79364617432205,
+                  "y": 0.706,
+                  "z": -29.778006279974363,
+                  "yaw": 4.2803189168623215
+                },
+                "state": "chase",
+                "group": "dry-shortcut-2"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2031,
+              "sourceId": 667,
+              "targetId": 751,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 950,
+              "after": 940,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -147.72702855044955,
+                  "y": 0.706,
+                  "z": -28.619546171824247,
+                  "yaw": -2.635088457350813
+                },
+                "state": "chase",
+                "group": "dry-shortcut-2"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2081,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 940,
+              "after": 930,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -138.51691792546603,
+                  "y": 0.706,
+                  "z": -30.570141451935044,
+                  "yaw": -0.014974322775533476
+                },
+                "state": "idle",
+                "group": "dry-shortcut-2"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2474,
+              "sourceId": 667,
+              "targetId": 796,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 930,
+              "after": 920,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.43048871136074,
+                  "y": 0.706,
+                  "z": -31.381748582108326,
+                  "yaw": -3.0489288798433534
+                },
+                "state": "chase",
+                "group": "dry-shortcut-3"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2529,
+              "sourceId": 667,
+              "targetId": 797,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 920,
+              "after": 910,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -55.18540719017713,
+                  "y": 0.706,
+                  "z": -28.419776499825957,
+                  "yaw": 1.8467876714751894
+                },
+                "state": "alerted",
+                "group": "dry-shortcut-3"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3114,
+              "sourceId": 667,
+              "targetId": 831,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 910,
+              "after": 900,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 53.726273874324974,
+                  "y": 0.706,
+                  "z": -30.870634146527674,
+                  "yaw": -3.127929596655439
+                },
+                "state": "chase",
+                "group": "dry-shortcut-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3132,
+              "sourceId": 667,
+              "targetId": 832,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 900,
+              "after": 890,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 57.00159098912048,
+                  "y": 0.706,
+                  "z": -30.584426323246447,
+                  "yaw": -3.189242725495786
+                },
+                "state": "chase",
+                "group": "dry-shortcut-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3140,
+              "sourceId": 667,
+              "targetId": 828,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 890,
+              "after": 880,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 57.959284559193364,
+                  "y": 0.706,
+                  "z": -28.68104765662237,
+                  "yaw": 2.8310574624030824
+                },
+                "state": "chase",
+                "group": "dry-shortcut-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3564,
+              "sourceId": 667,
+              "targetId": 870,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 880,
+              "after": 870,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 137.46903533099749,
+                  "y": 0.706,
+                  "z": -29.082279191036854,
+                  "yaw": 0.7931774406301967
+                },
+                "state": "chase",
+                "group": "dry-shortcut-5"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3701,
+              "sourceId": 667,
+              "targetId": 873,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 870,
+              "after": 860,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 162.58725667770892,
+                  "y": 0.706,
+                  "z": -31.729771505592208,
+                  "yaw": 1.5866295432672877
+                },
+                "state": "idle",
+                "group": "dry-shortcut-5"
+              }
+            }
+          ],
+          "target": "nonempty actual hit ledger; ten damage per unique contact/attack transaction",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-04",
           "clause": "safe route retains more durability than risky shortcut",
           "tier": "high",
           "policy": "controlled-fixture",
@@ -7636,6 +8595,856 @@
           "status": "PASS",
           "receipt": "docs/reports/fix55-c/L9-native.json",
           "level": "L9"
+        },
+        {
+          "id": "L9-04",
+          "clause": "stopped-surround attacks deal10 damage after at least0.6s windup",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "value": {
+            "windups": [
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 1,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 2,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 3,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 1,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 4,
+                "hitAt": 37
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 5,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 6,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 7,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 97,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 8,
+                "hitAt": 133
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 9,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 10,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 193,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 11,
+                "hitAt": 229
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 12,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 13,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 289,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 14,
+                "hitAt": 325
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 15,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 16,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 385,
+                "sourceId": 667,
+                "targetId": 672,
+                "attackId": 17,
+                "hitAt": 421
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 480,
+                "sourceId": 667,
+                "targetId": 669,
+                "attackId": 18,
+                "hitAt": 516
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 481,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 19,
+                "hitAt": 517
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 481,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 20,
+                "hitAt": 517
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 577,
+                "sourceId": 667,
+                "targetId": 670,
+                "attackId": 21,
+                "hitAt": 613
+              },
+              {
+                "type": "vehicle.attack-windup",
+                "tick": 577,
+                "sourceId": 667,
+                "targetId": 671,
+                "attackId": 22,
+                "hitAt": 613
+              }
+            ],
+            "matched": [
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 1,
+                  "before": 1000,
+                  "after": 990
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "attackId": 1,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 2,
+                  "before": 990,
+                  "after": 980
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 2,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 3,
+                  "before": 980,
+                  "after": 970
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 3,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 37,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 4,
+                  "before": 970,
+                  "after": 960
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 1,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 4,
+                  "hitAt": 37
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 5,
+                  "before": 960,
+                  "after": 950
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 669,
+                  "attackId": 5,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 6,
+                  "before": 950,
+                  "after": 940
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 6,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 7,
+                  "before": 940,
+                  "after": 930
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 7,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 133,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 8,
+                  "before": 930,
+                  "after": 920
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 97,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 8,
+                  "hitAt": 133
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 9,
+                  "before": 920,
+                  "after": 910
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 9,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 10,
+                  "before": 910,
+                  "after": 900
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 10,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 229,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 11,
+                  "before": 900,
+                  "after": 890
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 193,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 11,
+                  "hitAt": 229
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 12,
+                  "before": 890,
+                  "after": 880
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 12,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 13,
+                  "before": 880,
+                  "after": 870
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 13,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 325,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 14,
+                  "before": 870,
+                  "after": 860
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 289,
+                  "sourceId": 667,
+                  "targetId": 672,
+                  "attackId": 14,
+                  "hitAt": 325
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 421,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 15,
+                  "before": 860,
+                  "after": 850
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 385,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 15,
+                  "hitAt": 421
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 421,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 16,
+                  "before": 850,
+                  "after": 840
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 385,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 16,
+                  "hitAt": 421
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 517,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 19,
+                  "before": 840,
+                  "after": 830
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 481,
+                  "sourceId": 667,
+                  "targetId": 670,
+                  "attackId": 19,
+                  "hitAt": 517
+                }
+              },
+              {
+                "hit": {
+                  "type": "vehicle.durability-hit",
+                  "tick": 517,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "source": "attack",
+                  "contactId": null,
+                  "attackId": 20,
+                  "before": 830,
+                  "after": 820
+                },
+                "windup": {
+                  "type": "vehicle.attack-windup",
+                  "tick": 481,
+                  "sourceId": 667,
+                  "targetId": 671,
+                  "attackId": 20,
+                  "hitAt": 517
+                }
+              }
+            ]
+          },
+          "target": "at least one actual attack hit; every hit has its matching actual windup, ≥36 ticks lead, and exactly10 durability damage",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c3/L9-04/stopped-contact.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-04",
+          "clause": "physical matched safe route retains more durability than shortcut",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "value": {
+            "validPair": true,
+            "safe": 990,
+            "shortcut": 900
+          },
+          "target": "same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c5/L9-04/L9-04-high-physical.json.gz",
+          "level": "L9"
+        },
+        {
+          "id": "L9-04",
+          "clause": "physical route contact and attack billing",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6891,
+              "sourceId": 667,
+              "targetId": 1022,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 404.7135056459553,
+                  "y": 0.702,
+                  "z": -133.27495377944678,
+                  "yaw": 2.1896855314738075
+                },
+                "state": "chase",
+                "group": "road-wanderer-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1201,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -301.29178695173266,
+                  "y": 0.706,
+                  "z": -20.301065047231948,
+                  "yaw": 0.45200767704966177
+                },
+                "state": "idle",
+                "group": "dry-shortcut-1"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1272,
+              "sourceId": 667,
+              "targetId": 751,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -288.37768943548565,
+                  "y": 0.706,
+                  "z": -22.03742654781646,
+                  "yaw": 3.743463457337051
+                },
+                "state": "chase",
+                "group": "dry-shortcut-1"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2483,
+              "sourceId": 667,
+              "targetId": 772,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.32632199812568,
+                  "y": 0.706,
+                  "z": -27.991343706328585,
+                  "yaw": 2.0061656151973852
+                },
+                "state": "attack",
+                "group": "dry-shortcut-3"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2536,
+              "sourceId": 667,
+              "targetId": 774,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.89976700978614,
+                  "y": 0.706,
+                  "z": -29.14553962527501,
+                  "yaw": -6.60642950372326
+                },
+                "state": "wander",
+                "group": "dry-shortcut-3"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3107,
+              "sourceId": 667,
+              "targetId": 814,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 52.26693689019002,
+                  "y": 0.706,
+                  "z": -28.154697268317374,
+                  "yaw": -9.823737248099452
+                },
+                "state": "chase",
+                "group": "dry-shortcut-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3113,
+              "sourceId": 667,
+              "targetId": 817,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 53.55262425102246,
+                  "y": 0.706,
+                  "z": -30.093713766213117,
+                  "yaw": -3.3588560660008913
+                },
+                "state": "chase",
+                "group": "dry-shortcut-4"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3586,
+              "sourceId": 667,
+              "targetId": 865,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 141.4474691068331,
+                  "y": 0.706,
+                  "z": -30.607721417760033,
+                  "yaw": 3.477141099149003
+                },
+                "state": "chase",
+                "group": "dry-shortcut-5"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4104,
+              "sourceId": 667,
+              "targetId": 920,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 237.61981382267464,
+                  "y": 0.706,
+                  "z": -31.431131269916943,
+                  "yaw": 0.004978221733000721
+                },
+                "state": "wander",
+                "group": "dry-shortcut-6"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4125,
+              "sourceId": 667,
+              "targetId": 922,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 241.75956513697852,
+                  "y": 0.706,
+                  "z": -30.072335289365814,
+                  "yaw": 0.8742673500121662
+                },
+                "state": "wander",
+                "group": "dry-shortcut-6"
+              }
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4141,
+              "sourceId": 667,
+              "targetId": 918,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900,
+              "target": {
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": 241.92941432438215,
+                  "y": 0.706,
+                  "z": -27.74347476360547,
+                  "yaw": -0.4895556894099011
+                },
+                "state": "wander",
+                "group": "dry-shortcut-6"
+              }
+            }
+          ],
+          "target": "nonempty actual hit ledger; ten damage per unique contact/attack transaction",
+          "status": "PASS",
+          "receipt": "docs/reports/sweep-c5/L9-04/L9-04-high-physical.json.gz",
+          "level": "L9"
         }
       ],
       "historical": {
@@ -7646,7 +9455,7 @@
         "evidence": [],
         "method": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
       },
-      "remaining": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L9-05",

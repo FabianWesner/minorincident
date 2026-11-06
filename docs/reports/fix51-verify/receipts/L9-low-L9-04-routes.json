@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "low",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "7323555d39b1cc65ca842ae61632c7fd01bf685acdb018c920c94bc8f5ca2a76",
+  "errors": [],
+  "observations": {
+    "proofPath": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz",
+    "reviewPath": "docs/reports/sweep-c5/L9-04/L9-04-review.json"
+  },
+  "checks": [
+    {
+      "id": "L9-04",
+      "clause": "physical matched safe route retains more durability than shortcut",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "value": {
+        "validPair": true,
+        "safe": 990,
+        "shortcut": 860
+      },
+      "target": "same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater",
+      "status": "PASS",
+      "receipt": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz"
+    },
+    {
+      "id": "L9-04",
+      "clause": "physical route contact and attack billing",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "value": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 6903,
+          "sourceId": 667,
+          "targetId": 1006,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 407.31877371519863,
+              "y": 0.702,
+              "z": -130.64960646215684,
+              "yaw": 8.201027375233362
+            },
+            "state": "chase",
+            "group": "road-wanderer-4"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1207,
+          "sourceId": 667,
+          "targetId": 721,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -300.49467859610826,
+              "y": 0.706,
+              "z": -21.698671471995073,
+              "yaw": 4.646030435992758
+            },
+            "state": "wander",
+            "group": "dry-shortcut-1"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1229,
+          "sourceId": 667,
+          "targetId": 722,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -298.60947178792446,
+              "y": 0.706,
+              "z": -23.240805970996718,
+              "yaw": -0.15922710534868145
+            },
+            "state": "wander",
+            "group": "dry-shortcut-1"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1278,
+          "sourceId": 667,
+          "targetId": 718,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 980,
+          "after": 970,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -291.6637286608111,
+              "y": 0.706,
+              "z": -20.69254455213322,
+              "yaw": 2.1467432130749096
+            },
+            "state": "attack",
+            "group": "dry-shortcut-1"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1974,
+          "sourceId": 667,
+          "targetId": 754,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 970,
+          "after": 960,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -159.80507308344912,
+              "y": 0.706,
+              "z": -31.86180591892732,
+              "yaw": 2.5178586640182687
+            },
+            "state": "wander",
+            "group": "dry-shortcut-2"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1988,
+          "sourceId": 667,
+          "targetId": 750,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 960,
+          "after": 950,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -155.79364617432205,
+              "y": 0.706,
+              "z": -29.778006279974363,
+              "yaw": 4.2803189168623215
+            },
+            "state": "chase",
+            "group": "dry-shortcut-2"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2031,
+          "sourceId": 667,
+          "targetId": 751,
+          "source": "contact",
+          "contactId": 7,
+          "attackId": null,
+          "before": 950,
+          "after": 940,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -147.72702855044955,
+              "y": 0.706,
+              "z": -28.619546171824247,
+              "yaw": -2.635088457350813
+            },
+            "state": "chase",
+            "group": "dry-shortcut-2"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2081,
+          "sourceId": 667,
+          "targetId": 753,
+          "source": "contact",
+          "contactId": 8,
+          "attackId": null,
+          "before": 940,
+          "after": 930,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -138.51691792546603,
+              "y": 0.706,
+              "z": -30.570141451935044,
+              "yaw": -0.014974322775533476
+            },
+            "state": "idle",
+            "group": "dry-shortcut-2"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2474,
+          "sourceId": 667,
+          "targetId": 796,
+          "source": "contact",
+          "contactId": 9,
+          "attackId": null,
+          "before": 930,
+          "after": 920,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -65.43048871136074,
+              "y": 0.706,
+              "z": -31.381748582108326,
+              "yaw": -3.0489288798433534
+            },
+            "state": "chase",
+            "group": "dry-shortcut-3"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2529,
+          "sourceId": 667,
+          "targetId": 797,
+          "source": "contact",
+          "contactId": 10,
+          "attackId": null,
+          "before": 920,
+          "after": 910,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": -55.18540719017713,
+              "y": 0.706,
+              "z": -28.419776499825957,
+              "yaw": 1.8467876714751894
+            },
+            "state": "alerted",
+            "group": "dry-shortcut-3"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3114,
+          "sourceId": 667,
+          "targetId": 831,
+          "source": "contact",
+          "contactId": 11,
+          "attackId": null,
+          "before": 910,
+          "after": 900,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 53.726273874324974,
+              "y": 0.706,
+              "z": -30.870634146527674,
+              "yaw": -3.127929596655439
+            },
+            "state": "chase",
+            "group": "dry-shortcut-4"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3132,
+          "sourceId": 667,
+          "targetId": 832,
+          "source": "contact",
+          "contactId": 12,
+          "attackId": null,
+          "before": 900,
+          "after": 890,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 57.00159098912048,
+              "y": 0.706,
+              "z": -30.584426323246447,
+              "yaw": -3.189242725495786
+            },
+            "state": "chase",
+            "group": "dry-shortcut-4"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3140,
+          "sourceId": 667,
+          "targetId": 828,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 890,
+          "after": 880,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 57.959284559193364,
+              "y": 0.706,
+              "z": -28.68104765662237,
+              "yaw": 2.8310574624030824
+            },
+            "state": "chase",
+            "group": "dry-shortcut-4"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3564,
+          "sourceId": 667,
+          "targetId": 870,
+          "source": "contact",
+          "contactId": 14,
+          "attackId": null,
+          "before": 880,
+          "after": 870,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 137.46903533099749,
+              "y": 0.706,
+              "z": -29.082279191036854,
+              "yaw": 0.7931774406301967
+            },
+            "state": "chase",
+            "group": "dry-shortcut-5"
+          }
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3701,
+          "sourceId": 667,
+          "targetId": 873,
+          "source": "contact",
+          "contactId": 15,
+          "attackId": null,
+          "before": 870,
+          "after": 860,
+          "target": {
+            "archetype": "infected.runner",
+            "hp": 60,
+            "position": {
+              "x": 162.58725667770892,
+              "y": 0.706,
+              "z": -31.729771505592208,
+              "yaw": 1.5866295432672877
+            },
+            "state": "idle",
+            "group": "dry-shortcut-5"
+          }
+        }
+      ],
+      "target": "nonempty actual hit ledger; ten damage per unique contact/attack transaction",
+      "status": "PASS",
+      "receipt": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz"
+    }
+  ]
+}
