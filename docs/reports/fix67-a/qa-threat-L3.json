@@ -1,0 +1,13 @@
+{
+  "command": "node --import tsx/esm tools/qa/threat-audit.ts --levels L3 (base: main e061357 sim sources; lane: 198d6d4). Full npm run qa:threat on the lane hit its 600 s budget during L9 (exit 124, Mac load average 8-12 from other lanes; L4 alone took 267 s); L1-L8 completed.",
+  "base": {
+    "skilledFlags": ["step/checkpoint:SLOW_FOLLOWER:32", "step/checkpoint:SLOW_FOLLOWER:33", "phase/corridor:SLOW_FOLLOWER:32", "phase/corridor:SLOW_FOLLOWER:33", "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS", "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"],
+    "passiveFlags": [],
+    "skilledSquad": "4 at fallback, 2 at army"
+  },
+  "lane": {
+    "skilledFlags": ["wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS", "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"],
+    "passiveFlags": ["criterion/L3-06 squad counts/losses:FAIL"],
+    "skilledSquad": "4 at fallback, 3 at army (single seed 1; seeds 2/3 end with 0)"
+  }
+}
