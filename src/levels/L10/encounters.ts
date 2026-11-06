@@ -49,7 +49,9 @@ export const cureEncounters: readonly CureEncounter[] = [
   // retained corridor hordes. Every member is once-only and the director
   // separately limits concurrent regional dogs. Their fixed X stations cover
   // the road and parallel forecourt crossings through the existing director.
-  ...([[2977, 20], [2977, 75], [3030, 95], [3080, 95], [3130, 95], [3180, 95], [3230, 95], [3280, 95], [3330, 95], [3380, 95], [3430, 95], [3480, 95], [3530, 95], [3577, 45]] as Point[]).map((at, i): CureEncounter => ({
+  // R5/R6 envelopes overlap by 50 m. Keep the first R6 packs past the R5 edge
+  // so their chase cannot briefly inflate the research-campus local dog peak.
+  ...([[3010, 20], [3010, 75], [3030, 95], [3080, 95], [3130, 95], [3180, 95], [3230, 95], [3280, 95], [3330, 95], [3380, 95], [3430, 95], [3480, 95], [3530, 95], [3577, 45]] as Point[]).map((at, i): CureEncounter => ({
     id: `corridor-pack-${i}`, region: 'destroyed-corridor', at, regular: [0, 0], dogs: 2, alphas: 0,
   })),
   ...([[3755, -25], [3820, -41], [3890, -41], [3920, -41], [3955, -25], [3970, -25]] as Point[]).map((at, i): CureEncounter => ({
