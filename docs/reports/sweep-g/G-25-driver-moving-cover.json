@@ -1,0 +1,22 @@
+{
+  "row": "G-25",
+  "kind": "driver diagnosis, not a game crash",
+  "sourceHash": "8e400302a231cae93f92785b2d9d2a214cc7c458de05aff25045141f4aa3740e",
+  "oldBrowserHash": "dd3776108556f99608e31ae5ab8d4505a63be0bb0d9642af809d9bbe9faf2ae4",
+  "receipt": "docs/reports/sweep-g/G-25-codec-L10-high-webgl2-batch2.json",
+  "receiptSha256": "60b05ceeb0438fe2c82bab04ea3f0dc63be53c811ff45f6bf401e7dce25a104a",
+  "failedPosition": {
+    "x": 2234.0732421875,
+    "z": -46.525455474853516,
+    "hp": 100,
+    "weapon": "weapon.army-mg"
+  },
+  "failedHUD": "Reach the research campus \u00b7 237\u00a0m",
+  "noProgressSeconds": 90.2,
+  "consoleErrors": [],
+  "objectiveSkips": [],
+  "cause": "L10 ranged combat branch returns before ordinary navigation and otherwise presses no movement keys. Moving cover existed for L3 checkpoint/L5/L7 but excluded L10 travel. After last navigation at tick8465, research-campus237m never advances and route aborts at tick19358.",
+  "change": "Reuse existing physical WASD+mouse moving cover toward actual objective during L10 travel. Yield to unchanged navigation recovery after3s of no movement. Hold/Mega/epilogue excluded. No game/world/objective writes, no timer/cap/target changes.",
+  "qualification": "Fresh full routes must qualify the new browser hash; old cells are not relabelled.",
+  "lowInterruption": "Owned low route intentionally interrupted during research recording approach before changing the driver, so no later batch silently mixes versions. Partial observations and captures retained; not a game failure."
+}

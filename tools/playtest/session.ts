@@ -110,7 +110,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 });
       // Reveal diagnostics beside each capture (courier, camera, see-through cut placements, foreground state).
       if (process.env.PLAYTEST_REVEAL_AUDIT === '1') writeFileSync(join(o.out, file.replace(/\.jpg$/, '.json')), JSON.stringify(await page.evaluate(() => {
-        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; clock: { paused: boolean }; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; courierForeground?: boolean } };
+        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; clock: { paused: boolean }; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; marker?: import('three/webgpu').Group; courierForeground?: boolean } };
         const p = g.world.entities.get(1)!.transform, a = window.__SS__!;
         const render = a.getState().render as { backend: string; quality: string; healthBars?: unknown };
         const figures = new Map(a.crowdFigures().map(f => [f.id, f]));
@@ -119,7 +119,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           lod: figures.get(e.id)?.lod, clip: figures.get(e.id)?.clip, drawn: figures.get(e.id)?.drawn }));
         const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]'), box = cue?.getBoundingClientRect();
         const alarmCue = cue ? { text: cue.innerText, hidden: cue.hidden, alarm: cue.dataset.alarm, opacity: getComputedStyle(cue).opacity, box: box && { x: box.x, y: box.y, width: box.width, height: box.height } } : null;
-        return { tick: g.world.tick, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        const marker = g.view.marker, mission = g.world.missions;
+        const hud = (id: string) => {
+          const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
+          return e ? { text: e.textContent, visible: !e.hidden && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden', style: e.getAttribute('style') } : null;
+        };
+        const objective = { markerId: mission?.state.marker, authoredAnchors: mission?.def.anchors,
+          activeSteps: mission?.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => ({ id: s.id, anchor: s.anchor })),
+          marker: marker && { visible: marker.visible, position: marker.getWorldPosition(marker.position.clone()).toArray(), children: marker.children.map(c => ({ visible: c.visible, position: c.getWorldPosition(c.position.clone()).toArray() })) },
+          tracker: hud('mission-tracker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
+        const companions = [...g.world.entities.iterate()].filter(e => !!e.companion).map(e => ({ id: e.id, archetype: e.archetype, health: { ...e.health }, hidden: !!e.hidden, passengerOf: e.passengerOf, state: e.companion?.state, transform: { ...e.transform } }));
+        const vehicles = [...(g.world.vehicles?.cars.values() ?? [])].filter(c => c.entity.id === g.world.vehicles?.active || c.entity.vehicle?.driver != null || (c.entity.vehicle?.attached.length ?? 0) > 0 || (c.entity.vehicle?.passengers?.length ?? 0) > 0).map(c => ({ id: c.entity.id, archetype: c.entity.archetype, transform: { ...c.entity.transform }, vehicle: c.entity.vehicle }));
+        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
@@ -618,6 +629,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return true;
     }
     if (ranged.test(e.player?.current ?? '')) {
+      const l10Travel = e.level === 'L10' && !['hold', 'mega', 'epilogue'].includes(e.step ?? '');
+      if (l10Travel && e.player && ring && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) > 1.2) {
+        if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: now };
+        // A nearby crowd must not monopolize this loop and starve ordinary
+        // WASD route recovery. Reuse that recovery when covering fire stalls.
+        if (now - navPos.wall > 3000) { await releaseAim(); return false; }
+      }
       const defending = e.step === 'mega' || e.step === 'hold' && /Charge \d+\/60/.test(e.objective);
       const dodge = e.player && finaleDodgeGoal(e.level, defending ? e.step : null, e.player, cureConsole, threat);
       if (dodge && e.player) {
@@ -645,7 +663,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       let retreatKeys: string[] = [];
       const coverGoal = e.level === 'L5' && e.player ? visibleGroupTarget(e.level, e.player, e.allies, 5, e.step) ?? ring : ring;
       const l7EscortRoute = process.env.PLAYTEST_L7_ESCORT_ROUTE === '1' && e.level === 'L7';
-      if ((l7EscortRoute || e.level === 'L3' && e.step === 'checkpoint' || e.level === 'L5' && (e.step === 'look' || e.step === 'metro')) && e.player && coverGoal && Math.hypot(coverGoal.x - e.player.x, coverGoal.z - e.player.z) > (l7EscortRoute ? 1.2 : e.level === 'L5' ? 2 : 12)) {
+      if ((l10Travel || l7EscortRoute || e.level === 'L3' && e.step === 'checkpoint' || e.level === 'L5' && (e.step === 'look' || e.step === 'metro')) && e.player && coverGoal && Math.hypot(coverGoal.x - e.player.x, coverGoal.z - e.player.z) > (l10Travel || l7EscortRoute ? 1.2 : e.level === 'L5' ? 2 : 12)) {
         const points = await page.evaluate(({ p, goal }) => {
           const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;

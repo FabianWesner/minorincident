@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-audited-L9-high-webgl2.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L9",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 161,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 16.216666666666665,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city · 1020 m",
+          "tick": 1,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 1.0482969284057617,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "reach-outskirts",
+          "text": "Get clear of the wreck · 20 m",
+          "tick": 8006,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

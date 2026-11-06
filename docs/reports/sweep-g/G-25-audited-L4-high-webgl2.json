@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "level": "L4",
+  "tier": "high",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-audited-L4-high-webgl2.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 295,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 11.833333333333334,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 1280
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy · 58 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1834,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2247,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 71 m",
+          "tick": 13675,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7053146958351135,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door · 3 m",
+          "tick": 15590,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.7999999999999998
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.8
+            ],
+            "playerY": 0.7089999914169312,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down · 0:07 remaining",
+          "tick": 15795,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

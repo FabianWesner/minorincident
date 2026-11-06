@@ -1,0 +1,73 @@
+{
+  "row": "G-15",
+  "status": "FAIL",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "cells": [
+    {
+      "tier": "low",
+      "weapon": "weapon.bat",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 0.0,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.13801892514002,
+      "pointerAimReleaseFrame": 28
+    },
+    {
+      "tier": "low",
+      "weapon": "weapon.handgun",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 1.336885555457667e-15,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.10139136931105,
+      "pointerAimReleaseFrame": 28
+    },
+    {
+      "tier": "low",
+      "weapon": "weapon.rocket-launcher",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 1.336885555457667e-15,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.101391369311,
+      "pointerAimReleaseFrame": 28
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.bat",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 0.0,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.13801892514002,
+      "pointerAimReleaseFrame": 28
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.handgun",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 1.336885555457667e-15,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.10139136931105,
+      "pointerAimReleaseFrame": 28
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.rocket-launcher",
+      "groundClickDisplacementM": 0.0,
+      "hasMoveTarget": false,
+      "attacks": 4,
+      "maximumAttackDirectionError": 1.336885555457667e-15,
+      "renderedFacingErrorAt46TicksAfterReleaseDeg": 71.101391369311,
+      "pointerAimReleaseFrame": 28
+    }
+  ],
+  "diagnosis": "Input drops pointer aim after the0.45s grace (27ticks); CharacterView.face separately eases locomotion turns at6rad/s. A180degree return therefore remains visibly misaligned beyond the stated grace. No turn-rate or timer changes made.",
+  "limitations": [
+    "Empty-scene representative bat, handgun, rocket launcher, both qualities; not every weapon/action variant.",
+    "Rocket ground impact can affect presentation; strict facing counterexample independently reproduces with bat/handgun.",
+    "Two discarded harness runs retained explicitly: SceneLab.step overwrote device input; then a12m projected pointer target missed the canvas. Neither is game failure evidence."
+  ]
+}

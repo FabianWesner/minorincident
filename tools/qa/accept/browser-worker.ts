@@ -9,7 +9,7 @@ import { runSession } from '../../playtest/session';
 import { atomicJson } from './report';
 import type { RunnerLevel } from '../../sim-runner/levels';
 import type { Tier } from './probe';
-import { SAVE_KEY, validateSave } from '../../../src/sim/progression/Save';
+import { SAVE_KEY, encodeSave, validateSave } from '../../../src/sim/progression/Save';
 import type { CampaignSave } from '../../../src/sim/progression/Campaign';
 import type { BrowserReceipt } from './browser-chain';
 
@@ -26,7 +26,7 @@ try {
     start = JSON.parse(gunzipSync(readFileSync(options.resumeFrom)).toString()) as CampaignSave;
     assert(options.level === 'L10' && options.batchIndex && options.batchIndex > 1 && validateSave(start) && start.cureResume, 'Resume requires the previous actual production save');
     mkdirSync(profile, { recursive: true });
-    writeFileSync(join(profile, 'pool-storage.json'), JSON.stringify({ cookies: [], origins: [{ origin: options.origin, localStorage: [{ name: SAVE_KEY, value: JSON.stringify(start) }] }] }));
+    writeFileSync(join(profile, 'pool-storage.json'), JSON.stringify({ cookies: [], origins: [{ origin: options.origin, localStorage: [{ name: SAVE_KEY, value: encodeSave(start) }] }] }));
   }
   const batching = options.level === 'L10' && options.batchIndex !== undefined;
   const result = await runSession({ origin: options.origin, out: options.out, levels: [options.level], quality: options.tier, zoom: options.zoom, heroine: 'female', entry: start ? 'continue' : options.level === 'L1' ? 'new' : 'debug', profile, levelMinutes: batching || ['L4', 'L5', 'L7'].includes(options.level) ? 9 : 6,

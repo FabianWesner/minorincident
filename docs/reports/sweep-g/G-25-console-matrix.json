@@ -1,0 +1,686 @@
+{
+  "row": "G-25",
+  "status": "NOT CHECKED",
+  "completedCells": 19,
+  "expectedCells": 20,
+  "qualification": "Final source, headless WebGL2, real WASD/mouse, low/high; survival protection explicitly true, no objective skips or timing claim. Original L4 mortal high and quality switches retained separately, baseline source differs only in later HUD fix.",
+  "remaining": "L10 high first branch crowd stall; retry released cure but final production-save Resume exceeds browser local-storage quota. No further retry, trimming or enlarged storage budget.",
+  "cells": [
+    {
+      "level": "L1",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-browser.json",
+      "sha256": "46348a1b101d88e16a7fe410e782ce4e195d427b836e0b1fdddbfe59f1cb5487",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L1-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L1-low-webgl2.json",
+        "sha256": "cf69dcd6fa91a34bdea00a341168ef5a0612bad947d1eadd43a82444f93e33e4"
+      }
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-browser.json",
+      "sha256": "6f122e295e2073f3bfc82f763052d55528823e18de2c19903c0c2fa5a357e3a9",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L1-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L1-high-webgl2.json",
+        "sha256": "c26d84f57fe5d111f2b37945600c707e10b5a8a04de8c5d451b7f4344c3b1e6e"
+      }
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-browser.json",
+      "sha256": "9099534f8983b01667e87b1ad89921e311c024199531a5cbca0d9e70067e4882",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L2-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L2-low-webgl2.json",
+        "sha256": "90a11d163f6b25750261fc558bc2779a33bcdaa83ad00ae5837df250861f3bd1"
+      }
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-browser.json",
+      "sha256": "a1146adb288aa1d3c28ab808c5225220415d84edc81819266b57eb99f052bc69",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L2-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L2-high-webgl2.json",
+        "sha256": "f32185b5b6a7503a134e78a3984005af36f0f20aaf2a1334283805ad20ebe1b8"
+      }
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-browser.json",
+      "sha256": "bfe55792b78d9a559d9847bbde42cd679ba040de2b27823b20af2366e335632b",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L3-low-webgl2.json",
+        "sha256": "2e15ed1f29a9d8c0672e7470d5e62c8fc679b96138ebd2675ad7e49b6ac911bd"
+      }
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-browser.json",
+      "sha256": "316de9ba8e5f432ad19d65658b5dba0a7103ed0f0950432f7a817fdef9942371",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L3-high-webgl2.json",
+        "sha256": "7238bc169909e2cefe8e21f260a0f381014205bdea36654390b5453c64af0580"
+      }
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+      "sha256": "2f244ff0a4f968562b61497aaa971d17c1342ec4ff3af0e6d4367064b8754f59",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L4-low-webgl2.json",
+        "sha256": "358b70edf15126cf8eb65d5d7122556c3ef83a3fc0afc38b2286e73d09e24ee6"
+      }
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+      "sha256": "1b367c8bde1567f09907673ba9d2f974699741fca785d4e92832ac4a76922937",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L4-high-webgl2.json",
+        "sha256": "1ea67eb4571a5220cb157016398b18882c6fda56934b3656e015508f7d59208e"
+      }
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json",
+      "sha256": "4816c04052ad38eda8458a68a6c9070231212c02bcd728b883092b434b72e886",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L5-low-webgl2.json",
+        "sha256": "92174c010050e874a47b07fddbf760ee6cfc844ba705c9bebcf11b3b33f4b0ee"
+      }
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json",
+      "sha256": "b00f0c436ac3bf43cb5998b06cb7a33591889a1d9e57df3df4f98cc2f619878d",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L5-high-webgl2.json",
+        "sha256": "4c2416f3451c7970cc389684effe862c261555874ff733c06e6f714cae4c1763"
+      }
+    },
+    {
+      "level": "L6",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-browser.json",
+      "sha256": "b2ded9f66771d485345dca95b77a19038b11fa0135d80497daeab277986728aa",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-final-L6-low-webgl2.json",
+        "sha256": "22659e9bd39e4fef8f21a4de69c19371cef03987db2402351cbfb8ad618f32fc"
+      }
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-browser.json",
+      "sha256": "d400804a5010e0004767394cc2aba57ef35573b86faf53f2d6329bf152b42a1d",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-final-L6-high-webgl2.json",
+        "sha256": "d1a94202267fb6d0290bcd45efe08ac393c29aeb1e3668504444db21c0c368ad"
+      }
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-browser.json",
+      "sha256": "c39c6e2ddf333221a59195c05f9d8ecf2c113fd40c371d2197680472e9dca3c8",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L7-low-webgl2.json",
+        "sha256": "556713dfe2f99cc1977e804db7ceeea066711ab649b4cd65529b13be575aed85"
+      }
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-browser.json",
+      "sha256": "804d558ce280cd525a93e6a9f63674cf93dffa331a3c04a964bb8f696f25e5dd",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L7-high-webgl2.json",
+        "sha256": "dc7a0f5b3b669b862d2220cb9e01f2c29efd1e8ce5e391713f44b4f0b7fb23df"
+      }
+    },
+    {
+      "level": "L8",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-browser.json",
+      "sha256": "f967883ffd38cf14e874fbde99b94b214397984bc6fc116ca71a239722d89a67",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L8-low-webgl2.json",
+        "sha256": "92e9730c200448e52476b67fff9b0422b66b156ddc9dee5b7a2f945913b28a2d"
+      }
+    },
+    {
+      "level": "L8",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-browser.json",
+      "sha256": "9621494d34546c3dabb7d0e86966508717eed3a6a1e5c07bac4ff2223c9285fb",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L8-high-webgl2.json",
+        "sha256": "15750706bde30de8babd4e29c24338da351021c59968151b9edcc4f306397e67"
+      }
+    },
+    {
+      "level": "L9",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-browser.json",
+      "sha256": "e38cb1724b868c6a4de4ec6c06c523f993af793dd0d21deec9d7f8ed941488b5",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L9-low-webgl2.json",
+        "sha256": "fe13f28f8fbf54a7f4bd89d2f55dcb288e625e04747201cc9b8540230d402297"
+      }
+    },
+    {
+      "level": "L9",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-browser.json",
+      "sha256": "bf0bbb5fd71c7f2306a044e8c6fa4079af2258ea130df03b76b0508fd8e1f05b",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L9-high-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L9-high-webgl2.json",
+        "sha256": "84d42b90e439a3cb82123936d63307480a9d4c86e103e7ec2632649c7288a75d"
+      }
+    },
+    {
+      "level": "L10",
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-browser.json",
+      "sha256": "691582e85536442d45a241d63dc19acd36d1440084c69e9c95e38fa5ade261b2",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false,
+            "batches": [
+              "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch1.json",
+              "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch2.json",
+              "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch3.json",
+              "docs/reports/sweep-g/G-25-audited-L10-low-webgl2-batch4.json"
+            ]
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-browser.json"
+        }
+      ],
+      "errors": [],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-audited-L10-low-webgl2.json",
+        "sha256": "acff9be64eac43a7a804197204539f323ad7a009d7f4f78c3730ad892f0f7361"
+      }
+    },
+    {
+      "level": "L10",
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-browser.json",
+      "sha256": "eab4ead1b2ee64f424b37af6a1e9ce5ed81adcee38a0f73068bd825f1162cf22",
+      "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+      "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "NOT CHECKED",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": false,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false,
+            "batches": [
+              "docs/reports/sweep-g/G-25-audited-L10-high-webgl2-batch1.json",
+              "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch2.json",
+              "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3.json",
+              "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch4.json"
+            ]
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-browser.json"
+        }
+      ],
+      "errors": [
+        "Error: browser.newContext: Error setting storage state:\nQuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'minor-incident.campaign' exceeded the quota.\n    at StorageScript.restore (eval at evaluate (:311:30), <anonymous>:507:33)\n    at async <anonymous>:337:30\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4981\", waiting until \"load\"\u001b[22m\n",
+        "Batch 4: missing or mismatched route",
+        "Batch 4: Resume does not continue the preceding yielded save"
+      ],
+      "original": {
+        "originalReceipt": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2.json",
+        "sha256": "42c731dbdfa65477453a4772418fc8d54ffb9881bea08075c73ece4dd435eda6"
+      }
+    }
+  ]
+}

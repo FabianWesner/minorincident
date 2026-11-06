@@ -1,0 +1,59 @@
+{
+  "row": "G-21",
+  "status": "NOT CHECKED",
+  "sourceHash": "f7c6992a57ac3d3bcf07ec6da0e20466a1cc28eb2b2fc3f4db4585b6660ed657",
+  "literalGlobalObservation": "FAIL: snapshot gate and pickup are not restored in all four observed L1 deaths.",
+  "authoredEpicObservation": "PASS: E19 PO2026-10-07 explicitly preserves the live world; last-checkpoint position restored exactly.",
+  "classification": "Contract conflict requiring criterion authority, not an invented implementation regression. Specs, checker and game unchanged.",
+  "cells": [
+    {
+      "tier": "low",
+      "id": "accident",
+      "removedPickupId": 80,
+      "snapshotGatesRestored": false,
+      "removedPickupRestored": false,
+      "positionErrorM": 0
+    },
+    {
+      "tier": "low",
+      "id": "bat",
+      "removedPickupId": 80,
+      "snapshotGatesRestored": false,
+      "removedPickupRestored": false,
+      "positionErrorM": 0
+    },
+    {
+      "tier": "high",
+      "id": "accident",
+      "removedPickupId": 80,
+      "snapshotGatesRestored": false,
+      "removedPickupRestored": false,
+      "positionErrorM": 0
+    },
+    {
+      "tier": "high",
+      "id": "bat",
+      "removedPickupId": 80,
+      "snapshotGatesRestored": false,
+      "removedPickupRestored": false,
+      "positionErrorM": 0
+    }
+  ],
+  "controls": [
+    {
+      "tier": "low",
+      "controlHash": "bb811ff8",
+      "matchesFinalNativeControl": true
+    },
+    {
+      "tier": "high",
+      "controlHash": "161ab8c2",
+      "matchesFinalNativeControl": true
+    }
+  ],
+  "evidence": {
+    "file": "docs/reports/sweep-g/G-21-literal-snapshot.json.gz",
+    "sha256": "1f771ab74df4019ebeeded71277b3ca8dc3444b8df46b8cf4958c03ea750ecb3"
+  },
+  "remaining": "PO must reconcile global snapshot rewind with explicit L1/E19 and L4/E22 live-world exceptions. Whole96-case authored-contract refresh continues separately."
+}

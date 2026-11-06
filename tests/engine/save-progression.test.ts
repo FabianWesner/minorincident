@@ -15,7 +15,7 @@ import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, prese
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
-import { decodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
+import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
@@ -136,6 +136,17 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   const store = new SaveStore({ getItem: k => entries.get(k) ?? null, setItem: (k, v) => { entries.set(k, v); }, removeItem: k => { entries.delete(k); } });
   expect(store.write(save)).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save });
+  expect(encodeSave(save)).toBe(JSON.stringify(save));
+  const large = preset('L10-default');
+  large.results = { L9: { ...result, optionalObjectives: Array.from({ length: 1024 }, (_, i) => `${i}:${'cure 雪 🧟\u0000'.repeat(32)}`) } };
+  expect(validateSave(large)).toBe(true);
+  const encoded = encodeSave(large);
+  expect(JSON.stringify(large).length).toBeGreaterThan(65536);
+  expect(encoded.length).toBeLessThan(65536);
+  expect(decodeSave(encoded)).toEqual({ status: 'ok', save: large });
+  expect(store.write(large)).toBe(true);
+  expect(store.load()).toEqual({ status: 'ok', save: large });
+  expect(decodeSave(encoded.slice(0, -20)).status).toBe('error');
 });
 
 // N10: the destructive L9 -> L10 crossing commits once, after the crawl, and Continue resumes the committed save.

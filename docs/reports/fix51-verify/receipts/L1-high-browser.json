@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L1",
   "tier": "high",
-  "sourceHash": "ecd1759dda68e9c2e894d758abd18fab6b02eb1c91f89daa5d7432320f9f8f81",
-  "fixtureHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
-  "browserHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,9 +33,9 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 175,
-      "simSeconds": 167,
-      "maxNoProgressSeconds": 16.983333333333334,
+      "wallSeconds": 205,
+      "simSeconds": 162,
+      "maxNoProgressSeconds": 16.033333333333335,
       "deaths": 0,
       "assists": 2,
       "attacks": {},
@@ -47,8 +47,8 @@
       "steps": [
         {
           "id": "pickup",
-          "text": "Pick up the package at the courier depot · 55 m",
-          "tick": 12,
+          "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "tick": 36,
           "marker": {
             "anchor": "parcel-counter",
             "ring": {
@@ -67,8 +67,8 @@
         },
         {
           "id": "deliver",
-          "text": "Deliver the package to the Medical Annex · 107 m",
-          "tick": 1012,
+          "text": "Deliver the package to the Medical Annex \u00b7 106\u00a0m",
+          "tick": 1541,
           "marker": {
             "anchor": "lab-door",
             "ring": {
@@ -83,8 +83,8 @@
         },
         {
           "id": "weapon",
-          "text": "Find something to defend yourself · 63 m",
-          "tick": 5126,
+          "text": "Find something to defend yourself \u00b7 63\u00a0m",
+          "tick": 5125,
           "marker": {
             "anchor": "garage-door",
             "ring": {
@@ -97,14 +97,14 @@
               0.24,
               36.7
             ],
-            "playerY": 0.7049955129623413,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         },
         {
           "id": "firestation",
-          "text": "Get inside the fire station · 100 m",
-          "tick": 8023,
+          "text": "Get inside the fire station \u00b7 99\u00a0m",
+          "tick": 6411,
           "marker": {
             "anchor": "fire-bay-trigger",
             "ring": {
@@ -123,5 +123,9 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L1-high-webgl2.json",
+    "sha256": "c26d84f57fe5d111f2b37945600c707e10b5a8a04de8c5d451b7f4344c3b1e6e"
+  }
 }

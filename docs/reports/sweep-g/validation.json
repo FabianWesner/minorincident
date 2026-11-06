@@ -1,0 +1,94 @@
+{
+  "source": {
+    "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+    "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+    "revision": "8ec4b86f546f8fcc5203d8293bc60988ef6b86b3"
+  },
+  "codeChanges": [
+    "src/ui/Hud.ts"
+  ],
+  "protectedChanges": [],
+  "manualReviewExistingEvidenceVerified": 55,
+  "manualReviewIssues": [],
+  "archivedRawReviewEvidence": [
+    {
+      "file": "test-results/sweep-g/G-25-audited-L10-low-webgl2/batch3/captures/accept-L10-epilogue-t19582-low-z0-5.jpg",
+      "sha256": "0c71447d0402f178d7d15654cbc9107928864d1fbe00a45e1d6eaad571576bd5",
+      "what": "Original1280x720 physical L10 cure epilogue inspected: numerous corpse bodies are angular red/black shards with pointed/disconnected geometry; living heroine remains connected. Raw image removed after capture-manifest review."
+    }
+  ],
+  "unreviewedRawCapturesRemaining": [],
+  "rawCapturesReviewedHashedDeleted": 1924,
+  "gates": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "lint.log"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "testsPassed": 107,
+      "filesPassed": 27,
+      "log": "unit.log"
+    },
+    {
+      "command": "npm run qa:threat",
+      "exitCode": 0,
+      "flags": [],
+      "levels": 10,
+      "seconds": 355.800852834,
+      "alone": true,
+      "arguments": [],
+      "log": "threat.log"
+    }
+  ],
+  "acceptance": {
+    "command": "npm run qa:accept -- --level all --reuse --skip-browser",
+    "exitCode": 1,
+    "meaning": "Measured FAIL rows and incomplete high L10 browser qualification; unchanged targets.",
+    "log": "accept-final-consolidated.log"
+  },
+  "artifacts": [
+    {
+      "file": "docs/reports/sweep-g/gates/accept-final-consolidated.log",
+      "sha256": "a1b5fef11a857b028d7b2dc45cd3a7b71f4308087aafbb5651946c2703bcef84",
+      "bytes": 5592
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/accept-final.log",
+      "sha256": "98d9be241073adffe7c1485e3bd196eb8169315a23f8e908434702491a9d33e0",
+      "bytes": 7940
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/lint.log",
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "bytes": 73
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/threat-audit.json.gz",
+      "sha256": "cbe8f36e3c6b569db583460e10df0f6639f303c8662320490eaeefdcc69152fd",
+      "bytes": 64960
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/threat.log",
+      "sha256": "5ccbab16e44e92fe5144ad32beef6423873e7e0412c860b6574da34ecb77b9ab",
+      "bytes": 2362
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "file": "docs/reports/sweep-g/gates/unit.log",
+      "sha256": "afedfa03b3ea7cdf0bd1252f27047c15d9b865ff78f49a92c0276d05c829f022",
+      "bytes": 518
+    }
+  ]
+}

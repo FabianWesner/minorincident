@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L2",
   "tier": "high",
-  "sourceHash": "ecd1759dda68e9c2e894d758abd18fab6b02eb1c91f89daa5d7432320f9f8f81",
-  "fixtureHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
-  "browserHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 115,
+      "wallSeconds": 132,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 22.553,
+      "maxNoProgressSeconds": 22.8,
       "deaths": 0,
       "assists": 1,
       "attacks": {
-        "weapon.bat": 4
+        "weapon.bat": 3
       },
       "weaponsStart": [
         "weapon.bat",
@@ -56,7 +56,7 @@
         {
           "id": "calm",
           "text": "Take the fire axe",
-          "tick": 10,
+          "tick": 20,
           "marker": {
             "anchor": null,
             "ring": null,
@@ -67,8 +67,8 @@
         },
         {
           "id": "board",
-          "text": "Get on the fire truck · 5 m · Take the fire axe",
-          "tick": 1399,
+          "text": "Get on the fire truck \u00b7 5\u00a0m \u00b7 Take the fire axe",
+          "tick": 1391,
           "marker": {
             "anchor": "l2-board",
             "ring": {
@@ -87,8 +87,8 @@
         },
         {
           "id": "ride",
-          "text": "Ride with Engine 3 to Grove Market · 73 m",
-          "tick": 1501,
+          "text": "Ride with Engine 3 to Grove Market \u00b7 73\u00a0m",
+          "tick": 1502,
           "marker": {
             "anchor": "l2-truck-stop",
             "ring": {
@@ -104,19 +104,19 @@
         {
           "id": "doors",
           "text": "Cover the firefighters while they force the doors",
-          "tick": 2955,
+          "tick": 2962,
           "marker": {
             "anchor": "l2-truck-stop",
             "ring": null,
             "drawn": null,
-            "playerY": 0.7049999833106995,
+            "playerY": 0.8500000238418579,
             "pinVisible": false
           }
         },
         {
           "id": "bridge",
-          "text": "Reach the police checkpoint at the bridge · 139 m",
-          "tick": 3736,
+          "text": "Reach the police checkpoint at the bridge \u00b7 139\u00a0m",
+          "tick": 3727,
           "marker": {
             "anchor": "l2-gate-inside",
             "ring": {
@@ -139,14 +139,14 @@
   "issues": [
     {
       "level": "L2",
-      "tick": 1242,
+      "tick": 1224,
       "x": -73.2,
       "z": 45.2,
       "severity": "P2",
       "kind": "stuck-navigating",
       "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Take the fire axe\"",
       "captures": [
-        "captures/accept-L2-1242-stuck-navigating.jpg"
+        "captures/accept-L2-1224-stuck-navigating.jpg"
       ],
       "step": "calm",
       "objective": "Take the fire axe"
@@ -154,5 +154,9 @@
   ],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L2-high-webgl2.json",
+    "sha256": "f32185b5b6a7503a134e78a3984005af36f0f20aaf2a1334283805ad20ebe1b8"
+  }
 }

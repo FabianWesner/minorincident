@@ -8,12 +8,14 @@ import { VehicleBody } from '../../src/sim/vehicles/VehicleBody';
 import type { MissionId } from '../../src/levels/missions';
 import { Cuboid } from '@dimforge/rapier3d-compat';
 
-const out = 'test-results/visual-p1-1102'; mkdirSync(out, { recursive: true });
+const out = process.env.BOUNDS_OUT ?? 'test-results/visual-p1-1102'; mkdirSync(out, { recursive: true });
 const levels = (process.env.BOUNDS_LEVELS ?? 'L1,L2,L3,L4,L5,L6,L7,L8,L9,L10').split(',') as MissionId[];
 const results: { level: string; runs: number; walked: number; driven: number; failures: unknown[]; probes: unknown[] }[] = [];
 const counterproof = process.env.BOUNDS_COUNTERPROOF === '1';
+const tier = process.env.BOUNDS_TIER ?? 'low';
+if (tier !== 'low' && tier !== 'high') throw new Error('BOUNDS_TIER must be low or high');
 for (const level of levels) {
-  const w = await loadLevel(level, 1, 'low');
+  const w = await loadLevel(level, 1, tier);
   const row = { level, runs: w.districts!.boundaries.length, walked: 0, driven: 0, failures: [] as unknown[], probes: [] as unknown[] };
   try {
     const districts = w.districts!;
@@ -77,7 +79,7 @@ for (const level of levels) {
         row.probes.push({ edge, fraction, x, z, outward: [nx, nz], ground: floor, top: b.max[1], maxWalk, maxDrive });
       }
     }
-    results.push(row); writeFileSync(`${out}/${counterproof ? 'bounds-counterproof' : 'bounds-sweep'}.json`, JSON.stringify({ seed: 1, counterproof, method: 'production loadLevel, real character controller and sedan, three probes on every boundary run; AI paused, physics runs', results }, null, 2));
+    results.push(row); writeFileSync(`${out}/${counterproof ? 'bounds-counterproof' : 'bounds-sweep'}.json`, JSON.stringify({ seed: 1, tier, counterproof, method: 'production loadLevel, real character controller and sedan, three probes on every boundary run; AI paused, physics runs', results }, null, 2));
     console.log(`${level}: ${row.runs} runs, walk ${row.walked}, drive ${row.driven}, failures ${row.failures.length}`);
   } finally { w.dispose(); }
 }

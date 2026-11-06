@@ -23,6 +23,12 @@ unknown-version, and inaccessible saves return an error result; CampaignUI displ
 Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
 to version 2 while retaining any existing world aftermath, survivor list and results.
 
+Saves of at least 64 KiB use lossless gzip through Three.js's MIT fflate module,
+with a `minor-incident.gzip1:` prefix and a binary string payload. Small saves and
+all legacy JSON saves remain supported. The campaign schema and both L10 snapshots
+are unchanged; encoding reduces storage size without discarding entities or seams.
+Tools seeding localStorage should use `encodeSave`; readers should use `decodeSave`.
+
 `level.completed` immediately records rewards, the next unlocked level, and results,
 before the result screen or automatic transition. L1's player-caused aftermath lives in
 `world.L1` (L2 always applies the scripted burned annex and outbreak house); L5's rescued

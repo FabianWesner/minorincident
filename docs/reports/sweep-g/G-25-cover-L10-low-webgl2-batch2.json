@@ -1,0 +1,224 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "8e400302a231cae93f92785b2d9d2a214cc7c458de05aff25045141f4aa3740e",
+  "fixtureHash": "5a5eaceee1898b376d929f5814d99bfb168a947b77a9982672c3e8577dbc8972",
+  "browserHash": "5a5eaceee1898b376d929f5814d99bfb168a947b77a9982672c3e8577dbc8972",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/sweep-g/G-25-cover-L10-low-webgl2-batch2.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 480,
+      "simSeconds": 472,
+      "maxNoProgressSeconds": 3.6333333333333333,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 377,
+        "weapon.rocket-launcher": 85
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "research-campus",
+          "text": "Reach the research campus · 183 m",
+          "tick": 1,
+          "marker": {
+            "anchor": "cure-research-entry",
+            "ring": {
+              "x": 2467,
+              "y": 0,
+              "z": -5
+            },
+            "drawn": [
+              2467,
+              0,
+              -5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "research",
+          "text": "Play the research recording · 245 m",
+          "tick": 2917,
+          "marker": {
+            "anchor": "cure-terminal",
+            "ring": {
+              "x": 2707,
+              "y": 0,
+              "z": 41.25
+            },
+            "drawn": [
+              2707,
+              0,
+              41.25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "cure",
+          "text": "Pack the cure canister · 7 m",
+          "tick": 7038,
+          "marker": {
+            "anchor": "cure-canister",
+            "ring": {
+              "x": 2713,
+              "y": 0,
+              "z": 41
+            },
+            "drawn": [
+              2713,
+              0,
+              41
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "research-exit",
+          "text": "Get the cure out of the laboratory · 95 m",
+          "tick": 7164,
+          "marker": {
+            "anchor": "cure-research",
+            "ring": {
+              "x": 2807,
+              "y": 0,
+              "z": 45
+            },
+            "drawn": [
+              2807,
+              0,
+              45
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "destroyed-corridor",
+          "text": "Carry the cure down the corridor and grab the rocket launcher · 139 m",
+          "tick": 9552,
+          "marker": {
+            "anchor": "cure-corridor",
+            "ring": {
+              "x": 2937,
+              "y": 0,
+              "z": -5
+            },
+            "drawn": [
+              2937,
+              0,
+              -5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "dispersal-complex",
+          "text": "Bring the cure to the dispersal complex · 760 m",
+          "tick": 12001,
+          "marker": {
+            "anchor": "cure-complex",
+            "ring": {
+              "x": 3697,
+              "y": 0,
+              "z": -25
+            },
+            "drawn": [
+              3697,
+              0,
+              -25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "install",
+          "text": "Install the cure in the dispersal device · 311 m",
+          "tick": 24242,
+          "marker": {
+            "anchor": "cure-install",
+            "ring": {
+              "x": 4006.5,
+              "y": 0,
+              "z": -39
+            },
+            "drawn": [
+              4006.5,
+              0,
+              -39
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "batch": {
+    "index": 2,
+    "yielded": true,
+    "startSaveHash": "4bd7398df95fdd595ae448e6511c4a1e48f8c090a4538070c2a4c0f8fbcbaaca",
+    "endSaveHash": "5d8d5cc222d3125a10e2b7b7986d27d8f44f6220c678f2fab95906b41f077cfb",
+    "startSeconds": 473.8833333333333,
+    "endSeconds": 945.9166666666666,
+    "savePath": "docs/reports/sweep-g/G-25-cover-L10-low-webgl2-batch2-save.json.gz"
+  },
+  "observations": {
+    "runtime": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1.5000000000000002
+    },
+    "productionResume": true
+  }
+}

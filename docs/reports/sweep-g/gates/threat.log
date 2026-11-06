@@ -1,0 +1,29 @@
+
+> qa:threat
+> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+[qa:threat] L1: skilled and passive native routes, seed=1, low population
+[qa:threat] L1: skilled complete, passive complete, 0 passive flags (9.6s)
+[qa:threat] L2: skilled and passive native routes, seed=1, low population
+[qa:threat] L2: skilled complete, passive complete, 0 passive flags (19.8s)
+[qa:threat] L3: skilled and passive native routes, seed=1, low population
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (22.4s)
+[qa:threat] L4: skilled and passive native routes, seed=1, low population
+[qa:threat] L4: high-tier native hold census through the line break
+[qa:threat] L4 high hold: {"tier":"high","holdComplete":true,"firstBreachLevelSeconds":52.71666666666667,"firstBreachAfterTurnSeconds":19.9,"aliveAtFirstBreach":65,"peakAlive":98,"peakPlazaAlive":90,"minPlazaAliveAfter45Seconds":69,"samplesAfter45Seconds":8760,"arrivalEdges":[0,1,2,3,4,5],"threeDirectionsAtLeast60Degrees":true,"maxGroupAtOneSourcePerTick":5,"firstAttackSeconds":7.716666666666667,"lineBreakAfterTurnSeconds":190}
+[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (132.1s)
+[qa:threat] L5: skilled and passive native routes, seed=1, low population
+[qa:threat] L5: skilled complete, passive mission-failed, 0 passive flags (80.2s)
+[qa:threat] L6: skilled and passive native routes, seed=1, low population
+[qa:threat] L6: skilled complete, passive tick-budget, 0 passive flags (7.5s)
+[qa:threat] L7: skilled and passive native routes, seed=1, low population
+[qa:threat] L7: skilled complete, passive complete, 0 passive flags (19.4s)
+[qa:threat] L8: skilled and passive native routes, seed=1, low population
+[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (21.7s)
+[qa:threat] L9: skilled and passive native routes, seed=1, low population
+[qa:threat] L9: skilled complete, passive complete, 0 passive flags (10.3s)
+[qa:threat] L10: skilled and passive native routes, seed=1, low population
+[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (32.7s)
+[qa:threat] 355.8s; 0 fail flags; test-results/qa-threat/README.md
+[test-budget] qa-threat: 357.9 s (budget 600 s)

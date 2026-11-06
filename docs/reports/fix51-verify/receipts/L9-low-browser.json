@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L9",
   "tier": "low",
-  "sourceHash": "c2adff10dcd7013513129da3e9e04994d347bf0a61f6bfcf934e7a2274862f9e",
-  "fixtureHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
-  "browserHash": "7a2150785003f1cb7ff212b5c9412e3124cc4023a4ae113e6ca6c00c62672a02",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,11 +33,11 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 158,
+      "wallSeconds": 110,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 13.996,
+      "maxNoProgressSeconds": 4.664,
       "deaths": 0,
-      "assists": 0,
+      "assists": 1,
       "attacks": {},
       "weaponsStart": [
         "weapon.bat",
@@ -54,7 +54,7 @@
       "steps": [
         {
           "id": "approach",
-          "text": "Drive toward the city · 1020 m",
+          "text": "Drive toward the city \u00b7 1020\u00a0m",
           "tick": 10,
           "marker": {
             "anchor": "crash-approach",
@@ -74,8 +74,8 @@
         },
         {
           "id": "reach-outskirts",
-          "text": "Get clear of the wreck · 20 m",
-          "tick": 8627,
+          "text": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tick": 5673,
           "marker": {
             "anchor": "crawl-end",
             "ring": {
@@ -94,5 +94,9 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L9-low-webgl2.json",
+    "sha256": "fe13f28f8fbf54a7f4bd89d2f55dcb288e625e04747201cc9b8540230d402297"
+  }
 }

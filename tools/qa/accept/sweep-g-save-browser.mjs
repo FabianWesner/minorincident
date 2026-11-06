@@ -1,0 +1,51 @@
+/** Native browser storage/reload proof for the exact oversized high L10 campaign. */
+import assert from 'node:assert/strict';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
+import { launchBrowser } from '../../browser-pool/client.ts';
+import { decodeSave, encodeSave, SAVE_KEY } from '../../../src/sim/progression/Save.ts';
+import { provenance } from './probe.ts';
+const origin = process.env.SWEEP_G_ORIGIN ?? 'http://127.0.0.1:4981';
+const out = 'test-results/sweep-g/G-25-save-browser';
+const savePath = 'docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3-save.json.gz';
+const save = JSON.parse(gunzipSync(readFileSync(savePath)).toString());
+const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const result = { ...provenance(), method: 'Exact prior oversized production save, native localStorage quota, ordinary L10 menu Resume and Settings save, reload. No quota override or state trimming.', savePath, originalSaveHash: hash(save), errors: [], captures: [] };
+mkdirSync(out, { recursive: true });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+try {
+ const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, storageState: { cookies: [], origins: [{ origin, localStorage: [{ name: SAVE_KEY, value: encodeSave(save) }] }] } });
+ const page = await context.newPage();
+ page.on('pageerror', e => result.errors.push({ kind: 'pageerror', text: String(e) }));
+ page.on('console', m => { if (m.type() === 'error') result.errors.push({ kind: 'console', text: m.text() }); });
+ await page.addInitScript('window.__name=f=>f');
+ await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&debug=1&renderer=webgl&quality=high&audio=muted&dpr=1`);
+ await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
+ const stored = await page.evaluate(key => localStorage.getItem(key), SAVE_KEY);
+ const loaded = decodeSave(stored);
+ assert.equal(loaded.status, 'ok'); assert.deepEqual(loaded.save, save);
+ result.nativeStorageRoundTrip = { exact: true, encodedCodeUnits: stored.length };
+ await page.getByTestId('start-game').click();
+ await page.getByTestId('level-L10').click();
+ await page.waitForFunction(() => window.__SCENE__.game.world.scenario === 'L10' && !!window.__SCENE__.game.world.missions?.state.epilogue);
+ await page.getByTestId('pause-button').waitFor({ state: 'visible', timeout: 120000 });
+ await page.getByTestId('pause-button').click();
+ await page.getByTestId('pause-settings').click();
+ await page.getByTestId('setting-quality').selectOption('high');
+ await page.getByTestId('settings-back').click();
+ const saved = await page.evaluate(key => ({ stored: localStorage.getItem(key), campaign: window.__SS__.campaign.state(), mission: window.__SCENE__.game.world.missions.state, backend: window.__SS__.perf().backend }), SAVE_KEY);
+ const decoded = decodeSave(saved.stored); assert.equal(decoded.status, 'ok'); assert.equal(hash(decoded.save), hash(saved.campaign));
+ assert.deepEqual(decoded.save.cureResume.checkpoint.entities.map(e => e.id), save.cureResume.checkpoint.entities.map(e => e.id));
+ result.productionSettingsSave = { encodedCodeUnits: saved.stored.length, campaignHash: hash(saved.campaign), exactStoredCampaignJson: true, checkpointEntityCount: decoded.save.cureResume.checkpoint.entities.length, currentEntityCount: decoded.save.cureResume.current.entities.length, backend: saved.backend, step: saved.mission.step, epilogue: saved.mission.epilogue };
+ const capture = `${out}/resumed.jpg`; await page.screenshot({ path: capture, type: 'jpeg', quality: 85 });
+ result.captures.push({ file: capture, sha256: createHash('sha256').update(readFileSync(capture)).digest('hex'), reviewed: false });
+ await page.reload(); await page.waitForFunction(() => !!window.__SCENE__?.game);
+ const reloaded = await page.evaluate(() => window.__SCENE__.game.saves.load());
+ assert.equal(reloaded.status, 'ok'); assert.deepEqual(reloaded.save, decoded.save);
+ result.reloadExact = true;
+ await context.close();
+} catch (error) { result.failure = String(error); }
+finally { await browser.close(); writeFileSync('docs/reports/sweep-g/G-25-save-browser.json', JSON.stringify(result, null, 2) + '\n'); }
+console.log(JSON.stringify({ failure: result.failure, errors: result.errors, roundTrip: result.nativeStorageRoundTrip, saved: result.productionSettingsSave, reloadExact: result.reloadExact }));
+process.exitCode = result.failure || result.errors.length ? 1 : 0;

@@ -1,0 +1,474 @@
+{
+  "sourceHash": "f7c6992a57ac3d3bcf07ec6da0e20466a1cc28eb2b2fc3f4db4585b6660ed657",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "103c395e5a5f67b6d9ef11c39dea49ae0eeffc3a",
+  "method": "Explicit fixture setup: load real mission, arrange completed final predicates, spawn one live chasing runner within2m, invoke actual Mission.finish edge. Then ordinary empty-input world updates. No timer/threshold/finish logic changes.",
+  "cells": [
+    {
+      "tier": "low",
+      "level": "L1",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 148,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L2",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 170,
+        "enemyState": "chase",
+        "distance": 1.5
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L3",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 105,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L4",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 99,
+        "enemyState": "chase",
+        "distance": 3
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L6",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 57,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "cinematic",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L7",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 173,
+        "enemyState": "chase",
+        "distance": 1.6839793459620862
+      },
+      "immediate": {
+        "phase": "result",
+        "cinematic": null,
+        "runOutUntil": null,
+        "invulnerableUntil": 0
+      },
+      "transitioned": 0,
+      "maxTick": 0,
+      "minProtection": 0,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 0,
+      "pass": false
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 407,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "level": "L9",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 669,
+        "enemyState": "chase",
+        "distance": 3.19500000000005
+      },
+      "immediate": {
+        "phase": "progression",
+        "cinematic": null,
+        "runOutUntil": null,
+        "invulnerableUntil": 0
+      },
+      "transitioned": 0,
+      "maxTick": 0,
+      "minProtection": 0,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 0,
+      "pass": false
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 100,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L1",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 155,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L2",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 180,
+        "enemyState": "chase",
+        "distance": 1.5
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L3",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 105,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L4",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 142,
+        "enemyState": "chase",
+        "distance": 3
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L6",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 57,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "cinematic",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L7",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 268,
+        "enemyState": "chase",
+        "distance": 1.6839793459620862
+      },
+      "immediate": {
+        "phase": "result",
+        "cinematic": null,
+        "runOutUntil": null,
+        "invulnerableUntil": 0
+      },
+      "transitioned": 0,
+      "maxTick": 0,
+      "minProtection": 0,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 0,
+      "pass": false
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 407,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L9",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 669,
+        "enemyState": "chase",
+        "distance": 3.19500000000005
+      },
+      "immediate": {
+        "phase": "progression",
+        "cinematic": null,
+        "runOutUntil": null,
+        "invulnerableUntil": 0
+      },
+      "transitioned": 0,
+      "maxTick": 0,
+      "minProtection": 0,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 0,
+      "pass": false
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 100,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "result",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    }
+  ],
+  "errors": [
+    {
+      "tier": "low",
+      "level": "L5",
+      "error": "Error: Infected concurrency cap reached"
+    },
+    {
+      "tier": "high",
+      "level": "L5",
+      "error": "Error: Infected concurrency cap reached"
+    }
+  ],
+  "limitations": [
+    "Terminal predicates and enemy placement are arranged, not a naturally completed physical route.",
+    "Special cinematic/vehicle endings require route confirmation; immediate result without run-out is retained as a concrete common-finish counterexample."
+  ]
+}

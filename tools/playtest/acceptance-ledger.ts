@@ -5,7 +5,7 @@ import type { observeAttackStarts } from '../qa/threat/attackStarts';
  * path queries, gameplay writes or synthetic combat events. Runs in the page. */
 export function installAcceptanceLedger(observeStarts: typeof observeAttackStarts): void {
   type Step = { ticks: number; playerWindups: number; groupWindups: number; playerDamage: number; peakAlive: number };
-  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
+  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; corpseLife?: unknown[]; corpseSamples?: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
   const root = window as unknown as { __SCENE__?: { game: Game }; __acceptanceInputLedger?: Record[] };
   const records: Record[] = root.__acceptanceInputLedger = [];
   let bound: Game['world']['missions'];
@@ -15,6 +15,33 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
     if (!world || !mission || mission === bound) return;
     bound = mission;
     const record: Record = { level: mission.def.id, steps: {}, samples: [], events: [], audioCues: [] }; records.push(record);
+    // G-14: logical dead identities include sleeping streamed records. A
+    // checkpoint rewind starts a fresh timeline; a native revival is explicit.
+    const corpseLife: { id: number; archetype: string; deadAt: number; firstTick: number; lastTick: number; samples: number; sleepingSamples: number; missingFirstTick?: number; missingSamples: number; returnedAfterMissing?: number; end?: string }[] = [];
+    const trackedCorpses = new Map<number, typeof corpseLife[number]>();
+    record.corpseLife = corpseLife; record.corpseSamples = [];
+    world.events.on('checkpoint.restored', () => {
+      for (const row of trackedCorpses.values()) row.end = 'checkpoint rewind';
+      trackedCorpses.clear();
+    });
+    world.events.on('sim.tick', () => {
+      if (world.missions !== mission || world.tick % 120) return;
+      const entities = new Map([...world.entities.iterate()].map(e => [e.id, e]));
+      const sleeping = new Set<number>();
+      for (const entity of world.chunks?.inactiveEntities() ?? []) { entities.set(entity.id, entity); sleeping.add(entity.id); }
+      for (const entity of entities.values()) if (entity.corpse || entity.infected && entity.health.current <= 0 && entity.infected.recoverAt < 0 && entity.infected.state === 'dead') {
+        let row = trackedCorpses.get(entity.id);
+        if (!row) { row = { id: entity.id, archetype: entity.archetype, deadAt: entity.infected?.deadAt ?? world.tick, firstTick: world.tick, lastTick: world.tick, samples: 0, sleepingSamples: 0, missingSamples: 0 }; trackedCorpses.set(entity.id, row); corpseLife.push(row); }
+      }
+      for (const [id, row] of trackedCorpses) {
+        const entity = entities.get(id);
+        if (entity && entity.health.current > 0) { row.end = 'native revival'; trackedCorpses.delete(id); continue; }
+        if (!entity) { row.missingFirstTick ??= world.tick; row.missingSamples++; continue; }
+        if (row.missingSamples && !row.returnedAfterMissing) row.returnedAfterMissing = world.tick;
+        row.lastTick = world.tick; row.samples++; if (sleeping.has(id)) row.sleepingSamples++;
+      }
+      record.corpseSamples!.push({ tick: world.tick, tracked: trackedCorpses.size, liveOrSleeping: [...trackedCorpses.keys()].filter(id => entities.has(id)).length });
+    }, 8);
     const seenVoices = new Set(root.__SCENE__!.game.audio.log.map(cue => cue.voice));
     const cellarRoster = () => {
       const at = mission.def.anchors['l4-cellar-in'] ?? mission.def.anchors['l5-cellar-in'];

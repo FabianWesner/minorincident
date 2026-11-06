@@ -1,0 +1,931 @@
+{
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "5e104db33681dcd04e4755e07ecd073cced8230b",
+  "scriptSha256": "358bc4374bf036ba990049d5949999ab98a751b655eff53601c0b8ea1c77e06f",
+  "backend": "webgpu",
+  "tier": "low",
+  "setup": "production renderer fixture; actual Alpha and five zoo species; native lethal damage; healthy animals; fixed camera; no route or timing claim",
+  "rows": [
+    {
+      "stage": "near-healthy",
+      "expected": 6,
+      "backend": "webgpu",
+      "quality": "low",
+      "bars": {
+        "count": 6,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 3,
+            "fraction": 1,
+            "x": 883.4832653218896,
+            "y": 434.2801797923852,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              7.881157932353339,
+              2.2046821909134344,
+              -0.5958951738637879
+            ]
+          },
+          {
+            "id": 4,
+            "fraction": 1,
+            "x": 572.4862725937801,
+            "y": 525.147975578134,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              3.3681979280627665,
+              1.3218064039715358,
+              6.554061941196917
+            ]
+          },
+          {
+            "id": 5,
+            "fraction": 1,
+            "x": 368.7750938595698,
+            "y": 385.5157743944671,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -4.36969667538942,
+              1.7006069301864422,
+              6.42161716180636
+            ]
+          },
+          {
+            "id": 6,
+            "fraction": 1,
+            "x": 447.91949669799806,
+            "y": 184.4277154502201,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -8.602300501354947,
+              3.0457964008515965,
+              -0.8469788954345852
+            ]
+          },
+          {
+            "id": 7,
+            "fraction": 1,
+            "x": 686.9351909485029,
+            "y": 170.82559992235596,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -4.398969180404276,
+              2.126028681533775,
+              -7.483141688693934
+            ]
+          },
+          {
+            "id": 8,
+            "fraction": 1,
+            "x": 890.413216070056,
+            "y": 286.77820593648096,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              3.730410931945002,
+              1.3755808597653711,
+              -7.2881020921674775
+            ]
+          }
+        ]
+      },
+      "player": {
+        "x": 0,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0
+      },
+      "actors": [
+        {
+          "id": 3,
+          "archetype": "infected.alpha",
+          "faction": "infected",
+          "health": {
+            "current": 300,
+            "max": 300
+          },
+          "at": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 4,
+          "archetype": "infected.lion",
+          "faction": "infected",
+          "health": {
+            "current": 600,
+            "max": 600
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": 6.928203230275509,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 5,
+          "archetype": "infected.gorilla",
+          "faction": "infected",
+          "health": {
+            "current": 1800,
+            "max": 1800
+          },
+          "at": {
+            "x": -3.9999999999999982,
+            "y": 0.7,
+            "z": 6.92820323027551,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 6,
+          "archetype": "infected.elephant",
+          "faction": "infected",
+          "health": {
+            "current": 1200,
+            "max": 1200
+          },
+          "at": {
+            "x": -8,
+            "y": 0.7,
+            "z": 9.797174393178826e-16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 7,
+          "archetype": "infected.zebra",
+          "faction": "infected",
+          "health": {
+            "current": 180,
+            "max": 180
+          },
+          "at": {
+            "x": -4.0000000000000036,
+            "y": 0.7,
+            "z": -6.928203230275508,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 8,
+          "archetype": "infected.flamingo",
+          "faction": "infected",
+          "health": {
+            "current": 15,
+            "max": 15
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": -6.928203230275509,
+            "yaw": 0
+          }
+        }
+      ],
+      "countPass": true,
+      "pixels": [
+        {
+          "id": 3,
+          "fraction": 1,
+          "x": 883.4832653218896,
+          "y": 434.2801797923852,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            7.881157932353339,
+            2.2046821909134344,
+            -0.5958951738637879
+          ],
+          "redPixels": 512,
+          "pass": true
+        },
+        {
+          "id": 4,
+          "fraction": 1,
+          "x": 572.4862725937801,
+          "y": 525.147975578134,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            3.3681979280627665,
+            1.3218064039715358,
+            6.554061941196917
+          ],
+          "redPixels": 512,
+          "pass": true
+        },
+        {
+          "id": 5,
+          "fraction": 1,
+          "x": 368.7750938595698,
+          "y": 385.5157743944671,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -4.36969667538942,
+            1.7006069301864422,
+            6.42161716180636
+          ],
+          "redPixels": 512,
+          "pass": true
+        },
+        {
+          "id": 6,
+          "fraction": 1,
+          "x": 447.91949669799806,
+          "y": 184.4277154502201,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -8.602300501354947,
+            3.0457964008515965,
+            -0.8469788954345852
+          ],
+          "redPixels": 512,
+          "pass": true
+        },
+        {
+          "id": 7,
+          "fraction": 1,
+          "x": 686.9351909485029,
+          "y": 170.82559992235596,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -4.398969180404276,
+            2.126028681533775,
+            -7.483141688693934
+          ],
+          "redPixels": 512,
+          "pass": true
+        },
+        {
+          "id": 8,
+          "fraction": 1,
+          "x": 890.413216070056,
+          "y": 286.77820593648096,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            3.730410931945002,
+            1.3755808597653711,
+            -7.2881020921674775
+          ],
+          "redPixels": 512,
+          "pass": true
+        }
+      ],
+      "file": "test-results/sweep-g/G-24-webgpu-low/near-healthy.png",
+      "sha256": "2e3578bc244db7db22b46aaa7adc027126573949e1a5bcd0d4047979353fcf5f"
+    },
+    {
+      "stage": "far-healthy",
+      "expected": 0,
+      "backend": "webgpu",
+      "quality": "low",
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "player": {
+        "x": 100,
+        "y": 0.72,
+        "z": 100,
+        "yaw": 0
+      },
+      "actors": [
+        {
+          "id": 3,
+          "archetype": "infected.alpha",
+          "faction": "infected",
+          "health": {
+            "current": 300,
+            "max": 300
+          },
+          "at": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 4,
+          "archetype": "infected.lion",
+          "faction": "infected",
+          "health": {
+            "current": 600,
+            "max": 600
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": 6.928203230275509,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 5,
+          "archetype": "infected.gorilla",
+          "faction": "infected",
+          "health": {
+            "current": 1800,
+            "max": 1800
+          },
+          "at": {
+            "x": -3.9999999999999982,
+            "y": 0.7,
+            "z": 6.92820323027551,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 6,
+          "archetype": "infected.elephant",
+          "faction": "infected",
+          "health": {
+            "current": 1200,
+            "max": 1200
+          },
+          "at": {
+            "x": -8,
+            "y": 0.7,
+            "z": 9.797174393178826e-16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 7,
+          "archetype": "infected.zebra",
+          "faction": "infected",
+          "health": {
+            "current": 180,
+            "max": 180
+          },
+          "at": {
+            "x": -4.0000000000000036,
+            "y": 0.7,
+            "z": -6.928203230275508,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 8,
+          "archetype": "infected.flamingo",
+          "faction": "infected",
+          "health": {
+            "current": 15,
+            "max": 15
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": -6.928203230275509,
+            "yaw": 0
+          }
+        }
+      ],
+      "countPass": true,
+      "pixels": [],
+      "file": "test-results/sweep-g/G-24-webgpu-low/far-healthy.png",
+      "sha256": "fd2fe78e26dfe4a40641aef87b4589913fde8f8184160ebd7f5447e5669f149a"
+    },
+    {
+      "stage": "far-damaged",
+      "expected": 6,
+      "backend": "webgpu",
+      "quality": "low",
+      "bars": {
+        "count": 6,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 3,
+            "fraction": 0.5,
+            "x": 883.4832653218896,
+            "y": 434.2801797923852,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              7.881157932353339,
+              2.2046821909134344,
+              -0.5958951738637879
+            ]
+          },
+          {
+            "id": 4,
+            "fraction": 0.5,
+            "x": 572.4853542735891,
+            "y": 525.147975578134,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              3.3684609186003946,
+              1.3221964788042015,
+              6.554368763490935
+            ]
+          },
+          {
+            "id": 5,
+            "fraction": 0.5,
+            "x": 368.8664037317281,
+            "y": 385.51583796869267,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -4.366426227475802,
+              1.7019557610719858,
+              6.421005092413875
+            ]
+          },
+          {
+            "id": 6,
+            "fraction": 0.5,
+            "x": 447.91949669799806,
+            "y": 184.4277154502201,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -8.602300501354947,
+              3.0457964008515965,
+              -0.8469788954345852
+            ]
+          },
+          {
+            "id": 7,
+            "fraction": 0.5,
+            "x": 686.9351909485029,
+            "y": 170.82559992235596,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -4.398969180404276,
+              2.126028681533775,
+              -7.483141688693934
+            ]
+          },
+          {
+            "id": 8,
+            "fraction": 0.5,
+            "x": 890.412230694466,
+            "y": 286.77820593648096,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              3.730292692382676,
+              1.3754458453526865,
+              -7.288249137965494
+            ]
+          }
+        ]
+      },
+      "player": {
+        "x": 100,
+        "y": 0.72,
+        "z": 100,
+        "yaw": 0
+      },
+      "actors": [
+        {
+          "id": 3,
+          "archetype": "infected.alpha",
+          "faction": "infected",
+          "health": {
+            "current": 150,
+            "max": 300
+          },
+          "at": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 4,
+          "archetype": "infected.lion",
+          "faction": "infected",
+          "health": {
+            "current": 300,
+            "max": 600
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": 6.928203230275509,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 5,
+          "archetype": "infected.gorilla",
+          "faction": "infected",
+          "health": {
+            "current": 900,
+            "max": 1800
+          },
+          "at": {
+            "x": -3.9999999999999982,
+            "y": 0.7,
+            "z": 6.92820323027551,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 6,
+          "archetype": "infected.elephant",
+          "faction": "infected",
+          "health": {
+            "current": 600,
+            "max": 1200
+          },
+          "at": {
+            "x": -8,
+            "y": 0.7,
+            "z": 9.797174393178826e-16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 7,
+          "archetype": "infected.zebra",
+          "faction": "infected",
+          "health": {
+            "current": 90,
+            "max": 180
+          },
+          "at": {
+            "x": -4.0000000000000036,
+            "y": 0.7,
+            "z": -6.928203230275508,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 8,
+          "archetype": "infected.flamingo",
+          "faction": "infected",
+          "health": {
+            "current": 7.5,
+            "max": 15
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": -6.928203230275509,
+            "yaw": 0
+          }
+        }
+      ],
+      "countPass": true,
+      "pixels": [
+        {
+          "id": 3,
+          "fraction": 0.5,
+          "x": 883.4832653218896,
+          "y": 434.2801797923852,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            7.881157932353339,
+            2.2046821909134344,
+            -0.5958951738637879
+          ],
+          "redPixels": 256,
+          "pass": true
+        },
+        {
+          "id": 4,
+          "fraction": 0.5,
+          "x": 572.4853542735891,
+          "y": 525.147975578134,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            3.3684609186003946,
+            1.3221964788042015,
+            6.554368763490935
+          ],
+          "redPixels": 256,
+          "pass": true
+        },
+        {
+          "id": 5,
+          "fraction": 0.5,
+          "x": 368.8664037317281,
+          "y": 385.51583796869267,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -4.366426227475802,
+            1.7019557610719858,
+            6.421005092413875
+          ],
+          "redPixels": 256,
+          "pass": true
+        },
+        {
+          "id": 6,
+          "fraction": 0.5,
+          "x": 447.91949669799806,
+          "y": 184.4277154502201,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -8.602300501354947,
+            3.0457964008515965,
+            -0.8469788954345852
+          ],
+          "redPixels": 256,
+          "pass": true
+        },
+        {
+          "id": 7,
+          "fraction": 0.5,
+          "x": 686.9351909485029,
+          "y": 170.82559992235596,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            -4.398969180404276,
+            2.126028681533775,
+            -7.483141688693934
+          ],
+          "redPixels": 256,
+          "pass": true
+        },
+        {
+          "id": 8,
+          "fraction": 0.5,
+          "x": 890.412230694466,
+          "y": 286.77820593648096,
+          "width": 64,
+          "height": 8,
+          "gap": 2,
+          "anchor": [
+            3.730292692382676,
+            1.3754458453526865,
+            -7.288249137965494
+          ],
+          "redPixels": 256,
+          "pass": true
+        }
+      ],
+      "file": "test-results/sweep-g/G-24-webgpu-low/far-damaged.png",
+      "sha256": "ff333b6299b79452f22d28383718587e43f4cb8ca2832fc22104f24f8c63f3bc"
+    },
+    {
+      "stage": "dead-near",
+      "expected": 0,
+      "backend": "webgpu",
+      "quality": "low",
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "player": {
+        "x": 0,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0
+      },
+      "actors": [
+        {
+          "id": 3,
+          "archetype": "infected.alpha",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 300
+          },
+          "at": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 4,
+          "archetype": "infected.lion",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 600
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": 6.928203230275509,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 5,
+          "archetype": "infected.gorilla",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 1800
+          },
+          "at": {
+            "x": -3.9999999999999982,
+            "y": 0.7,
+            "z": 6.92820323027551,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 6,
+          "archetype": "infected.elephant",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 1200
+          },
+          "at": {
+            "x": -8,
+            "y": 0.7,
+            "z": 9.797174393178826e-16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 7,
+          "archetype": "infected.zebra",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 180
+          },
+          "at": {
+            "x": -4.0000000000000036,
+            "y": 0.7,
+            "z": -6.928203230275508,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 8,
+          "archetype": "infected.flamingo",
+          "faction": "infected",
+          "health": {
+            "current": 0,
+            "max": 15
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "y": 0.7,
+            "z": -6.928203230275509,
+            "yaw": 0
+          }
+        }
+      ],
+      "countPass": true,
+      "pixels": [],
+      "file": "test-results/sweep-g/G-24-webgpu-low/dead-near.png",
+      "sha256": "7064c5151e38dca6b69cbb96220034798fa74a2860c89189f35392d60ec61b81"
+    },
+    {
+      "stage": "healthy-zoo",
+      "expected": 0,
+      "backend": "webgpu",
+      "quality": "low",
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "player": {
+        "x": 0,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0
+      },
+      "actors": [
+        {
+          "id": 3,
+          "archetype": "animal.lion",
+          "faction": "civilian",
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "at": {
+            "x": 8,
+            "z": 0,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "animal": "lion"
+        },
+        {
+          "id": 4,
+          "archetype": "animal.gorilla",
+          "faction": "civilian",
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "at": {
+            "x": 4.000000000000001,
+            "z": 6.928203230275509,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "animal": "gorilla"
+        },
+        {
+          "id": 5,
+          "archetype": "animal.elephant",
+          "faction": "civilian",
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "at": {
+            "x": -3.9999999999999982,
+            "z": 6.92820323027551,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "animal": "elephant"
+        },
+        {
+          "id": 6,
+          "archetype": "animal.zebra",
+          "faction": "civilian",
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "at": {
+            "x": -8,
+            "z": 9.797174393178826e-16,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "animal": "zebra"
+        },
+        {
+          "id": 7,
+          "archetype": "animal.flamingo",
+          "faction": "civilian",
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "at": {
+            "x": -4.0000000000000036,
+            "z": -6.928203230275508,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "animal": "flamingo"
+        }
+      ],
+      "countPass": true,
+      "pixels": [],
+      "file": "test-results/sweep-g/G-24-webgpu-low/healthy-zoo.png",
+      "sha256": "60d5e4981b614504c754cb7caa463ca47925d9fa6533b5952bd8c6b0000fd5e1"
+    }
+  ],
+  "errors": []
+}

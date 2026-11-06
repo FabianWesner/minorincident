@@ -1,3 +1,4 @@
+import { gzipSync, gunzipSync, strFromU8, strToU8 } from 'three/addons/libs/fflate.module.js';
 import { migrateCureResume, validCureCheckpoint } from './cureSave';
 import { rocketZoomLimit } from '../../data/cameraFraming';
 import { catalog } from '../../data/actions/catalog';
@@ -150,15 +151,25 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     else if(save.completedLevels!==p.level-1||p.cards.length!==(p.phase==='cards'?3:0)||p.cards.some(id=>!eligible(save,upgrades[id])))return false;
   }return true;
 }
+const compressedPrefix = 'minor-incident.gzip1:';
+/** Keep small/legacy saves readable; full finale snapshots need lossless storage compression.
+ * Binary strings are valid localStorage values and avoid base64's extra size. */
+export function encodeSave(save: CampaignSave): string {
+  const text = JSON.stringify(save);
+  return text.length < 65536 ? text : compressedPrefix + strFromU8(gzipSync(strToU8(text), { level: 1, mtime: 0 }), true);
+}
 export function decodeSave(text:string|null):SaveResult {
   if(text===null)return {status:'empty'};
-  try {const save=migrate(JSON.parse(text));return validateSave(save)?{status:'ok',save:structuredClone(save)}:{status:'error',message:SAVE_ERROR};}catch{return {status:'error',message:SAVE_ERROR};}
+  try {
+    if (text.startsWith(compressedPrefix)) text = strFromU8(gunzipSync(strToU8(text.slice(compressedPrefix.length), true)));
+    const save=migrate(JSON.parse(text));return validateSave(save)?{status:'ok',save:structuredClone(save)}:{status:'error',message:SAVE_ERROR};
+  }catch{return {status:'error',message:SAVE_ERROR};}
 }
 /** Options.js delegates persistence to Audio.js (Bruno Simon, MIT): restore/store at the browser boundary.
  * Injected storage keeps migration/validation testable without DOM or a singleton. */
 export class SaveStore {
   constructor(private readonly storage:{getItem(key:string):string|null;setItem(key:string,value:string):void;removeItem(key:string):void}){}
   load():SaveResult {try{return decodeSave(this.storage.getItem(SAVE_KEY));}catch{return {status:'error',message:SAVE_ERROR};}}
-  write(save:CampaignSave):boolean {if(!validateSave(save))throw new Error('Invalid campaign save');try{this.storage.setItem(SAVE_KEY,JSON.stringify(save));return true;}catch{return false;}}
+  write(save:CampaignSave):boolean {if(!validateSave(save))throw new Error('Invalid campaign save');try{this.storage.setItem(SAVE_KEY,encodeSave(save));return true;}catch{return false;}}
   clear():boolean {try{this.storage.removeItem(SAVE_KEY);return true;}catch{return false;}}
 }

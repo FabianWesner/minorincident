@@ -1,0 +1,117 @@
+{
+  "phase": "before",
+  "sourceHash": "095bc361d821ac6fdee29abb0e98d7a28b49c3a4e4d7e5ce335ae5d622099944",
+  "generatedAt": "2026-11-06T00:36:44.159Z",
+  "method": "Controlled authored L4 line-break checkpoint prefix (objective skips during setup only); ordinary WASD between two collapse poses per tier. Read-only actual HUD/ring/destination observation. No performance timing.",
+  "cells": [
+    {
+      "tier": "low",
+      "index": 0,
+      "tick": 54,
+      "levelPhase": "collapse",
+      "player": {
+        "x": -16.553863525390625,
+        "y": 0.7099999785423279,
+        "z": 1.6413947343826294,
+        "yaw": 2.356194490192345
+      },
+      "marker": "l4-cellar-door",
+      "destination": {
+        "x": -79.29999999999998,
+        "z": -45.2801,
+        "radius": 1.4,
+        "yaw": -1.5707963267948966
+      },
+      "directM": 78.34988392205186,
+      "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 316\u00a0m",
+      "displayedM": 316,
+      "hudRouteVisible": true,
+      "legacyRouteVisible": false,
+      "markerGuidance": "destination",
+      "ring": {
+        "visible": true,
+        "position": [
+          -79.29999999999998,
+          0.13,
+          -45.2801
+        ]
+      },
+      "backend": "webgl",
+      "quality": "low",
+      "file": "test-results/sweep-g/G-08-before/low-1.jpg",
+      "sha256": "c37ea5d5ca92c800db94ff61ff9b7a64c74f27d7e70cc0434859b544e536acce",
+      "reviewed": true,
+      "observation": "Reviewed: heroine/crowd/bus visible; objective shows routed315\u2013318m distance and extra cyan minimap waypoint; legacy destination arrow remains separate."
+    },
+    {
+      "tier": "low",
+      "index": 1,
+      "tick": 102,
+      "levelPhase": "collapse",
+      "player": {
+        "x": -14.518936157226562,
+        "y": 0.7099999785423279,
+        "z": -0.9041891694068909,
+        "yaw": 0.7853981633974483
+      },
+      "marker": "l4-cellar-door",
+      "destination": {
+        "x": -79.29999999999998,
+        "z": -45.2801,
+        "radius": 1.4,
+        "yaw": -1.5707963267948966
+      },
+      "directM": 78.52265720571506,
+      "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 318\u00a0m",
+      "displayedM": 318,
+      "hudRouteVisible": true,
+      "legacyRouteVisible": false,
+      "markerGuidance": "destination",
+      "ring": {
+        "visible": true,
+        "position": [
+          -79.29999999999998,
+          0.13,
+          -45.2801
+        ]
+      },
+      "backend": "webgl",
+      "quality": "low",
+      "file": "test-results/sweep-g/G-08-before/low-2.jpg",
+      "sha256": "6506773b4bef8b14b5c17d422d9e809dfed5b76568112bba2bf1d679e29da335",
+      "reviewed": true,
+      "observation": "Reviewed: heroine/crowd/bus visible; objective shows routed315\u2013318m distance and extra cyan minimap waypoint; legacy destination arrow remains separate."
+    }
+  ],
+  "errors": [
+    {
+      "tier": "high",
+      "kind": "console",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "tier": "high",
+      "kind": "console",
+      "text": "Level load failed Error: Layout request failed: /assets/layouts/D-FAIR.layout.json\n    at http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39515\n    at async Promise.all (index 0)\n    at async ip (http://127.0.0.1:4981/build/index-iSw-mbIZ.js:8:762368)\n    at async http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39444"
+    },
+    {
+      "tier": "high",
+      "kind": "console",
+      "text": "Error: Layout request failed: /assets/layouts/D-FAIR.layout.json\n    at http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39515\n    at async Promise.all (index 0)\n    at async ip (http://127.0.0.1:4981/build/index-iSw-mbIZ.js:8:762368)\n    at async http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39444"
+    },
+    {
+      "tier": "high",
+      "kind": "console",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "tier": "high",
+      "kind": "console",
+      "text": "Level load failed Error: Layout request failed: /assets/layouts/D-FAIR.layout.json\n    at http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39515\n    at async Promise.all (index 0)\n    at async ip (http://127.0.0.1:4981/build/index-iSw-mbIZ.js:8:762368)\n    at async http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39444"
+    }
+  ],
+  "failure": "Error: page.evaluate: Error: Layout request failed: /assets/layouts/D-FAIR.layout.json\n    at http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39515\n    at async Promise.all (index 0)\n    at async ip (http://127.0.0.1:4981/build/index-iSw-mbIZ.js:8:762368)\n    at async http://127.0.0.1:4981/build/index-iSw-mbIZ.js:11:39444",
+  "limitations": [
+    "Only low completed. Concurrent build replacement interrupted high setup with missing-layout errors; harness interference, not a game crash. Initial baseline independently covers high."
+  ]
+}

@@ -314,7 +314,8 @@ export class Hud {
     attribute(this.corgiBadge, 'data-state', corgi ? corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
-    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? mission.l4!.cellarDistance(this.cellarTurn) : null;
+    // Show the destination, leaving route discovery to the player (G-08 / Q-277).
+    const cellarDistance: number | null = null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     if (cellarDistance !== null) this.place(this.routePin, this.cellarTurn.x, this.cellarTurn.z, px, pz, true);
     setHidden(this.objectivePin, !anchor);

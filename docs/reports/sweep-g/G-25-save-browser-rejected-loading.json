@@ -1,0 +1,15 @@
+{
+  "sourceHash": "8e400302a231cae93f92785b2d9d2a214cc7c458de05aff25045141f4aa3740e",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "7bd7cdfeb943a1748614ee7c614b8c357feaa82b",
+  "method": "Exact prior oversized production save, native localStorage quota, ordinary L10 menu Resume and Settings save, reload. No quota override or state trimming.",
+  "savePath": "docs/reports/sweep-g/G-25-retry-L10-high-webgl2-batch3-save.json.gz",
+  "originalSaveHash": "f175542f6474d6a70afd50657815471fd8b0504e4a39c2614687aa67e1e1441b",
+  "errors": [],
+  "captures": [],
+  "nativeStorageRoundTrip": {
+    "exact": true,
+    "encodedCodeUnits": 1577123
+  },
+  "failure": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-settings')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-testid=\"pause-settings\">Settings</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    39 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+}

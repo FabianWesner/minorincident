@@ -1,0 +1,37 @@
+{
+  "row": "G-26",
+  "status": "FAIL",
+  "reviewer": "sweep-g/Codex",
+  "date": "2026-11-06",
+  "commit": "a232cb1a0f52a9249e6037820eb2cb7a38cfdd9b",
+  "clauses": [
+    {
+      "clause": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
+      "verdict": "FAIL",
+      "note": "Current-source coffee-holder close camera visibly separates cap above head in low/high; full-size high-ped-grip-coffee-standing-grip0-coffee.png inspected. Height catalog141LOD rows matches adult heroine1.454m but does not cure accessory placement. Zoo bag-holder also shows long pointed body/arm triangles; no speculative skinning fix."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-g/G-26-scenes-captures.json",
+      "sha256": "af161ebc05011b076ae573cc338c528ba6b36e45bb0202e49b829cec99e57e76",
+      "what": "All28 frames inspected, including original-size coffee cap and zoo bag-holder deformities; hashes retained and raw removed."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-26-heights.json",
+      "sha256": "786887c20d80b83483ac798df01da8713685104e581bab15436d3df21a0b4fdd",
+      "what": "Current baked figure heights,141LOD rows; adult heroine1.454m."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-26-scenes.json",
+      "sha256": "675a707266656fc036f961bd89545e2faad36bb1fbdcd16b5ee4b384bc2d3f2e",
+      "what": "Five authored routines both qualities, grip contact gaps and actual rendered accessories."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-26-final-closeout.json",
+      "sha256": "f876d67f1f90038d429031ef72307d69d99aee4c7991aad65ecb1881557643ae",
+      "what": "28 frames viewed, including full original high coffee closeup. Coffee cap floats visibly above head; zoo bag holder and phone arm show triangular stretching. Large pale foreground weather triangle is not counted as a body defect."
+    }
+  ],
+  "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed."
+}

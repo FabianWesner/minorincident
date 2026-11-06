@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L3",
   "tier": "high",
-  "sourceHash": "e8c033eae5293ec193e2411c608f90c2dc53e6165ece071fd5a31d884ec48ac0",
-  "fixtureHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
-  "browserHash": "37b7acb0b5c4767f11be5a041c0e22784e9e12ee7d5607acc2a1182a0820cb5b",
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 164,
+      "wallSeconds": 178,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 4.95,
+      "maxNoProgressSeconds": 4.7,
       "deaths": 0,
       "assists": 0,
       "attacks": {
-        "weapon.handgun": 190
+        "weapon.handgun": 226
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -56,8 +56,8 @@
       "steps": [
         {
           "id": "armory",
-          "text": "Take a handgun from the armory · 19 m",
-          "tick": 10,
+          "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+          "tick": 14,
           "marker": {
             "anchor": "l3-armory",
             "ring": {
@@ -76,8 +76,8 @@
         },
         {
           "id": "defend",
-          "text": "Help defend the station · 10 m",
-          "tick": 829,
+          "text": "Help defend the station \u00b7 10\u00a0m",
+          "tick": 839,
           "marker": {
             "anchor": "l3-armory",
             "ring": null,
@@ -88,8 +88,8 @@
         },
         {
           "id": "checkpoint",
-          "text": "Get inside the army checkpoint · 364 m",
-          "tick": 1577,
+          "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+          "tick": 1599,
           "marker": {
             "anchor": "l3-zone",
             "ring": {
@@ -112,5 +112,9 @@
   "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5
+  "zoom": 1.5,
+  "sweepEvidence": {
+    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L3-high-webgl2.json",
+    "sha256": "7238bc169909e2cefe8e21f260a0f381014205bdea36654390b5453c64af0580"
+  }
 }
