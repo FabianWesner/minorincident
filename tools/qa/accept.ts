@@ -1,3 +1,4 @@
+import { l8BreachReceipts } from './accept/l8-breach-receipts';
 import { l8PopulationReceipts } from './accept/l8-population-receipts';
 import { l9DetourReceipts } from './accept/l9-detour-receipts';
 import { l8HandoverReceipts } from './accept/l8-handover-receipts';
@@ -78,7 +79,7 @@ for (const level of selected) {
     const receipt = JSON.parse(readFileSync(path, 'utf8')) as FixtureReceipt & { browserHash: string };
     if (receipt.sourceHash === identity.sourceHash && receipt.browserHash === browserHash()) fixtures.push({ path, receipt });
   }
-  if (level === 'L8') fixtures.push(...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
+  if (level === 'L8') fixtures.push(...l8BreachReceipts(identity.sourceHash, browserHash()), ...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...fix55RocketReceipts(identity.sourceHash, browserHash()));
   if (level === 'L9') fixtures.push(...l9DetourReceipts(identity.sourceHash, browserHash()), ...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/sweep-c5/L9-04'));
   if (level === 'L10') fixtures.push(...l10PresentationReceipts(identity.sourceHash, browserHash()), ...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));

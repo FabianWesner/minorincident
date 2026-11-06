@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "low",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "e41139548ff0af715eb0cfd510524ad90aa089bf58ad827821aaba985ef373fe",
+  "errors": [],
+  "observations": {
+    "root": "docs/reports/sweep-c5/L8-04"
+  },
+  "checks": [
+    {
+      "id": "L8-04",
+      "clause": "tunnel0 physical timed emergence and reviewed strip",
+      "tier": "low",
+      "policy": "physical-breach",
+      "status": "PASS",
+      "value": {
+        "sampled": true,
+        "ready": true,
+        "packetPass": true,
+        "entry": true,
+        "seen": true,
+        "firstAdmitted": [
+          [
+            701,
+            {
+              "tick": 3600,
+              "s": -0.9000000000000057
+            }
+          ],
+          [
+            705,
+            {
+              "tick": 3639,
+              "s": -0.6900000000000261
+            }
+          ],
+          [
+            703,
+            {
+              "tick": 3648,
+              "s": -0.761000000000081
+            }
+          ]
+        ],
+        "maxThreeTickEmergenceStepMetres": 0.20999999999997954,
+        "distances": [
+          202.9,
+          124.08547457297328,
+          138.6052127446872,
+          166.04579187681932,
+          78.9037705055975,
+          152.1092041922513
+        ],
+        "consoleErrors": []
+      },
+      "target": "actual WASD prebreach observation point; all4 packets3/6 at3600,20m separation; door opens3600; actors born/admitted behind threshold, continuous3tick emergence;12 reviewed paired frames, exact O-review judges visible-door or roof-occluded paths",
+      "receipt": "docs/reports/sweep-c5/L8-04/low-0-review.json"
+    },
+    {
+      "id": "L8-04",
+      "clause": "tunnel1 physical timed emergence and reviewed strip",
+      "tier": "low",
+      "policy": "physical-breach",
+      "status": "PASS",
+      "value": {
+        "sampled": true,
+        "ready": true,
+        "packetPass": true,
+        "entry": true,
+        "seen": true,
+        "firstAdmitted": [
+          [
+            707,
+            {
+              "tick": 3600,
+              "s": -0.9000000000000057
+            }
+          ],
+          [
+            711,
+            {
+              "tick": 3639,
+              "s": -0.6900000000000261
+            }
+          ],
+          [
+            709,
+            {
+              "tick": 3648,
+              "s": -0.761000000000081
+            }
+          ]
+        ],
+        "maxThreeTickEmergenceStepMetres": 0.21080248012272804,
+        "distances": [
+          202.9,
+          124.08547457297328,
+          138.6052127446872,
+          166.04579187681932,
+          78.9037705055975,
+          152.1092041922513
+        ],
+        "consoleErrors": []
+      },
+      "target": "actual WASD prebreach observation point; all4 packets3/6 at3600,20m separation; door opens3600; actors born/admitted behind threshold, continuous3tick emergence;12 reviewed paired frames, exact O-review judges visible-door or roof-occluded paths",
+      "receipt": "docs/reports/sweep-c5/L8-04/low-1-review.json"
+    },
+    {
+      "id": "L8-04",
+      "clause": "tunnel2 physical timed emergence and reviewed strip",
+      "tier": "low",
+      "policy": "physical-breach",
+      "status": "PASS",
+      "value": {
+        "sampled": true,
+        "ready": true,
+        "packetPass": true,
+        "entry": true,
+        "seen": true,
+        "firstAdmitted": [
+          [
+            713,
+            {
+              "tick": 3600,
+              "s": -0.9000000000000057
+            }
+          ],
+          [
+            717,
+            {
+              "tick": 3639,
+              "s": -0.6900000000000261
+            }
+          ],
+          [
+            715,
+            {
+              "tick": 3648,
+              "s": -0.761000000000081
+            }
+          ]
+        ],
+        "maxThreeTickEmergenceStepMetres": 0.20999999999997954,
+        "distances": [
+          202.9,
+          124.08547457297328,
+          138.6052127446872,
+          166.04579187681932,
+          78.9037705055975,
+          152.1092041922513
+        ],
+        "consoleErrors": []
+      },
+      "target": "actual WASD prebreach observation point; all4 packets3/6 at3600,20m separation; door opens3600; actors born/admitted behind threshold, continuous3tick emergence;12 reviewed paired frames, exact O-review judges visible-door or roof-occluded paths",
+      "receipt": "docs/reports/sweep-c5/L8-04/low-2-review.json"
+    },
+    {
+      "id": "L8-04",
+      "clause": "tunnel3 physical timed emergence and reviewed strip",
+      "tier": "low",
+      "policy": "physical-breach",
+      "status": "PASS",
+      "value": {
+        "sampled": true,
+        "ready": true,
+        "packetPass": true,
+        "entry": true,
+        "seen": true,
+        "firstAdmitted": [
+          [
+            719,
+            {
+              "tick": 3600,
+              "s": -0.9000000000000057
+            }
+          ],
+          [
+            723,
+            {
+              "tick": 3639,
+              "s": -0.6900000000000261
+            }
+          ],
+          [
+            721,
+            {
+              "tick": 3648,
+              "s": -0.761000000000081
+            }
+          ]
+        ],
+        "maxThreeTickEmergenceStepMetres": 0.20999999999997954,
+        "distances": [
+          202.9,
+          124.08547457297328,
+          138.6052127446872,
+          166.04579187681932,
+          78.9037705055975,
+          152.1092041922513
+        ],
+        "consoleErrors": []
+      },
+      "target": "actual WASD prebreach observation point; all4 packets3/6 at3600,20m separation; door opens3600; actors born/admitted behind threshold, continuous3tick emergence;12 reviewed paired frames, exact O-review judges visible-door or roof-occluded paths",
+      "receipt": "docs/reports/sweep-c5/L8-04/low-3-review.json"
+    }
+  ]
+}

@@ -774,6 +774,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     { clause: 'every living roster identity boarded', policy: 'complete' },
     ...['actual passenger door-entry spacing', 'living infected remaining when boarding has finished', 'offscreen stalled boarding recovery after20s'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
+  ['L8-04', [...['breach active-sim clock','distinct tunnel outlets','actual first packet per tunnel outlet','first ordinary visible actor outlet start window','actual tunnel outlet separation'].map(clause=>({clause,policy:'complete'})),...[0,1,2,3].map(n=>({clause:`tunnel${n} physical timed emergence and reviewed strip`,policy:'physical-breach'}))]],
   ['L8-03', [{clause:'actual calm local census and purposeful routines',policy:'calm-population'},{clause:'outside wall pursuit cannot cross or damage occupants',policy:'calm-population'},{clause:'reviewed physical calm activity clips',policy:'real-input-calm'}]],
   ['L8-05', ['actual admitted Alphas over observed route','concurrent cap','unprotected local-threat victim class coverage','all five same-ID species convert after actual bites'].map(clause=>({clause,policy:'complete'}))],
   ['L8-10', ['production L8 to L9 handover first frame within6s', 'actual physical departure APC identity durability and seats retained'].map(clause => ({ clause, policy: 'production-handover' }))],
