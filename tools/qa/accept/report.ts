@@ -103,6 +103,7 @@ const remainingChecks: Record<string, string> = {
 };
 export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const objectiveReviews: Record<string, string> = {
+    'L4-15': source.expected,
     'L6-09': source.expected,
     'L6-04': source.expected,
     'L4-02': source.expected,

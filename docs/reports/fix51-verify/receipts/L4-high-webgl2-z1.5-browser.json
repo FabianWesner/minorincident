@@ -1319,6 +1319,28 @@
       },
       "target": "Frontal MG incapacitates\u22646s; no solo riot downs a continuously firing full-HP courier",
       "receipt": "docs/reports/sweep-b/L4-11-proof.json"
+    },
+    {
+      "id": "L4-15",
+      "clause": "actual military-wall capsule solidity and bounded isometric camera family",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "actualSolidWallSegments": 60,
+        "allCapsulesBlocked": true,
+        "observedCameraSamples": 263,
+        "minCameraElevationDeg": 35.99999999999999,
+        "maxCameraElevationDeg": 41.84980547114921,
+        "allAuthoredCinematicOffsets": [
+          15,
+          19,
+          15
+        ]
+      },
+      "target": "No top-down snap; actual structures solid and textured/readable; surrounding terrain not void",
+      "receipt": "docs/reports/sweep-b/L4-15-proof.json"
     }
   ],
   "observations": {
