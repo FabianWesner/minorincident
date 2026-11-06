@@ -746,6 +746,8 @@ export class CrowdView extends Group {
         const lurchScale = this.world.scenario === 'L10' && e.archetype === 'infected.runner' ? .35 : 1;
         const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined, lurchScale);
         if (this.world.scenario === 'L10' && e.archetype === 'infected.runner' && moving && !heavy) layers.maxBodyLean = 38 * Math.PI / 180;
+        // G-17: standing and walking infected never lean past the 42 degree acceptance limit (idle hunch read 45-52 degrees on the womanB/manB rigs); attacks and crawlers keep their authored reach.
+        if (!heavy && !specialAttack && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
         // The baked hunch already reaches toward the victim. Keep the added pelvis/torso lunge
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
