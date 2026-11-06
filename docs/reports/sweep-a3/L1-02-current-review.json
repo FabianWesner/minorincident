@@ -1,7 +1,7 @@
 {
-  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
   "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
-  "revision": "50d23a8fd557e2497cba39fd21abb3d631ed612c",
+  "revision": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "criterion": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
   "method": "Seed1, ordinary stationary opening, no relocation/protection/mission skips, both qualities, every tick0–3600. Actual yaw uses transform-to-target, matching Outbreak.face; the technician faces the authored lab door. Hidden interiors do not establish visible idle. Facing nowhere is observed as no authored meaningful target ahead (missing target, coincident target, or target behind the actual body heading). More than0.1m cumulative actual travel ends an idle interval. Full actual heading errors are retained; merely being slightly off exact mathematical yaw does not mean facing nowhere. Population targets correspond to partners, seats, flowers, doorways and shop displays, as authored in Population.ts and MorningRoutines.ts.",
   "controls": [
@@ -25,7 +25,7 @@
   "toolSha256": "0b284493d6a236172cc4926979079e368e757c10a6b07e8ef4594fdfddde49ad",
   "ledger": {
     "file": "docs/reports/sweep-a3/L1-02-current-ledger.json.gz",
-    "sha256": "c80ddf015a1a79005e2593e66924d19cdc21b1a416a3d3abd3f58dc5b96ef4fb"
+    "sha256": "daa59a04ed1e5be7d61c86666d0f219456281144f76716fb216d5f62bd5671fd"
   },
   "runs": [
     {

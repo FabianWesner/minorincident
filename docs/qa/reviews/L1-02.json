@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "50d23a8fd557e2497cba39fd21abb3d631ed612c",
+  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
   "clauses": [
     {
       "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
@@ -14,14 +14,14 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L1-02-current-review.json",
-      "sha256": "049eb4e8c14d83de973873eeb7b38a96b86dc613253d43cce2eb4c5ab3d815fa",
+      "sha256": "148ec696982637b5bc139f93fe79d74d7dd5041bfd10d4e546f11bc8bb008cd3",
       "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
     },
     {
       "file": "docs/reports/sweep-a3/L1-02-current-ledger.json.gz",
-      "sha256": "c80ddf015a1a79005e2593e66924d19cdc21b1a416a3d3abd3f58dc5b96ef4fb",
+      "sha256": "daa59a04ed1e5be7d61c86666d0f219456281144f76716fb216d5f62bd5671fd",
       "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
     }
   ],
-  "notes": "Scripted sim criterion. Actual actor positions/yaws, authored targets, civilian identity census and combat events measured for every tick; no visual appearance claim."
+  "notes": "Scripted sim criterion. Actual actor positions/yaws, authored targets, civilian identity census and combat events measured for every tick; no visual appearance claim. Native scripted observation rerun after the final constant-width ring change."
 }
