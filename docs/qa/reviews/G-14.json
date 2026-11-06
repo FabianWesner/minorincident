@@ -8,7 +8,7 @@
     {
       "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height \u2264 ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
       "verdict": "FAIL",
-      "note": "Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix."
+      "note": "Current authored permanent-corpse fixtures visibly float and have disconnected boot/pointed geometry, both qualities. Original-size high-l4-corpses-persist-f7320-z0.5 and low-corpse-placement-pile-f600-z0.5 inspected. Roots maxLift0.66m (pile) /0.22m (ten bodies), zero sunkPairs; these counters do not validate rendered support. Ten corpse identities remain through7320ticks; no lifetime/performance removal observed in sampled physical ledgers. No speculative corpse skinning/layout fix. Independent full physical L10 low epilogue also shows corpses as red/black folded shards and pointed geometry; per-capture metadata records actual dead/corpse entities and death-back clips (e.g. runner454 drawn)."
     }
   ],
   "evidence": [
@@ -21,6 +21,16 @@
       "file": "docs/reports/sweep-g/G-14-scenes.json",
       "sha256": "cbce58d747e9aa61674d4dadd5da870cc57b8a1dcd05fcafb9606b975223590d",
       "what": "Authored30-body pile and ten-body122-second native fixture; exact identities/layout/grounding metrics, no errors."
+    },
+    {
+      "file": "test-results/sweep-g/G-25-audited-L10-low-webgl2/batch3/captures/accept-L10-epilogue-t19582-low-z0-5.jpg",
+      "sha256": "0c71447d0402f178d7d15654cbc9107928864d1fbe00a45e1d6eaad571576bd5",
+      "what": "Original1280x720 physical L10 cure epilogue inspected: numerous corpse bodies are angular red/black shards with pointed/disconnected geometry; living heroine remains connected. Raw image removed after capture-manifest review."
+    },
+    {
+      "file": "docs/reports/sweep-g/G-14-L10-physical-epilogue.json.gz",
+      "sha256": "95c29230a5a9d3c3454809e166e85a249d98c7e7c3a9b21981f5c8eefccc5251",
+      "what": "Same physical capture read-only metadata: corpse/dead flags, positions, actual LOD/death clip/drawn state and renderer/camera."
     }
   ],
   "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry."
