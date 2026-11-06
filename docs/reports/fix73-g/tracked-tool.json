@@ -1,0 +1,96 @@
+{
+  "finding": "6: VQA4 tracked source depended on squashed commit",
+  "status": "PASS: both qualities load a valid exported checkpoint and advance by physical input",
+  "change": "Use the versioned sweep-c5 corridor seed in current Git HEAD, with disk read when present and Git blob fallback for slim worktrees. Optional VQA_TRACKED_SAVE JSON/gz override is decoded and required to carry an L10 cure resume before opening a socket. Source hash and seed SHA256 are recorded.",
+  "scope": "Default is the versioned R6 corridor entrance checkpoint, not the unavailable old near-complex save. Other historical VQA scripts are outside this fix. Full physical input ledgers and capture reviews are archived in L10-corridor receipt.",
+  "runs": [
+    {
+      "tier": "low",
+      "source": {
+        "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "b1ba0e390ce4c456fdc7bc814e9816871130d855",
+        "input": {
+          "level": "L10",
+          "tier": "low",
+          "backend": "webgl2",
+          "zoom": 1.5,
+          "source": "tracked",
+          "courierGodMode": true,
+          "movingCoverRoute": false,
+          "noSkip": true,
+          "frameTiming": false
+        }
+      },
+      "trackedSource": {
+        "path": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+        "sha256": "a203c6b62a8f8bb2bd3962e76450eec8b17a636bc912ea7bc0d5afff9c978d64"
+      },
+      "firstPhysicalObservation": {
+        "tick": 0,
+        "step": "destroyed-corridor",
+        "checkpoint": "cure-research",
+        "menu": null,
+        "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 3\u00a0m",
+        "player": {
+          "x": 2934.016357421875,
+          "z": -4.996177673339844,
+          "hp": 91.23333333332776,
+          "weapon": "weapon.army-mg"
+        },
+        "driving": null,
+        "enemies": [],
+        "marker": {
+          "x": 2937,
+          "y": 0,
+          "z": -5
+        },
+        "noProgressSeconds": 0
+      }
+    },
+    {
+      "tier": "high",
+      "source": {
+        "sourceHash": "edaa320cbb9c133a6e392a483299dd112a7e1eb397746ea6e33ec302d771a2aa",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "4778a00988a606e9346eb3d86030c8ab5d60ba2f",
+        "input": {
+          "level": "L10",
+          "tier": "high",
+          "backend": "webgl2",
+          "zoom": 1.5,
+          "source": "tracked",
+          "courierGodMode": true,
+          "movingCoverRoute": false,
+          "noSkip": true,
+          "frameTiming": false
+        }
+      },
+      "trackedSource": {
+        "path": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+        "sha256": "eca0abb02bf33e3d422d25a60eda4e4fa7f7d7a427545b6545b0048114a1363b"
+      },
+      "firstPhysicalObservation": {
+        "tick": 0,
+        "step": "destroyed-corridor",
+        "checkpoint": "cure-research",
+        "menu": null,
+        "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 3\u00a0m",
+        "player": {
+          "x": 2934.07177734375,
+          "z": -4.996211528778076,
+          "hp": 69.93333333333163,
+          "weapon": "weapon.army-mg"
+        },
+        "driving": null,
+        "enemies": [],
+        "marker": {
+          "x": 2937,
+          "y": 0,
+          "z": -5
+        },
+        "noProgressSeconds": 0
+      }
+    }
+  ]
+}
