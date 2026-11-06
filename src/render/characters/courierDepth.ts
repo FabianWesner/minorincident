@@ -17,18 +17,22 @@ const slice = positionView.z.negate().mul(.001).clamp(.001, .1);
 const perPass = Fn((builder: { material?: { isShadowPassMaterial?: boolean } }) =>
   builder.material?.isShadowPassMaterial ? depth : select(courierForegroundOn.greaterThan(.5), slice, depth)) as unknown as () => Node;
 const courierDepth = perPass();
+// vqa-fix-6: the companion shares the crowd/boss slice, but not the on-foot vehicle x-ray (it drew the dog on the roof).
+const companionPass = Fn((builder: { material?: { isShadowPassMaterial?: boolean } }) =>
+  builder.material?.isShadowPassMaterial ? depth : select(courierForegroundOn.greaterThan(.5).and(courierXray.lessThan(.5)), slice, depth)) as unknown as () => Node;
+const companionDepth = companionPass();
 
 /** Give a courier material (body, gear, carried weapon) the switchable depth before its first compile. True when it changed. */
-export function useCourierDepth(material: Material): boolean {
+export function useCourierDepth(material: Material, companion = false): boolean {
   livingStencil(material);
-  const node = material as NodeMaterial;
-  if (node.depthNode === courierDepth) return false;
+  const node = material as NodeMaterial, target = companion ? companionDepth : courierDepth;
+  if (node.depthNode === target) return false;
   // A depth lift alone leaves her dark silhouette lost among similarly colored
   // infected. Install a gold contour once and switch it with the same uniform.
-  const edge = float(1).sub(normalView.dot(positionView.negate().normalize()).abs()).pow(3).mul(courierForegroundOn).mul(.8);
+  const edge = float(1).sub(normalView.dot(positionView.negate().normalize()).abs()).pow(3).mul(courierForegroundOn).mul(companion ? courierXray.oneMinus() : 1).mul(.8);
   const contour = color('#ffd17d').mul(edge);
   const lit = node as unknown as { emissiveNode?: typeof contour };
   lit.emissiveNode = lit.emissiveNode ? lit.emissiveNode.add(contour) : contour;
-  node.depthTest = true; node.depthNode = courierDepth; node.needsUpdate = true;
+  node.depthTest = true; node.depthNode = target; node.needsUpdate = true;
   return true;
 }
