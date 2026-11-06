@@ -243,3 +243,8 @@ A living record, updated after every lane or experiment. Short entries with evid
 - Staged test-API blasts with `step()` do not age VFX like real play does. Verify bloom and smoke with real-input runs.
 - 2026-11-05 Git history squashed to 4 commits (single-commit push exceeded GitHub's 2 GB pack limit → split code/assets/docs + 3 docs/reports chunks); 76 remote + 314 local branches and stashes deleted; .git 8→3.7 GB. Lesson: GitHub rejects packs > 2 GB; push large snapshots in < 1.5 GB commits.
 - 2026-11-06: 11 merges in a row each passed qa:threat on their own branch, but main ended at 13 flags (L7 follower pace, L4 breach-south) — merge interaction. Rule: after every 2–3 merges the orchestrator runs qa:threat on main itself (~6–9 min, background) before merging more game changes.
+
+### 2026-11-06 — fix70-v (corpse piles, knee splay, floating hat)
+- Corpse mounds came from the 1 m ring search: when every footprint within 1 m was taken, the lowest candidate was a stack of 8+ bodies (220 cm for 90 bodies on 4.5x4 m). Letting a tall spot keep searching outward (0.3 m rings to 5.5 m) gave 44 cm with the same bodies. `grounding.corpseOffMaxCm` in Scene Lab metrics is the quick number; `corpse-heap-dense` gates it at 100 cm.
+- A "splayed knee" can be a stride problem, not a clip problem: `infected-lurch` had no minimum cadence, so a rig with world scale 1.2 (womanB) took 1.5 m strides on 0.6 m legs at 1 m/s. Print `cadenceStride(name, scale, speed)` before editing clips; the author-side rotations were only 21 degrees.
+- A Scene Lab `accessories: ["cap"]` is not an accessory id, so the hat shown is a random `acc.hat-*`. To find which one, lower each id's `rimDepth` by 5 cm in turn and compare shots (the hard hat floated over the brow).
