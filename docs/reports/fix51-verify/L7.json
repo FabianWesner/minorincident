@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L7",
-  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "sourceHash": "6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c",
   "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T13:16:22.248Z",
+  "generatedAt": "2026-11-06T13:50:08.694Z",
   "policies": [
     {
       "tier": "low",
@@ -66,7 +66,7 @@
     {
       "tier": "low",
       "policy": "real-input-browser",
-      "outcome": "incomplete",
+      "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-low-pickup-browser.json"
     },
@@ -80,7 +80,7 @@
     {
       "tier": "high",
       "policy": "real-input-browser",
-      "outcome": "incomplete",
+      "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-high-pickup-browser.json"
     },
@@ -6176,10 +6176,10 @@
   "rows": [
     {
       "id": "L7-01",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":12,\"valid\":true,\"maxMs\":749.9000000000015},{\"event\":\"combat.attack\",\"tick\":38,\"samples\":7,\"valid\":true,\"maxMs\":233.29999999999927}],\"frameGate\":false} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":33.399999999999636},{\"event\":\"combat.attack\",\"tick\":25,\"samples\":17,\"valid\":true,\"maxMs\":100}],\"frameGate\":false} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL) Manual review FAIL (FRESH, Codex fix72-c): Measured quiet-context FAIL. Actual moving auto-pickup3m from authentic carried exit, no E, no god/driver/actor manipulation; first physical rocket fired. Low event maxima pickup749.9ms / first-shot233.3ms; high33.4ms /100ms against unchanged50ms gate. Four images personally reviewed: green launcher beside wrecked truck, Corgi/followers, visible orange blast in wide views. No safe small game cause isolated; retain failure, do not close row. Twenty-two synthetic fault controls reject invalid receipts and50.01ms, while50ms boundary passes.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); low/stationary native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); high/complete native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); high/stationary native launcher horizontal distance from night-exit checkpoint: 3 (target 0 ≤ value ≤ 5; PASS); low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":20,\"valid\":true,\"maxMs\":49.899999999999636},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; PASS); low/physical-pickup reviewed actual launcher first-rocket captures: {\"seen\":true} (target Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.; PASS); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":true,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":50},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; PASS); high/physical-pickup reviewed actual launcher first-rocket captures: {\"seen\":true} (target Current both-tier low/high zoom0.5/1.5 images personally reviewed with exact SHA-256.; PASS) Manual review PASS (FRESH, Codex fix72-c): Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
@@ -6189,7 +6189,8 @@
         "docs/reports/fix72-c/L7-01/review.json",
         "docs/reports/fix72-c/L7-01/high.json",
         "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
-        "docs/reports/fix72-c/L7-01/fault-proof.json"
+        "docs/reports/fix72-c/L7-01/fault-proof.json",
+        "docs/reports/fix72-c/L7-01/quality-order-cause.json"
       ],
       "expected": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
       "checks": [
@@ -6242,7 +6243,7 @@
           "clause": "physical launcher approach pickup and first rocket frame gate",
           "tier": "low",
           "policy": "physical-pickup",
-          "status": "FAIL",
+          "status": "PASS",
           "value": {
             "valid": true,
             "mechanics": true,
@@ -6251,19 +6252,19 @@
               {
                 "event": "pickup.collected",
                 "tick": 14,
-                "samples": 12,
+                "samples": 20,
                 "valid": true,
-                "maxMs": 749.9000000000015
+                "maxMs": 49.899999999999636
               },
               {
                 "event": "combat.attack",
-                "tick": 38,
-                "samples": 7,
+                "tick": 26,
+                "samples": 22,
                 "valid": true,
-                "maxMs": 233.29999999999927
+                "maxMs": 16.800000000000182
               }
             ],
-            "frameGate": false
+            "frameGate": true
           },
           "target": "Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.",
           "receipt": "docs/reports/fix72-c/L7-01/low.json",
@@ -6287,7 +6288,7 @@
           "clause": "physical launcher approach pickup and first rocket frame gate",
           "tier": "high",
           "policy": "physical-pickup",
-          "status": "FAIL",
+          "status": "PASS",
           "value": {
             "valid": true,
             "mechanics": true,
@@ -6298,17 +6299,17 @@
                 "tick": 14,
                 "samples": 19,
                 "valid": true,
-                "maxMs": 33.399999999999636
+                "maxMs": 50
               },
               {
                 "event": "combat.attack",
-                "tick": 25,
-                "samples": 17,
+                "tick": 26,
+                "samples": 22,
                 "valid": true,
-                "maxMs": 100
+                "maxMs": 16.800000000000182
               }
             ],
-            "frameGate": false
+            "frameGate": true
           },
           "target": "Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.",
           "receipt": "docs/reports/fix72-c/L7-01/high.json",
@@ -6336,7 +6337,7 @@
         "evidence": [],
         "method": "NEXT: Record real launcher approach/auto-pickup and first physical mouse shot with frames.ts; measure pickup distance and actual frame intervals without prewarming via a photo."
       },
-      "remaining": "Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
@@ -6344,42 +6345,47 @@
       },
       "reviewDecision": {
         "row": "L7-01",
-        "status": "FAIL",
+        "status": "PASS",
         "reviewer": "Codex fix72-c",
         "date": "2026-11-06",
-        "commit": "65591f560f941723828035ca104b8b4985351bed",
+        "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
         "clauses": [
           {
             "clause": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
-            "verdict": "FAIL",
-            "note": "Measured quiet-context FAIL. Actual moving auto-pickup3m from authentic carried exit, no E, no god/driver/actor manipulation; first physical rocket fired. Low event maxima pickup749.9ms / first-shot233.3ms; high33.4ms /100ms against unchanged50ms gate. Four images personally reviewed: green launcher beside wrecked truck, Corgi/followers, visible orange blast in wide views. No safe small game cause isolated; retain failure, do not close row. Twenty-two synthetic fault controls reject invalid receipts and50.01ms, while50ms boundary passes."
+            "verdict": "PASS",
+            "note": "Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured."
           }
         ],
         "evidence": [
           {
             "file": "docs/reports/fix72-c/L7-01/low.json",
-            "sha256": "5c3586ad2dc2bdda1e9b25a027eff9db93e3433144e813fce7a788996b01b479",
-            "what": "Authentic low quiet physical pickup/first-rocket raw RAF intervals and retained measured FAIL."
+            "sha256": "ed4450519d2e7b02d55b3982e912eac15f030924791e58a01aee2cf9c7eff505",
+            "what": "Low uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
           },
           {
             "file": "docs/reports/fix72-c/L7-01/high.json",
-            "sha256": "f5ce915da0c28a07c3f4f43fdfb55a19ced027297dfe5dd1d7fe2a77c98193e0",
-            "what": "Authentic high quiet physical pickup/first-rocket raw RAF intervals and retained measured FAIL."
+            "sha256": "8671220577b628066ea07f29ed21c6826a2f4c40e97389e1cc42a0d583a88401",
+            "what": "High uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
           },
           {
             "file": "docs/reports/fix72-c/L7-01/review.json",
-            "sha256": "47180692b21a7036c9feb10df5b0d85fd59297e5343953a0657be0cf3aebea9e",
-            "what": "All4 exact image digests and personal observations; raw captures deleted."
+            "sha256": "eda2cecc1b42077e41a0bf8c49e1e01b4c34316f57a5dd1ba50febb046c3e5ad",
+            "what": "All4 current image SHA-256 and personal observations; raw captures deleted."
           },
           {
             "file": "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
-            "sha256": "beb91371ab5121631e69ed8e1de40c173318940fcd2801b73b6592ef1a6fb333",
-            "what": "Quiet-run admission/load and exclusive interval conditions."
+            "sha256": "f526790288bd8ff4d4fa0ddf44fe23801a5a545a25ef28f68abef3b26ae9c5be",
+            "what": "Exclusive shared-pool admission; host load<3 and no foreign build/browser/test processes."
           },
           {
             "file": "docs/reports/fix72-c/L7-01/fault-proof.json",
-            "sha256": "1cd09e9a87cc4c156fc0cf1e5499ab4aefdf85d81d8f384c21605380ae8c3674",
-            "what": "22 synthetic mechanical/timing/provenance fault controls; original measured failures unchanged."
+            "sha256": "5b0478842f4db1d981f5f0fd84fe7e28c3a2743c53e5fe1160b9853b448112f8",
+            "what": "22 mechanical/timing/provenance faults rejected, unchanged strict50ms boundary."
+          },
+          {
+            "file": "docs/reports/fix72-c/L7-01/quality-order-cause.json",
+            "sha256": "c2f5c9c313ab73c717bec275547752e70b18f0e81c800e1ac24d0d0c628b1fb6",
+            "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
           }
         ],
         "freshness": "FRESH",

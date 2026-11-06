@@ -1,38 +1,38 @@
 # fix72-c — regional census, Mega corpse, launcher timing
 
-Base `fa27d0b`; no deploy or push. Final game source SHA-256: `cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1`.
+Base `fa27d0b`; no push or deploy. Final game source SHA-256: `6bd47c715412b028930eab167464b55a4f39ab8c6a6834c254b75398d953ed0c`.
 
-| Row | Result | Evidence / remaining work |
+## Rows closed / fixed / open
+
+| Row | Result | Numbers and evidence |
 |---|---|---|
-| L10-03 | PASS; all12 joint witnesses | Industrial Alpha joins its depot cohort; lab releases with campus approach; corridor dogs cannot have their local quota reserved by distant campus dogs. Earlier-region species guard and carried Alpha once-only identity preserved. Zero local upper-bound violations; both complete controls and all54 checkpoints pass. [Report](L10-03/README.md). |
-| L10-12 | Measured visual defect repaired; scoped PASS | Settled Mega retains complete connected creature silhouette after physical rockets. Matched before/after and final-source confirmations personally reviewed;82 raw captures hash verified/deleted. Tight crops, dark contrast and hunched death pose are documented. Whole row remains NOT CHECKED for independent fight/death timing and complete grab/boundary matrix. [Report](L10-12/README.md). |
-| L7-01 | Measured FAIL; remains open | Both tiers physically auto-pick up the launcher and fire the first rocket. Quiet narrow gate fails: low749.9/233.3ms, high33.4/100ms versus50ms. No best-of retry or speculative performance changes. A separate instrumented diagnostic also fails and identifies several late material categories; it does not replace the original measurement. Raw intervals, exclusive admission, producer/seed digests,4 reviewed capture digests and22 fault controls retained. [Report](L7-01/README.md). |
+| L10-03 | Closed: PASS/FRESH | All 12 same-tick joint count/species witnesses; zero upper-bound violations; 74 boundary/separated-peak controls. Both complete policies and all 54 checkpoint checks pass. Final state hashes low `99215cf9`, high `860b50df`, identical to independent controls. Handgun pickup tick 3497 precedes first fringe dogs tick 4950. [Report](L10-03/README.md). |
+| L10-12 | Requested visual FAIL fixed; scoped PASS | Settled Mega retains its head and all limb chains despite raw severance mask 31. Geometry 7,865/16,119 vertices/indices before, 18,375/46,338 after. 102 raw captures personally reviewed or exact-duplicate hash verified, then deleted; both final-source physical probes have zero errors. Whole row remains NOT CHECKED for separate fight/death timing and complete grab/12m boundary clauses. [Report](L10-12/README.md). |
+| L7-01 | Closed: PASS/FRESH | Unchanged strict 50ms gate: low pickup 49.9ms / first rocket 16.8ms; high pickup 50.0ms / first rocket 16.8ms. All 22 fault controls pass, including 50ms PASS / 50.01ms FAIL. [Report](L7-01/README.md). |
 
-## Changes and commits
+The requested lane outcomes are complete. Independent unfinished level criteria remain open; this is not whole-level signoff.
 
-- `06dab81` — L10-03 cohort admission correction and joint census.
-- `3a0d07a` — L10-12 complete settled Mega silhouette, matched physical before/after proof.
-- `65591f5` — L10-03 preserves earlier-region stationary quotas and carried Alpha once-only slot.
-- `3a1601b` — L10-03 acceptance adapter and fresh full-criterion review, generated PASS.
-- `b305c03` — L10-12 final-source physical confirmation and scoped review.
-- `35e305b` — L7-01 physical frame measurement, adapter/fault controls and retained FAIL.
-- `bc4cafe` — L7-01 quiet admission and instrumented late-build diagnosis; original failure retained.
+## Fixes and commits
 
-No authored counts, HP, timers, cap values, acceptance ranges or frame thresholds were reduced. The acceptance tooling adds the missing joint regional count/species requirement and the physical launcher event/frame requirement. Existing criteria and prior failures remain. No specs, reference trees or assets were edited.
+- `06dab81` — L10-03 regional cohort admission and joint census.
+- `3a0d07a` — L10-12 complete settled Mega silhouette and matched physical proof.
+- `65591f5` — preserve earlier-region quotas and carried Alpha once-only identity.
+- `3a1601b` — L10-03 current joint-census acceptance and full-criterion review.
+- `b305c03` — L10-12 physical confirmation and scoped review.
+- `35e305b`, `bc4cafe` — retain initial L7 timing failures and narrow shader diagnosis.
+- `66f29ff` — L7-01 restores carried quality before assets and pipelines warm up. Previously the low save warmed the high-tier light graph, then changed it after loading. Four lines fix the ordering; 14 paired shader records establish the cause.
 
-## Validation
+Final evidence commits: `0540b57` (L7-01), `f2a0d99` (L10-03), `a67651d` (L10-12). Prior failed measurements and the rejected renderer experiment remain archived. The final L7 result is the first uninstrumented pair after the ordering fix, using the unchanged producer and event windows.
 
-- `npx tsc --noEmit` — PASS.
-- `npm run lint` — PASS.
-- `npm test` — PASS,107/107 (27files).
-- `npm run build:qa` — PASS on final game source.
-- `npm run qa:accept -- --level L7 --reuse --skip-browser` — both complete policies pass, all6 checkpoint checks preserve identical controls; current L7-01 timing and unrelated L7-09 are fresh FAILs. Eight incomplete criteria remain.
-- `npm run qa:accept -- --level L10 --reuse --skip-browser` — both complete policies pass, all54 checkpoint checks preserve identical controls; zero fresh failing rows;10 incomplete rows. Stationary policies reach the Mega hold and exhaust the normal hold/tick budget. Incomplete criteria remain.
-- Final-source dedicated L10 census — all12 same-tick witnesses, zero upper-bound violations,74 boundary/separated-peak controls. Final hashes low `99215cf9`, high `860b50df`, identical to independent native controls. Both actual handgun pickups tick3497 precede first admitted fringe dogs tick4950.
-- `npm run qa:threat` — PASS, zero flags across all10 levels,301.2s total; run alone, admitted at host load4.09 (<6). Immutable audit and condition summary in [gates](gates/threat-summary.json).
+No authored counts, HP, timers, caps, acceptance ranges or frame thresholds were reduced. No specs, reference trees or assets were edited. No broad performance run was started.
 
-Gate receipts/logs are retained under this lane’s evidence or ignored `test-results/fix72-c/`. Shared all-level indexes are restored to baseline to avoid representing other lanes’ stale reports as current; the coordinator should regenerate them after merge. L7/L10 per-level JSON and current receipts are retained. An old L10-11 review used mutable native receipt paths; exact original bytes are archived in `prior-receipts/`, with only evidence paths changed and original digests/verdict preserved.
+## Validation on final source
 
-## Still open
+- `npx tsc --noEmit`, `npm run lint`, `npm run build:qa` — PASS.
+- `npm test` — PASS, 107/107 tests in 27 files.
+- L7 whole-group refresh: both complete policies pass, all 6 checkpoint checks match controls, fixtures have zero errors. L7-01 PASS; unrelated L7-09 remains the one fresh FAIL; 8 incomplete rows remain. Command exits 1 for those outstanding criteria.
+- L10 whole-group refresh: both complete policies pass, all 54 checkpoint checks match controls, fixtures have zero errors; zero fresh FAILs and 10 incomplete rows. Stationary policies reach the Mega hold and exhaust the normal tick budget. Command exits 1 for incomplete criteria.
+- Dedicated final-source census and both physical corpse confirmations pass.
+- **Final `qa:threat` deferred at orchestrator request.** The in-progress final-source audit was stopped (exit 143); the orchestrator runs the gate on main. The retained 301.2s, zero-flag audit in [gates](gates/threat-summary.json) covers the prior `cd41f284…` source only and is historical evidence, not a final-source gate claim.
 
-L7-01 cannot be closed honestly: the authorized current-source timing measurement fails. Next work needs a proved first-action frame cause and a repeated unchanged quiet event gate. The brief explicitly permits retaining measured failures when a small safe game fix is not understood. This report does not claim the entire goal or whole levels accepted.
+Current validation logs and hashes are retained in [validation.json](gates/validation.json). All 114 raw lane captures were inspected/hash verified and deleted; only two ignored derived comparison sheets remain. Shared all-level indexes are restored to baseline; regenerate them on main after integration. Per-level JSON and current receipts are retained. Original L10-11 evidence bytes remain in `prior-receipts/` with their original digests and verdict.
