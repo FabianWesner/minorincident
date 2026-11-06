@@ -1,0 +1,26 @@
+{
+  "row": "L4-11",
+  "status": "FAIL",
+  "reviewer": "Codex/fix67-b",
+  "date": "2026-11-06",
+  "commit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf",
+  "clauses": [
+    {
+      "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
+      "verdict": "FAIL",
+      "note": "Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L4-11-recheck.json",
+      "sha256": "7e8c96b6764ad28747da4f75e58506b5942864de5a2e9d27129518cdb8631398",
+      "what": "Current-source low/high mortal duels across0.9–26m; frontal TTK and first-hit-to-kill are under6s from1.6–26m, and the courier survives every duel."
+    },
+    {
+      "file": "docs/reports/sweep-b/L4-riot-duels.json",
+      "sha256": "0f86da3b69ef71b5c0e5d1d594e3adb46612f8f80d3f92d3c6726cfc5fb118dd",
+      "what": "Underlying production combat ledger with hit ticks, actual damage, player health, riot health, and measured completion time."
+    }
+  ]
+}

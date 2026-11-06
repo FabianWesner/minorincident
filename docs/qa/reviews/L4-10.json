@@ -3,24 +3,19 @@
   "status": "FAIL",
   "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "c9b7527a6e29a2f723658d77382359d554650b3d",
+  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
   "clauses": [
     {
-      "clause": "Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
+      "clause": "Spectacle: \u2265 2 HMGs fire, tank enters at +22 s and fires every 8\u201312 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
       "verdict": "FAIL",
-      "note": "Current-source native evidence clears every ordinary and forced tank impact from registered live actors at both tiers and retains the 8–12 s cadence and canonical route hashes. The previous fuel-truck clearance defect is resolved. The current-source renderer capture/review needed to close the wall, orbit/withdrawal, and full spectacle clauses could not run because the sandbox rejected the local Vite bind (EPERM), so this exact-criterion row remains open."
+      "note": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-10-clearance-recheck.json",
-      "sha256": "543b2d5cc6efea109c507089823bdd858504d2bca1b03076985e51b7292a5aa1",
-      "what": "Current-source low/high route ledger: all tank impacts satisfy the 15 m live-actor clearance, ordinary cadence remains 8–12 s, and canonical hashes match."
-    },
-    {
-      "file": "docs/reports/sweep-b/L4-10-proof.json",
-      "sha256": "b7c2195605db829f46929b20f3e716f9250a2120861bd17493d4a061f6d043e0",
-      "what": "Historical baseline counterexample that motivated the relocated fuel truck; the current-source recheck supersedes its measured distance but not its old visual evidence."
+      "file": "docs/reports/fix67-b/L4-10-final-recheck.json",
+      "sha256": "9cb177d41249ad5139c57f9ed04a2af1b11365d481c371c725d126d24875ec68",
+      "what": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
     }
   ]
 }

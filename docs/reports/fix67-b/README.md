@@ -1,23 +1,57 @@
-# fix67-b — L4–L6 measured failures
+# fix67-b — L4–L6 fix sweep
 
-Work is in progress. The L6-12 collision counterexample is fixed, and the L4-10 and L4-11 measured combat defects are fixed at the native-measurement level. Their compound acceptance rows remain open where current-source visual or taste clauses are not yet qualified.
+## Outcome
 
-## Completed row work
+Game changes are committed through `dd26478` (final source SHA256 `1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214`). The closed Northgate collision defect is fixed. The real-save shelter handover and horde census pass their qualifications. Cohort size, tank clearance/cadence, frontal duel duration and bounded reachability now pass their measured checks. Compound rows with missing visual or legal-path evidence remain open.
 
-| Row | Current result | Commits / evidence |
+**Not merge-ready: truck relocation introduces L5-05 bounded reachability87.5% vs≥90 (baseline100%).** A/B restoring only the original truck returns100%; the attack-rate repair does not resolve this remaining geometry regression. [Evidence and next work](L5-05-unresolved-regression.json).
+
+**L6 protection still fails:1/29 survivors. L6 side entries still admit3 instead of2.** Other retained failures and exact next work are below. There is no blanket level PASS.
+
+[Final qualification and evidence hashes](final-qualification.json) records current native results. Visual qualifications retain their original measured source identity. All game changes, including the regression repairs, have separate commits; no acceptance target, cap, timer or completion policy was weakened. No specs/reference assets were edited; no push, deployment or performance work was performed.
+
+## Assigned rows
+
+| Row | Result / remaining work | Evidence |
 | --- | --- | --- |
-| L6-12 | At both qualities, an open Northgate crosses and its closed raised gate blocks the production Rapier capsule. The complete row remains open for current-source end-shot and result review. | `9d252a4`; `docs/reports/sweep-b/L6-northgate.json`, `docs/reports/sweep-b/L6-12-proof.json` |
-| L6-11 | Fresh low/high ordinary mortal runs still fail the 60% target: complete saves1/29 (3.45%) at both tiers. Evade-only times out at600 s with13 courier deaths, so no result rate is inferred. | `b255570`; `docs/reports/sweep-b/L6-11-protection.json` |
-| L4-10 | The fuel truck moved to x34,z−9.5. Both complete-route hashes match current canonical receipts; all ordinary and forced impacts clear registered living actors by at least15m (low forced21.19m, high18.95m). Ordinary cadence remains8–12s. The full row stays open for renderer review. | `c9b7527`, `6093eb3`; `docs/reports/sweep-b/L4-10-clearance-recheck.json`, `docs/reports/sweep-b/L4-tank-clearance.json.gz` |
-| L4-11 | Army MG spread is2° and riot shield strain breaks at80. The low/high full-health courier duels finish in4.70s or less from1.6–26m; the courier survives all cases. Flank timing, rendered chip/recoil/bar review, and PO feel remain open. | `2b0024d`, `feedf7b`; `docs/reports/sweep-b/L4-11-recheck.json`, `docs/reports/sweep-b/L4-riot-duels.json` |
+| **L6-12** | **PASS in the explicit exit fixture, both tiers.** Actual production Rapier capsule crosses open Northgate and is blocked closed. All12 active-clock frames reviewed: open passage, closed leaf, readable night caption, settled end shot, and29 out/29 in/0 lost agree with the original fixture IDs. Final-source capsule replay also passes. This fixture is separate from the ordinary rescue-rate policy. | `9d252a4`, `dd0857a`; [reviewed qualification](L6-12-qualification.json), [final native](final-placement-gate.json.gz) |
+| **L6-11** | **FAIL, final source:1/29=3.45% at both tiers**, target≥60%. Mission result and final identities agree. Earlier bite trace finds victims>26m away (first59.5m) and zero ignored visible, in-range shootable biters: courier is behind the departing column. Cover-pause trials yield1/29 and4/29 and were reverted. Needs coordinated column/cover behavior; no evade-only percentage is inferred from a timeout or protected stationary run. | `8210b0f`; [final qualification](final-qualification.json), [diagnosis and rejected trials](L6-11-diagnosis.json), [review](../../qa/reviews/L6-11.json) |
+| **L4-10** | **Scoped native PASS, final source.** Truck now x16.3,z−45. Every ordinary/forced impact clears registered protected living actors≥15m: minima15.0037/16.5351m, forced26.03/20.80m. All measured ordinary intervals8–12s; both final hashes match canonical controls. The introduced L5-05 reachability regression still blocks merging this truck fix. Current wall-ray, renderer, HMG/helicopter compound review remains open. **P:** inspect northern fuel-blast/camera framing. | `c9b7527`, `f9e9c00`; [final tank ledger](final-placement-tank.json.gz), [qualification](final-qualification.json) |
+| **L4-11** | **Scoped frontal-duel PASS, final source.** MG spread2°, shield strain80; damage/rate/range unchanged. All12 live, unprotected duels at0.9/1.6/3/6/20/26m finish≤4.70s with courier alive. Full flank/bar/chip/recoil review remains open. **P:** judge shield-break feedback and MG feel. | `2b0024d`; [final duels](final-placement-riot.json.gz) |
+| **L4-13** | **Historical measured FAIL retained; not freshly replayed on final source.** First9s collapse admissions low3/0/0 vs2 per edge, high0/0/0 vs3. Actual pending/admitted-ID conservation and canonical equality hold at the recorded source. Existing bodies, reserved ambushes and perimeter demand compete for the shared cap. Needs admission-priority/capacity validation; quotas, caps and40s escape window unchanged. | `547bcdd`; [proof](../sweep-b/L4-13-proof.json), [raw](../sweep-b/L4-escape.json.gz) |
+| **L4-05** | **Singleton counterexample fixed; scoped PASS, final source.** Reserve a complete transaction, wait if fewer than2 fit, retain the remainder. Actual low57 cohorts/141 admitted; high27/83; all2–5 with exact canonical hashes. Wall-crossing and forbidden-source clauses remain open. | `e7db9a4`; [final cohort ledger](final-placement-cohorts.json.gz) |
+| **L4-06** | **PASS, both tiers.** Low alarm increased from original9 to18; high18 unchanged. First breach52.7167s;61/66 living vs≥60. Sustained plaza minima66/66 vs≥40; full190s hold completes. Caps, timers and targets unchanged. | `4081152`; [final qualification](final-qualification.json), [review](../../qa/reviews/L4-06.json) |
+| **L4-07** | **Numeric reachability counterexample resolved; full row open.** Complete minima96.825% low/93.878% high pass≥90; stationary100%/98.214%. Passive first attacks satisfy≤10s. High complete legal-route coverage remains incomplete; blocked IDs are retained. No universal no-permanent-trap PASS is inferred. | `f9e9c00`; [final checks](final-qualification.json) |
+| **L5-12** | **Framing improved; compound row remains unqualified.** Same angle/player zoom eases toward residents during existing3s introduction. Both actual renderers submit24 residents, peak21 feet/head pairs fully projected; bounds do not prove unoccluded pixels. All8 captures reviewed: HUD/edge occlusion and follower overlap at the shutter remain in those reviewed runs. No full crossing/no-overlap/visibility PASS. | `4efa975`; [recheck](L5-12-recheck.json), [capture ledger/reviews](l5-metro-ledger.json.gz) |
+| **L6-01** | **PASS with actual completed mortal L5 saves, both tiers.** Preserve24 station IDs plus5 low/4 high rescues, full health; use authored L6 shelter positions/routines instead of stale L5 story/track offsets. All five non-guard routines present, zero idle ticks over4s, no seated/resting guns. All6 final frames reviewed in the furnished shelter. Final-source native replay also passes. | `e5b4fe0`, `382a5b4`; [reviewed qualification](L6-01-qualification.json), [final native](final-placement-carry.json.gz) |
+| **L6-06** | **FAIL, final source.** Six actual entry waves each admit3 identities, required2 (18 total). Count alone establishes FAIL; current floor/visual clauses are not inferred. Brief forbids reducing counts, so no reduction or speculative redistribution was made. Needs a count-preserving entry/pursuit design and route validation. | [final qualification](final-qualification.json), [review](../../qa/reviews/L6-06.json) |
+| **L4-17** | **Historical FAIL retained; no game change/re-render.** Actual corpse-layout ground lifts1.76/2.86m exceed~1m. Height clamping, interpenetration or corpse deletion would not solve placement. Needs lateral spreading and overlap/order review. | [review](../../qa/reviews/L4-17.json) |
+| **L4-12** | **Historical FAIL retained; no game change/re-render.** High nearest20 at tick5820 has only3 silhouettes (9 hazmat/7 riot/4 firefighter), required≥4. Needs local admitted-roster balancing without lowering counts. | [review](../../qa/reviews/L4-12.json) |
+| **L4-16** | **Historical FAIL retained; no game change/re-render.** Low zoom1.5 filtered positive-gain battle audio spans5.55s vs≥6; other cells6.917s. Cellar entry/handover and uninterrupted1s bar scoped checks pass. Needs actual audio delivery repair. | [review](../../qa/reviews/L4-16.json), [proof](../sweep-b/L4-16-proof.json) |
+| **L6-14** | **Historical FAIL retained; no game change/re-render.** Forehead luminance0.24663 exceeds eye maxima0.24487 low/0.23464 high on the measured elderly actor. Courier-ground contrast passes. Needs eye/body material repair and repeat masked render checks. | [review](../../qa/reviews/L6-14.json) |
 
-## Still open
+## Regression checks and remaining tradeoff
 
-- L6-12 full end-shot/result clauses; L6-11 60% outcome target.
-- L4-10 current-source renderer review; L4-11 flank, bar/chip/recoil, and PO feel review.
-- L4-13, L4-05, L4-06, L4-07, L5-12, L6-01, L6-06, L4-17, L4-12, L4-16, and L6-14 have not yet been requalified in this lane.
-- Final current-source `qa:accept` for L4–L6, `npx tsc --noEmit`, `npm run lint`, `npm test`, and standalone `npm run qa:threat` remain pending.
+- **Horde tuning:** alarm12 reaches62 at breach but drops low bounded reachability to86.885%; rejected as final tuning. Alarm10/11 miss the census (56/59). Final18 preserves the≥60 census and≥90 bounded reachability. [Trials](l4-alarm-route-trials.json.gz), [screening](l4-alarm-census-trials.json), [final candidate](l4-alarm-final-trials.json.gz).
+- **Truck/crater placement:** initial x34 fixes clearance but drops L5 skilled attacks from3.17/min to1.91/min. The first standalone threat audit catches it. A/B restores the rate by restoring only truck position; restoring only MG spread does not help. x20,z−26 restores pressure but fails blast clearance (3.96/10.29m), so is rejected. Final x16.3,z−45 restores3.20/min and passes actual clearance/cadence, but bounded L5 reachability remains87.5% vs≥90. This unresolved introduced regression is explicitly retained, not treated as repaired. [A/B](L5-threat-regression-ab.json.gz), [position screening](L5-safe-truck-position-trials.json.gz), [rejected safety trial](truck-20-26-trial.json.gz), [first audit](threat-before-north.json.gz).
+- **Glass damage:** northern placement initially leaves9 broken windows at low vs≥10. Existing fuel shockwave glass reach48→60m restores actual10 low/11 high (`dd26478`), retaining the target.
+- **Unit fixtures:** the shield test hardcoded the old25th-hit/350-strain break and an unrequired3.4–3.7s/ratio window. It now checks exact authored-strain damage accounting, unchanged chip/break mechanics and the unchanged≤6s bound. The intermediate crater-area fixture update was reverted after the final placement restored the original259m² yard census and original assertion. No navigation tolerance was widened. [Evidence](checker-corrections.json), [A/B](fuel-position-navigation.json).
 
-## Capture limitation
+## Evidence boundaries
 
-The current-source Scene Lab capture attempt failed because local Vite could not bind (`listen EPERM` on port3341). No new captures were produced. Existing screenshots were not used to claim that the relocated fuel truck or updated riot behavior looks correct. Retry those visual checks when local browser-server access is available; the browser workflow remains headless and uses the shared pool.
+Every artifact records its measured source. Final native scope is collected in [final-placement-rechecks.json](final-placement-rechecks.json); canonical hashes must match. Older proofs remain commit-scoped and are not relabeled as final-source replays. Superseded numeric FAIL reviews are copied into [history](superseded-reviews/) while current incomplete clauses remain NOT CHECKED. The high complete legal-route gap and visual clauses still prevent full-row PASS.
+
+L6-01/L6-12 have complete reviewed fixture qualifications, but acceptance integration lacks their completeNativeRows/objective-review bindings and still reports incomplete coverage. No checker was weakened to force a green summary. Final acceptance commands use `--skip-browser`; this lane's targeted shared-pool WebGL2 captures are separate from a complete renderer matrix.
+
+All40 generated captures were personally inspected, SHA256-recorded and deleted: Northgate20 (including8 rejected paused diagnostics), carry12 (including6 intermediate), Metro8. Current visual claims retain those original qualified commits. Browser sessions were headless, shared-pool, private-port; no3300 server was started.
+
+## Validation
+
+- `npx tsc --noEmit`: PASS.
+- `npx tsc --noEmit -p tsconfig.sim.json`: PASS.
+- `npm run lint`: PASS.
+- `npm test`: **107/107 PASS**,27 files; no test cases added.
+- Final `qa:accept` L4/L5/L6, both tiers/complete+stationary, `--reuse --skip-browser`: zero fixture errors; checkpoint controls identical,6/6/7 per tier. Known global/row failures and incomplete coverage remain; this is not a green whole-level acceptance claim.
+- **Final zero-flag `npm run qa:threat`: **PASS:10 levels, zero fail flags, exit0**.** It ran alone with the unchanged600s budget. First pre-correction audit fails one L5 skilled-rate flag and is archived above.
+
+Exact exits, audit flags and log hashes are in [final-validation.json](final-validation.json). Native acceptance exits1 for L4/L5/L6: current row failures are L5-05/L5-08 and L6-06/L6-11; G-22 also fails in L4/L6. L5-08 already fails on the baseline. No check remains running.

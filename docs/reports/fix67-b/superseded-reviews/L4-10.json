@@ -1,0 +1,21 @@
+{
+  "row": "L4-10",
+  "status": "FAIL",
+  "reviewer": "Codex/fix67-b",
+  "date": "2026-11-06",
+  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+  "clauses": [
+    {
+      "clause": "Spectacle: \u2265 2 HMGs fire, tank enters at +22 s and fires every 8\u201312 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
+      "verdict": "FAIL",
+      "note": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix67-b/L4-10-final-recheck.json",
+      "sha256": "9cb177d41249ad5139c57f9ed04a2af1b11365d481c371c725d126d24875ec68",
+      "what": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
+    }
+  ]
+}

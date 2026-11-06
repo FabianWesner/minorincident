@@ -1,0 +1,341 @@
+{
+  "row": "L6-11",
+  "status": "FAIL",
+  "sourceHash": "3bdc893166f3e0d13b6514693a636b5ca986859da9d02cf95549cfd481a45719",
+  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+  "observation": "Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis.",
+  "rows": [
+    {
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "1c54e4366363d8e943396e7bc72ac56fadb883b6f5d2b207a05a1f2d4255c117",
+      "nativeStateHash": "91b3ff42",
+      "out": 1,
+      "atStart": 29,
+      "lost": 28,
+      "percent": 3.4482758620689653,
+      "targetMinimumPercent": 60,
+      "status": "FAIL",
+      "run": {
+        "completed": true,
+        "outcome": "complete",
+        "time": 264.05,
+        "deaths": 0,
+        "damageTaken": 80
+      },
+      "identities": [
+        {
+          "id": 16,
+          "key": "shelter-0",
+          "status": "out"
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "status": "dead"
+        },
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "status": "dead"
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "status": "dead"
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "status": "dead"
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "status": "dead"
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "status": "turned"
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "status": "turned"
+        },
+        {
+          "id": 24,
+          "key": "shelter-8",
+          "status": "dead"
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "status": "turned"
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "status": "turned"
+        },
+        {
+          "id": 27,
+          "key": "shelter-11",
+          "status": "dead"
+        },
+        {
+          "id": 28,
+          "key": "shelter-12",
+          "status": "turned"
+        },
+        {
+          "id": 29,
+          "key": "shelter-13",
+          "status": "turned"
+        },
+        {
+          "id": 30,
+          "key": "shelter-14",
+          "status": "dead"
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "status": "dead"
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "status": "turned"
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "status": "turned"
+        },
+        {
+          "id": 34,
+          "key": "shelter-18",
+          "status": "dead"
+        },
+        {
+          "id": 35,
+          "key": "shelter-19",
+          "status": "turned"
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "status": "turned"
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "status": "turned"
+        },
+        {
+          "id": 38,
+          "key": "shelter-22",
+          "status": "turned"
+        },
+        {
+          "id": 39,
+          "key": "shelter-23",
+          "status": "turned"
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "status": "turned"
+        },
+        {
+          "id": 41,
+          "key": "rosa",
+          "status": "dead"
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "status": "turned"
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "status": "dead"
+        },
+        {
+          "id": 44,
+          "key": "sam",
+          "status": "dead"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "ff624c1a3c1663507a928e9fbaaa6a4460c49c4fec29820a8f262ed7589a3b6f",
+      "nativeStateHash": "934235c4",
+      "out": 1,
+      "atStart": 29,
+      "lost": 28,
+      "percent": 3.4482758620689653,
+      "targetMinimumPercent": 60,
+      "status": "FAIL",
+      "run": {
+        "completed": true,
+        "outcome": "complete",
+        "time": 264.05,
+        "deaths": 0,
+        "damageTaken": 80
+      },
+      "identities": [
+        {
+          "id": 16,
+          "key": "shelter-0",
+          "status": "out"
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "status": "dead"
+        },
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "status": "dead"
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "status": "dead"
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "status": "dead"
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "status": "dead"
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "status": "turned"
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "status": "turned"
+        },
+        {
+          "id": 24,
+          "key": "shelter-8",
+          "status": "dead"
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "status": "turned"
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "status": "turned"
+        },
+        {
+          "id": 27,
+          "key": "shelter-11",
+          "status": "dead"
+        },
+        {
+          "id": 28,
+          "key": "shelter-12",
+          "status": "turned"
+        },
+        {
+          "id": 29,
+          "key": "shelter-13",
+          "status": "turned"
+        },
+        {
+          "id": 30,
+          "key": "shelter-14",
+          "status": "dead"
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "status": "dead"
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "status": "turned"
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "status": "turned"
+        },
+        {
+          "id": 34,
+          "key": "shelter-18",
+          "status": "dead"
+        },
+        {
+          "id": 35,
+          "key": "shelter-19",
+          "status": "turned"
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "status": "turned"
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "status": "turned"
+        },
+        {
+          "id": 38,
+          "key": "shelter-22",
+          "status": "turned"
+        },
+        {
+          "id": 39,
+          "key": "shelter-23",
+          "status": "turned"
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "status": "turned"
+        },
+        {
+          "id": 41,
+          "key": "rosa",
+          "status": "dead"
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "status": "turned"
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "status": "dead"
+        },
+        {
+          "id": 44,
+          "key": "sam",
+          "status": "dead"
+        }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L6",
-  "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
+  "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T05:40:11.279Z",
+  "generatedAt": "2026-11-06T06:05:59.833Z",
   "policies": [
     {
       "tier": "low",
@@ -1245,7 +1245,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -1374,7 +1374,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -4288,7 +4288,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -4420,7 +4420,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     }
   ],
@@ -7753,7 +7753,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -8036,17 +8036,17 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
       "id": "L6-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint. Not measured by this batch run.",
+      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source actual birth identities:3 at each of6 entries at both tiers,18 total, versus unchanged2 per entry. Count establishes FAIL. Floor/visual clauses are not inferred and no count reduction or redistribution was made. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix67-b/L6-06-final-recheck.json"
+        "docs/reports/fix67-b/final-qualification.json"
       ],
       "expected": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
       "checks": [],
@@ -8064,23 +8064,23 @@
         "status": "FAIL",
         "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+        "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
         "clauses": [
           {
             "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
             "verdict": "FAIL",
-            "note": "Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint."
+            "note": "Final-source actual birth identities:3 at each of6 entries at both tiers,18 total, versus unchanged2 per entry. Count establishes FAIL. Floor/visual clauses are not inferred and no count reduction or redistribution was made."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix67-b/L6-06-final-recheck.json",
-            "sha256": "c6ffe6898c71bd379fd2722375dcaac30047a85bbc4c3eaa9435000a466c389e",
-            "what": "Final-source actual wave-birth identities show3 at each of6 side entries,18 total, versus unchanged2 per entry. Count alone establishes FAIL; current track-floor and real-input visual clauses are not inferred. No count reduction or speculative redistribution was made under the brief count-preservation constraint."
+            "file": "docs/reports/fix67-b/final-qualification.json",
+            "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
+            "what": "Final-source actual birth identities:3 at each of6 entries at both tiers,18 total, versus unchanged2 per entry. Count establishes FAIL. Floor/visual clauses are not inferred and no count reduction or redistribution was made."
           }
         ],
         "freshness": "FRESH",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -8219,7 +8219,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -8655,7 +8655,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -8707,7 +8707,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -9153,10 +9153,10 @@
       "id": "L6-11",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis. Not measured by this batch run.",
+      "value": "Manual review FAIL (FRESH, Codex/fix67-b): Final-source ordinary mortal canonical complete saves1/29=3.448276% at both tiers, below60%; final identity statuses and mission result agree. Evade-only is not inferred from protected stationary policy. Earlier range trace and reverted trials remain diagnosis. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix67-b/L6-11-final-recheck.json"
+        "docs/reports/fix67-b/final-qualification.json"
       ],
       "expected": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
       "checks": [],
@@ -9174,23 +9174,23 @@
         "status": "FAIL",
         "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+        "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
         "clauses": [
           {
             "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
             "verdict": "FAIL",
-            "note": "Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis."
+            "note": "Final-source ordinary mortal canonical complete saves1/29=3.448276% at both tiers, below60%; final identity statuses and mission result agree. Evade-only is not inferred from protected stationary policy. Earlier range trace and reverted trials remain diagnosis."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix67-b/L6-11-final-recheck.json",
-            "sha256": "ca3c5ebac00c5762a7de882ee418111f814c8c273e21a97edeba3704ff15de44",
-            "what": "Final-source ordinary mortal canonical complete runs still save1/29=3.448276% at both tiers, below60%. Result, final identity statuses and roster size agree. Evade-only is not rerun or inferred from protected stationary policy. The earlier covering-range trace and rejected pause trials remain commit-scoped diagnosis."
+            "file": "docs/reports/fix67-b/final-qualification.json",
+            "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
+            "what": "Final-source ordinary mortal canonical complete saves1/29=3.448276% at both tiers, below60%; final identity statuses and mission result agree. Evade-only is not inferred from protected stationary policy. Earlier range trace and reverted trials remain diagnosis."
           }
         ],
         "freshness": "FRESH",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     },
     {
@@ -9739,9 +9739,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
+              "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
               "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-              "revision": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+              "revision": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
               "tier": "low",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
@@ -13412,9 +13412,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "e32940677cf20ce814be7630763ce9db58e90d79d118471d8ccd6860bdc05d5c",
+              "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
               "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-              "revision": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+              "revision": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
               "tier": "high",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
@@ -16680,7 +16680,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "4081152a7fb5e9041bae7cd5ca159369770043ef"
+        "latestRelevantCommit": "f9e9c003b0b464754e61d27a2419d0b769041a77"
       }
     }
   ]
