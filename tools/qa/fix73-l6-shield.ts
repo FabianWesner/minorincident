@@ -19,7 +19,7 @@ try {
   await session.open();
   const initial = await session.page.evaluate(async ({ tier, doors }) => {
     const a = window.__SS__!; await a.loadLevel('L6', { seed: 1, progression: 'L6-default' });
-    a.pause(); a.missions.begin(); a.cheats.god(true); a.settings.set({ quality: tier }); a.camera.follow(); a.camera.zoom(1.5);
+    a.pause(); a.missions.begin(); a.cheats.god(true); a.settings.set({ quality: tier as 'low' | 'high' }); a.camera.follow(); a.camera.zoom(1.5);
     const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
     const controller = w.missions!.l6 as unknown as { spawn(n: number, doors: number[], wave: number): number };
     const ids = doors.map(door => {
