@@ -28,7 +28,7 @@ try {
        await s.page.evaluate(z => window.__SS__.camera.zoom(z), zoom); await s.ready();
        const observation = await s.page.evaluate(() => {
         const g = window.__SCENE__.game, w = g.world, p = w.entities.get(1);
-        return { tick: w.tick, player: { ...p.transform }, hidden: !!p.hidden, camera: g.view.view.getState(), quality: g.quality.snapshot().tier, backend: g.view.getState().backend, livingInfected: [...w.entities.iterate()].filter(e => e.infected && e.health.current > 0).length, corpses: [...w.entities.iterate()].filter(e => e.corpse).length };
+        return { tick: w.tick, player: { ...p.transform }, playerHealth: { ...p.health }, hidden: !!p.hidden, camera: g.view.view.getState(), quality: g.quality.snapshot().tier, backend: g.view.getState().backend, livingInfected: [...w.entities.iterate()].filter(e => e.infected && e.health.current > 0).length, corpses: [...w.entities.iterate()].filter(e => e.corpse).length };
        });
        const visibility = await measureCourierShare(s), minimum = spec.expect?.courierVisibleShareMin ?? null;
        const file = `${out}/${tier}-${spec.name}-f${frame}-z${zoom}.png`; await s.screenshot(file);
