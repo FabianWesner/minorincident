@@ -98,12 +98,13 @@ export class LevelTenEncounters {
         }
         if (slot.archetype === 'infected.dog') {
           const limit = cure.threatDepth.find(r => r.region === group.region)?.dogs?.[1] ?? 4;
-          // Regional composition budgets include every dog inside the envelope,
-          // including visitors. Distant dogs left in a previous region still
-          // count toward the overall director cap, but cannot reserve this pack.
+          // The long corridor keeps prior-campus dogs in the resident window.
+          // Count every visitor inside R6, while dogs still outside it retain
+          // their overall population slots without reserving the corridor pack.
+          const local = group.region === 'destroyed-corridor';
           const living = ai.active.filter(e => e.archetype === 'infected.dog' &&
-            e.transform.x >= region.envelope[0][0] && e.transform.x <= region.envelope[1][0] &&
-            e.transform.z >= region.envelope[0][1] && e.transform.z <= region.envelope[1][1] &&
+            (!local || e.transform.x >= region.envelope[0][0] && e.transform.x <= region.envelope[1][0] &&
+              e.transform.z >= region.envelope[0][1] && e.transform.z <= region.envelope[1][1]) &&
             (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length;
           if (living >= limit) continue;
         }

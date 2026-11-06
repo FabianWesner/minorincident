@@ -46,16 +46,26 @@ for (const tier of ['low', 'high'] as const) for (const target of targets) {
 }
 for (const tier of ['low', 'high'] as const) {
   const campaign = preset('L10-default'); campaign.settings.quality = tier;
+  const fringe = cure.regions.find(region => region.id === 'residential-fringe')!;
+  let pickupTick: number | null = null, firstDogTick: number | null = null, prematureTicks = 0;
   const regions = targets.map(target => ({ region: target.region, ticks: 0, upperViolations: 0,
     peak: 0, peakCensus: null as Census | null, witness: null as Census | null, intervals: [] as Interval[] }));
   let finalHash = '';
   const run = await runLevel('L10', 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
     quality: tier,
     beforeBegin: world => {
+      world.events.on('pickup.collected', event => {
+        if (event.type === 'pickup.collected' && ('actionId' in event ? event.actionId : event.item) === 'weapon.pistol') pickupTick ??= event.tick;
+      });
       const update = world.update.bind(world);
       world.update = () => {
         update();
         if (world.missions!.state.states['cure-released']) return;
+        if (pickupTick === null || firstDogTick === null) {
+          const dogs = world.infected!.active.some(actor => actor.health.current > 0 && !actor.hidden && !actor.pendingAdmission && actor.archetype === 'infected.dog' &&
+            actor.transform.x >= fringe.envelope[0][0] && actor.transform.x <= fringe.envelope[1][0] && actor.transform.z >= fringe.envelope[0][1] && actor.transform.z <= fringe.envelope[1][1]);
+          if (dogs) { firstDogTick ??= world.tick; if (pickupTick === null) prematureTicks++; }
+        }
         const player = world.entities.get(1)!;
         const region = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]);
         const index = targets.findIndex(target => target.region === region?.id);
@@ -95,7 +105,9 @@ for (const tier of ['low', 'high'] as const) {
   assert(run.completed && control.sourceHash === identity.sourceHash);
   assert.equal(finalHash, control.nativeStateHash, 'simultaneous census must preserve the native route');
   for (const region of regions) assert.equal(region.intervals.reduce((sum, interval) => sum + interval.lastTick - interval.firstTick + 1, 0), region.ticks);
-  rows.push({ tier, regions, nativeStateHash: finalHash, controlIdentical: true });
+  assert(pickupTick !== null && firstDogTick !== null && firstDogTick >= pickupTick && prematureTicks === 0);
+  rows.push({ tier, regions, nativeStateHash: finalHash, controlIdentical: true,
+    fringeDogs: { tier, pickupTick, firstDogTick, prematureTicks, nativeStateHash: finalHash, controlIdentical: true } });
   console.log(tier, regions.map(region => ({ region: region.region, ticks: region.ticks, upperViolations: region.upperViolations,
     peakCensus: region.peakCensus && { ...region.peakCensus, ids: region.peakCensus.ids.length },
     witness: region.witness && { ...region.witness, ids: region.witness.ids.length }, intervals: region.intervals.length })));
@@ -105,3 +117,7 @@ atomicJson('docs/reports/fix72-c/L10-03/simultaneous-census.json', { ...identity
   faultControls,
   pass: rows.every(row => row.regions.every(region => region.ticks > 0 && region.witness && !region.upperViolations)),
   method: 'Read-only every-tick admitted living local census on both canonical competent routes. Every region needs one same-tick witness meeting all count/species ranges and no upper-bound violations. Hidden/pending actors and the separate pursuing Mega are excluded. Final state hashes equal independent native controls; authored counts and input are unchanged.' });
+atomicJson('docs/reports/fix51-verify/receipts/L10-fringe-dogs.json', { ...identity,
+  toolSha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),
+  method: 'Same complete native routes as the regional census: actual handgun pickup versus first admitted living fringe dog; every pre-pickup tick observed, no input/state/RNG edits, canonical final hashes identical.',
+  rows: rows.map(row => row.fringeDogs) });
