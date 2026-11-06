@@ -51,6 +51,7 @@ export class CorpseLayout {
   private readonly layerPoses: (RestingPose | undefined)[] = [];
   private readonly bestScratch = {} as RestingPose;
   private readonly swept = { x: 0, z: 0 };
+  private readonly candidateNumbers = new Float64Array(8);
   private readonly deferred = new Map<number, DeferredPose>();
   private remainingMs = Infinity;
   private revision = -1;
@@ -121,7 +122,6 @@ export class CorpseLayout {
   }
   private settle(e: EntitySnapshot, deadAt: number, prone: number | undefined, epilogue: boolean): RestingPose | EntitySnapshot['transform'] {
     const player = this.world.entities.get(1)?.transform;
-    const safePlayer = (p: RestingPose) => !player || pointDistanceSquared(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .95 ** 2;
     let feet = e.transform.y - .7;
     const support = this.world.districts, nav = this.world.infected?.nav;
     if (this.vehicleDistrict !== support) {
@@ -187,6 +187,11 @@ export class CorpseLayout {
     const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e, prone };
+    // Rejected candidates keep numeric scratch unboxed. Publishing every
+    // sampled coordinate into a spread/copied pose record caused heavy GC.
+    const numeric = this.candidateNumbers;
+    numeric[0] = pose.x; numeric[1] = pose.z; numeric[2] = pose.yaw;
+    numeric[3] = pose.ax; numeric[4] = pose.az; numeric[5] = pose.bx; numeric[6] = pose.bz; numeric[7] = pose.y;
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
     let queriedX = NaN, queriedZ = NaN;
@@ -214,16 +219,17 @@ export class CorpseLayout {
       }
       if (!rootClear) return;
       const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
-      pose.x = x; pose.z = z; pose.yaw = yaw;
-      pose.ax = x - dx * .15; pose.az = z - dz * .15;
-      pose.bx = x + dx * length; pose.bz = z + dz * length;
-      if (!vehicleClear(pose.ax, pose.az, radius) || !vehicleClear(pose.bx, pose.bz, radius)) return;
-      if (!safePlayer(pose)) return;
+      const ax = x - dx * .15, az = z - dz * .15;
+      const bx = x + dx * length, bz = z + dz * length;
+      numeric[0] = x; numeric[1] = z; numeric[2] = yaw;
+      numeric[3] = ax; numeric[4] = az; numeric[5] = bx; numeric[6] = bz;
+      if (!vehicleClear(ax, az, radius) || !vehicleClear(bx, bz, radius)) return;
+      if (player && !(pointDistanceSquared(player.x, player.z, ax, az, bx, bz) >= .95 ** 2)) return;
       if (Number.isNaN(rootFloor)) rootFloor = support?.supportBelow(x, z, feet) ?? feet;
-      pose.y = rootFloor;
+      let y = rootFloor; numeric[7] = y;
       if (supported) for (let sample = 0; sample < 3; sample++) {
         const t = sample * .5;
-        const px = pose.ax + (pose.bx - pose.ax) * t, pz = pose.az + (pose.bz - pose.az) * t;
+        const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
         if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
       }
       if (x !== queriedX || z !== queriedZ) {
@@ -231,7 +237,7 @@ export class CorpseLayout {
         neighborCount = 0;
         this.spatial.query(this.query, this.neighbors, false, collectNeighbor);
       }
-      const minX = Math.min(pose.ax, pose.bx), maxX = Math.max(pose.ax, pose.bx), minZ = Math.min(pose.az, pose.bz), maxZ = Math.max(pose.az, pose.bz);
+      const minX = Math.min(ax, bx), maxX = Math.max(ax, bx), minZ = Math.min(az, bz), maxZ = Math.max(az, bz);
       layerCount = 0;
       for (let n = 0; n < neighborCount; n++) {
         const other = neighbors[n]!;
@@ -240,7 +246,7 @@ export class CorpseLayout {
         const reach = radius + other.radius + 1e-6;
         if (maxX < Math.min(other.ax, other.bx) - reach || minX > Math.max(other.ax, other.bx) + reach
           || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
-        if (segmentDistanceSquared(pose.ax, pose.az, pose.bx, pose.bz, other) >= (radius + other.radius) ** 2) continue;
+        if (segmentDistanceSquared(ax, az, bx, bz, other) >= (radius + other.radius) ** 2) continue;
         if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
         // Stable insertion into the used prefix retains the old height sort
         // and bucket tie order without resizing the scratch backing store.
@@ -252,8 +258,9 @@ export class CorpseLayout {
       // made a chain of touching feet climb into an artificial body tower.
       for (let i = 0; i < layerCount; i++) {
         const other = layers[i]!;
-        if (pose.y + height > other.y + .001 && pose.y < other.y + other.height - .001) pose.y = other.y + other.height;
+        if (y + height > other.y + .001 && y < other.y + other.height - .001) y = other.y + other.height;
       }
+      pose.x = x; pose.z = z; pose.yaw = yaw; pose.ax = ax; pose.az = az; pose.bx = bx; pose.bz = bz; pose.y = y;
       // Reuse search scratch; only the winning pose needs an owned record.
       return pose;
     };
@@ -286,7 +293,14 @@ export class CorpseLayout {
       const angle = initialYaw + i * Math.PI * 2 / 80;
       best = evaluate(e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
     }
-    if (!best) best = evaluate(e.transform.x, e.transform.z, initialYaw + .7, false) ?? pose;
+    if (!best) {
+      best = evaluate(e.transform.x, e.transform.z, initialYaw + .7, false);
+      if (!best) {
+        // The legacy fallback uses the final rejected candidate's footprint.
+        pose.x = numeric[0]; pose.z = numeric[1]; pose.yaw = numeric[2];
+        pose.ax = numeric[3]; pose.az = numeric[4]; pose.bx = numeric[5]; pose.bz = numeric[6]; pose.y = numeric[7]; best = pose;
+      }
+    }
     // Retain one stable result for this body; candidate exploration above
     // reuses bestScratch instead of allocating on every improving root.
     const placed = { ...best };
