@@ -1,0 +1,111 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "producerSha256": "3036b4379b7e2f01bb3176114c72531dbdedfb4dd4ff2aca2d9f841e018028e2",
+  "method": "Physical WASD/mouse/E, progressed preset, protected courier, mortal followers; shared headless Metal WebGL2; no performance timing; L5 authored-map tour is not caption-only evidence.",
+  "matrix": {
+    "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+    "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+    "revision": "7f0a5c526fc49ac7d651e3631866f7d59550b448",
+    "method": "Physical WASD/mouse/E, progressed preset, protected courier, mortal followers; shared headless Metal WebGL2; no performance timing; L5 authored-map tour is not caption-only evidence.",
+    "results": [
+      {
+        "tag": "sweep-b-L5-low-z1.5",
+        "tier": "low",
+        "zoom": 1.5,
+        "started": "2026-11-06T00:13:14.295Z",
+        "ended": "2026-11-06T00:16:48.931Z",
+        "exit": 1
+      },
+      {
+        "tag": "sweep-b-L5-high-z1.5",
+        "tier": "high",
+        "zoom": 1.5,
+        "started": "2026-11-06T00:13:14.309Z",
+        "ended": "2026-11-06T00:17:04.552Z",
+        "exit": 0
+      },
+      {
+        "tag": "sweep-b-L5-low-z0.5",
+        "tier": "low",
+        "zoom": 0.5,
+        "started": "2026-11-06T00:17:04.554Z",
+        "ended": "2026-11-06T00:21:56.154Z",
+        "exit": 0
+      },
+      {
+        "tag": "sweep-b-L5-high-z0.5",
+        "tier": "high",
+        "zoom": 0.5,
+        "started": "2026-11-06T00:17:04.557Z",
+        "ended": "2026-11-06T00:24:12.490Z",
+        "exit": 0
+      }
+    ]
+  },
+  "reviewSha256": "0b6832f91759ce472ef35b246a382ed0c813112c35aa2283757f1e04b9e90813",
+  "observation": "All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt.",
+  "rows": [
+    {
+      "tier": "low",
+      "status": "PASS",
+      "fogAndBusCaptures": [
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-low-z1.5/captures/sweep-b-L5-low-z1.5-L5-look-t4517-low-z1-5.jpg",
+          "sha256": "3ffe0d08d8786b9f49989388e7163795a2ae68bac4df1fe8c1e096a3f4e713d4",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-low-z1.5-02.jpg",
+          "cell": 4,
+          "sheetSha256": "eb0ceb18139796a72467c908c96eb9fd81ab26d9f582b1aee243d57c909b0163",
+          "observation": "Mia then survivor-lost; fog battle shows green heroine and orange shoes, gun in hands, pickup lights; Dale rescued then attacked."
+        },
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-low-z1.5/captures/sweep-b-L5-low-z1.5-L5-look-t4517-low-z0-5.jpg",
+          "sha256": "ea322b55924cdf937504f8f56f36c62cf6affa561d11f80dbf611cff52561245",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-low-z1.5-02.jpg",
+          "cell": 5,
+          "sheetSha256": "eb0ceb18139796a72467c908c96eb9fd81ab26d9f582b1aee243d57c909b0163",
+          "observation": "Mia then survivor-lost; fog battle shows green heroine and orange shoes, gun in hands, pickup lights; Dale rescued then attacked."
+        },
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-low-z1.5/captures/sweep-b-L5-low-z1.5-L5-t5607.jpg",
+          "sha256": "b6e1e56e1d36ebeca738c82b408a4e9bcfa23816027f6a43129437ab40012573",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-low-z1.5-03.jpg",
+          "cell": 1,
+          "sheetSha256": "5e54c64a2d34a4d3533edf1629841d8d48e83930c430345fb9d3c3e34121fbe1",
+          "observation": "Bus-call caption and visible long wrecked bus beside lake; Sam then lost. Fog heroine remains opaque/coloured at both photo zooms."
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "status": "PASS",
+      "fogAndBusCaptures": [
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-high-z1.5/captures/sweep-b-L5-high-z1.5-L5-look-t4478-high-z1-5.jpg",
+          "sha256": "ff1680ac7b17554eaba36546b8a1be859ed60f9b4a8d87c1f564f01f9c6619ee",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-high-z1.5-02.jpg",
+          "cell": 4,
+          "sheetSha256": "3caa1ccd46e41cf474c057402e559999dfa03a58211cacd201067af96c583dc5",
+          "observation": "Mia, prayer caption, fog horde; metal-call caption and bus shell. Heroine coloured, gun in hands; very dense battle overlaps."
+        },
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-high-z1.5/captures/sweep-b-L5-high-z1.5-L5-look-t4478-high-z0-5.jpg",
+          "sha256": "86c6d2324358bd60bdf8ae55b541e8a10f4b9c98a2bca634a9536e08ded9b48c",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-high-z1.5-02.jpg",
+          "cell": 5,
+          "sheetSha256": "3caa1ccd46e41cf474c057402e559999dfa03a58211cacd201067af96c583dc5",
+          "observation": "Mia, prayer caption, fog horde; metal-call caption and bus shell. Heroine coloured, gun in hands; very dense battle overlaps."
+        },
+        {
+          "source": "test-results/vqa-1b/sweep-b-L5-high-z1.5/captures/sweep-b-L5-high-z1.5-L5-t5581.jpg",
+          "sha256": "1848df4d9ea22fd49d9b9c580cd2c792675c2273b69eb718fdd218d08b35c1d3",
+          "sheet": "test-results/sweep-b/L5-review/review/sweep-b-L5-high-z1.5-03.jpg",
+          "cell": 1,
+          "sheetSha256": "3ef3e35b9ae3876902b0c29bf42384c8aa1f422f1d283586fee5b0bfb9fdcaf9",
+          "observation": "Flashlight-in-bus caption, long roofless bus body; Sam found/lost; heroine retains green/orange colour through fog at both photo zooms."
+        }
+      ]
+    }
+  ]
+}
