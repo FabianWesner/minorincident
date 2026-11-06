@@ -32,6 +32,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
+import { corpseLayout } from './characters/CorpseLayout';
 import { Box3, BoxGeometry, Color, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
@@ -134,6 +135,7 @@ export class GameView implements Lifecycle {
   missionHidden = false;
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
   background = false;
+  private scenePrepared = false;
   private frozenFrame: HTMLCanvasElement | null = null;
   private frozenUpdates = false;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
@@ -324,6 +326,9 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
+    // Resolve the authored interaction radius before warming its buffers.
+    // The first gameplay sync must not replace the torus that was just warmed.
+    this.marker?.update();
     // Instantiate L9's resident pet/escort before warming, including its own
     // skinned shadow bindings. Their first update can request an escort model.
     if (this.world.scenario === 'L9') this.npcs?.update(this.camera);
@@ -360,6 +365,7 @@ export class GameView implements Lifecycle {
     const warm = async (): Promise<void> => { try { await this.warmUp(cooperative, restorePrewarmed, corgiPrewarmed); } finally { restorePrewarmed(); } };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
+      this.scenePrepared = true;
       if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
       this.update(1);
       this.missionUI?.prepare();
@@ -565,7 +571,10 @@ export class GameView implements Lifecycle {
     // model/LOD once; both views get independent rig clones and share its atlas.
     const registry = this.world.scenario === 'L4' ? this.crowdRegistry ??= new AssetRegistry(() => {}, { materials: this.materials!, textureSize: this.quality === 'low' ? 512 : 1024 }) : undefined;
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch), registry); this.npcs.setQuality(this.quality); }
+    // L7 begins its mission before loading actors. Its initial batches still
+    // belong to the full scene warm-up below, rather than the serialized
+    // gameplay streaming queue (which otherwise compiles them twice).
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve(), registry); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = __QA_HOOKS__ && (this.params.has('debug') || this.params.get('aimcone') === '1'); }
     if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories, registry); this.healthBars = new HealthBars(this.world, bounds => this.character?.healthBarBounds(bounds) ?? false); this.barScene.add(this.healthBars); }
@@ -574,7 +583,7 @@ export class GameView implements Lifecycle {
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
-    if (this.crowd) this.crowd.warmBatch = batch => this.warmHidden(batch);
+    if (this.crowd) this.crowd.warmBatch = batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve();
     return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(this.view), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
@@ -966,6 +975,7 @@ export class GameView implements Lifecycle {
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
+    corpseLayout(this.world).beginFrame();
     this.militaryPerimeter?.update();
     if (this.destination) {
       const blocked = this.world.controls.blockedMove, active = blocked && blocked.until > this.world.tick;
@@ -1233,12 +1243,14 @@ export class GameView implements Lifecycle {
     if (__QA_HOOKS__ && this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]);
+    corpseLayout(this.world).settleAll();
     // Tier loads chain (LOD1 stand-in, then LOD0) and each step is requested by the next partition: settle them, so a snapshot
     // never shows a building drawn from a stand-in mesh (lod-pop: the first Scene Lab frame showed crude LOD2 shapes).
     for (let i = 0; i < 6 && this.districts?.placeholderDraws().length; i++) { this.districts.updateLods(this.view); await this.districts.ready(); }
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    this.scenePrepared = false;
     for (const stop of this.cameraStops) stop(); this.cameraStops = []; this.cameraSnap = false;
     if (this.shutter) {
       this.shutter.removeFromParent(); this.shutter.traverse(o => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null;

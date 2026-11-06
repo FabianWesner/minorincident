@@ -17,6 +17,7 @@ import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progress
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
+import { levelTenMission } from '../../src/levels/L10/mission';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -147,6 +148,40 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(store.write(large)).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save: large });
   expect(decodeSave(encoded.slice(0, -20)).status).toBe('error');
+
+  const cure = preset('L10-default'), definition = levelTenMission(() => ({ x: 0, z: 0, radius: 2 }));
+  const checkpoint = {
+    tick: 1, combatSequence: 0, arsenal: { ownedActions: cure.ownedActions, racks: cure.racks },
+    state: { id: 'L10', phase: 'playing', checkpoint: 'cure-crash', actors: {}, gates: {}, items: [], volumes: [], killedBosses: [], completedObjectives: [],
+      steps: Object.fromEntries(definition.steps.map(s => [s.id, { status: 'pending', started: 0, interaction: 0, kills: [], events: {} }])),
+      states: Object.fromEntries(definition.states.map(s => [s, false])), counters: Object.fromEntries(definition.counters.map(s => [s, 0])),
+      stats: { ...result, optionalObjectives: large.results!.L9!.optionalObjectives } },
+    entities: [{ id: 1, transform: { x: 0, y: .7, z: 0, yaw: 0 }, health: { current: 40, max: 40 }, survivor: { checkpoint: { x: 0, z: 0 } },
+      weapons: { LEFT: { rack: cure.racks.LEFT.map(id => ({ id })) }, RIGHT: { rack: cure.racks.RIGHT.map(id => ({ id })) } } }],
+  } as unknown as NonNullable<CampaignSave['cureResume']>['current'];
+  cure.cureResume = { current: checkpoint, checkpoint: structuredClone(checkpoint), cameraZoom: 1 };
+  expect(validateSave(cure)).toBe(true);
+  expect(store.write(cure)).toBe(true);
+  const compact = entries.get('minor-incident.campaign')!;
+  expect(compact.startsWith('minor-incident.checkpoint1:')).toBe(true);
+  expect(store.load()).toEqual({ status: 'ok', save: cure });
+  const restored = store.load();
+  if (restored.status !== 'ok') throw new Error('Checkpoint did not load');
+  restored.save.cureResume!.current.entities[0].health.current--;
+  expect(restored.save.cureResume!.checkpoint.entities[0].health.current).toBe(40);
+  expect(decodeSave(compact.slice(0, -5)).status).toBe('error');
+  expect(decodeSave('minor-incident.checkpoint1:[null,{},{}]').status).toBe('error');
+  const limited = new SaveStore({ getItem: k => entries.get(k) ?? null, removeItem: k => { entries.delete(k); }, setItem: (k, v) => {
+    if (v.startsWith('minor-incident.checkpoint1:')) throw new Error('quota');
+    entries.set(k, v);
+  } });
+  expect(limited.write(cure)).toBe(true);
+  expect(entries.get('minor-incident.campaign')!.startsWith('minor-incident.gzip1:')).toBe(true);
+  expect(limited.load()).toEqual({ status: 'ok', save: cure });
+  cure.cureResume.current.entities[0].health.current--;
+  expect(store.write(cure)).toBe(true);
+  expect(entries.get('minor-incident.campaign')!.startsWith('minor-incident.gzip1:')).toBe(true);
+  expect(store.load()).toEqual({ status: 'ok', save: cure });
 });
 
 // N10: the destructive L9 -> L10 crossing commits once, after the crawl, and Continue resumes the committed save.

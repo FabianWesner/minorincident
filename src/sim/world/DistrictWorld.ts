@@ -229,7 +229,7 @@ export class DistrictWorld {
     const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     let height = 0;
     for (const a of this.supports.get(key) ?? none) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
-    for (const roof of this.wreckRoofs.get(key) ?? []) {
+    for (const roof of this.wreckRoofs.get(key) ?? none) {
       const a = roof.bounds;
       if (x < a.min[0] || x > a.max[0] || z < a.min[2] || z > a.max[2]) continue;
       const top = wreckRoofHeight(roof.placement, x - roof.origin[0], z - roof.origin[1]) ?? a.max[1];

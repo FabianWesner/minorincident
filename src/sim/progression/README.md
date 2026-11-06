@@ -28,6 +28,10 @@ with a `minor-incident.gzip1:` prefix and a binary string payload. Small saves a
 all legacy JSON saves remain supported. The campaign schema and both L10 snapshots
 are unchanged; encoding reduces storage size without discarding entities or seams.
 Tools seeding localStorage should use `encodeSave`; readers should use `decodeSave`.
+At large L10 checkpoint boundaries, identical live/retry snapshots use a
+`minor-incident.checkpoint1:` record containing one snapshot and its reference.
+Loading reconstructs independent copies. Writes remain synchronous and fall
+back to gzip if the single-snapshot record exceeds the browser's storage quota.
 
 `level.completed` immediately records rewards, the next unlocked level, and results,
 before the result screen or automatic transition. L1's player-caused aftermath lives in

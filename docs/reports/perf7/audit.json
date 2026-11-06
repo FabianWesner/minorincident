@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-06T18:34:52.710684+00:00",
+  "selectedCells": 8,
+  "allSelectedPass": false,
+  "confirmationPass": false,
+  "gatesExitZero": true,
+  "sourceRevision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+  "nativeBothDurationsAtLeast90s": true,
+  "nativeNoBoundaryFrames": true,
+  "nativeNoPageErrors": true,
+  "requestedSourceUnchanged": true,
+  "changedSourcePaths": [
+    "src/render/CrowdView.ts",
+    "src/render/GameView.ts",
+    "src/render/characters/CorpseLayout.ts",
+    "src/render/characters/StaticCorpses.ts",
+    "src/render/npc/CivilianCrowd.ts",
+    "src/sim/ai/NavGrid.ts",
+    "src/sim/progression/README.md",
+    "src/sim/progression/Save.ts",
+    "src/sim/world/DistrictWorld.ts",
+    "tests/engine/save-progression.test.ts"
+  ],
+  "limitations": [
+    "Shared host GPU/driver caches",
+    "Diagnostics excluded from acceptance and can retain long GC pauses",
+    "Native cureFront not activated; epilogue layout covered by exact comparisons"
+  ],
+  "goalStatus": "NOT MET",
+  "independentAudit": {
+    "loadRows": 32,
+    "selectedCells": 8,
+    "passCells": 7,
+    "nativeCaptures": 3,
+    "allNativeAtLeast90s": true,
+    "nativeNoBoundariesOrErrors": true,
+    "nativeAppleMetal": true,
+    "loadTierBackendAndErrorsValid": true
+  },
+  "remainingWork": "L10 99.9 ms confirmation failure; compare matched PROD/candidate heap allocation and eliminate remaining GC pressure, then repeat captures and required gates",
+  "continuationRequires": "Extension of the brief 2.5-hour time box"
+}

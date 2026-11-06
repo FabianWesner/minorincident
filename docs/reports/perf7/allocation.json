@@ -1,0 +1,4052 @@
+[
+  {
+    "path": "diagnostic/l10-shared-allocation/strips/webgpu/L10-candidate.heap.json.gz",
+    "sha256": "f62a1f2d823a82b3b13f76ce486549573fe9f719c0cd3907abe86b60de07ec5c",
+    "totalSampledBytes": 11361326704,
+    "method": "CDP HeapProfiler.startSampling, 16384-byte interval; include collected objects from major and minor GC; diagnostic only",
+    "topSelfStacks": [
+      {
+        "selfBytes": 656409640,
+        "inclusiveBytes": 2025480460,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775"
+        ]
+      },
+      {
+        "selfBytes": 455494320,
+        "inclusiveBytes": 800491204,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "move index-CvPNRdTU.js:5:75064"
+        ]
+      },
+      {
+        "selfBytes": 365335292,
+        "inclusiveBytes": 396506864,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:346337",
+          "occludesBar index-CvPNRdTU.js:17:830825"
+        ]
+      },
+      {
+        "selfBytes": 335474296,
+        "inclusiveBytes": 335474296,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "move index-CvPNRdTU.js:5:75064",
+          "clear index-CvPNRdTU.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 305375132,
+        "inclusiveBytes": 4909866180,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971"
+        ]
+      },
+      {
+        "selfBytes": 276618880,
+        "inclusiveBytes": 276618880,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateLights index-CvPNRdTU.js:17:930591",
+          "update index-CvPNRdTU.js:17:99126"
+        ]
+      },
+      {
+        "selfBytes": 264535508,
+        "inclusiveBytes": 807879844,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775"
+        ]
+      },
+      {
+        "selfBytes": 247526560,
+        "inclusiveBytes": 247526560,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "D7 index-CvPNRdTU.js:17:217395"
+        ]
+      },
+      {
+        "selfBytes": 225209424,
+        "inclusiveBytes": 388087056,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029",
+          "correct index-CvPNRdTU.js:17:292776",
+          " index-CvPNRdTU.js:17:269470",
+          "update index-CvPNRdTU.js:17:246273"
+        ]
+      },
+      {
+        "selfBytes": 194448028,
+        "inclusiveBytes": 194448028,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "groundBelow index-CvPNRdTU.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 188540892,
+        "inclusiveBytes": 334077232,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "move index-CvPNRdTU.js:5:75064"
+        ]
+      },
+      {
+        "selfBytes": 150314140,
+        "inclusiveBytes": 176699312,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateLods index-CvPNRdTU.js:17:839977",
+          "partition index-CvPNRdTU.js:17:842032"
+        ]
+      },
+      {
+        "selfBytes": 141258544,
+        "inclusiveBytes": 141258544,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "move index-CvPNRdTU.js:5:75064",
+          "clear index-CvPNRdTU.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 119630616,
+        "inclusiveBytes": 179355780,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateLights index-CvPNRdTU.js:17:930591",
+          "setHeroLight index-CvPNRdTU.js:17:118138",
+          "update index-CvPNRdTU.js:17:94117",
+          "filter :-1:-1",
+          " index-CvPNRdTU.js:17:94825"
+        ]
+      },
+      {
+        "selfBytes": 115413560,
+        "inclusiveBytes": 116512112,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:873548"
+        ]
+      },
+      {
+        "selfBytes": 114615276,
+        "inclusiveBytes": 118368588,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:346337",
+          "skinBounds index-CvPNRdTU.js:12:40779",
+          "u index-CvPNRdTU.js:12:41484"
+        ]
+      },
+      {
+        "selfBytes": 105363576,
+        "inclusiveBytes": 105831952,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:440782",
+          "ready index-CvPNRdTU.js:17:436763"
+        ]
+      },
+      {
+        "selfBytes": 88063176,
+        "inclusiveBytes": 88063176,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "clear index-CvPNRdTU.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 87440652,
+        "inclusiveBytes": 87522204,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029",
+          "correct index-CvPNRdTU.js:17:292776",
+          " index-CvPNRdTU.js:17:269470",
+          "load index-CvPNRdTU.js:17:261032",
+          " index-CvPNRdTU.js:17:261193",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 86703764,
+        "inclusiveBytes": 107999076,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:0:963518",
+          "update index-CvPNRdTU.js:0:905065",
+          "place index-CvPNRdTU.js:0:904770"
+        ]
+      },
+      {
+        "selfBytes": 82398412,
+        "inclusiveBytes": 84611068,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "D7 index-CvPNRdTU.js:17:217395"
+        ]
+      },
+      {
+        "selfBytes": 75191752,
+        "inclusiveBytes": 2102179208,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076"
+        ]
+      },
+      {
+        "selfBytes": 74674828,
+        "inclusiveBytes": 76285012,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "place index-CvPNRdTU.js:17:137030",
+          "V0 index-CvPNRdTU.js:16:18077"
+        ]
+      },
+      {
+        "selfBytes": 74596028,
+        "inclusiveBytes": 101140588,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "Mh index-CvPNRdTU.js:16:19619"
+        ]
+      },
+      {
+        "selfBytes": 72608396,
+        "inclusiveBytes": 72608396,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775",
+          "groundBelow index-CvPNRdTU.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 72066828,
+        "inclusiveBytes": 72293724,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029",
+          "correct index-CvPNRdTU.js:17:292776",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 70925088,
+        "inclusiveBytes": 283768052,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:19817",
+          "commit index-CvPNRdTU.js:0:414100"
+        ]
+      },
+      {
+        "selfBytes": 62610944,
+        "inclusiveBytes": 2348569588,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209"
+        ]
+      },
+      {
+        "selfBytes": 59725164,
+        "inclusiveBytes": 59725164,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateLights index-CvPNRdTU.js:17:930591",
+          "setHeroLight index-CvPNRdTU.js:17:118138",
+          "update index-CvPNRdTU.js:17:94117",
+          "filter :-1:-1",
+          " index-CvPNRdTU.js:17:94825",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 59433192,
+        "inclusiveBytes": 294172892,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:17:741890"
+        ]
+      },
+      {
+        "selfBytes": 58971228,
+        "inclusiveBytes": 85572204,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "noticeDuringApproach index-CvPNRdTU.js:5:119504",
+          "inCone index-CvPNRdTU.js:5:59316"
+        ]
+      },
+      {
+        "selfBytes": 58904992,
+        "inclusiveBytes": 141319000,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-CvPNRdTU.js:17:593496",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-CvPNRdTU.js:17:593496",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "_update three-webgpu-Cy_8JUkS.js:32:96694"
+        ]
+      },
+      {
+        "selfBytes": 58888008,
+        "inclusiveBytes": 201446452,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "noticeDuringApproach index-CvPNRdTU.js:5:119504"
+        ]
+      },
+      {
+        "selfBytes": 53300280,
+        "inclusiveBytes": 53316672,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029",
+          "correct index-CvPNRdTU.js:17:292776",
+          " index-CvPNRdTU.js:17:269903",
+          "correct index-CvPNRdTU.js:17:265103",
+          "load index-CvPNRdTU.js:17:261032",
+          " index-CvPNRdTU.js:17:261193",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 49282272,
+        "inclusiveBytes": 49282272,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateLights index-CvPNRdTU.js:17:930591",
+          "update index-CvPNRdTU.js:17:471717",
+          "set three-core-DQooTupI.js:4:75209",
+          "setStyle three-core-DQooTupI.js:4:75938",
+          "exec :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47875188,
+        "inclusiveBytes": 47875188,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:17:741890",
+          "get count index-CvPNRdTU.js:17:681454"
+        ]
+      },
+      {
+        "selfBytes": 47814820,
+        "inclusiveBytes": 47814820,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:338110",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47739340,
+        "inclusiveBytes": 47739340,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654116",
+          "update index-CvPNRdTU.js:18:639051"
+        ]
+      },
+      {
+        "selfBytes": 47624580,
+        "inclusiveBytes": 47624580,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:18682",
+          "update index-CvPNRdTU.js:5:233987",
+          "update index-CvPNRdTU.js:5:198095"
+        ]
+      },
+      {
+        "selfBytes": 47608176,
+        "inclusiveBytes": 49313448,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:0:388105"
+        ]
+      },
+      {
+        "selfBytes": 47477528,
+        "inclusiveBytes": 130999460,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "updateArchetype index-CvPNRdTU.js:5:125834",
+          "chase index-CvPNRdTU.js:5:129216",
+          "seek index-CvPNRdTU.js:5:187507",
+          "visible index-CvPNRdTU.js:5:73518"
+        ]
+      },
+      {
+        "selfBytes": 47245020,
+        "inclusiveBytes": 137800480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "updateArchetype index-CvPNRdTU.js:5:125834",
+          "chase index-CvPNRdTU.js:5:129216",
+          "seek index-CvPNRdTU.js:5:187507",
+          "nearestCell index-CvPNRdTU.js:5:67944"
+        ]
+      },
+      {
+        "selfBytes": 47214676,
+        "inclusiveBytes": 123577064,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654116",
+          "update index-CvPNRdTU.js:18:622930"
+        ]
+      },
+      {
+        "selfBytes": 46788480,
+        "inclusiveBytes": 46788480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "updateDoors index-CvPNRdTU.js:17:837086",
+          "next :-1:-1",
+          "doorBodies index-CvPNRdTU.js:17:907176",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 45529732,
+        "inclusiveBytes": 178570108,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:19817",
+          "commit index-CvPNRdTU.js:0:414100",
+          "clear index-CvPNRdTU.js:0:407720"
+        ]
+      },
+      {
+        "selfBytes": 44657260,
+        "inclusiveBytes": 45214660,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:16233",
+          "update index-CvPNRdTU.js:0:384160"
+        ]
+      },
+      {
+        "selfBytes": 44419684,
+        "inclusiveBytes": 854248964,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076"
+        ]
+      },
+      {
+        "selfBytes": 41669936,
+        "inclusiveBytes": 148218400,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029",
+          "correct index-CvPNRdTU.js:17:292776",
+          " index-CvPNRdTU.js:17:269470",
+          "load index-CvPNRdTU.js:17:261032"
+        ]
+      },
+      {
+        "selfBytes": 40843240,
+        "inclusiveBytes": 43277076,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "nearLargeCorpse index-CvPNRdTU.js:17:915300"
+        ]
+      },
+      {
+        "selfBytes": 40473548,
+        "inclusiveBytes": 90555460,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "updateArchetype index-CvPNRdTU.js:5:125834",
+          "chase index-CvPNRdTU.js:5:129216",
+          "seek index-CvPNRdTU.js:5:187507",
+          "nearestCell index-CvPNRdTU.js:5:67944",
+          "visible index-CvPNRdTU.js:5:73518"
+        ]
+      },
+      {
+        "selfBytes": 40316756,
+        "inclusiveBytes": 117191216,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:19817",
+          "commit index-CvPNRdTU.js:0:414100",
+          "clear index-CvPNRdTU.js:0:407720",
+          "solids index-CvPNRdTU.js:0:405569"
+        ]
+      },
+      {
+        "selfBytes": 39168360,
+        "inclusiveBytes": 39168360,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654061",
+          "update index-CvPNRdTU.js:5:118029",
+          "updateArchetype index-CvPNRdTU.js:5:125834",
+          "chase index-CvPNRdTU.js:5:129216",
+          "seek index-CvPNRdTU.js:5:187507",
+          "visible index-CvPNRdTU.js:5:73518",
+          "Set :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 38111424,
+        "inclusiveBytes": 38111424,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:338110",
+          "update index-CvPNRdTU.js:17:324796",
+          "discover index-CvPNRdTU.js:17:322332",
+          "nearbyModels index-CvPNRdTU.js:17:320748",
+          "flatMap :-1:-1",
+          " index-CvPNRdTU.js:17:320859"
+        ]
+      },
+      {
+        "selfBytes": 37835104,
+        "inclusiveBytes": 660731944,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:346337"
+        ]
+      },
+      {
+        "selfBytes": 37533096,
+        "inclusiveBytes": 49465020,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:18:654116",
+          "update index-CvPNRdTU.js:18:622930",
+          "warn index-CvPNRdTU.js:18:628510",
+          "visiblePoint index-CvPNRdTU.js:5:98405"
+        ]
+      },
+      {
+        "selfBytes": 37443680,
+        "inclusiveBytes": 84808472,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "advance index-CvPNRdTU.js:0:381689",
+          "simTick index-CvPNRdTU.js:20:51611",
+          "update index-CvPNRdTU.js:20:26244",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:22644",
+          "update index-CvPNRdTU.js:18:29510"
+        ]
+      },
+      {
+        "selfBytes": 36451356,
+        "inclusiveBytes": 83837868,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "begin index-CvPNRdTU.js:17:205209",
+          "corpsePosition index-CvPNRdTU.js:17:396372",
+          "place index-CvPNRdTU.js:17:220551",
+          "settle index-CvPNRdTU.js:17:222076",
+          "p3 index-CvPNRdTU.js:17:217775"
+        ]
+      },
+      {
+        "selfBytes": 36419156,
+        "inclusiveBytes": 906952032,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "present index-CvPNRdTU.js:17:267217",
+          "solve index-CvPNRdTU.js:17:268029"
+        ]
+      },
+      {
+        "selfBytes": 36156336,
+        "inclusiveBytes": 36156336,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-CvPNRdTU.js:12:69484",
+          "emit index-CvPNRdTU.js:0:348182",
+          " index-CvPNRdTU.js:20:36959",
+          "update index-CvPNRdTU.js:17:920718",
+          "updateFrame index-CvPNRdTU.js:17:920953",
+          "update index-CvPNRdTU.js:17:380971",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 34025432,
+        "inclusiveBytes": 45083924,
+        "stack": [
+          "(root) :-1:-1",
+          " :-1:-1",
+          "load index-CvPNRdTU.js:17:799386",
+          "traverse three-core-DQooTupI.js:4:62344",
+          "traverse three-core-DQooTupI.js:4:62344",
+          " index-CvPNRdTU.js:17:799936",
+          "add index-CvPNRdTU.js:17:794824"
+        ]
+      }
+    ]
+  },
+  {
+    "path": "diagnostic/l10-final-allocation/strips/webgpu/L10-candidate.heap.json.gz",
+    "sha256": "b94eab51e7a8a7da2a94f9e36dc581b1f81591089693f1ccc39917ec4658d168",
+    "totalSampledBytes": 10215265556,
+    "method": "CDP HeapProfiler.startSampling, 16384-byte interval; include collected objects from major and minor GC; diagnostic only",
+    "topSelfStacks": [
+      {
+        "selfBytes": 464001336,
+        "inclusiveBytes": 1169476712,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775"
+        ]
+      },
+      {
+        "selfBytes": 371153612,
+        "inclusiveBytes": 401656928,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:347319",
+          "occludesBar index-BIBEe6kP.js:17:831807"
+        ]
+      },
+      {
+        "selfBytes": 306083216,
+        "inclusiveBytes": 3787020640,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953"
+        ]
+      },
+      {
+        "selfBytes": 276914080,
+        "inclusiveBytes": 276914080,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateLights index-BIBEe6kP.js:17:931573",
+          "update index-BIBEe6kP.js:17:99126"
+        ]
+      },
+      {
+        "selfBytes": 238661792,
+        "inclusiveBytes": 238661792,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "move index-BIBEe6kP.js:5:75211",
+          "clear index-BIBEe6kP.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 223331408,
+        "inclusiveBytes": 388444804,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          " index-BIBEe6kP.js:17:270452",
+          "update index-BIBEe6kP.js:17:247255"
+        ]
+      },
+      {
+        "selfBytes": 206224864,
+        "inclusiveBytes": 518462204,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775"
+        ]
+      },
+      {
+        "selfBytes": 172710156,
+        "inclusiveBytes": 172710156,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "D7 index-BIBEe6kP.js:17:217395"
+        ]
+      },
+      {
+        "selfBytes": 148970632,
+        "inclusiveBytes": 174472648,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateLods index-BIBEe6kP.js:17:840959",
+          "partition index-BIBEe6kP.js:17:843014"
+        ]
+      },
+      {
+        "selfBytes": 148247556,
+        "inclusiveBytes": 394071776,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "move index-BIBEe6kP.js:5:75211"
+        ]
+      },
+      {
+        "selfBytes": 123233512,
+        "inclusiveBytes": 123233512,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "move index-BIBEe6kP.js:5:75211",
+          "clear index-BIBEe6kP.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 119499492,
+        "inclusiveBytes": 179650800,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateLights index-BIBEe6kP.js:17:931573",
+          "setHeroLight index-BIBEe6kP.js:17:118138",
+          "update index-BIBEe6kP.js:17:94117",
+          "filter :-1:-1",
+          " index-BIBEe6kP.js:17:94825"
+        ]
+      },
+      {
+        "selfBytes": 115840012,
+        "inclusiveBytes": 116709024,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:874530"
+        ]
+      },
+      {
+        "selfBytes": 113526916,
+        "inclusiveBytes": 117132724,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:347319",
+          "skinBounds index-BIBEe6kP.js:12:40779",
+          "u index-BIBEe6kP.js:12:41484"
+        ]
+      },
+      {
+        "selfBytes": 107905512,
+        "inclusiveBytes": 108446740,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:441764",
+          "ready index-BIBEe6kP.js:17:437745"
+        ]
+      },
+      {
+        "selfBytes": 88638436,
+        "inclusiveBytes": 111056160,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:0:963518",
+          "update index-BIBEe6kP.js:0:905065",
+          "place index-BIBEe6kP.js:0:904770"
+        ]
+      },
+      {
+        "selfBytes": 87604548,
+        "inclusiveBytes": 87686900,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          " index-BIBEe6kP.js:17:270452",
+          "load index-BIBEe6kP.js:17:262014",
+          " index-BIBEe6kP.js:17:262175",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 74364136,
+        "inclusiveBytes": 76390404,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "place index-BIBEe6kP.js:17:137030",
+          "V0 index-BIBEe6kP.js:16:18077"
+        ]
+      },
+      {
+        "selfBytes": 73935288,
+        "inclusiveBytes": 74164752,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 72922304,
+        "inclusiveBytes": 99417820,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "Mh index-BIBEe6kP.js:16:19619"
+        ]
+      },
+      {
+        "selfBytes": 69854184,
+        "inclusiveBytes": 196562380,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "move index-BIBEe6kP.js:5:75211"
+        ]
+      },
+      {
+        "selfBytes": 64331856,
+        "inclusiveBytes": 64331856,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "clear index-BIBEe6kP.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 64089748,
+        "inclusiveBytes": 252751220,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:19817",
+          "commit index-BIBEe6kP.js:0:414100"
+        ]
+      },
+      {
+        "selfBytes": 62201076,
+        "inclusiveBytes": 1465203488,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209"
+        ]
+      },
+      {
+        "selfBytes": 61327396,
+        "inclusiveBytes": 1231821816,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897"
+        ]
+      },
+      {
+        "selfBytes": 61216656,
+        "inclusiveBytes": 61216656,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "groundBelow index-BIBEe6kP.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 61095460,
+        "inclusiveBytes": 61406872,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775",
+          "D7 index-BIBEe6kP.js:17:217395"
+        ]
+      },
+      {
+        "selfBytes": 60151308,
+        "inclusiveBytes": 60151308,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateLights index-BIBEe6kP.js:17:931573",
+          "setHeroLight index-BIBEe6kP.js:17:118138",
+          "update index-BIBEe6kP.js:17:94117",
+          "filter :-1:-1",
+          " index-BIBEe6kP.js:17:94825",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 57903272,
+        "inclusiveBytes": 140637304,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-BIBEe6kP.js:17:594478",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-BIBEe6kP.js:17:594478",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "_update three-webgpu-Cy_8JUkS.js:32:96694"
+        ]
+      },
+      {
+        "selfBytes": 57479736,
+        "inclusiveBytes": 83310372,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "noticeDuringApproach index-BIBEe6kP.js:5:119639",
+          "inCone index-BIBEe6kP.js:5:59316"
+        ]
+      },
+      {
+        "selfBytes": 57335264,
+        "inclusiveBytes": 295687500,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:17:742872"
+        ]
+      },
+      {
+        "selfBytes": 52710240,
+        "inclusiveBytes": 52743432,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          " index-BIBEe6kP.js:17:270885",
+          "correct index-BIBEe6kP.js:17:266085",
+          "load index-BIBEe6kP.js:17:262014",
+          " index-BIBEe6kP.js:17:262175",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 51739968,
+        "inclusiveBytes": 180283036,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "noticeDuringApproach index-BIBEe6kP.js:5:119639"
+        ]
+      },
+      {
+        "selfBytes": 50654608,
+        "inclusiveBytes": 50654608,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:339092",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 49317688,
+        "inclusiveBytes": 49317688,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateDoors index-BIBEe6kP.js:17:838068",
+          "next :-1:-1",
+          "doorBodies index-BIBEe6kP.js:17:908158",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47954124,
+        "inclusiveBytes": 47954124,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "updateLights index-BIBEe6kP.js:17:931573",
+          "update index-BIBEe6kP.js:17:472699",
+          "set three-core-DQooTupI.js:4:75209",
+          "setStyle three-core-DQooTupI.js:4:75938",
+          "exec :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47891580,
+        "inclusiveBytes": 47891580,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:17:742872",
+          "get count index-BIBEe6kP.js:17:682436"
+        ]
+      },
+      {
+        "selfBytes": 42375156,
+        "inclusiveBytes": 149782120,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          " index-BIBEe6kP.js:17:270452",
+          "load index-BIBEe6kP.js:17:262014"
+        ]
+      },
+      {
+        "selfBytes": 42000172,
+        "inclusiveBytes": 114267924,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "updateArchetype index-BIBEe6kP.js:5:125969",
+          "chase index-BIBEe6kP.js:5:129351",
+          "seek index-BIBEe6kP.js:5:187642",
+          "visible index-BIBEe6kP.js:5:73665"
+        ]
+      },
+      {
+        "selfBytes": 41938404,
+        "inclusiveBytes": 561288000,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897"
+        ]
+      },
+      {
+        "selfBytes": 41903044,
+        "inclusiveBytes": 109792808,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654116",
+          "update index-BIBEe6kP.js:18:622930"
+        ]
+      },
+      {
+        "selfBytes": 41596512,
+        "inclusiveBytes": 44830988,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "nearLargeCorpse index-BIBEe6kP.js:17:916282"
+        ]
+      },
+      {
+        "selfBytes": 41441752,
+        "inclusiveBytes": 118545760,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "updateArchetype index-BIBEe6kP.js:5:125969",
+          "chase index-BIBEe6kP.js:5:129351",
+          "seek index-BIBEe6kP.js:5:187642",
+          "nearestCell index-BIBEe6kP.js:5:67944"
+        ]
+      },
+      {
+        "selfBytes": 41230920,
+        "inclusiveBytes": 41755520,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:16233",
+          "update index-BIBEe6kP.js:0:384160"
+        ]
+      },
+      {
+        "selfBytes": 41165340,
+        "inclusiveBytes": 41165340,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654116",
+          "update index-BIBEe6kP.js:18:639051"
+        ]
+      },
+      {
+        "selfBytes": 40143856,
+        "inclusiveBytes": 157565968,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:19817",
+          "commit index-BIBEe6kP.js:0:414100",
+          "clear index-BIBEe6kP.js:0:407720"
+        ]
+      },
+      {
+        "selfBytes": 40083336,
+        "inclusiveBytes": 41247664,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:0:388105"
+        ]
+      },
+      {
+        "selfBytes": 39968580,
+        "inclusiveBytes": 39968580,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:18682",
+          "update index-BIBEe6kP.js:5:234122",
+          "update index-BIBEe6kP.js:5:198230"
+        ]
+      },
+      {
+        "selfBytes": 39114420,
+        "inclusiveBytes": 669348668,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:347319"
+        ]
+      },
+      {
+        "selfBytes": 37619672,
+        "inclusiveBytes": 37619672,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:339092",
+          "update index-BIBEe6kP.js:17:325778",
+          "discover index-BIBEe6kP.js:17:323314",
+          "nearbyModels index-BIBEe6kP.js:17:321730",
+          "flatMap :-1:-1",
+          " index-BIBEe6kP.js:17:321841"
+        ]
+      },
+      {
+        "selfBytes": 36642412,
+        "inclusiveBytes": 103029972,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:19817",
+          "commit index-BIBEe6kP.js:0:414100",
+          "clear index-BIBEe6kP.js:0:407720",
+          "solids index-BIBEe6kP.js:0:405569"
+        ]
+      },
+      {
+        "selfBytes": 36226792,
+        "inclusiveBytes": 36226792,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 36056060,
+        "inclusiveBytes": 911695712,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011"
+        ]
+      },
+      {
+        "selfBytes": 35858304,
+        "inclusiveBytes": 35858304,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 35672136,
+        "inclusiveBytes": 71419468,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "present index-BIBEe6kP.js:17:268199",
+          "solve index-BIBEe6kP.js:17:269011",
+          "correct index-BIBEe6kP.js:17:293758",
+          " index-BIBEe6kP.js:17:270452",
+          "update index-BIBEe6kP.js:17:247255",
+          "solve index-BIBEe6kP.js:17:227482"
+        ]
+      },
+      {
+        "selfBytes": 35669932,
+        "inclusiveBytes": 77104008,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "updateArchetype index-BIBEe6kP.js:5:125969",
+          "chase index-BIBEe6kP.js:5:129351",
+          "seek index-BIBEe6kP.js:5:187642",
+          "nearestCell index-BIBEe6kP.js:5:67944",
+          "visible index-BIBEe6kP.js:5:73665"
+        ]
+      },
+      {
+        "selfBytes": 35228736,
+        "inclusiveBytes": 55373824,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-BIBEe6kP.js:17:594478",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-BIBEe6kP.js:17:594478",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "IE.n.get index-BIBEe6kP.js:17:592995",
+          "get three-webgpu-Cy_8JUkS.js:32:81681",
+          "getDynamicCacheKey three-webgpu-Cy_8JUkS.js:32:80796"
+        ]
+      },
+      {
+        "selfBytes": 34483744,
+        "inclusiveBytes": 46084656,
+        "stack": [
+          "(root) :-1:-1",
+          " :-1:-1",
+          "load index-BIBEe6kP.js:17:800368",
+          "traverse three-core-DQooTupI.js:4:62344",
+          "traverse three-core-DQooTupI.js:4:62344",
+          " index-BIBEe6kP.js:17:800918",
+          "add index-BIBEe6kP.js:17:795806"
+        ]
+      },
+      {
+        "selfBytes": 34279508,
+        "inclusiveBytes": 34279508,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "advance index-BIBEe6kP.js:0:381689",
+          "simTick index-BIBEe6kP.js:20:51611",
+          "update index-BIBEe6kP.js:20:26244",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:18:654061",
+          "update index-BIBEe6kP.js:5:118164",
+          "updateArchetype index-BIBEe6kP.js:5:125969",
+          "chase index-BIBEe6kP.js:5:129351",
+          "seek index-BIBEe6kP.js:5:187642",
+          "visible index-BIBEe6kP.js:5:73665",
+          "Set :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 33779796,
+        "inclusiveBytes": 64155236,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BIBEe6kP.js:12:69484",
+          "emit index-BIBEe6kP.js:0:348182",
+          " index-BIBEe6kP.js:20:36959",
+          "update index-BIBEe6kP.js:17:921700",
+          "updateFrame index-BIBEe6kP.js:17:921935",
+          "update index-BIBEe6kP.js:17:381953",
+          "begin index-BIBEe6kP.js:17:205209",
+          "corpsePosition index-BIBEe6kP.js:17:397354",
+          "place index-BIBEe6kP.js:17:220888",
+          "settle index-BIBEe6kP.js:17:222897",
+          "p3 index-BIBEe6kP.js:17:217775"
+        ]
+      }
+    ]
+  },
+  {
+    "path": "diagnostic/l10-allocation/strips/webgpu/L10-candidate.heap.json.gz",
+    "sha256": "d4c5c30b5ab9819a0d7c8af28c8ea5d36b07fd0dc7fae24aa8582501fe5f6429",
+    "totalSampledBytes": 12748126704,
+    "method": "CDP HeapProfiler.startSampling, 16384-byte interval; include collected objects from major and minor GC; diagnostic only",
+    "topSelfStacks": [
+      {
+        "selfBytes": 1696443628,
+        "inclusiveBytes": 3083251296,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273"
+        ]
+      },
+      {
+        "selfBytes": 575388812,
+        "inclusiveBytes": 1112891584,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273"
+        ]
+      },
+      {
+        "selfBytes": 470415512,
+        "inclusiveBytes": 811979144,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "move index-BQWnDIPQ.js:5:75064"
+        ]
+      },
+      {
+        "selfBytes": 367695380,
+        "inclusiveBytes": 397950108,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:345579",
+          "occludesBar index-BQWnDIPQ.js:17:830027"
+        ]
+      },
+      {
+        "selfBytes": 331352664,
+        "inclusiveBytes": 331352664,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "move index-BQWnDIPQ.js:5:75064",
+          "clear index-BQWnDIPQ.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 307541996,
+        "inclusiveBytes": 6325307444,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202"
+        ]
+      },
+      {
+        "selfBytes": 271912096,
+        "inclusiveBytes": 271912096,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateLights index-BQWnDIPQ.js:17:929796",
+          "update index-BQWnDIPQ.js:17:99130"
+        ]
+      },
+      {
+        "selfBytes": 250591600,
+        "inclusiveBytes": 250591600,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "Wf index-BQWnDIPQ.js:17:217397"
+        ]
+      },
+      {
+        "selfBytes": 225354596,
+        "inclusiveBytes": 393277304,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290",
+          "correct index-BQWnDIPQ.js:17:292034",
+          " index-BQWnDIPQ.js:17:268731",
+          "update index-BQWnDIPQ.js:17:245536"
+        ]
+      },
+      {
+        "selfBytes": 197675600,
+        "inclusiveBytes": 197675600,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "groundBelow index-BQWnDIPQ.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 186295852,
+        "inclusiveBytes": 332362124,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "move index-BQWnDIPQ.js:5:75064"
+        ]
+      },
+      {
+        "selfBytes": 150285692,
+        "inclusiveBytes": 175801968,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateLods index-BQWnDIPQ.js:17:839179",
+          "partition index-BQWnDIPQ.js:17:841234"
+        ]
+      },
+      {
+        "selfBytes": 142116280,
+        "inclusiveBytes": 142116280,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "move index-BQWnDIPQ.js:5:75064",
+          "clear index-BQWnDIPQ.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 117645808,
+        "inclusiveBytes": 178108516,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateLights index-BQWnDIPQ.js:17:929796",
+          "setHeroLight index-BQWnDIPQ.js:17:118142",
+          "update index-BQWnDIPQ.js:17:94121",
+          "filter :-1:-1",
+          " index-BQWnDIPQ.js:17:94829"
+        ]
+      },
+      {
+        "selfBytes": 115877304,
+        "inclusiveBytes": 120843480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:345579",
+          "skinBounds index-BQWnDIPQ.js:12:40779",
+          "u index-BQWnDIPQ.js:12:41484"
+        ]
+      },
+      {
+        "selfBytes": 112082744,
+        "inclusiveBytes": 113230480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:872750"
+        ]
+      },
+      {
+        "selfBytes": 105872160,
+        "inclusiveBytes": 106498572,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:440004",
+          "ready index-BQWnDIPQ.js:17:435985"
+        ]
+      },
+      {
+        "selfBytes": 87880472,
+        "inclusiveBytes": 109868952,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:0:963428",
+          "update index-BQWnDIPQ.js:0:905036",
+          "place index-BQWnDIPQ.js:0:904741"
+        ]
+      },
+      {
+        "selfBytes": 86572684,
+        "inclusiveBytes": 86572684,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "clear index-BQWnDIPQ.js:5:68997"
+        ]
+      },
+      {
+        "selfBytes": 86031108,
+        "inclusiveBytes": 133268672,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273"
+        ]
+      },
+      {
+        "selfBytes": 83474268,
+        "inclusiveBytes": 83599452,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290",
+          "correct index-BQWnDIPQ.js:17:292034",
+          " index-BQWnDIPQ.js:17:268731",
+          "load index-BQWnDIPQ.js:17:260293",
+          " index-BQWnDIPQ.js:17:260454",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 80579692,
+        "inclusiveBytes": 82464556,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "Wf index-BQWnDIPQ.js:17:217397"
+        ]
+      },
+      {
+        "selfBytes": 77748676,
+        "inclusiveBytes": 3162573532,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469"
+        ]
+      },
+      {
+        "selfBytes": 73838596,
+        "inclusiveBytes": 75744468,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "place index-BQWnDIPQ.js:17:137034",
+          "V0 index-BQWnDIPQ.js:16:18077"
+        ]
+      },
+      {
+        "selfBytes": 72099816,
+        "inclusiveBytes": 283007828,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:19817",
+          "commit index-BQWnDIPQ.js:0:414068"
+        ]
+      },
+      {
+        "selfBytes": 70821192,
+        "inclusiveBytes": 70968708,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290",
+          "correct index-BQWnDIPQ.js:17:292034",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 70628124,
+        "inclusiveBytes": 96466468,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "Mh index-BQWnDIPQ.js:16:19619"
+        ]
+      },
+      {
+        "selfBytes": 68892092,
+        "inclusiveBytes": 68892092,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469",
+          "U index-BQWnDIPQ.js:17:223273",
+          "groundBelow index-BQWnDIPQ.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 66543408,
+        "inclusiveBytes": 94783380,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "noticeDuringApproach index-BQWnDIPQ.js:5:119504",
+          "inCone index-BQWnDIPQ.js:5:59316"
+        ]
+      },
+      {
+        "selfBytes": 62315744,
+        "inclusiveBytes": 3458062540,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "begin index-BQWnDIPQ.js:17:205206"
+        ]
+      },
+      {
+        "selfBytes": 60462708,
+        "inclusiveBytes": 60462708,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateLights index-BQWnDIPQ.js:17:929796",
+          "setHeroLight index-BQWnDIPQ.js:17:118142",
+          "update index-BQWnDIPQ.js:17:94121",
+          "filter :-1:-1",
+          " index-BQWnDIPQ.js:17:94829",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 58690848,
+        "inclusiveBytes": 203018780,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "noticeDuringApproach index-BQWnDIPQ.js:5:119504"
+        ]
+      },
+      {
+        "selfBytes": 57457684,
+        "inclusiveBytes": 139949588,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-BQWnDIPQ.js:17:592714",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-BQWnDIPQ.js:17:592714",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "_update three-webgpu-Cy_8JUkS.js:32:96694"
+        ]
+      },
+      {
+        "selfBytes": 55581344,
+        "inclusiveBytes": 289694832,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:17:741105"
+        ]
+      },
+      {
+        "selfBytes": 51776016,
+        "inclusiveBytes": 51792408,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290",
+          "correct index-BQWnDIPQ.js:17:292034",
+          " index-BQWnDIPQ.js:17:269164",
+          "correct index-BQWnDIPQ.js:17:264364",
+          "load index-BQWnDIPQ.js:17:260293",
+          " index-BQWnDIPQ.js:17:260454",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 49495020,
+        "inclusiveBytes": 49495020,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateDoors index-BQWnDIPQ.js:17:836288",
+          "next :-1:-1",
+          "doorBodies index-BQWnDIPQ.js:17:906381",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 48756192,
+        "inclusiveBytes": 132874864,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "updateArchetype index-BQWnDIPQ.js:5:125834",
+          "chase index-BQWnDIPQ.js:5:129216",
+          "seek index-BQWnDIPQ.js:5:187507",
+          "visible index-BQWnDIPQ.js:5:73518"
+        ]
+      },
+      {
+        "selfBytes": 48006312,
+        "inclusiveBytes": 48006312,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:17:741105",
+          "get count index-BQWnDIPQ.js:17:680672"
+        ]
+      },
+      {
+        "selfBytes": 47756520,
+        "inclusiveBytes": 47756520,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "updateLights index-BQWnDIPQ.js:17:929796",
+          "update index-BQWnDIPQ.js:17:470939",
+          "set three-core-DQooTupI.js:4:75209",
+          "setStyle three-core-DQooTupI.js:4:75938",
+          "exec :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47559000,
+        "inclusiveBytes": 47559000,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654116",
+          "update index-BQWnDIPQ.js:18:639051"
+        ]
+      },
+      {
+        "selfBytes": 47083548,
+        "inclusiveBytes": 48526360,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:0:388073"
+        ]
+      },
+      {
+        "selfBytes": 47034320,
+        "inclusiveBytes": 122890816,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654116",
+          "update index-BQWnDIPQ.js:18:622930"
+        ]
+      },
+      {
+        "selfBytes": 46919640,
+        "inclusiveBytes": 47313100,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:16233",
+          "update index-BQWnDIPQ.js:0:384128"
+        ]
+      },
+      {
+        "selfBytes": 46648044,
+        "inclusiveBytes": 46648044,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:337352",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 46558960,
+        "inclusiveBytes": 46558960,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:18682",
+          "update index-BQWnDIPQ.js:5:233987",
+          "update index-BQWnDIPQ.js:5:198095"
+        ]
+      },
+      {
+        "selfBytes": 45774640,
+        "inclusiveBytes": 134543340,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "updateArchetype index-BQWnDIPQ.js:5:125834",
+          "chase index-BQWnDIPQ.js:5:129216",
+          "seek index-BQWnDIPQ.js:5:187507",
+          "nearestCell index-BQWnDIPQ.js:5:67944"
+        ]
+      },
+      {
+        "selfBytes": 44746424,
+        "inclusiveBytes": 178219012,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:19817",
+          "commit index-BQWnDIPQ.js:0:414068",
+          "clear index-BQWnDIPQ.js:0:407688"
+        ]
+      },
+      {
+        "selfBytes": 44256428,
+        "inclusiveBytes": 1158654924,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "corpsePosition index-BQWnDIPQ.js:17:395598",
+          "place index-BQWnDIPQ.js:17:218944",
+          "settle index-BQWnDIPQ.js:17:220469"
+        ]
+      },
+      {
+        "selfBytes": 42045480,
+        "inclusiveBytes": 44551308,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "nearLargeCorpse index-BQWnDIPQ.js:17:914505"
+        ]
+      },
+      {
+        "selfBytes": 41858796,
+        "inclusiveBytes": 116780292,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:19817",
+          "commit index-BQWnDIPQ.js:0:414068",
+          "clear index-BQWnDIPQ.js:0:407688",
+          "solids index-BQWnDIPQ.js:0:405537"
+        ]
+      },
+      {
+        "selfBytes": 40998008,
+        "inclusiveBytes": 143660480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290",
+          "correct index-BQWnDIPQ.js:17:292034",
+          " index-BQWnDIPQ.js:17:268731",
+          "load index-BQWnDIPQ.js:17:260293"
+        ]
+      },
+      {
+        "selfBytes": 40770844,
+        "inclusiveBytes": 88768700,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "updateArchetype index-BQWnDIPQ.js:5:125834",
+          "chase index-BQWnDIPQ.js:5:129216",
+          "seek index-BQWnDIPQ.js:5:187507",
+          "nearestCell index-BQWnDIPQ.js:5:67944",
+          "visible index-BQWnDIPQ.js:5:73518"
+        ]
+      },
+      {
+        "selfBytes": 39282764,
+        "inclusiveBytes": 39282764,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654061",
+          "update index-BQWnDIPQ.js:5:118029",
+          "updateArchetype index-BQWnDIPQ.js:5:125834",
+          "chase index-BQWnDIPQ.js:5:129216",
+          "seek index-BQWnDIPQ.js:5:187507",
+          "visible index-BQWnDIPQ.js:5:73518",
+          "Set :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 37452400,
+        "inclusiveBytes": 906391200,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "present index-BQWnDIPQ.js:17:266478",
+          "solve index-BQWnDIPQ.js:17:267290"
+        ]
+      },
+      {
+        "selfBytes": 37137668,
+        "inclusiveBytes": 37137668,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:380202",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 37051776,
+        "inclusiveBytes": 83784304,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:22644",
+          "update index-BQWnDIPQ.js:18:29510"
+        ]
+      },
+      {
+        "selfBytes": 37029560,
+        "inclusiveBytes": 37029560,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:337352",
+          "update index-BQWnDIPQ.js:17:324038",
+          "discover index-BQWnDIPQ.js:17:321574",
+          "nearbyModels index-BQWnDIPQ.js:17:319990",
+          "flatMap :-1:-1",
+          " index-BQWnDIPQ.js:17:320101"
+        ]
+      },
+      {
+        "selfBytes": 36467748,
+        "inclusiveBytes": 48514404,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "advance index-BQWnDIPQ.js:0:381657",
+          "simTick index-BQWnDIPQ.js:20:51611",
+          "update index-BQWnDIPQ.js:20:26244",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:18:654116",
+          "update index-BQWnDIPQ.js:18:622930",
+          "warn index-BQWnDIPQ.js:18:628510",
+          "visiblePoint index-BQWnDIPQ.js:5:98405"
+        ]
+      },
+      {
+        "selfBytes": 36259864,
+        "inclusiveBytes": 56514444,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-BQWnDIPQ.js:17:592714",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-BQWnDIPQ.js:17:592714",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "n.get index-BQWnDIPQ.js:17:591231",
+          "get three-webgpu-Cy_8JUkS.js:32:81681",
+          "getDynamicCacheKey three-webgpu-Cy_8JUkS.js:32:80796"
+        ]
+      },
+      {
+        "selfBytes": 35868660,
+        "inclusiveBytes": 661543136,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-BQWnDIPQ.js:12:69484",
+          "emit index-BQWnDIPQ.js:0:348180",
+          " index-BQWnDIPQ.js:20:36959",
+          "update index-BQWnDIPQ.js:17:919923",
+          "updateFrame index-BQWnDIPQ.js:17:920158",
+          "update index-BQWnDIPQ.js:17:345579"
+        ]
+      }
+    ]
+  },
+  {
+    "path": "diagnostic/l10-unboxed-allocation/strips/webgpu/L10-candidate.heap.json.gz",
+    "sha256": "3a909500bb9853f5736603d544106d10163de177db4e1054884cbf9a1d590683",
+    "totalSampledBytes": 12711207964,
+    "method": "CDP HeapProfiler.startSampling, 16384-byte interval; include collected objects from major and minor GC; diagnostic only",
+    "topSelfStacks": [
+      {
+        "selfBytes": 1657465172,
+        "inclusiveBytes": 3006625408,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247"
+        ]
+      },
+      {
+        "selfBytes": 587795740,
+        "inclusiveBytes": 1139980940,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247"
+        ]
+      },
+      {
+        "selfBytes": 450495292,
+        "inclusiveBytes": 793445484,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "move index-B1WD4dwm.js:5:75054"
+        ]
+      },
+      {
+        "selfBytes": 369547352,
+        "inclusiveBytes": 399856612,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:345554",
+          "occludesBar index-B1WD4dwm.js:17:830000"
+        ]
+      },
+      {
+        "selfBytes": 333312872,
+        "inclusiveBytes": 333312872,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "move index-B1WD4dwm.js:5:75054",
+          "clear index-B1WD4dwm.js:5:68987"
+        ]
+      },
+      {
+        "selfBytes": 300490436,
+        "inclusiveBytes": 6268697740,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179"
+        ]
+      },
+      {
+        "selfBytes": 278685280,
+        "inclusiveBytes": 278685280,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateLights index-B1WD4dwm.js:17:929766",
+          "update index-B1WD4dwm.js:17:99123"
+        ]
+      },
+      {
+        "selfBytes": 240005276,
+        "inclusiveBytes": 240005276,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "Wf index-B1WD4dwm.js:17:217369"
+        ]
+      },
+      {
+        "selfBytes": 225743288,
+        "inclusiveBytes": 388706116,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250",
+          "correct index-B1WD4dwm.js:17:291995",
+          " index-B1WD4dwm.js:17:268691",
+          "update index-B1WD4dwm.js:17:245498"
+        ]
+      },
+      {
+        "selfBytes": 192972748,
+        "inclusiveBytes": 192972748,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "groundBelow index-B1WD4dwm.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 191261924,
+        "inclusiveBytes": 342105132,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "move index-B1WD4dwm.js:5:75054"
+        ]
+      },
+      {
+        "selfBytes": 148823032,
+        "inclusiveBytes": 175420248,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateLods index-B1WD4dwm.js:17:839152",
+          "partition index-B1WD4dwm.js:17:841207"
+        ]
+      },
+      {
+        "selfBytes": 146696536,
+        "inclusiveBytes": 146696536,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "move index-B1WD4dwm.js:5:75054",
+          "clear index-B1WD4dwm.js:5:68987"
+        ]
+      },
+      {
+        "selfBytes": 118237464,
+        "inclusiveBytes": 177592420,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateLights index-B1WD4dwm.js:17:929766",
+          "setHeroLight index-B1WD4dwm.js:17:118135",
+          "update index-B1WD4dwm.js:17:94114",
+          "filter :-1:-1",
+          " index-B1WD4dwm.js:17:94822"
+        ]
+      },
+      {
+        "selfBytes": 116857500,
+        "inclusiveBytes": 117923252,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:872723"
+        ]
+      },
+      {
+        "selfBytes": 113713824,
+        "inclusiveBytes": 118680012,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:345554",
+          "skinBounds index-B1WD4dwm.js:12:40779",
+          "u index-B1WD4dwm.js:12:41484"
+        ]
+      },
+      {
+        "selfBytes": 106792060,
+        "inclusiveBytes": 107472740,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:439982",
+          "ready index-B1WD4dwm.js:17:435963"
+        ]
+      },
+      {
+        "selfBytes": 88539836,
+        "inclusiveBytes": 109778484,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:0:963460",
+          "update index-B1WD4dwm.js:0:905046",
+          "place index-B1WD4dwm.js:0:904751"
+        ]
+      },
+      {
+        "selfBytes": 87670116,
+        "inclusiveBytes": 134612536,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247"
+        ]
+      },
+      {
+        "selfBytes": 83670948,
+        "inclusiveBytes": 83772296,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250",
+          "correct index-B1WD4dwm.js:17:291995",
+          " index-B1WD4dwm.js:17:268691",
+          "load index-B1WD4dwm.js:17:260253",
+          " index-B1WD4dwm.js:17:260414",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 82985500,
+        "inclusiveBytes": 82985500,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "clear index-B1WD4dwm.js:5:68987"
+        ]
+      },
+      {
+        "selfBytes": 82788188,
+        "inclusiveBytes": 84902516,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "Wf index-B1WD4dwm.js:17:217369"
+        ]
+      },
+      {
+        "selfBytes": 76558320,
+        "inclusiveBytes": 3084724588,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471"
+        ]
+      },
+      {
+        "selfBytes": 74789984,
+        "inclusiveBytes": 76794480,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "place index-B1WD4dwm.js:17:137027",
+          "V0 index-B1WD4dwm.js:16:18077"
+        ]
+      },
+      {
+        "selfBytes": 74081380,
+        "inclusiveBytes": 74261668,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250",
+          "correct index-B1WD4dwm.js:17:291995",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 73467176,
+        "inclusiveBytes": 101150224,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "Mh index-B1WD4dwm.js:16:19619"
+        ]
+      },
+      {
+        "selfBytes": 72696468,
+        "inclusiveBytes": 281761696,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:19817",
+          "commit index-B1WD4dwm.js:0:414081"
+        ]
+      },
+      {
+        "selfBytes": 71678408,
+        "inclusiveBytes": 71678408,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471",
+          "D index-B1WD4dwm.js:17:223247",
+          "groundBelow index-B1WD4dwm.js:20:1534"
+        ]
+      },
+      {
+        "selfBytes": 66658128,
+        "inclusiveBytes": 95537304,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "noticeDuringApproach index-B1WD4dwm.js:5:119494",
+          "inCone index-B1WD4dwm.js:5:59306"
+        ]
+      },
+      {
+        "selfBytes": 59855896,
+        "inclusiveBytes": 3382588088,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "begin index-B1WD4dwm.js:17:205183"
+        ]
+      },
+      {
+        "selfBytes": 59354956,
+        "inclusiveBytes": 59354956,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateLights index-B1WD4dwm.js:17:929766",
+          "setHeroLight index-B1WD4dwm.js:17:118135",
+          "update index-B1WD4dwm.js:17:94114",
+          "filter :-1:-1",
+          " index-B1WD4dwm.js:17:94822",
+          "hypot :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 58943208,
+        "inclusiveBytes": 139518532,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-B1WD4dwm.js:17:592693",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-B1WD4dwm.js:17:592693",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "_update three-webgpu-Cy_8JUkS.js:32:96694"
+        ]
+      },
+      {
+        "selfBytes": 58712088,
+        "inclusiveBytes": 296617516,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:17:741079"
+        ]
+      },
+      {
+        "selfBytes": 57854468,
+        "inclusiveBytes": 201034508,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "noticeDuringApproach index-B1WD4dwm.js:5:119494"
+        ]
+      },
+      {
+        "selfBytes": 51415428,
+        "inclusiveBytes": 51415428,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250",
+          "correct index-B1WD4dwm.js:17:291995",
+          " index-B1WD4dwm.js:17:269124",
+          "correct index-B1WD4dwm.js:17:264324",
+          "load index-B1WD4dwm.js:17:260253",
+          " index-B1WD4dwm.js:17:260414",
+          "decompose three-core-DQooTupI.js:4:52501"
+        ]
+      },
+      {
+        "selfBytes": 48727756,
+        "inclusiveBytes": 48727756,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:337327",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 48183688,
+        "inclusiveBytes": 48183688,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateLights index-B1WD4dwm.js:17:929766",
+          "update index-B1WD4dwm.js:17:470917",
+          "set three-core-DQooTupI.js:4:75209",
+          "setStyle three-core-DQooTupI.js:4:75938",
+          "exec :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 47886640,
+        "inclusiveBytes": 130064140,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "updateArchetype index-B1WD4dwm.js:5:125824",
+          "chase index-B1WD4dwm.js:5:129206",
+          "seek index-B1WD4dwm.js:5:187497",
+          "visible index-B1WD4dwm.js:5:73508"
+        ]
+      },
+      {
+        "selfBytes": 47706536,
+        "inclusiveBytes": 123791848,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654116",
+          "update index-B1WD4dwm.js:18:622930"
+        ]
+      },
+      {
+        "selfBytes": 47509820,
+        "inclusiveBytes": 47509820,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "updateDoors index-B1WD4dwm.js:17:836261",
+          "next :-1:-1",
+          "doorBodies index-B1WD4dwm.js:17:906351",
+          "next :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 46926936,
+        "inclusiveBytes": 135894496,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "updateArchetype index-B1WD4dwm.js:5:125824",
+          "chase index-B1WD4dwm.js:5:129206",
+          "seek index-B1WD4dwm.js:5:187497",
+          "nearestCell index-B1WD4dwm.js:5:67934"
+        ]
+      },
+      {
+        "selfBytes": 46903240,
+        "inclusiveBytes": 47296700,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:16233",
+          "update index-B1WD4dwm.js:0:384141"
+        ]
+      },
+      {
+        "selfBytes": 46826232,
+        "inclusiveBytes": 46826232,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:17:741079",
+          "get count index-B1WD4dwm.js:17:680647"
+        ]
+      },
+      {
+        "selfBytes": 46427820,
+        "inclusiveBytes": 46427820,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:18682",
+          "update index-B1WD4dwm.js:5:233977",
+          "update index-B1WD4dwm.js:5:198085"
+        ]
+      },
+      {
+        "selfBytes": 46050760,
+        "inclusiveBytes": 46050760,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654116",
+          "update index-B1WD4dwm.js:18:639051"
+        ]
+      },
+      {
+        "selfBytes": 45854000,
+        "inclusiveBytes": 47772348,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:0:388086"
+        ]
+      },
+      {
+        "selfBytes": 44220640,
+        "inclusiveBytes": 174659332,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:19817",
+          "commit index-B1WD4dwm.js:0:414081",
+          "clear index-B1WD4dwm.js:0:407701"
+        ]
+      },
+      {
+        "selfBytes": 43478140,
+        "inclusiveBytes": 1185568300,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "corpsePosition index-B1WD4dwm.js:17:395575",
+          "place index-B1WD4dwm.js:17:218946",
+          "settle index-B1WD4dwm.js:17:220471"
+        ]
+      },
+      {
+        "selfBytes": 42881608,
+        "inclusiveBytes": 45821928,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "nearLargeCorpse index-B1WD4dwm.js:17:914475"
+        ]
+      },
+      {
+        "selfBytes": 41448352,
+        "inclusiveBytes": 114491188,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:19817",
+          "commit index-B1WD4dwm.js:0:414081",
+          "clear index-B1WD4dwm.js:0:407701",
+          "solids index-B1WD4dwm.js:0:405550"
+        ]
+      },
+      {
+        "selfBytes": 41309336,
+        "inclusiveBytes": 143926040,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250",
+          "correct index-B1WD4dwm.js:17:291995",
+          " index-B1WD4dwm.js:17:268691",
+          "load index-B1WD4dwm.js:17:260253"
+        ]
+      },
+      {
+        "selfBytes": 40229580,
+        "inclusiveBytes": 88967560,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "updateArchetype index-B1WD4dwm.js:5:125824",
+          "chase index-B1WD4dwm.js:5:129206",
+          "seek index-B1WD4dwm.js:5:187497",
+          "nearestCell index-B1WD4dwm.js:5:67934",
+          "visible index-B1WD4dwm.js:5:73508"
+        ]
+      },
+      {
+        "selfBytes": 37822552,
+        "inclusiveBytes": 37822552,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:337327",
+          "update index-B1WD4dwm.js:17:324013",
+          "discover index-B1WD4dwm.js:17:321549",
+          "nearbyModels index-B1WD4dwm.js:17:319965",
+          "flatMap :-1:-1",
+          " index-B1WD4dwm.js:17:320076"
+        ]
+      },
+      {
+        "selfBytes": 37642520,
+        "inclusiveBytes": 37642520,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "updateArchetype index-B1WD4dwm.js:5:125824",
+          "chase index-B1WD4dwm.js:5:129206",
+          "seek index-B1WD4dwm.js:5:187497",
+          "visible index-B1WD4dwm.js:5:73508",
+          "Set :-1:-1"
+        ]
+      },
+      {
+        "selfBytes": 37616664,
+        "inclusiveBytes": 85415084,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:22644",
+          "update index-B1WD4dwm.js:18:29510"
+        ]
+      },
+      {
+        "selfBytes": 36771364,
+        "inclusiveBytes": 663149956,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:345554"
+        ]
+      },
+      {
+        "selfBytes": 36536964,
+        "inclusiveBytes": 905372508,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "update index-B1WD4dwm.js:17:380179",
+          "present index-B1WD4dwm.js:17:266438",
+          "solve index-B1WD4dwm.js:17:267250"
+        ]
+      },
+      {
+        "selfBytes": 36516924,
+        "inclusiveBytes": 49022496,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654116",
+          "update index-B1WD4dwm.js:18:622930",
+          "warn index-B1WD4dwm.js:18:628510",
+          "visiblePoint index-B1WD4dwm.js:5:98395"
+        ]
+      },
+      {
+        "selfBytes": 35619524,
+        "inclusiveBytes": 54349964,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "update index-B1WD4dwm.js:17:919893",
+          "updateFrame index-B1WD4dwm.js:17:920128",
+          "render three-webgpu-Cy_8JUkS.js:578:41293",
+          "render index-B1WD4dwm.js:17:592693",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "updateBefore three-webgpu-Cy_8JUkS.js:40:15454",
+          "updateBefore three-webgpu-Cy_8JUkS.js:32:151671",
+          "render index-B1WD4dwm.js:17:592693",
+          "_renderScene three-webgpu-Cy_8JUkS.js:43:3485",
+          "_renderObjects three-webgpu-Cy_8JUkS.js:43:19922",
+          "renderObject three-webgpu-Cy_8JUkS.js:43:21745",
+          "_renderObjectDirect three-webgpu-Cy_8JUkS.js:43:23638",
+          "n.get index-B1WD4dwm.js:17:591210",
+          "get three-webgpu-Cy_8JUkS.js:32:81681",
+          "getDynamicCacheKey three-webgpu-Cy_8JUkS.js:32:80796"
+        ]
+      },
+      {
+        "selfBytes": 34247092,
+        "inclusiveBytes": 457084772,
+        "stack": [
+          "(root) :-1:-1",
+          "frame index-B1WD4dwm.js:12:69484",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:20:36959",
+          "advance index-B1WD4dwm.js:0:381670",
+          "simTick index-B1WD4dwm.js:20:51611",
+          "update index-B1WD4dwm.js:20:26244",
+          "emit index-B1WD4dwm.js:0:348178",
+          " index-B1WD4dwm.js:18:654061",
+          "update index-B1WD4dwm.js:5:118019",
+          "updateArchetype index-B1WD4dwm.js:5:125824"
+        ]
+      }
+    ]
+  }
+]
