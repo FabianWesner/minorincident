@@ -42,6 +42,6 @@ for (const tier of ['low', 'high']) {
   }
  } catch (error) { result.errors.push({ tier, error: String(error) }); }
 }
-writeFileSync('docs/reports/sweep-g/G-21-literal-snapshot.json.gz', gzipSync(JSON.stringify(result)));
+writeFileSync(process.env.SWEEP_G_RECEIPT_OUT ?? 'docs/reports/sweep-g/G-21-literal-snapshot.json.gz', gzipSync(JSON.stringify(result)));
 console.log(JSON.stringify({ controls: result.controls, cells: result.cells.map(({ tier, id, removedPickupId, snapshotGatesRestored, removedPickupRestored, positionErrorM }) => ({ tier, id, removedPickupId, snapshotGatesRestored, removedPickupRestored, positionErrorM })), errors: result.errors }));
 process.exitCode = result.errors.length ? 1 : 0;

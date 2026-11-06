@@ -1,0 +1,27 @@
+{
+  "row": "G-21",
+  "status": "PASS",
+  "reviewer": "fix68-g/Codex",
+  "date": "2026-11-06",
+  "commit": "6dc2f6a68abcc81989fd0b2137e66ffc5cc15676",
+  "clauses": [
+    {
+      "clause": "Per the E19 PO live-world decision, changes made after the checkpoint (opened gates, taken pickups) persist after death.",
+      "verdict": "PASS",
+      "note": "Four fresh mortal L1 respawns: accident/bat at low/high. Checkpoint ID and position restore exactly; changed live gates and removed pickup persist. Prior literal-snapshot conflict is closed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix68-g/G-21-live-world.json.gz",
+      "sha256": "6698c62c04dd1644bd8adfb20d37e2bc9cb3a766ca7c029cab4a0c5c5a1fecdd",
+      "what": "Naturally captured checkpoint, dirty live gates/pickup, actual death damage and respawn pose/state; no rewind expectation substituted for observed state."
+    },
+    {
+      "file": "docs/reports/fix68-g/G-21-closure.json",
+      "sha256": "9c78d2ee1aef36e1683ca5b59013f9050bbad48d603d6310662cca335d0bd552",
+      "what": "Naturally captured checkpoint, dirty live gates/pickup, actual death damage and respawn pose/state; no rewind expectation substituted for observed state."
+    }
+  ],
+  "notes": "Scoped contract review. This fixture has no human follower roster and cannot certify follower restoration across all levels."
+}
