@@ -1,0 +1,2890 @@
+{
+  "sourceHash": "8b4b68c9fdc5154cfb486ea981718e6ef8d0a67827f93dad06f6c0cbbc400cb3",
+  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "revision": "fa27d0b880475991a6fbf72b03b528380d2e13a2",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1310.3833333333334,
+        "deaths": 0,
+        "kills": 721,
+        "damageTaken": 370,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 357.46666666666664
+          },
+          {
+            "id": "research-campus",
+            "t": 530.3833333333333
+          },
+          {
+            "id": "research",
+            "t": 594.3833333333333
+          },
+          {
+            "id": "cure",
+            "t": 595.7166666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 616.65
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 657.25
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 873.7
+          },
+          {
+            "id": "install",
+            "t": 949.0666666666667
+          },
+          {
+            "id": "hold",
+            "t": 1011.3833333333333
+          },
+          {
+            "id": "mega",
+            "t": 1156.8
+          },
+          {
+            "id": "release",
+            "t": 1160.3833333333334
+          },
+          {
+            "id": "epilogue",
+            "t": 1310.3833333333334
+          },
+          {
+            "id": "credits",
+            "t": 1327.3833333333334
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 62.799999999997716,
+            "combatSeconds": 3.21666666666666,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.46666666666106,
+            "travelSeconds": 93.81666666666263,
+            "combatSeconds": 27.64999999999971,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0703822284006
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 165.91666666669084,
+            "travelSeconds": 107.79999999999517,
+            "combatSeconds": 58.09999999999798,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1874829119861
+          },
+          {
+            "id": "military-zone",
+            "seconds": 181.83333333337018,
+            "travelSeconds": 139.11666666666952,
+            "combatSeconds": 42.69999999999886,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.0470728624654
+          },
+          {
+            "id": "research-campus",
+            "seconds": 129.0833333333282,
+            "travelSeconds": 84.69999999999648,
+            "combatSeconds": 44.3333333333321,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.796993822855
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 214.23333333339596,
+            "travelSeconds": 186.45000000004052,
+            "combatSeconds": 27.783333333333037,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.0005875938069
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 431.79999999993595,
+            "travelSeconds": 66.18333333333086,
+            "combatSeconds": 7.849999999999977,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 207.7333333333908,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0,
+            "metres": 1292.5128927463134
+          }
+        ],
+        "maxConcurrentInfected": 95,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 893,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "samples": [
+        {
+          "tick": 10,
+          "player": {
+            "x": 547.4300537109375,
+            "z": 0
+          },
+          "admissions": {
+            "depot-workers": 0,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 8,
+          "count": 0,
+          "specials": []
+        },
+        {
+          "tick": 13440,
+          "player": {
+            "x": 1332.2869873046875,
+            "z": 98.6549072265625
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 28,
+          "count": 25,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1096.8242324539324,
+              "z": 25
+            },
+            {
+              "id": 137,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1297.9566850948072,
+              "z": 51.1515685083367,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 138,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 14316,
+              "hidden": false,
+              "x": 1306.4425118690078,
+              "z": 85.62935056913932,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 145,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1374.2939469863682,
+              "z": 101.93334094865148,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 146,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1368.003415783971,
+              "z": 100.1652713047895,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 15380,
+          "player": {
+            "x": 1477.6922607421875,
+            "z": 99.6980972290039
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 28,
+          "count": 10,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1213.9517324539747,
+              "z": 25
+            },
+            {
+              "id": 138,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1308.1381279106145,
+              "z": 83.6617233933397,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 145,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1357.7000275358523,
+              "z": 104.21000828234106,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 146,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1348.2739764151781,
+              "z": 95.02356985143359,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            },
+            {
+              "id": 164,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1517.349702898868,
+              "z": 96.0153158365407,
+              "region": "industrial-area",
+              "slot": "depot-alpha:infected.dog:0"
+            },
+            {
+              "id": 165,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1518.2168777219576,
+              "z": 101.5872015025834,
+              "region": "industrial-area",
+              "slot": "depot-alpha:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 33960,
+          "player": {
+            "x": 2577.488525390625,
+            "z": 42.93603515625
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 25,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 55,
+          "count": 34,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2085.719232454282,
+              "z": -75
+            },
+            {
+              "id": 234,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2518.826868194601,
+              "z": -1.524189805055654,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:0"
+            },
+            {
+              "id": 235,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2509.7532564141347,
+              "z": -10.587983780175866,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:1"
+            },
+            {
+              "id": 240,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2614.5374249891024,
+              "z": 46.71339555144234,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:0"
+            },
+            {
+              "id": 241,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2617.8779254769856,
+              "z": 41.09753323436833,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:1"
+            },
+            {
+              "id": 242,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2617.9943617499307,
+              "z": 46.73529383975019,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 34690,
+          "player": {
+            "x": 2632.202880859375,
+            "z": 42.42700958251953
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 25,
+            "research-lab": 21,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 55,
+          "count": 55,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2129.792982454298,
+              "z": -75
+            },
+            {
+              "id": 234,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2515.0275879927585,
+              "z": -9.094361738572124,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:0"
+            },
+            {
+              "id": 235,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2500.300538293495,
+              "z": -7.503521317765127,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:1"
+            },
+            {
+              "id": 240,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 35329,
+              "hidden": false,
+              "x": 2599.598720249328,
+              "z": 44.45133727978601,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:0"
+            },
+            {
+              "id": 241,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 35055,
+              "hidden": false,
+              "x": 2602.7398471816336,
+              "z": 42.276877709904575,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:1"
+            },
+            {
+              "id": 242,
+              "archetype": "infected.alpha",
+              "hp": 167,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2614.397523796197,
+              "z": 42.5847721860405,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 35600,
+          "player": {
+            "x": 2700.408447265625,
+            "z": 41.456790924072266
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 55,
+          "count": 39,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2184.734232454318,
+              "z": -75
+            },
+            {
+              "id": 242,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": 36097,
+              "hidden": false,
+              "x": 2658.0324218650485,
+              "z": 42.191908565746516,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 37790,
+          "player": {
+            "x": 2817.53759765625,
+            "z": -3.5555551052093506
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 13,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 55,
+          "count": 24,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2316.9554824543657,
+              "z": -75
+            },
+            {
+              "id": 290,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 38448,
+              "hidden": false,
+              "x": 2813.173396885545,
+              "z": 0.157253986460298,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 291,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 38721,
+              "hidden": false,
+              "x": 2809.7458246165424,
+              "z": 1.9884983925221675,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 296,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2858.271537985144,
+              "z": -7.717202817666841,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 297,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2858.1971354577795,
+              "z": -1.183343518768412,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 298,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2855.2695775804937,
+              "z": -6.002815162464853,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 41860,
+          "player": {
+            "x": 3020.161865234375,
+            "z": 93.75422668457031
+          },
+          "admissions": {
+            "depot-workers": 18,
+            "depot-alpha": 4,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 13,
+            "corridor-line": 23,
+            "corridor-breach": 23,
+            "corridor-exit": 22
+          },
+          "cap": 75,
+          "count": 71,
+          "specials": [
+            {
+              "id": 119,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2492.6817324544286,
+              "z": -5
+            },
+            {
+              "id": 312,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.7165666521364,
+              "z": 85.03875408649343,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 333,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3058.7185817100726,
+              "z": 81.21865930856899,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:0"
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3062.9732082381993,
+              "z": 83.15426764785121,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:1"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.7165666521364,
+              "z": 96.03875408649343,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.alpha:0"
+            },
+            {
+              "id": 356,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3058.7185817100726,
+              "z": 92.21865930856899,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.dog:0"
+            },
+            {
+              "id": 357,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3062.9732082381993,
+              "z": 94.15426764785121,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.dog:1"
+            },
+            {
+              "id": 358,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3064.0338684099793,
+              "z": 106.21492781963103,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.alpha:0"
+            },
+            {
+              "id": 379,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3058.7185817100726,
+              "z": 103.21865930856899,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.dog:0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1262.6,
+        "deaths": 0,
+        "kills": 1329,
+        "damageTaken": 450,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.1
+          },
+          {
+            "id": "military-zone",
+            "t": 359.23333333333335
+          },
+          {
+            "id": "research-campus",
+            "t": 531.5
+          },
+          {
+            "id": "research",
+            "t": 595.3
+          },
+          {
+            "id": "cure",
+            "t": 596.6333333333333
+          },
+          {
+            "id": "research-exit",
+            "t": 617.5333333333333
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 657.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 873.45
+          },
+          {
+            "id": "install",
+            "t": 949.0166666666667
+          },
+          {
+            "id": "hold",
+            "t": 1013.1333333333333
+          },
+          {
+            "id": "mega",
+            "t": 1109.65
+          },
+          {
+            "id": "release",
+            "t": 1112.6
+          },
+          {
+            "id": "epilogue",
+            "t": 1262.6
+          },
+          {
+            "id": "credits",
+            "t": 1279.6
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 63.933333333330985,
+            "combatSeconds": 2.083333333333331,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.68333333332771,
+            "travelSeconds": 78.06666666666352,
+            "combatSeconds": 43.61666666666547,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0727553025105
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 167.46666666669208,
+            "travelSeconds": 61.06666666666448,
+            "combatSeconds": 106.38333333332858,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.419434429683
+          },
+          {
+            "id": "military-zone",
+            "seconds": 181.18333333336966,
+            "travelSeconds": 134.1499999999989,
+            "combatSeconds": 47.01666666666528,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 814.433974591289
+          },
+          {
+            "id": "research-campus",
+            "seconds": 127.58333333332737,
+            "travelSeconds": 81.59999999999665,
+            "combatSeconds": 45.93333333333201,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.2975685506043
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 214.3666666667294,
+            "travelSeconds": 182.0666666667037,
+            "combatSeconds": 32.29999999999945,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.2504529009562
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 384.26666666664585,
+            "travelSeconds": 65.11666666666426,
+            "combatSeconds": 8.483333333333334,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 160.6333333333533,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0,
+            "metres": 1043.9075072726441
+          }
+        ],
+        "maxConcurrentInfected": 190,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 1544,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "samples": [
+        {
+          "tick": 10,
+          "player": {
+            "x": 547.4300537109375,
+            "z": 0
+          },
+          "admissions": {
+            "depot-workers": 0,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 8,
+          "count": 0,
+          "specials": []
+        },
+        {
+          "tick": 13450,
+          "player": {
+            "x": 1332.060791015625,
+            "z": 98.6567153930664
+          },
+          "admissions": {
+            "depot-workers": 23,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 45,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1065.9240061099506,
+              "z": 25
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 15.000000000000004,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1314.2834933653005,
+              "z": 91.0842942404077,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 13981,
+              "hidden": false,
+              "x": 1307.325453765919,
+              "z": 85.59345450330059,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1369.1419216684099,
+              "z": 99.0881950589653,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1375.6311645343376,
+              "z": 98.32230988422504,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 13620,
+          "player": {
+            "x": 1344.802490234375,
+            "z": 98.7488021850586
+          },
+          "admissions": {
+            "depot-workers": 24,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 45,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1075.8307561099666,
+              "z": 25
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 15.000000000000004,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1321.2709267502257,
+              "z": 96.01205236459161,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 13981,
+              "hidden": false,
+              "x": 1307.325453765919,
+              "z": 85.59345450330059,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1358.7223894478961,
+              "z": 98.9551540523578,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1365.1844406343657,
+              "z": 98.53829902274175,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 13650,
+          "player": {
+            "x": 1347.051025390625,
+            "z": 98.76505279541016
+          },
+          "admissions": {
+            "depot-workers": 25,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 45,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1077.5790061099694,
+              "z": 25
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 15.000000000000004,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1321.8342211819747,
+              "z": 97.15098242303354,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 13981,
+              "hidden": false,
+              "x": 1307.325453765919,
+              "z": 85.59345450330059,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1356.2477037997132,
+              "z": 98.91870698394052,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1362.7001323982506,
+              "z": 98.74412015666607,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 13680,
+          "player": {
+            "x": 1349.299560546875,
+            "z": 98.78130340576172
+          },
+          "admissions": {
+            "depot-workers": 26,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 45,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1079.3272561099723,
+              "z": 25
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 15.000000000000004,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1323.209632351716,
+              "z": 97.65103701778806,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 13981,
+              "hidden": false,
+              "x": 1307.325453765919,
+              "z": 85.59345450330059,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1354.084992383474,
+              "z": 98.88372783842976,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1360.2471263073664,
+              "z": 98.95735484393835,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 13710,
+          "player": {
+            "x": 1351.3232421875,
+            "z": 98.7959213256836
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 0,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 45,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1081.075506109975,
+              "z": 25
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 15.000000000000004,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1325.4769961483928,
+              "z": 97.81032886939003,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 13981,
+              "hidden": false,
+              "x": 1307.325453765919,
+              "z": 85.59345450330059,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1352.4010959646826,
+              "z": 98.85695774879028,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1357.8741392243405,
+              "z": 99.03752836202898,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 15480,
+          "player": {
+            "x": 1477.3321533203125,
+            "z": 99.71147155761719
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 5,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 15,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1180.6793922404402,
+              "z": 25.018937803860425
+            },
+            {
+              "id": 147,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1381.09680201104,
+              "z": 100.3914800565764,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:0"
+            },
+            {
+              "id": 148,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1314.5639219609147,
+              "z": 93.80907328120155,
+              "region": "industrial-area",
+              "slot": "industrial-area-direct-0:infected.dog:1"
+            },
+            {
+              "id": 158,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1352.0499656628456,
+              "z": 94.22007436813695,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:0"
+            },
+            {
+              "id": 159,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1357.7762454920025,
+              "z": 99.35083482965595,
+              "region": "industrial-area",
+              "slot": "depot-workers:infected.dog:1"
+            },
+            {
+              "id": 185,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1520.3750211792496,
+              "z": 97.85308778949471,
+              "region": "industrial-area",
+              "slot": "depot-alpha:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 17200,
+          "player": {
+            "x": 1600.6253662109375,
+            "z": 100.0074462890625
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 0,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 45,
+          "count": 7,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 1280.912389056671,
+              "z": 25
+            },
+            {
+              "id": 185,
+              "archetype": "infected.alpha",
+              "hp": 190.9091337085328,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1566.4579920689873,
+              "z": 100.10563119871121,
+              "region": "industrial-area",
+              "slot": "depot-alpha:infected.alpha:0"
+            },
+            {
+              "id": 189,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 1514.0458595440537,
+              "z": 99.47745414886207,
+              "region": "industrial-area",
+              "slot": "depot-alpha:infected.dog:0"
+            }
+          ]
+        },
+        {
+          "tick": 34010,
+          "player": {
+            "x": 2577.109130859375,
+            "z": 42.95848846435547
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 23,
+            "research-lab": 0,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 85,
+          "count": 36,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2010.515139057845,
+              "z": -75
+            },
+            {
+              "id": 252,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2464.3026283600225,
+              "z": -44.26568309075419,
+              "region": "military-zone",
+              "slot": "military-breach:infected.dog:0"
+            },
+            {
+              "id": 254,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2448.677995574289,
+              "z": -48.48891923171691,
+              "region": "military-zone",
+              "slot": "military-column:infected.dog:0"
+            },
+            {
+              "id": 276,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2510.1081686869343,
+              "z": -14.662187013391204,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:0"
+            },
+            {
+              "id": 277,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2526.7959726868453,
+              "z": 0.7822024768578908,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:1"
+            },
+            {
+              "id": 284,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2617.9943617499307,
+              "z": 46.73529383975019,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 34750,
+          "player": {
+            "x": 2632.572998046875,
+            "z": 42.443809509277344
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 23,
+            "research-lab": 22,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 85,
+          "count": 58,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2053.6386390578928,
+              "z": -75
+            },
+            {
+              "id": 252,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2466.6156594408217,
+              "z": -43.740452456629896,
+              "region": "military-zone",
+              "slot": "military-breach:infected.dog:0"
+            },
+            {
+              "id": 254,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2451.047641677381,
+              "z": -47.920530189189805,
+              "region": "military-zone",
+              "slot": "military-column:infected.dog:0"
+            },
+            {
+              "id": 276,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2517.3444067164683,
+              "z": -13.911611026970903,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:0"
+            },
+            {
+              "id": 277,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2522.9168694551263,
+              "z": -7.605217894332385,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:1"
+            },
+            {
+              "id": 284,
+              "archetype": "infected.alpha",
+              "hp": 132,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2614.633289578535,
+              "z": 42.60378244345221,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 35660,
+          "player": {
+            "x": 2700.778564453125,
+            "z": 41.4451789855957
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 0,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 85,
+          "count": 58,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2106.6688890577716,
+              "z": -75
+            },
+            {
+              "id": 276,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2520.510602712052,
+              "z": -22.466117071573674,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:0"
+            },
+            {
+              "id": 277,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2515.1327992566657,
+              "z": -7.072874306061636,
+              "region": "research-campus",
+              "slot": "research-campus-direct-0:infected.dog:1"
+            },
+            {
+              "id": 284,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": 36411,
+              "hidden": false,
+              "x": 2650.858430351672,
+              "z": 42.271314139899275,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            },
+            {
+              "id": 330,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2614.5374249891024,
+              "z": 46.71339555144234,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:0"
+            },
+            {
+              "id": 331,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2617.8779254769856,
+              "z": 41.09753323436833,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 37840,
+          "player": {
+            "x": 2817.3173828125,
+            "z": -3.55405330657959
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 23,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 85,
+          "count": 75,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2233.7083890574813,
+              "z": -75
+            },
+            {
+              "id": 284,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2643.7224850904227,
+              "z": 44.593113332091505,
+              "region": "research-campus",
+              "slot": "research-approach:infected.alpha:0"
+            },
+            {
+              "id": 330,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2732.7195528957664,
+              "z": 44.05289613918433,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:0"
+            },
+            {
+              "id": 331,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2617.737150428881,
+              "z": 41.610923209655745,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:1"
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 38709,
+              "hidden": false,
+              "x": 2824.327529603128,
+              "z": -2.9915888668613126,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": 38680,
+              "hidden": false,
+              "x": 2818.1074666847635,
+              "z": -3.240633726795265,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.9943617499307,
+              "z": -3.2647061602498053,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 38950,
+          "player": {
+            "x": 2900.51318359375,
+            "z": -4.761072158813477
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 24,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 85,
+          "count": 37,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2304.5676390573435,
+              "z": -75
+            },
+            {
+              "id": 330,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2732.7195528957664,
+              "z": 44.05289613918433,
+              "region": "research-campus",
+              "slot": "research-approach:infected.dog:0"
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2824.849331019812,
+              "z": -5.796278316655996,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2815.020648303248,
+              "z": -1.2827042387898253,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": 39275,
+              "hidden": false,
+              "x": 2860.3601838011377,
+              "z": -3.5477919742070503,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2854.5374249891024,
+              "z": -3.28660444855766,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            }
+          ]
+        },
+        {
+          "tick": 41710,
+          "player": {
+            "x": 3010.64501953125,
+            "z": 93.56810760498047
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 0,
+            "corridor-breach": 0,
+            "corridor-exit": 0
+          },
+          "cap": 130,
+          "count": 36,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2430.182639057144,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2829.2794842504045,
+              "z": -0.4331446227548122,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2803.98330529258,
+              "z": -4.120725866766963,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 372,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3016.890638384722,
+              "z": 93.49388327004458,
+              "region": "destroyed-corridor",
+              "slot": "corridor-pack-2:infected.dog:0"
+            },
+            {
+              "id": 373,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3021.011820194605,
+              "z": 95.03438913020891,
+              "region": "destroyed-corridor",
+              "slot": "corridor-pack-2:infected.dog:1"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 41840,
+          "player": {
+            "x": 3020.388671875,
+            "z": 93.60778045654297
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 34,
+            "corridor-breach": 33,
+            "corridor-exit": 28
+          },
+          "cap": 130,
+          "count": 130,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2439.3963890571295,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2828.028849684259,
+              "z": 0.8809769830950908,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2803.105400533494,
+              "z": -5.7551740550733,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 376,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3060.6775046900157,
+              "z": 86.54998636123732,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:0"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3065.97951404686,
+              "z": 82.11238994047977,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 410,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3065.97951404686,
+              "z": 93.11238994047977,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 42030,
+          "player": {
+            "x": 3034.62939453125,
+            "z": 93.66576385498047
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 34,
+            "corridor-breach": 33,
+            "corridor-exit": 32
+          },
+          "cap": 130,
+          "count": 116,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2452.862639057108,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2825.666472721664,
+              "z": 4.040019107052393,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2800.3074173642835,
+              "z": -9.748847126483577,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 376,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3048.9283769494436,
+              "z": 89.34190553758285,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:0"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.8653381525774,
+              "z": 84.93872899594952,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 410,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.441644896557,
+              "z": 93.26664922890406,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 42080,
+          "player": {
+            "x": 3038.376953125,
+            "z": 93.68102264404297
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 35,
+            "corridor-breach": 33,
+            "corridor-exit": 32
+          },
+          "cap": 130,
+          "count": 79,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2456.4063890571024,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2825.6615542790896,
+              "z": 4.04884260568589,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2800.3074173642835,
+              "z": -9.764907586251727,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 376,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3046.134758472209,
+              "z": 91.1026646519548,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:0"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.929422114453,
+              "z": 86.12253364194726,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 410,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.2755557765026,
+              "z": 93.32663235459076,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.alpha:0"
+            },
+            {
+              "id": 475,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.0468841252864,
+              "z": 79.54626532819786,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 42220,
+          "player": {
+            "x": 3048.465577982366,
+            "z": 94.04296255856752
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 35,
+            "corridor-breach": 33,
+            "corridor-exit": 33
+          },
+          "cap": 130,
+          "count": 55,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2466.3288890570866,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2824.8774462160186,
+              "z": -0.18593098234892308,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2800.300028050702,
+              "z": -10.884517031238698,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 95.64319073846244,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3044.7045613648556,
+              "z": 91.33499534845626,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 410,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3049.388204466857,
+              "z": 93.05606774762434,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.alpha:0"
+            },
+            {
+              "id": 475,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3051.731376346253,
+              "z": 84.72998546266254,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.dog:1"
+            },
+            {
+              "id": 476,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3060.6775046900157,
+              "z": 108.54998636123732,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.dog:0"
+            }
+          ]
+        },
+        {
+          "tick": 42510,
+          "player": {
+            "x": 3070.012451171875,
+            "z": 94.41998291015625
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 35,
+            "corridor-breach": 33,
+            "corridor-exit": 34
+          },
+          "cap": 130,
+          "count": 36,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2486.882639057054,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2820.167827743927,
+              "z": -2.4146532845438875,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2803.1870871749375,
+              "z": -15.076240969242901,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3046.05379616198,
+              "z": 93.78318144133169,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 478,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3075.979337930163,
+              "z": 93.90547359708886,
+              "region": "destroyed-corridor",
+              "slot": "corridor-pack-3:infected.dog:0"
+            },
+            {
+              "id": 479,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.925563781727,
+              "z": 103.66758567175751,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.alpha:0"
+            }
+          ]
+        },
+        {
+          "tick": 42520,
+          "player": {
+            "x": 3070.761962890625,
+            "z": 94.42105102539062
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 35,
+            "corridor-breach": 34,
+            "corridor-exit": 34
+          },
+          "cap": 130,
+          "count": 37,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2487.5913890570528,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2820.159694570471,
+              "z": -2.417549790539978,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2803.1925354818936,
+              "z": -15.083788172314451,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 377,
+              "archetype": "infected.alpha",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3046.05379616198,
+              "z": 93.78318144133169,
+              "region": "destroyed-corridor",
+              "slot": "corridor-line:infected.alpha:0"
+            },
+            {
+              "id": 478,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3075.979337930163,
+              "z": 93.90547359708886,
+              "region": "destroyed-corridor",
+              "slot": "corridor-pack-3:infected.dog:0"
+            },
+            {
+              "id": 479,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.925563781727,
+              "z": 103.66758567175751,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.alpha:0"
+            },
+            {
+              "id": 480,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.0468841252864,
+              "z": 90.04626532819786,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.dog:1"
+            }
+          ]
+        },
+        {
+          "tick": 42590,
+          "player": {
+            "x": 3076.008544921875,
+            "z": 94.42852783203125
+          },
+          "admissions": {
+            "depot-workers": 27,
+            "depot-alpha": 6,
+            "research-approach": 25,
+            "research-lab": 22,
+            "research-quarantine": 25,
+            "corridor-line": 35,
+            "corridor-breach": 35,
+            "corridor-exit": 34
+          },
+          "cap": 130,
+          "count": 37,
+          "specials": [
+            {
+              "id": 122,
+              "archetype": "infected.alpha",
+              "hp": 3000,
+              "recoverAt": -1,
+              "hidden": true,
+              "x": 2492.552639057045,
+              "z": -5
+            },
+            {
+              "id": 334,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2820.06599718327,
+              "z": -2.3141672888534304,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:0"
+            },
+            {
+              "id": 335,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2803.084249215035,
+              "z": -15.037196442856025,
+              "region": "research-campus",
+              "slot": "research-campus-direct-4:infected.dog:1"
+            },
+            {
+              "id": 342,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2907.439776281854,
+              "z": -3.5019214084630472,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.alpha:0"
+            },
+            {
+              "id": 365,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2949.614180185383,
+              "z": -0.7766477348298232,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:0"
+            },
+            {
+              "id": 375,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 2857.8779254769856,
+              "z": -8.902466765631672,
+              "region": "research-campus",
+              "slot": "research-quarantine:infected.dog:1"
+            },
+            {
+              "id": 478,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3075.979337930163,
+              "z": 93.90547359708886,
+              "region": "destroyed-corridor",
+              "slot": "corridor-pack-3:infected.dog:0"
+            },
+            {
+              "id": 479,
+              "archetype": "infected.alpha",
+              "hp": 300,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3056.3048451054697,
+              "z": 102.52281667525226,
+              "region": "destroyed-corridor",
+              "slot": "corridor-exit:infected.alpha:0"
+            },
+            {
+              "id": 480,
+              "archetype": "infected.dog",
+              "hp": 0,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3053.6757007059923,
+              "z": 89.99681029839144,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.dog:1"
+            },
+            {
+              "id": 481,
+              "archetype": "infected.dog",
+              "hp": 45,
+              "recoverAt": -1,
+              "hidden": false,
+              "x": 3058.556184346456,
+              "z": 99.67130670479696,
+              "region": "destroyed-corridor",
+              "slot": "corridor-breach:infected.dog:0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

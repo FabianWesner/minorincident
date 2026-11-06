@@ -57,7 +57,7 @@ export class LevelTenEncounters {
       const at = low ? group.atLow ?? group.at : group.at;
       if (!assault && !released.includes(group.id)) {
         const approach = corridorPatrol || corridorHorde ? Math.abs(player.transform.x - at[0]) : Math.hypot(player.transform.x - at[0], player.transform.z - at[1]);
-        if (approach > 40) continue;
+        if (group.releaseWith ? !released.includes(group.releaseWith) : approach > 40) continue;
         released.push(group.id);
         if (corridorPatrol || corridorHorde) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : at[1]);
       }
@@ -98,7 +98,13 @@ export class LevelTenEncounters {
         }
         if (slot.archetype === 'infected.dog') {
           const limit = cure.threatDepth.find(r => r.region === group.region)?.dogs?.[1] ?? 4;
-          const living = ai.active.filter(e => e.archetype === 'infected.dog' && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length;
+          // Regional composition budgets include every dog inside the envelope,
+          // including visitors. Distant dogs left in a previous region still
+          // count toward the overall director cap, but cannot reserve this pack.
+          const living = ai.active.filter(e => e.archetype === 'infected.dog' &&
+            e.transform.x >= region.envelope[0][0] && e.transform.x <= region.envelope[1][0] &&
+            e.transform.z >= region.envelope[0][1] && e.transform.z <= region.envelope[1][1] &&
+            (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length;
           if (living >= limit) continue;
         }
         if (slot.archetype === 'infected.alpha') {
