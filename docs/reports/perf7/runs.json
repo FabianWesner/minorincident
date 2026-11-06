@@ -1,0 +1,559 @@
+{
+  "runs.json": [
+    {
+      "label": "final-high-loads",
+      "started": "2026-11-06T17:05:28.115Z",
+      "revision": "a12c9a7be33133aa9658ccd04fc272a359f97384",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-load.mjs",
+        "L7,L10,L5"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/final/high"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:06:27.028Z",
+      "seconds": 58.913,
+      "exitCode": 0,
+      "stdoutSha256": "7b3cce01825813c12e8911a717e261391ab08456bc3e2146ac5908b2ac35b0a1"
+    },
+    {
+      "label": "final-L10-high-native",
+      "started": "2026-11-06T17:07:43.633Z",
+      "revision": "a12c9a7be33133aa9658ccd04fc272a359f97384",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/final/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:11:38.041Z",
+      "seconds": 234.408,
+      "exitCode": 0,
+      "stdoutSha256": "d13fdb17eacb5cf01cea18684ed8eff36b3f23988e480fafc9dce6f29acc207f"
+    },
+    {
+      "label": "L10-budget-diagnostic",
+      "started": "2026-11-06T17:16:28.930Z",
+      "revision": "a12c9a7be33133aa9658ccd04fc272a359f97384",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-comparative-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-budget",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_CPU_PROFILE": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:18:02.550Z",
+      "seconds": 93.62,
+      "exitCode": 0,
+      "stdoutSha256": "9659b647caf53dc009914b92459141c36aa483b1b10227759c2b46f594889543"
+    },
+    {
+      "label": "selected-L10-high-native",
+      "started": "2026-11-06T17:23:31.970Z",
+      "revision": "976c9f686ba90347c2d58bf5d569d6fbad124997",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/selected/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:27:26.479Z",
+      "seconds": 234.509,
+      "exitCode": 0,
+      "stdoutSha256": "d055533272271eda55a0b4500ad5229654e285f7b37d5387cb625447bb142d49"
+    },
+    {
+      "label": "L10-unprofiled-trace",
+      "started": "2026-11-06T17:31:15.226Z",
+      "revision": "976c9f686ba90347c2d58bf5d569d6fbad124997",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-trace-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-trace",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:32:53.657Z",
+      "seconds": 98.431,
+      "exitCode": 0,
+      "stdoutSha256": "b8778efe87f7ef275dacb1db1faa68c331f6fe97832743e1ce1a2b0bf49f60a1"
+    },
+    {
+      "label": "L10-allocation-profile",
+      "started": "2026-11-06T17:35:11.400Z",
+      "revision": "976c9f686ba90347c2d58bf5d569d6fbad124997",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-allocation-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-allocation",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:36:45.532Z",
+      "seconds": 94.132,
+      "exitCode": 0,
+      "stdoutSha256": "0cbb5ea4011962a7a5a7f0cdff16cd6d1cdff53e8b5e91c4c6908062fe7ee239"
+    },
+    {
+      "label": "unboxed-L10-high-native",
+      "started": "2026-11-06T17:37:58.871Z",
+      "revision": "b8ddf9632f56faebebd172778fcec7deb94e7998",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/unboxed/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:41:53.518Z",
+      "seconds": 234.647,
+      "exitCode": 0,
+      "stdoutSha256": "50b6b950bddb1bf12df6cfaf30337b6cdeecde593bc73ec01f2560f08704eec6"
+    },
+    {
+      "label": "L10-unboxed-allocation",
+      "started": "2026-11-06T17:42:13.146Z",
+      "revision": "b8ddf9632f56faebebd172778fcec7deb94e7998",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-allocation-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-unboxed-allocation",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:44:27.773Z",
+      "seconds": 134.627,
+      "exitCode": 0,
+      "stdoutSha256": "d08ab32da150af5277bba337b7970e4e37ee0654a8e5a7392a98dcb1ff1e8b24"
+    },
+    {
+      "label": "L10-lightweight-phases",
+      "started": "2026-11-06T17:44:58.103Z",
+      "revision": "b8ddf9632f56faebebd172778fcec7deb94e7998",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-phase-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-phases",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:47:00.423Z",
+      "seconds": 122.32,
+      "exitCode": 0,
+      "stdoutSha256": "4f18db5069037613ad6c7c73c271fc15dc07dde3a91b55cecca03c75c38cae0b"
+    },
+    {
+      "label": "L10-crowd-phases",
+      "started": "2026-11-06T17:47:27.937Z",
+      "revision": "8a1e4cf5dfd88788a5ea39cf4654e3ae8d81d5b2",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-crowd-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-crowd",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:49:33.352Z",
+      "seconds": 125.415,
+      "exitCode": 0,
+      "stdoutSha256": "188ecf329deea11e5e61a80e589536a360f9653389df6e48849eba228a537689"
+    },
+    {
+      "label": "numeric-L10-high-native",
+      "started": "2026-11-06T17:50:44.313Z",
+      "revision": "96fa5bd67044cea01b7b9635f541739041e84146",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/numeric/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:54:39.098Z",
+      "seconds": 234.785,
+      "exitCode": 0,
+      "stdoutSha256": "25b26df10a7c44159c893275056c13ad4395261fbdb6adf8ccbdf749b651aa6e"
+    },
+    {
+      "label": "L10-shared-allocation",
+      "started": "2026-11-06T17:56:16.547Z",
+      "revision": "7ada0afff9f780e19c4303b53b3b20e9371b1a73",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-allocation-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-shared-allocation",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T17:58:21.983Z",
+      "seconds": 125.436,
+      "exitCode": 0,
+      "stdoutSha256": "7949f5c0d7bbaccfc8eff7660301035975384024a88dcbaaf9b03fb2357fefca"
+    },
+    {
+      "label": "shared-L10-high-native",
+      "started": "2026-11-06T17:58:48.603Z",
+      "revision": "7ada0afff9f780e19c4303b53b3b20e9371b1a73",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/shared/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:03:16.240Z",
+      "seconds": 267.637,
+      "exitCode": 0,
+      "stdoutSha256": "c4fa5b8c2088ecfd59e90e2287f660f5c9df689140ec3d927bc6f5f5c7f5baf9"
+    },
+    {
+      "label": "incremental-L10-high-native",
+      "started": "2026-11-06T18:04:43.281Z",
+      "revision": "3886b618e93181df951c0ba59187bc349a795ef3",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/incremental/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:08:53.221Z",
+      "seconds": 249.94,
+      "exitCode": 0,
+      "stdoutSha256": "c3c6aee0f94ecd3810e8cce03b379e7e12924f5c4fdd4cf3fcb9af93f80f30e3"
+    },
+    {
+      "label": "final-selection-L10-candidate-native",
+      "started": "2026-11-06T18:11:26.929Z",
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/final-selection/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:13:42.273Z",
+      "seconds": 135.344,
+      "exitCode": 0,
+      "stdoutSha256": "bff8dc4592b7c3e2722f511898f4e828f063f25f60e71dd3e1c83acacf1f1230"
+    },
+    {
+      "label": "final-selection-high-loads",
+      "started": "2026-11-06T18:14:20.177Z",
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-load.mjs",
+        "L7,L10,L5"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/final-selection/high"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:15:40.727Z",
+      "seconds": 80.55,
+      "exitCode": 0,
+      "stdoutSha256": "5da4e9121b86c25ce1018e21bb8cd4c279989564a8ade7cf14677a258958cf95"
+    },
+    {
+      "label": "final-selection-tail",
+      "started": "2026-11-06T18:16:01.396Z",
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "test-results/perf7/measure-tail.mjs"
+      ],
+      "env": {},
+      "signal": null,
+      "finished": "2026-11-06T18:19:31.060Z",
+      "seconds": 209.664,
+      "exitCode": 0,
+      "stdoutSha256": "ec5fac4800514da53b1a53dd0b1088b74f3e26ecdb5508cc9987f3ea3704f8f7"
+    },
+    {
+      "label": "final-selection-L10-confirmation",
+      "started": "2026-11-06T18:27:21.666Z",
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-browser.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/confirmation/high",
+        "RELEASE_SECONDS": "90",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "signal": null,
+      "finished": "2026-11-06T18:29:25.210Z",
+      "seconds": 123.544,
+      "exitCode": 0,
+      "stdoutSha256": "babe8fe05981975fcad39d6d3449b0210775dc0a01520694dc608036b6d4737f"
+    }
+  ],
+  "tail-runs.json": [
+    {
+      "label": "final-selection-low-loads",
+      "args": [
+        "tools/qa/release-ab-load.mjs",
+        "L5,L7"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "low",
+        "RELEASE_OUT": "test-results/perf7/final-selection/low"
+      },
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-load.mjs",
+        "L5,L7"
+      ],
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "started": "2026-11-06T18:16:51.033Z",
+      "finished": "2026-11-06T18:17:18.327Z",
+      "exitCode": 0
+    },
+    {
+      "label": "final-selection-gl2-low-loads",
+      "args": [
+        "tools/qa/release-ab-load.mjs",
+        "L5,L6,L10",
+        "webgl2"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "low",
+        "RELEASE_OUT": "test-results/perf7/final-selection/gl2-low"
+      },
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/release-ab-load.mjs",
+        "L5,L6,L10",
+        "webgl2"
+      ],
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "started": "2026-11-06T18:17:18.333Z",
+      "finished": "2026-11-06T18:18:06.562Z",
+      "exitCode": 0
+    },
+    {
+      "label": "final-selection-allocation",
+      "args": [
+        "test-results/perf7/l10-final-allocation-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "env": {
+        "RELEASE_QUALITY": "high",
+        "RELEASE_OUT": "test-results/perf7/diagnostic/l10-final-allocation",
+        "RELEASE_SECONDS": "60",
+        "RELEASE_PERF_ONLY": "1",
+        "RELEASE_SIDES": "candidate"
+      },
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "test-results/perf7/l10-final-allocation-diagnostic.mjs",
+        "strips",
+        "L10",
+        "webgpu"
+      ],
+      "revision": "5f790f70717dbeacbac94d2ff65b695deed6cbe8",
+      "started": "2026-11-06T18:18:06.573Z",
+      "finished": "2026-11-06T18:19:30.997Z",
+      "exitCode": 0
+    }
+  ]
+}

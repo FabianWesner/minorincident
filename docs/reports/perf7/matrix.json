@@ -1,0 +1,317 @@
+[
+  {
+    "backend": "webgpu",
+    "level": "L5",
+    "tier": "low",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 2525.5,
+        "warm": 2443.1000003814697
+      },
+      "candidate": {
+        "cold": 2573.300000190735,
+        "warm": 2494
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgpu",
+    "level": "L7",
+    "tier": "low",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 2475.300000190735,
+        "warm": 2394.199999809265
+      },
+      "candidate": {
+        "cold": 2540.699999809265,
+        "warm": 2478.2000007629395
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgpu",
+    "level": "L7",
+    "tier": "high",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 2890.5,
+        "warm": 3194.1000003814697
+      },
+      "candidate": {
+        "cold": 2788.5,
+        "warm": 2670.7000007629395
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgpu",
+    "level": "L10",
+    "tier": "high",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 3124.5,
+        "warm": 2872.1000003814697
+      },
+      "candidate": {
+        "cold": 3007.699999809265,
+        "warm": 2922
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "FAIL confirmation",
+    "frames": {
+      "prod": {
+        "maxMs": 66.70000000000437,
+        "p95Ms": 16.79999999998836,
+        "durationMs": 90166.60000038147,
+        "nonGameplayFrames": 0,
+        "originalMinuteMaxMs": 66.70000000000437,
+        "lateCharge40to60MaxMs": 66.59999999999127,
+        "after60MaxMs": 16.80000000000291,
+        "frameCount": 5377,
+        "topFrames": [
+          {
+            "ms": 66.70000000000437,
+            "at": 27820.200000190736,
+            "tick": 63824,
+            "charge": 1789
+          },
+          {
+            "ms": 66.59999999999127,
+            "at": 59802.20000019073,
+            "tick": 65743,
+            "charge": 3600
+          },
+          {
+            "ms": 50.099999999998545,
+            "at": 6137.800000190735,
+            "tick": 62523,
+            "charge": 488
+          },
+          {
+            "ms": 50,
+            "at": 5337.800000190735,
+            "tick": 62475,
+            "charge": 440
+          },
+          {
+            "ms": 50,
+            "at": 5387.800000190735,
+            "tick": 62478,
+            "charge": 443
+          },
+          {
+            "ms": 50,
+            "at": 5921.100000190734,
+            "tick": 62510,
+            "charge": 475
+          },
+          {
+            "ms": 50,
+            "at": 45669.50000019073,
+            "tick": 64895,
+            "charge": 2805
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 23503.800000190735,
+            "tick": 63565,
+            "charge": 1530
+          },
+          {
+            "ms": 33.39999999999782,
+            "at": 6371.100000190734,
+            "tick": 62537,
+            "charge": 502
+          },
+          {
+            "ms": 33.30000000000291,
+            "at": 6337.700000190736,
+            "tick": 62535,
+            "charge": 500
+          }
+        ]
+      },
+      "candidate": {
+        "maxMs": 50,
+        "p95Ms": 16.70000000001164,
+        "durationMs": 90196.69999980927,
+        "nonGameplayFrames": 0,
+        "originalMinuteMaxMs": 50,
+        "lateCharge40to60MaxMs": 50,
+        "after60MaxMs": 33.29999999998836,
+        "frameCount": 5384,
+        "topFrames": [
+          {
+            "ms": 50,
+            "at": 5366.999999809264,
+            "tick": 60419,
+            "charge": 442
+          },
+          {
+            "ms": 50,
+            "at": 6333.599999809267,
+            "tick": 60477,
+            "charge": 500
+          },
+          {
+            "ms": 50,
+            "at": 59714.79999980927,
+            "tick": 63680,
+            "charge": 3600
+          },
+          {
+            "ms": 49.89999999999418,
+            "at": 23482.899999809262,
+            "tick": 61506,
+            "charge": 1529
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 2217.199999809265,
+            "tick": 60230,
+            "charge": 253
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 23516.299999809264,
+            "tick": 61508,
+            "charge": 1531
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 40348.99999980927,
+            "tick": 62518,
+            "charge": 2491
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 40398.99999980927,
+            "tick": 62521,
+            "charge": 2494
+          },
+          {
+            "ms": 33.400000000001455,
+            "at": 40482.299999809264,
+            "tick": 62526,
+            "charge": 2499
+          },
+          {
+            "ms": 33.39999999999782,
+            "at": 1783.7999998092637,
+            "tick": 60204,
+            "charge": 227
+          }
+        ]
+      }
+    },
+    "nativePass": true,
+    "confirmation": {
+      "maxMs": 99.90000000000146,
+      "p95Ms": 16.79999999998836,
+      "durationMs": 90169.80000019073,
+      "nonGameplayFrames": 0,
+      "pass": false,
+      "extraCriterion": "No >=66 ms frame, independently of noisier PROD captures"
+    }
+  },
+  {
+    "backend": "webgl2",
+    "level": "L5",
+    "tier": "low",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 2794.1000003814697,
+        "warm": 2671.300000190735
+      },
+      "candidate": {
+        "cold": 2824.699999809265,
+        "warm": 2705.199999809265
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgl2",
+    "level": "L6",
+    "tier": "low",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 1975,
+        "warm": 1890
+      },
+      "candidate": {
+        "cold": 2024.3999996185303,
+        "warm": 1941.3999996185303
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgl2",
+    "level": "L10",
+    "tier": "low",
+    "control": false,
+    "loadsMs": {
+      "prod": {
+        "cold": 3442.8999996185303,
+        "warm": 3459.300000190735
+      },
+      "candidate": {
+        "cold": 3542.6000003814697,
+        "warm": 3410.4000005722046
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  },
+  {
+    "backend": "webgpu",
+    "level": "L5",
+    "tier": "high",
+    "control": true,
+    "loadsMs": {
+      "prod": {
+        "cold": 2406.300000190735,
+        "warm": 2323.1000003814697
+      },
+      "candidate": {
+        "cold": 2506.5,
+        "warm": 2389.800000190735
+      }
+    },
+    "loadRelativePass": true,
+    "loadAbsolutePass": true,
+    "errors": [],
+    "verdict": "PASS"
+  }
+]

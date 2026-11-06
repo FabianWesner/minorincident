@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-06T18:35:48.703084+00:00",
+  "removed": [
+    "test-results/perf7 (including local PROD mirror, raw images, profiles and logs)",
+    "test-results/qa-threat"
+  ],
+  "stopped": {
+    "pid": 30506,
+    "command": "node test-results/perf7/serve.mjs",
+    "ports": [
+      4901,
+      4902
+    ]
+  },
+  "retained": [
+    "docs/reports/perf7 JSON/README evidence",
+    "ordinary dist build artifact"
+  ],
+  "globalBrowserPool": "left running; not owned by this job",
+  "rawDirectoryAbsent": true
+}
