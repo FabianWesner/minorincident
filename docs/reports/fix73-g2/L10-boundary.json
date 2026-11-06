@@ -1,0 +1,19 @@
+{
+  "cause": "A living research-quarantine dog295 was atx2916.52 outside R6 when five corridor dogs were admitted. At tick41970 it entered R6 atx2917.06, raising the local dog census to6. Local-only admission ignored this incoming reservation.",
+  "fix": "Count all living/recoverable active dogs before admitting once-only R6 dog slots, as for other regions. Deferred slot ledger, authored dog counts, region bounds, patrol search range/cadence and complex release distance are unchanged.",
+  "before": {
+    "peak": 6,
+    "completed": true,
+    "time": 1312.0166666666667
+  },
+  "after": {
+    "peak": 5,
+    "completed": true,
+    "time": 1312.0166666666667
+  },
+  "scope": "Unpaused native complete policy, low, seed1, full route. Trace samples every10ticks during R5/R6/R7 transition; final qa:accept adds the exact per-tick observer at both tiers after merging main. No checker/threshold/population edits.",
+  "input": {
+    "file": "docs/reports/fix73-g2/L10-boundary-input.json.gz",
+    "sha256": "45395a2bd56665a6dc119d50e952d8f04f64c1a8ff4bc80da1cb8940cb6dc51f"
+  }
+}

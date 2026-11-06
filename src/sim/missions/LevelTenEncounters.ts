@@ -102,13 +102,10 @@ export class LevelTenEncounters {
         }
         if (slot.archetype === 'infected.dog') {
           const limit = cure.threatDepth.find(r => r.region === group.region)?.dogs?.[1] ?? 4;
-          // The long corridor keeps prior-campus dogs in the resident window.
-          // Count every visitor inside R6, while dogs still outside it retain
-          // their overall population slots without reserving the corridor pack.
-          const local = group.region === 'destroyed-corridor';
+          // A prior-region dog can cross the corridor boundary after this
+          // admission. Reserve its concurrent slot before it enters, just as
+          // for the other regions; deferred authored pack slots remain queued.
           const living = ai.active.filter(e => e.archetype === 'infected.dog' &&
-            (!local || e.transform.x >= region.envelope[0][0] && e.transform.x <= region.envelope[1][0] &&
-              e.transform.z >= region.envelope[0][1] && e.transform.z <= region.envelope[1][1]) &&
             (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length;
           if (living >= limit) continue;
         }
