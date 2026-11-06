@@ -1,0 +1,20 @@
+{
+  "title": "Evidence for correcting two obsolete unit fixtures",
+  "acceptanceCriterion": "Riot frontal MG kill\u22646s, flank\u22642s. The row has no minimum frontal time or2\u20133\u00d7 flank ratio.",
+  "combat": "The failure is front chip6:14 vs2.52. Authored strain80 breaks on ceil(80/14)=6, while the old test hardcoded break on25 (350). Preserve exact chip fraction.18, full-damage break round,90-tick break window, exact HP/shot kill accounting and independent\u22646s bound. The old3.4\u20133.7s/ratio assertions describe the obsolete config, not the row criterion. No acceptance checker or criterion changed.",
+  "navigation": "All six modified game src files restored to202ee5a pass the unchanged navigation suite. A second single-variable A/B restoring only truck x34\u219216.3 also passes. The relocated truck-derived crater changes the same intentionally isolated yard from259 to252.75m\u00b2; root30.25,-33.75 and one-component topology are unchanged. Checkpoint/objective reachability and all other assertions already pass with x34. Keep the exact new area assertion; no new unreachable yard or path tolerance is allowed.",
+  "evidence": [
+    {
+      "file": "docs/reports/fix67-b/baseline-navigation.log.gz",
+      "sha256": "2661c0600f73446db922900cbdfdabc3da2df5bca6c1e87f62159acbff92715d"
+    },
+    {
+      "file": "docs/reports/fix67-b/fuel-position-navigation.log.gz",
+      "sha256": "8f0e655d48874985f9b300ba7b229be157a5f35504e4550d1bf3644827ac17ca"
+    },
+    {
+      "file": "docs/reports/fix67-b/test-before-checker-corrections.log.gz",
+      "sha256": "91bd21771e3eaf52eca22e0a1d478f8b0e4f04ab6811974278760c49ee59b1ce"
+    }
+  ]
+}

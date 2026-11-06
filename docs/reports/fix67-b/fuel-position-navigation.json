@@ -1,0 +1,7 @@
+{
+  "method": "Single-variable A/B: retain all lane source, temporarily restore only fuel-truck x34\u219216.3; current bytes restored in finally. Same original navigation tests/helper.",
+  "command": "npx vitest run tests/engine/navigation.test.ts --maxWorkers=1 --configLoader runner",
+  "exitCode": 0,
+  "logSha256": "fb16402a2cf40bad9ad4a87dbcfd5cbc90b6e4e048484eb479478983d936b5ec",
+  "currentFailure": "Exactly one isolated residential yard remains at30.25,-33.75; area252.75 instead of259. All other navigation cases and objective/checkpoint reachability assertions pass. Fuel crater is derived from the truck and reused by the district."
+}
