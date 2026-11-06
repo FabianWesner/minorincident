@@ -128,8 +128,12 @@ export class LevelSevenDeparture {
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
     const d = Math.hypot(player.transform.x - this.boarding[0], player.transform.z - this.boarding[2]);
-    if (s.phase === 'waiting' && d <= cfg.boardRadius) { s.phase = 'boarding'; this.progress.clear(); }
-    else if (s.phase === 'boarding' && d > cfg.leaveRadius) { s.phase = 'waiting'; s.readyAt = null; this.progress.clear(); }
+    // Once the corridor is cleared the party heads straight for the bus.
+    // The courier may cover a distant straggler without recalling everyone
+    // already approaching the door back into the horde.
+    if (s.phase === 'waiting' && (w.missions?.state.steps.departure?.status === 'active' || d <= cfg.boardRadius)) {
+      s.phase = 'boarding'; this.progress.clear();
+    }
     // Boarding owns this exceptional step-through just like the door crossing. Keep the figure
     // visible and moving at its ordinary speed; never snap a trapped actor out of the camera.
     for (const id of [...s.assisting ?? []]) {
@@ -177,7 +181,7 @@ export class LevelSevenDeparture {
     }
     if (living.every(r => s.boarded.includes(r.id)) && !Object.keys(s.entering).length) {
       s.readyAt ??= w.tick;
-      if (!living.length || w.tick - s.readyAt >= 60) this.depart();
+      if (d <= cfg.boardRadius && (!living.length || w.tick - s.readyAt >= 60)) this.depart();
     } else s.readyAt = null;
   }
   private queue(slot: number) { return { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 }; }
@@ -220,7 +224,7 @@ export class LevelSevenDeparture {
     const name = missing && survivorName(w.entities.get(missing.r.id)!);
     const entity = missing && w.entities.get(missing.r.id)!;
     return {
-      count: missing ? count : `${count} · Everyone aboard`,
+      count: missing ? count : living.length ? `${count} · Everyone aboard` : 'Aboard 0/0 · No survivors',
       waiting: missing && entity ? `Waiting for ${name} · ${Math.ceil(distance(entity.transform, w.entities.get(1)!.transform))} m` : '',
       ...(missing && entity ? { target: { x: entity.transform.x, z: entity.transform.z, id: entity.id, name: name! } } : {}),
     };

@@ -25,8 +25,8 @@ export const l7Encounters = {
  * defaults from epic 29 section 5.5: 6-10 s shot, bus moves >= 30 m.
  */
 export const l7Departure = {
-  /** The player enters this radius around `l7-bus-boarding` to start boarding; leaving the larger one pauses it (those aboard stay aboard). */
-  boardRadius: 6, leaveRadius: 16,
+  /** Followers load as soon as the corridor is clear; the courier boards last inside this radius. */
+  boardRadius: 6,
   /** Departure approach includes crowd separation in this movement bound. */
   followMs: 4.6,
   /** Where survivors queue (in front of the bus nose) and the door they step through; one new passenger at most every `gapTicks`. */
