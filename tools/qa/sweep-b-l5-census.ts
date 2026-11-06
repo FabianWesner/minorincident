@@ -15,7 +15,8 @@ for (const tier of ['low', 'high'] as const) {
   try {
     const s = w.missions!.state.l5!, nav = w.infected!.nav, anchor = w.missions!.def.anchors;
     const reachable = nav.reachableFrom(nav.startCell(anchor['l5-out'], .45));
-    const planned: { x: number; z: number }[] = [], actors = [];
+    const planned: { x: number; z: number }[] = [];
+    const actors: { id: number; groupIndex: number; authoredGroupCount: number; spread: boolean; alpha: boolean; requested: { x: number; z: number }; admitted: { x: number; z: number; y: number; yaw: number }; admissionShiftM: number }[] = [];
     let cursor = 0;
     for (const [groupIndex, g] of l5Wanderers.entries()) for (let k = 0; k < g.n && cursor < s.infectedIds.length; k++) {
       const raw = { x: g.at[0] + k * 2.5, z: g.at[1] + k * 1.5 };
