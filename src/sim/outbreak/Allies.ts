@@ -340,12 +340,24 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const forward = moving && world.missions?.def.l3 && velocity
       ? -Math.atan2(velocity.z, velocity.x) : leader.transform.yaw;
     const behind = 4 + Math.floor((f.slot % 6) / 2), side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
-    const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
-      z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
+    const at = (b: number, s: number): Point => ({ x: p.x - Math.cos(forward) * b + Math.sin(forward) * s, z: p.z + Math.sin(forward) * b + Math.cos(forward) * s });
     const nav = world.infected!.nav;
+    const usable = (q: Point) => d <= 10 && nav.clear(q.x, q.z, .4) && nav.visible(e.transform, q, .4) && nav.visible(q, p, .4);
     // Settle into individual spots even after the courier stops. Sending every
     // blocked slot to her feet left the pull-back squad packed over the van.
-    let goal: Point = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
+    // fix67-a (L3-06): a slot beside a kerb car or frontage is blocked on most street samples. Falling back to the
+    // courier herself (stop at minM, speed capped to hers) froze rear officers ~6.45 m back; try the same row centred,
+    // the mirrored side and a short row before that.
+    let goal: Point = [at(behind, side), at(behind, 0), at(behind, -side), at(f.minM + .7, side), at(f.minM + .7, 0)].find(usable) ?? p;
+    // fix67-a (L3-06): a calm officer walking to a moving slot settles where the arrival ramp ((distance - stop) * 4) matches
+    // her pace, i.e. stop + pace / 4 behind it (1.2 m at the street pace). Aim that far ahead of the slot so the officer
+    // stands on it; Npcs.move grants the matching catch-up headroom. Fights keep the old movement.
+    const calm = !a.targetId && !a.strikeAt;
+    if (calm && moving && world.missions?.def.l3 && velocity && goal !== p) {
+      const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(2, .5 + v / 4);
+      const ahead = { x: goal.x + velocity.x / v * lead, z: goal.z + velocity.z / v * lead };
+      if (nav.clear(ahead.x, ahead.z, .4) && nav.visible(e.transform, ahead, .4)) goal = ahead;
+    }
     if (spread) {
       // The van divides the deck: a clear resting spot need not have a
       // straight sight line to the courier. Shared navigation routes around it;
