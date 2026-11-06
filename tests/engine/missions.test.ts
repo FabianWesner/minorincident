@@ -272,11 +272,12 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       const bystander = ai.l1!.humans.all().find(h => h.kind === 'civilian')!;
       expect(bystander).toBeDefined();
       const closest = vi.spyOn(ai.l1!, 'closest').mockReturnValue(bystander);
+      const approach = structuredClone(brain), approachState = actor.infected!.state;
       try {
         brain.cueYaw = actor.transform.yaw; brain.cueUntil = w.tick;
         (ai as unknown as { herdTurn(...args: unknown[]): void }).herdTurn(actor, actor.infected!, brain);
-        expect(brain.targetId, 'a herd turn must honor the same finite courier assignment as direct sight').not.toBe(bystander.id);
-      } finally { closest.mockRestore(); }
+        expect(brain.targetId, 'a herd turn retains normal human perception during a finite courier assignment (G-18)').toBe(bystander.id);
+      } finally { closest.mockRestore(); Object.assign(brain, approach); actor.infected!.state = approachState; }
       const focusClock = brain.focusUntil!, approachClock = brain.search.until;
       l6.infectedIds.push(id); m.l6!.restore(600);
       expect(brain.focusUntil, 'checkpoint rewind rebases the remaining courier assignment').toBe(focusClock + 600);

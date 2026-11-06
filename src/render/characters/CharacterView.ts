@@ -491,12 +491,12 @@ export class CharacterView extends Group {
   /** `striking` snaps the body onto the attack direction (QA1-06: strikes read side-on when the
    * 6 rad/s locomotion turn lags a 0.27 s jab); locomotion keeps the bounded turn. */
   /** `spin` (radians) is a presentation-only turn on top of the tracked heading (bat roundhouse, 00 §6.2). */
-  face(yaw: number, time: number, striking = false, frame?: Quaternion, spin = 0): void {
+  face(yaw: number, time: number, striking = false, frame?: Quaternion, spin = 0, snap = false): void {
     if (frame) { this.quaternion.copy(frame); this.facing = yaw; this.facingTime = time; this.turn = 0; return; }
     // Facing is tracked as a scalar heading. Reading it back from `rotation.y` (an XYZ Euler decomposed from the
     // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
     // diagonally (PO: walk micro-vibration).
-    if (this.facingTime < 0 || time < this.facingTime) this.facing = yaw;
+    if (snap || this.facingTime < 0 || time < this.facingTime) this.facing = yaw;
     const dt = Math.max(0, time - this.facingTime);
     let delta = Math.atan2(Math.sin(yaw - this.facing), Math.cos(yaw - this.facing));
     if (!striking && Math.abs(delta) < .006) delta = 0;

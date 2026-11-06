@@ -1,0 +1,85 @@
+{
+  "row": "G-09",
+  "status": "PASS",
+  "scope": "Close the reported L4 in-place hold counterexample under the 2026-11-06 clarification. Every other spatial objective and hidden pickup remains outside this fixture.",
+  "cells": 4,
+  "samples": 28,
+  "captures": [
+    {
+      "file": "test-results/fix68-g/G-09/low-z1.png",
+      "sha256": "a625d996b6b46d6f8cbb6783eef09d02a760f8cc97ca61c4978440b62960c0a8",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09/low-z1.5.png",
+      "sha256": "a76c35740728deef60bbd09adca422e01e95739034e046af4c04b078847b09b8",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09/high-z1.png",
+      "sha256": "499e70b9f81e932857e52e4ebb82cfd1207b71483db34913b35feb1c01eb11eb",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09/high-z1.5.png",
+      "sha256": "65995c11ae307a101b110ff6bfd5d2370cb23a3619ca0f1273138c0501c3cbb1",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-hud/low-z1.png",
+      "sha256": "b3c1cf0ede6f8624b6483a53330df7d3a87294b7c961d3bdb516e7ad71db3873",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-hud/low-z1.5.png",
+      "sha256": "005144293068ad9a811d4dd08c61e089f3c0899e80696d6533c34ae13a5b449c",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-hud/high-z1.png",
+      "sha256": "25ee8b403397fb517d8a5f8578a139471403617d0e99c09f74447ca6d8e726f4",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-hud/high-z1.5.png",
+      "sha256": "35686fe06d47729d501957d4978d10c264c5ca5039b6d5851dff9ff9f0a919fb",
+      "reviewed": true,
+      "what": "World ring absent. Legacy objective text is visible in the ui-disabled run; SceneSession suppresses full HUD in the intermediate run. These captures do not qualify full HUD visibility."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-visible/low-z1.png",
+      "sha256": "8964411c4970efee6c6a5ba4fcdd9ea5d7ba133c114ed04ae39c96ae2a70d397",
+      "reviewed": true,
+      "what": "Actual full HUD visibly says Hold the plaza with the army with countdown; no world destination ring. Both zooms and both tiers."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-visible/low-z1.5.png",
+      "sha256": "2d55c0c71788fd460608f3c35bad7384fb60c66cb097c4e8c2c4525ce2dace69",
+      "reviewed": true,
+      "what": "Actual full HUD visibly says Hold the plaza with the army with countdown; no world destination ring. Both zooms and both tiers."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-visible/high-z1.png",
+      "sha256": "5c5487b4cc3d651b1f9fb4d70cdd6c9d103dc1569997eb5fc5fc11f9da1dc34d",
+      "reviewed": true,
+      "what": "Actual full HUD visibly says Hold the plaza with the army with countdown; no world destination ring. Both zooms and both tiers."
+    },
+    {
+      "file": "test-results/fix68-g/G-09-visible/high-z1.5.png",
+      "sha256": "f3e7cda543999356f1e12efd5c6aa273539a8bbeb24753e354a9956c134566d8",
+      "reviewed": true,
+      "what": "Actual full HUD visibly says Hold the plaza with the army with countdown; no world destination ring. Both zooms and both tiers."
+    }
+  ],
+  "rejectedAttempts": [
+    "G-09-hud: SceneSession capture stylesheet suppresses full HUD; corrected by enabling its existing scene-HUD display override."
+  ],
+  "errors": []
+}

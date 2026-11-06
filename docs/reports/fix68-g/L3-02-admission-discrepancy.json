@@ -1,0 +1,85 @@
+{
+  "status": "FAIL",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "scope": "Low complete third cohort; no game/checker/count/threshold changes made for this discrepancy.",
+  "ledgerCount": 50,
+  "uniqueLedgerIds": 50,
+  "cohortObserverCount": 48,
+  "missing": [
+    {
+      "id": 226,
+      "sampleCount": 40,
+      "first": {
+        "tick": 3060,
+        "wave": 2,
+        "source": "river",
+        "scheduled": 2996,
+        "id": 226,
+        "identity": null,
+        "at": null,
+        "hidden": false,
+        "pending": false,
+        "goal": null
+      },
+      "last": {
+        "tick": 5400,
+        "wave": 2,
+        "source": "river",
+        "scheduled": 2996,
+        "id": 226,
+        "identity": null,
+        "at": null,
+        "hidden": false,
+        "pending": false,
+        "goal": null
+      }
+    },
+    {
+      "id": 240,
+      "sampleCount": 39,
+      "first": {
+        "tick": 3120,
+        "wave": 2,
+        "source": "river",
+        "scheduled": 3090,
+        "id": 240,
+        "identity": null,
+        "at": null,
+        "hidden": false,
+        "pending": false,
+        "goal": null
+      },
+      "last": {
+        "tick": 5400,
+        "wave": 2,
+        "source": "river",
+        "scheduled": 3090,
+        "id": 240,
+        "identity": null,
+        "at": null,
+        "hidden": false,
+        "pending": false,
+        "goal": null
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-complete.json.gz",
+      "sha256": "1699db5823bcc37ad69d6e026ecdcbc5e575f43ec2c88555ec81445f0e094d25",
+      "rawSha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "encoding": "gzip"
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-contact/G-22-L3-low-trace.json.gz",
+      "sha256": "22a1f2f08a80c27e3ef3d47224844f9994e3bda321216dbe9ce2cc105a8a2bcc"
+    }
+  ],
+  "next": "Trace EntityStore deletion/release and conversion admission acknowledgement for the missing IDs; distinguish an engine lifecycle failure from a cohort-identity join failure before changing game or checker.",
+  "archiveNote": "Historical sourceD evidence now links immutable gzip copies reconstructed byte-for-byte from49e8004; rawSha256 retains its original JSON hash. Current continuation checks are recorded separately.",
+  "continuation": {
+    "resolution": "docs/reports/fix68-g/L3-retirement-fix.json",
+    "commit": "d616789",
+    "note": "Low-complete lifecycle finding resolved; high stationary still has10 retained pending quota entries under the cap. Protecting every wave ID for80m was rejected after army-line regressions."
+  }
+}

@@ -249,12 +249,13 @@ export class LevelThreeCollapse {
     const a = l3.attack;
     for (const [w, wave] of a.waves.entries()) {
       const n = Math.ceil(wave.count * scale), police = Math.max(a.stationMinimum[w], Math.round(n * a.stationShare));
+      const nearCover = w === 0 || world.infected!.director.tier === 'high';
       for (let i = 0; i < n; i++) {
         // Keep the opening alarm burst, then sustain the first wave across its
         // authored stream. Later waves retain their existing cubic schedule.
         const progress = i / n, opening = .25 ** a.streamFront;
         const stream = w > 0 || progress <= .25 ? progress ** a.streamFront : opening + (1 - opening) * (progress - .25) / .75;
-        s.waves.push({ id: 0, dir: i < police ? 'station' : DIRS[(i - police) % DIRS.length], ...(w === 0 && i >= police && i < Math.ceil(n * .4) ? { source: 'yard-cover' as const } : {}), at: tick + ticks(wave.atS + stream * a.streamS + (i % 3) * .15), wave: w });
+        s.waves.push({ id: 0, dir: i < police ? 'station' : DIRS[(i - police) % DIRS.length], ...(nearCover && i >= police && i < Math.ceil(n * .4) ? { source: 'yard-cover' as const } : {}), at: tick + ticks(wave.atS + stream * a.streamS + (i % 3) * .15), wave: w });
       }
     }
     this.reserveWaves();
@@ -279,20 +280,29 @@ export class LevelThreeCollapse {
       const body = ai.active.find(e => e.health.current <= 0 && e.infected!.recoverAt >= 0 && e.infected!.downs > 1 && s.waveIds.includes(e.id));
       if (body) body.infected!.recoverAt = -1;
     }
-    if (ai.director.count >= this.emergenceCap(true) || !ai.pool.length) return;
+    if (ai.director.count >= this.emergenceCap(true, false, true) || !ai.pool.length) return;
     for (const q of s.waves) if (!q.id && tick >= q.at) {
       const player = world.entities.get(1)!.transform;
       const cover = q.source === 'yard-cover';
-      const pts = (cover ? this.alarmCoverSources : this.sources(q.dir)).filter(p => (ai.director.offscreen(p) || ai.director.occluded(p, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, p) < .85))
+      // Once the squad retreats, the remaining announced stream enters from
+      // real doors ahead of it. Sending it from the old yard toward the old
+      // police line left the third cohort behind a moving courier forever.
+      const velocity = world.entities.get(1)!.survivor!.velocity;
+      const fallback = s.phase === 'fallback' || s.phase === 'corridor';
+      const retreating = fallback && Math.hypot(velocity.x, velocity.z) > .5;
+      const doors = retreating ? this.doors().filter(p => dist(p, player) <= 30 &&
+        (p.x - player.x) * velocity.x + (p.z - player.z) * velocity.z >= 0) : [];
+      const sources = doors.length ? doors : cover && !retreating ? this.alarmCoverSources : this.sources(q.dir);
+      const pts = sources.filter(p => (ai.director.offscreen(p) || !retreating && ai.director.occluded(p, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, p) < .85))
         .sort((a, b) => dist(a, player) - dist(b, player));
       if (!pts.length) continue;
-      const id = this.emerge(pts[0], undefined, true, q.dir === 'station', true, false, cover);
+      const id = this.emerge(pts[0], undefined, true, q.dir === 'station', true, false, cover, true);
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       q.id = id; s.waveIds.push(id); s.wavesSpawned = Math.max(s.wavesSpawned, q.wave + 1);
       this.reserveWaves();
       // One finite arrival route clears the doorway. After fallback there is
       // no courier preference or compulsory approach; senses may interrupt it.
-      ai.rush(id, cover ? { x: this.alarmCoverSources[0].x - 4, z: this.alarmCoverSources[1].z + 2.5 } : RUSH[q.dir], tick + ticks(60), cover && s.phase === 'attack');
+      ai.rush(id, fallback ? player : cover ? { x: this.alarmCoverSources[0].x - 4, z: this.alarmCoverSources[1].z + 2.5 } : RUSH[q.dir], tick + ticks(60), cover && s.phase === 'attack');
       if (s.phase === 'attack' && !cover && (q.dir === 'station' || q.dir === 'commerce')) {
         ai.press(id, 1, tick + ticks(30), l3.density.playerBiasM);
         world.entities.get(id)!.infected!.l1!.search.completeApproach = true;
@@ -301,16 +311,16 @@ export class LevelThreeCollapse {
     }
   }
   /** Returning bodies hold S1 arrival slots too; later streets retain the E18 cap. */
-  private emergenceCap(s1 = false, pressure = false): number {
+  private emergenceCap(s1 = false, pressure = false, announced = false): number {
     const ai = this.world.infected!, s = this.s;
     const x = this.world.entities.get(1)!.transform.x;
     const opening = (s.phase === 'fallback' || s.phase === 'corridor') && x >= l3.map.corridor[0] && (s1 || x < l3.map.segments[0][1]);
-    return opening && !pressure ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
+    return opening && !pressure && !announced ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
   }
   /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
-  private emerge(at: Point, home?: Point, running = false, police = false, s1 = false, pressure = false, cover = false): number {
+  private emerge(at: Point, home?: Point, running = false, police = false, s1 = false, pressure = false, cover = false, announced = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    if (ai.director.count >= this.emergenceCap(s1, pressure) || !ai.pool.length) return 0;
+    if (ai.director.count >= this.emergenceCap(s1, pressure, announced) || !ai.pool.length) return 0;
     let out = this.snap(at, .45);
     const clear = (point: Point) => (ai.director.offscreen(point, world.districts?.groundHeight(point.x, point.z) ?? 0) || (police || cover) && ai.director.occluded(point, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, point) < .85);
     if (pressure && !clear(out)) for (const offset of [-1.2, 1.2, -2.4, 2.4]) {
@@ -362,7 +372,13 @@ export class LevelThreeCollapse {
     // Replacements fill casualties without turning the whole station into an escort.
     squad.push(...others.slice(0, Math.max(0, l3.officers.squad.size - squad.length)));
     const f = l3.officers.squad;
-    for (const [slot, id] of squad.entries()) {
+    // Keep the same squad and slots, assigning the nearest officer first.
+    // Fixed ID order crossed their breakout paths around the alarm truck.
+    const available = new Set(squad);
+    for (const slot of squad.keys()) {
+      const goal = { x: player.transform.x - 4 - Math.floor(slot / 2), z: player.transform.z + (slot % 2 ? 1 : -1) * 1.8 };
+      const id = [...available].sort((a, b) => dist(world.entities.get(a)!.transform, goal) - dist(world.entities.get(b)!.transform, goal))[0];
+      available.delete(id);
       const a = world.entities.get(id)!.civilian!.ally!;
       a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = weak(f.gun);
       // Shared allied follower/navigation keeps the assigned squad with the courier.
@@ -529,7 +545,8 @@ export class LevelThreeCollapse {
     // The announced station cohorts own the opening slots. S1's six low-tier
     // background residents otherwise consume the last slots of the 50-member wave.
     // They keep their authored queue and enter as soon as the courier leaves the yard.
-    if (this.insideYard(p) && s.waves.some(q => !q.id)) return;
+    const announcedPending = s.waves.some(q => !q.id);
+    if (this.insideYard(p) && announcedPending) return;
     // Stream street residents one at a time instead of creating three rigs/brains in one frame.
     // The yard retains its original cadence; the street rate remains at least as high (20/s vs 18/s).
     const yard = s.phase === 'attack' || p.x < l3.map.corridor[0];
@@ -547,6 +564,7 @@ export class LevelThreeCollapse {
     // so for the rest of this call (one frustum test per door, not per queued infected).
     const closed = this.closedDoors; closed.clear();
     for (const q of s.pending as Pending[]) {
+      if (announcedPending && !q.kind) continue;
       // A blocked pressure doorway retains its freed slot. Letting an unrelated
       // street/horde entry take it immediately can starve the announced batch.
       if (pressure && q.kind !== 'pressure') continue;
@@ -616,6 +634,7 @@ export class LevelThreeCollapse {
     const finalIds = new Set(s.finaleIds ?? []);
     const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
     for (const e of [...ai.active]) {
+      if (!e.motion && s.waveIds.includes(e.id)) continue; // An announced admission must participate in the fixed step before it can retire.
       if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
       if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
       const downBehind = e.health.current <= 0 && world.tick - e.infected!.deadAt > 120 && dist(e.transform, world.entities.get(1)!.transform) > 10;
@@ -644,6 +663,16 @@ export class LevelThreeCollapse {
     if (s.phase === 'attack') { this.emergeWaves(); this.checkFallback(); }
     if (s.phase !== 'yard') this.emergePending();
     if (tick % 120 === 0) {
+      // The short high-tier retreat lunge needs an arrival goal that follows
+      // the moving column. Keep the original finite expiry; rush() refuses
+      // to overwrite a human chase or attack acquired through normal senses.
+      if (world.infected!.director.tier === 'high' && (s.phase === 'fallback' || s.phase === 'corridor')) {
+        for (const q of s.waves) if (q.id && tick < q.at + ticks(60)) {
+          // A delayed admission already owns its full spawn-time budget.
+          const until = Math.max(q.at + ticks(60), world.entities.get(q.id)?.infected?.l1?.search.until ?? 0);
+          world.infected!.rush(q.id, player.transform, until);
+        }
+      }
       for (const q of s.waves) if (q.id && s.phase === 'attack') {
         const arriving = world.entities.get(q.id)?.infected?.l1;
         if (q.source === 'yard-cover' && arriving?.mode === 'attracted' && arriving.search.completeApproach) continue;

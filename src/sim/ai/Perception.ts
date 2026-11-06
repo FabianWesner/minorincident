@@ -210,10 +210,6 @@ export class Perception {
     let best: HumanTarget | undefined, bestDistance = Infinity, current: HumanTarget | undefined, currentDistance = Infinity;
     const brain = e.infected?.l1, pressure = e.infected?.pressureTarget;
     const focus = brain?.focusId && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : pressure && this.world.tick < pressure.until ? pressure.id : 0;
-    if (focus === 1 && ignoreId !== 1 && ['L3', 'L4', 'L6', 'L8'].includes(this.world.scenario ?? '')) {
-      const courier = this.humans.get(1);
-      if (courier && (currentId === 1 ? this.tracks(e, courier.position, 1) : this.notices(e, courier.position, 1))) return courier;
-    }
     for (const h of this.humans.within(e.transform, this.rangeM)) {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;

@@ -1,0 +1,66 @@
+diff --git a/src/sim/locomotion/AgentMotion.ts b/src/sim/locomotion/AgentMotion.ts
+index 4cac292..9f72a6d 100644
+--- a/src/sim/locomotion/AgentMotion.ts
++++ b/src/sim/locomotion/AgentMotion.ts
+@@ -7,7 +7,7 @@ import { SimPhase } from '../../core/EventBus';
+ import type { NavGrid } from '../ai/NavGrid';
+ import type { SimWorld } from '../world/SimWorld';
+ import type { EntitySnapshot } from '../world/types';
+-import { faceMotion, motionResponse, resetResponse, respond } from './MotionResponse';
++import { faceMotion, motionResponse, playerMotionLimits, resetResponse, respond } from './MotionResponse';
+ import { Status } from '../combat/Status';
+ import { followerInCombat } from '../outbreak/Survivors';
+ 
+@@ -72,7 +72,7 @@ export function installAgentMotion(world: SimWorld): void {
+     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
+       const yaw = e.transform.yaw;
+       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
+-        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
++        world.scenario === 'L3' && e.civilian?.ally?.follow ? playerMotionLimits : world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+       // Braking retains the authored approach distance. The windup owns facing,
+       // so residual steering must not turn the strike away from its victim.
+       if (e.infected?.state === 'attack') e.transform.yaw = yaw;
+diff --git a/src/sim/npc/Npcs.ts b/src/sim/npc/Npcs.ts
+index 3eb9ecb..5c806a8 100644
+--- a/src/sim/npc/Npcs.ts
++++ b/src/sim/npc/Npcs.ts
+@@ -8,6 +8,7 @@ import { Escorts } from './Escorts';
+ import { populateMorning } from './MorningRoutines';
+ import { Civilians } from './Civilians';
+ import { l5FollowerTracking, moveAgent } from '../locomotion/AgentMotion';
++import { playerMotionLimits } from '../locomotion/MotionResponse';
+ import type { Point } from './types';
+ /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
+ export class Npcs {
+@@ -35,7 +36,7 @@ export class Npcs {
+       // fix67-a (L3-06): a calm officer behind his slot gets headroom over her pace in proportion to the slot error;
+       // capped at exactly her pace he could never close a gap once it opened.
+       const leaderSpeed = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0);
+-      const catchUp = e.civilian!.ally!.targetId ? 0 : Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
++      const catchUp = Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
+       if (leaderSpeed > .5 && Math.hypot(e.transform.x - leader.transform.x, e.transform.z - leader.transform.z) <= follow.maxM + 2)
+         speed = Math.min(speed, leaderSpeed + catchUp);
+     }
+@@ -98,7 +99,7 @@ export class Npcs {
+     // At its catch-up pace the ordinary crowd response carries the dog several
+     // metres beyond a corner before it can turn back toward the courier.
+     moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
+-      this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
++      this.world.scenario === 'L3' && e.civilian?.ally?.follow ? playerMotionLimits : this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
+     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
+   }
+   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */
+diff --git a/src/sim/outbreak/Allies.ts b/src/sim/outbreak/Allies.ts
+index bd26e76..d8a8e96 100644
+--- a/src/sim/outbreak/Allies.ts
++++ b/src/sim/outbreak/Allies.ts
+@@ -352,8 +352,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+     // fix67-a (L3-06): a calm officer walking to a moving slot settles where the arrival ramp ((distance - stop) * 4) matches
+     // her pace, i.e. stop + pace / 4 behind it (1.2 m at the street pace). Aim that far ahead of the slot so the officer
+     // stands on it; Npcs.move grants the matching catch-up headroom. Fights keep the old movement.
+-    const calm = !a.targetId && !a.strikeAt;
+-    if (calm && moving && world.missions?.def.l3 && velocity && goal !== p) {
++    if (moving && world.missions?.def.l3 && velocity && goal !== p) {
+       const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(2, .5 + v / 4);
+       const ahead = { x: goal.x + velocity.x / v * lead, z: goal.z + velocity.z / v * lead };
+       if (nav.clear(ahead.x, ahead.z, .4) && nav.visible(e.transform, ahead, .4)) goal = ahead;

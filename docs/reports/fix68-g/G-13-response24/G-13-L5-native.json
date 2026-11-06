@@ -1,0 +1,294 @@
+{
+  "sourceHash": "8a1fac623d301227fc3feb17959bd01ee9a0353968e2bfa83a62570043977eb0",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "14a5587e15ad2235f833a290610890c725138723",
+  "generatedAt": "2026-11-06T04:49:39.255Z",
+  "row": "G-13",
+  "level": "L5",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/G-13-response24/G-13-L5-low-complete.json.gz",
+      "sha256": "38267fc08bc12af195b43eb15d5422121ebe98b2d323c641c49dda373debd769",
+      "outcome": "complete",
+      "nativeStateHash": "1628fae4",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/look",
+              "id": 31,
+              "samples": 126,
+              "median": 4.350289879854527,
+              "groupMedian": 4.372708613215049,
+              "ratio": 0.9948730328627962
+            },
+            {
+              "phase": "step/look",
+              "id": 30,
+              "samples": 108,
+              "median": 4.3951273465755705,
+              "groupMedian": 4.372708613215049,
+              "ratio": 1.0051269671372038
+            },
+            {
+              "phase": "step/look",
+              "id": 32,
+              "samples": 77,
+              "median": 4.48270763168886,
+              "groupMedian": 4.372708613215049,
+              "ratio": 1.025155808036551
+            },
+            {
+              "phase": "step/look",
+              "id": 28,
+              "samples": 44,
+              "median": 4.288413787376569,
+              "groupMedian": 4.372708613215049,
+              "ratio": 0.9807225147397823
+            },
+            {
+              "phase": "step/metro",
+              "id": 28,
+              "samples": 46,
+              "median": 4.407725943760692,
+              "groupMedian": 4.407725943760692,
+              "ratio": 1
+            },
+            {
+              "phase": "step/metro",
+              "id": 30,
+              "samples": 44,
+              "median": 4.440804565895716,
+              "groupMedian": 4.407725943760692,
+              "ratio": 1.0075046912074577
+            },
+            {
+              "phase": "step/metro",
+              "id": 31,
+              "samples": 46,
+              "median": 4.305021113123616,
+              "groupMedian": 4.407725943760692,
+              "ratio": 0.976698907339632
+            },
+            {
+              "phase": "step/metro",
+              "id": 32,
+              "samples": 47,
+              "median": 4.420918932983661,
+              "groupMedian": 4.407725943760692,
+              "ratio": 1.0029931509788272
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 45,
+              "median": 4.4002727743221595,
+              "groupMedian": 4.407725943760692,
+              "ratio": 0.9983090669579667
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-response24/G-13-L5-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L5",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 12082,
+            "stationaryFarTicks": 436,
+            "upperBoundPercent": 3.6086740605859955,
+            "followers": [
+              {
+                "id": 18,
+                "escortTicks": 12082,
+                "stationaryFarTicks": 148
+              },
+              {
+                "id": 31,
+                "escortTicks": 10085,
+                "stationaryFarTicks": 274
+              },
+              {
+                "id": 30,
+                "escortTicks": 8445,
+                "stationaryFarTicks": 394
+              },
+              {
+                "id": 32,
+                "escortTicks": 6756,
+                "stationaryFarTicks": 331
+              },
+              {
+                "id": 28,
+                "escortTicks": 4820,
+                "stationaryFarTicks": 280
+              },
+              {
+                "id": 29,
+                "escortTicks": 2543,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-response24/G-13-L5-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/G-13-response24/G-13-L5-high-complete.json.gz",
+      "sha256": "1b3cfb2c037205f0de0138ae58fe04cfb305292235a4cd5386335047678fa9ff",
+      "outcome": "complete",
+      "nativeStateHash": "124a4ffd",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/look",
+              "id": 31,
+              "samples": 132,
+              "median": 4.369633135307814,
+              "groupMedian": 4.326616424220779,
+              "ratio": 1.009942344518045
+            },
+            {
+              "phase": "step/look",
+              "id": 30,
+              "samples": 112,
+              "median": 4.283599713133745,
+              "groupMedian": 4.326616424220779,
+              "ratio": 0.9900576554819551
+            },
+            {
+              "phase": "step/look",
+              "id": 32,
+              "samples": 83,
+              "median": 4.373151022143141,
+              "groupMedian": 4.326616424220779,
+              "ratio": 1.010755424877014
+            },
+            {
+              "phase": "step/look",
+              "id": 28,
+              "samples": 52,
+              "median": 3.9480593042712937,
+              "groupMedian": 4.326616424220779,
+              "ratio": 0.912505042547731
+            },
+            {
+              "phase": "step/metro",
+              "id": 28,
+              "samples": 42,
+              "median": 4.493573126749826,
+              "groupMedian": 4.493573126749826,
+              "ratio": 1
+            },
+            {
+              "phase": "step/metro",
+              "id": 30,
+              "samples": 43,
+              "median": 4.446619500800995,
+              "groupMedian": 4.493573126749826,
+              "ratio": 0.98955093761147
+            },
+            {
+              "phase": "step/metro",
+              "id": 31,
+              "samples": 42,
+              "median": 4.364194831074011,
+              "groupMedian": 4.493573126749826,
+              "ratio": 0.9712081472746847
+            },
+            {
+              "phase": "step/metro",
+              "id": 32,
+              "samples": 43,
+              "median": 4.500332019794055,
+              "groupMedian": 4.493573126749826,
+              "ratio": 1.0015041244135972
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 41,
+              "median": 4.49779669632696,
+              "groupMedian": 4.493573126749826,
+              "ratio": 1.0009399133958656
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-response24/G-13-L5-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L5",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14353,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": 0,
+            "followers": [
+              {
+                "id": 18,
+                "escortTicks": 14353,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 31,
+                "escortTicks": 12002,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 9365,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 7265,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 28,
+                "escortTicks": 5234,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 29,
+                "escortTicks": 2900,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-response24/G-13-L5-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

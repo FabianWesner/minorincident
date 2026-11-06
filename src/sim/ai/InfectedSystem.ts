@@ -336,7 +336,8 @@ export class InfectedSystem {
    * interrupts a set-piece approach; distant camp defenders keep their authored battle. */
   private noticeDuringApproach(e: EntitySnapshot, courier: EntitySnapshot): void {
     const b = e.infected!, brain = b.l1;
-    if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted') ||
+    if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted' || !brain && b.heardTargetId ||
+        b.pressureTarget && this.world.tick < b.pressureTarget.until) ||
         e.emerging || b.specialAttack || b.state === 'attack' || b.grabUntil > this.world.tick || Status.stunned(e, this.world.tick)) return;
     if (this.world.scenario === 'L4' && b.breachApproach && b.scripted) {
       const assigned = this.world.entities.get(b.pressureTarget?.id ?? brain?.focusId ?? b.l4FlankTarget ?? 1) ?? courier;
@@ -347,9 +348,6 @@ export class InfectedSystem {
     }
     let target: EntitySnapshot | undefined, nearest = Infinity;
     for (const candidate of this.approachParty) {
-      // A metro arrival's finite courier assignment must survive the column
-      // crossing its entrance; the corgi can still alert it to the courier.
-      if (['L3', 'L4', 'L6', 'L8'].includes(this.world.scenario ?? '') && brain?.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0) && candidate.id !== 1 && !isCorgi(candidate)) continue;
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
       if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
@@ -359,6 +357,7 @@ export class InfectedSystem {
     }
     if (!target) return;
     b.heardTargetId = target.id; b.state = 'chase'; e.combat!.attacking = false;
+    if (b.pressureTarget && b.pressureTarget.id !== target.id) delete b.pressureTarget;
     delete b.scripted; delete b.breachApproach; delete b.investigate; delete e.noiseTarget;
     if (brain) {
       brain.mode = 'chase'; brain.targetId = target.id;
@@ -1167,8 +1166,6 @@ export class InfectedSystem {
     this.goTo(e.id, { x: e.transform.x + fx * run, z: e.transform.z + fz * run }, tick + l1Ticks(2 + rng.next()), 0);
   }
   private sight(e: EntitySnapshot, b: InfectedState, brain: L1Brain, seen: HumanTarget): boolean {
-    // Both direct perception and herd turns select through this same rule.
-    if (['L3', 'L4', 'L6', 'L8'].includes(this.world.scenario ?? '') && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0) && seen.id !== 1) return false;
     const tick = this.world.tick, heard = !this.l1!.sees(e, seen.position);
     if (brain.mode === 'chase' && brain.targetId === seen.id) {
       const dx = seen.position.x - brain.seenX, dz = seen.position.z - brain.seenZ, d = Math.hypot(dx, dz);
@@ -1216,6 +1213,13 @@ export class InfectedSystem {
         if (this.infectedNav.clear(this.ringPoint.x, this.ringPoint.z, e.combat!.radius)) { this.steerL1(e, brain, this.ringPoint, brain.runSpeed, true, true); return; }
       }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
+      // L3 high has a short retreat lunge. Resolve reaching it during this
+      // move before crowd separation can push the runner outside it again.
+      if (this.world.scenario === 'L3' && this.director.tier === 'high' && this.world.tick >= b.cooldown &&
+          Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= lunge &&
+          (this.l1!.lineOfSight(e.transform, target.position) || Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= 1.6)) {
+        b.combo = 0; this.windup(e);
+      }
       return;
     }
     // Civilians: runner lunge burst inside 2.5 m, then grab on contact.

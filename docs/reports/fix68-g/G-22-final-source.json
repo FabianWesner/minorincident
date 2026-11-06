@@ -1,0 +1,513 @@
+{
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "scope": "Final game source, all three L3 cohorts, both tiers and native policies; no full every-level announcement inventory claim.",
+  "rows": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-complete.json.gz",
+      "sha256": "1699db5823bcc37ad69d6e026ecdcbc5e575f43ec2c88555ec81445f0e094d25",
+      "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+      "stateHash": "3ce6de95",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 3
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 23,
+              "median": 4.4901615192863975,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9953970760110403
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 203,
+              "median": 4.511584052402963,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.000146109366163
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 203,
+              "median": 4.51661443419605,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.001261264646558
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 202,
+              "median": 4.510265875628361,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9998538906338371
+            }
+          ],
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11457,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8728288382648163,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11457,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1557,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9285,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9358,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 181.51666666666668,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 161.51666666666668,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 141.51666666666668,
+            "spawned": 48,
+            "firstAttackSeconds": 7.433333333333334,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5.3857661893567,
+          "target": "3 \u2264 value \u2264 25",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 \u2264 value \u2264 Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        }
+      ],
+      "rawSha256": "78831dd1202b5d8ba2eeac49728d0c4b391636658cfa5b531e1764f692d0b8aa",
+      "encoding": "gzip"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-low-stationary.json.gz",
+      "sha256": "160cf09d43f6b67b841c80ed85ddc11986fdc6194597b8c6be8af40e7477fe3c",
+      "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+      "stateHash": "c30feb32",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.966666666666667,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 50,
+            "firstAttackSeconds": 4.466666666666667,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 \u2264 value \u2264 Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+        }
+      ],
+      "rawSha256": "dfcceac0538db2df4f30467a13571073eb847f09e6e089d5c7f7aa0f8ccc11b7",
+      "encoding": "gzip"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-complete.json.gz",
+      "sha256": "2b9b08440b1365a2cbf64d114930f52ba3cd50e0cf2522d95a18c9743dc91ec8",
+      "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+      "stateHash": "9e71c96f",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 10,
+              "median": 4.926288360902988,
+              "groupMedian": 4.926288360902988,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 12416,
+            "stationaryFarTicks": 1608,
+            "upperBoundPercent": 12.95103092783505,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 12416,
+                "stationaryFarTicks": 1602
+              },
+              {
+                "id": 30,
+                "escortTicks": 283,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 133,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 204,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 287,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting \u226410%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 197.5,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 177.5,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 157.5,
+            "spawned": 100,
+            "firstAttackSeconds": 14.466666666666667,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 12.020606754436177,
+          "target": "3 \u2264 value \u2264 25",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 \u2264 value \u2264 Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        }
+      ],
+      "rawSha256": "87fa129fb86836525bcd66cda5524d5b7e08cff8663aa30ecc02523035579ae3",
+      "encoding": "gzip"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "file": "docs/reports/fix68-g/accept-d485990/receipts/L3-high-stationary.json.gz",
+      "sha256": "54317280c42cff6d6d49a065a9bf68a3885d113b18c0245dbb41f0a1d977b092",
+      "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+      "stateHash": "9e07e267",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 60,
+            "firstAttackSeconds": 15.133333333333333,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 90,
+            "firstAttackSeconds": 7.333333333333333,
+            "flags": []
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 \u2264 value \u2264 Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+        }
+      ],
+      "rawSha256": "29346ba31e0ba95df57db1ae93908605fe0807169657f41b23514bc7d9179905",
+      "encoding": "gzip"
+    }
+  ],
+  "archiveNote": "Historical sourceD evidence now links immutable gzip copies reconstructed byte-for-byte from49e8004; rawSha256 retains its original JSON hash. Current continuation checks are recorded separately."
+}

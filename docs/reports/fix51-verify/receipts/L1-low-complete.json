@@ -4,10 +4,10 @@
   "tier": "low",
   "policy": "complete",
   "seed": 1,
-  "sourceHash": "c7a509a67d9cf56003518ca7d81b21a9c97c8c1f0f6438cc8083539a5445ddb0",
-  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "revision": "9f82472999e751987b0cb428e18e8af4fa5579ee",
-  "generatedAt": "2026-11-06T02:09:03.494Z",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "f6031cac649a3d5faa2a64a27eab72e0e0c4ebf2",
+  "generatedAt": "2026-11-06T05:47:05.341Z",
   "run": {
     "level": "L1",
     "policy": "complete",
@@ -16,7 +16,7 @@
     "time": 115.08333333333333,
     "deaths": 0,
     "kills": 0,
-    "damageTaken": 40,
+    "damageTaken": 30,
     "failures": {},
     "objectiveTimeline": [
       {
@@ -47,7 +47,7 @@
     "collision": {
       "failures": 0,
       "pending": 0,
-      "admitted": 5777,
+      "admitted": 5027,
       "deferred": 7,
       "requests": [],
       "offenders": []
@@ -1094,7 +1094,7 @@
             "started": 4167,
             "kills": [],
             "events": {
-              "civilian.saved:*": 1,
+              "civilian.saved:*": 2,
               "player.damaged:*": 1
             },
             "interaction": 36
@@ -1103,13 +1103,18 @@
             "status": "completed",
             "started": 5132,
             "kills": [
-              182,
-              189,
-              176
+              185,
+              164,
+              1000000492,
+              187,
+              176,
+              172,
+              174
             ],
             "events": {
-              "player.damaged:*": 3,
-              "combat.kill:*": 3,
+              "player.damaged:*": 2,
+              "combat.kill:*": 7,
+              "civilian.saved:*": 1,
               "interact.completed:*": 1
             },
             "interaction": 1
@@ -1144,24 +1149,24 @@
         "stats": {
           "time": 115.08333333333333,
           "kills": 0,
-          "knockdowns": 3,
-          "damage": 40,
+          "knockdowns": 6,
+          "damage": 30,
           "deaths": 0,
-          "rescued": 1,
+          "rescued": 3,
           "optionalObjectives": []
         },
         "result": {
           "time": 115.08333333333333,
           "kills": 0,
-          "knockdowns": 3,
-          "damage": 40,
+          "knockdowns": 6,
+          "damage": 30,
           "deaths": 0,
-          "rescued": 1,
+          "rescued": 3,
           "optionalObjectives": [],
           "delivered": true,
-          "infected": 29,
+          "infected": 27,
           "turned": 0,
-          "escaped": 6
+          "escaped": 5
         },
         "l1": {
           "phase": "spread",
@@ -1198,8 +1203,7 @@
             105,
             139,
             98,
-            97,
-            123
+            97
           ],
           "graceUntil": 0,
           "house": {
@@ -1241,18 +1245,18 @@
             "ids": [
               211,
               213,
-              216,
-              218,
-              221,
+              215,
+              217,
+              220,
+              222,
               224,
-              227,
-              229,
-              233,
-              236
+              226,
+              230,
+              232
             ],
             "walking": [
               {
-                "id": 236,
+                "id": 232,
                 "until": 7099,
                 "leg": -1
               }
@@ -1408,7 +1412,7 @@
           "x": -76.03812408447266,
           "y": 1.25,
           "z": 41.14918899536133,
-          "yaw": -2.929803313580757
+          "yaw": -3.0793932591004536
         },
         "health": {
           "current": 100,
@@ -1427,8 +1431,8 @@
         "survivor": {
           "variant": "female",
           "gearTier": 0,
-          "animation": "idle",
-          "animationTick": 6608,
+          "animation": "swing",
+          "animationTick": 6887,
           "velocity": {
             "x": 0,
             "z": 0
@@ -1439,16 +1443,17 @@
             "x": 23.257389068603516,
             "y": 0.9649999737739563,
             "z": 37.310020446777344,
-            "yaw": 1.6508496192221687
+            "yaw": 1.7596292420389532
           },
           "diedAt": null,
           "attack": {
             "actionId": "weapon.bat",
-            "combo": 2,
-            "started": 6212,
-            "activeAt": 6219,
-            "recoveryAt": 6223,
-            "endsAt": 6235
+            "combo": 0,
+            "started": 6887,
+            "activeAt": 6893,
+            "recoveryAt": 6904,
+            "endsAt": 6914,
+            "style": "roundhouse"
           }
         },
         "combat": {
@@ -1471,17 +1476,17 @@
                 "charges": 0,
                 "nextCharge": 0,
                 "reloadUntil": 0,
-                "readyAt": 6235
+                "readyAt": 6914
               }
             ],
             "index": 0,
             "aim": {
-              "x": 0.1629786906671113,
-              "z": 0.9866295892524378
+              "x": -0.9980662412213327,
+              "z": 0.062159296443254866
             },
             "aimPoint": {
-              "x": -48.09725062256852,
-              "z": 35.04713809179428
+              "x": -77.70670489167857,
+              "z": 41.253107758215904
             },
             "swapUntil": 0
           },
@@ -1582,8 +1587,8 @@
         {
           "id": 95,
           "archetype": "npc.jogger",
-          "x": -67.38246478987712,
-          "z": 14.841960615413445,
+          "x": -67.38243626181016,
+          "z": 14.841970275280328,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1596,8 +1601,8 @@
         {
           "id": 96,
           "archetype": "npc.jogger",
-          "x": -68.26917989498467,
-          "z": 16.92942292739337,
+          "x": -68.8244210833637,
+          "z": 19.578589065502243,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1624,9 +1629,9 @@
         {
           "id": 100,
           "archetype": "npc.jogger",
-          "x": -50.74055780638093,
-          "z": 3.6877794446358156,
-          "hp": 0,
+          "x": -50.79633725269775,
+          "z": 4.614216491179841,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1666,9 +1671,9 @@
         {
           "id": 103,
           "archetype": "npc.delivery-driver",
-          "x": -18.58108888448807,
-          "z": 6.716490621891522,
-          "hp": 100,
+          "x": -16.14618466434334,
+          "z": 4.431101196484102,
+          "hp": 0,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1680,8 +1685,8 @@
         {
           "id": 104,
           "archetype": "npc.suburban-mom",
-          "x": -2.125887626879767,
-          "z": 16.97502268838134,
+          "x": -2.1258889788595865,
+          "z": 16.97504868818239,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1722,8 +1727,8 @@
         {
           "id": 108,
           "archetype": "npc.bathrobe-neighbor",
-          "x": 36.67950264377143,
-          "z": 26.83272948560089,
+          "x": 32.360412307377636,
+          "z": 26.505346996657124,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1736,9 +1741,9 @@
         {
           "id": 109,
           "archetype": "npc.delivery-driver",
-          "x": 38.64008406476634,
-          "z": 27.046451275150602,
-          "hp": 0,
+          "x": 57.25420139457516,
+          "z": 49.428945371732425,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1750,8 +1755,8 @@
         {
           "id": 110,
           "archetype": "npc.bbq-dad",
-          "x": 32.45205293514246,
-          "z": 35.87080039715032,
+          "x": 33.341837184182644,
+          "z": 35.217275244682504,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1792,8 +1797,8 @@
         {
           "id": 113,
           "archetype": "npc.bbq-dad",
-          "x": 6.332494665055963,
-          "z": -3.4712109056404894,
+          "x": 6.30918182725949,
+          "z": -3.441522079155435,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1806,8 +1811,8 @@
         {
           "id": 114,
           "archetype": "npc.suburban-mom",
-          "x": 6.711678178007162,
-          "z": -0.4549708993371554,
+          "x": 6.033771016828271,
+          "z": 2.8869273723805446,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1820,9 +1825,9 @@
         {
           "id": 115,
           "archetype": "npc.bathrobe-neighbor",
-          "x": -17.859799999999964,
-          "z": 4.4159,
-          "hp": 100,
+          "x": -17.875019996642,
+          "z": 4.419876097785397,
+          "hp": 0,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1834,8 +1839,8 @@
         {
           "id": 116,
           "archetype": "npc.bathrobe-neighbor",
-          "x": 25.95140685817835,
-          "z": -23.922008798067342,
+          "x": 25.340200000000024,
+          "z": -25.084099999999978,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1848,8 +1853,8 @@
         {
           "id": 117,
           "archetype": "npc.bathrobe-neighbor",
-          "x": -59.0289681343973,
-          "z": 13.02884908655682,
+          "x": -55.56,
+          "z": 5.3158999999999965,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1862,9 +1867,9 @@
         {
           "id": 118,
           "archetype": "npc.delivery-driver",
-          "x": -52.24267127192505,
-          "z": 3.129496483123017,
-          "hp": 0,
+          "x": -52.30526862219892,
+          "z": 3.057338354597979,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1876,9 +1881,9 @@
         {
           "id": 119,
           "archetype": "npc.suburban-mom",
-          "x": -60.4016178637772,
-          "z": -6.798375374455566,
-          "hp": 0,
+          "x": -60.55070824834527,
+          "z": -12.153953165856786,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1890,8 +1895,8 @@
         {
           "id": 120,
           "archetype": "npc.suburban-mom",
-          "x": -41.302707507357454,
-          "z": 29.37859829216992,
+          "x": -41.81370754881307,
+          "z": 29.476455474138348,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -1904,9 +1909,9 @@
         {
           "id": 121,
           "archetype": "npc.suburban-mom",
-          "x": -50.84115968843248,
-          "z": 3.8552482160529817,
-          "hp": 0,
+          "x": -53.22985879715293,
+          "z": 3.8999999997480157,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1918,9 +1923,23 @@
         {
           "id": 122,
           "archetype": "npc.suburban-mom",
-          "x": -52.04466160419224,
-          "z": -3.569775632172568,
-          "hp": 0,
+          "x": -59.82386762495554,
+          "z": -3.4499999999999997,
+          "hp": 100,
+          "maxHp": 100,
+          "civilian": true,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": false,
+          "pickup": null
+        },
+        {
+          "id": 123,
+          "archetype": "npc.bathrobe-neighbor",
+          "x": -73.42098752923678,
+          "z": 4.352365032536044,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1932,9 +1951,9 @@
         {
           "id": 124,
           "archetype": "npc.bbq-dad",
-          "x": 42.167331141944906,
-          "z": -28.233652918371483,
-          "hp": 0,
+          "x": 42.85795031154093,
+          "z": -27.5306660816559,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -1946,8 +1965,8 @@
         {
           "id": 125,
           "archetype": "npc.dog",
-          "x": 40.800320863073466,
-          "z": -27.763199653413903,
+          "x": 43.84581982005846,
+          "z": -29.187543104095987,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1974,8 +1993,8 @@
         {
           "id": 127,
           "archetype": "npc.jogger",
-          "x": 21.000576990727698,
-          "z": -27.05035908177199,
+          "x": 26.486545717800773,
+          "z": -26.829863194518122,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1988,9 +2007,9 @@
         {
           "id": 128,
           "archetype": "npc.bbq-dad",
-          "x": 23.05221055002226,
-          "z": -34.91193788751916,
-          "hp": 0,
+          "x": 34.54496584479691,
+          "z": -33.74049200918912,
+          "hp": 100,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -2002,8 +2021,8 @@
         {
           "id": 129,
           "archetype": "npc.dog",
-          "x": 22.761750098233758,
-          "z": -33.5602615410829,
+          "x": 32.51830896943744,
+          "z": -32.333656276725065,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -2016,8 +2035,8 @@
         {
           "id": 130,
           "archetype": "npc.jogger",
-          "x": 71.27810962334073,
-          "z": 3.9381274378300666,
+          "x": 71.3907791918662,
+          "z": 3.9136098834831627,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2030,8 +2049,8 @@
         {
           "id": 131,
           "archetype": "npc.bathrobe-neighbor",
-          "x": 59.052031432276685,
-          "z": 2.853927023993751,
+          "x": 59.05169523869331,
+          "z": 2.8497128595828793,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2044,9 +2063,9 @@
         {
           "id": 132,
           "archetype": "npc.jogger",
-          "x": 28.278892919717656,
-          "z": 3.8971115123075086,
-          "hp": 100,
+          "x": 25.65919036710843,
+          "z": 3.2070634368916755,
+          "hp": 0,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -2058,9 +2077,9 @@
         {
           "id": 133,
           "archetype": "npc.bathrobe-neighbor",
-          "x": 33.93416509785343,
-          "z": -2.4119297014153336,
-          "hp": 100,
+          "x": 36.77272072351433,
+          "z": -2.937884807315077,
+          "hp": 0,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -2072,9 +2091,9 @@
         {
           "id": 134,
           "archetype": "npc.jogger",
-          "x": -64.26255325977293,
-          "z": 37.7328491659804,
-          "hp": 100,
+          "x": -68.10982918766183,
+          "z": 39.81106870251401,
+          "hp": 0,
           "maxHp": 100,
           "civilian": true,
           "role": null,
@@ -2100,8 +2119,8 @@
         {
           "id": 137,
           "archetype": "npc.jogger",
-          "x": 9.996242068798427,
-          "z": 23.8353492834892,
+          "x": 9.996148890524143,
+          "z": 23.834743540573573,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2128,8 +2147,8 @@
         {
           "id": 140,
           "archetype": "npc.cashier",
-          "x": -23.35945657571228,
-          "z": 33.79576254622494,
+          "x": -28.38760280357924,
+          "z": 27.236359088013153,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2142,8 +2161,8 @@
         {
           "id": 141,
           "archetype": "npc.bbq-dad",
-          "x": 34.01007898838127,
-          "z": 35.231623215327794,
+          "x": 33.94002426342382,
+          "z": 34.30725909001891,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2156,8 +2175,8 @@
         {
           "id": 142,
           "archetype": "npc.jogger",
-          "x": 30.709954736002775,
-          "z": 26.549875695798416,
+          "x": 31.70153147546521,
+          "z": 26.650646984357525,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2198,8 +2217,8 @@
         {
           "id": 145,
           "archetype": "npc.delivery-driver",
-          "x": -34.46509198921635,
-          "z": 37.65892240008434,
+          "x": -28.560734644579306,
+          "z": 37.35025161104689,
           "hp": 0,
           "maxHp": 100,
           "civilian": true,
@@ -2226,8 +2245,8 @@
         {
           "id": 147,
           "archetype": "infected.runner",
-          "x": 46.14476403197514,
-          "z": -25.679825241456054,
+          "x": -4.001424416665221,
+          "z": 4.294951122162561,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2254,8 +2273,8 @@
         {
           "id": 151,
           "archetype": "infected.runner",
-          "x": 45.30853874058312,
-          "z": -26.91307570972871,
+          "x": 2.6113585523347673,
+          "z": 2.9898000841484724,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2268,8 +2287,8 @@
         {
           "id": 153,
           "archetype": "infected.runner",
-          "x": 46.45542472425916,
-          "z": -24.651448204786472,
+          "x": -4.6362441078085395,
+          "z": 3.629939241785829,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2282,8 +2301,8 @@
         {
           "id": 155,
           "archetype": "infected.runner",
-          "x": 23.761791005777948,
-          "z": -33.87701582380637,
+          "x": -9.09059385856713,
+          "z": 4.253554058218863,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2296,8 +2315,8 @@
         {
           "id": 157,
           "archetype": "infected.runner",
-          "x": 32.262473973648206,
-          "z": -29.412290913059174,
+          "x": -20.682566190625188,
+          "z": 4.113537915851395,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2310,8 +2329,8 @@
         {
           "id": 159,
           "archetype": "infected.runner",
-          "x": 14.694829852448706,
-          "z": 23.99978735816914,
+          "x": 16.673360661103487,
+          "z": 26.376234832029485,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2324,8 +2343,8 @@
         {
           "id": 162,
           "archetype": "infected.runner",
-          "x": 11.864477475254487,
-          "z": 24.433611455983694,
+          "x": 20.37749405982893,
+          "z": 27.391459414322693,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2338,9 +2357,9 @@
         {
           "id": 164,
           "archetype": "infected.runner",
-          "x": 16.65589074568733,
-          "z": 25.529477379442877,
-          "hp": 51,
+          "x": -3.2740992241796882,
+          "z": 32.32294472400471,
+          "hp": 60,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2352,9 +2371,9 @@
         {
           "id": 166,
           "archetype": "infected.runner",
-          "x": 18.819956100981283,
-          "z": 27.796941202119807,
-          "hp": 51,
+          "x": 12.509392721883263,
+          "z": 11.483623439968627,
+          "hp": 60,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2366,8 +2385,8 @@
         {
           "id": 168,
           "archetype": "infected.runner",
-          "x": 17.403666158580887,
-          "z": 23.7140450636276,
+          "x": 19.81666050641274,
+          "z": 29.217599103527583,
           "hp": 51,
           "maxHp": 60,
           "civilian": false,
@@ -2380,8 +2399,8 @@
         {
           "id": 170,
           "archetype": "infected.runner",
-          "x": 8.53944136594914,
-          "z": 0.7488477248750854,
+          "x": 14.89369894120119,
+          "z": 14.04541761848971,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2394,9 +2413,9 @@
         {
           "id": 172,
           "archetype": "infected.runner",
-          "x": -58.23695296289283,
-          "z": 5.073732464932852,
-          "hp": 60,
+          "x": -78.15583470022817,
+          "z": 41.281079441615375,
+          "hp": 0,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2408,9 +2427,9 @@
         {
           "id": 174,
           "archetype": "infected.runner",
-          "x": -60.07769456041515,
-          "z": 3.2653658437961566,
-          "hp": 60,
+          "x": -47.54144192346486,
+          "z": 35.499247432906735,
+          "hp": 0,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2422,9 +2441,9 @@
         {
           "id": 176,
           "archetype": "infected.runner",
-          "x": -47.98237927091265,
-          "z": 35.53376379248091,
-          "hp": 0,
+          "x": -73.49864519799051,
+          "z": 43.20257612461539,
+          "hp": 60,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2436,9 +2455,9 @@
         {
           "id": 179,
           "archetype": "infected.runner",
-          "x": -74.43868157276907,
-          "z": 42.45166826451775,
-          "hp": 7,
+          "x": -73.7836998423459,
+          "z": 42.07572358313324,
+          "hp": 21,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2450,9 +2469,9 @@
         {
           "id": 182,
           "archetype": "infected.runner",
-          "x": 17.16351928982996,
-          "z": 37.67815255242275,
-          "hp": 60,
+          "x": 18.73182686696633,
+          "z": 31.724471087765355,
+          "hp": 51,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2464,9 +2483,9 @@
         {
           "id": 185,
           "archetype": "infected.runner",
-          "x": -74.84981119375874,
-          "z": 40.73107008449913,
-          "hp": 9,
+          "x": 16.989810407845642,
+          "z": 36.56514393081721,
+          "hp": 60,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2478,9 +2497,9 @@
         {
           "id": 187,
           "archetype": "infected.runner",
-          "x": -74.84999996983441,
-          "z": 41.640410562355136,
-          "hp": 30,
+          "x": -8.798941752803922,
+          "z": 31.41774526954321,
+          "hp": 60,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2492,9 +2511,9 @@
         {
           "id": 189,
           "archetype": "infected.runner",
-          "x": -12.085277783061004,
-          "z": 29.91647696956499,
-          "hp": 60,
+          "x": -74.11058376573767,
+          "z": 41.59792482505747,
+          "hp": 0,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2506,9 +2525,9 @@
         {
           "id": 191,
           "archetype": "infected.runner",
-          "x": -26.15371505160749,
-          "z": 41.66211594054982,
-          "hp": 60,
+          "x": -74.61650940391127,
+          "z": 42.465030991428726,
+          "hp": 30,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2520,9 +2539,9 @@
         {
           "id": 210,
           "archetype": "npc.firefighter",
-          "x": -74.84999999482145,
-          "z": 39.78215172614237,
-          "hp": 70,
+          "x": -74.80264426482134,
+          "z": 40.17118576191298,
+          "hp": 0,
           "maxHp": 70,
           "civilian": true,
           "role": "firefighter",
@@ -2534,9 +2553,9 @@
         {
           "id": 211,
           "archetype": "infected.runner",
-          "x": -74.04554029913126,
-          "z": 41.17582900033905,
-          "hp": 60,
+          "x": -74.41827173631081,
+          "z": 40.578086109363234,
+          "hp": 30,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -2548,8 +2567,8 @@
         {
           "id": 213,
           "archetype": "infected.runner",
-          "x": -25.817376702164914,
-          "z": 26.22136332959627,
+          "x": -8.560484703792195,
+          "z": 25.764401324253182,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2560,10 +2579,10 @@
           "pickup": null
         },
         {
-          "id": 216,
+          "id": 215,
           "archetype": "infected.runner",
-          "x": -26.26279330234604,
-          "z": 34.16155011391371,
+          "x": -30.956817588434397,
+          "z": 36.569371555401624,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2574,10 +2593,10 @@
           "pickup": null
         },
         {
-          "id": 218,
+          "id": 217,
           "archetype": "infected.runner",
-          "x": -40.44765317903512,
-          "z": 34.759751315619965,
+          "x": -36.307515327051874,
+          "z": 35.50535761197522,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2588,10 +2607,24 @@
           "pickup": null
         },
         {
-          "id": 221,
+          "id": 220,
           "archetype": "infected.runner",
-          "x": -31.472145374019327,
-          "z": 28.085858785163637,
+          "x": -25.73900717372234,
+          "z": 27.890425767686427,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 222,
+          "archetype": "infected.runner",
+          "x": -13.586126986488253,
+          "z": 27.93838744294139,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2604,8 +2637,8 @@
         {
           "id": 224,
           "archetype": "infected.runner",
-          "x": -21.28259496240109,
-          "z": 27.45802932728696,
+          "x": -10.985734165664223,
+          "z": 29.06898138461303,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2616,10 +2649,10 @@
           "pickup": null
         },
         {
-          "id": 227,
+          "id": 226,
           "archetype": "infected.runner",
-          "x": -10.51076168501278,
-          "z": 29.511391620013576,
+          "x": -4.3598026006317925,
+          "z": 27.819686137421765,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2630,10 +2663,10 @@
           "pickup": null
         },
         {
-          "id": 229,
+          "id": 230,
           "archetype": "infected.runner",
-          "x": -3.9993696426069945,
-          "z": 27.84058315745274,
+          "x": 5.2777798184839755,
+          "z": 26.105385216264615,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2644,21 +2677,7 @@
           "pickup": null
         },
         {
-          "id": 233,
-          "archetype": "infected.runner",
-          "x": 5.274801635819666,
-          "z": 26.089845573188175,
-          "hp": 60,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 236,
+          "id": 232,
           "archetype": "infected.runner",
           "x": 5.01147,
           "z": 23.974416666666524,
@@ -2714,35 +2733,35 @@
       "story.say": 4,
       "objective.completed": 5,
       "item.granted": 2,
-      "mission.signal": 3,
+      "mission.signal": 5,
       "l1.flicker": 1,
       "l1.blast": 1,
-      "civilian.state": 600,
+      "civilian.state": 427,
       "l1.ringing": 1,
       "l1.smoke": 1,
       "l1.screams": 1,
       "l1.infectedExit": 1,
       "checkpoint.set": 3,
-      "ai.alerted": 709,
-      "civilian.grabbed": 32,
-      "outbreak.bite": 31,
-      "civilian.finished": 31,
-      "world.blocker.changed": 26,
-      "civilian.saved": 1,
-      "outbreak.civilian-escaped": 6,
-      "combat.attack": 30,
-      "telegraph": 35,
-      "combat.hit": 25,
-      "combat.hit-stop": 17,
-      "player.damaged": 4,
+      "ai.alerted": 695,
+      "civilian.grabbed": 38,
+      "outbreak.bite": 29,
+      "civilian.finished": 29,
+      "world.blocker.changed": 20,
+      "civilian.saved": 4,
+      "outbreak.civilian-escaped": 5,
+      "telegraph": 29,
+      "combat.attack": 28,
+      "combat.hit": 38,
+      "combat.hit-stop": 23,
+      "player.damaged": 3,
       "infected.attack": 8,
-      "combat.kill": 3,
-      "noise": 3,
-      "infected.groan": 3,
+      "combat.kill": 9,
+      "noise": 7,
+      "ally.attack": 11,
+      "infected.groan": 6,
+      "infected.recovered": 5,
       "interact.completed": 1,
-      "infected.recovered": 2,
       "civilian.bark": 1,
-      "ally.attack": 4,
       "level.completed": 1
     },
     "ledger": [
@@ -2831,6 +2850,11 @@
         "tick": 4631
       },
       {
+        "type": "mission.signal",
+        "name": "civilian.saved",
+        "tick": 4938
+      },
+      {
         "type": "objective.completed",
         "id": "weapon",
         "tick": 5132
@@ -2852,6 +2876,11 @@
         "tick": 5132
       },
       {
+        "type": "mission.signal",
+        "name": "civilian.saved",
+        "tick": 5974
+      },
+      {
         "type": "objective.completed",
         "id": "firestation",
         "tick": 6605
@@ -2868,15 +2897,15 @@
         "result": {
           "time": 115.08333333333333,
           "kills": 0,
-          "knockdowns": 3,
-          "damage": 40,
+          "knockdowns": 6,
+          "damage": 30,
           "deaths": 0,
-          "rescued": 1,
+          "rescued": 3,
           "optionalObjectives": [],
           "delivered": true,
-          "infected": 29,
+          "infected": 27,
           "turned": 0,
-          "escaped": 6
+          "escaped": 5
         },
         "tick": 6905
       }
@@ -3043,9 +3072,9 @@
     "births": {},
     "speed": {
       "regularMax": 5.801164742442429,
-      "fasterThanPlayer": 1847,
-      "regularSamples": 1949,
-      "sprinters": 1949
+      "fasterThanPlayer": 1780,
+      "regularSamples": 1872,
+      "sprinters": 1872
     },
     "runOut": {
       "tick": 6605,
@@ -3106,13 +3135,13 @@
     "ticks": 6905,
     "followerWait": {
       "escortTicks": 6090,
-      "stationaryFarTicks": 0,
-      "upperBoundPercent": 0,
+      "stationaryFarTicks": 1023,
+      "upperBoundPercent": 16.798029556650246,
       "followers": [
         {
           "id": 83,
           "escortTicks": 6090,
-          "stationaryFarTicks": 0
+          "stationaryFarTicks": 1023
         }
       ]
     },
@@ -3175,12 +3204,12 @@
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 78,
-            "median": 4.500076187317064
+            "samples": 77,
+            "median": 0
           }
         ],
-        "followerMin": 4.500076187317064,
-        "followerMedian": 4.500076187317064,
+        "followerMin": 0,
+        "followerMedian": 0,
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
@@ -3213,12 +3242,12 @@
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 49,
-            "median": 4.503846810454924
+            "samples": 48,
+            "median": 0
           }
         ],
-        "followerMin": 4.503846810454924,
-        "followerMedian": 4.503846810454924,
+        "followerMin": 0,
+        "followerMedian": 0,
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
@@ -3316,7 +3345,7 @@
           {
             "id": 83,
             "samples": 1,
-            "median": 2.431162429790057
+            "median": 0.4119556753145347
           }
         ],
         "followerMin": null,
@@ -3383,36 +3412,38 @@
         "initial": 5,
         "observed": 28,
         "reachableEver": 28,
-        "within2_5m": 11,
-        "attacks": 19,
-        "attacksPerMinute": 28.04428044280443,
-        "firstAttackSeconds": 12.116666666666667,
+        "within2_5m": 8,
+        "attacks": 17,
+        "attacksPerMinute": 25.092250922509226,
+        "firstAttackSeconds": 12.666666666666666,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
         "firstGroupAttackSeconds": null,
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 76,
-            "median": 4.507450013277488
+            "samples": 77,
+            "median": 6.227285314063075
           }
         ],
-        "followerMin": 4.507450013277488,
-        "followerMedian": 4.507450013277488,
+        "followerMin": 6.227285314063075,
+        "followerMedian": 6.227285314063075,
         "boundedPaths": {
           "samples": 23,
-          "minimumPercent": 100,
-          "worstTick": 6572,
-          "nearby": 4,
-          "reachable": 4,
-          "blockedIds": []
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
           "tick": 6572,
-          "alive": 27,
-          "reachable": 27,
+          "alive": 24,
+          "reachable": 24,
           "playerX": -73.91126251220703,
           "playerZ": 40.46430969238281,
           "positions": []
@@ -3429,22 +3460,22 @@
         "initial": 5,
         "observed": 20,
         "reachableEver": 20,
-        "within2_5m": 8,
-        "attacks": 7,
-        "attacksPerMinute": 26.1139896373057,
-        "firstAttackSeconds": 12.1,
+        "within2_5m": 4,
+        "attacks": 5,
+        "attacksPerMinute": 18.65284974093264,
+        "firstAttackSeconds": 12.65,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
         "firstGroupAttackSeconds": null,
         "followerSpeeds": [
           {
             "id": 83,
-            "samples": 31,
-            "median": 4.525367004687262
+            "samples": 32,
+            "median": 7.993294263507268
           }
         ],
-        "followerMin": 4.525367004687262,
-        "followerMedian": 4.525367004687262,
+        "followerMin": 7.993294263507268,
+        "followerMedian": 7.993294263507268,
         "boundedPaths": {
           "samples": 9,
           "minimumPercent": 100,
@@ -3475,10 +3506,10 @@
         "initial": 20,
         "observed": 28,
         "reachableEver": 28,
-        "within2_5m": 7,
+        "within2_5m": 6,
         "attacks": 12,
         "attacksPerMinute": 29.327902240325866,
-        "firstAttackSeconds": 0.7166666666666667,
+        "firstAttackSeconds": 0.4166666666666667,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
         "firstGroupAttackSeconds": null,
@@ -3486,25 +3517,27 @@
           {
             "id": 83,
             "samples": 45,
-            "median": 4.503363420445792
+            "median": 4.547830762033034
           }
         ],
-        "followerMin": 4.503363420445792,
-        "followerMedian": 4.503363420445792,
+        "followerMin": 4.547830762033034,
+        "followerMedian": 4.547830762033034,
         "boundedPaths": {
           "samples": 13,
-          "minimumPercent": 100,
-          "worstTick": 6572,
-          "nearby": 4,
-          "reachable": 4,
-          "blockedIds": []
+          "minimumPercent": 88.88888888888889,
+          "worstTick": 5252,
+          "nearby": 9,
+          "reachable": 8,
+          "blockedIds": [
+            166
+          ]
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
           "tick": 6572,
-          "alive": 27,
-          "reachable": 27,
+          "alive": 24,
+          "reachable": 24,
           "playerX": -73.91126251220703,
           "playerZ": 40.46430969238281,
           "positions": []
@@ -3518,13 +3551,13 @@
         "startSeconds": 110.08333333333333,
         "seconds": 5,
         "spawned": 2,
-        "initial": 27,
+        "initial": 24,
         "observed": 29,
-        "reachableEver": 29,
-        "within2_5m": 4,
-        "attacks": 16,
-        "attacksPerMinute": 192,
-        "firstAttackSeconds": 0.15,
+        "reachableEver": 28,
+        "within2_5m": 5,
+        "attacks": 12,
+        "attacksPerMinute": 144,
+        "firstAttackSeconds": 1.1333333333333333,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
         "firstGroupAttackSeconds": null,
@@ -3534,13 +3567,13 @@
         "boundedPaths": {
           "samples": 3,
           "minimumPercent": 0,
-          "worstTick": 6845,
+          "worstTick": 6725,
           "nearby": 4,
           "reachable": 0,
           "blockedIds": [
             179,
-            185,
-            187,
+            189,
+            191,
             211
           ]
         },
@@ -3548,8 +3581,8 @@
         "blockedEvidence": null,
         "last": {
           "tick": 6845,
-          "alive": 29,
-          "reachable": 29,
+          "alive": 28,
+          "reachable": 28,
           "playerX": -76.03812408447266,
           "playerZ": 41.14918899536133,
           "positions": []
@@ -3559,6 +3592,6 @@
     ],
     "waves": []
   },
-  "nativeStateHash": "182d12b0",
+  "nativeStateHash": "b5e6a3be",
   "error": null
 }

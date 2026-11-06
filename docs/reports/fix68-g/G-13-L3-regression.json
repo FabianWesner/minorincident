@@ -1,0 +1,345 @@
+{
+  "row": "G-13",
+  "level": "L3",
+  "status": "FAIL",
+  "method": "Existing evaluate() on untouched base/final native receipts. Its human-only group median excludes the companion; raw threat phase flags use a different broader population and are not substituted.",
+  "rows": [
+    {
+      "tier": "low",
+      "version": "base-be6af29",
+      "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 88,
+              "median": 4.368328047665178,
+              "groupMedian": 4.506716338303421,
+              "ratio": 0.9692928775077199
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 214,
+              "median": 4.4968574270828725,
+              "groupMedian": 4.506716338303421,
+              "ratio": 0.9978123958819517
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 214,
+              "median": 4.516575249523969,
+              "groupMedian": 4.506716338303421,
+              "ratio": 1.0021876041180484
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 215,
+              "median": 4.544200621821534,
+              "groupMedian": 4.506716338303421,
+              "ratio": 1.0083174268590032
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11619,
+            "stationaryFarTicks": 26,
+            "upperBoundPercent": 0.2237714088992168,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11619,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 3748,
+                "stationaryFarTicks": 26
+              },
+              {
+                "id": 31,
+                "escortTicks": 9406,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9440,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9434,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        }
+      ],
+      "gitObject": "be6af29:docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "historicalContentSHA256": "32007a94f27b33273c828c67dc88a7bdd67968a20ae022779140a67dba08bb3c"
+    },
+    {
+      "tier": "low",
+      "version": "final-49d44dc",
+      "file": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-low-complete.json.gz",
+      "sha256": "31a58fd27e08fbef992a3407b44b7246f6e103b850c7d89ce45716ab9de4c495",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 26,
+              "median": 2.660875875106389,
+              "groupMedian": 2.590105788468832,
+              "ratio": 1.0273232417581653
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 29,
+              "median": 1.9417834549430153,
+              "groupMedian": 2.590105788468832,
+              "ratio": 0.7496927205011656
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 29,
+              "median": 2.5193357018312743,
+              "groupMedian": 2.590105788468832,
+              "ratio": 0.9726767582418345
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 35,
+              "median": 4.077706746150637,
+              "groupMedian": 2.590105788468832,
+              "ratio": 1.57433984523127
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 22492,
+            "stationaryFarTicks": 521,
+            "upperBoundPercent": 2.316379157033612,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 22492,
+                "stationaryFarTicks": 144
+              },
+              {
+                "id": 30,
+                "escortTicks": 2165,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 2494,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 2444,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2261,
+                "stationaryFarTicks": 334
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        }
+      ],
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "originalSHA256": "40b3eef4a75cc2f5f80a077a5459484d9007b602512f8c1682f32c51eb4410de"
+    },
+    {
+      "tier": "high",
+      "version": "base-be6af29",
+      "sourceHash": "612d16b60e0eb3bfa056e401210477a3d2c57b9a96c266518cb038f68fd9c00e",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 12059,
+            "stationaryFarTicks": 14,
+            "upperBoundPercent": 0.11609586201177544,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 12059,
+                "stationaryFarTicks": 13
+              },
+              {
+                "id": 30,
+                "escortTicks": 177,
+                "stationaryFarTicks": 1
+              },
+              {
+                "id": 31,
+                "escortTicks": 124,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 129,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 243,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        }
+      ],
+      "gitObject": "be6af29:docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "historicalContentSHA256": "dea34935556fba842b8df2717c506713281d1d91c969da147d02b6fb1ce42ce8"
+    },
+    {
+      "tier": "high",
+      "version": "final-49d44dc",
+      "file": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-high-complete.json.gz",
+      "sha256": "44f7d0297f2ad5b9e69a5e64c6bf9743240f439b2f1fc888335628e64f82ddab",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 10,
+              "median": 4.583657823734729,
+              "groupMedian": 4.262949095225749,
+              "ratio": 1.0752316580247592
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 15,
+              "median": 3.9422403667167685,
+              "groupMedian": 4.262949095225749,
+              "ratio": 0.9247683419752407
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 18596,
+            "stationaryFarTicks": 703,
+            "upperBoundPercent": 3.7803828780382878,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 18596,
+                "stationaryFarTicks": 597
+              },
+              {
+                "id": 30,
+                "escortTicks": 498,
+                "stationaryFarTicks": 46
+              },
+              {
+                "id": 31,
+                "escortTicks": 385,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 465,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 568,
+                "stationaryFarTicks": 80
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        }
+      ],
+      "originalFile": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "originalSHA256": "869f5a693f69684ab27220a99003232042d8472e784eae0f2ba37f8bfe2521e7"
+    }
+  ]
+}

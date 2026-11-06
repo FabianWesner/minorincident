@@ -1,0 +1,90 @@
+{
+  "command": "npm run qa:threat",
+  "exitCode": 1,
+  "revision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "seconds": 419.20336237500004,
+  "flags": [
+    "L3/criterion/L3-02 cohorts:FAIL",
+    "L6/wave/l6.breach2:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+    "L7/step/corridor:SLOW_FOLLOWER:62",
+    "L7/step/corridor:SLOW_FOLLOWER:63",
+    "L7/step/corridor:SLOW_FOLLOWER:67",
+    "L7/step/corridor:SLOW_FOLLOWER:70",
+    "L7/step/corridor:SLOW_FOLLOWER:71",
+    "L7/step/corridor:SLOW_FOLLOWER:74",
+    "L7/phase/encounters:SLOW_FOLLOWER:62",
+    "L7/phase/encounters:SLOW_FOLLOWER:63",
+    "L7/phase/encounters:SLOW_FOLLOWER:67",
+    "L7/phase/encounters:SLOW_FOLLOWER:70",
+    "L7/phase/encounters:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:SLOW_FOLLOWER:74"
+  ],
+  "files": [
+    {
+      "path": "docs/reports/fix68-g/threat-final/L1.json.gz",
+      "sha256": "49d4883da3dc98ade9f4cef04055db9796aeac1fd75896a8fb717ab27b2e401b",
+      "rawSha256": "890c6b788c8d65d9ececd2137f0f5773c418021610eaf7a646401cafe2b83073"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L10.json.gz",
+      "sha256": "047aba9eae3975ee3e37ef2918eb6ac8b47acf79e1482018a6a73f17e71ca1fb",
+      "rawSha256": "f2e069f12a5b5b88ca4c17458305ddbf7160207ad53845c897086a1580c6b99e"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L2.json.gz",
+      "sha256": "764639858b41c67eca440cc4619cbb6677b9377b9080a40156e1514afb5cbaec",
+      "rawSha256": "b79cb6a9549a9da9628010e32505978b24c5770a040e34a0973d55259e2413ce"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L3.json.gz",
+      "sha256": "31ba16f7e0e9eb8bd73286f9d0f50516292f68c1511e5a67986a4dcd89a91f2b",
+      "rawSha256": "8c434eeac9d4d816ea3c424d35b36e2595b050880eb66f8da57bf5981935f1a0"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L4.json.gz",
+      "sha256": "c6982a16929980d6c8adcdc81e53c54398ddca4aa81ee96bc1074675ca7b1c7a",
+      "rawSha256": "7011aa70c1f2fd9262e4e7e04e85bad87541e3086ca1131f5e7b3526c166c4c2"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L5.json.gz",
+      "sha256": "9cde1397616715a94949e972ed5b4f1354e5d69b3b42c2d544413fbdbfa569d1",
+      "rawSha256": "c423d511bf283e652c6e12b7e78b70638a4754a33e9f91ad02025bf4b7e9a438"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L6.json.gz",
+      "sha256": "ef73f2b9cfc45a47d356caf26b4ebb17746e79407dd6d5d2af2b517ed7782445",
+      "rawSha256": "6b0e179689f65727ef6eabc6ec005d439d2e5c34ed63b78230ae4af3335af3d3"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L7.json.gz",
+      "sha256": "3623de04ef63f3a771b6f0a738b84d52fe0d13f318be16ffa7287736762e55d9",
+      "rawSha256": "ea4f9136fa674c4a47a09af177724afa5ed0bdb1f6c9494ef7aeb8dbfd2720ba"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L8.json.gz",
+      "sha256": "f1c019dda61c2d970a1cfa39ffa7610ffab9875949d5c51be666c769e8699ec2",
+      "rawSha256": "8a28f1877e8bb8445c400f9172471f413d2a2a47b457c9e37e1e8b266847c8a4"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/L9.json.gz",
+      "sha256": "7f15827b12d428fa4619bddb255e4c5ec43be2633690fb787f993dc7cab0f928",
+      "rawSha256": "eb978bcdac75cdb3c08a6f743fb26ead12e14cb91d865316551d6af98ba8ea23"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/README.md.gz",
+      "sha256": "8f1d44e1f9bc4a2e73ac283e1cc123c093b4534c7d73ba44882b6281379d9e54",
+      "rawSha256": "d10d3f7ec45ec9b7a21b3d3985cc270e6aaeddead004661a68ff2c24db973677"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/audit.json.gz",
+      "sha256": "c72465beb8b2847c3f171a739296172a6d254709068af247f9c425b3448dc08c",
+      "rawSha256": "a89e21cbd6b56e5f9b411b7263e87f9a88871900b1db07792e8da8a1b1129f2d"
+    },
+    {
+      "path": "docs/reports/fix68-g/threat-final/command.log.gz",
+      "sha256": "dc3c18a37eb81d773d041615d78b120a316e32a03abd81f5658caf7256f15365",
+      "rawSha256": "32b9107a301d9504e4d21e3ff81382828440dde069b253d1d8487a380dd60503"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "base": "be6af29",
+  "gameplayRevision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "gameFiles": [
+    {
+      "file": "src/input/InputSystem.ts",
+      "sha256": "921867be91f51f562e3a23de4ed8aa2414aafc79befe55e80994db9e301994ee"
+    },
+    {
+      "file": "src/levels/L3/layout.ts",
+      "sha256": "a020dc55b54186b3bef01c8cd466f01e6474bbf028cfd48d957d8c0f2161ae99"
+    },
+    {
+      "file": "src/render/characters/CharacterView.ts",
+      "sha256": "843d333acb55139b636807317e3c291cfeffbf57c75ea906429775180001b369"
+    },
+    {
+      "file": "src/render/characters/CourierPresenter.ts",
+      "sha256": "f941bf9ec7017589019c64a4e1dd1c3c62a52407a0fcff6594d738ba0a7deb83"
+    },
+    {
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "sha256": "542c091e4c4061acdf483293e5cb8aafbb5b001a9b2849f37c3b639105708d2f"
+    },
+    {
+      "file": "src/sim/ai/Perception.ts",
+      "sha256": "9a3991a390a6526bb97ebde59b73b274b7402d70e4637b8346bb92283963e441"
+    },
+    {
+      "file": "src/sim/locomotion/AgentMotion.ts",
+      "sha256": "bf548b582c1f20fe037a96a68cd07756ea7da92268ab3df339871b184f2a34ad"
+    },
+    {
+      "file": "src/sim/missions/LevelThreeCollapse.ts",
+      "sha256": "9977f1ad294a4d9130d2b878691543e81088ce3ad1033767b13c872ed344e6ae"
+    },
+    {
+      "file": "src/sim/missions/Mission.ts",
+      "sha256": "5d2da60a58b9cc4e6c941b429017201aaf3899fc2131cf3ddaee86df3049820e"
+    },
+    {
+      "file": "src/sim/npc/Npcs.ts",
+      "sha256": "d694dcb91b1fa00dd52d19021cce2fb944926cd40c9c8f987b66f774ecf88b5a"
+    }
+  ],
+  "protectedChanges": [],
+  "measurementCoreChanges": [],
+  "criterion": {
+    "file": "docs/qa/level-acceptance.md",
+    "sha256": "bdeba9c8f2d9beafe5de5577b524887d4cd9e1c6d938f069f947c8e702154eb8",
+    "identicalToBase": true
+  },
+  "scope": "Final code frozen; no performance work, push or deployment. Scheduled counts, population caps and authored maximum speeds retained. L3 calm squad reuses existing follower response limits."
+}

@@ -1,0 +1,51 @@
+{
+  "reportedMainCounterexamples": {
+    "lowCompleteStation0": 24.9833333333,
+    "lowHighCompleteStation2": "no attack",
+    "highStationaryStation1": 30.9833333333
+  },
+  "stagedBaselineAfterEarlierSharedFixes": {
+    "file": "docs/reports/fix68-g/G-22-L3-native.json",
+    "sha256": "be8c1597ed6d138cd706a602763d287a3b84b2c9c845ecab407a72f7e15b1bba",
+    "sourceHash": "e28a440cc2c0ee324702936f1c13186249e4db04e7c78d526da8187450e20418",
+    "rows": [
+      {
+        "tier": "low",
+        "policy": "complete",
+        "seconds": [
+          24.8,
+          4.533333333333333,
+          null
+        ]
+      },
+      {
+        "tier": "low",
+        "policy": "stationary",
+        "seconds": [
+          3.7333333333333334,
+          4.85,
+          3.8666666666666667
+        ]
+      },
+      {
+        "tier": "high",
+        "policy": "complete",
+        "seconds": [
+          5.85,
+          3.55,
+          null
+        ]
+      },
+      {
+        "tier": "high",
+        "policy": "stationary",
+        "seconds": [
+          3.5,
+          25.016666666666666,
+          8.766666666666667
+        ]
+      }
+    ]
+  },
+  "note": "Earlier G-18 targeting fixes changed the staged baseline timings. Both histories remain original; G-22-fix.json baseline records the originally reported main findings. The local staged baseline still fails station-0 low complete, station-2 both complete, and station-1 high stationary."
+}

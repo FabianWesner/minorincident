@@ -1,0 +1,5880 @@
+{
+  "criterionChanges": [],
+  "countCapTimerReductions": [],
+  "method": "Every trial retains original provenance. Prefixes are diagnostic only. Selection requires completed routes, both-tier observed pace/wait, cohort deadlines, competent attack rate and three-seed army-line rule. High has only one officer with10 qualified samples; no full high-roster pace qualification claimed.",
+  "rows": [
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "4ab79e976c80394ed56206caad011faab50df81c6b8097773f92db7413be1962",
+      "selected": false,
+      "configuration": "Nearest assignment plus existing follower response only when calm. Successful prototype; cleaned implementation selected.",
+      "sourceHash": "8460d769eb9a2ad966396d03520241941e467c236ec8cc919ea8d49afb075300",
+      "stateHash": "4cd74d11",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 10,
+              "median": 4.926288360902988,
+              "groupMedian": 4.926288360902988,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14251,
+            "stationaryFarTicks": 505,
+            "upperBoundPercent": 3.5436109746684443,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14251,
+                "stationaryFarTicks": 499
+              },
+              {
+                "id": 30,
+                "escortTicks": 283,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 133,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 204,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 287,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 228.08333333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 208.08333333333334,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 188.08333333333334,
+            "spawned": 100,
+            "firstAttackSeconds": 14.466666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2250
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2282
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2282
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2358
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 15.490785093772834,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "dd834d508604397ebbb433471fef9213233effeb31166208956ffae06fb24154",
+      "selected": false,
+      "configuration": "Nearest assignment plus existing follower response only when calm. Successful prototype; cleaned implementation selected.",
+      "sourceHash": "8460d769eb9a2ad966396d03520241941e467c236ec8cc919ea8d49afb075300",
+      "stateHash": "3ce6de95",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 3
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 23,
+              "median": 4.4901615192863975,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9953970760110403
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 203,
+              "median": 4.511584052402963,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.000146109366163
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 203,
+              "median": 4.51661443419605,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.001261264646558
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 202,
+              "median": 4.510265875628361,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9998538906338371
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11457,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8728288382648163,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11457,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1557,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9285,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9358,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 181.51666666666668,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 161.51666666666668,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 141.51666666666668,
+            "spawned": 48,
+            "firstAttackSeconds": 7.433333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 3
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 2,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 3822
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5.3857661893567,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-calm-slots-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "04512aa6b5f640da35c0ac654002382cb4eddcbba6aa70a8daf7956945d0fb62",
+      "selected": false,
+      "configuration": "Nearest assignment plus continuous lead/catch-up; fails low pace.",
+      "sourceHash": "cb519fb0dafb3dd0577bb5e9c4062f6d9086eb71471533f5c3b0529e609ae6c7",
+      "stateHash": "d9f1f723",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 15,
+              "median": 4.080081341744484,
+              "groupMedian": 4.080081341744484,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 13597,
+            "stationaryFarTicks": 1968,
+            "upperBoundPercent": 14.473780981098772,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 13597,
+                "stationaryFarTicks": 1962
+              },
+              {
+                "id": 30,
+                "escortTicks": 266,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 147,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 236,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 444,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 217.18333333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 197.18333333333334,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 177.18333333333334,
+            "spawned": 100,
+            "firstAttackSeconds": 14.133333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2255
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2285
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2311
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2439
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 7.0993740889994,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "4f7e8182ddb4b236729e9140cdc261dd698e1686a458371516a8b80fc7fd6b22",
+      "selected": false,
+      "configuration": "Nearest assignment plus continuous lead/catch-up; fails low pace.",
+      "sourceHash": "cb519fb0dafb3dd0577bb5e9c4062f6d9086eb71471533f5c3b0529e609ae6c7",
+      "stateHash": "134fdc9d",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 2
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 15,
+              "median": 3.06767473225426,
+              "groupMedian": 3.8369349067924983,
+              "ratio": 0.7995117995938835
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 115,
+              "median": 4.373987052102704,
+              "groupMedian": 3.8369349067924983,
+              "ratio": 1.1399690529957822
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 114,
+              "median": 4.350783700179757,
+              "groupMedian": 3.8369349067924983,
+              "ratio": 1.13392168641631
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 34,
+              "median": 3.32308611340524,
+              "groupMedian": 3.8369349067924983,
+              "ratio": 0.86607831358369
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 21718,
+            "stationaryFarTicks": 2519,
+            "upperBoundPercent": 11.598673911041532,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 21718,
+                "stationaryFarTicks": 2091
+              },
+              {
+                "id": 30,
+                "escortTicks": 1477,
+                "stationaryFarTicks": 108
+              },
+              {
+                "id": 31,
+                "escortTicks": 5803,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 5765,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2360,
+                "stationaryFarTicks": 339
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 352.53333333333336,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 332.53333333333336,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 312.53333333333336,
+            "spawned": 50,
+            "firstAttackSeconds": 3.7,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 2
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 4974
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 5552
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 11057
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 11064
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 72.29726285743412,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-continuous-slots-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "8ce304ad10e0a68ab5fa044939f7212840b9eaa489a7cd8fd04182ad279adf87",
+      "selected": false,
+      "configuration": "Moving slot velocity plus position correction under old body limits; fails high pace. Larger API rejected.",
+      "sourceHash": "8a6bbd7be5fc4165c2e3fc38949f463d15472656bd5aa2ac292ded3b5da9c904",
+      "stateHash": "6e907dc1",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 11,
+              "median": 5.0720397968320485,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 1.6719843081982275
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 29,
+              "median": 2.6588906614284045,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 0.8764961714022426
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 29,
+              "median": 1.9719815843782451,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 0.6500584374743389
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 15,
+              "median": 3.40819952830885,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 1.1235038285977574
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 42361,
+            "stationaryFarTicks": 3644,
+            "upperBoundPercent": 8.602252071480843,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 42361,
+                "stationaryFarTicks": 3292
+              },
+              {
+                "id": 30,
+                "escortTicks": 919,
+                "stationaryFarTicks": 337
+              },
+              {
+                "id": 31,
+                "escortTicks": 1993,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1971,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 968,
+                "stationaryFarTicks": 15
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 696.5833333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 676.5833333333334,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 656.5833333333334,
+            "spawned": 100,
+            "firstAttackSeconds": 9.333333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 32085
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 32152
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 32587
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 32594
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 14.71328531911182,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "200beb448ff4b5747a43ba3e3d1801394fa755a4b52b513452dd84819c065f55",
+      "selected": false,
+      "configuration": "Moving slot velocity plus position correction under old body limits; fails high pace. Larger API rejected.",
+      "sourceHash": "8a6bbd7be5fc4165c2e3fc38949f463d15472656bd5aa2ac292ded3b5da9c904",
+      "stateHash": "138bac25",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 126,
+              "median": 4.242582654846267,
+              "groupMedian": 4.4234770184268,
+              "ratio": 0.9591058430219068
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 116,
+              "median": 4.357912265719724,
+              "groupMedian": 4.4234770184268,
+              "ratio": 0.9851780053487441
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 140,
+              "median": 4.489041771133875,
+              "groupMedian": 4.4234770184268,
+              "ratio": 1.014821994651256
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 109,
+              "median": 4.499900620336839,
+              "groupMedian": 4.4234770184268,
+              "ratio": 1.0172768167646589
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 13672,
+            "stationaryFarTicks": 525,
+            "upperBoundPercent": 3.839964891749561,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 13672,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 7061,
+                "stationaryFarTicks": 65
+              },
+              {
+                "id": 31,
+                "escortTicks": 6583,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 7459,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 6030,
+                "stationaryFarTicks": 482
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 218.43333333333334,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 198.43333333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 178.43333333333334,
+            "spawned": 50,
+            "firstAttackSeconds": 5.416666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 8947
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 10042
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 10430
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 10867
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 21.77482070336127,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz",
+      "sha256": "437fded54a3ef65d2053eea9d6d3de942c2ee69e4a6116db27a7958659501d3e",
+      "selected": true,
+      "configuration": "Selected clean implementation: shared calm follower response and nearest existing L3 slots.",
+      "sourceHash": "29121ecf8fef2c55ae57e18edc957d83be43a99c812ec7a5f403108352d0d2c1",
+      "stateHash": "4cd74d11",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 10,
+              "median": 4.926288360902988,
+              "groupMedian": 4.926288360902988,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14251,
+            "stationaryFarTicks": 505,
+            "upperBoundPercent": 3.5436109746684443,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14251,
+                "stationaryFarTicks": 499
+              },
+              {
+                "id": 30,
+                "escortTicks": 283,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 133,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 204,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 287,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 228.08333333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 208.08333333333334,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 188.08333333333334,
+            "spawned": 100,
+            "firstAttackSeconds": 14.466666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2250
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2282
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2282
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2358
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 15.490785093772834,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz",
+      "sha256": "5f17af122c265f9120336dbb72f7b6b933770320d2fd882b6078bc09dadea107",
+      "selected": true,
+      "configuration": "Selected clean implementation: shared calm follower response and nearest existing L3 slots.",
+      "sourceHash": "29121ecf8fef2c55ae57e18edc957d83be43a99c812ec7a5f403108352d0d2c1",
+      "stateHash": "3ce6de95",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 3
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 23,
+              "median": 4.4901615192863975,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9953970760110403
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 203,
+              "median": 4.511584052402963,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.000146109366163
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 203,
+              "median": 4.51661443419605,
+              "groupMedian": 4.510924964015662,
+              "ratio": 1.001261264646558
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 202,
+              "median": 4.510265875628361,
+              "groupMedian": 4.510924964015662,
+              "ratio": 0.9998538906338371
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11457,
+            "stationaryFarTicks": 100,
+            "upperBoundPercent": 0.8728288382648163,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11457,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1557,
+                "stationaryFarTicks": 17
+              },
+              {
+                "id": 31,
+                "escortTicks": 9285,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 9303,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 9358,
+                "stationaryFarTicks": 98
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 181.51666666666668,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 161.51666666666668,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 141.51666666666668,
+            "spawned": 48,
+            "firstAttackSeconds": 7.433333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 3
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 2,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 3822
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5.3857661893567,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-final/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "7773c715fbb445ce28b8e9f6849f752e47c5690b4a6bd50719b1031531b49ada",
+      "selected": false,
+      "configuration": "Skip distant corpse finishing while retreating; low route unchanged, rejected.",
+      "sourceHash": "d869bbd9d2b2ce2b0ca57ebdb4ff8c93b994e3d86d89e81103bb7ae7fffbbc62",
+      "stateHash": "f93e89fc",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 10,
+              "median": 4.583657823734729,
+              "groupMedian": 4.262949095225749,
+              "ratio": 1.0752316580247592
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 15,
+              "median": 3.9422403667167685,
+              "groupMedian": 4.262949095225749,
+              "ratio": 0.9247683419752407
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 18596,
+            "stationaryFarTicks": 703,
+            "upperBoundPercent": 3.7803828780382878,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 18596,
+                "stationaryFarTicks": 597
+              },
+              {
+                "id": 30,
+                "escortTicks": 498,
+                "stationaryFarTicks": 46
+              },
+              {
+                "id": 31,
+                "escortTicks": 385,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 465,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 568,
+                "stationaryFarTicks": 80
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 300.5,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 280.5,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 260.5,
+            "spawned": 100,
+            "firstAttackSeconds": 14.8,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 9400
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 9509
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 9521
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 9529
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 17.50090025207058,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "c15300dd2b97e4dc65bd20023a5cc56caed64bbbbed19c09fcc92609c6765f19",
+      "selected": false,
+      "configuration": "Skip distant corpse finishing while retreating; low route unchanged, rejected.",
+      "sourceHash": "d869bbd9d2b2ce2b0ca57ebdb4ff8c93b994e3d86d89e81103bb7ae7fffbbc62",
+      "stateHash": "a745529f",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 26,
+              "median": 2.660875875106389,
+              "groupMedian": 2.590105788468832,
+              "ratio": 1.0273232417581653
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 29,
+              "median": 1.9417834549430153,
+              "groupMedian": 2.590105788468832,
+              "ratio": 0.7496927205011656
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 29,
+              "median": 2.5193357018312743,
+              "groupMedian": 2.590105788468832,
+              "ratio": 0.9726767582418345
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 35,
+              "median": 4.077706746150637,
+              "groupMedian": 2.590105788468832,
+              "ratio": 1.57433984523127
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 22492,
+            "stationaryFarTicks": 521,
+            "upperBoundPercent": 2.316379157033612,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 22492,
+                "stationaryFarTicks": 144
+              },
+              {
+                "id": 30,
+                "escortTicks": 2165,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 2494,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 2444,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2261,
+                "stationaryFarTicks": 334
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 365.43333333333334,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 345.43333333333334,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 325.43333333333334,
+            "spawned": 50,
+            "firstAttackSeconds": 3.55,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 5333
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 5599
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 5856
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 5876
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 60.020595302309616,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-finish-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz",
+      "sha256": "993169e3db9880c60bef213357f0bc9d862a4252db4c3da1c03df3b135b9b87d",
+      "selected": false,
+      "configuration": "Diagnostic first90s only, not complete-route qualification.",
+      "sourceHash": "72b79936ac5724f41f77c0e3c7c812cc11adade8656981d8687d28697e15448c",
+      "stateHash": "8f5e6e1d",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 13,
+              "median": 4.173333333333444,
+              "groupMedian": 4.173333333333444,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5400,
+            "stationaryFarTicks": 35,
+            "upperBoundPercent": 0.6481481481481481,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 5400,
+                "stationaryFarTicks": 29
+              },
+              {
+                "id": 30,
+                "escortTicks": 254,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 126,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 182,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 397,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 100,
+            "firstAttackSeconds": 14.183333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "seed1": null
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2184
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2213
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2249
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2392
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 2.0779220779220777,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/high.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz",
+      "sha256": "04bd36af7643055fa69e58e786c9b23d6af2846fc24afa029048740b8a58c24a",
+      "selected": false,
+      "configuration": "Diagnostic first90s only, not complete-route qualification.",
+      "sourceHash": "72b79936ac5724f41f77c0e3c7c812cc11adade8656981d8687d28697e15448c",
+      "stateHash": "11538987",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 34,
+              "median": 2.551293701196257,
+              "groupMedian": 2.770887703136942,
+              "ratio": 0.9207495844410868
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 35,
+              "median": 2.9904817050776273,
+              "groupMedian": 2.770887703136942,
+              "ratio": 1.0792504155589133
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 35,
+              "median": 2.416125307330257,
+              "groupMedian": 2.770887703136942,
+              "ratio": 0.8719679634057143
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 46,
+              "median": 3.84861188957474,
+              "groupMedian": 2.770887703136942,
+              "ratio": 1.3889454578825762
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5400,
+            "stationaryFarTicks": 377,
+            "upperBoundPercent": 6.981481481481482,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 5400,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 2002,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 1982,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1976,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2408,
+                "stationaryFarTicks": 334
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 49,
+            "firstAttackSeconds": 3.9166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "seed1": null
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 76.36363636363636,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-prefix/low.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "1865e4db6fde2718bdb50f0e46a5133c50e1381844aa9a71bbedc144d6084216",
+      "selected": false,
+      "configuration": "Continuous position lead, without combat catch-up; fails low pace.",
+      "sourceHash": "72b79936ac5724f41f77c0e3c7c812cc11adade8656981d8687d28697e15448c",
+      "stateHash": "a775a618",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 16,
+              "median": 4.052797880079258,
+              "groupMedian": 2.262953297804864,
+              "ratio": 1.790933062565012
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 15,
+              "median": 0.9118388481520997,
+              "groupMedian": 2.262953297804864,
+              "ratio": 0.40294196483710565
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 17,
+              "median": 1.1939134886916078,
+              "groupMedian": 2.262953297804864,
+              "ratio": 0.5275908653747922
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 18,
+              "median": 3.33199310691812,
+              "groupMedian": 2.262953297804864,
+              "ratio": 1.472409134625208
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 31729,
+            "stationaryFarTicks": 1556,
+            "upperBoundPercent": 4.9040310126382805,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 31729,
+                "stationaryFarTicks": 1428
+              },
+              {
+                "id": 30,
+                "escortTicks": 669,
+                "stationaryFarTicks": 118
+              },
+              {
+                "id": 31,
+                "escortTicks": 838,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 874,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 738,
+                "stationaryFarTicks": 10
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 519.3833333333333,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 499.3833333333333,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 479.3833333333333,
+            "spawned": 100,
+            "firstAttackSeconds": 14.183333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 15119
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 15194
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 15516
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 15527
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 21.144487330088943,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "30a15acfd0604e4ca54f8a10d815f0d8efb658eef2936a30bc9e188a5dd8af46",
+      "selected": false,
+      "configuration": "Continuous position lead, without combat catch-up; fails low pace.",
+      "sourceHash": "72b79936ac5724f41f77c0e3c7c812cc11adade8656981d8687d28697e15448c",
+      "stateHash": "f3067946",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 2
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 124,
+              "median": 3.7656136296238696,
+              "groupMedian": 4.246363004586563,
+              "ratio": 0.8867856152562962
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 217,
+              "median": 4.377859395363457,
+              "groupMedian": 4.246363004586563,
+              "ratio": 1.0309668275262531
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 216,
+              "median": 4.439994016548784,
+              "groupMedian": 4.246363004586563,
+              "ratio": 1.0455992602971242
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 127,
+              "median": 4.114866613809668,
+              "groupMedian": 4.246363004586563,
+              "ratio": 0.9690331724737468
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 13652,
+            "stationaryFarTicks": 377,
+            "upperBoundPercent": 2.7615001464986815,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 13652,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 6920,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 10230,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 10221,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 6988,
+                "stationaryFarTicks": 334
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 218.1,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 198.1,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 178.1,
+            "spawned": 50,
+            "firstAttackSeconds": 3.9166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 2
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 10079
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 10390
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 26.175019475460918,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-lead-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "c0b4007e4b924a57fff3d26264722bd55640861aeb2083d04e9be73e69ae4a54",
+      "selected": false,
+      "configuration": "Continuous position lead plus combat catch-up; fails low pace.",
+      "sourceHash": "7d9aa40d1efdfc3ebae660ea73da7374982b3d095ac1e865cd2bd52f9df20444",
+      "stateHash": "ac1983f9",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 12,
+              "median": 4.057786850025106,
+              "groupMedian": 4.057786850025106,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14608,
+            "stationaryFarTicks": 44,
+            "upperBoundPercent": 0.30120481927710846,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14608,
+                "stationaryFarTicks": 38
+              },
+              {
+                "id": 30,
+                "escortTicks": 224,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 115,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 200,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 351,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 234.03333333333333,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 214.03333333333333,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 194.03333333333333,
+            "spawned": 100,
+            "firstAttackSeconds": 4.583333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2176
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2218
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2219
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2346
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 14.202303929304087,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "043f9cadb79a38a4b56a1fd2d458513f40af812caed825e291eeaa5af525866f",
+      "selected": false,
+      "configuration": "Continuous position lead plus combat catch-up; fails low pace.",
+      "sourceHash": "7d9aa40d1efdfc3ebae660ea73da7374982b3d095ac1e865cd2bd52f9df20444",
+      "stateHash": "0f60ad86",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 3
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 2
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 166,
+              "median": 4.299001787479316,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 1.0958275226151466
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 175,
+              "median": 4.4421940955979125,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 1.1323276405541884
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 25,
+              "median": 2.9341476638461685,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 0.7479224072025434
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 40,
+              "median": 3.547126729570388,
+              "groupMedian": 3.9230642585248523,
+              "ratio": 0.9041724773848533
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 18556,
+            "stationaryFarTicks": 376,
+            "upperBoundPercent": 2.0262987712869154,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 18556,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 8523,
+                "stationaryFarTicks": 58
+              },
+              {
+                "id": 31,
+                "escortTicks": 8156,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1825,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2584,
+                "stationaryFarTicks": 337
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 299.8333333333333,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 279.8333333333333,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "seconds": 259.8333333333333,
+            "spawned": 50,
+            "firstAttackSeconds": null,
+            "flags": [
+              "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+            ]
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 3
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 2
+              }
+            ],
+            "measured": 3,
+            "within": 2,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 5045
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 5501
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 14675
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 15142
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 40.031597496506045,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-moving-fire-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "74e1efbbc92aff241b3c4ad0729c26e3c6e31e0ec34e4bc65d9eb7aadaf0b288",
+      "selected": false,
+      "configuration": "Use courier motion profile for squad travel; fails low pace.",
+      "sourceHash": "18e00d1131c729e7eb736583fe7737c41a14afd96fe24a40c8f1f367a92322b3",
+      "stateHash": "796ec2b9",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 11,
+              "median": 5.602873498631428,
+              "groupMedian": 5.602873498631428,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 11232,
+            "stationaryFarTicks": 1057,
+            "upperBoundPercent": 9.410612535612536,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 11232,
+                "stationaryFarTicks": 1051
+              },
+              {
+                "id": 30,
+                "escortTicks": 271,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 281,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 218,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 334,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 177.76666666666668,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 157.76666666666668,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 137.76666666666668,
+            "spawned": 100,
+            "firstAttackSeconds": 5.466666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2299
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2309
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2365
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2367
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 13.164121316412132,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "dc6baa71984ca8223c1643328133173265a2308936f79bd6ffffe1e7baf12e98",
+      "selected": false,
+      "configuration": "Use courier motion profile for squad travel; fails low pace.",
+      "sourceHash": "18e00d1131c729e7eb736583fe7737c41a14afd96fe24a40c8f1f367a92322b3",
+      "stateHash": "f8900178",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 3
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 55,
+              "median": 3.0894890632551943,
+              "groupMedian": 3.375467502243592,
+              "ratio": 0.9152773834147967
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 54,
+              "median": 2.8452615582430223,
+              "groupMedian": 3.375467502243592,
+              "ratio": 0.8429237005990564
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 45,
+              "median": 3.6614459412319893,
+              "groupMedian": 3.375467502243592,
+              "ratio": 1.084722616585203
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 49,
+              "median": 4.283265650469783,
+              "groupMedian": 3.375467502243592,
+              "ratio": 1.2689399757582616
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 60912,
+            "stationaryFarTicks": 338,
+            "upperBoundPercent": 0.5548988705017074,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 60912,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 3547,
+                "stationaryFarTicks": 56
+              },
+              {
+                "id": 31,
+                "escortTicks": 3375,
+                "stationaryFarTicks": 58
+              },
+              {
+                "id": 32,
+                "escortTicks": 2700,
+                "stationaryFarTicks": 65
+              },
+              {
+                "id": 33,
+                "escortTicks": 3125,
+                "stationaryFarTicks": 245
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 1005.7666666666667,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 985.7666666666667,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 965.7666666666667,
+            "spawned": 50,
+            "firstAttackSeconds": 10.9,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 3
+              }
+            ],
+            "measured": 3,
+            "within": 2,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 6251
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 6353
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 6367
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 6604
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 18.85297468246816,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-player-response-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "c66bc5a41aaa406bcf2b5dfb82b81d64b6d3c9c20c70ca934c5f94bd1397f795",
+      "selected": false,
+      "configuration": "Above plus faster response for all squad travel; fails high pace and low army-line rule.",
+      "sourceHash": "42753c95be626a938f3f9bfe01fe289cb7dfb0b1f3408b4be3b39734e793080f",
+      "stateHash": "48f0b87a",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 10,
+              "median": 3.0139773317979275,
+              "groupMedian": 3.3738001523535397,
+              "ratio": 0.8933479150196248
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 11,
+              "median": 3.7336229729091515,
+              "groupMedian": 3.3738001523535397,
+              "ratio": 1.106652084980375
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14130,
+            "stationaryFarTicks": 16,
+            "upperBoundPercent": 0.11323425336164189,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14130,
+                "stationaryFarTicks": 10
+              },
+              {
+                "id": 30,
+                "escortTicks": 279,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 304,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 186,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 327,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 226.06666666666666,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 206.06666666666666,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 186.06666666666666,
+            "spawned": 100,
+            "firstAttackSeconds": 14.266666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2274
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2312
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2313
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2322
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 13.87340111511971,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "bc704f62314a34e54661033029ce3f2390c6650c3e95064bee00e3928b866602",
+      "selected": false,
+      "configuration": "Above plus faster response for all squad travel; fails high pace and low army-line rule.",
+      "sourceHash": "42753c95be626a938f3f9bfe01fe289cb7dfb0b1f3408b4be3b39734e793080f",
+      "stateHash": "78ebbff1",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 4
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 4
+          }
+        ],
+        "measured": 3,
+        "within": 1,
+        "pass": false
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 242,
+              "median": 4.5000190134362565,
+              "groupMedian": 4.5000056305735,
+              "ratio": 1.0000029739657803
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 242,
+              "median": 4.499996720869362,
+              "groupMedian": 4.5000056305735,
+              "ratio": 0.9999980200682245
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 238,
+              "median": 4.500010780757053,
+              "groupMedian": 4.5000056305735,
+              "ratio": 1.0000011444838022
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 249,
+              "median": 4.5000004803899465,
+              "groupMedian": 4.5000056305735,
+              "ratio": 0.9999988555161979
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 14066,
+            "stationaryFarTicks": 358,
+            "upperBoundPercent": 2.5451443196360017,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 14066,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 11185,
+                "stationaryFarTicks": 177
+              },
+              {
+                "id": 31,
+                "escortTicks": 11194,
+                "stationaryFarTicks": 122
+              },
+              {
+                "id": 32,
+                "escortTicks": 11130,
+                "stationaryFarTicks": 140
+              },
+              {
+                "id": 33,
+                "escortTicks": 11337,
+                "stationaryFarTicks": 301
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 225,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 205,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 185,
+            "spawned": 50,
+            "firstAttackSeconds": 9.65,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 4
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 4
+              }
+            ],
+            "measured": 3,
+            "within": 1,
+            "pass": false
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 22.86287290047631,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-response-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz",
+      "sha256": "73911e99d9b88b35082c1534ea43aa4222015837f6c183beb02c06dd825f31c9",
+      "selected": false,
+      "configuration": "Diagnostic first90s, read-only requested/resolved motion; not complete-route qualification.",
+      "sourceHash": "1e2d68d0db6a3a0549c9b96f57d4dc387c164d2bc171f4bd9e237fdba079971e",
+      "stateHash": "6f8f8f46",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 13,
+              "median": 4.173333333333444,
+              "groupMedian": 4.173333333333444,
+              "ratio": 1
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5400,
+            "stationaryFarTicks": 6,
+            "upperBoundPercent": 0.1111111111111111,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 5400,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 243,
+                "stationaryFarTicks": 6
+              },
+              {
+                "id": 31,
+                "escortTicks": 114,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 186,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 402,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 100,
+            "firstAttackSeconds": 13.833333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "seed1": null
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 2176
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 2195
+            },
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 2238
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 2397
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 1.0389610389610389,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/high.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz",
+      "sha256": "35ed90864710142d372a8451289123711a30d14f505792cc899d43dde57c11f4",
+      "selected": false,
+      "configuration": "Diagnostic first90s, read-only requested/resolved motion; not complete-route qualification.",
+      "sourceHash": "1e2d68d0db6a3a0549c9b96f57d4dc387c164d2bc171f4bd9e237fdba079971e",
+      "stateHash": "8963fbab",
+      "outcome": "tick-budget",
+      "army": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 20,
+              "median": 1.9263865669845606,
+              "groupMedian": 2.512756213394792,
+              "ratio": 0.7666428429131084
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 29,
+              "median": 2.237689964291769,
+              "groupMedian": 2.512756213394792,
+              "ratio": 0.8905320589252859
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 29,
+              "median": 2.7878224624978154,
+              "groupMedian": 2.512756213394792,
+              "ratio": 1.1094679410747144
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 34,
+              "median": 3.8460757301487973,
+              "groupMedian": 2.512756213394792,
+              "ratio": 1.5306203242664196
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5400,
+            "stationaryFarTicks": 521,
+            "upperBoundPercent": 9.648148148148149,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 5400,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1865,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 2158,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 2222,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 2587,
+                "stationaryFarTicks": 478
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 80.55,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 60.55,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.55,
+            "spawned": 50,
+            "firstAttackSeconds": 4.283333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "seed1": null
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 5145
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 46.90909090909091,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-prefix/low.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "a40ef5dde75b69b4c3617b0fb53458e775137c2f46cfc18c799ef07acf1a3cd0",
+      "selected": false,
+      "configuration": "Nearest existing slot assignment alone; fails low pace.",
+      "sourceHash": "1e2d68d0db6a3a0549c9b96f57d4dc387c164d2bc171f4bd9e237fdba079971e",
+      "stateHash": "6be7f085",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 11,
+              "median": 3.954035359568304,
+              "groupMedian": 3.954035359568304,
+              "ratio": 1
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 15,
+              "median": 1.757794623328802,
+              "groupMedian": 3.954035359568304,
+              "ratio": 0.4445571330249094
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 13,
+              "median": 4.173333333333444,
+              "groupMedian": 3.954035359568304,
+              "ratio": 1.0554618140261351
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 24841,
+            "stationaryFarTicks": 2563,
+            "upperBoundPercent": 10.317620063604524,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 24841,
+                "stationaryFarTicks": 2342
+              },
+              {
+                "id": 30,
+                "escortTicks": 663,
+                "stationaryFarTicks": 221
+              },
+              {
+                "id": 31,
+                "escortTicks": 831,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1047,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 749,
+                "stationaryFarTicks": 0
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 404.5833333333333,
+            "spawned": 30,
+            "firstAttackSeconds": 2.4166666666666665,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 384.5833333333333,
+            "spawned": 60,
+            "firstAttackSeconds": 0.16666666666666666,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 364.5833333333333,
+            "spawned": 100,
+            "firstAttackSeconds": 13.833333333333334,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 0
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 15839
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 15915
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 16155
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 16241
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 12.739416994736144,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "a44f479ae61fa522227e2a6c2810c05a32bcb7e704536114c382933c36b21bf8",
+      "selected": false,
+      "configuration": "Nearest existing slot assignment alone; fails low pace.",
+      "sourceHash": "1e2d68d0db6a3a0549c9b96f57d4dc387c164d2bc171f4bd9e237fdba079971e",
+      "stateHash": "396af6d3",
+      "outcome": "complete",
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 2
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 2
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      },
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 20,
+              "median": 1.9263865669845606,
+              "groupMedian": 4.193053372135708,
+              "ratio": 0.459423335697577
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 113,
+              "median": 4.234378967857053,
+              "groupMedian": 4.193053372135708,
+              "ratio": 1.0098557285237455
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 114,
+              "median": 4.151727776414364,
+              "groupMedian": 4.193053372135708,
+              "ratio": 0.9901442714762548
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 97,
+              "median": 4.358433652449926,
+              "groupMedian": 4.193053372135708,
+              "ratio": 1.039441491828658
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 13218,
+            "stationaryFarTicks": 526,
+            "upperBoundPercent": 3.9794220003026175,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 13218,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 1865,
+                "stationaryFarTicks": 62
+              },
+              {
+                "id": 31,
+                "escortTicks": 6175,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 6216,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 5142,
+                "stationaryFarTicks": 483
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-0",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 210.86666666666667,
+            "spawned": 15,
+            "firstAttackSeconds": 2.95,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-1",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 190.86666666666667,
+            "spawned": 30,
+            "firstAttackSeconds": 3.6333333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort station-2",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 170.86666666666667,
+            "spawned": 50,
+            "firstAttackSeconds": 4.283333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "initial squad count",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "3 ≤ value ≤ 4",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "squad remaining at army arrival (seeds 1–3)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seeds": [
+              {
+                "seed": 1,
+                "valid": true,
+                "army": 0
+              },
+              {
+                "seed": 2,
+                "valid": true,
+                "army": 2
+              },
+              {
+                "seed": 3,
+                "valid": true,
+                "army": 2
+              }
+            ],
+            "measured": 3,
+            "within": 3,
+            "pass": true
+          },
+          "target": "≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-06",
+          "clause": "logged squad-loss causes",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 30,
+              "cause": "bite",
+              "tick": 5145
+            },
+            {
+              "id": 33,
+              "cause": "bite",
+              "tick": 8043
+            },
+            {
+              "id": 32,
+              "cause": "bite",
+              "tick": 9531
+            },
+            {
+              "id": 31,
+              "cause": "bite",
+              "tick": 9538
+            }
+          ],
+          "target": "each loss bite, kill, or separation",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "competent player attack rate on checkpoint route",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 22.34013850166382,
+          "target": "3 ≤ value ≤ 25",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "L3-11",
+          "clause": "all-street medkit census (per-street split still open)",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 33,
+          "target": "7 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix68-g/G-13-L3-slots-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

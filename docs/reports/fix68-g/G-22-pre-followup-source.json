@@ -1,0 +1,129 @@
+{
+  "method": "Historical first-source L3 rerun before the L3 follow-up, superseded by final closeout. Original source identities retained.",
+  "rows": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "receipt": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-low-complete.json.gz",
+      "sha256": "31a58fd27e08fbef992a3407b44b7246f6e103b850c7d89ce45716ab9de4c495",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "nativeStateHash": "a745529f",
+      "sameAsFocusedNative": true,
+      "cohorts": [
+        {
+          "key": "station-0",
+          "firstAttackSeconds": 2.95,
+          "spawned": 15,
+          "flags": []
+        },
+        {
+          "key": "station-1",
+          "firstAttackSeconds": 3.6333333333333333,
+          "spawned": 30,
+          "flags": []
+        },
+        {
+          "key": "station-2",
+          "firstAttackSeconds": 3.55,
+          "spawned": 50,
+          "flags": []
+        }
+      ],
+      "originalReceipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "originalSHA256": "40b3eef4a75cc2f5f80a077a5459484d9007b602512f8c1682f32c51eb4410de"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "receipt": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-low-stationary.json.gz",
+      "sha256": "f0ff3dbda38b15f5eceddeb4dbc84d81ec816980c5431d62e86840c41f25cd40",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "nativeStateHash": "301b4452",
+      "sameAsFocusedNative": true,
+      "cohorts": [
+        {
+          "key": "station-0",
+          "firstAttackSeconds": 2.95,
+          "spawned": 15,
+          "flags": []
+        },
+        {
+          "key": "station-1",
+          "firstAttackSeconds": 2.966666666666667,
+          "spawned": 30,
+          "flags": []
+        },
+        {
+          "key": "station-2",
+          "firstAttackSeconds": 4.666666666666667,
+          "spawned": 50,
+          "flags": []
+        }
+      ],
+      "originalReceipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "originalSHA256": "b66da9584c89b9f5496ffb6a68c614fcefab97a9e3c665145f6ec9f2891407ae"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "receipt": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-high-complete.json.gz",
+      "sha256": "44f7d0297f2ad5b9e69a5e64c6bf9743240f439b2f1fc888335628e64f82ddab",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "nativeStateHash": "f93e89fc",
+      "sameAsFocusedNative": true,
+      "cohorts": [
+        {
+          "key": "station-0",
+          "firstAttackSeconds": 2.4166666666666665,
+          "spawned": 30,
+          "flags": []
+        },
+        {
+          "key": "station-1",
+          "firstAttackSeconds": 0.16666666666666666,
+          "spawned": 60,
+          "flags": []
+        },
+        {
+          "key": "station-2",
+          "firstAttackSeconds": 14.8,
+          "spawned": 100,
+          "flags": []
+        }
+      ],
+      "originalReceipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "originalSHA256": "869f5a693f69684ab27220a99003232042d8472e784eae0f2ba37f8bfe2521e7"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "receipt": "docs/reports/fix68-g/accept-before-L3-followup/receipts/L3-high-stationary.json.gz",
+      "sha256": "987477f15991d7aa7d312d6b8ecb2bc63239a18a9094b9cd667061b89f904658",
+      "sourceHash": "b2cd99bfae80e48e0e2e3c91893365fdf4a81d05075b43e0291577ea82bd09e1",
+      "nativeStateHash": "2faa9a76",
+      "sameAsFocusedNative": true,
+      "cohorts": [
+        {
+          "key": "station-0",
+          "firstAttackSeconds": 2.4166666666666665,
+          "spawned": 30,
+          "flags": []
+        },
+        {
+          "key": "station-1",
+          "firstAttackSeconds": 6.483333333333333,
+          "spawned": 60,
+          "flags": []
+        },
+        {
+          "key": "station-2",
+          "firstAttackSeconds": 7.55,
+          "spawned": 89,
+          "flags": []
+        }
+      ],
+      "originalReceipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "originalSHA256": "11e503ba048d5cf2d05d54020f2b8eb98dc36e04c76e4289ed3be079772d0fb0"
+    }
+  ]
+}

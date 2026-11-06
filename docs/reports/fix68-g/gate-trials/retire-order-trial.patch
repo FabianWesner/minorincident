@@ -1,0 +1,70 @@
+diff --git a/src/sim/locomotion/AgentMotion.ts b/src/sim/locomotion/AgentMotion.ts
+index f413b04..4a075ed 100644
+--- a/src/sim/locomotion/AgentMotion.ts
++++ b/src/sim/locomotion/AgentMotion.ts
+@@ -76,7 +76,7 @@ export function installAgentMotion(world: SimWorld): void {
+     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
+       const yaw = e.transform.yaw;
+       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
+-        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
++        (world.scenario === 'L5' || world.scenario === 'L7') && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+       // Braking retains the authored approach distance. The windup owns facing,
+       // so residual steering must not turn the strike away from its victim.
+       if (e.infected?.state === 'attack') e.transform.yaw = yaw;
+diff --git a/src/sim/missions/LevelSevenEncounters.ts b/src/sim/missions/LevelSevenEncounters.ts
+index 08b48ab..4162c18 100644
+--- a/src/sim/missions/LevelSevenEncounters.ts
++++ b/src/sim/missions/LevelSevenEncounters.ts
+@@ -197,9 +197,9 @@ export class LevelSevenEncounters {
+   follower(e: EntitySnapshot): boolean {
+     const r = this.state.roster.find(r => r.id === e.id);
+     if (!r || r.status !== 'following') return false;
+-    if (this.world.l7Departure?.claims(e)) return true;
+     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
+     s.briskAt = w.tick;
++    if (this.world.l7Departure?.claims(e)) return true;
+     c.state = 'calm'; c.story = null; s.cover = false;
+     if (this.walkPocketRoute(e)) return true;
+     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
+diff --git a/src/sim/missions/LevelSixSubway.ts b/src/sim/missions/LevelSixSubway.ts
+index 442a690..3915516 100644
+--- a/src/sim/missions/LevelSixSubway.ts
++++ b/src/sim/missions/LevelSixSubway.ts
+@@ -165,9 +165,9 @@ export class LevelSixSubway {
+       // itself or it can sit forever at the cap with zero members spawned.
+       const currentEntry=wave===4?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
+       const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
+-      // Future quotas suppress filler, but an announced hatch has priority
++      // Future quotas suppress filler, but an announced breach or hatch has priority
+       // over those unannounced promises. Preserve other live announcements.
+-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
++      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
+       if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
+       if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
+       const requested=doors[i%doors.length];
+diff --git a/src/sim/missions/LevelThreeCollapse.ts b/src/sim/missions/LevelThreeCollapse.ts
+index f2cbdcc..4913c1a 100644
+--- a/src/sim/missions/LevelThreeCollapse.ts
++++ b/src/sim/missions/LevelThreeCollapse.ts
+@@ -687,7 +687,7 @@ export class LevelThreeCollapse {
+     if (s.phase === 'fallback' || s.phase === 'corridor') {
+       const nav = world.infected!.nav, goal = nav.nearestCell(player.transform.x, player.transform.z);
+       if (goal >= 0) nav.flow(nav.x(goal), nav.z(goal), 1500);
+-      this.emergeWaves(); this.squadUpdate(); this.pressure(); this.retire(); this.sealYard(); this.finale();
++      this.retire(); this.emergeWaves(); this.squadUpdate(); this.pressure(); this.sealYard(); this.finale();
+       if (s.phase === 'fallback' && player.transform.x > l3.map.corridor[0]) s.phase = 'corridor';
+       // Populate a segment while the player is still well short of it (out of view, ahead of the squad).
+       for (let k = 1; k < 3; k++) if (!s.populated[k] && player.transform.x >= l3.map.segments[k][0] - l3.density.populateAheadM) this.populate(k);
+diff --git a/src/sim/npc/Npcs.ts b/src/sim/npc/Npcs.ts
+index 3eb9ecb..16e47fe 100644
+--- a/src/sim/npc/Npcs.ts
++++ b/src/sim/npc/Npcs.ts
+@@ -98,7 +98,7 @@ export class Npcs {
+     // At its catch-up pace the ordinary crowd response carries the dog several
+     // metres beyond a corner before it can turn back toward the courier.
+     moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
+-      this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
++      (this.world.scenario === 'L5' || this.world.scenario === 'L7') && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
+     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
+   }
+   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

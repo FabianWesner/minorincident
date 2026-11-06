@@ -47,19 +47,19 @@ try {
       if (!isWalkingSample(e.motion.speed, speed, distance > 6, e.civilian.knockedUntil > world.tick)) continue;
       const key = `${phase}/${e.id}`, values = paces.get(key) ?? []; values.push(e.motion.speed); paces.set(key, values);
       row.push({ id: e.id, key: e.civilian.survivor.key, slot: e.civilian.survivor.slot, speed: e.motion.speed,
-        distance, inCombat: followerInCombat(world, e), brisk: e.civilian.survivor.briskAt === world.tick,
+        distance, locomotion: e.locomotion ? { ...e.locomotion } : null, statuses: e.combat?.statuses ?? [], inCombat: followerInCombat(world, e), brisk: e.civilian.survivor.briskAt === world.tick,
         at: { ...e.transform }, command: commands.get(e.id) ?? null });
     }
-    samples.push({ tick: world.tick, phase, player: { ...player.transform }, playerSpeed: speed, followers: row });
+    samples.push({ tick: world.tick, phase, player: { ...player.transform }, playerSpeed: speed, companions: [...world.entities.iterate()].filter(e => e.companion).map(e => ({ id: e.id, at: { ...e.transform } })), followers: row });
   }
   hash = stateHash(world.getState());
 } finally { world.dispose(); }
-const control = JSON.parse(gunzipSync(readFileSync(`docs/reports/sweep-g/G-13-L5-${tier}-complete.json.gz`)));
+const control = JSON.parse(gunzipSync(readFileSync(`${process.env.SWEEP_G_CONTROL_OUT ?? 'docs/reports/sweep-g'}/G-13-L5-${tier}-complete.json.gz`)));
 const summaries = [...paces].map(([key, values]) => ({ phase: key.slice(0, key.lastIndexOf('/')), id: Number(key.slice(key.lastIndexOf('/') + 1)), samples: values.length, median: median(values) }));
 const result = { ...identity, tier, method: 'Same loadLevel/LevelFiveBot/sample/applyInput/update loop and1200s budget as the canonical runner. Read-only command/pose samples and exact existing bot.lag wait-branch intent; >10m live human followers only. Corgi excluded. Whole final state compared with canonical acceptance receipt.',
   completed: bot.finished, hash, controlHash: control.nativeStateHash, identical: hash === control.nativeStateHash,
   escortTicks, waitTicks, soleWaitTicks, waitPercent: escortTicks ? waitTicks / escortTicks * 100 : null, summaries, waits, samples };
-const data = gzipSync(JSON.stringify(result)), path = `docs/reports/sweep-g/G-13-L5-${tier}-trace.json.gz`; writeFileSync(path, data);
+const data = gzipSync(JSON.stringify(result)), path = `${process.env.SWEEP_G_TRACE_OUT ?? 'docs/reports/sweep-g'}/G-13-L5-${tier}-trace.json.gz`; writeFileSync(path, data);
 console.log(JSON.stringify({ path, sha256: createHash('sha256').update(data).digest('hex'), completed: result.completed, identical: result.identical,
   escortTicks, waitTicks, soleWaitTicks, waitPercent: result.waitPercent, summaries }));
 process.exitCode = result.identical ? 0 : 1;

@@ -1,0 +1,686 @@
+{
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+  "scope": "Both-tier complete and exact canonical-stationary90-second prefixes, plus two separate passive-policy diagnostics. Every cohort has at least3 independently bounded2.5x paths at both ages1s/2s. Late18/20s samples retained without requiring killed attackers to stay alive.",
+  "rows": [
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-contact/G-22-L3-low-trace.json.gz",
+      "sha256": "22a1f2f08a80c27e3ef3d47224844f9994e3bda321216dbe9ce2cc105a8a2bcc",
+      "tier": "low",
+      "policy": "complete-prefix",
+      "observedHash": "f79bc5c2",
+      "controlHash": "f79bc5c2",
+      "identical": true,
+      "canonicalStationaryStateIdentical": null,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 15,
+          "firstAttackSeconds": 2.95
+        },
+        {
+          "key": "station-1",
+          "admitted": 30,
+          "firstAttackSeconds": 3.6333333333333333
+        },
+        {
+          "key": "station-2",
+          "admitted": 48,
+          "firstAttackSeconds": 7.433333333333334
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 5,
+          "live": 5,
+          "bounded": 5
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 5,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 15,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 15,
+          "live": 3,
+          "bounded": 3
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 8,
+          "live": 8,
+          "bounded": 8
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 13,
+          "live": 13,
+          "bounded": 13
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 30,
+          "live": 7,
+          "bounded": 7
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 30,
+          "live": 1,
+          "bounded": 1
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 13,
+          "live": 13,
+          "bounded": 10
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 20,
+          "live": 18,
+          "bounded": 16
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 48,
+          "live": 29,
+          "bounded": 21
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 48,
+          "live": 25,
+          "bounded": 17
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-contact/G-22-L3-high-trace.json.gz",
+      "sha256": "57e31fdefee266b8a691a113b208fe6556e4438a0a5c6fd64cdd8630e673e2d4",
+      "tier": "high",
+      "policy": "complete-prefix",
+      "observedHash": "f9a73aa0",
+      "controlHash": "f9a73aa0",
+      "identical": true,
+      "canonicalStationaryStateIdentical": null,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 30,
+          "firstAttackSeconds": 2.4166666666666665
+        },
+        {
+          "key": "station-1",
+          "admitted": 60,
+          "firstAttackSeconds": 0.16666666666666666
+        },
+        {
+          "key": "station-2",
+          "admitted": 100,
+          "firstAttackSeconds": 14.466666666666667
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 6,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 9,
+          "live": 9,
+          "bounded": 9
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 30,
+          "live": 9,
+          "bounded": 9
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 30,
+          "live": 7,
+          "bounded": 7
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 7,
+          "live": 7,
+          "bounded": 7
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 15,
+          "live": 14,
+          "bounded": 14
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 60,
+          "live": 54,
+          "bounded": 48
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 60,
+          "live": 54,
+          "bounded": 48
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 12,
+          "live": 12,
+          "bounded": 9
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 22,
+          "live": 22,
+          "bounded": 17
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 100,
+          "live": 100,
+          "bounded": 99
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 100,
+          "live": 100,
+          "bounded": 100
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-passive/G-22-L3-low-trace.json.gz",
+      "sha256": "98bb0c71ede27fe9a01c473466bdd609e0a940772892ff8593b615c8d897c8d8",
+      "tier": "low",
+      "policy": "separate-passive-prefix",
+      "observedHash": "3915087d",
+      "controlHash": "3915087d",
+      "identical": true,
+      "canonicalStationaryStateIdentical": false,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 15,
+          "firstAttackSeconds": 2.95
+        },
+        {
+          "key": "station-1",
+          "admitted": 30,
+          "firstAttackSeconds": 2.966666666666667
+        },
+        {
+          "key": "station-2",
+          "admitted": 50,
+          "firstAttackSeconds": 4.466666666666667
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 5,
+          "live": 5,
+          "bounded": 5
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 5,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 15,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 15,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 8,
+          "live": 8,
+          "bounded": 8
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 13,
+          "live": 13,
+          "bounded": 13
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 30,
+          "live": 22,
+          "bounded": 22
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 30,
+          "live": 18,
+          "bounded": 18
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 11,
+          "live": 11,
+          "bounded": 11
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 17,
+          "live": 17,
+          "bounded": 17
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 50,
+          "live": 40,
+          "bounded": 40
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 50,
+          "live": 40,
+          "bounded": 40
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-passive/G-22-L3-high-trace.json.gz",
+      "sha256": "af32664cb54e9cd5c38a8f401d14cf216572dca1b2b5e96a43cfe9c50f03dcee",
+      "tier": "high",
+      "policy": "separate-passive-prefix",
+      "observedHash": "7ed13105",
+      "controlHash": "7ed13105",
+      "identical": true,
+      "canonicalStationaryStateIdentical": false,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 30,
+          "firstAttackSeconds": 2.4166666666666665
+        },
+        {
+          "key": "station-1",
+          "admitted": 60,
+          "firstAttackSeconds": 15.133333333333333
+        },
+        {
+          "key": "station-2",
+          "admitted": 90,
+          "firstAttackSeconds": 7.333333333333333
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 6,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 9,
+          "live": 9,
+          "bounded": 9
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 30,
+          "live": 25,
+          "bounded": 24
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 30,
+          "live": 22,
+          "bounded": 22
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 6,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 14,
+          "live": 14,
+          "bounded": 14
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 60,
+          "live": 60,
+          "bounded": 60
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 60,
+          "live": 60,
+          "bounded": 60
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 4,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 14,
+          "live": 14,
+          "bounded": 14
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 87,
+          "live": 87,
+          "bounded": 87
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 88,
+          "live": 88,
+          "bounded": 88
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-stationary/G-22-L3-low-trace.json.gz",
+      "sha256": "bb09fd52bc9e27b9e694486d2ff30900b409cf2d449c14837d0391deb194ea59",
+      "tier": "low",
+      "policy": "canonical-stationary-prefix",
+      "observedHash": "c30feb32",
+      "controlHash": "c30feb32",
+      "identical": true,
+      "canonicalStationaryStateIdentical": true,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 15,
+          "firstAttackSeconds": 2.95
+        },
+        {
+          "key": "station-1",
+          "admitted": 30,
+          "firstAttackSeconds": 2.966666666666667
+        },
+        {
+          "key": "station-2",
+          "admitted": 50,
+          "firstAttackSeconds": 4.466666666666667
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 5,
+          "live": 5,
+          "bounded": 5
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 5,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 15,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 15,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 8,
+          "live": 8,
+          "bounded": 8
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 13,
+          "live": 13,
+          "bounded": 13
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 30,
+          "live": 22,
+          "bounded": 22
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 30,
+          "live": 18,
+          "bounded": 18
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 11,
+          "live": 11,
+          "bounded": 11
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 17,
+          "live": 17,
+          "bounded": 17
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 50,
+          "live": 40,
+          "bounded": 40
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 50,
+          "live": 40,
+          "bounded": 40
+        }
+      ]
+    },
+    {
+      "file": "docs/reports/fix68-g/G-22-closeout-stationary/G-22-L3-high-trace.json.gz",
+      "sha256": "0f27a88941c87801600cd046f624860cafc6111916af37313bfc68559b7112ff",
+      "tier": "high",
+      "policy": "canonical-stationary-prefix",
+      "observedHash": "9e07e267",
+      "controlHash": "9e07e267",
+      "identical": true,
+      "canonicalStationaryStateIdentical": true,
+      "waves": [
+        {
+          "key": "station-0",
+          "admitted": 30,
+          "firstAttackSeconds": 2.4166666666666665
+        },
+        {
+          "key": "station-1",
+          "admitted": 60,
+          "firstAttackSeconds": 15.133333333333333
+        },
+        {
+          "key": "station-2",
+          "admitted": 90,
+          "firstAttackSeconds": 7.333333333333333
+        }
+      ],
+      "paths": [
+        {
+          "wave": "station-0",
+          "age": 1,
+          "admitted": 6,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-0",
+          "age": 2,
+          "admitted": 9,
+          "live": 9,
+          "bounded": 9
+        },
+        {
+          "wave": "station-0",
+          "age": 18,
+          "admitted": 30,
+          "live": 25,
+          "bounded": 24
+        },
+        {
+          "wave": "station-0",
+          "age": 20,
+          "admitted": 30,
+          "live": 22,
+          "bounded": 22
+        },
+        {
+          "wave": "station-1",
+          "age": 1,
+          "admitted": 6,
+          "live": 6,
+          "bounded": 6
+        },
+        {
+          "wave": "station-1",
+          "age": 2,
+          "admitted": 14,
+          "live": 14,
+          "bounded": 14
+        },
+        {
+          "wave": "station-1",
+          "age": 18,
+          "admitted": 60,
+          "live": 60,
+          "bounded": 60
+        },
+        {
+          "wave": "station-1",
+          "age": 20,
+          "admitted": 60,
+          "live": 60,
+          "bounded": 60
+        },
+        {
+          "wave": "station-2",
+          "age": 1,
+          "admitted": 4,
+          "live": 4,
+          "bounded": 4
+        },
+        {
+          "wave": "station-2",
+          "age": 2,
+          "admitted": 14,
+          "live": 14,
+          "bounded": 14
+        },
+        {
+          "wave": "station-2",
+          "age": 18,
+          "admitted": 87,
+          "live": 87,
+          "bounded": 87
+        },
+        {
+          "wave": "station-2",
+          "age": 20,
+          "admitted": 88,
+          "live": 88,
+          "bounded": 88
+        }
+      ]
+    }
+  ]
+}

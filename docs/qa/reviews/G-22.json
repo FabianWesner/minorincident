@@ -1,77 +1,105 @@
 {
   "row": "G-22",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
+  "status": "PASS",
+  "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
-      "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack \u2264 20 s after the announcement (tune).",
-      "verdict": "FAIL",
-      "note": "Four cited L3 failures reproduced on current game source. Low complete station-0=24.9833s; low/high complete station-2 have no player attack; high stationary station-1=30.9833s. 92/92 sampled living-cohort bounded paths pass. Both traced canonical prefixes match unobserved controls."
+      "clause": "L3 station-0/1/2 announced cohorts: >=3 admitted members and actual player attack within20s, both qualities and complete/stationary policies.",
+      "verdict": "PASS",
+      "note": "All12 final-source checks pass. Low complete2.950/3.633/7.433s; low stationary2.950/2.967/4.467s; high complete2.417/0.167/14.467s; high stationary2.417/15.133/7.333s."
+    },
+    {
+      "clause": "Every L3 cohort has several independently reachable living members at its start, both canonical native policies and qualities.",
+      "verdict": "PASS",
+      "note": "At ages1s and2s each cohort has at least4 bounded2.5x paths. Four canonical-policy prefixes match unobserved controls; stationary prefixes also match canonical acceptance state hashes. Two alternate passive diagnostics retained separately."
+    },
+    {
+      "clause": "Finite L3 cohort goal refresh preserves already-active arrival deadlines.",
+      "verdict": "PASS",
+      "note": "43 shortened assignments before, zero after; both audit traces equal their unobserved controls. No duration/count/cap reduction."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-22-L3-high-complete.json.gz",
-      "sha256": "c72849107b3e6f2fc035acb4fa2a85a4f04e69243c928b37530e4b609f4af5c3",
-      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+      "file": "docs/reports/fix68-g/G-22-fix.json",
+      "sha256": "e60d86ee7951ceb5c03d8e86589e817e3064f2ac19a46e47cab88ed7804d6216",
+      "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-high-stationary.json.gz",
-      "sha256": "a0ed6495767677070eaf14cb73b8e261d94370da1b6622492f9002843e85ff6b",
-      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+      "file": "docs/reports/fix68-g/G-22-final-tiered/G-22-L3-native.json",
+      "sha256": "4192647622326d167a88f6c7c02671a64f118a05615ddb9d5940325fdcd6c441",
+      "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-high-trace.json.gz",
-      "sha256": "944e1b38d66295311b08c46238479813fcceb3d12b5a45e55a26f575ed427faa",
-      "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
+      "file": "docs/reports/fix68-g/G-22-clean-preview.json",
+      "sha256": "b906c1cd6553451b50d113666d29993d54dfbcb70359a06315aefe20e333827a",
+      "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-low-complete.json.gz",
-      "sha256": "dd49400ef2a38e7b3307854c475cfded01ba9aeb45b4ae0da22a1b418f667a6d",
-      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+      "file": "docs/reports/fix68-g/G-22-captures.json",
+      "sha256": "2e72341e454c6fc95c5c53a4ae645d8987cd5bc045681ff88661a6701d05069d",
+      "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-low-stationary.json.gz",
-      "sha256": "4d2251b97a8b2433408d1f9ce8b63f5b7bcc68f18786bbe9a7ec7a6b96be9317",
-      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+      "file": "docs/reports/fix68-g/G-22-trials.json",
+      "sha256": "8de2efdd2752d212f115e5e6e7e39dd94fd4a5ee1874ec88a14746c055c55288",
+      "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-low-trace.json.gz",
-      "sha256": "02eee70dda7adf4e5adedf1d373d691050b54c2c3f45c4fb7c39d880c50b7ba2",
-      "what": "Read-only canonical90s prefix with actual target/actor ledgers, bounded2.5x path snapshots at cohort ages18/20s and identical unobserved control state."
+      "file": "docs/reports/fix68-g/G-22-final-source.json",
+      "sha256": "acae0dc2fe41309ae856897e6d22073535c4b6134569a1a60cd876f3eabdccd8",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-L3-native.json",
-      "sha256": "f87961b1982371e8cec51519c65c345304059bffc73d8e4b8859e73d7d52b89f",
-      "what": "Current-source L3 low/high complete or stationary cohort timing receipt; scheduled native wave clocks and actual player attack windups."
+      "file": "docs/reports/fix68-g/G-22-final-paths.json",
+      "sha256": "b24c0db358e4ae252a6bb348152ccd7064a8a31bbf75e6a4ae50f8903722f411",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-diagnosis.json",
-      "sha256": "85148d11e06ad8234b2fd10bf6ee90a134238c917e662a61df46c3d28bda8020",
-      "what": "4 reproduced failing L3 cohort clocks; 92/92 independent bounded-path queries pass and both traced states equal controls."
+      "file": "docs/reports/fix68-g/G-22-closeout-captures.json",
+      "sha256": "e8d820bb7596eb93a3e27986e83a07cbbde11a38c1f61c42c629311fa9459f3f",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-final-L3-low-complete.json.gz",
-      "sha256": "e38621da9f0a2fb6f9e6ed2053074c55b7cbeb37eda12a2adedcff92d1a53c21",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+      "file": "docs/reports/fix68-g/G-22-closeout-bundle.json",
+      "sha256": "52690ec67c4cb9b92a0a7be7c41e7a504946fd117a331f8a1c461dbff634ed96",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-final-L3-low-stationary.json.gz",
-      "sha256": "6226d13a47b400ebee89d04bb61d5a1fe26da2b9c0789345557e7d3a5d5697f5",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+      "file": "docs/reports/fix68-g/G-22-deadline-fix.json",
+      "sha256": "8fbc0f82f63327a64a14092870b79a37f247248507f0923bb5fb61566a94e237",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-final-L3-high-complete.json.gz",
-      "sha256": "906d16f98952415e94d7a6fb80a6ca5f12f5d52d7001b6b929f0bbe721db3e98",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+      "file": "docs/reports/fix68-g/L3-02-admission-discrepancy.json",
+      "sha256": "a07fef26a4adc545a28b549b68a666e334064a3e1198b031af6ec26b0edfa0a0",
+      "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
     },
     {
-      "file": "docs/reports/sweep-g/G-22-final-L3-high-stationary.json.gz",
-      "sha256": "51c4ea7c122c23ebeccece07dff8383ac45c92c6b635922ff037aa314528914b",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+      "file": "docs/reports/fix68-g/threat-final/manifest.json",
+      "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
+      "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-02-retirement-finding.json",
+      "sha256": "75aa82b46ccec9e0018eedbb954b90134c1cf05e3ced328976edf7464df65029",
+      "what": "Read-only trace proves same-tick retirement of two living announced actors; proposed repair remains unapplied."
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+      "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+      "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
+    },
+    {
+      "file": "docs/reports/fix68-g/L6-breach-priority-fix.json",
+      "sha256": "4d5e5dd53dd170441a826945395a7f7d36526f2211726d8d31e00a8a551d8c83",
+      "what": "Real passive breach quota before/after, exact unobserved control matches; all10 members admitted with unchanged cap and9.733s first attack. Full both-tier targeted receipts archived separately."
     }
   ],
-  "notes": "Measured game failure; targets/checkers/counts/timers/caps unchanged. No whole-row PASS or all-level announcement inventory claim. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled."
+  "notes": [
+    "Scoped L3 counterexample correction. Every-level announcement inventory remains unqualified. Historical proofs retain original source identities; current supplements describe final game source. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }

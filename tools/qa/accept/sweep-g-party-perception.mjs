@@ -26,7 +26,8 @@ for (const tier of ['low', 'high']) for (let n = 1; n <= 10; n++) {
   let active = null;
   observeAttackStarts(w, (sourceId, targetId) => { if (active?.id === sourceId) active.attacks.push({ tick: w.tick, targetId }); });
   const cases = [...humanInfected.map(def => ({ archetype: def.id, target: 'companion-notice', mode: 'script' })),
-   ...['rush-complete', 'focus-complete'].map(mode => ({ archetype: 'infected.runner', target: 'escort', mode }))];
+   { archetype: 'infected.runner', target: 'escort', mode: 'rush-complete' },
+   ...humanInfected.map(def => ({ archetype: def.id, target: 'escort', mode: 'focus-complete' }))];
   for (const test of cases) {
    Object.assign(player.transform, { x: start.x + 30, z: start.z }); player.hidden = false;
    Object.assign(dog.transform, start); dog.hidden = test.target !== 'companion-notice';

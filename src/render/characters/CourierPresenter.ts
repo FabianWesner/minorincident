@@ -22,6 +22,7 @@ export class CourierPresenter {
   private hitStopTick = 0;
   private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
+  private wasPointerFacing = false;
   private readonly bikeOrientation = new Quaternion();
   private readonly seat = new Vector3();
   private readonly glance = new Vector3();
@@ -30,7 +31,7 @@ export class CourierPresenter {
   constructor(private readonly world: SimWorld) {}
   /** Combat levels: keep a pose copy the hit-stop freezes into. */
   capture(survivor: SurvivorState | undefined): void { this.frozenPose = survivor ? structuredClone(survivor) : null; }
-  reset(): void { this.frozenStarted = -1; this.frozenPose = null; }
+  reset(): void { this.frozenStarted = -1; this.frozenPose = null; this.wasPointerFacing = false; }
   present(character: CharacterView, survivor: SurvivorState, bicycle: BicycleView | null, vfx: Vfx | null, carPose: ReturnType<typeof carTransitionPose>, alpha: number, aspect: number): void {
     const current = this.world.entities.get(1)!.transform, previous = this.world.previousPlayer;
     // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
@@ -40,6 +41,10 @@ export class CourierPresenter {
     const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
     const input = this.world.inputFrame;
     const pointerFacing = input.strafe && input.aimSource === 'pointer' ? input.aim : null;
+    // The input's follow-through already owns the full 0.45 s grace. Do not
+    // append another presentation turn after handing facing back to walking.
+    const resumeWalking = this.wasPointerFacing && !pointerFacing && Math.hypot(survivor.velocity.x, survivor.velocity.z) > .1;
+    this.wasPointerFacing = !!pointerFacing;
     const riding = this.world.entities.get(1)?.riding;
     const mountedFrame = riding !== undefined && bicycle?.frameOrientation(this.bikeOrientation);
     const stopped = vfx?.hitStop.active(vfx.time) ?? false;
@@ -51,7 +56,7 @@ export class CourierPresenter {
       this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
     }
     character.face(carPose ? carPose.yaw : mountedFrame ? current.yaw : pointerFacing ? -Math.atan2(pointerFacing.z, pointerFacing.x) : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined,
-      striking && survivor.attack!.style === 'roundhouse' ? roundhouseSpin(survivor.attack!, (stopped ? this.hitStopTick : this.world.tick) + (stopped ? 1 : alpha) - 1) : 0);
+      striking && survivor.attack!.style === 'roundhouse' ? roundhouseSpin(survivor.attack!, (stopped ? this.hitStopTick : this.world.tick) + (stopped ? 1 : alpha) - 1) : 0, resumeWalking);
     // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
     const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
     character.update(carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,

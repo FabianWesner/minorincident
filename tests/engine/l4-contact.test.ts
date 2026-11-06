@@ -175,10 +175,11 @@ async function scriptedPartyEngagement() {
           w.combat!.damage.apply({ sourceId: bystanderId, targetId: arrival.id, attackId: 0, actionId: 'weapon.pistol', origin: bystander.transform, direction: { x: 1, z: 0 }, base: 1, multiplier: 1, type: 'bullet', stagger: 0, knockback: 0 });
           const attacks = new Set<number>();
           const stop = w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.sourceId === arrival.id) attacks.add(e.targetId); });
-          for (let tick = 0; tick < 180 && !attacks.has(1); tick++) { w.tick++; ai.update(); }
-          stop();
-          expect(attacks.has(1), `${level}: finite courier assignment survives a closer follower and reaches an actual attack`).toBe(true);
-          expect(attacks.has(bystanderId), `${level}: follower crossing cannot steal the finite approach`).toBe(false);
+          const grab = w.events.on('civilian.grabbed', e => { if (e.type === 'civilian.grabbed' && e.sourceId === arrival.id) attacks.add(e.targetId); });
+          const windup = w.events.on('telegraph', e => { if (e.type === 'telegraph' && e.sourceId === arrival.id && e.target) attacks.add(e.target.id); });
+          for (let tick = 0; tick < 180 && !attacks.has(bystanderId); tick++) { w.tick++; ai.update(); }
+          stop(); grab(); windup();
+          expect(attacks.has(bystanderId), `${level}/${archetype}: finite courier focus retains normal perception and attacks the closer follower (G-18)`).toBe(true);
           ai.release(arrival);
         }
         bystander.hidden = true;

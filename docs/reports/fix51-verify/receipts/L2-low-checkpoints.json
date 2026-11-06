@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L2",
   "tier": "low",
-  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -151,15 +151,15 @@
       "value": {
         "checkpoint": "escape",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "f0aadc3d2e8deed9a7a7993ad15053b92122c43ddc39114773fbd01fa63adea7",
+        "snapshotSha256": "6fe5c6a7fee2e6a9b7c74eca8833e65bbf183dbb91575b6d87d6c2bcfeebc3d9",
         "damage": 100,
         "expected": {
           "id": "escape",
           "anchor": {
-            "x": -66.63066101074219,
+            "x": -18.73966407775879,
             "y": 0.7099999785423279,
-            "z": 27.934968948364258,
-            "yaw": -2.8858082823882993
+            "z": 47.559024810791016,
+            "yaw": 3.0489995190115042
           },
           "gates": {},
           "racks": {
@@ -183,8 +183,8 @@
         "observed": {
           "id": "escape",
           "position": {
-            "x": -67.38066101074219,
-            "z": 27.934968948364258
+            "x": -18.73966407775879,
+            "z": 47.559024810791016
           },
           "gates": {},
           "racks": {
@@ -203,7 +203,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0.75,
+        "positionError": 0,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -219,15 +219,15 @@
       "value": {
         "checkpoint": "cluster",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "05a0c2120d52db6fe18bdae5ab3b95c3e0195e039571108717bfb286d649f339",
+        "snapshotSha256": "2c7c4100736a4003dd4616a3617b7bd5ca9720c0cbf8f11e2e47e584b1290717",
         "damage": 100,
         "expected": {
           "id": "cluster",
           "anchor": {
-            "x": 24.059947967529297,
+            "x": 24.329883575439453,
             "y": 0.7099999785423279,
-            "z": 47.999977111816406,
-            "yaw": -6.355171467821323e-7
+            "z": 47.999671936035156,
+            "yaw": -0.000009177867934064631
           },
           "gates": {},
           "racks": {
@@ -251,8 +251,8 @@
         "observed": {
           "id": "cluster",
           "position": {
-            "x": 24.059947967529297,
-            "z": 47.999977111816406
+            "x": 24.329883575439453,
+            "z": 47.999671936035156
           },
           "gates": {},
           "racks": {
@@ -281,8 +281,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "c7c5c0ed",
-    "control": "c7c5c0ed",
+    "observed": "2c5c5390",
+    "control": "2c5c5390",
     "identical": true
   }
 }

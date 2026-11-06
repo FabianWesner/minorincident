@@ -221,7 +221,7 @@ export class Mission {
   }
   private finish(): void {
     if (this.finishApplied || this.state.phase !== 'playing' || !this.def.finish.every(id => this.state.steps[id].status === 'completed')) return;
-    if (!this.def.l9 && this.def.id !== 'L7' && this.runOut()) return;
+    if (this.runOut()) return;
     this.finishApplied = true; this.run(this.def.onComplete);
     if (!this.state.cinematic) this.result();
   }

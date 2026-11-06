@@ -1,0 +1,1108 @@
+{
+  "sourceHash": "06b3d7fdcb9c12d840a8098d385234e8c6045426a918a49702051b637bb47c59",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "49e80049e17c75d90e7736f7e47a1eab0c21b6b1",
+  "generatedAt": "2026-11-06T07:20:19.279Z",
+  "row": "G-13",
+  "level": "L7",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-low-complete.json.gz",
+      "sha256": "9b61659d010c83f8da466e4321a7a5d239f09e5ca72d27b0f1fbd8e8f31d86b2",
+      "outcome": "complete",
+      "nativeStateHash": "24efd9e4",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/corridor",
+              "id": 51,
+              "samples": 141,
+              "median": 4.500001268174637,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000030552713806
+            },
+            {
+              "phase": "step/corridor",
+              "id": 52,
+              "samples": 140,
+              "median": 4.500009286797508,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.000004837192516
+            },
+            {
+              "phase": "step/corridor",
+              "id": 53,
+              "samples": 141,
+              "median": 4.4999885656186285,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000002324733275
+            },
+            {
+              "phase": "step/corridor",
+              "id": 54,
+              "samples": 141,
+              "median": 4.500015721262116,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000062670775058
+            },
+            {
+              "phase": "step/corridor",
+              "id": 55,
+              "samples": 141,
+              "median": 4.499987503897107,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999999965345572
+            },
+            {
+              "phase": "step/corridor",
+              "id": 56,
+              "samples": 142,
+              "median": 4.499987477407869,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999999906480435
+            },
+            {
+              "phase": "step/corridor",
+              "id": 57,
+              "samples": 142,
+              "median": 4.500032808936295,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.000010064348966
+            },
+            {
+              "phase": "step/corridor",
+              "id": 58,
+              "samples": 143,
+              "median": 4.499987509321937,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999999977400782
+            },
+            {
+              "phase": "step/corridor",
+              "id": 59,
+              "samples": 144,
+              "median": 4.499993148234644,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000012508352665
+            },
+            {
+              "phase": "step/corridor",
+              "id": 60,
+              "samples": 144,
+              "median": 4.4999844633114705,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999993208469862
+            },
+            {
+              "phase": "step/corridor",
+              "id": 61,
+              "samples": 144,
+              "median": 4.499984717674758,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.999999377372318
+            },
+            {
+              "phase": "step/corridor",
+              "id": 62,
+              "samples": 144,
+              "median": 4.50004356164225,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000124538458053
+            },
+            {
+              "phase": "step/corridor",
+              "id": 63,
+              "samples": 146,
+              "median": 4.499987528582613,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000000020202404
+            },
+            {
+              "phase": "step/corridor",
+              "id": 64,
+              "samples": 146,
+              "median": 4.4999858139589275,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999996209916979
+            },
+            {
+              "phase": "step/corridor",
+              "id": 65,
+              "samples": 146,
+              "median": 4.499987488860229,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999999931930195
+            },
+            {
+              "phase": "step/corridor",
+              "id": 66,
+              "samples": 146,
+              "median": 4.499987670797104,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000000336235484
+            },
+            {
+              "phase": "step/corridor",
+              "id": 67,
+              "samples": 146,
+              "median": 4.500001409929773,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.000003086772609
+            },
+            {
+              "phase": "step/corridor",
+              "id": 68,
+              "samples": 146,
+              "median": 4.4999875104005,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999999979797596
+            },
+            {
+              "phase": "step/corridor",
+              "id": 69,
+              "samples": 146,
+              "median": 4.499978487610306,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999979929097113
+            },
+            {
+              "phase": "step/corridor",
+              "id": 70,
+              "samples": 146,
+              "median": 4.499979712998874,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.999998265219037
+            },
+            {
+              "phase": "step/corridor",
+              "id": 71,
+              "samples": 146,
+              "median": 4.500059776292767,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.0000160571114693
+            },
+            {
+              "phase": "step/corridor",
+              "id": 72,
+              "samples": 146,
+              "median": 4.499978338803582,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999979598414586
+            },
+            {
+              "phase": "step/corridor",
+              "id": 73,
+              "samples": 146,
+              "median": 4.49997805810597,
+              "groupMedian": 4.499987519491556,
+              "ratio": 0.9999978974640384
+            },
+            {
+              "phase": "step/corridor",
+              "id": 74,
+              "samples": 146,
+              "median": 4.50000123650307,
+              "groupMedian": 4.499987519491556,
+              "ratio": 1.000003048233235
+            },
+            {
+              "phase": "step/departure",
+              "id": 51,
+              "samples": 32,
+              "median": 4.489965248071293,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.97607940378232
+            },
+            {
+              "phase": "step/departure",
+              "id": 52,
+              "samples": 26,
+              "median": 4.498030073553325,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9778326267168387
+            },
+            {
+              "phase": "step/departure",
+              "id": 53,
+              "samples": 28,
+              "median": 4.599999993577111,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000006811032
+            },
+            {
+              "phase": "step/departure",
+              "id": 54,
+              "samples": 27,
+              "median": 4.5999999999999135,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773645
+            },
+            {
+              "phase": "step/departure",
+              "id": 55,
+              "samples": 27,
+              "median": 4.563405680293076,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9920447151680475
+            },
+            {
+              "phase": "step/departure",
+              "id": 56,
+              "samples": 25,
+              "median": 4.577265071756296,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.995057626361963
+            },
+            {
+              "phase": "step/departure",
+              "id": 57,
+              "samples": 28,
+              "median": 4.526591387240231,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.984041607966021
+            },
+            {
+              "phase": "step/departure",
+              "id": 58,
+              "samples": 28,
+              "median": 4.518858151315639,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9823604697180521
+            },
+            {
+              "phase": "step/departure",
+              "id": 59,
+              "samples": 26,
+              "median": 4.600000000000047,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773936
+            },
+            {
+              "phase": "step/departure",
+              "id": 60,
+              "samples": 28,
+              "median": 4.599999997930256,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.000000001627439
+            },
+            {
+              "phase": "step/departure",
+              "id": 61,
+              "samples": 27,
+              "median": 4.599999999999905,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773627
+            },
+            {
+              "phase": "step/departure",
+              "id": 62,
+              "samples": 30,
+              "median": 4.599999905499852,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9999999815338729
+            },
+            {
+              "phase": "step/departure",
+              "id": 63,
+              "samples": 30,
+              "median": 4.546087510240408,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9882798955835598
+            },
+            {
+              "phase": "step/departure",
+              "id": 64,
+              "samples": 31,
+              "median": 4.599999999999975,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773778
+            },
+            {
+              "phase": "step/departure",
+              "id": 65,
+              "samples": 26,
+              "median": 4.599999999999929,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773678
+            },
+            {
+              "phase": "step/departure",
+              "id": 66,
+              "samples": 32,
+              "median": 4.59999923119069,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9999998349449244
+            },
+            {
+              "phase": "step/departure",
+              "id": 67,
+              "samples": 32,
+              "median": 4.599999987310963,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.999999999318897
+            },
+            {
+              "phase": "step/departure",
+              "id": 68,
+              "samples": 32,
+              "median": 4.599999999999827,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773459
+            },
+            {
+              "phase": "step/departure",
+              "id": 69,
+              "samples": 32,
+              "median": 4.507424420404013,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9798748760364482
+            },
+            {
+              "phase": "step/departure",
+              "id": 70,
+              "samples": 32,
+              "median": 4.593775740363169,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 0.9986469021535223
+            },
+            {
+              "phase": "step/departure",
+              "id": 71,
+              "samples": 31,
+              "median": 4.600000000000031,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.00000000207739
+            },
+            {
+              "phase": "step/departure",
+              "id": 72,
+              "samples": 32,
+              "median": 4.600000000000046,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773934
+            },
+            {
+              "phase": "step/departure",
+              "id": 73,
+              "samples": 30,
+              "median": 4.599999999999971,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773772
+            },
+            {
+              "phase": "step/departure",
+              "id": 74,
+              "samples": 31,
+              "median": 4.599999999999785,
+              "groupMedian": 4.5999999904440365,
+              "ratio": 1.0000000020773365
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 5885,
+            "stationaryFarTicks": 229,
+            "upperBoundPercent": 3.89124893797791,
+            "followers": [
+              {
+                "id": 20,
+                "escortTicks": 5285,
+                "stationaryFarTicks": 31
+              },
+              {
+                "id": 51,
+                "escortTicks": 5789,
+                "stationaryFarTicks": 181
+              },
+              {
+                "id": 52,
+                "escortTicks": 5483,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 53,
+                "escortTicks": 5588,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 54,
+                "escortTicks": 5438,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 55,
+                "escortTicks": 5528,
+                "stationaryFarTicks": 102
+              },
+              {
+                "id": 56,
+                "escortTicks": 5453,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 57,
+                "escortTicks": 5543,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 58,
+                "escortTicks": 5558,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 59,
+                "escortTicks": 5468,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 60,
+                "escortTicks": 5513,
+                "stationaryFarTicks": 82
+              },
+              {
+                "id": 61,
+                "escortTicks": 5498,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 62,
+                "escortTicks": 5573,
+                "stationaryFarTicks": 122
+              },
+              {
+                "id": 63,
+                "escortTicks": 5603,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 64,
+                "escortTicks": 5618,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 65,
+                "escortTicks": 5633,
+                "stationaryFarTicks": 141
+              },
+              {
+                "id": 66,
+                "escortTicks": 5648,
+                "stationaryFarTicks": 149
+              },
+              {
+                "id": 67,
+                "escortTicks": 5663,
+                "stationaryFarTicks": 112
+              },
+              {
+                "id": 68,
+                "escortTicks": 5678,
+                "stationaryFarTicks": 123
+              },
+              {
+                "id": 69,
+                "escortTicks": 5693,
+                "stationaryFarTicks": 121
+              },
+              {
+                "id": 70,
+                "escortTicks": 5708,
+                "stationaryFarTicks": 119
+              },
+              {
+                "id": 71,
+                "escortTicks": 5723,
+                "stationaryFarTicks": 160
+              },
+              {
+                "id": 72,
+                "escortTicks": 5738,
+                "stationaryFarTicks": 200
+              },
+              {
+                "id": 73,
+                "escortTicks": 5753,
+                "stationaryFarTicks": 160
+              },
+              {
+                "id": 74,
+                "escortTicks": 5768,
+                "stationaryFarTicks": 160
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-high-complete.json.gz",
+      "sha256": "900753df15af435c018adc7590e67f9ecd572d21f83d99651de21342f1afb63f",
+      "outcome": "complete",
+      "nativeStateHash": "824ad772",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/corridor",
+              "id": 62,
+              "samples": 146,
+              "median": 4.500009825912198,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.000006162753906
+            },
+            {
+              "phase": "step/corridor",
+              "id": 63,
+              "samples": 146,
+              "median": 4.500009848917212,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000061678661516
+            },
+            {
+              "phase": "step/corridor",
+              "id": 64,
+              "samples": 146,
+              "median": 4.499958020244228,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.999994650337436
+            },
+            {
+              "phase": "step/corridor",
+              "id": 65,
+              "samples": 146,
+              "median": 4.500294634355975,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.000069453771037
+            },
+            {
+              "phase": "step/corridor",
+              "id": 66,
+              "samples": 146,
+              "median": 4.499982380234599,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000000636901702
+            },
+            {
+              "phase": "step/corridor",
+              "id": 67,
+              "samples": 146,
+              "median": 4.49999292869963,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000024078028382
+            },
+            {
+              "phase": "step/corridor",
+              "id": 68,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999632889430922
+            },
+            {
+              "phase": "step/corridor",
+              "id": 69,
+              "samples": 146,
+              "median": 4.499816895105937,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999632890708009
+            },
+            {
+              "phase": "step/corridor",
+              "id": 70,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999632889430922
+            },
+            {
+              "phase": "step/corridor",
+              "id": 71,
+              "samples": 146,
+              "median": 4.500001317916308,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000042720806293
+            },
+            {
+              "phase": "step/corridor",
+              "id": 72,
+              "samples": 146,
+              "median": 4.49981689453125,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999632889430922
+            },
+            {
+              "phase": "step/corridor",
+              "id": 73,
+              "samples": 146,
+              "median": 4.49990610388326,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.999983113322424
+            },
+            {
+              "phase": "step/corridor",
+              "id": 74,
+              "samples": 146,
+              "median": 4.500000153687578,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000040133621044
+            },
+            {
+              "phase": "step/corridor",
+              "id": 51,
+              "samples": 143,
+              "median": 4.499927672865512,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999879064486639
+            },
+            {
+              "phase": "step/corridor",
+              "id": 52,
+              "samples": 143,
+              "median": 4.499981807025348,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999999363098299
+            },
+            {
+              "phase": "step/corridor",
+              "id": 53,
+              "samples": 143,
+              "median": 4.499999362104336,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000038374540172
+            },
+            {
+              "phase": "step/corridor",
+              "id": 54,
+              "samples": 143,
+              "median": 4.499857234628166,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.999972253444745
+            },
+            {
+              "phase": "step/corridor",
+              "id": 55,
+              "samples": 143,
+              "median": 4.499857332730812,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999722752454199
+            },
+            {
+              "phase": "step/corridor",
+              "id": 56,
+              "samples": 143,
+              "median": 4.500040369613582,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000129502701114
+            },
+            {
+              "phase": "step/corridor",
+              "id": 57,
+              "samples": 143,
+              "median": 4.500037682900537,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000123532203922
+            },
+            {
+              "phase": "step/corridor",
+              "id": 58,
+              "samples": 143,
+              "median": 4.499895414803612,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999807379619391
+            },
+            {
+              "phase": "step/corridor",
+              "id": 59,
+              "samples": 143,
+              "median": 4.500078324099022,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.000021384633771
+            },
+            {
+              "phase": "step/corridor",
+              "id": 60,
+              "samples": 143,
+              "median": 4.5000431370588885,
+              "groupMedian": 4.499982093629973,
+              "ratio": 1.0000135652604043
+            },
+            {
+              "phase": "step/corridor",
+              "id": 61,
+              "samples": 143,
+              "median": 4.499899668582869,
+              "groupMedian": 4.499982093629973,
+              "ratio": 0.9999816832499798
+            },
+            {
+              "phase": "step/departure",
+              "id": 51,
+              "samples": 27,
+              "median": 1.3382239387675305,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.3036598700500777
+            },
+            {
+              "phase": "step/departure",
+              "id": 52,
+              "samples": 23,
+              "median": 4.547654942995959,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0319201958788426
+            },
+            {
+              "phase": "step/departure",
+              "id": 53,
+              "samples": 23,
+              "median": 4.600000000000063,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0437979487325757
+            },
+            {
+              "phase": "step/departure",
+              "id": 54,
+              "samples": 27,
+              "median": 0.5668837406367221,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.12863306209705477
+            },
+            {
+              "phase": "step/departure",
+              "id": 55,
+              "samples": 22,
+              "median": 4.59999999999981,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0437979487325184
+            },
+            {
+              "phase": "step/departure",
+              "id": 56,
+              "samples": 23,
+              "median": 4.599999999999905,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.04379794873254
+            },
+            {
+              "phase": "step/departure",
+              "id": 57,
+              "samples": 26,
+              "median": 4.558094353526283,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0342890296391751
+            },
+            {
+              "phase": "step/departure",
+              "id": 58,
+              "samples": 22,
+              "median": 4.5911573417849425,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0417914381877311
+            },
+            {
+              "phase": "step/departure",
+              "id": 59,
+              "samples": 26,
+              "median": 3.9404703362668037,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.8941423595732167
+            },
+            {
+              "phase": "step/departure",
+              "id": 60,
+              "samples": 27,
+              "median": 2.394864901196994,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.5434250155132676
+            },
+            {
+              "phase": "step/departure",
+              "id": 61,
+              "samples": 26,
+              "median": 4.599999999999963,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0437979487325533
+            },
+            {
+              "phase": "step/departure",
+              "id": 62,
+              "samples": 23,
+              "median": 4.562912850004977,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.035382407191444
+            },
+            {
+              "phase": "step/departure",
+              "id": 63,
+              "samples": 27,
+              "median": 4.4828103434494935,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0172061393586285
+            },
+            {
+              "phase": "step/departure",
+              "id": 64,
+              "samples": 27,
+              "median": 3.312929861426043,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.7517455203589898
+            },
+            {
+              "phase": "step/departure",
+              "id": 65,
+              "samples": 27,
+              "median": 4.59999444694352,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0437966886740915
+            },
+            {
+              "phase": "step/departure",
+              "id": 66,
+              "samples": 27,
+              "median": 1.8438746032614306,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.4183983757835537
+            },
+            {
+              "phase": "step/departure",
+              "id": 67,
+              "samples": 27,
+              "median": 2.7075209696995435,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.614370616157126
+            },
+            {
+              "phase": "step/departure",
+              "id": 68,
+              "samples": 27,
+              "median": 1.556489090144763,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.35318698250385105
+            },
+            {
+              "phase": "step/departure",
+              "id": 69,
+              "samples": 27,
+              "median": 3.459862209214521,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.7850863210598752
+            },
+            {
+              "phase": "step/departure",
+              "id": 70,
+              "samples": 27,
+              "median": 4.338342239131844,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.9844245065447058
+            },
+            {
+              "phase": "step/departure",
+              "id": 71,
+              "samples": 27,
+              "median": 1.2043232020053034,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.2732761060574274
+            },
+            {
+              "phase": "step/departure",
+              "id": 72,
+              "samples": 27,
+              "median": 4.475624114386248,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.015575493455294
+            },
+            {
+              "phase": "step/departure",
+              "id": 73,
+              "samples": 26,
+              "median": 4.50477793648451,
+              "groupMedian": 4.406983176759046,
+              "ratio": 1.0221908629561376
+            },
+            {
+              "phase": "step/departure",
+              "id": 74,
+              "samples": 27,
+              "median": 1.3477893875186093,
+              "groupMedian": 4.406983176759046,
+              "ratio": 0.30583039087292174
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": {
+            "escortTicks": 6930,
+            "stationaryFarTicks": 1622,
+            "upperBoundPercent": 23.405483405483405,
+            "followers": [
+              {
+                "id": 20,
+                "escortTicks": 6330,
+                "stationaryFarTicks": 393
+              },
+              {
+                "id": 51,
+                "escortTicks": 5888,
+                "stationaryFarTicks": 539
+              },
+              {
+                "id": 52,
+                "escortTicks": 5297,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 53,
+                "escortTicks": 5312,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 54,
+                "escortTicks": 5774,
+                "stationaryFarTicks": 443
+              },
+              {
+                "id": 55,
+                "escortTicks": 5266,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 56,
+                "escortTicks": 5282,
+                "stationaryFarTicks": 2
+              },
+              {
+                "id": 57,
+                "escortTicks": 5327,
+                "stationaryFarTicks": 65
+              },
+              {
+                "id": 58,
+                "escortTicks": 5251,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 59,
+                "escortTicks": 5422,
+                "stationaryFarTicks": 129
+              },
+              {
+                "id": 60,
+                "escortTicks": 5502,
+                "stationaryFarTicks": 187
+              },
+              {
+                "id": 61,
+                "escortTicks": 5407,
+                "stationaryFarTicks": 116
+              },
+              {
+                "id": 62,
+                "escortTicks": 5342,
+                "stationaryFarTicks": 1
+              },
+              {
+                "id": 63,
+                "escortTicks": 5437,
+                "stationaryFarTicks": 117
+              },
+              {
+                "id": 64,
+                "escortTicks": 5520,
+                "stationaryFarTicks": 217
+              },
+              {
+                "id": 65,
+                "escortTicks": 5482,
+                "stationaryFarTicks": 170
+              },
+              {
+                "id": 66,
+                "escortTicks": 6834,
+                "stationaryFarTicks": 1622
+              },
+              {
+                "id": 67,
+                "escortTicks": 5755,
+                "stationaryFarTicks": 428
+              },
+              {
+                "id": 68,
+                "escortTicks": 5903,
+                "stationaryFarTicks": 489
+              },
+              {
+                "id": 69,
+                "escortTicks": 5979,
+                "stationaryFarTicks": 629
+              },
+              {
+                "id": 70,
+                "escortTicks": 5452,
+                "stationaryFarTicks": 117
+              },
+              {
+                "id": 71,
+                "escortTicks": 6270,
+                "stationaryFarTicks": 1058
+              },
+              {
+                "id": 72,
+                "escortTicks": 5467,
+                "stationaryFarTicks": 145
+              },
+              {
+                "id": 73,
+                "escortTicks": 5392,
+                "stationaryFarTicks": 115
+              },
+              {
+                "id": 74,
+                "escortTicks": 6031,
+                "stationaryFarTicks": 688
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "docs/reports/fix68-g/L7-close-response-trial/G-13-L7-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

@@ -110,7 +110,9 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
       // With a wall between the follower and its heading, route to where the
       // slot will be in half a second, so the route does not brake on arrival.
       const lead = { x: target.x + pace.x * .5, z: target.z + pace.z * .5 };
-      const goal = nav.visible(me, aim, .35) ? aim : nav.clear(lead.x, lead.z, .35) && nav.visible(target, lead, .35) ? lead : target;
+      // A short clear stride can still lead into a frontage pocket while the
+      // courier is around its corner. Keep the global slot route until it is visible.
+      const goal = nav.visible(me, target, .35) && nav.visible(me, aim, .35) ? aim : nav.clear(lead.x, lead.z, .35) && nav.visible(target, lead, .35) ? lead : target;
       // Track her already smooth pace without the crowd response lag: a
       // critically damped 6/s response trails a starting courier by 1-1.5 m,
       // which a 1.05x catch-up then needs seconds to win back.

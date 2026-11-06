@@ -282,6 +282,7 @@ export class InputSystem implements Lifecycle {
     // this direction"): the cursor aims only while a click or held LMB attacks, plus a short hold for the follow-through.
     if (mouseAim && !keyboardFireOwnsAim) {
       if (frame.mouseAttack) this.mouseAimHold = .45; else this.mouseAimHold = Math.max(0, this.mouseAimHold - dt);
+      if (this.mouseAimHold < 1e-6) this.mouseAimHold = 0;
       if (this.mouseAimHold <= 0) { delete frame.strafe; if (frame.aimSource === 'pointer') { frame.aim = null; frame.aimSource = 'assist'; } }
     }
     if ((this.drivingContext || this.mountedGunContext) && this.scheme === 'touch') {

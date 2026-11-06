@@ -1,0 +1,153 @@
+diff --git a/src/sim/locomotion/AgentMotion.ts b/src/sim/locomotion/AgentMotion.ts
+index f413b04..2587f32 100644
+--- a/src/sim/locomotion/AgentMotion.ts
++++ b/src/sim/locomotion/AgentMotion.ts
+@@ -21,7 +21,7 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
+   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
+   else {
+     const speed = Status.speed(e), ally = e.civilian?.ally;
+-    const following = e.civilian?.survivor?.briskAt === tick || ally?.follow && !ally.targetId && !ally.strikeAt;
++    const following = e.civilian?.survivor?.briskAt === tick || ally?.follow;
+     respond(state, vx * speed, vz * speed, tracking ?? (following ? followerTracking : undefined));
+   }
+   state.updatedAt = tick;
+diff --git a/src/sim/missions/LevelSevenEncounters.ts b/src/sim/missions/LevelSevenEncounters.ts
+index 08b48ab..22275ff 100644
+--- a/src/sim/missions/LevelSevenEncounters.ts
++++ b/src/sim/missions/LevelSevenEncounters.ts
+@@ -7,6 +7,7 @@ import { l7Encounters } from '../../data/l7';
+ import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+ import { NavGrid } from '../ai/NavGrid';
+ import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
++import { courierPace } from '../outbreak/Survivors';
+ 
+ export interface L7EncounterState {
+   started: boolean;
+@@ -15,6 +16,7 @@ export interface L7EncounterState {
+   finalReady: boolean;
+   passageReady: boolean;
+   waitAt: number;
++  leaderVelocity?: Point;
+   alarm?: { key: string; id: number; x: number; z: number; text: string; until: number; kind: 'wait' | 'attack' | 'lost' };
+ }
+ const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+@@ -176,6 +178,8 @@ export class LevelSevenEncounters {
+       }
+     }
+     const p = w.entities.get(1)!.transform;
++    const previous = w.previousPlayer;
++    s.leaderVelocity = previous ? { x: (p.x - previous.x) * 60, z: (p.z - previous.z) * 60 } : { x: 0, z: 0 };
+     // The crowd already builds this field above twenty infected. Keep it
+     // available for distant followers after the fighting has thinned out too.
+     if (ai.active.length <= 20 && s.roster.some(r => r.status === 'following' && distance(w.entities.get(r.id)!.transform, p) > 30)) ai.nav.flow(p.x, p.z, 1500);
+@@ -197,12 +201,13 @@ export class LevelSevenEncounters {
+   follower(e: EntitySnapshot): boolean {
+     const r = this.state.roster.find(r => r.id === e.id);
+     if (!r || r.status !== 'following') return false;
++    e.civilian!.survivor!.briskAt = this.world.tick;
+     if (this.world.l7Departure?.claims(e)) return true;
+     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
+     s.briskAt = w.tick;
+     c.state = 'calm'; c.story = null; s.cover = false;
+     if (this.walkPocketRoute(e)) return true;
+-    const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
++    const d = distance(e.transform, p.transform), slot = s.slot, v = this.state.leaderVelocity ?? p.survivor!.velocity;
+     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
+     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
+     // Reuse the L5 formation rule around cover: a clear slot across a wreck
+@@ -211,7 +216,15 @@ export class LevelSevenEncounters {
+     // In the final approach the large formation must not double back into the
+     // narrow opening as the courier turns toward the bus.
+     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
+-    const target = ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
++    let target = ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
++    let travelSpeed = 5.2;
++    const pace = courierPace(s, v, w.tick);
++    if (Math.hypot(pace.x, pace.z) > .2) {
++      const vx = pace.x + (target.x - e.transform.x) * .125, vz = pace.z + (target.z - e.transform.z) * .125;
++      const speed = Math.hypot(vx, vz), scale = Math.min(1, 5.2 / speed);
++      const lead = { x: e.transform.x + vx * scale * .5, z: e.transform.z + vz * scale * .5 };
++      if (nav.clear(lead.x, lead.z, .35) && nav.visible(e.transform, lead, .35)) { target = lead; travelSpeed = speed * scale; }
++    }
+     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
+       this.state.waitAt = w.tick + 300;
+       this.warn(e, 'wait');
+@@ -251,13 +264,13 @@ export class LevelSevenEncounters {
+       // The pre-boarding corridor wait has no recovery timer. Use the bus
+       // approach's swept corpse detour here too, so a dead Alpha cannot hold
+       // the whole group at the corridor objective indefinitely.
+-      if (!approach.around && w.tick - approach.at >= 30 && (w.tick + e.id) % 15 === 0) approach.around = corpseDetour(w, e, destination);
++      if (!approach.around && w.tick - approach.at >= 30 && (w.tick + e.id) % 15 === 0) approach.around = corpseDetour(w, e, destination, true);
+       if (approach.around) destination = approach.around[0];
+       // Injury remains visible in the carried story state; it must not turn
+       // one evacuee into a straggler the player has to babysit.
+       // Every slot has the same catch-up speed through street corners.
+       const budget = d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
+-      w.npcs!.move(e, destination, 5.2, c, 0, budget);
++      w.npcs!.move(e, destination, travelSpeed, c, 0, budget);
+     }
+     w.spatial.set(e.id, e.transform.x, e.transform.z);
+     return true;
+diff --git a/src/sim/missions/LevelSixSubway.ts b/src/sim/missions/LevelSixSubway.ts
+index 442a690..b8261d3 100644
+--- a/src/sim/missions/LevelSixSubway.ts
++++ b/src/sim/missions/LevelSixSubway.ts
+@@ -167,7 +167,7 @@ export class LevelSixSubway {
+       const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
+       // Future quotas suppress filler, but an announced hatch has priority
+       // over those unannounced promises. Preserve other live announcements.
+-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
++      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
+       if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
+       if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
+       const requested=doors[i%doors.length];
+diff --git a/src/sim/missions/LevelThreeCollapse.ts b/src/sim/missions/LevelThreeCollapse.ts
+index f2cbdcc..81eda2f 100644
+--- a/src/sim/missions/LevelThreeCollapse.ts
++++ b/src/sim/missions/LevelThreeCollapse.ts
+@@ -302,10 +302,14 @@ export class LevelThreeCollapse {
+       this.reserveWaves();
+       // One finite arrival route clears the doorway. After fallback there is
+       // no courier preference or compulsory approach; senses may interrupt it.
+-      ai.rush(id, fallback ? player : cover ? { x: this.alarmCoverSources[0].x - 4, z: this.alarmCoverSources[1].z + 2.5 } : RUSH[q.dir], tick + ticks(60), cover && s.phase === 'attack');
+-      if (s.phase === 'attack' && !cover && (q.dir === 'station' || q.dir === 'commerce')) {
+-        ai.press(id, 1, tick + ticks(30), l3.density.playerBiasM);
+-        world.entities.get(id)!.infected!.l1!.search.completeApproach = true;
++      const courierWave = q.dir === 'station' || q.dir === 'commerce';
++      const officer = fallback && !courierWave ? s.squad.map(m => world.entities.get(m.id))
++        .filter(e => e && e.health.current > 0 && !e.infection && !e.infected)
++        .sort((a, b) => dist(a!.transform, world.entities.get(id)!.transform) - dist(b!.transform, world.entities.get(id)!.transform))[0] : undefined;
++      ai.rush(id, fallback ? officer?.transform ?? player : cover ? { x: this.alarmCoverSources[0].x - 4, z: this.alarmCoverSources[1].z + 2.5 } : RUSH[q.dir], tick + ticks(60), cover && s.phase === 'attack');
++      if (!cover && (fallback || courierWave)) {
++        ai.press(id, officer?.id ?? 1, tick + ticks(30), l3.density.playerBiasM);
++        if (!fallback) world.entities.get(id)!.infected!.l1!.search.completeApproach = true;
+       }
+       if (s.waves.filter(w => w.wave === q.wave && w.id).length === 1) world.events.emit({ type: 'l3.wave', tick, wave: q.wave, count: s.waves.filter(w => w.wave === q.wave).length });
+     }
+@@ -632,7 +636,7 @@ export class LevelThreeCollapse {
+     // Only while the planned population ahead still waits for slots, or the cap is nearly reached.
+     if (world.tick % 30 !== 0 || (ai.director.count < ai.director.cap - 6 && !s.pending.some(q => q.id === 0) && !s.finaleAt)) return;
+     const finalIds = new Set(s.finaleIds ?? []);
+-    const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
++    const pursuers = new Set([...s.waveIds, ...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
+     for (const e of [...ai.active]) {
+       if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
+       if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
+diff --git a/src/sim/missions/missionHelpers.ts b/src/sim/missions/missionHelpers.ts
+index efebc5f..6efd980 100644
+--- a/src/sim/missions/missionHelpers.ts
++++ b/src/sim/missions/missionHelpers.ts
+@@ -8,11 +8,11 @@ import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
+ 
+ /** A large corpse is a physical body outside the static route grid. Find a
+  * swept, body-clear step around it before asking the ordinary route to resume. */
+-export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): Point[] | undefined {
++export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point, avoidInfected = false): Point[] | undefined {
+   const dx = goal.x - e.transform.x, dz = goal.z - e.transform.z, length2 = dx * dx + dz * dz;
+   if (length2 < .01) return;
+   const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+-  const bodies = [...world.entities.iterate()].filter(body => solidLargeCorpse(body) && !body.hidden && Math.abs(body.transform.y - e.transform.y) <= 1.2);
++  const bodies = [...world.entities.iterate()].filter(body => (solidLargeCorpse(body) || avoidInfected && body.infected && body.health.current > 0) && !body.hidden && Math.abs(body.transform.y - e.transform.y) <= 1.2);
+   const clearOfCorpses = (from: Point, to: Point) => bodies.every(body => {
+     const x = to.x - from.x, z = to.z - from.z, length = x * x + z * z;
+     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;

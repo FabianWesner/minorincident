@@ -1,0 +1,204 @@
+{
+  "sourceHash": "8a6bbd7be5fc4165c2e3fc38949f463d15472656bd5aa2ac292ded3b5da9c904",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "revision": "49d44dcc4829fa724cec7e54afc4277bbd870aec",
+  "generatedAt": "2026-11-06T05:38:02.800Z",
+  "row": "G-13",
+  "level": "L3",
+  "results": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz",
+      "sha256": "200beb448ff4b5747a43ba3e3d1801394fa755a4b52b513452dd84819c065f55",
+      "outcome": "complete",
+      "nativeStateHash": "138bac25",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 126,
+              "median": 4.242582654846267,
+              "groupMedian": 4.4234770184268,
+              "ratio": 0.9591058430219068
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 116,
+              "median": 4.357912265719724,
+              "groupMedian": 4.4234770184268,
+              "ratio": 0.9851780053487441
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 140,
+              "median": 4.489041771133875,
+              "groupMedian": 4.4234770184268,
+              "ratio": 1.014821994651256
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 109,
+              "median": 4.499900620336839,
+              "groupMedian": 4.4234770184268,
+              "ratio": 1.0172768167646589
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 13672,
+            "stationaryFarTicks": 525,
+            "upperBoundPercent": 3.839964891749561,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 13672,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 30,
+                "escortTicks": 7061,
+                "stationaryFarTicks": 65
+              },
+              {
+                "id": 31,
+                "escortTicks": 6583,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 7459,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 6030,
+                "stationaryFarTicks": 482
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-low-complete.json.gz"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz",
+      "sha256": "8ce304ad10e0a68ab5fa044939f7212840b9eaa489a7cd8fd04182ad279adf87",
+      "outcome": "complete",
+      "nativeStateHash": "6e907dc1",
+      "error": null,
+      "checks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/checkpoint",
+              "id": 30,
+              "samples": 11,
+              "median": 5.0720397968320485,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 1.6719843081982275
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 31,
+              "samples": 29,
+              "median": 2.6588906614284045,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 0.8764961714022426
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 32,
+              "samples": 29,
+              "median": 1.9719815843782451,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 0.6500584374743389
+            },
+            {
+              "phase": "step/checkpoint",
+              "id": 33,
+              "samples": 15,
+              "median": 3.40819952830885,
+              "groupMedian": 3.0335450948686273,
+              "ratio": 1.1235038285977574
+            }
+          ],
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        },
+        {
+          "id": "G-13",
+          "clause": "stationary far-follower time upper bound",
+          "level": "L3",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "escortTicks": 42361,
+            "stationaryFarTicks": 3644,
+            "upperBoundPercent": 8.602252071480843,
+            "followers": [
+              {
+                "id": 23,
+                "escortTicks": 42361,
+                "stationaryFarTicks": 3292
+              },
+              {
+                "id": 30,
+                "escortTicks": 919,
+                "stationaryFarTicks": 337
+              },
+              {
+                "id": 31,
+                "escortTicks": 1993,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 32,
+                "escortTicks": 1971,
+                "stationaryFarTicks": 0
+              },
+              {
+                "id": 33,
+                "escortTicks": 968,
+                "stationaryFarTicks": 15
+              }
+            ]
+          },
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+          "receipt": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix68-g/docs/reports/fix68-g/G-13-L3-feedforward-trial/G-13-L3-high-complete.json.gz"
+        }
+      ]
+    }
+  ]
+}

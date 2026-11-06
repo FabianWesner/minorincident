@@ -1,0 +1,74 @@
+diff --git a/src/sim/missions/LevelSevenEncounters.ts b/src/sim/missions/LevelSevenEncounters.ts
+index 08b48ab..2736bc3 100644
+--- a/src/sim/missions/LevelSevenEncounters.ts
++++ b/src/sim/missions/LevelSevenEncounters.ts
+@@ -26,6 +26,8 @@ export class LevelSevenEncounters {
+   private readonly waypoint = { x: 0, z: 0 };
+   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
+   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
++  private rescueAt = -1;
++  private waitingForRescue = false;
+   constructor(private readonly world: SimWorld, private readonly carried?: readonly EntitySnapshot[]) {
+     world.events.on('infected.attack', event => {
+       if (event.type !== 'infected.attack') return;
+@@ -201,6 +203,14 @@ export class LevelSevenEncounters {
+     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
+     s.briskAt = w.tick;
+     c.state = 'calm'; c.story = null; s.cover = false;
++    if (this.rescueAt !== w.tick) {
++      this.rescueAt = w.tick;
++      this.waitingForRescue = this.state.roster.some(member => {
++        const other = w.entities.get(member.id);
++        return member.status === 'following' && other?.civilian?.state === 'grabbed' && distance(other.transform, p.transform) <= 18;
++      });
++    }
++    if (this.waitingForRescue) { w.spatial.set(e.id, e.transform.x, e.transform.z); return true; }
+     if (this.walkPocketRoute(e)) return true;
+     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
+     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
+@@ -216,7 +226,8 @@ export class LevelSevenEncounters {
+       this.state.waitAt = w.tick + 300;
+       this.warn(e, 'wait');
+     }
+-    if (distance(e.transform, target) > .6) {
++    const movingDeparture = w.missions!.state.steps.departure?.status === 'active' && Math.hypot(v.x, v.z) > .8;
++    if (distance(e.transform, target) > (movingDeparture ? .3 : .6)) {
+       // Reuse the crowd's connected route across the city. Until that field
+       // reaches a follower, short searches fit the shared A* scratch budget.
+       let destination = target;
+@@ -329,6 +340,7 @@ export class LevelSevenEncounters {
+     this.state = structuredClone(record.state); this.prepared = record.prepared;
+     this.approaches.clear();
+     this.pocketRoutes.clear();
++    this.rescueAt = -1;
+     this.state.waitAt += this.world.tick - record.tick;
+     if (this.state.alarm) this.state.alarm.until += this.world.tick - record.tick;
+     this.seen.clear(); for (const id of record.seen) this.seen.add(id);
+diff --git a/src/sim/missions/LevelSixSubway.ts b/src/sim/missions/LevelSixSubway.ts
+index 442a690..3915516 100644
+--- a/src/sim/missions/LevelSixSubway.ts
++++ b/src/sim/missions/LevelSixSubway.ts
+@@ -165,9 +165,9 @@ export class LevelSixSubway {
+       // itself or it can sit forever at the cap with zero members spawned.
+       const currentEntry=wave===4?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
+       const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
+-      // Future quotas suppress filler, but an announced hatch has priority
++      // Future quotas suppress filler, but an announced breach or hatch has priority
+       // over those unannounced promises. Preserve other live announcements.
+-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
++      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
+       if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
+       if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
+       const requested=doors[i%doors.length];
+diff --git a/src/sim/missions/LevelThreeCollapse.ts b/src/sim/missions/LevelThreeCollapse.ts
+index f2cbdcc..8caa4ea 100644
+--- a/src/sim/missions/LevelThreeCollapse.ts
++++ b/src/sim/missions/LevelThreeCollapse.ts
+@@ -634,6 +634,7 @@ export class LevelThreeCollapse {
+     const finalIds = new Set(s.finaleIds ?? []);
+     const pursuers = new Set([...s.pending.filter(q => q.horde && q.id > 0).map(q => q.id), ...(s.finaleIds ?? [])]);
+     for (const e of [...ai.active]) {
++      if (!e.motion && s.waveIds.includes(e.id)) continue; // An announced admission must participate in the fixed step before it can retire.
+       if (e.infected!.recoverAt >= 0) continue; // A downed body must keep its get-up timer and slot.
+       if (e.health.current > 0 && (finalIds.has(e.id) || pursuers.has(e.id) && e.transform.x > s.furthest - 80)) continue;
+       const downBehind = e.health.current <= 0 && world.tick - e.infected!.deadAt > 120 && dist(e.transform, world.entities.get(1)!.transform) > 10;

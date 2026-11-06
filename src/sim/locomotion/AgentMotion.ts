@@ -12,13 +12,19 @@ import { Status } from '../combat/Status';
 import { followerInCombat } from '../outbreak/Survivors';
 
 /** Navigation/behaviour supplies intent; static sweeps remain authoritative. */
-/** L5 calm followers track the courier's own (already limited) pace closely (L5-08). */
+/** Calm followers track the courier's own (already limited) pace closely. */
 export const followerTracking = { acceleration: 12, jerk: 300, omega: 20 } as const;
+// Keep the calm party responsive without overshooting its moving slots.
+export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
-  else { const speed = Status.speed(e); respond(state, vx * speed, vz * speed, tracking ?? (e.civilian?.survivor?.briskAt === tick ? followerTracking : undefined)); }
+  else {
+    const speed = Status.speed(e), ally = e.civilian?.ally;
+    const following = e.civilian?.survivor?.briskAt === tick || ally?.follow && !ally.targetId && !ally.strikeAt;
+    respond(state, vx * speed, vz * speed, tracking ?? (following ? followerTracking : undefined));
+  }
   state.updatedAt = tick;
   const x = e.transform.x, z = e.transform.z;
   if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius);
@@ -71,7 +77,7 @@ export function installAgentMotion(world: SimWorld): void {
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       const yaw = e.transform.yaw;
       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
-        world.scenario === 'L5' && e.companion ? followerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Braking retains the authored approach distance. The windup owns facing,
       // so residual steering must not turn the strike away from its victim.
       if (e.infected?.state === 'attack') e.transform.yaw = yaw;

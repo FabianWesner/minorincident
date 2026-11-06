@@ -1,0 +1,328 @@
+{
+  "status": "PASS",
+  "scope": "Low-complete same-tick announced-admission retirement counterexample; not full L3-02 closure.",
+  "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "provenance": "Frozen main source tested before committing the one-line L3 guard; raw revision is its parent d10848b.",
+  "change": "Only newly admitted announced actors without fixed-step motion publication skip retirement. Existing35m retirement distance,30tick cadence, all wave quotas and caps stay unchanged. Ordinary fillers retain their existing retirement rules.",
+  "beforeSameTickRetirements": 2,
+  "afterSameTickRetirements": 0,
+  "controlIdentical": true,
+  "formerlyMissingActors": [
+    {
+      "tick": 3060,
+      "id": 226,
+      "wave": 2,
+      "scheduled": 2996,
+      "admittedAt": 3030,
+      "ageTicks": 30,
+      "furthest": -106.28189086914062,
+      "position": {
+        "x": -154.97786405637862,
+        "z": -32.992621352126285,
+        "y": 0.83,
+        "yaw": 0.09230208658981616
+      },
+      "hp": 60,
+      "mode": "attracted"
+    },
+    {
+      "tick": 3120,
+      "id": 240,
+      "wave": 2,
+      "scheduled": 3090,
+      "admittedAt": 3090,
+      "ageTicks": 30,
+      "furthest": -106.28189086914062,
+      "position": {
+        "x": -154.97931128322398,
+        "z": -32.99645892262476,
+        "y": 0.83,
+        "yaw": 5.608136200562237
+      },
+      "hp": 60,
+      "mode": "attracted"
+    }
+  ],
+  "firstFixedStep": [
+    {
+      "tick": 3030,
+      "id": 226,
+      "ageTicks": 0,
+      "present": true,
+      "hp": 60,
+      "hasMotion": false,
+      "hidden": false,
+      "pending": false,
+      "position": {
+        "x": -155,
+        "z": -33,
+        "y": 0.83,
+        "yaw": 1.3106354199231498
+      }
+    },
+    {
+      "tick": 3031,
+      "id": 226,
+      "ageTicks": 1,
+      "present": true,
+      "hp": 60,
+      "hasMotion": true,
+      "updatedAt": 3031,
+      "hidden": false,
+      "pending": false,
+      "position": {
+        "x": -154.99978918148932,
+        "z": -32.99992972716311,
+        "y": 0.83,
+        "yaw": 1.3106354199231498
+      }
+    },
+    {
+      "tick": 3090,
+      "id": 240,
+      "ageTicks": 0,
+      "present": true,
+      "hp": 60,
+      "hasMotion": false,
+      "hidden": false,
+      "pending": false,
+      "position": {
+        "x": -155,
+        "z": -33,
+        "y": 0.83,
+        "yaw": 4.539802867228904
+      }
+    },
+    {
+      "tick": 3091,
+      "id": 240,
+      "ageTicks": 1,
+      "present": true,
+      "hp": 60,
+      "hasMotion": true,
+      "updatedAt": 3091,
+      "hidden": false,
+      "pending": false,
+      "position": {
+        "x": -154.99978918148932,
+        "z": -32.99992972716311,
+        "y": 0.83,
+        "yaw": 4.539802867228904
+      }
+    }
+  ],
+  "native": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+      "outcome": "complete",
+      "stateHash": "3ce6de95",
+      "waves": [
+        {
+          "key": "station-0",
+          "members": 15,
+          "firstAttackSeconds": 2.95
+        },
+        {
+          "key": "station-1",
+          "members": 30,
+          "firstAttackSeconds": 3.6333333333333333
+        },
+        {
+          "key": "station-2",
+          "members": 50,
+          "firstAttackSeconds": 7.433333333333334
+        }
+      ],
+      "pendingWaveEntries": 0,
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 3
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      }
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+      "outcome": "tick-budget",
+      "stateHash": "c30feb32",
+      "waves": [
+        {
+          "key": "station-0",
+          "members": 15,
+          "firstAttackSeconds": 2.95
+        },
+        {
+          "key": "station-1",
+          "members": 30,
+          "firstAttackSeconds": 2.966666666666667
+        },
+        {
+          "key": "station-2",
+          "members": 50,
+          "firstAttackSeconds": 4.466666666666667
+        }
+      ],
+      "pendingWaveEntries": 0,
+      "army": null
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+      "outcome": "complete",
+      "stateHash": "9e71c96f",
+      "waves": [
+        {
+          "key": "station-0",
+          "members": 30,
+          "firstAttackSeconds": 2.4166666666666665
+        },
+        {
+          "key": "station-1",
+          "members": 60,
+          "firstAttackSeconds": 0.16666666666666666
+        },
+        {
+          "key": "station-2",
+          "members": 100,
+          "firstAttackSeconds": 14.466666666666667
+        }
+      ],
+      "pendingWaveEntries": 0,
+      "army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      }
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "sourceHash": "5e0e8c153b6c15d7a9a7497e32886ed51c78d7153f456d9de01030516172fbe7",
+      "outcome": "tick-budget",
+      "stateHash": "9e07e267",
+      "waves": [
+        {
+          "key": "station-0",
+          "members": 30,
+          "firstAttackSeconds": 2.4166666666666665
+        },
+        {
+          "key": "station-1",
+          "members": 60,
+          "firstAttackSeconds": 15.133333333333333
+        },
+        {
+          "key": "station-2",
+          "members": 90,
+          "firstAttackSeconds": 7.333333333333333
+        }
+      ],
+      "pendingWaveEntries": 10,
+      "army": null
+    }
+  ],
+  "remaining": "High stationary third wave has90 actual admissions and10 retained pending entries under the unchanged cap; it is a separate L3-02 failure, not missing/deleted IDs. Other L3 density, formation-distance and pressure failures remain recorded.",
+  "evidence": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-high-fixtures.json.gz",
+      "sha256": "efaa1a76ccc7a224452a5e9ce8b7a3e6596bc37db52d7d0f50b6b1bdf7d7e0ea",
+      "rawSha256": "63b9a91239d79660f0863a866b65aef2ae9f97672cc50bb08948f90d4696fe25"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-low-checkpoints.json.gz",
+      "sha256": "7a59c37eeb0579c77e9e05c4813192b101e7fca81ab79afb11fb07a71979bfd9",
+      "rawSha256": "82f39510b7fef54a63b5cf35cf043dc49e83bbeea19f7b7ed37eea53a156e463"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-high-complete.json.gz",
+      "sha256": "d0374f700bd65fe86768ae06ab0b0c6aae94c1d437591b27391c8a4a34cac6b4",
+      "rawSha256": "fef368bbfd03971aea35a73afb3ba430c32eab067f6e529e847dc86a3d3e9494"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-low-fixtures.json.gz",
+      "sha256": "4982d3043c4ddee4b33598a52ba3778df2f0e07b3fc981efdbf377524a0dd08d",
+      "rawSha256": "095c2e2f153f95c860c5cf5e7b3551b4b8f0b5a94aa832304d6ab0506c1087f9"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-low-complete.json.gz",
+      "sha256": "9df826d1843de9c403772c50c7b5c1e60b45605ded920955ea69de5b48044420",
+      "rawSha256": "5bd77408d2b75eec7b16a9cfbf44c04ff84c445766a61b4b0c3cacb0e1f353af"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-high-checkpoints.json.gz",
+      "sha256": "a9b1ed07ebf221dc8eaf16f09e6cd5f5963a70e5a3c3bca9ebe8050b0b39fe9f",
+      "rawSha256": "3aad34943fe156a3752f2635ac49912955925c8093667ef7bbe879027420d73e"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-low-stationary.json.gz",
+      "sha256": "08ab491b0b0813c86c4ab3bab297c97feaa00e7bd6e91be38a50efda566a75b3",
+      "rawSha256": "416665c03bf47fa0d246dfbf1ac29b833df584d0a230890d6523094682208d29"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3-high-stationary.json.gz",
+      "sha256": "8ddd90a8e84f71aab249f443df4b39406c8a5b5b5e66ba654ae5aecb43172f48",
+      "rawSha256": "426010759064a233f8398240dda1a0c47d33d63ee05558576a3e5b7eabbd3f5b"
+    },
+    {
+      "original": "docs/reports/fix51-verify/L3.json",
+      "file": "docs/reports/fix68-g/L3-retirement-final/L3.json.gz",
+      "sha256": "78dcd332420c76ae2eb381ab70c516116ca6c5be48fe27cae7564665a967c223",
+      "rawSha256": "8633b66219b6943c164ebb3a068f4512eb5f493bcb085c0ec881df6b749954d8"
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-02-retirement-trace.json.gz",
+      "sha256": "510ec926384fd84b9a449e2315ab575997b58b1895ad83aebf4719b578810856"
+    },
+    {
+      "file": "docs/reports/fix68-g/L3-02-ready-wave-retirement-after.json.gz",
+      "sha256": "8f6c05d3b0286377cb37603ecb3a1eef70d0d08d118477fef1ac2fc65b996dfb"
+    }
+  ]
+}

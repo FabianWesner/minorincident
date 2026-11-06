@@ -169,9 +169,9 @@ export class LevelSixSubway {
       // itself or it can sit forever at the cap with zero members spawned.
       const currentEntry=wave===4?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
       const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
-      // Future quotas suppress filler, but an announced hatch has priority
+      // Future quotas suppress filler, but an announced breach or hatch has priority
       // over those unannounced promises. Preserve other live announcements.
-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
+      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
       if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
       if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
       const requested=doors[i%doors.length];

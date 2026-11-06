@@ -1,27 +1,30 @@
 {
   "row": "G-20",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
+  "status": "PASS",
+  "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "4ec2699068306bbf58cccf265aba25dd3a3516d1",
+  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
   "clauses": [
     {
-      "clause": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
-      "verdict": "FAIL",
-      "note": "Controlled real Mission.finish edge with live chasing enemy2m away: L7 enters result andL9 progression immediately, in low/high; runOutUntil absent, protection0.14 other cells retain300ticks and protection. No cap/timer/finish logic changed. L5 fixture cannot spawn under current phase cap and remains unmeasured; special endings still need natural route confirmation before altering their handoff/cinematic contracts."
+      "clause": "L7/L9 give 300 ticks of invulnerable run-out during nearby action",
+      "verdict": "PASS",
+      "note": "All four former L7/L9 failures pass. All 18 valid real-world final-predicate fixtures pass at both tiers. L5 remains a concurrency-cap setup rejection at both tiers."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-20-final-runout.json",
-      "sha256": "2adc1d3cadfa0858fc2fdee1b87767b1db4e3712d5c813f45451d3f673c97b95",
-      "what": "Fresh final-source run of every arranged terminal predicate, both qualities. All18 measured cells and both explicit L5 fixture rejections identical to prior proof; L7/L9 still transition immediately with live chaser."
+      "file": "docs/reports/fix68-g/G-20-before.json",
+      "sha256": "16dd2d514556bca6383ae42c8bbf351bca36827628921d05179e4cfd1c635eb4",
+      "what": "Actual Mission.finish with live chase within 2m; exact 300-tick delay and invulnerability measured. Before isolates L7/L9 exceptions, after passes 18 valid fixtures; two L5 setup errors retained."
     },
     {
-      "file": "docs/reports/sweep-g/G-20-runout.json",
-      "sha256": "7baee8979188050947f855a6fbab585f5e874e590aedae13ffbbd504fe043a23",
-      "what": "18 controlled native terminal receipts, exact0/300tick transition and protection values; L5 cap errors retained, not passed."
+      "file": "docs/reports/fix68-g/G-20-after.json",
+      "sha256": "0cf1c79344ece4abe0100ffc2ddcb088a8eda69f9f6ce3fe838796dd66178287",
+      "what": "Actual Mission.finish with live chase within 2m; exact 300-tick delay and invulnerability measured. Before isolates L7/L9 exceptions, after passes 18 valid fixtures; two L5 setup errors retained."
     }
   ],
-  "notes": "Arranged final predicates and enemy placement are explicitly labelled fixture setup. This is not full physical route coverage. Final-source refresh preserves all original setup errors and counterexamples; no shortened clocks or caps."
+  "notes": [
+    "Natural terminal route confirmation still pending; predicate fixtures do not prove every cinematic/vehicle sequence. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+  ]
 }
