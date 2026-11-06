@@ -56,19 +56,23 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
  * they stay opaque, depth-writing and in their batch. Horizontal supports through 0.45 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
-export const seeThroughKeep = (eligible?: Node<'float'>) => {
+export const seeThroughKeep = (eligible?: Node<'float'>, deck = false) => {
+  // fix68-a (L3-13): `deck` (the raised highway ramp) keeps everything up to 1.6 m above her feet, so the 0.95 m jersey rails and the
+  // deck edge she walks along stay whole; only the gantry and lamp heads above head height dissolve.
   // QA #48 (L5 pharmacy): the kept 0.3 m band of a wall standing right in front of her drew its top edge across her feet, so she read as
   // standing on the roof edge. Support surfaces (facing up) keep the 0.3 m band; vertical faces keep 0.22 m, so 20 cm kerbs stay whole (PO #5).
   // A courier on the street must not cut the adjacent 0.4 m station apron.
   // Preserve step-height horizontal tops while vertical cover keeps its tight band.
-  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(seeThrough.keepBand.add(.08).max(.45)))
-    .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(seeThrough.keepBand))));
+  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(seeThrough.keepBand.add(.08).max(deck ? 1.6 : .45)))
+    .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(deck ? seeThrough.keepBand.max(1.6) : seeThrough.keepBand))));
   const hole = cuttable.select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   // A placement enclosing most of the lens cannot leave a roof across the
   // entire viewport. Its foreground surfaces clear, while supports and surfaces
   // behind the subject stay intact. Other placements keep the bounded disc.
-  const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
+  // The ramp's bounding box encloses the camera whenever she stands on it, which would clear every surface nearer than her (a straight
+  // cut through the deck): the deck mode never takes the lens branch.
+  const lens = deck ? undefined : eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
   // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
   const keep = seeThrough.solidSilhouette.greaterThan(.5).select(hole.greaterThan(.5), hole.greaterThan(noise));
@@ -76,7 +80,7 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
   const retained = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain);
   const silhouette = seeThrough.solidSilhouette.greaterThan(.5).select(retained.greaterThan(.5), retained.greaterThan(noise));
-  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
+  return eligible ? eligible.lessThan(.5).or(lens ? keep.and(lens.not()) : keep) : silhouette;
 };
 
 /** A closed hull has no playable interior. Clear its full depth inside the

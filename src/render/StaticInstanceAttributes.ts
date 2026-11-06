@@ -25,7 +25,7 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   let material = materials.get(source);
   if (!material) {
     material = source instanceof PaletteMaterial ? source.frozenCopy() : source.clone();
-    if (material instanceof PaletteMaterial && source.userData.seeThrough === true) material.seeThrough('placement');
+    if (material instanceof PaletteMaterial && source.userData.seeThrough === true) material.seeThrough(source.userData.seeThroughDeck === true ? 'deck' : 'placement');
     material.positionNode = source.positionNode ? placementPosition(source.positionNode, corpseNormals) : corpseNormals ? corpsePosition : staticPosition;
     const owned = material;
     source.addEventListener('dispose', () => owned.dispose()); materials.set(source, material);
