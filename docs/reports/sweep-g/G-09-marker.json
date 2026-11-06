@@ -1,0 +1,670 @@
+{
+  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "5e104db33681dcd04e4755e07ecd073cced8230b",
+  "method": "Authored L4 turn checkpoint setup (prefix objective skips); actual active hold step observed for180 live simulation ticks at each quality/zoom. No marker/entity writes. Baseline physical full route independently spends190s in this step.",
+  "cells": [
+    {
+      "tier": "low",
+      "zoom": 1,
+      "samples": [
+        {
+          "tick": 0,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 30,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 60,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 90,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 120,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 150,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 180,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        }
+      ],
+      "file": "test-results/sweep-g/G-09/low-z1.png",
+      "sha256": "a625d996b6b46d6f8cbb6783eef09d02a760f8cc97ca61c4978440b62960c0a8",
+      "reviewed": true,
+      "observation": "Plaza hold is active, timer counts down, heroine/corgi/bus visible. No world objective ring is drawn. A small peripheral UI arrow in some frames does not supply the missing plaza ring."
+    },
+    {
+      "tier": "low",
+      "zoom": 1.5,
+      "samples": [
+        {
+          "tick": 180,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 210,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 240,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 270,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 300,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 330,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 360,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "low",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        }
+      ],
+      "file": "test-results/sweep-g/G-09/low-z1.5.png",
+      "sha256": "523c99f8c930973e4b257b60a88719f825a24f8dbaac1b0233750c5620c86e2a",
+      "reviewed": true,
+      "observation": "Plaza hold is active, timer counts down, heroine/corgi/bus visible. No world objective ring is drawn. A small peripheral UI arrow in some frames does not supply the missing plaza ring."
+    },
+    {
+      "tier": "high",
+      "zoom": 1,
+      "samples": [
+        {
+          "tick": 0,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 30,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 60,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 90,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 120,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 150,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 180,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        }
+      ],
+      "file": "test-results/sweep-g/G-09/high-z1.png",
+      "sha256": "181f88d9c0b278875a96782a89691378206f540d008c8ba49f93a27339454057",
+      "reviewed": true,
+      "observation": "Plaza hold is active, timer counts down, heroine/corgi/bus visible. No world objective ring is drawn. A small peripheral UI arrow in some frames does not supply the missing plaza ring."
+    },
+    {
+      "tier": "high",
+      "zoom": 1.5,
+      "samples": [
+        {
+          "tick": 180,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 210,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 240,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 270,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 300,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 330,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        },
+        {
+          "tick": 360,
+          "active": [
+            {
+              "id": "hold",
+              "waypoint": false,
+              "anchor": "l4-plaza"
+            }
+          ],
+          "phase": "war",
+          "quality": "high",
+          "zoom": 1.5,
+          "marker": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "pinVisible": false
+        }
+      ],
+      "file": "test-results/sweep-g/G-09/high-z1.5.png",
+      "sha256": "caac86da0abd0ea6dbaf53af9f8e092c050e04ca58ae7d34c9e3bce4e7c2f0e2",
+      "reviewed": true,
+      "observation": "Plaza hold is active, timer counts down, heroine/corgi/bus visible. No world objective ring is drawn. A small peripheral UI arrow in some frames does not supply the missing plaza ring."
+    }
+  ],
+  "errors": [],
+  "diagnosis": "L4 mission explicitly sets hold.waypoint=false. This is authored suppression, not a delayed asset load. Counterexample to the unchanged EVERY-step global criterion; no criterion or game behavior silently weakened.",
+  "limitations": [
+    "Authored checkpoint-prefix setup, not fresh natural step entry. Persistent absence over180 ticks plus original physical route spanning190s independently establishes missing marker beyond the2s allowance.",
+    "Other objective starts and behind-prop coverage remain unqualified."
+  ]
+}

@@ -23,3 +23,5 @@ G-11: four fresh backend/quality pickup-ring fixtures PASS; eight full-size fram
 G-12: fresh shared follower-bar matrix PASS (140 group-size identity/count samples; 17 captures reviewed including negative control). Campaign occlusion remains G-07.
 
 G-24: fresh shared Alpha/zoo health-bar matrix PASS (four backend/quality cells; 20 state captures reviewed).
+
+G-09: measured FAIL. Authored L4 hold suppresses the ring (`waypoint=false`), persisting beyond2s at both qualities and requested zooms1/1.5. Other objective starts remain open.
