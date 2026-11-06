@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L5",
   "tier": "low",
-  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
-  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
-  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 181,
+      "wallSeconds": 292,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 4.915,
+      "maxNoProgressSeconds": 45.71666666666667,
       "deaths": 0,
-      "assists": 5,
+      "assists": 4,
       "attacks": {
-        "weapon.army-mg": 919
+        "weapon.shotgun": 119
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -53,13 +53,14 @@
         "weapon.bat",
         "weapon.army-mg",
         "weapon.handgun",
-        "weapon.kick"
+        "weapon.kick",
+        "weapon.shotgun"
       ],
       "steps": [
         {
           "id": "emerge",
-          "text": "Unbar the cellar door \u00b7 4\u00a0m",
-          "tick": 14,
+          "text": "Unbar the cellar door · 4 m",
+          "tick": 16,
           "marker": {
             "anchor": "l5-brace",
             "ring": {
@@ -79,7 +80,7 @@
         {
           "id": "look",
           "text": "Look for anyone still alive",
-          "tick": 790,
+          "tick": 807,
           "marker": {
             "anchor": "l5-brace",
             "ring": null,
@@ -90,8 +91,8 @@
         },
         {
           "id": "metro",
-          "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 91\u00a0m",
-          "tick": 8383,
+          "text": "Lead the survivors down into the Metro · Survivors in 0/3 · 67 m",
+          "tick": 15288,
           "marker": {
             "anchor": "l5-metro-in",
             "ring": {
@@ -104,19 +105,72 @@
               0.94,
               -48.44
             ],
-            "playerY": 0.8500000238418579,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         }
       ]
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "level": "L5",
+      "tick": 5366,
+      "x": 45.4,
+      "z": 6.7,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 1/5\"",
+      "captures": [
+        "captures/accept-L5-5366-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 10918,
+      "x": -52.8,
+      "z": -9.6,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
+      "captures": [
+        "captures/accept-L5-10918-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 12453,
+      "x": -31.7,
+      "z": -5.1,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "46 s without objective progress standing at the ring (undefined m); HUD: \"Look for anyone still alive · Survivors found 3/5\"",
+      "captures": [
+        "captures/accept-L5-12453-stuck-at-ring.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 14269,
+      "x": -49.8,
+      "z": -23.4,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 4/5\"",
+      "captures": [
+        "captures/accept-L5-14269-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    }
+  ],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5,
-  "sweepEvidence": {
-    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L5-low-webgl2.json",
-    "sha256": "92174c010050e874a47b07fddbf760ee6cfc844ba705c9bebcf11b3b33f4b0ee"
-  }
+  "zoom": 1.5
 }

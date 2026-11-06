@@ -1,0 +1,95 @@
+{
+  "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+  "expected": "combat: attacks on player + group \u2265 4/min across the retreat (tune); competent damage taken \u2265 30 HP (tune); concurrent infected \u2264 60 / 30.",
+  "checks": [
+    {
+      "id": "L6-07",
+      "clause": "ordinary retreat route completion",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": "complete",
+      "target": "complete",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "retreat player/group windups per minute",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.277591973244146,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "actual HP lost during retreat",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 80,
+      "target": "30 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "retreat concurrent infected cap",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 17,
+      "target": "0 \u2264 value \u2264 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "ordinary retreat route completion",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": "complete",
+      "target": "complete",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "retreat player/group windups per minute",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.277591973244146,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "actual HP lost during retreat",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 80,
+      "target": "30 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-07",
+      "clause": "retreat concurrent infected cap",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 17,
+      "target": "0 \u2264 value \u2264 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    }
+  ],
+  "note": "Full ordinary mortal native retreat, both qualities; no perceived-pressure or browser qualification."
+}

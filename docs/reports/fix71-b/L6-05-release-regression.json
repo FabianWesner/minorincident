@@ -1,0 +1,192 @@
+{
+  "status": "FAIL",
+  "newRegression": true,
+  "criterion": "L6-05 explicitly requires attacks on player>=4/min; group attacks cannot substitute.",
+  "baseline": "be99181 currentStatus PASS, complete player windups4.997686/min; release complete0/min, both tiers.",
+  "rows": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+      "nativeStateHash": "4a1802d3",
+      "stop": {
+        "key": "step/stop",
+        "label": "stop: Stop the infected",
+        "threat": true,
+        "startSeconds": 33.2,
+        "seconds": 21.016666666666666,
+        "spawned": 3,
+        "initial": 8,
+        "observed": 11,
+        "reachableEver": 9,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 10,
+        "groupAttacksPerMinute": 28.548770816812056,
+        "firstGroupAttackSeconds": 0.4,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 7,
+          "minimumPercent": 100,
+          "worstTick": 3192,
+          "nearby": 3,
+          "reachable": 3,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3192,
+          "alive": 3,
+          "reachable": 3,
+          "playerX": 0.33253079652786255,
+          "playerZ": 3.5566253662109375,
+          "positions": []
+        },
+        "flags": []
+      }
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+      "nativeStateHash": "07c399c9",
+      "stop": {
+        "key": "step/stop",
+        "label": "stop: Stop the infected",
+        "threat": true,
+        "startSeconds": 33.2,
+        "seconds": 21.016666666666666,
+        "spawned": 13,
+        "initial": 8,
+        "observed": 21,
+        "reachableEver": 20,
+        "within2_5m": 11,
+        "attacks": 51,
+        "attacksPerMinute": 145.59873116574147,
+        "firstAttackSeconds": 2.0833333333333335,
+        "groupAttacks": 58,
+        "groupAttacksPerMinute": 165.58287073750992,
+        "firstGroupAttackSeconds": 0.4,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 11,
+          "minimumPercent": 100,
+          "worstTick": 3192,
+          "nearby": 19,
+          "reachable": 19,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3192,
+          "alive": 19,
+          "reachable": 19,
+          "playerX": 0.33253079652786255,
+          "playerZ": 3.5566253662109375,
+          "positions": []
+        },
+        "flags": []
+      }
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+      "nativeStateHash": "10d0a475",
+      "stop": {
+        "key": "step/stop",
+        "label": "stop: Stop the infected",
+        "threat": true,
+        "startSeconds": 33.2,
+        "seconds": 21.016666666666666,
+        "spawned": 3,
+        "initial": 8,
+        "observed": 11,
+        "reachableEver": 9,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 10,
+        "groupAttacksPerMinute": 28.548770816812056,
+        "firstGroupAttackSeconds": 0.4,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 7,
+          "minimumPercent": 100,
+          "worstTick": 3192,
+          "nearby": 3,
+          "reachable": 3,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3192,
+          "alive": 3,
+          "reachable": 3,
+          "playerX": 0.33253079652786255,
+          "playerZ": 3.5566253662109375,
+          "positions": []
+        },
+        "flags": []
+      }
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+      "nativeStateHash": "49be35bd",
+      "stop": {
+        "key": "step/stop",
+        "label": "stop: Stop the infected",
+        "threat": true,
+        "startSeconds": 33.2,
+        "seconds": 21.016666666666666,
+        "spawned": 13,
+        "initial": 8,
+        "observed": 21,
+        "reachableEver": 20,
+        "within2_5m": 11,
+        "attacks": 51,
+        "attacksPerMinute": 145.59873116574147,
+        "firstAttackSeconds": 2.0833333333333335,
+        "groupAttacks": 58,
+        "groupAttacksPerMinute": 165.58287073750992,
+        "firstGroupAttackSeconds": 0.4,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 11,
+          "minimumPercent": 100,
+          "worstTick": 3192,
+          "nearby": 19,
+          "reachable": 19,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3192,
+          "alive": 19,
+          "reachable": 19,
+          "playerX": 0.33253079652786255,
+          "playerZ": 3.5566253662109375,
+          "positions": []
+        },
+        "flags": []
+      }
+    }
+  ]
+}

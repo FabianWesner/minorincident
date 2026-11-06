@@ -207,8 +207,11 @@ export class LevelSixSubway {
       const hatchFront = wave === 4 && !this.s.spawnLog.some(entry=>entry.wave===4&&entry.door===requested);
       const armored = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
         || hatchFront;
+      // The first breach's existing front member must survive the now-correct
+      // elevated MG fire long enough to engage the courier. Reuse the armored
+      // hatch archetype without adding a member, cap slot or special stat.
       let id:number;
-      try { id=armored?ai.spawn(hatchFront?'infected.armored':'infected.riot',at,hatchFront?{variant:'inf.riot-cop'}:{}):o.spawnPedestrian(at,{model}); const e=w.entities.get(id)!; if(!armored)o.turnNow(e); }
+      try { id=armored?ai.spawn(hatchFront||wave===1?'infected.armored':'infected.riot',at,hatchFront?{variant:'inf.riot-cop'}:{}):o.spawnPedestrian(at,{model}); const e=w.entities.get(id)!; if(!armored)o.turnNow(e); }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later
@@ -373,7 +376,8 @@ export class LevelSixSubway {
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
-    s.paused=atGate&&(rear||!!behind);
+    const uncovered=hot&&p.x<s.leaderX&&distance(p,{x:s.leaderX,z:s.leaderZ})>12;
+    s.paused=uncovered||atGate&&(rear||!!behind);
     // QA 10-21 #83: a paused group names its reason and the ring leads to it (an injured straggler to fetch, or the rear to cover).
     // QA 10-21 #88: the held-group reason flipped 3x in 3 s (rear cover as infected crossed the 20 m band). Like `strayed`
     // (#84) the shown reason changes only once the new one has held for strayDwellS. The first reason, and fetch -> bring

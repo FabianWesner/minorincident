@@ -1,0 +1,1132 @@
+{
+  "revision": "be991818d6ae4cf5e31ce6c64780d62eb8a9da8a",
+  "mainRevision": "ed487cc912550aede8413aaf578cfe08fb8e0d2d",
+  "sourceMatchesMain": false,
+  "seed": 1,
+  "policy": "complete + passive",
+  "tier": "low",
+  "workers": 1,
+  "seconds": 7.5378655,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate",
+    "BASELINE_MAIN_SOURCE_NOT_VERIFIED"
+  ],
+  "levels": [
+    {
+      "level": "L6",
+      "quality": "low",
+      "definitions": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter",
+          "type": "custom"
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected",
+          "type": "custom"
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel",
+          "type": "custom"
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night",
+          "type": "custom"
+        }
+      ],
+      "run": {
+        "level": "L6",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 275.78333333333336,
+        "deaths": 1,
+        "kills": 35,
+        "damageTaken": 150,
+        "failures": {
+          "player-died": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "shelter",
+            "t": 33.2
+          },
+          {
+            "id": "stop",
+            "t": 60.983333333333334
+          },
+          {
+            "id": "retreat",
+            "t": 266.21666666666664
+          },
+          {
+            "id": "exit",
+            "t": 275.78333333333336
+          }
+        ],
+        "furthestObjective": "exit",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 151,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "observation": {
+        "ticks": 16547,
+        "followerWait": {
+          "escortTicks": 16546,
+          "stationaryFarTicks": 6795,
+          "upperBoundPercent": 41.067327450743385,
+          "followers": [
+            {
+              "id": 15,
+              "escortTicks": 16534,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 16,
+              "escortTicks": 12887,
+              "stationaryFarTicks": 6516
+            },
+            {
+              "id": 30,
+              "escortTicks": 4843,
+              "stationaryFarTicks": 1870
+            },
+            {
+              "id": 38,
+              "escortTicks": 4324,
+              "stationaryFarTicks": 1305
+            },
+            {
+              "id": 42,
+              "escortTicks": 3856,
+              "stationaryFarTicks": 1022
+            },
+            {
+              "id": 43,
+              "escortTicks": 4249,
+              "stationaryFarTicks": 1228
+            },
+            {
+              "id": 44,
+              "escortTicks": 4067,
+              "stationaryFarTicks": 1196
+            }
+          ]
+        },
+        "phases": [
+          {
+            "key": "step/shelter",
+            "label": "shelter: Look around the shelter",
+            "threat": false,
+            "startSeconds": 0,
+            "seconds": 33.2,
+            "spawned": 8,
+            "initial": 0,
+            "observed": 8,
+            "reachableEver": 0,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 1,
+                "median": 2.1553391786722838
+              }
+            ],
+            "followerMin": null,
+            "followerMedian": null,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 1921,
+              "alive": 0,
+              "reachable": 0,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/shelter",
+            "label": "controller: shelter",
+            "threat": false,
+            "startSeconds": 0,
+            "seconds": 33.2,
+            "spawned": 8,
+            "initial": 0,
+            "observed": 8,
+            "reachableEver": 0,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 1,
+                "median": 2.1553391786722838
+              }
+            ],
+            "followerMin": null,
+            "followerMedian": null,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 1921,
+              "alive": 0,
+              "reachable": 0,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "step/stop",
+            "label": "stop: Stop the infected",
+            "threat": true,
+            "startSeconds": 33.2,
+            "seconds": 27.783333333333335,
+            "spawned": 12,
+            "initial": 8,
+            "observed": 20,
+            "reachableEver": 19,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 13,
+            "groupAttacksPerMinute": 28.074385122975404,
+            "firstGroupAttackSeconds": 0.85,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 11,
+              "minimumPercent": 100,
+              "worstTick": 3613,
+              "nearby": 8,
+              "reachable": 8,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 3613,
+              "alive": 8,
+              "reachable": 8,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/first",
+            "label": "controller: first",
+            "threat": false,
+            "startSeconds": 33.2,
+            "seconds": 21.016666666666666,
+            "spawned": 3,
+            "initial": 8,
+            "observed": 11,
+            "reachableEver": 10,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 4,
+            "groupAttacksPerMinute": 11.419508326724822,
+            "firstGroupAttackSeconds": 0.85,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 7,
+              "minimumPercent": 100,
+              "worstTick": 3192,
+              "nearby": 4,
+              "reachable": 4,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 3192,
+              "alive": 4,
+              "reachable": 4,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/fails",
+            "label": "controller: fails",
+            "threat": false,
+            "startSeconds": 54.21666666666667,
+            "seconds": 6.766666666666667,
+            "spawned": 9,
+            "initial": 4,
+            "observed": 16,
+            "reachableEver": 14,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 9,
+            "groupAttacksPerMinute": 79.80295566502463,
+            "firstGroupAttackSeconds": 1.7833333333333334,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 4,
+              "minimumPercent": 100,
+              "worstTick": 3613,
+              "nearby": 8,
+              "reachable": 8,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 3613,
+              "alive": 8,
+              "reachable": 8,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "step/retreat",
+            "label": "retreat: Cover the retreat through the tunnel",
+            "threat": false,
+            "startSeconds": 60.983333333333334,
+            "seconds": 205.23333333333332,
+            "spawned": 67,
+            "initial": 9,
+            "observed": 79,
+            "reachableEver": 78,
+            "within2_5m": 40,
+            "attacks": 79,
+            "attacksPerMinute": 23.09566347247036,
+            "firstAttackSeconds": 24.333333333333332,
+            "groupAttacks": 209,
+            "groupAttacksPerMinute": 61.10118564235829,
+            "firstGroupAttackSeconds": 0.15,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 135,
+                "median": 3.9445038836477155
+              },
+              {
+                "id": 16,
+                "samples": 139,
+                "median": 2.199877766770521
+              },
+              {
+                "id": 30,
+                "samples": 39,
+                "median": 2.1999375247935533
+              },
+              {
+                "id": 38,
+                "samples": 30,
+                "median": 2.1999990333315877
+              },
+              {
+                "id": 42,
+                "samples": 30,
+                "median": 2.1999981517047944
+              },
+              {
+                "id": 43,
+                "samples": 30,
+                "median": 2.1999994263339318
+              },
+              {
+                "id": 44,
+                "samples": 30,
+                "median": 2.199858064278059
+              }
+            ],
+            "followerMin": 2.199858064278059,
+            "followerMedian": 2.1999981517047944,
+            "boundedPaths": {
+              "samples": 87,
+              "minimumPercent": 100,
+              "worstTick": 15899,
+              "nearby": 2,
+              "reachable": 2,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 15899,
+              "alive": 23,
+              "reachable": 23,
+              "playerX": 237.29498291015625,
+              "playerZ": 15.000007629394531,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/retreat",
+            "label": "controller: retreat",
+            "threat": false,
+            "startSeconds": 60.983333333333334,
+            "seconds": 205.23333333333332,
+            "spawned": 67,
+            "initial": 9,
+            "observed": 79,
+            "reachableEver": 78,
+            "within2_5m": 40,
+            "attacks": 79,
+            "attacksPerMinute": 23.09566347247036,
+            "firstAttackSeconds": 24.333333333333332,
+            "groupAttacks": 209,
+            "groupAttacksPerMinute": 61.10118564235829,
+            "firstGroupAttackSeconds": 0.15,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 135,
+                "median": 3.9445038836477155
+              },
+              {
+                "id": 16,
+                "samples": 139,
+                "median": 2.199877766770521
+              },
+              {
+                "id": 30,
+                "samples": 39,
+                "median": 2.1999375247935533
+              },
+              {
+                "id": 38,
+                "samples": 30,
+                "median": 2.1999990333315877
+              },
+              {
+                "id": 42,
+                "samples": 30,
+                "median": 2.1999981517047944
+              },
+              {
+                "id": 43,
+                "samples": 30,
+                "median": 2.1999994263339318
+              },
+              {
+                "id": 44,
+                "samples": 30,
+                "median": 2.199858064278059
+              }
+            ],
+            "followerMin": 2.199858064278059,
+            "followerMedian": 2.1999981517047944,
+            "boundedPaths": {
+              "samples": 87,
+              "minimumPercent": 100,
+              "worstTick": 15899,
+              "nearby": 2,
+              "reachable": 2,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 15899,
+              "alive": 23,
+              "reachable": 23,
+              "playerX": 237.29498291015625,
+              "playerZ": 15.000007629394531,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "step/exit",
+            "label": "exit: Bring the survivors into the night",
+            "threat": false,
+            "startSeconds": 266.21666666666664,
+            "seconds": 9.566666666666666,
+            "spawned": 1,
+            "initial": 23,
+            "observed": 26,
+            "reachableEver": 25,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 16,
+                "median": 2.3185535667547397
+              },
+              {
+                "id": 16,
+                "samples": 16,
+                "median": 2.1983220799245684
+              }
+            ],
+            "followerMin": 2.1983220799245684,
+            "followerMedian": 2.258437823339654,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 16453,
+              "alive": 25,
+              "reachable": 25,
+              "playerX": 261.8222351074219,
+              "playerZ": 14.336832046508789,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/exit",
+            "label": "controller: exit",
+            "threat": false,
+            "startSeconds": 266.21666666666664,
+            "seconds": 9.566666666666666,
+            "spawned": 1,
+            "initial": 23,
+            "observed": 26,
+            "reachableEver": 25,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 16,
+                "median": 2.3185535667547397
+              },
+              {
+                "id": 16,
+                "samples": 16,
+                "median": 2.1983220799245684
+              }
+            ],
+            "followerMin": 2.1983220799245684,
+            "followerMedian": 2.258437823339654,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 16453,
+              "alive": 25,
+              "reachable": 25,
+              "playerX": 261.8222351074219,
+              "playerZ": 14.336832046508789,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/done",
+            "label": "controller: done",
+            "threat": false,
+            "startSeconds": 275.78333333333336,
+            "seconds": 0,
+            "spawned": 0,
+            "initial": 0,
+            "observed": 0,
+            "reachableEver": 25,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 16547,
+              "alive": 25,
+              "reachable": 25,
+              "playerX": 268.8590393066406,
+              "playerZ": 14.754331588745117,
+              "positions": []
+            },
+            "flags": []
+          }
+        ],
+        "waves": [
+          {
+            "key": "l6.breach1",
+            "source": "l6.breach1",
+            "startSeconds": 33.2,
+            "observedSeconds": 242.58333333333334,
+            "expected": 8,
+            "spawned": 8,
+            "firstAttackSeconds": null,
+            "members": [
+              "57@2",
+              "59@1",
+              "60@3",
+              "62@4",
+              "64@5",
+              "66@6",
+              "68@7",
+              "70@8"
+            ],
+            "flags": [
+              "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+            ],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 8
+          },
+          {
+            "key": "l6.breach2",
+            "source": "l6.breach2",
+            "startSeconds": 54.21666666666667,
+            "observedSeconds": 221.56666666666666,
+            "expected": 10,
+            "spawned": 10,
+            "firstAttackSeconds": 31.1,
+            "members": [
+              "74@11",
+              "75@12",
+              "77@13",
+              "79@14",
+              "81@15",
+              "83@16",
+              "85@17",
+              "87@18",
+              "89@19",
+              "91@20"
+            ],
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 10
+          },
+          {
+            "key": "entry-2@4440",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 74,
+            "observedSeconds": 201.78333333333333,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": 17.416666666666668,
+            "members": [
+              "101@27",
+              "102@28"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          },
+          {
+            "key": "entry-2@6706",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 111.76666666666667,
+            "observedSeconds": 164.01666666666668,
+            "expected": 2,
+            "spawned": 0,
+            "firstAttackSeconds": null,
+            "members": [],
+            "flags": [
+              "L6_ENTRY_COUNT_MISMATCH"
+            ],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 0
+          },
+          {
+            "key": "entry-5@8308",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 138.46666666666667,
+            "observedSeconds": 137.31666666666666,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": 15.85,
+            "members": [
+              "116@61",
+              "117@62"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          },
+          {
+            "key": "entry-3@9874",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 164.56666666666666,
+            "observedSeconds": 111.21666666666667,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": 23.8,
+            "members": [
+              "124@66",
+              "125@67"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          },
+          {
+            "key": "entry-6@10614",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 176.9,
+            "observedSeconds": 98.88333333333334,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": 23.4,
+            "members": [
+              "131@71",
+              "132@72"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          },
+          {
+            "key": "entry-4@12787",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 213.11666666666667,
+            "observedSeconds": 62.666666666666664,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": null,
+            "members": [
+              "143@79",
+              "144@80"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          },
+          {
+            "key": "entry-7@13271",
+            "source": "L6 maintenance entry.warnedAt",
+            "startSeconds": 221.18333333333334,
+            "observedSeconds": 54.6,
+            "expected": 2,
+            "spawned": 2,
+            "firstAttackSeconds": 25.216666666666665,
+            "members": [
+              "148@82",
+              "149@83"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 2
+          }
+        ]
+      },
+      "flags": [
+        "wave/l6.breach1:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+        "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/entry-2@6706:L6_ENTRY_COUNT_MISMATCH"
+      ],
+      "passiveRun": {
+        "level": "L6",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 110,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "shelter",
+            "t": 33.2
+          },
+          {
+            "id": "stop",
+            "t": 54.21666666666667
+          }
+        ],
+        "furthestObjective": "retreat",
+        "activeObjectives": [
+          "retreat"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "retreat",
+          "detail": "tick-budget: Cover the retreat through the tunnel",
+          "player": {
+            "x": 0.33253079652786255,
+            "z": 3.5566253662109375
+          },
+          "distance": 241.9382493410672,
+          "actors": {}
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 76,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "passiveObservation": {
+        "ticks": 6600,
+        "followerWait": {
+          "escortTicks": 6600,
+          "stationaryFarTicks": 2820,
+          "upperBoundPercent": 42.72727272727273,
+          "followers": [
+            {
+              "id": 15,
+              "escortTicks": 6000,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 16,
+              "escortTicks": 3348,
+              "stationaryFarTicks": 2820
+            }
+          ]
+        },
+        "phases": [
+          {
+            "key": "step/shelter",
+            "label": "shelter: Look around the shelter",
+            "threat": false,
+            "startSeconds": 0,
+            "seconds": 33.2,
+            "spawned": 8,
+            "initial": 0,
+            "observed": 8,
+            "reachableEver": 0,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 1,
+                "median": 2.1553391786722838
+              }
+            ],
+            "followerMin": null,
+            "followerMedian": null,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 1921,
+              "alive": 0,
+              "reachable": 0,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/shelter",
+            "label": "controller: shelter",
+            "threat": false,
+            "startSeconds": 0,
+            "seconds": 33.2,
+            "spawned": 8,
+            "initial": 0,
+            "observed": 8,
+            "reachableEver": 0,
+            "within2_5m": 0,
+            "attacks": 0,
+            "attacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0,
+            "firstGroupAttackSeconds": null,
+            "followerSpeeds": [
+              {
+                "id": 15,
+                "samples": 1,
+                "median": 2.1553391786722838
+              }
+            ],
+            "followerMin": null,
+            "followerMedian": null,
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 1921,
+              "alive": 0,
+              "reachable": 0,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "step/stop",
+            "label": "stop: Stop the infected",
+            "threat": true,
+            "startSeconds": 33.2,
+            "seconds": 21.016666666666666,
+            "spawned": 13,
+            "initial": 8,
+            "observed": 21,
+            "reachableEver": 20,
+            "within2_5m": 14,
+            "attacks": 93,
+            "attacksPerMinute": 265.5035685963521,
+            "firstAttackSeconds": 5.766666666666667,
+            "groupAttacks": 31,
+            "groupAttacksPerMinute": 88.50118953211737,
+            "firstGroupAttackSeconds": 0.85,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 11,
+              "minimumPercent": 100,
+              "worstTick": 3192,
+              "nearby": 20,
+              "reachable": 20,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 3192,
+              "alive": 20,
+              "reachable": 20,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/first",
+            "label": "controller: first",
+            "threat": false,
+            "startSeconds": 33.2,
+            "seconds": 21.016666666666666,
+            "spawned": 13,
+            "initial": 8,
+            "observed": 21,
+            "reachableEver": 20,
+            "within2_5m": 14,
+            "attacks": 93,
+            "attacksPerMinute": 265.5035685963521,
+            "firstAttackSeconds": 5.766666666666667,
+            "groupAttacks": 31,
+            "groupAttacksPerMinute": 88.50118953211737,
+            "firstGroupAttackSeconds": 0.85,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 11,
+              "minimumPercent": 100,
+              "worstTick": 3192,
+              "nearby": 20,
+              "reachable": 20,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 3192,
+              "alive": 20,
+              "reachable": 20,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "step/retreat",
+            "label": "retreat: Cover the retreat through the tunnel",
+            "threat": false,
+            "startSeconds": 54.21666666666667,
+            "seconds": 55.78333333333333,
+            "spawned": 9,
+            "initial": 21,
+            "observed": 30,
+            "reachableEver": 30,
+            "within2_5m": 27,
+            "attacks": 789,
+            "attacksPerMinute": 848.6405736480431,
+            "firstAttackSeconds": 0.05,
+            "groupAttacks": 157,
+            "groupAttacksPerMinute": 168.8676426650732,
+            "firstGroupAttackSeconds": 0.6166666666666667,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 28,
+              "minimumPercent": 100,
+              "worstTick": 6493,
+              "nearby": 19,
+              "reachable": 19,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 6493,
+              "alive": 30,
+              "reachable": 30,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          },
+          {
+            "key": "phase/retreat",
+            "label": "controller: retreat",
+            "threat": false,
+            "startSeconds": 54.21666666666667,
+            "seconds": 55.78333333333333,
+            "spawned": 9,
+            "initial": 21,
+            "observed": 30,
+            "reachableEver": 30,
+            "within2_5m": 27,
+            "attacks": 789,
+            "attacksPerMinute": 848.6405736480431,
+            "firstAttackSeconds": 0.05,
+            "groupAttacks": 157,
+            "groupAttacksPerMinute": 168.8676426650732,
+            "firstGroupAttackSeconds": 0.6166666666666667,
+            "followerSpeeds": [],
+            "followerMin": null,
+            "followerMedian": null,
+            "boundedPaths": {
+              "samples": 28,
+              "minimumPercent": 100,
+              "worstTick": 6493,
+              "nearby": 19,
+              "reachable": 19,
+              "blockedIds": []
+            },
+            "maxBlockedSeconds": 0,
+            "blockedEvidence": null,
+            "last": {
+              "tick": 6493,
+              "alive": 30,
+              "reachable": 30,
+              "playerX": 0.33253079652786255,
+              "playerZ": 3.5566253662109375,
+              "positions": []
+            },
+            "flags": []
+          }
+        ],
+        "waves": [
+          {
+            "key": "l6.breach1",
+            "source": "l6.breach1",
+            "startSeconds": 33.2,
+            "observedSeconds": 76.8,
+            "expected": 8,
+            "spawned": 8,
+            "firstAttackSeconds": 5.766666666666667,
+            "members": [
+              "57@2",
+              "59@1",
+              "60@3",
+              "62@4",
+              "64@5",
+              "66@6",
+              "68@7",
+              "70@8"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 1,
+            "spawnedWithinEighteenSeconds": 8
+          },
+          {
+            "key": "l6.breach2",
+            "source": "l6.breach2",
+            "startSeconds": 54.21666666666667,
+            "observedSeconds": 55.78333333333333,
+            "expected": 10,
+            "spawned": 10,
+            "firstAttackSeconds": 9.733333333333333,
+            "members": [
+              "84@21",
+              "85@22",
+              "87@23",
+              "89@24",
+              "91@25",
+              "93@26",
+              "95@27",
+              "97@28",
+              "99@29",
+              "101@30"
+            ],
+            "flags": [],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 10
+          }
+        ]
+      },
+      "passiveFlags": [],
+      "wallSeconds": 7.535029125,
+      "nativeStateHash": "40d92147"
+    }
+  ]
+}

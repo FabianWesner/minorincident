@@ -1,0 +1,105 @@
+{
+  "sourceHash": "b6ba7ab4dad002cea675cff279a07b4a3a130a52e10a73a0f2826a8e379990c6",
+  "revision": "d9b6764ad5f766d7ae43e121cc219cb0e3ea592b",
+  "status": "FAIL",
+  "method": "Read-only frozen mesh position vertices transformed by exact instance/world matrices; top relative to source feet. Actual mesh geometry includes shield/equipment. Excludes airborne corpseBlast. Root-layout lift and collision envelope are separate, not visible top bounds. Camera follow blend completed before sim resumes.",
+  "rows": [
+    {
+      "tier": "low",
+      "samples": 47,
+      "lastPhase": "war",
+      "entry": false,
+      "deaths": 0,
+      "maxRootLiftM": 0,
+      "maxRenderedTopM": 1.2637132413685321,
+      "worst": {
+        "tick": 2820,
+        "phase": "war",
+        "warSeconds": 14.183333333333334,
+        "actualTier": "low",
+        "renderTier": "low",
+        "backend": "webgl",
+        "audit": {
+          "count": 8,
+          "sunkPairs": 0,
+          "heapPairs": 0,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 0.20000000000000004,
+          "maxLiftM": 0,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.21999999999999997,
+        "maxRenderedTopM": 1.2637132413685321,
+        "frozenBodies": 1,
+        "worst": {
+          "id": 209,
+          "x": -25.641700744628906,
+          "y": 0.05000000074505806,
+          "z": 7.262692451477051,
+          "top": 1.2637132413685321,
+          "mesh": "corpses:infected.riot:death-side:0/-1/0",
+          "vertices": 3465
+        },
+        "player": {
+          "x": -17.2333984375,
+          "y": 0.7099999785423279,
+          "z": 3.138496160507202,
+          "yaw": -2.0918514312688052
+        },
+        "deaths": 0,
+        "descendAt": 0
+      },
+      "errors": [],
+      "scope": "explicit early failing witness, not a full route"
+    },
+    {
+      "tier": "high",
+      "samples": 600,
+      "lastPhase": "collapse",
+      "entry": false,
+      "deaths": 16,
+      "maxRootLiftM": 0.71,
+      "maxRenderedTopM": 1.9208223342895507,
+      "worst": {
+        "tick": 11700,
+        "phase": "war",
+        "warSeconds": 162.18333333333334,
+        "actualTier": "high",
+        "renderTier": "high",
+        "backend": "webgl",
+        "audit": {
+          "count": 200,
+          "sunkPairs": 0,
+          "heapPairs": 289,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 4.899999999999999,
+          "maxLiftM": 0.6599999999999999,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.8799999999999999,
+        "maxRenderedTopM": 1.9208223342895507,
+        "frozenBodies": 195,
+        "worst": {
+          "id": 316,
+          "x": -17.754695892333984,
+          "y": 0.49000000953674316,
+          "z": -10.03324031829834,
+          "top": 1.9208223342895507,
+          "mesh": "corpses:inf.alpha:death-back:0",
+          "vertices": 1041
+        },
+        "player": {
+          "x": -12.69832706451416,
+          "y": 0.7099999785423279,
+          "z": 14.559091567993164,
+          "yaw": 1.2499005469378084
+        },
+        "deaths": 6,
+        "descendAt": 0
+      },
+      "errors": [],
+      "scope": "600s mortal rendered route; cellar not reached, route assertion FAIL; numeric height observations retained"
+    }
+  ],
+  "P": "PO: inspect the seated/half-upright riot shield pose and angular folded gray-suit death poses. No universal limb-stretch or continuous pixel-ordering PASS is claimed."
+}

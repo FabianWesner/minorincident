@@ -1,0 +1,101 @@
+{
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "revision": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5",
+  "status": "FAIL",
+  "method": "Actual frozen position vertices projected through instance/world matrices, relative to source feet. Equipment included; airborne corpseBlast excluded. Root lift and layout collision envelope reported separately. First150s of war, not a whole-route maximum or limb/depth PASS.",
+  "rows": [
+    {
+      "tier": "low",
+      "samples": 184,
+      "lastTick": 10980,
+      "lastPhase": "war",
+      "observedMaxRenderedTopM": 1.745605182647705,
+      "maxRootLiftM": 0.6599999999999999,
+      "worst": {
+        "tick": 9240,
+        "phase": "war",
+        "warSeconds": 121.18333333333334,
+        "actualTier": "low",
+        "renderTier": "low",
+        "backend": "webgl",
+        "audit": {
+          "count": 191,
+          "sunkPairs": 0,
+          "heapPairs": 306,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 3.7000000000000006,
+          "maxLiftM": 0.43999999999999995,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.76,
+        "maxRenderedTopM": 1.745605182647705,
+        "frozenBodies": 172,
+        "worst": {
+          "id": 433,
+          "x": -19.525257110595703,
+          "y": 0.49000000953674316,
+          "z": -8.179986953735352,
+          "top": 1.745605182647705,
+          "mesh": "corpses:inf.alpha-worker:death-back:0",
+          "vertices": 1263
+        },
+        "player": {
+          "x": -22.968212127685547,
+          "y": 0.7099999785423279,
+          "z": 0.9682266116142273,
+          "yaw": 0.8523178324470141
+        },
+        "deaths": 3,
+        "descendAt": 0
+      },
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "samples": 184,
+      "lastTick": 10980,
+      "lastPhase": "war",
+      "observedMaxRenderedTopM": 1.9202008962631225,
+      "maxRootLiftM": 0.6599999999999999,
+      "worst": {
+        "tick": 9600,
+        "phase": "war",
+        "warSeconds": 127.18333333333334,
+        "actualTier": "high",
+        "renderTier": "high",
+        "backend": "webgl",
+        "audit": {
+          "count": 190,
+          "sunkPairs": 0,
+          "heapPairs": 307,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.5,
+          "maxLiftM": 0.6599999999999999,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.8799999999999999,
+        "maxRenderedTopM": 1.9202008962631225,
+        "frozenBodies": 176,
+        "worst": {
+          "id": 451,
+          "x": -19.794206619262695,
+          "y": 0.49000000953674316,
+          "z": -8.135258674621582,
+          "top": 1.9202008962631225,
+          "mesh": "corpses:inf.alpha:death-back:0",
+          "vertices": 1041
+        },
+        "player": {
+          "x": -14.3961181640625,
+          "y": 0.7099999785423279,
+          "z": -14.545855522155762,
+          "yaw": -1.7930187003554403
+        },
+        "deaths": 4,
+        "descendAt": 0
+      },
+      "errors": []
+    }
+  ],
+  "P": "Inspect seated riot shields and upward-folded gray Alpha death poses. Dense overlap prevents a universal visual no-stretch or continuous player-ordering verdict."
+}

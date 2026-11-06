@@ -18,6 +18,12 @@ export function waveFlags(wave: Pick<WaveReceipt, 'firstAttackSeconds' | 'observ
   return [wave.observedSeconds > 20 ? 'WAVE_NO_ATTACK_WITHIN_20_SECONDS' : 'WAVE_OBSERVATION_ENDED_BEFORE_ATTACK'];
 }
 
+/** L6-06 authors exactly two infected at each of six side entries; these are
+ * route admissions, not three-member attack cohorts. */
+export function l6EntryFlags(wave: Pick<WaveReceipt, 'expected' | 'spawned'>): string[] {
+  return wave.expected === 2 && wave.spawned === 2 ? [] : ['L6_ENTRY_COUNT_MISMATCH'];
+}
+
 /** Starts come from native controller clocks/events, never the first successfully spawned/nearby identity.
  * Resident street populations in L5/L7/L9 are not announced waves. */
 export class WaveObserver {
@@ -150,7 +156,7 @@ export class WaveObserver {
   }
   finish(): WaveReceipt[] {
     return [...this.waves.values()].map(wave => {
-      const acceptanceWave = wave.key === 'market-ambush' || wave.key.startsWith('station-') || wave.key.startsWith('breach-') || wave.key.startsWith('l6.breach') || wave.key.startsWith('entry-') || wave.key.startsWith('tunnel-breach') || wave.key === 'dispersal-assault' || wave.key.startsWith('war-0@');
+      const acceptanceWave = wave.key === 'market-ambush' || wave.key.startsWith('station-') || wave.key.startsWith('breach-') || wave.key.startsWith('l6.breach') || wave.key.startsWith('tunnel-breach') || wave.key === 'dispersal-assault' || wave.key.startsWith('war-0@');
       const zoo = this.world.missions!.l8?.state;
       const outletCohorts = wave.key === 'tunnel-breach' && zoo ? zoo.outlets.map((_, outlet) => ({
         outlet, spawned: zoo.arrivals.filter(q => q.tick === zoo.breachedAt && q.outlet === outlet).length,
@@ -166,7 +172,7 @@ export class WaveObserver {
         for (let i = 0; i < outlets.length; i++) for (let j = i + 1; j < outlets.length; j++)
           if (Math.hypot(outlets[i].x - outlets[j].x, outlets[i].z - outlets[j].z) < 20) breachFlags.push('BREACH_OUTLETS_LESS_THAN_20M_APART');
       }
-      receipt.flags = acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
+      receipt.flags = wave.key.startsWith('entry-') ? l6EntryFlags(receipt) : acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
     });
   }
 }

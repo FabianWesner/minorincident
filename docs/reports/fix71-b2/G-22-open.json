@@ -1,0 +1,201 @@
+{
+  "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+  "status": "FAIL",
+  "existingBeforeFollowup": true,
+  "before": "85b2896 had16 failing checks; entry3 courier contact35.583s",
+  "after": "12 failing checks; entry3 courier contact45.133s. Generic>=3 cohort rule conflicts with explicit2 per L6 entry; long entry3 contact window also remains open. No checker/criterion edits.",
+  "failedChecks": [
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-2@4991",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 205.16666666666666,
+        "spawned": 2,
+        "firstAttackSeconds": 10.15,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-5@6313",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 183.13333333333333,
+        "spawned": 2,
+        "firstAttackSeconds": 10.933333333333334,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-3@8249",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 150.86666666666667,
+        "spawned": 2,
+        "firstAttackSeconds": 45.13333333333333,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-6@10002",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 121.65,
+        "spawned": 2,
+        "firstAttackSeconds": 15.866666666666667,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-4@12406",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 81.58333333333333,
+        "spawned": 2,
+        "firstAttackSeconds": 10.3,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-7@13838",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 57.71666666666667,
+        "spawned": 2,
+        "firstAttackSeconds": 12.55,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-2@4991",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 205.16666666666666,
+        "spawned": 2,
+        "firstAttackSeconds": 10.15,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-5@6313",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 183.13333333333333,
+        "spawned": 2,
+        "firstAttackSeconds": 10.933333333333334,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-3@8249",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 150.86666666666667,
+        "spawned": 2,
+        "firstAttackSeconds": 45.13333333333333,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-6@10002",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 121.65,
+        "spawned": 2,
+        "firstAttackSeconds": 15.866666666666667,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-4@12406",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 81.58333333333333,
+        "spawned": 2,
+        "firstAttackSeconds": 10.3,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-22",
+      "clause": "announcement cohort entry-7@13838",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": {
+        "seconds": 57.71666666666667,
+        "spawned": 2,
+        "firstAttackSeconds": 12.55,
+        "flags": []
+      },
+      "target": "\u22653 admitted cohort members; real player windup within20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    }
+  ]
+}

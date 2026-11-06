@@ -3,7 +3,8 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4InfectedArchetypes, l4InfectedLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4InfectedArchetypes, l4InfectedLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -84,7 +85,11 @@ export class LevelFourWar {
     // Low's opening needs living pressure now. Keep the later street quotas
     // pending, reserving their capacity once the collapse actually starts.
     const streets = this.low && s.phase !== 'collapse' ? 0 : this.streetReserve();
-    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets + this.spearheadNeed();
+    // Hold the next two collapse cohorts during the last defensive line too;
+    // otherwise ordinary arrivals fill every character slot before Fall back.
+    const collapse = s.phase === 'collapse' || s.phase === 'war' && this.director.current() === 2
+      ? 2 * Math.ceil(l4.war.collapseWaveSize * (this.low ? .5 : 1)) * l4.war.edgesPerWave : 0;
+    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets + this.spearheadNeed() + collapse;
     // A bitten human already owns a future slot; scripted emergence must count
     // it just as the ordinary spawn director does (otherwise streets deadlock).
     let turning = 0; for (const e of this.world.entities.iterate()) if (e.infection && !e.infected) turning++;
@@ -911,22 +916,15 @@ export class LevelFourWar {
     // turn in place with their own identity, clothes and accessories.
     // The arrival roster mixes silhouette and combat archetypes at the source.
     // Refill the least represented living archetype so slower survivors cannot dominate later waves.
-    const counts = new Map<string, number>(roster.map(archetype => [archetype, 0]));
-    for (const living of ai.active) if (living.health.current > 0 && !living.hidden && counts.has(living.archetype ?? '')) counts.set(living.archetype!, counts.get(living.archetype!)! + 1);
-    const minimum = Math.min(...counts.values()), choices = roster.filter(archetype => counts.get(archetype) === minimum);
-    const rosterIndex = (this.s.emergedIds.length + this.s.collapseIds.length) % choices.length;
-    const id = ai.spawn(choices[rosterIndex], at), e = world.entities.get(id)!;
+    const neighbours = ai.active.filter(e => e.health.current > 0 && !e.hidden);
+    const archetype = balancedCrowdModel(roster, neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z })), at, this.s.emergedIds.length + this.s.collapseIds.length);
+    const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
     if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
     if (!this.outsidePerimeter(e.transform)) { ai.release(e); return 0; }
     if (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter') {
-      const looks = new Map<string, number>(l4InfectedLooks.map(model => [model, 0]));
-      for (const living of ai.active) if (living.health.current > 0 && !living.hidden) {
-        const model = living.infected!.model ?? living.infected!.variant;
-        if (looks.has(model)) looks.set(model, looks.get(model)! + 1);
-      }
-      e.infected!.model = l4InfectedLooks.reduce((least, model) => looks.get(model)! < looks.get(least)! ? model : least);
+      e.infected!.model = balancedCrowdModel(l4InfectedLooks, neighbours.map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), at, e.id);
     }
     if (e.combat) { e.combat.staggerUntil = world.tick; e.combat.allyResist = l4.war.arrivalAllyResist; }
     return id;
@@ -961,10 +959,13 @@ export class LevelFourWar {
   private waves(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     const collapse = s.phase === 'collapse', every = collapse ? l4.war.collapseWaveEveryS : l4.war.waveEveryS;
-    if (tick >= (collapse ? s.collapseWaveAt : s.waveAt) && !(collapse && this.infected.director.count >= l4.war.collapseCapInfected)) {
+    if (tick >= (collapse ? s.collapseWaveAt : s.waveAt)) {
       const w = collapse ? s.collapseWaves : s.wave, scale = (this.low ? .5 : 1) * (collapse ? 1 : l4.war.waveScale), base = collapse ? l4.war.collapseWaveSize : l4.war.waveSize[Math.min(w, l4.war.waveSize.length - 1)];
       const n = Math.max(1, Math.ceil(base * scale)), ring = collapse ? l4Edges.length : l4Edges.length - 1, edges: number[] = [];
-      if (collapse) for (let k = 0; k < l4.war.edgesPerWave; k++) { const i = (w + k) % ring; edges.push(i); s.pend[i] = (s.pend[i] ?? 0) + n; }
+      if (collapse) for (let k = 0; k < l4.war.edgesPerWave; k++) {
+        const i = (w + k) % ring; edges.push(i); s.pend[i] = (s.pend[i] ?? 0) + n;
+        s.collapsePend ??= s.pend.map(() => 0); s.collapsePend[i] += n;
+      }
       // PO 10-13 ("from all directios, not in bulk"): a war wave adds to every street edge (the same total), released in small groups.
       else { const each = Math.ceil(n * l4.war.edgesPerWave / ring); for (let i = 0; i < ring; i++) { edges.push(i); s.pend[i] = (s.pend[i] ?? 0) + each; } }
       world.events.emit({ type: 'l4.wave', tick, wave: w, count: collapse ? n * edges.length : Math.ceil(n * l4.war.edgesPerWave / ring) * ring, edges });
@@ -1150,9 +1151,10 @@ export class LevelFourWar {
   }
   private flushEdges(): void {
     const { world } = this.mission, s = this.s, ai = this.infected, p = world.entities.get(1)!.transform, centre = l4.map.centre;
+    const priority = s.phase === 'collapse' && s.collapsePend?.some(n => n > 0);
     // Let a coherent breach cohort accumulate its existing slots. Consuming
     // every single opening here would starve that cohort at the shared cap.
-    if (s.phase === 'collapse' && !this.low && s.perimeterPending && this.liveSoldiers().length) {
+    if (!priority && s.phase === 'collapse' && !this.low && s.perimeterPending && this.liveSoldiers().length) {
       const room = Math.floor(ai.director.cap * this.director.aliveShare()) - ai.director.reserved - Math.max(0, this.headroom() - this.streetReserve()) - ai.director.pendingTurns - ai.director.count;
       if (room < Math.min(s.perimeterPending, 10)) return;
     }
@@ -1160,21 +1162,29 @@ export class LevelFourWar {
     const battleDistance = (point: Point) => defenders.reduce((d, e) => Math.min(d, dist(e.transform, point)), Infinity);
     // At a full cap only one slot may open between updates. Rotate the first
     // edge so western demand cannot consume every reinforcement slot.
-    const first = this.low ? 0 : s.collapseEdgeCursor ?? 0;
+    const first = s.collapseEdgeCursor ?? 0;
     for (let offset = 0; offset < s.pend.length; offset++) {
       const i = (first + offset) % s.pend.length;
       if (s.pend[i] <= 0) continue;
+      if (priority && !s.collapsePend![i]) continue;
       // The courier can remain within 30 m of an edge's first mouth after Fall back.
       // Keep that edge's quota queued and use another authored mouth, rather than starving it forever.
-      const at = [this.spectacle.edgePoint(i), ...l4Emergence.filter(e => e.edge === i).map(e => ({ x: e.at[0], z: e.at[1] }))]
+      const at = [this.spectacle.edgePoint(i), ...l4Emergence.filter(e => e.edge === i).map(e => ({ x: e.at[0], z: e.at[1] })), ...l4OffscreenMouths.filter(e => e.edge === i).map(e => ({ x: e.at[0], z: e.at[1] }))]
         .map(point => this.snap(point, .45)).filter(point => ai.director.offscreen(point) && dist(point, p) >= 32 && !this.inGap(point))
         .sort((a, b) => battleDistance(a) - battleDistance(b))[0];
       if (!at) continue;
       const defender = defenders.sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
-      for (let k = 0; k < 3 && s.pend[i] > 0; k++) {
+      for (let k = 0; k < 3 && s.pend[i] > 0 && (!priority || s.collapsePend![i] > 0); k++) {
         const point = this.snap({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }, .45);
-        const id = this.emerge(point); if (!id) break;
+        // An announced collapse group gets the next free slots before future
+        // street/perimeter promises. All promises and both hard caps remain.
+        const reserved = ai.director.reserved;
+        let id: number;
+        try { if (priority) ai.director.reserved = 0; id = this.emerge(point, false, priority ? 0 : this.headroom(), !!priority); }
+        finally { ai.director.reserved = reserved; }
+        if (!id) break;
         s.pend[i]--; s.collapseEdgeCursor = (i + 1) % s.pend.length;
+        if (priority) s.collapsePend![i]--;
         (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
         // Once the army retreats, street waves join its real remaining fights
         // instead of spending their whole approach on the vacated plaza centre.

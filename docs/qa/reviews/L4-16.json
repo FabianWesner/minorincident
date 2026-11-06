@@ -1,26 +1,36 @@
 {
   "row": "L4-16",
-  "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix71-b",
   "date": "2026-11-06",
-  "commit": "bfea27ac26786ab1d0b252931e0185b37e4cfa93",
+  "commit": "86bab6be6c0b25a4f1e32b00dc694e3f0e37f09f",
   "clauses": [
     {
       "clause": "Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above \u2265 6 s (low-pass); L5 loads in the same basement.",
-      "verdict": "FAIL",
-      "note": "Four actual cellar entries and physical L5 handovers have only courier+corgi, matching exterior doorway and interior starts1m apart; both visible at both photo zooms. Existing uninterrupted production1s bar fixture passes. Decoded positive-gain750Hz-filtered battle spans5.55sim seconds in low-z1.5, failing required6s; other three cells6.917s. Raw frame review and full audio graph/PCM ledgers retained. This is a measured audio delivery FAIL, not a subjective mix claim."
+      "verdict": "PASS",
+      "note": "Final four-cell live decoded matrix PASS: low-z0.5 6.917s, low-z1.5 6.850s, high-z0.5 6.867s, high-z1.5 6.917s of positive decoded <=750Hz battle audio under ordinary-weapon voice stress. Actual roster at bar contains only courier+corgi. Actual L5 handover starts1m from L4 cellar entry in every cell. Current native fixture bars in exactly60ticks with E false, both tiers. Captures personally reviewed; L5 briefing partly obscures actors, while environment and coordinates establish same basement. Native-save fixture is labelled, not claimed as a new full physical level route."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-16-proof.json",
-      "sha256": "5222aaeb94d9732aab63ed1b32a7274b51e1f79d61b9c187bce9453270a0a17d",
-      "what": "Four actual cellar entries and physical L5 handovers have only courier+corgi, matching exterior doorway and interior starts1m apart; both visible at both photo zooms. Existing uninterrupted production1s bar fixture passes. Decoded positive-gain750Hz-filtered battle spans5.55sim seconds in low-z1.5, failing required6s; other three cells6.917s. Raw frame review and full audio graph/PCM ledgers retained. This is a measured audio delivery FAIL, not a subjective mix claim."
+      "file": "docs/reports/fix71-b/L4-16-release-summary.json",
+      "sha256": "844d913e352ccc114b08db781c3bebb11110eb66596d2564d1d0821517bc4563",
+      "what": "Final four-cell live decoded matrix PASS: low-z0.5 6.917s, low-z1.5 6.850s, high-z0.5 6.867s, high-z1.5 6.917s of positive decoded <=750Hz battle audio under ordinary-weapon voice stress. Actual roster at bar contains only courier+corgi. Actual L5 handover starts1m from L4 cellar entry in every cell. Current native fixture bars in exactly60ticks with E false, both tiers. Captures personally reviewed; L5 briefing partly obscures actors, while environment and coordinates establish same basement. Native-save fixture is labelled, not claimed as a new full physical level route."
     },
     {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "Four actual cellar entries and physical L5 handovers have only courier+corgi, matching exterior doorway and interior starts1m apart; both visible at both photo zooms. Existing uninterrupted production1s bar fixture passes. Decoded positive-gain750Hz-filtered battle spans5.55sim seconds in low-z1.5, failing required6s; other three cells6.917s. Raw frame review and full audio graph/PCM ledgers retained. This is a measured audio delivery FAIL, not a subjective mix claim."
+      "file": "docs/reports/fix71-b/L4-16-release-decoded.json.gz",
+      "sha256": "5c9ce0901f1539bdd6fda12f312924dfa0ac2167a46df0d96f2e869b211b0d0b",
+      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
+    },
+    {
+      "file": "docs/reports/fix71-b/L4-16-release-priority.json",
+      "sha256": "11a6cce579ac213d922633e941b08ea5317a7e79f3a3910243e93940975aa915",
+      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
+    },
+    {
+      "file": "docs/reports/fix71-b/L4-16-release-capture-review.json",
+      "sha256": "f32ed9e2da02e9ff7e167a26c0a9ce2816456276e7614412bdcd672a07ac0e6e",
+      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
     }
   ]
 }

@@ -1,0 +1,318 @@
+{
+  "sourceHash": "8b7cf5b43b68140ceaa4ce5e346f23382b8b817c8f7ad29b1f1b0773c539246e",
+  "observerHash": "9954946cd2baca7001d78c0fc904daf6ce44ee5e925c624cdfe83a2c825894f9",
+  "revision": "49c6ef78dd80280511427bfdbf9fd1b43f8ed428",
+  "scope": "Every simulation tick with 20 living admitted infected nearest the courier, through 211 sim seconds; this diagnostic stops before the complete war ends. Retain one record per membership change; full final-route check remains pending.",
+  "rows": [
+    {
+      "tier": "low",
+      "checks": 10601,
+      "minimumLooks": 5,
+      "worst": {
+        "tick": 3823,
+        "looks": 5,
+        "actors": [
+          {
+            "id": 253,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -25.259077069927372,
+            "z": 5.578049557394357
+          },
+          {
+            "id": 164,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -23.689715849003097,
+            "z": 2.7339014223637483
+          },
+          {
+            "id": 165,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -22.06196988672214,
+            "z": 2.4693719610695486
+          },
+          {
+            "id": 163,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -24.687901640082792,
+            "z": 2.0432330820076583
+          },
+          {
+            "id": 215,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -26.66203641122054,
+            "z": 4.816936651917841
+          },
+          {
+            "id": 168,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -20.074771003871092,
+            "z": 4.934030629263356
+          },
+          {
+            "id": 214,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -27.6267132807035,
+            "z": 4.648960361267286
+          },
+          {
+            "id": 188,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -27.004520870867584,
+            "z": 2.30883826781129
+          },
+          {
+            "id": 251,
+            "archetype": "infected.crawler",
+            "model": "infected.crawler",
+            "x": -28.132314263480904,
+            "z": 5.5762999618362095
+          },
+          {
+            "id": 256,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -27.356983508016864,
+            "z": 7.426026705835427
+          },
+          {
+            "id": 264,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -20.247658136648845,
+            "z": 7.8466949428422055
+          },
+          {
+            "id": 249,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -28.221412887969077,
+            "z": 6.474801977169848
+          },
+          {
+            "id": 261,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -27.965284775229616,
+            "z": 7.118066768276052
+          },
+          {
+            "id": 217,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -27.1649111266525,
+            "z": 8.247681516695971
+          },
+          {
+            "id": 173,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.611880787315837,
+            "z": 0.308214758959068
+          },
+          {
+            "id": 273,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -25.607610229492927,
+            "z": 9.457041800940472
+          },
+          {
+            "id": 191,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -28.776957022493423,
+            "z": 5.7968488436365675
+          },
+          {
+            "id": 263,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -28.85699917817043,
+            "z": 6.781122438888558
+          },
+          {
+            "id": 208,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -28.059657124679987,
+            "z": 8.246592600907652
+          },
+          {
+            "id": 262,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -28.639296308646195,
+            "z": 7.449860329798164
+          }
+        ]
+      },
+      "lastTick": 12570.0,
+      "peak": 80
+    },
+    {
+      "tier": "high",
+      "checks": 10601,
+      "minimumLooks": 4,
+      "worst": {
+        "tick": 9354,
+        "looks": 4,
+        "actors": [
+          {
+            "id": 416,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.414198499231805,
+            "z": 0.08494455130934808
+          },
+          {
+            "id": 410,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.494818547015328,
+            "z": 0.10209633448140354
+          },
+          {
+            "id": 454,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.888470314620985,
+            "z": -5.42025853113151
+          },
+          {
+            "id": 421,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -22.979368323470105,
+            "z": -0.021694310429304822
+          },
+          {
+            "id": 450,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -17.37258269696302,
+            "z": -4.164553031710645
+          },
+          {
+            "id": 448,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -20.014529538337516,
+            "z": 1.8075525691867214
+          },
+          {
+            "id": 279,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -18.669015781396357,
+            "z": -5.959524956451986
+          },
+          {
+            "id": 452,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -23.271596316185054,
+            "z": 0.7927110140964526
+          },
+          {
+            "id": 412,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -24.2652294175119,
+            "z": -0.3622921006535814
+          },
+          {
+            "id": 354,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.365957096221646,
+            "z": -5.780182732336137
+          },
+          {
+            "id": 361,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -16.008557429020126,
+            "z": 0.6726680358543176
+          },
+          {
+            "id": 403,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -15.425605896674194,
+            "z": -4.430587647499036
+          },
+          {
+            "id": 409,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -15.96323585918522,
+            "z": -5.719346833973588
+          },
+          {
+            "id": 423,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -15.134104082262843,
+            "z": 0.4759953199355492
+          },
+          {
+            "id": 360,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -16.230980206984967,
+            "z": -7.304064773089288
+          },
+          {
+            "id": 368,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -19.850032856233245,
+            "z": -9.637019057263027
+          },
+          {
+            "id": 292,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.152935797772948,
+            "z": -8.988454941981615
+          },
+          {
+            "id": 355,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -14.054215598586019,
+            "z": -6.642040517516432
+          },
+          {
+            "id": 252,
+            "archetype": "infected.brute",
+            "model": "infected.brute",
+            "x": -15.739486410679957,
+            "z": -8.900487595559017
+          },
+          {
+            "id": 364,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -13.148749619422803,
+            "z": -6.7795837872342375
+          }
+        ]
+      },
+      "lastTick": 12570.0,
+      "peak": 106
+    }
+  ],
+  "ledger": {
+    "file": "docs/reports/fix71-b/L4-12-native.json.gz",
+    "sha256": "6fe15a2983bdb5b883d78880b5b297583c97c29d248d1fd063b528eccdab1957"
+  }
+}

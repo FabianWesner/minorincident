@@ -1,0 +1,30 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "qa:threat",
+    "--",
+    "--out",
+    "test-results/fix71-b2/threat"
+  ],
+  "sourceHash": "0832704e13ddc34361b53ed2aef8e2104ff1a15e0c03c7668de2d7bd99320703",
+  "revision": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+  "aloneInLane": true,
+  "pollIntervalSeconds": 120,
+  "maxWaitSeconds": 1800,
+  "samples": [
+    {
+      "at": "2026-11-06T13:36:55.847552+01:00",
+      "elapsedSeconds": 0.0,
+      "load1m": 4.95654296875
+    }
+  ],
+  "launch": {
+    "at": "2026-11-06T13:36:55.847552+01:00",
+    "elapsedSeconds": 0.0,
+    "load1m": 4.95654296875
+  },
+  "waitedForThreshold": true,
+  "exitCode": 0,
+  "finishedAt": "2026-11-06T13:42:54.185799+01:00"
+}

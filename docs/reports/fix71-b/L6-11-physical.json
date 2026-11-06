@@ -1,0 +1,368 @@
+{
+  "status": "FAIL physical qualification; native criterion passes separately",
+  "method": "Independent headless WebGL2 physical WASD/mouse completion at zoom 1.5; mortal courier, no objective skips, one logged read-only navigation assist per route. The temporary counter-weapon driver trial is rejected and its code was reverted. Build is the L6 repair candidate used by L6-11-native.json, before later L4 edits.",
+  "nativeBuildSourceHash": "dddc73e303f13827213d737e934d892f4e0763b1a26747dabdea5d23e8ed89d3",
+  "runs": [
+    {
+      "tier": "low",
+      "scope": "qualification",
+      "result": {
+        "stats": {
+          "time": 222.45,
+          "kills": 0,
+          "knockdowns": 78,
+          "damage": 279.36666666666736,
+          "deaths": 1,
+          "rescued": 10,
+          "optionalObjectives": []
+        },
+        "rescued": 2,
+        "survivorsIn": 29,
+        "survivorsLost": 27
+      },
+      "outPercent": 6.896551724137931,
+      "run": {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 241,
+        "simSeconds": 222,
+        "maxNoProgressSeconds": 32.81666666666667,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1425,
+          "weapon.fire-axe": 23
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1999,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 243\u00a0m",
+            "tick": 3256,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/2 out \u00b7 25\u00a0m",
+            "tick": 12178,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "log": "docs/reports/fix71-b/l6-physical-low.jsonl.gz",
+      "sha256": "25ab517c84cf142570680e09145fb5f0ae68b01f766b5b0b7f45439c209c72a2",
+      "rawLogSha256": "568feb94a517dbbf035047cf913df56cf005a330d902afdbd99f6d9ad4ae1b49"
+    },
+    {
+      "tier": "high",
+      "scope": "qualification",
+      "result": {
+        "stats": {
+          "time": 207.08333333333334,
+          "kills": 0,
+          "knockdowns": 88,
+          "damage": 230.29999999999316,
+          "deaths": 1,
+          "rescued": 12,
+          "optionalObjectives": []
+        },
+        "rescued": 1,
+        "survivorsIn": 29,
+        "survivorsLost": 28
+      },
+      "outPercent": 3.4482758620689653,
+      "run": {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 219,
+        "simSeconds": 207,
+        "maxNoProgressSeconds": 32.529,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1273,
+          "weapon.fire-axe": 7
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 2000,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 243\u00a0m",
+            "tick": 3255,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 25\u00a0m",
+            "tick": 10511,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "log": "docs/reports/fix71-b/l6-physical-high.jsonl.gz",
+      "sha256": "2ea6e295c4ff06ea254562dd9f8cff15e31019e7675adb73c918bd08d746e90c",
+      "rawLogSha256": "5b2ec6b10e579c916b72685ca7faed45fcd4c7809fc7fa301c1407f254cd4a88"
+    },
+    {
+      "tier": "low",
+      "scope": "rejected driver trial",
+      "result": {
+        "stats": {
+          "time": 202.23333333333332,
+          "kills": 2,
+          "knockdowns": 72,
+          "damage": 256.1666666666633,
+          "deaths": 1,
+          "rescued": 10,
+          "optionalObjectives": []
+        },
+        "rescued": 1,
+        "survivorsIn": 29,
+        "survivorsLost": 28
+      },
+      "outPercent": 3.4482758620689653,
+      "run": {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 216,
+        "simSeconds": 202,
+        "maxNoProgressSeconds": 32.466,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1202,
+          "weapon.shotgun": 15,
+          "weapon.fire-axe": 5
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1994,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 243\u00a0m",
+            "tick": 3264,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 30\u00a0m",
+            "tick": 11255,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "log": "docs/reports/fix71-b/l6-physical-counter-low.jsonl.gz",
+      "sha256": "1b2786aa072835ba1d57c8b29b991f6505ca4d749b9d17bba7948344e952dde3",
+      "rawLogSha256": "95b4d28f3ee93241f987d6d94c80290f3ef8f74f31df7779778d69d049de774a"
+    }
+  ]
+}

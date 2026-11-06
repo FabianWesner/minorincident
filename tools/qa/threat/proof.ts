@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { EntitySnapshot, GameEvent } from '../../../src/sim/world/types';
 import { median, isWalkingSample, PathProbe, phaseFlags, followerCoverageFlags, followerWaitFlags, observeBlocked, SpawnIdentities, type BlockedWindow } from './observer';
-import { WaveObserver, waveFlags } from './waves';
+import { WaveObserver, l6EntryFlags, waveFlags } from './waves';
 import { EventBus } from '../../../src/core/EventBus';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
@@ -139,6 +139,9 @@ export async function proveThreatAudit(): Promise<void> {
   assert(waveFlags({ firstAttackSeconds: null, observedSeconds: 21, spawned: 3 }).includes('WAVE_NO_ATTACK_WITHIN_20_SECONDS'));
   assert(waveFlags({ firstAttackSeconds: null, observedSeconds: 5, spawned: 3 }).includes('WAVE_OBSERVATION_ENDED_BEFORE_ATTACK'));
   assert(waveFlags({ firstAttackSeconds: 0, observedSeconds: 30, spawned: 2 }).includes('WAVE_FEWER_THAN_THREE_COHORT_MEMBERS'));
+  assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 2 }), []);
+  assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 1 }), ['L6_ENTRY_COUNT_MISMATCH']);
+  assert.deepEqual(l6EntryFlags({ expected: 3, spawned: 3 }), ['L6_ENTRY_COUNT_MISMATCH']);
   {
   const member = { ...entityForWave(), id: 2 }, player = { ...member, id: 1, transform: { ...member.transform, x: 1 } };
   const events = new EventBus<{ tick: number; type: string; sourceId?: number; targetId?: number }>();

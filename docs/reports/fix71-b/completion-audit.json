@@ -1,0 +1,141 @@
+{
+  "at": "2026-11-06T13:27:05.310062+01:00",
+  "objectiveAchieved": false,
+  "checks": [
+    {
+      "row": "L6-11",
+      "dedicatedReviewStatus": "PASS",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L6-11-release-native.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L6-11-release-native.json.gz",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L6-11-physical.json",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    },
+    {
+      "row": "L6-06",
+      "dedicatedReviewStatus": "PASS",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L6-06-release-trajectories.json.gz",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    },
+    {
+      "row": "L4-13",
+      "dedicatedReviewStatus": "FAIL",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L4-release-native.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-release-native.json.gz",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    },
+    {
+      "row": "L4-12",
+      "dedicatedReviewStatus": "FAIL",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L4-release-native.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-release-native.json.gz",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-release-capture-review.json",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    },
+    {
+      "row": "L4-16",
+      "dedicatedReviewStatus": "PASS",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L4-16-release-summary.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-16-release-decoded.json.gz",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-16-release-priority.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-16-release-capture-review.json",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    },
+    {
+      "row": "L4-17",
+      "dedicatedReviewStatus": "FAIL",
+      "evidence": [
+        {
+          "file": "docs/reports/fix71-b/L4-17-release-measurement.json",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-17-release-low.json.gz",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-17-release-high.json.gz",
+          "exists": true,
+          "hashMatches": true
+        },
+        {
+          "file": "docs/reports/fix71-b/L4-release-capture-review.json",
+          "exists": true,
+          "hashMatches": true
+        }
+      ]
+    }
+  ],
+  "stockReportSources": {
+    "L4": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+    "L5": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+    "L6": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25"
+  },
+  "remaining": [
+    "L4-12 local diversity FAIL",
+    "L4-13 later quotas FAIL",
+    "L4-17 measurement complete but geometry FAIL",
+    "New L6-05 regression",
+    "Dedicated PASS proofs not registered by stock acceptance",
+    "Final isolated load<6 full threat gate missing"
+  ],
+  "gateBlockedLoad": 12.205078125
+}

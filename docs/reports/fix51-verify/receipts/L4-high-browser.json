@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "9ac18b3e82399d0b44afa2b2f506dd2d483a8dee4f4a91fc5ea4830e34b8410c",
-  "fixtureHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
-  "browserHash": "f2862c087f2d0628a8d54f31f2fe509a82ad64ca2a8f1e75cf68af210cbcdea3",
+  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
+  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 295,
+      "wallSeconds": 265,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 11.833333333333334,
+      "maxNoProgressSeconds": 11.633333333333333,
       "deaths": 0,
       "assists": 0,
       "attacks": {
-        "weapon.army-mg": 1280
+        "weapon.army-mg": 1391
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -59,7 +59,7 @@
       "steps": [
         {
           "id": "ride",
-          "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+          "text": "Ride into Fairhaven with the convoy · 58 m",
           "tick": 11,
           "marker": {
             "anchor": "l4-plaza",
@@ -75,8 +75,8 @@
         },
         {
           "id": "quartermaster",
-          "text": "Report to the quartermaster \u00b7 10\u00a0m",
-          "tick": 1834,
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1829,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": {
@@ -95,8 +95,8 @@
         },
         {
           "id": "hold",
-          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
-          "tick": 2247,
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2103,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
@@ -107,8 +107,8 @@
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 71\u00a0m",
-          "tick": 13675,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 64 m",
+          "tick": 13499,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -121,14 +121,14 @@
               0.13,
               -45.28
             ],
-            "playerY": 0.7053146958351135,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         },
         {
           "id": "bar",
-          "text": "Bar the cellar door \u00b7 3\u00a0m",
-          "tick": 15590,
+          "text": "Bar the cellar door · 5 m",
+          "tick": 14616,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -141,14 +141,14 @@
               0.05,
               -1.8
             ],
-            "playerY": 0.7089999914169312,
+            "playerY": 0.8100000619888306,
             "pinVisible": true
           }
         },
         {
           "id": "wait",
-          "text": "Stay down \u00b7 0:07 remaining",
-          "tick": 15795,
+          "text": "Stay down · 0:07 remaining",
+          "tick": 14762,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,
@@ -160,12 +160,23 @@
       ]
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "level": "L4",
+      "tick": 10353,
+      "x": -23.6,
+      "z": 4,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #459 in state chase 3.7 m away has not moved for ~5 s",
+      "captures": [
+        "captures/accept-L4-10353-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the north breach · 0:53 remaining · 14 m"
+    }
+  ],
   "frameTiming": false,
   "backend": "webgl2",
-  "zoom": 1.5,
-  "sweepEvidence": {
-    "originalReceipt": "docs/reports/sweep-g/G-25-audited-L4-high-webgl2.json",
-    "sha256": "1ea67eb4571a5220cb157016398b18882c6fda56934b3656e015508f7d59208e"
-  }
+  "zoom": 1.5
 }

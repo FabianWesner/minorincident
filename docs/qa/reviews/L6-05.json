@@ -1,27 +1,26 @@
 {
   "row": "L6-05",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix71-b2",
   "date": "2026-11-06",
-  "commit": "f322429f3998ee50dbce9f3bdc50b950d3b03efb",
+  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
   "clauses": [
     {
       "clause": "combat: **reachable \u2265 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack \u2264 15 s after each breach caption; attacks on player \u2265 4/min (tune).",
       "verdict": "PASS",
-      "note": "Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim."
+      "note": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/rows/L6-05.json",
-      "sha256": "8f1bd43c14b83082b2c14740496a43b8cae90ce0b608c4df5126a733ee751cd0",
-      "what": "Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim."
+      "file": "docs/reports/fix71-b2/merged-summary.json",
+      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
+      "what": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
     },
     {
-      "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
-      "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
-      "what": "Every admitted body birth lies inside the authored station/tunnel floor plan and has a legal bounded path; same-ID trajectories and canonical state hashes retained."
+      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
+      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
+      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
     }
-  ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  ]
 }

@@ -1,21 +1,26 @@
 {
   "row": "L6-11",
-  "status": "FAIL",
-  "reviewer": "Codex/fix67-b",
+  "status": "PASS",
+  "reviewer": "Codex/fix71-b2",
   "date": "2026-11-06",
-  "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
   "clauses": [
     {
       "clause": "Covering matters: `evade-only` \u2264 30 % out, `complete` \u2265 60 %.",
-      "verdict": "FAIL",
-      "note": "Final-source ordinary mortal canonical complete saves1/29=3.448276% at both tiers, below60%; final identity statuses and mission result agree. Evade-only is not inferred from protected stationary policy. Earlier range trace and reverted trials remain diagnosis."
+      "verdict": "PASS",
+      "note": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/final-qualification.json",
-      "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
-      "what": "Final-source ordinary mortal canonical complete saves1/29=3.448276% at both tiers, below60%; final identity statuses and mission result agree. Evade-only is not inferred from protected stationary policy. Earlier range trace and reverted trials remain diagnosis."
+      "file": "docs/reports/fix71-b2/merged-summary.json",
+      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
+      "what": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
+    },
+    {
+      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
+      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
+      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
     }
   ]
 }

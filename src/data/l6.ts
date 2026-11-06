@@ -33,4 +33,4 @@ export const l6InjuryLines = {
 };
 
 /** Alternating sides leave the opposite half of the tunnel open. */
-export const l6Entries = [2, 5, 3, 6, 4, 7].map((door, i) => ({ door, count: 3, label: i % 2 ? 'Maintenance hatch' : 'Side passage' }));
+export const l6Entries = [2, 5, 3, 6, 4, 7].map((door, i) => ({ door, count: 2, label: i % 2 ? 'Maintenance hatch' : 'Side passage' }));

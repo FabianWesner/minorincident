@@ -50,6 +50,12 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
   const row = subway?.survivors.find(r => r.id === e.id);
   const injured = row?.injured ?? world.l7Encounters?.state.roster.find(r => r.id === e.id)?.injured ?? c.survivor?.injured ?? false;
   const group = subway && row && !row.collected ? { x: subway.leaderX, z: subway.leaderX < 25 ? subway.leaderZ : 15 } : world.entities.get(1)!.transform;
+  // The subway column owns unarmed travel. Generic panic flight can carry
+  // a threatened follower beyond the courier's covering fire.
+  if (survivor && row && !a) {
+    c.dangerUntil = 0;
+    return world.missions!.l6!.follower(e);
+  }
   // L7's escape route owns unarmed travel, boarding and rear-guard regrouping.
   // Repeated self-defence flight used to
   // steer a trailing evacuee away from the courier and into frontage pockets;

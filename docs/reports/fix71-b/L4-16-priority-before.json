@@ -1,0 +1,79 @@
+{
+  "method": "Real AudioEventMapper and VoiceLimiter; fill all 16/32 slots with priority-100 ordinary weapons, then emit actual door-barred event. No audio source statistics or cap changed.",
+  "rows": [
+    {
+      "tier": "low",
+      "limit": 16,
+      "voices": 16,
+      "attempts": [
+        {
+          "id": "door.gate",
+          "priority": 40,
+          "accepted": false
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "explosion.boom",
+          "priority": 95,
+          "accepted": false,
+          "lowpass": 500
+        }
+      ],
+      "acceptedShots": 0
+    },
+    {
+      "tier": "high",
+      "limit": 32,
+      "voices": 32,
+      "attempts": [
+        {
+          "id": "door.gate",
+          "priority": 40,
+          "accepted": false
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "action.weapon.army-mg",
+          "priority": 100,
+          "accepted": false,
+          "lowpass": 750
+        },
+        {
+          "id": "explosion.boom",
+          "priority": 95,
+          "accepted": false,
+          "lowpass": 500
+        }
+      ],
+      "acceptedShots": 0
+    }
+  ]
+}

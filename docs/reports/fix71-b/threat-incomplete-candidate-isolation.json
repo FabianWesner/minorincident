@@ -1,0 +1,25 @@
+{
+  "pausedPids": [
+    59357,
+    60103,
+    60125,
+    60148
+  ],
+  "candidate": "a49ce666e00daae357349a65aff3d017d9c3ffd3",
+  "reason": "Seize low-load window for isolated full qa:threat; no state edits or RNG/input changes. Resume all after gate.",
+  "at": "2026-11-06T11:42:12.990956+00:00",
+  "launchLoad": "12:43  up 89 days, 12:36, 5 users, load averages: 5.84 14.22 18.98",
+  "startedAt": "2026-11-06T11:43:15.083112+00:00",
+  "comparison": "QA_THREAT_MAIN_REVISION is the committed candidate; automatic git source equality check retained, no SOURCE_MATCHES_MAIN override.",
+  "samples": [
+    {
+      "at": "2026-11-06T11:46:41Z",
+      "load1m": 4.85,
+      "stage": "L4",
+      "ownedNativeProcessesSuspended": true
+    }
+  ],
+  "finishedAt": "2026-11-06T11:53:31.989946+00:00",
+  "result": "FAIL:600s budget during L5; earlier L1-L4 zero passive flags. Candidate rejected because its low L4 complete route worsens to38deaths/1145.7sim seconds.",
+  "pausedChecks": "Cancelled after gate, rather than resumed, because their runtime candidate is rejected. Fresh full group checks follow the roster rollback."
+}
