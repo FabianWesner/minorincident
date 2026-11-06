@@ -110,7 +110,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 });
       // Reveal diagnostics beside each capture (courier, camera, see-through cut placements, foreground state).
       if (process.env.PLAYTEST_REVEAL_AUDIT === '1') writeFileSync(join(o.out, file.replace(/\.jpg$/, '.json')), JSON.stringify(await page.evaluate(() => {
-        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; clock: { paused: boolean }; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; courierForeground?: boolean } };
+        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; clock: { paused: boolean }; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; marker?: import('three/webgpu').Group; courierForeground?: boolean } };
         const p = g.world.entities.get(1)!.transform, a = window.__SS__!;
         const render = a.getState().render as { backend: string; quality: string; healthBars?: unknown };
         const figures = new Map(a.crowdFigures().map(f => [f.id, f]));
@@ -119,7 +119,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           lod: figures.get(e.id)?.lod, clip: figures.get(e.id)?.clip, drawn: figures.get(e.id)?.drawn }));
         const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]'), box = cue?.getBoundingClientRect();
         const alarmCue = cue ? { text: cue.innerText, hidden: cue.hidden, alarm: cue.dataset.alarm, opacity: getComputedStyle(cue).opacity, box: box && { x: box.x, y: box.y, width: box.width, height: box.height } } : null;
-        return { tick: g.world.tick, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        const marker = g.view.marker, mission = g.world.missions;
+        const hud = (id: string) => {
+          const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
+          return e ? { text: e.textContent, visible: !e.hidden && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden', style: e.getAttribute('style') } : null;
+        };
+        const objective = { markerId: mission?.state.marker, authoredAnchors: mission?.def.anchors,
+          activeSteps: mission?.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => ({ id: s.id, anchor: s.anchor })),
+          marker: marker && { visible: marker.visible, position: marker.getWorldPosition(marker.position.clone()).toArray(), children: marker.children.map(c => ({ visible: c.visible, position: c.getWorldPosition(c.position.clone()).toArray() })) },
+          tracker: hud('mission-tracker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
+        return { tick: g.world.tick, objective, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
