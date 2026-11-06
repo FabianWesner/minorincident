@@ -14,6 +14,7 @@ import { followerInCombat } from '../outbreak/Survivors';
 /** Navigation/behaviour supplies intent; static sweeps remain authoritative. */
 /** L5 calm followers track the courier's own (already limited) pace closely (L5-08). */
 export const followerTracking = { acceleration: 12, jerk: 300, omega: 20 } as const;
+export const l5FollowerTracking = { ...followerTracking, omega: 28 } as const;
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
@@ -71,7 +72,7 @@ export function installAgentMotion(world: SimWorld): void {
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       const yaw = e.transform.yaw;
       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
-        world.scenario === 'L5' && e.companion ? followerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Braking retains the authored approach distance. The windup owns facing,
       // so residual steering must not turn the strike away from its victim.
       if (e.infected?.state === 'attack') e.transform.yaw = yaw;

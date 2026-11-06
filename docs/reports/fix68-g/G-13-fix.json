@@ -1,0 +1,77 @@
+{
+  "row": "G-13",
+  "status": "PASS",
+  "scope": "Current-source L5 complete routes at low/high; no pace or wait criterion changes.",
+  "fix": "Faster critically damped L5 follower response (omega 20 to 28) under identical 12 m/s\u00b2 acceleration, jerk 300 and speed caps; applies only to L5 humans/pet. Formation geometry unchanged.",
+  "rows": [
+    {
+      "tier": "low",
+      "minimumPaceRatio": 0.9562289922414665,
+      "waitUpperBoundPercent": 0,
+      "rescued": 5,
+      "stateHash": "dddd9808",
+      "formation": [
+        {
+          "id": 31,
+          "bandShare": 0.9447887323943662,
+          "maxOutOfBandTicks": 82
+        },
+        {
+          "id": 30,
+          "bandShare": 0.9393753827311696,
+          "maxOutOfBandTicks": 99
+        },
+        {
+          "id": 32,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        },
+        {
+          "id": 28,
+          "bandShare": 0.9897750511247444,
+          "maxOutOfBandTicks": 10
+        },
+        {
+          "id": 29,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "minimumPaceRatio": 0.9764432720234593,
+      "waitUpperBoundPercent": 0,
+      "rescued": 5,
+      "stateHash": "046b9ac6",
+      "formation": [
+        {
+          "id": 31,
+          "bandShare": 0.997887323943662,
+          "maxOutOfBandTicks": 3
+        },
+        {
+          "id": 30,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        },
+        {
+          "id": 32,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        },
+        {
+          "id": 28,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        },
+        {
+          "id": 29,
+          "bandShare": 1,
+          "maxOutOfBandTicks": 0
+        }
+      ]
+    }
+  ],
+  "remaining": "L5-08 is separate and remains FAIL at low quality: Mia/Okafor straight-walk 2-5m band shares below95%. High band now passes. No all-level or PO taste sign-off is claimed."
+}

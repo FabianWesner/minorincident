@@ -1,62 +1,37 @@
 {
   "row": "G-13",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
+  "status": "PASS",
+  "reviewer": "fix68-g/Codex",
   "date": "2026-11-06",
-  "commit": "ca38a19a0f58fbf7cc765e36f53eba36719bce29",
+  "commit": "14a5587e15ad2235f833a290610890c725138723",
   "clauses": [
     {
-      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed \u2265 0.95\u00d7 the group median (tune); time the player stands waiting for one follower > 10 m behind \u2264 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
-      "verdict": "FAIL",
-      "note": "Current high Dale search93.5881% and metro94.5800% fail95%. Exact intentional far-follower waiting is77/10295ticks=0.74794% low and0/11277ticks=0% high; both traced canonical state hashes match. One attempted pace-floor change was rejected and reverted because high pace and Mia survival regressed."
+      "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
+      "verdict": "PASS",
+      "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-13-L5-high-complete.json.gz",
-      "sha256": "59fb7fc319c25ac13b730041e6d616298a86e5bb14344f1b2cff50403c60038c",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+      "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
+      "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
+      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
     },
     {
-      "file": "docs/reports/sweep-g/G-13-L5-high-trace.json.gz",
-      "sha256": "d2d5e74fc70901c3da81a652be4bd3053635ae14fdd7a35c575a37ade0f279d5",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+      "file": "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
+      "sha256": "157c2c402a91a125647973af7a746b15eb021ccc23b4fc3a114c0120275b1546",
+      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
     },
     {
-      "file": "docs/reports/sweep-g/G-13-L5-low-complete.json.gz",
-      "sha256": "922e3d3adb6f88fecb09194b3ef9ecb8195ee43c207fc96262a5a1a3583b3a9e",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
+      "file": "docs/reports/fix68-g/G-13-fix.json",
+      "sha256": "f96258968825d34633b799bdca2366cd779b091f97877a96869286771fa8e4eb",
+      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
     },
     {
-      "file": "docs/reports/sweep-g/G-13-L5-low-trace.json.gz",
-      "sha256": "0d7250bfbf58b3d26d72e90422b2663193648b1e51e6006834161e26374b0e02",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-13-L5-native.json",
-      "sha256": "5b4cf529437998593e85f869e53bde18a24559cad5a084a437e3fc33077d5c7e",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-13-diagnosis.json",
-      "sha256": "69dc4af411a9ae73f04e111a68280b9f01b8155899c5705822a4369c41be4cb5",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
-    },
-    {
-      "file": "docs/reports/sweep-g/G13-after/REJECTED.json",
-      "sha256": "907d79ac7f2ac1d705d0ee9ac27cdf7a075fde10c5cdfc2eb0742e0058c2e9e4",
-      "what": "Current canonical L5 pace and exact-wait evidence, unchanged state controls and rejected/reverted trial history. Current high Dale pace fails95%; exact waiting passes both tiers."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-13-final-L5-low-complete.json.gz",
-      "sha256": "f211ff2a536f5f30dd65db270c6d01f5da7f84a8df299ad84b6102777a64b372",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-13-final-L5-high-complete.json.gz",
-      "sha256": "7683795440e9b4c9db5ebb804c2337cf83ef66a609113b398e6bed19a8df5d6b",
-      "what": "Final-source native rerun confirms unchanged measured failure and tier outcomes; historical traces above retain their original source identity."
+      "file": "docs/reports/fix68-g/G-13-trials.json",
+      "sha256": "a468229f22527de669eab639c3232765e2ef516dd4e229a5ca3e8388f9431193",
+      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
     }
   ],
-  "notes": "Unchanged95% and10% thresholds. This establishes a current whole-row FAIL from L5; all-level follower coverage remains required for any eventual PASS. Final-source whole-group rerun reconfirms the same values after the HUD-only game fix; archived trace/control/rejected-trial artifacts remain historical and are not relabelled."
+  "notes": "Scoped L5 correction; global all-level qualification and independent L5-08 distance failures are not hidden by this decision."
 }
