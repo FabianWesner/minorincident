@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
-  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
-  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "fixtureHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 276,
+      "wallSeconds": 269,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 11.765,
+      "maxNoProgressSeconds": 11.783333333333333,
       "deaths": 0,
-      "assists": 1,
+      "assists": 2,
       "attacks": {
-        "weapon.army-mg": 1450
+        "weapon.army-mg": 1786
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -59,8 +59,8 @@
       "steps": [
         {
           "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 57 m",
-          "tick": 15,
+          "text": "Ride into Fairhaven with the convoy · 58 m",
+          "tick": 1,
           "marker": {
             "anchor": "l4-plaza",
             "ring": {
@@ -96,7 +96,7 @@
         {
           "id": "hold",
           "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2174,
+          "tick": 2175,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
@@ -107,8 +107,8 @@
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 66 m",
-          "tick": 13590,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 69 m",
+          "tick": 13575,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -128,7 +128,7 @@
         {
           "id": "bar",
           "text": "Bar the cellar door · 5 m",
-          "tick": 14930,
+          "tick": 14747,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -148,7 +148,7 @@
         {
           "id": "wait",
           "text": "Stay down · 0:07 remaining",
-          "tick": 15069,
+          "tick": 14904,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,

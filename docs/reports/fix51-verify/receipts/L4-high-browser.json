@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "33b75918004edef0694d1fd7173b665ebadfe310d3ee58d4204d4211f7b3be25",
-  "fixtureHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
-  "browserHash": "a35dfd0fdce06b38750f10aaabd68e4860e041d66ca4dbdad9e83b6878c9da2a",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "fixtureHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 265,
+      "wallSeconds": 279,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 11.633333333333333,
+      "maxNoProgressSeconds": 11.865,
       "deaths": 0,
       "assists": 0,
       "attacks": {
-        "weapon.army-mg": 1391
+        "weapon.army-mg": 1459
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -59,8 +59,8 @@
       "steps": [
         {
           "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 58 m",
-          "tick": 11,
+          "text": "Ride into Fairhaven with the convoy · 57 m",
+          "tick": 12,
           "marker": {
             "anchor": "l4-plaza",
             "ring": {
@@ -76,7 +76,7 @@
         {
           "id": "quartermaster",
           "text": "Report to the quartermaster · 10 m",
-          "tick": 1829,
+          "tick": 1837,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": {
@@ -96,7 +96,7 @@
         {
           "id": "hold",
           "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2103,
+          "tick": 2180,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
@@ -107,8 +107,8 @@
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 64 m",
-          "tick": 13499,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 71 m",
+          "tick": 13589,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -121,14 +121,14 @@
               0.13,
               -45.28
             ],
-            "playerY": 0.7049999833106995,
+            "playerY": 0.7099999785423279,
             "pinVisible": true
           }
         },
         {
           "id": "bar",
           "text": "Bar the cellar door · 5 m",
-          "tick": 14616,
+          "tick": 14986,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -141,14 +141,14 @@
               0.05,
               -1.8
             ],
-            "playerY": 0.8100000619888306,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         },
         {
           "id": "wait",
           "text": "Stay down · 0:07 remaining",
-          "tick": 14762,
+          "tick": 15126,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,
@@ -160,22 +160,7 @@
       ]
     }
   ],
-  "issues": [
-    {
-      "level": "L4",
-      "tick": 10353,
-      "x": -23.6,
-      "z": 4,
-      "severity": "P2",
-      "kind": "enemy-frozen",
-      "text": "Infected #459 in state chase 3.7 m away has not moved for ~5 s",
-      "captures": [
-        "captures/accept-L4-10353-enemy-frozen.jpg"
-      ],
-      "step": "hold",
-      "objective": "Hold the north breach · 0:53 remaining · 14 m"
-    }
-  ],
+  "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
   "zoom": 1.5

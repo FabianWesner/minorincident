@@ -1,38 +1,39 @@
 {
-  "gameCommit": "cdcc78155ae14b8d93dae1c168edd56579bad8a3",
-  "sourceHash": "75d72b3a41bd4031c33374cc7549260d390d4b78dde6a9bf792e1f27311a50a6",
+  "gameCommit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-  "method": "Current-source full-rate read-only L4 native complete-route observer. Every war tick checks nearest20 living nonhidden admitted infected; each scheduled collapse quota is matched with real admitted actor counts in its540tick window. Both final complete state hashes match separate current-source qa:accept controls.",
+  "method": "Current-source full-rate read-only native complete routes. Every war tick checks the nearest20 living admitted infected; membership changes retain exact models/positions. Per-edge scheduled quotas are matched to real admitted actors within540ticks. Both complete hashes match independent current-source qa:accept controls.",
   "tiers": [
     {
       "tier": "low",
-      "finalHash": "c3184e26",
-      "canonicalHash": "c3184e26",
+      "finalHash": "18e71cbb",
+      "canonicalHash": "18e71cbb",
+      "gameplayHash": "17026cfd",
       "peak": 80,
       "mixChecks": 10679,
-      "minimumLooks": 3,
-      "firstCounterexample": {
+      "minimumLooks": 4,
+      "firstFourLookSample": {
         "tick": 4328,
-        "looks": 3,
+        "looks": 4,
         "actors": [
           {
             "id": 253,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -19.464881335070682,
             "z": 0.24400016727079565
           },
           {
             "id": 164,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -20.60717819580209,
             "z": -0.8528835563238527
           },
           {
             "id": 191,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -18.72425849211199,
             "z": 0.7616175471294372
           },
@@ -88,14 +89,14 @@
           {
             "id": 272,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -16.97374889981463,
             "z": 2.6372382412722377
           },
           {
             "id": 255,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -19.284769047206208,
             "z": -1.3903849672208688
           },
@@ -709,19 +710,20 @@
     },
     {
       "tier": "high",
-      "finalHash": "0bef7d9f",
-      "canonicalHash": "0bef7d9f",
+      "finalHash": "86ab19e8",
+      "canonicalHash": "86ab19e8",
+      "gameplayHash": "1995724f",
       "peak": 120,
       "mixChecks": 10715,
-      "minimumLooks": 3,
-      "firstCounterexample": {
+      "minimumLooks": 4,
+      "firstFourLookSample": {
         "tick": 7580,
-        "looks": 3,
+        "looks": 4,
         "actors": [
           {
             "id": 430,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -19.618710500328007,
             "z": -3.2154361804710674
           },
@@ -749,7 +751,7 @@
           {
             "id": 436,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -18.4676290218934,
             "z": -1.4829644438353375
           },
@@ -784,7 +786,7 @@
           {
             "id": 392,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -19.599210475499667,
             "z": -6.773196376835639
           },
@@ -826,7 +828,7 @@
           {
             "id": 360,
             "archetype": "infected.firefighter",
-            "model": "infected.firefighter",
+            "model": "npc.firefighter-alive",
             "x": -15.654720995283478,
             "z": -0.17791347724989076
           },
