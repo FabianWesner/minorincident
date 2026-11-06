@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L10",
-  "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T02:50:59.248Z",
+  "generatedAt": "2026-11-06T03:28:03.133Z",
   "policies": [
     {
       "tier": "low",
@@ -1413,7 +1413,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4f2d55f5e34c08a7259489ac1ea10f14b858e734"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
@@ -1542,7 +1542,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4f2d55f5e34c08a7259489ac1ea10f14b858e734"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
@@ -3595,7 +3595,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4f2d55f5e34c08a7259489ac1ea10f14b858e734"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
@@ -3727,7 +3727,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4f2d55f5e34c08a7259489ac1ea10f14b858e734"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     }
   ],
@@ -4111,12 +4111,13 @@
     },
     {
       "id": "L10-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); low/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":119,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.46693471992819774},\"player\":{\"x\":853.6096801757812,\"y\":0.7099999785423279,\"z\":78.70632934570312,\"yaw\":-3.09657018518757},\"direct\":119.37333755479696,\"radius\":0.55,\"pathMetres\":154.7137704533486,\"hidden\":false,\"residentPathMetres\":154.7137704533486,\"fullSourceRoute\":{\"ground\":{\"width\":226.60968017578125,\"depth\":… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); high/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":122,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.4684083101773735},\"player\":{\"x\":853.1604614257812,\"y\":0.7099999785423279,\"z\":78.676025390625,\"yaw\":3.048283639993729},\"direct\":118.9586452170241,\"radius\":0.55,\"pathMetres\":155.04193663026,\"hidden\":false,\"residentPathMetres\":155.04193663026,\"fullSourceRoute\":{\"ground\":{\"width\":226.16046142578125,\"depth\":173.6760… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+        "docs/reports/fix51-r10c/L10-introduction-proof.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
@@ -4144,6 +4145,102 @@
           "value": 119.37333755479696,
           "target": "80 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 119,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.46693471992819774
+            },
+            "player": {
+              "x": 853.6096801757812,
+              "y": 0.7099999785423279,
+              "z": 78.70632934570312,
+              "yaw": -3.09657018518757
+            },
+            "direct": 119.37333755479696,
+            "radius": 0.55,
+            "pathMetres": 154.7137704533486,
+            "hidden": false,
+            "residentPathMetres": 154.7137704533486,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.60968017578125,
+                "depth": 173.70632934570312
+              },
+              "center": {
+                "x": 800.3048400878906,
+                "z": 51.85316467285156
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 300,
+              "depth": 300,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
         },
         {
           "id": "L10-02",
@@ -4191,6 +4288,102 @@
         },
         {
           "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 122,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.4684083101773735
+            },
+            "player": {
+              "x": 853.1604614257812,
+              "y": 0.7099999785423279,
+              "z": 78.676025390625,
+              "yaw": 3.048283639993729
+            },
+            "direct": 118.9586452170241,
+            "radius": 0.55,
+            "pathMetres": 155.04193663026,
+            "hidden": false,
+            "residentPathMetres": 155.04193663026,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.16046142578125,
+                "depth": 173.676025390625
+              },
+              "center": {
+                "x": 800.0802307128906,
+                "z": 51.8380126953125
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 500,
+              "depth": 500,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
           "clause": "actual Mega introduction time",
           "level": "L10",
           "tier": "high",
@@ -4220,17 +4413,16 @@
         "evidence": [],
         "method": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
       },
-      "remaining": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-03",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7282,\"attacks\":17,\"groupAttacks\":0,\"peak\":13,\"normalPeak\":12,\"regularPeak\":11,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":4,\"residential-fringe-direct-3\":2,\"residential-fringe-direct-4\":2,\"fringe-exit\":4,\"residential-fringe-direct-5\":2}} (target regular human peak 8–16; species/group clauses remain open; PASS); low/complete industrial-area normal local concurrent peak bound: {\"ticks\":9882,\"attacks\":23,\"groupAttacks\":0,\"peak\":23,\"normalPeak\":23,\"regularPeak\":20,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":16,\"depot-alpha\":2,\"depot-exit\":3,\"industrial-area-direct-6\":6}} (target normal infected peak 16–28; species/group clauses remain open; PASS); low/complete military-zone normal local concurrent peak bound: {\"ticks\":10892,\"attacks\":41,\"groupAttacks\":0,\"peak\":35,\"normalPeak\":35,\"regularPeak\":30,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":16,\"military-column\":14,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; PASS); low/complete research-campus normal local concurrent peak bound: {\"ticks\":7654,\"attacks\":63,\"groupAttacks\":0,\"peak\":38,\"normalPeak\":38,\"regularPeak\":36,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":6,\"research-quarantine\":10}} (target normal infected peak 35–55; species/group clauses remain open; PASS); low/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12854,\"attacks\":20,\"groupAttacks\":0,\"peak\":68,\"normalPeak\":68,\"regularPeak\":61,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":20,\"corridor-breach\":20,\"corridor-exit\":20}} (target normal infected peak 50–75; species/group clauses remain open; PASS); low/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":8585,\"attacks\":93,\"groupAttacks\":0,\"peak\":95,\"normalPeak\":94,\"regularPeak\":89,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":89}} (target normal infected peak 75–95; species/group clauses remain open; PASS); low/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete military-zone concurrent Alpha peak: 1 (target 1 ≤ value ≤ 2; PASS); low/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete research-campus concurrent Alpha peak: 1 (target 1 ≤ value ≤ 2; PASS); low/complete destroyed-corridor concurrent dog peak: 4 (target 3 ≤ value ≤ 5; PASS); low/complete destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); low/complete military-breach regular group size: 16 (target 10 ≤ value ≤ 20; PASS); low/complete military-column regular group size: 14 (target 10 ≤ value ≤ 20; PASS); low/complete military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/complete corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-breach regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-exit regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete residential dogs follow actual handgun pickup: {\"tier\":\"low\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"14a5235c\",\"controlIdentical\":true} (target pickup observed; first admitted dog at or after pickup; zero dog ticks before pickup; PASS); low/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7518,\"attacks\":813,\"groupAttacks\":0,\"peak\":18,\"normalPeak\":17,\"regularPeak\":15,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":1}} (target regular human peak 8–16; species/group clauses remain open; NOT CHECKED); low/stationary industrial-area normal local concurrent peak bound: {\"ticks\":10232,\"attacks\":1500,\"groupAttacks\":0,\"peak\":28,\"normalPeak\":27,\"regularPeak\":23,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":6,\"depot-alpha\":2,\"depot-exit\":1}} (target normal infected peak 16–28; species/group clauses remain open; NOT CHECKED); low/stationary military-zone normal local concurrent peak bound: {\"ticks\":11995,\"attacks\":1004,\"groupAttacks\":0,\"peak\":45,\"normalPeak\":44,\"regularPeak\":39,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":15,\"military-column\":14,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; NOT CHECKED); low/stationary research-campus normal local concurrent peak bound: {\"ticks\":8048,\"attacks\":1464,\"groupAttacks\":0,\"peak\":55,\"normalPeak\":54,\"regularPeak\":50,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":2,\"research-quarantine\":1}} (target normal infected peak 35–55; species/group clauses remain open; NOT CHECKED); low/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":13847,\"attacks\":753,\"groupAttacks\":0,\"peak\":75,\"normalPeak\":74,\"regularPeak\":68,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":20}} (target normal infected peak 50–75; species/group clauses remain open; NOT CHECKED); low/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18960,\"attacks\":5292,\"groupAttacks\":0,\"peak\":95,\"normalPeak\":94,\"regularPeak\":87,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":74}} (target normal infected peak 75–95; species/group clauses remain open; NOT CHECKED); low/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); low/stationary destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); low/stationary military-breach regular group size: 15 (target 10 ≤ value ≤ 20; PASS); low/stationary military-column regular group size: 14 (target 10 ≤ value ≤ 20; PASS); low/stationary military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/stationary corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/stationary corridor-breach regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); low/stationary corridor-exit regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); high/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7288,\"attacks\":23,\"groupAttacks\":0,\"peak\":24,\"normalPeak\":23,\"regularPeak\":21,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"residential-fringe-direct-3\":3,\"residential-fringe-direct-4\":3,\"fringe-exit\":6,\"residential-fringe-direct-5\":3}} (target regular human peak 12–24; species/group clauses remain open; PASS); high/complete industrial-area normal local concurrent peak bound: {\"ticks\":9957,\"attacks\":54,\"groupAttacks\":0,\"peak\":32,\"normalPeak\":32,\"regularPeak\":28,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":22,\"depot-alpha\":4,\"depot-exit\":4,\"industrial-area-direct-6\":7}} (target normal infected peak 25–45; species/group clauses remain open; PASS); high/complete military-zone normal local concurrent peak bound: {\"ticks\":10854,\"attacks\":57,\"groupAttacks\":0,\"peak\":50,\"normalPeak\":50,\"regularPeak\":46,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; PASS); high/complete research-campus normal local concurrent peak bound: {\"ticks\":7731,\"attacks\":96,\"groupAttacks\":0,\"peak\":70,\"normalPeak\":70,\"regularPeak\":65,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":22}} (target normal infected peak 55–85; species/group clauses remain open; PASS); high/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12863,\"attacks\":19,\"groupAttacks\":0,\"peak\":96,\"normalPeak\":96,\"regularPeak\":93,\"dogPeak\":3,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":30}} (target normal infected peak 80–130; species/group clauses remain open; PASS); high/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":9745,\"attacks\":311,\"groupAttacks\":0,\"peak\":190,\"normalPeak\":189,\"regularPeak\":182,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":182}} (target normal infected peak 140–190; species/group clauses remain open; PASS); high/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete destroyed-corridor concurrent dog peak: 3 (target 3 ≤ value ≤ 5; PASS); high/complete destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); high/complete military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-exit regular group size: 30 (target 20 ≤ value ≤ 35; PASS); high/complete residential dogs follow actual handgun pickup: {\"tier\":\"high\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"fe1371ba\",\"controlIdentical\":true} (target pickup observed; first admitted dog at or after pickup; zero dog ticks before pickup; PASS); high/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7402,\"attacks\":1037,\"groupAttacks\":0,\"peak\":26,\"normalPeak\":25,\"regularPeak\":23,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"fringe-exit\":1}} (target regular human peak 12–24; species/group clauses remain open; NOT CHECKED); high/stationary industrial-area normal local concurrent peak bound: {\"ticks\":10372,\"attacks\":2133,\"groupAttacks\":0,\"peak\":45,\"normalPeak\":44,\"regularPeak\":40,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":14,\"depot-alpha\":3,\"depot-exit\":2}} (target normal infected peak 25–45; species/group clauses remain open; NOT CHECKED); high/stationary military-zone normal local concurrent peak bound: {\"ticks\":11711,\"attacks\":1306,\"groupAttacks\":0,\"peak\":75,\"normalPeak\":74,\"regularPeak\":69,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; NOT CHECKED); high/stationary research-campus normal local concurrent peak bound: {\"ticks\":7696,\"attacks\":1067,\"groupAttacks\":0,\"peak\":85,\"normalPeak\":84,\"regularPeak\":79,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":19}} (target normal infected peak 55–85; species/group clauses remain open; NOT CHECKED); high/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":13026,\"attacks\":1717,\"groupAttacks\":0,\"peak\":108,\"normalPeak\":107,\"regularPeak\":99,\"dogPeak\":5,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":32}} (target normal infected peak 80–130; species/group clauses remain open; NOT CHECKED); high/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18845,\"attacks\":6306,\"groupAttacks\":0,\"peak\":190,\"normalPeak\":189,\"regularPeak\":182,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":132}} (target normal infected peak 140–190; species/group clauses remain open; NOT CHECKED); high/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); high/stationary destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); high/stationary military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-exit regular group size: 32 (target 20 ≤ value ≤ 35; PASS)",
-      "automatedComplete": true,
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7282,\"attacks\":17,\"groupAttacks\":0,\"peak\":13,\"normalPeak\":12,\"regularPeak\":11,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":4,\"residential-fringe-direct-3\":2,\"residential-fringe-direct-4\":2,\"fringe-exit\":4,\"residential-fringe-direct-5\":2}} (target regular human peak 8–16; species/group clauses remain open; PASS); low/complete industrial-area normal local concurrent peak bound: {\"ticks\":9882,\"attacks\":23,\"groupAttacks\":0,\"peak\":23,\"normalPeak\":23,\"regularPeak\":20,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":16,\"depot-alpha\":2,\"depot-exit\":3,\"industrial-area-direct-6\":6}} (target normal infected peak 16–28; species/group clauses remain open; PASS); low/complete military-zone normal local concurrent peak bound: {\"ticks\":10892,\"attacks\":41,\"groupAttacks\":0,\"peak\":35,\"normalPeak\":35,\"regularPeak\":30,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":16,\"military-column\":14,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; PASS); low/complete research-campus normal local concurrent peak bound: {\"ticks\":7654,\"attacks\":63,\"groupAttacks\":0,\"peak\":38,\"normalPeak\":38,\"regularPeak\":36,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":6,\"research-quarantine\":10}} (target normal infected peak 35–55; species/group clauses remain open; PASS); low/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12854,\"attacks\":20,\"groupAttacks\":0,\"peak\":68,\"normalPeak\":68,\"regularPeak\":61,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":20,\"corridor-breach\":20,\"corridor-exit\":20}} (target normal infected peak 50–75; species/group clauses remain open; PASS); low/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":8585,\"attacks\":93,\"groupAttacks\":0,\"peak\":95,\"normalPeak\":94,\"regularPeak\":89,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":89}} (target normal infected peak 75–95; species/group clauses remain open; PASS); low/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete military-zone concurrent Alpha peak: 1 (target 1 ≤ value ≤ 2; PASS); low/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/complete research-campus concurrent Alpha peak: 1 (target 1 ≤ value ≤ 2; PASS); low/complete destroyed-corridor concurrent dog peak: 4 (target 3 ≤ value ≤ 5; PASS); low/complete destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); low/complete military-breach regular group size: 16 (target 10 ≤ value ≤ 20; PASS); low/complete military-column regular group size: 14 (target 10 ≤ value ≤ 20; PASS); low/complete military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/complete corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-breach regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/complete corridor-exit regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7518,\"attacks\":813,\"groupAttacks\":0,\"peak\":18,\"normalPeak\":17,\"regularPeak\":15,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":2,\"fringe-patrol\":4,\"fringe-hedges\":1}} (target regular human peak 8–16; species/group clauses remain open; NOT CHECKED); low/stationary industrial-area normal local concurrent peak bound: {\"ticks\":10232,\"attacks\":1500,\"groupAttacks\":0,\"peak\":28,\"normalPeak\":27,\"regularPeak\":23,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":6,\"depot-workers\":6,\"depot-alpha\":2,\"depot-exit\":1}} (target normal infected peak 16–28; species/group clauses remain open; NOT CHECKED); low/stationary military-zone normal local concurrent peak bound: {\"ticks\":11995,\"attacks\":1004,\"groupAttacks\":0,\"peak\":45,\"normalPeak\":44,\"regularPeak\":39,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":6,\"military-breach\":15,\"military-column\":14,\"military-exit\":10}} (target normal infected peak 28–45; species/group clauses remain open; NOT CHECKED); low/stationary research-campus normal local concurrent peak bound: {\"ticks\":8048,\"attacks\":1464,\"groupAttacks\":0,\"peak\":55,\"normalPeak\":54,\"regularPeak\":50,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":6,\"research-approach\":22,\"research-lab\":21,\"research-campus-direct-4\":2,\"research-quarantine\":1}} (target normal infected peak 35–55; species/group clauses remain open; NOT CHECKED); low/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":13847,\"attacks\":753,\"groupAttacks\":0,\"peak\":75,\"normalPeak\":74,\"regularPeak\":68,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":20}} (target normal infected peak 50–75; species/group clauses remain open; NOT CHECKED); low/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18960,\"attacks\":5292,\"groupAttacks\":0,\"peak\":95,\"normalPeak\":94,\"regularPeak\":87,\"dogPeak\":5,\"alphaPeak\":2,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":74}} (target normal infected peak 75–95; species/group clauses remain open; NOT CHECKED); low/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); low/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); low/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); low/stationary destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); low/stationary military-breach regular group size: 15 (target 10 ≤ value ≤ 20; PASS); low/stationary military-column regular group size: 14 (target 10 ≤ value ≤ 20; PASS); low/stationary military-exit regular group size: 10 (target 10 ≤ value ≤ 20; PASS); low/stationary corridor-line regular group size: 20 (target 20 ≤ value ≤ 35; PASS); low/stationary corridor-breach regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); low/stationary corridor-exit regular group size: null (target 20 ≤ value ≤ 35; NOT CHECKED); high/complete residential-fringe normal local concurrent peak bound: {\"ticks\":7288,\"attacks\":23,\"groupAttacks\":0,\"peak\":24,\"normalPeak\":23,\"regularPeak\":21,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"residential-fringe-direct-3\":3,\"residential-fringe-direct-4\":3,\"fringe-exit\":6,\"residential-fringe-direct-5\":3}} (target regular human peak 12–24; species/group clauses remain open; PASS); high/complete industrial-area normal local concurrent peak bound: {\"ticks\":9957,\"attacks\":54,\"groupAttacks\":0,\"peak\":32,\"normalPeak\":32,\"regularPeak\":28,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":22,\"depot-alpha\":4,\"depot-exit\":4,\"industrial-area-direct-6\":7}} (target normal infected peak 25–45; species/group clauses remain open; PASS); high/complete military-zone normal local concurrent peak bound: {\"ticks\":10854,\"attacks\":57,\"groupAttacks\":0,\"peak\":50,\"normalPeak\":50,\"regularPeak\":46,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; PASS); high/complete research-campus normal local concurrent peak bound: {\"ticks\":7731,\"attacks\":96,\"groupAttacks\":0,\"peak\":70,\"normalPeak\":70,\"regularPeak\":65,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":22}} (target normal infected peak 55–85; species/group clauses remain open; PASS); high/complete destroyed-corridor normal local concurrent peak bound: {\"ticks\":12863,\"attacks\":19,\"groupAttacks\":0,\"peak\":96,\"normalPeak\":96,\"regularPeak\":93,\"dogPeak\":3,\"alphaPeak\":2,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":30}} (target normal infected peak 80–130; species/group clauses remain open; PASS); high/complete dispersal-complex normal local concurrent peak bound: {\"ticks\":9745,\"attacks\":311,\"groupAttacks\":0,\"peak\":190,\"normalPeak\":189,\"regularPeak\":182,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":182}} (target normal infected peak 140–190; species/group clauses remain open; PASS); high/complete residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/complete military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/complete research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/complete destroyed-corridor concurrent dog peak: 3 (target 3 ≤ value ≤ 5; PASS); high/complete destroyed-corridor concurrent Alpha peak: 2 (target 2 ≤ value ≤ 3; PASS); high/complete military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/complete corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/complete corridor-exit regular group size: 30 (target 20 ≤ value ≤ 35; PASS); high/stationary residential-fringe normal local concurrent peak bound: {\"ticks\":7402,\"attacks\":1037,\"groupAttacks\":0,\"peak\":26,\"normalPeak\":25,\"regularPeak\":23,\"dogPeak\":2,\"alphaPeak\":0,\"regularGroupPeaks\":{\"residential-fringe-direct-0\":3,\"fringe-patrol\":6,\"fringe-hedges\":6,\"fringe-exit\":1}} (target regular human peak 12–24; species/group clauses remain open; NOT CHECKED); high/stationary industrial-area normal local concurrent peak bound: {\"ticks\":10372,\"attacks\":2133,\"groupAttacks\":0,\"peak\":45,\"normalPeak\":44,\"regularPeak\":40,\"dogPeak\":4,\"alphaPeak\":1,\"regularGroupPeaks\":{\"industrial-area-direct-0\":8,\"depot-workers\":14,\"depot-alpha\":3,\"depot-exit\":2}} (target normal infected peak 25–45; species/group clauses remain open; NOT CHECKED); high/stationary military-zone normal local concurrent peak bound: {\"ticks\":11711,\"attacks\":1306,\"groupAttacks\":0,\"peak\":75,\"normalPeak\":74,\"regularPeak\":69,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"military-zone-direct-0\":8,\"military-breach\":18,\"military-column\":18,\"military-exit\":18}} (target normal infected peak 45–75; species/group clauses remain open; NOT CHECKED); high/stationary research-campus normal local concurrent peak bound: {\"ticks\":7696,\"attacks\":1067,\"groupAttacks\":0,\"peak\":85,\"normalPeak\":84,\"regularPeak\":79,\"dogPeak\":4,\"alphaPeak\":2,\"regularGroupPeaks\":{\"research-campus-direct-0\":8,\"research-approach\":22,\"research-lab\":22,\"research-campus-direct-4\":8,\"research-quarantine\":19}} (target normal infected peak 55–85; species/group clauses remain open; NOT CHECKED); high/stationary destroyed-corridor normal local concurrent peak bound: {\"ticks\":13026,\"attacks\":1717,\"groupAttacks\":0,\"peak\":108,\"normalPeak\":107,\"regularPeak\":99,\"dogPeak\":5,\"alphaPeak\":3,\"regularGroupPeaks\":{\"corridor-line\":32,\"corridor-breach\":32,\"corridor-exit\":32}} (target normal infected peak 80–130; species/group clauses remain open; NOT CHECKED); high/stationary dispersal-complex normal local concurrent peak bound: {\"ticks\":18845,\"attacks\":6306,\"groupAttacks\":0,\"peak\":190,\"normalPeak\":189,\"regularPeak\":182,\"dogPeak\":4,\"alphaPeak\":3,\"regularGroupPeaks\":{\"complex-approach-0\":2,\"complex-approach-1\":2,\"complex-approach-2\":2,\"complex-approach-3\":2,\"complex-approach-4\":2,\"complex-approach-5\":2,\"dispersal-assault\":132}} (target normal infected peak 140–190; species/group clauses remain open; NOT CHECKED); high/stationary residential-fringe concurrent dog peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary industrial-area concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary industrial-area concurrent Alpha peak: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary military-zone concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary military-zone concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary research-campus concurrent dog peak: 4 (target 2 ≤ value ≤ 4; PASS); high/stationary research-campus concurrent Alpha peak: 2 (target 1 ≤ value ≤ 2; PASS); high/stationary destroyed-corridor concurrent dog peak: 5 (target 3 ≤ value ≤ 5; PASS); high/stationary destroyed-corridor concurrent Alpha peak: 3 (target 2 ≤ value ≤ 3; PASS); high/stationary military-breach regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-column regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary military-exit regular group size: 18 (target 10 ≤ value ≤ 20; PASS); high/stationary corridor-line regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-breach regular group size: 32 (target 20 ≤ value ≤ 35; PASS); high/stationary corridor-exit regular group size: 32 (target 20 ≤ value ≤ 35; PASS)",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
@@ -4564,24 +4756,6 @@
           "value": 20,
           "target": "20 ≤ value ≤ 35",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
-        },
-        {
-          "id": "L10-03",
-          "clause": "residential dogs follow actual handgun pickup",
-          "level": "L10",
-          "tier": "low",
-          "policy": "complete",
-          "status": "PASS",
-          "value": {
-            "tier": "low",
-            "pickupTick": 3497,
-            "firstDogTick": 4950,
-            "prematureTicks": 0,
-            "nativeStateHash": "14a5235c",
-            "controlIdentical": true
-          },
-          "target": "pickup observed; first admitted dog at or after pickup; zero dog ticks before pickup",
-          "receipt": "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json"
         },
         {
           "id": "L10-03",
@@ -5234,24 +5408,6 @@
         },
         {
           "id": "L10-03",
-          "clause": "residential dogs follow actual handgun pickup",
-          "level": "L10",
-          "tier": "high",
-          "policy": "complete",
-          "status": "PASS",
-          "value": {
-            "tier": "high",
-            "pickupTick": 3497,
-            "firstDogTick": 4950,
-            "prematureTicks": 0,
-            "nativeStateHash": "fe1371ba",
-            "controlIdentical": true
-          },
-          "target": "pickup observed; first admitted dog at or after pickup; zero dog ticks before pickup",
-          "receipt": "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json"
-        },
-        {
-          "id": "L10-03",
           "clause": "residential-fringe normal local concurrent peak bound",
           "level": "L10",
           "tier": "high",
@@ -5583,7 +5739,7 @@
         "evidence": [],
         "method": "NEXT: Run the native census through all seven regions at low/high, recording concurrent local counts and dogs/Alphas rather than total level spawn calls."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95."
     },
     {
       "id": "L10-04",
@@ -5799,7 +5955,7 @@
         ],
         "notes": "Original current-source producer, measured unchanged criterion.",
         "freshness": "STALE",
-        "latestRelevantCommit": "26b922875b73df57766a37f0d6cee7030dbf45f0"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
@@ -5879,7 +6035,7 @@
         ],
         "notes": "Focused regional approach capability from native-generated snapshots, not a continuous physical finale. Save validation rejected initial mismatched export; exporter now copies exact snapshot arsenal and retains the validation guard. Added exact-criterion review requirement so native-only measurements cannot silently replace the tracker physical NEXT. No game/criteria/count/timer/cap changes.",
         "freshness": "STALE",
-        "latestRelevantCommit": "26b922875b73df57766a37f0d6cee7030dbf45f0"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
@@ -6163,9 +6319,11 @@
       "id": "L10-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review FAIL (STALE, Codex fix53-c): Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix53-c/L10-hold-before.json"
+      ],
       "expected": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 6× catch-up on the final delivery approach, vqa-fix-2) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
       "checks": [],
       "historical": {
@@ -6176,7 +6334,31 @@
         "evidence": [],
         "method": "NEXT: Track the pursuing Mega continuously with native position/event ledgers: speed ratio, no-LOS pursuit, reachable path, no teleport and 20-35-second audio cadence; review minimap presentation."
       },
-      "remaining": "NEXT: Track the pursuing Mega continuously with native position/event ledgers: speed ratio, no-LOS pursuit, reachable path, no teleport and 20-35-second audio cadence; review minimap presentation."
+      "remaining": "NEXT: Track the pursuing Mega continuously with native position/event ledgers: speed ratio, no-LOS pursuit, reachable path, no teleport and 20-35-second audio cadence; review minimap presentation.",
+      "reviewDecision": {
+        "row": "L10-07",
+        "status": "FAIL",
+        "reviewer": "Codex fix53-c",
+        "date": "2026-11-04",
+        "commit": "adae51da70ed15e89246910db89df37df4c58e06",
+        "clauses": [
+          {
+            "clause": "Mega: cruise 0.7× run ± 2 %, always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
+            "verdict": "FAIL",
+            "note": "Current both-tier four-minute native assault observes the same persistent Mega moved by mega.rally: 1135.197m low and 745.518m high. This directly violates never teleports. Cruise, no-LOS full pursuit, route reach, minimap and audible cadence remain separate open clauses; this fail does not claim their qualification."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix53-c/L10-hold-before.json",
+            "sha256": "409bcb9d49b5d04139e4daa2de0edfecd3a9c4fe7c993a115d540819487bac03",
+            "what": "Actual scheduledRelocations ledger from wrapped production solids.relocate, one persistent Mega ID at both tiers, 240s trajectories, and final hashes matching independent controls."
+          }
+        ],
+        "notes": "Measured native FAIL is also in L10.json. No game or checker change. Full E32 arrival/pursuit relationship needs a dedicated game investigation.",
+        "freshness": "STALE",
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
+      }
     },
     {
       "id": "L10-08",
@@ -6683,7 +6865,7 @@
         ],
         "notes": "Original current-source producer, measured unchanged criterion.",
         "freshness": "STALE",
-        "latestRelevantCommit": "26b922875b73df57766a37f0d6cee7030dbf45f0"
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
       }
     },
     {
