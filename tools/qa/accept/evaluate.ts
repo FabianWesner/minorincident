@@ -718,6 +718,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
   ]],
   ['L7-08', ['initial admitted final horde census with canonical control','physical rocket-cleared disc used by living carried human','reviewed physical corridor strips'].map(clause=>({clause,policy:'physical-corridor'}))],
+  ['L10-08', ['physical five-region road framing matrix', 'production road and finale maximal zoom clamp', 'reviewed night road verges clothing and natural ground-slam telegraph'].map(clause => ({ clause, policy: 'physical-framing' }))],
   ['L7-06', ['physical Harbor and Lakeshore corridor routes with current bounds sweep', 'screenshot-only wrong-turn and route-clarity review'].map(clause => ({ clause, policy: 'physical-routes' }))],
   ['L7-11', ['continuous physical departure duration and bus displacement', 'reviewed complete cinematic visual strip'].map(clause => ({ clause, policy: 'physical-departure' }))],
   ['L7-12', ['physical rocket and horde player contrast matrix', 'reviewed ruined-city and Alpha motion frames'].map(clause => ({ clause, policy: 'physical-readability' }))],

@@ -13,11 +13,11 @@ Base: `0991b9da04a4ef65e1d0e5d889776c32b461a6ae`. Work list: `docs/reports/sweep
 | L7-11 | PASS, qualified | Fresh low/high physical runs from progressed L5/L6 saves:540consecutive departure ticks/9s, same live bus moves118.5m, original1/4humans boarded. All48frames personally reviewed: shrinking burning skyline, lit military truck/tower, red blood and no map edge. Dedicated consumer rejects20semantic faults. Native cinematic overrides userzoom; some bus cropping is explicit. |
 | L7-12 | current PASS; P taste | Fresh physical low/high and actual zoom0.5/1.5;28lossless same-tick courier-ID/ring cells span rocket, live Alpha/horde and bright city-fire motion. Minimum contrast3.879:1 with stricter .05 offset. All84frames reviewed;27faults reject and inclusive3.0passes. P sheets retained for worst-destruction/Alpha-human judgment; no PO taste approval claimed. |
 | L8-11 | P: Opus verdict pending | Fresh actual-input sanctuary and natural elephant/human mixed battle, low/high at actualzoom0.5/1.5,56frames personally reviewed. Exact Opus stunning≥7 question and sheets sent by scheduler NOTE. Dark sparse enclosure and HP-bar overlap are explicit concerns; no taste approval claimed. |
-| L10-08 | NOT CHECKED | Requires road framing/camera and night readability captures at required zooms. |
+| L10-08 | PASS, qualified | All5roadregions physically sampled at bothtiers/zooms,base1.3; finale1.0; actualView maxcombined2.0.82frames reviewed including natural same-ID groundslam strip and nightclothing;27semantic controls reject. |
 | L10-12 | NOT CHECKED | Native HP threshold fixtures pass; real-input motion/death captures, frame probe and visual corpse review remain. |
 | L10-14 | NOT CHECKED | Native cure measurements pass; complete physical epilogue, mist/event ledger, camera/title/credits review remain. |
 
-L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. L7-11 and L7-12 are also qualified current PASS, with the explicit L7-12 taste question tagged P. Five of the ten in-scope rows have current decisions, with five unchecked rows open.
+L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded measured failure rather than an unchecked row; L10-11 is current PASS. L7-11 and L7-12 are also qualified current PASS, with the explicit L7-12 taste question tagged P. Six of the ten in-scope rows have current decisions, with four unchecked rows open.
 
 ## Validation
 
@@ -25,7 +25,7 @@ L7-09 is owned by lane fix70-s and was not touched. L10-03 remains a recorded me
 - `npm run lint` — PASS, repeated after the L7 tools.
 - `npm test -- --maxWorkers=4` — FAIL: 106/107 tests pass. Existing architecture test `tests/shared/architecture.test.ts` rejects `src/sim/progression/Save.ts` importing `three/addons/libs/fflate.module.js`; that import predates this lane (last source commit `7bd7cdf`).
 - Full L10 `qa:accept` low/high, both policies — initial tuning rerun passed L10-11. The final status refresh rechecked all four policy receipts, fixtures and checkpoints and refreshed the acceptance tracker: L10-11 is current PASS, L10-03 is a fresh current FAIL, with remaining L10 criteria incomplete. The CLI exits 1 for those open rows. L10-03 current-source simultaneous census rerun completed, showing the failure above.
-- `npm run qa:threat` — PASS, 474.9 s, zero flags. The complete final gates are not all green: the unit suite has the architecture failure above, and five physical-input/review rows remain open.
+- `npm run qa:threat` — PASS, 474.9 s, zero flags. The complete final gates are not all green: the unit suite has the architecture failure above, and four physical-input/review rows remain open.
 
 Per-row commits: L10-11 and L10-03 evidence/review commits are present; L7-11 and L7-12 qualifications are recorded in their dedicated row directories and reviews. Other open rows have no completed evidence to commit.
 
