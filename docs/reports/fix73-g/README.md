@@ -1,5 +1,7 @@
 # fix73-g — VQA4 gameplay findings
 
+**Historical run:** the L7 high timeout and L10 dog regression below are superseded by [fix73-g2](../fix73-g2/README.md), which retains this run as evidence.
+
 Base `5a7f84b`; final game commit `35d5042`. Work finished with measured failures retained below. No push, deployment, performance work, dependency changes or acceptance criteria changes.
 
 ## Findings
