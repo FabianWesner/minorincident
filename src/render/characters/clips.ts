@@ -30,7 +30,7 @@ export function cadenceStride(name: string, scale: number, speed: number): numbe
  * tier gaits run at 3+ steps-pairs per second (frail chops quickest) and the stance stays within reach. */
 const crowdRunCadence: Record<string, number> = { 'infected-run': 3, 'infected-sprint': 3, 'civ-flee': 3, 'infected-lurch': 3, 'infected-frail': 3.3 };
 /** Minimum crowd gait cadence (cycles/s) per clip. */
-const minimumCadence: Record<string, number> = { shamble: 1.5, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
+const minimumCadence: Record<string, number> = { shamble: 1.5, 'infected-lurch': 1.7, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 export const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
