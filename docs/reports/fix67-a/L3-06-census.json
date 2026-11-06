@@ -1,0 +1,277 @@
+{
+ "row": "L3-06",
+ "method": "tools/qa/fix67/l3-squad.sh: mortal native complete run per seed 1-3 and tier (as qa:accept); followRange = calm samples every 30 ticks in S1-S3 (no living infected within 20 m of the courier, no squad target). base = main e061357, final = lane/fix67-a.",
+ "runs": {
+  "base": [
+   {
+    "seed": 1,
+    "tier": "high",
+    "outcome": "complete",
+    "deaths": 0,
+    "sim": 201,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 2,
+    "tier": "high",
+    "outcome": "timeout",
+    "deaths": 1,
+    "sim": 600,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": -1,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 3,
+    "tier": "high",
+    "outcome": "complete",
+    "deaths": 2,
+    "sim": 440,
+    "atFallback": 4,
+    "segmentEnds": [
+     3,
+     3,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": [
+     "31:20/38 med5.99 max8.02",
+     "32:22/38 med5.95 max8.52",
+     "33:23/38 med5.86 max7.78"
+    ]
+   },
+   {
+    "seed": 1,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 1,
+    "sim": 280.4,
+    "atFallback": 4,
+    "segmentEnds": [
+     4,
+     4,
+     2
+    ],
+    "atCheckpoint": 2,
+    "losses": [
+     "bite",
+     "bite"
+    ],
+    "follow": [
+     "30:62/62 med5.75 max5.99",
+     "31:58/62 med5.64 max6.07",
+     "32:11/62 med6.46 max6.55",
+     "33:5/62 med6.43 max6.56"
+    ]
+   },
+   {
+    "seed": 2,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 2,
+    "sim": 245.8,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 3,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 2,
+    "sim": 279.5,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   }
+  ],
+  "final": [
+   {
+    "seed": 1,
+    "tier": "high",
+    "outcome": "complete",
+    "deaths": 0,
+    "sim": 201,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 2,
+    "tier": "high",
+    "outcome": "complete",
+    "deaths": 0,
+    "sim": 195.3,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 3,
+    "tier": "high",
+    "outcome": "complete",
+    "deaths": 0,
+    "sim": 209.6,
+    "atFallback": 4,
+    "segmentEnds": [
+     3,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": [
+     "31:17/17 med4.42 max5.77",
+     "32:17/17 med5.32 max5.84",
+     "33:13/17 med5.31 max6.51"
+    ]
+   },
+   {
+    "seed": 1,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 0,
+    "sim": 193.7,
+    "atFallback": 4,
+    "segmentEnds": [
+     4,
+     3,
+     3
+    ],
+    "atCheckpoint": 3,
+    "losses": [
+     "bite"
+    ],
+    "follow": [
+     "30:52/61 med4.64 max7.98",
+     "31:57/64 med4.60 max6.65",
+     "32:47/64 med5.52 max8.51",
+     "33:52/64 med5.34 max6.90"
+    ]
+   },
+   {
+    "seed": 2,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 2,
+    "sim": 245.8,
+    "atFallback": 4,
+    "segmentEnds": [
+     0,
+     0,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": []
+   },
+   {
+    "seed": 3,
+    "tier": "low",
+    "outcome": "complete",
+    "deaths": 2,
+    "sim": 271.9,
+    "atFallback": 4,
+    "segmentEnds": [
+     1,
+     1,
+     0
+    ],
+    "atCheckpoint": 0,
+    "losses": [
+     "bite",
+     "bite",
+     "bite",
+     "bite"
+    ],
+    "follow": [
+     "31:47/47 med4.38 max5.74"
+    ]
+   }
+  ]
+ }
+}

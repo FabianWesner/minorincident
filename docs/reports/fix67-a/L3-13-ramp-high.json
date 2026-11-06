@@ -1,0 +1,184 @@
+{
+ "row": "L3-13",
+ "tier": "high",
+ "backend": "webgl2",
+ "method": "Native complete InputFrames to x>=126 (courier damage off), then physical keyboard only (WASD held toward the next authored ramp-road point projected to the screen) up both S-ramps to the central span. Frames at actual zoom 0.5 and 1.5 at x 141/146/150/154/158/163/170 plus x150 after 10 s standing. Lateral offsets from the authored centreline: tools/qa/fix67/ramp-offsets.ts (deck half-width 2.31 m).",
+ "frames": [
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x141-z0.5.png",
+   "tick": 8390,
+   "player": {
+    "x": 141.72,
+    "y": 1.18,
+    "z": -0.23
+   },
+   "livingInfectedNearRamp": 16,
+   "offDeckCentreOver1_9m": "none beyond 1.9 m"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x141-z1.5.png",
+   "tick": 8392,
+   "player": {
+    "x": 141.75,
+    "y": 1.19,
+    "z": -0.23
+   },
+   "livingInfectedNearRamp": 16,
+   "offDeckCentreOver1_9m": "none beyond 1.9 m"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x146-z0.5.png",
+   "tick": 8480,
+   "player": {
+    "x": 146.45,
+    "y": 2.76,
+    "z": 3.23
+   },
+   "livingInfectedNearRamp": 42,
+   "offDeckCentreOver1_9m": "#1462 (140.98,1.05,0.8) t1.000 off2.42 dy0.35"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x146-z1.5.png",
+   "tick": 8482,
+   "player": {
+    "x": 146.48,
+    "y": 2.74,
+    "z": 3.26
+   },
+   "livingInfectedNearRamp": 42,
+   "offDeckCentreOver1_9m": "#1462 (141.09,1.05,0.84) t1.000 off2.36 dy0.35"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x150-z0.5.png",
+   "tick": 8552,
+   "player": {
+    "x": 150.78,
+    "y": 4.1,
+    "z": 3.85
+   },
+   "livingInfectedNearRamp": 56,
+   "offDeckCentreOver1_9m": "#784 (141.58,1.15,1.05) t1.000 off2.13 dy0.45 | #1064 (140.66,1,1.05) t1.000 off2.82 dy0.30 | #1670 (141.11,1.05,0.25) t1.000 off1.95 dy0.35"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x150-z1.5.png",
+   "tick": 8554,
+   "player": {
+    "x": 150.81,
+    "y": 4.11,
+    "z": 3.85
+   },
+   "livingInfectedNearRamp": 56,
+   "offDeckCentreOver1_9m": "#784 (141.67,1.15,1.05) t1.000 off2.07 dy0.45 | #1064 (140.75,1,1.05) t1.000 off2.75 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x150-settle10s-z0.5.png",
+   "tick": 9158,
+   "player": {
+    "x": 150.8,
+    "y": 4.11,
+    "z": 3.85
+   },
+   "livingInfectedNearRamp": 83,
+   "offDeckCentreOver1_9m": "#1062 (141.23,1.1,1.04) t1.000 off2.39 dy0.40 | #1732 (140.77,1,0.23) t1.000 off2.19 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x150-settle10s-z1.5.png",
+   "tick": 9160,
+   "player": {
+    "x": 150.8,
+    "y": 4.11,
+    "z": 3.85
+   },
+   "livingInfectedNearRamp": 83,
+   "offDeckCentreOver1_9m": "#1062 (141.24,1.1,1.04) t1.000 off2.38 dy0.40 | #1732 (140.78,1,0.23) t1.000 off2.19 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x154-z0.5.png",
+   "tick": 9236,
+   "player": {
+    "x": 154.58,
+    "y": 4.96,
+    "z": 1.55
+   },
+   "livingInfectedNearRamp": 84,
+   "offDeckCentreOver1_9m": "#1062 (141.38,1.1,0.98) t1.000 off2.24 dy0.40 | #2204 (140.82,1,0.21) t1.000 off2.14 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x154-z1.5.png",
+   "tick": 9238,
+   "player": {
+    "x": 154.61,
+    "y": 4.97,
+    "z": 1.52
+   },
+   "livingInfectedNearRamp": 84,
+   "offDeckCentreOver1_9m": "#1062 (141.4,1.1,0.94) t1.000 off2.19 dy0.40 | #2204 (140.83,1,0.2) t1.000 off2.13 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x158-z0.5.png",
+   "tick": 9338,
+   "player": {
+    "x": 158.61,
+    "y": 5.81,
+    "z": -3.57
+   },
+   "livingInfectedNearRamp": 83,
+   "offDeckCentreOver1_9m": "#742 (140.97,1.05,0.25) t1.000 off2.06 dy0.35 | #1034 (141.41,1.1,1.05) t1.000 off2.26 dy0.40"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x158-z1.5.png",
+   "tick": 9340,
+   "player": {
+    "x": 158.64,
+    "y": 5.81,
+    "z": -3.6
+   },
+   "livingInfectedNearRamp": 83,
+   "offDeckCentreOver1_9m": "#742 (141.01,1.05,0.25) t1.000 off2.03 dy0.35 | #1034 (141.44,1.1,1.03) t1.000 off2.22 dy0.40"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x163-z0.5.png",
+   "tick": 9422,
+   "player": {
+    "x": 163.71,
+    "y": 6.32,
+    "z": -3.33
+   },
+   "livingInfectedNearRamp": 82,
+   "offDeckCentreOver1_9m": "#786 (141.03,1.05,0.24) t1.000 off2.01 dy0.35 | #1006 (141.47,1.1,1.05) t1.000 off2.22 dy0.40"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x163-z1.5.png",
+   "tick": 9424,
+   "player": {
+    "x": 163.74,
+    "y": 6.32,
+    "z": -3.3
+   },
+   "livingInfectedNearRamp": 82,
+   "offDeckCentreOver1_9m": "#786 (141.05,1.05,0.24) t1.000 off1.99 dy0.35 | #1006 (141.48,1.1,1.04) t1.000 off2.20 dy0.40"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x170-z0.5.png",
+   "tick": 9542,
+   "player": {
+    "x": 170.63,
+    "y": 6.42,
+    "z": -0.32
+   },
+   "livingInfectedNearRamp": 81,
+   "offDeckCentreOver1_9m": "#934 (141.33,1.1,1.05) t1.000 off2.32 dy0.40 | #1364 (140.76,1,0.33) t1.000 off2.27 dy0.30"
+  },
+  {
+   "file": "test-results/fix67/ramp-high-webgl2/x170-z1.5.png",
+   "tick": 9544,
+   "player": {
+    "x": 170.68,
+    "y": 6.42,
+    "z": -0.33
+   },
+   "livingInfectedNearRamp": 81,
+   "offDeckCentreOver1_9m": "#934 (141.42,1.1,1.05) t1.000 off2.25 dy0.40 | #1364 (140.84,1,0.33) t1.000 off2.21 dy0.30"
+  }
+ ]
+}
