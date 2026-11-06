@@ -105,7 +105,7 @@ export class DistrictWorld {
         if (!c.id.startsWith(`${p.id}/`) || c.walkable) continue;
         const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
         for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
-          const key = DistrictWorld.groundKey(x, z), bucket = this.wreckRoofs.get(key) ?? none; bucket.push({ bounds: a, placement: p, origin: d.origin }); this.wreckRoofs.set(key, bucket);
+          const key = DistrictWorld.groundKey(x, z), bucket = this.wreckRoofs.get(key) ?? []; bucket.push({ bounds: a, placement: p, origin: d.origin }); this.wreckRoofs.set(key, bucket);
         }
       }
     }
