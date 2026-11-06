@@ -51,6 +51,7 @@ export class CorpseLayout {
   private readonly layerPoses: (RestingPose | undefined)[] = [];
   private readonly bestScratch = {} as RestingPose;
   private readonly swept = { x: 0, z: 0 };
+  private readonly rootCache = new Float64Array(5);
   private readonly deferred = new Map<number, DeferredPose>();
   private remainingMs = Infinity;
   private revision = -1;
@@ -189,7 +190,9 @@ export class CorpseLayout {
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e, prone };
     // The four orientations at one root share the same spatial query. The
     // layout cannot change during this synchronous search; preserve bucket order.
-    let queriedX = NaN, queriedZ = NaN;
+    // Captured mutable doubles live in boxed closure slots in V8. Dense
+    // searches update these millions of times; retain unboxed scratch instead.
+    const roots = this.rootCache; roots.fill(NaN);
     const neighbors = this.neighborPoses, layers = this.layerPoses;
     let neighborCount = 0, layerCount = 0;
     // Clearing an array's length to zero also discards its V8 backing store.
@@ -200,17 +203,17 @@ export class CorpseLayout {
     // The four orientations at one root share its hull, sweep and support.
     // Dense piles search hundreds of roots; repeating these queries per yaw
     // made the zoo's settling waves block the view update.
-    let rootX = NaN, rootZ = NaN, rootClear = false, rootFloor = feet;
+    let rootClear = false;
     const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
-      if (x !== rootX || z !== rootZ) {
-        rootX = x; rootZ = z; rootClear = vehicleClear(x, z);
+      if (x !== roots[0] || z !== roots[1]) {
+        roots[0] = x; roots[1] = z; rootClear = vehicleClear(x, z);
         // A body falling off a hull does not need a route from its roof.
         if (rootClear && nav && !startsOnVehicle) {
           const swept = this.swept; swept.x = e.transform.x; swept.z = e.transform.z;
           nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
           rootClear = Math.hypot(swept.x - x, swept.z - z) <= .01;
         }
-        rootFloor = NaN;
+        roots[2] = NaN;
       }
       if (!rootClear) return;
       const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
@@ -219,15 +222,15 @@ export class CorpseLayout {
       pose.bx = x + dx * length; pose.bz = z + dz * length;
       if (!vehicleClear(pose.ax, pose.az, radius) || !vehicleClear(pose.bx, pose.bz, radius)) return;
       if (!safePlayer(pose)) return;
-      if (Number.isNaN(rootFloor)) rootFloor = support?.supportBelow(x, z, feet) ?? feet;
-      pose.y = rootFloor;
+      if (Number.isNaN(roots[2])) roots[2] = support?.supportBelow(x, z, feet) ?? feet;
+      pose.y = roots[2];
       if (supported) for (let sample = 0; sample < 3; sample++) {
         const t = sample * .5;
         const px = pose.ax + (pose.bx - pose.ax) * t, pz = pose.az + (pose.bz - pose.az) * t;
         if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
       }
-      if (x !== queriedX || z !== queriedZ) {
-        this.query.x = queriedX = x; this.query.z = queriedZ = z;
+      if (x !== roots[3] || z !== roots[4]) {
+        this.query.x = roots[3] = x; this.query.z = roots[4] = z;
         neighborCount = 0;
         this.spatial.query(this.query, this.neighbors, false, collectNeighbor);
       }
