@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "level": "L6",
+  "tier": "high",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "fixtureHash": "8bc3634afc12bae5efa261774e4abdc1d357c1e9d0dd6d37a17231e7557b0c00",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L6-04",
+      "clause": "actual second breach arrivals power and abandon condition",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "status": "PASS",
+        "breach2DelayS": 21.016666666666666,
+        "breach2Tick": 3253,
+        "powerOffTick": 3253,
+        "firstTwoPowerSamples": [
+          {
+            "tick": 3253,
+            "mainPower": false,
+            "emergency": true,
+            "lightGroups": [
+              "shelter-camp",
+              "self",
+              "metro-emergency"
+            ]
+          },
+          {
+            "tick": 3254,
+            "mainPower": false,
+            "emergency": true,
+            "lightGroups": [
+              "shelter-camp",
+              "self",
+              "metro-emergency"
+            ]
+          }
+        ],
+        "wave2ActualBodies": [
+          {
+            "id": 72,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3253,
+            "birth": {
+              "x": -10,
+              "y": 1.2999999999999998,
+              "z": -19.4,
+              "yaw": 0
+            },
+            "firstShelterFloor": 3253,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 40,
+            "pathFailures": 0
+          },
+          {
+            "id": 73,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3298,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.895519854488858
+            },
+            "firstShelterFloor": 3298,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 10,
+            "pathFailures": 0
+          },
+          {
+            "id": 75,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3343,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.6758755085695496
+            },
+            "firstShelterFloor": 3343,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 77,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3388,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.904013367744631
+            },
+            "firstShelterFloor": 3388,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 79,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3433,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 0.706279820303742
+            },
+            "firstShelterFloor": 3433,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 13,
+            "pathFailures": 0
+          },
+          {
+            "id": 81,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3478,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 3.100734279125924
+            },
+            "firstShelterFloor": 3478,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 26,
+            "pathFailures": 0
+          },
+          {
+            "id": 83,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3523,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.909667694271744
+            },
+            "firstShelterFloor": 3523,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 14,
+            "pathFailures": 0
+          },
+          {
+            "id": 85,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3568,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 2.9038541232600306
+            },
+            "firstShelterFloor": 3568,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 29,
+            "pathFailures": 0
+          },
+          {
+            "id": 87,
+            "wave": 2,
+            "door": 0,
+            "bornAt": 3613,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 5.1150379574964955
+            },
+            "firstShelterFloor": 3613,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 16,
+            "pathFailures": 0
+          },
+          {
+            "id": 89,
+            "wave": 2,
+            "door": 1,
+            "bornAt": 3658,
+            "birth": {
+              "x": 10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 0.3876486905753763
+            },
+            "firstShelterFloor": 3658,
+            "firstTrack": null,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 29,
+            "pathFailures": 0
+          }
+        ],
+        "abandonTick": 4147,
+        "abandonAfterBreach2S": 14.9,
+        "bittenOrLostAtAbandon": 3,
+        "ordinaryControlHash": "d9d2c6a1",
+        "observedHash": "d9d2c6a1"
+      },
+      "target": "breach2 after20\u201330s; two accesses and at least10 actual arrivals; power off within one tick with red emergency light; abandon at15s or three bitten",
+      "receipt": "docs/reports/sweep-b/L6-04-proof.json"
+    }
+  ],
+  "observations": {
+    "scope": "Current-source supplementary native clauses and185 reviewed physical images. Four physical routes remain unfinished; no full-route G-25 PASS.",
+    "captureReview": "docs/reports/sweep-b/L6-capture-review.json",
+    "captureReviewSha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083"
+  }
+}

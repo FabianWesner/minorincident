@@ -686,6 +686,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L5-01', ['authored shotgun start distance and moving approach pickup', 'one close shotgun shell incapacitates60HP regular', 'two close shotgun shells incapacitate300HP Alpha within0.6s'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L5-04', [{ clause: 'living Alphas have body-clear routes after actual cellar exit', policy: 'controlled-fixture' }]],
   ['L6-03', [{ clause: 'actual first breach bang clock and six shelter-floor arrivals', policy: 'controlled-fixture' }]],
+  ['L6-04', [
+    ...['second breach delay', 'second-wave admitted identities', 'second-wave source accesses'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'actual second breach arrivals power and abandon condition', policy: 'controlled-fixture' },
+  ]],
   ['L4-06', ['first physical breach level clock', 'living infected at first breach', 'sustained plaza living minimum after +45 s'].map(clause => ({ clause, policy: 'stationary' }))],
   ['L4-08', [{ clause: 'actual Alpha admission directions and line hits', policy: 'controlled-fixture' }]],
   ['L4-03', [{ clause: 'actual MG pickup klaxon and attack start share simulation tick', policy: 'real-input-webgl2' }]],
