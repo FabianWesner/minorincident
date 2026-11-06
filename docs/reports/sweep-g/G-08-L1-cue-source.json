@@ -1,0 +1,8 @@
+{
+  "row": "G-08",
+  "status": "NOT CHECKED",
+  "file": "src/render/ObjectiveMarker.ts",
+  "sha256": "ab41a957f1751dd016ba8267b00b560810dbcdfcb5530f40c919807213962661",
+  "finding": "Additional routeCue child is not covered by the primary markerAnchor observer. For L1 parcel-counter/lab-door/garage-door it uses nav.steer and positions a visible cone up to1.6m ahead of player, replanning every15ticks. This is route steering even while the destination ring remains fixed.",
+  "next": "Physical WASD before/after mesh-position captures with exact existing geometry; then remove cue without moving authored destinations. No PASS/FAIL review from code alone."
+}
