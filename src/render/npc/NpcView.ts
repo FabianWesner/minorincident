@@ -167,7 +167,7 @@ export class NpcView extends Group {
           // The vehicle silhouette protects both members of the reveal subject.
           // Own these graphs so ambient dogs retain their ordinary world depth.
           const copies = new Map<Material, Material>();
-          root.traverse(node => { if (!(node instanceof Mesh)) return; const copy = (source: Material) => { let owned = copies.get(source); if (!owned) { owned = source instanceof PaletteMaterial ? source.frozenCopy() : source.clone(); useCourierDepth(owned); copies.set(source, owned); this.companionMaterials.add(owned); } return owned; }; node.material = Array.isArray(node.material) ? node.material.map(copy) : copy(node.material); });
+          root.traverse(node => { if (!(node instanceof Mesh)) return; const copy = (source: Material) => { let owned = copies.get(source); if (!owned) { owned = source instanceof PaletteMaterial ? source.frozenCopy() : source.clone(); useCourierDepth(owned, true); copies.set(source, owned); this.companionMaterials.add(owned); } return owned; }; node.material = Array.isArray(node.material) ? node.material.map(copy) : copy(node.material); });
         }
         this.heroes.set(e.id, hero); this.add(root);
       }

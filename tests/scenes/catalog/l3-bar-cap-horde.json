@@ -1,0 +1,236 @@
+{
+ "name": "l3-bar-cap-horde",
+ "note": "vqa-3 #4: 24 healthy infected inside 15 m of the courier on L3 (Maple Hardware, -112, 2) carry at most six bars, the L4 cap now applied on every level except L10. Before the fix all of them drew a bar slab over her.",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "level": "L3",
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -135,
+    -14
+   ],
+   [
+    -90,
+    20
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -112,
+    2
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "inf-0",
+   "kind": "infected",
+   "at": [
+    -114.0,
+    2.9
+   ]
+  },
+  {
+   "id": "inf-1",
+   "kind": "infected",
+   "at": [
+    -114.3,
+    1.41
+   ]
+  },
+  {
+   "id": "inf-2",
+   "kind": "infected",
+   "at": [
+    -112.29,
+    0.51
+   ]
+  },
+  {
+   "id": "inf-3",
+   "kind": "infected",
+   "at": [
+    -110.0,
+    1.1
+   ]
+  },
+  {
+   "id": "inf-4",
+   "kind": "infected",
+   "at": [
+    -109.7,
+    2.59
+   ]
+  },
+  {
+   "id": "inf-5",
+   "kind": "infected",
+   "at": [
+    -111.71,
+    3.49
+   ]
+  },
+  {
+   "id": "inf-6",
+   "kind": "infected",
+   "at": [
+    -112.95,
+    -0.64
+   ]
+  },
+  {
+   "id": "inf-7",
+   "kind": "infected",
+   "at": [
+    -109.56,
+    -0.27
+   ]
+  },
+  {
+   "id": "inf-8",
+   "kind": "infected",
+   "at": [
+    -107.6,
+    1.43
+   ]
+  },
+  {
+   "id": "inf-9",
+   "kind": "infected",
+   "at": [
+    -108.22,
+    3.46
+   ]
+  },
+  {
+   "id": "inf-10",
+   "kind": "infected",
+   "at": [
+    -111.05,
+    4.64
+   ]
+  },
+  {
+   "id": "inf-11",
+   "kind": "infected",
+   "at": [
+    -114.44,
+    4.27
+   ]
+  },
+  {
+   "id": "inf-12",
+   "kind": "infected",
+   "at": [
+    -116.4,
+    2.57
+   ]
+  },
+  {
+   "id": "inf-13",
+   "kind": "infected",
+   "at": [
+    -115.78,
+    0.54
+   ]
+  },
+  {
+   "id": "inf-14",
+   "kind": "infected",
+   "at": [
+    -106.72,
+    4.76
+   ]
+  },
+  {
+   "id": "inf-15",
+   "kind": "infected",
+   "at": [
+    -110.43,
+    6.09
+   ]
+  },
+  {
+   "id": "inf-16",
+   "kind": "infected",
+   "at": [
+    -114.74,
+    5.86
+   ]
+  },
+  {
+   "id": "inf-17",
+   "kind": "infected",
+   "at": [
+    -118.0,
+    4.16
+   ]
+  },
+  {
+   "id": "inf-18",
+   "kind": "infected",
+   "at": [
+    -118.97,
+    1.63
+   ]
+  },
+  {
+   "id": "inf-19",
+   "kind": "infected",
+   "at": [
+    -117.28,
+    -0.76
+   ]
+  },
+  {
+   "id": "inf-20",
+   "kind": "infected",
+   "at": [
+    -113.57,
+    -2.09
+   ]
+  },
+  {
+   "id": "inf-21",
+   "kind": "infected",
+   "at": [
+    -109.26,
+    -1.86
+   ]
+  },
+  {
+   "id": "inf-22",
+   "kind": "infected",
+   "at": [
+    -106.0,
+    -0.16
+   ]
+  },
+  {
+   "id": "inf-23",
+   "kind": "infected",
+   "at": [
+    -105.03,
+    2.37
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "frames": 90,
+ "sheet": 30,
+ "expect": {
+  "consoleErrors": 0,
+  "healthBarsMax": 6,
+  "healthBarsMin": 1
+ }
+}

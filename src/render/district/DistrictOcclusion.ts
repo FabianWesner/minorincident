@@ -11,6 +11,8 @@ import type { DistrictParts, DressingEntry, LodBatch } from './DistrictBuild';
 
 /** Distance (m) beyond a tall prop's footprint within which a courier it covers counts as tucked against it. */
 const tuckMargin = 1.5;
+/** Feet this far above a placement's base inside its footprint stand on it (ramp deck, platform), not beside it. */
+const standOnLift = .3;
 /** District visibility policy: which placements the courier see-through cuts, closed building interiors, lifted roofs
  * and the health-bar line of sight. Reads the built parts; changed interiors are handed back for repartitioning. */
 export class DistrictOcclusion {
@@ -224,7 +226,7 @@ export class DistrictOcclusion {
   }
   /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against the same boxes.
    * Every placement hit by any segment is marked for the per-placement cut; the rest stay opaque. */
-  private occludedSubject(view: View, subject: Box3, courier?: { x: number; z: number }): boolean {
+  private occludedSubject(view: View, subject: Box3, courier?: { x: number; y?: number; z: number }): boolean {
     const points = this.subjectPoints, centre = subject.getCenter(this.holeTarget);
     let n = 0;
     points[n++].copy(centre);
@@ -234,7 +236,7 @@ export class DistrictOcclusion {
   /** Q-50 (L10 dispersal console): the corgi's generous box corner inside a prop's conservative box is contact, not cover; the
    * cut carved the uncovered console beside them into dark slivers. A subject point inside a non-building box only counts while
    * the courier herself stands within its footprint (tent, shelter); otherwise the segment must pass through the box in front of it. */
-  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number, courier?: { x: number; z: number }): boolean {
+  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number, courier?: { x: number; y?: number; z: number }): boolean {
     const o = view.camera.position;
     let blocked = false;
     for (const entry of this.parts.lodBatches) {
@@ -262,6 +264,9 @@ export class DistrictOcclusion {
           // courier-sized disc only opened a porthole into the vessel and she was lost in it. Such a prop clears its whole
           // foreground (the lens cut keeps everything behind her and her floor), like an enclosing building.
           tucked = entry.height * ref.scale.y >= 4 && ux < entry.foot.hx + tuckMargin && uz < entry.foot.hz + tuckMargin;
+          // vqa-3 #2 (L3 ramp, zoom 1.5): the raised deck she walks on is not a prop she is tucked against; standing on the
+          // placement (inside its footprint, feet above its base) kept her a gold foreground ghost for the whole climb.
+          if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
         }
         for (let i = 0; i < count; i++) {
           const point = points[i], dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;

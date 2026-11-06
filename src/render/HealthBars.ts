@@ -12,8 +12,12 @@ export const followerBarsAlwaysMax = 5;
 export const followerBarCap = Infinity;
 /** L10's close melee can put a dozen infected in one screen column. Keep its bars legible. */
 export const l10InfectedBarCap = 5;
-/** L4 breach crowds put a wall of red bars over the courier at close zoom. Keep the nearest threats useful and legible. */
+/** L4 breach crowds put a wall of red bars over the courier at close zoom. Keep the nearest threats useful and legible.
+ * vqa-3 #4: L3's retreat grew a 25-142 bar slab over her; the same cap now applies on every level except L10 (own cap). */
 export const l4InfectedBarCap = 6;
+export const infectedBarCap = l4InfectedBarCap;
+/** Shielded riot infected, Alphas and the pursuing Mega always keep their bar under the cap. */
+const mandatoryBar = (e: EntitySnapshot) => !!e.combat?.shield || e.archetype === 'infected.alpha' || !!e.infected?.pursuit;
 export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
@@ -95,16 +99,17 @@ export class HealthBars extends Group {
       for (const target of this.l10Bars) this.l10BarIds.add(target.id);
     }
     this.l4BarIds.clear();
-    if (this.world.scenario === 'L4') {
+    const capped = !l10;
+    if (capped) {
       this.l10Bars.length = 0;
       let mandatory = 0;
       for (const e of this.world.entities.iterate()) {
         if (e.faction !== 'infected' || !e.infected || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
-        if (e.combat?.shield || e.archetype === 'infected.alpha') { mandatory++; continue; }
+        if (mandatoryBar(e)) { mandatory++; continue; }
         this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) });
       }
       this.l10Bars.sort((a, b) => a.distance - b.distance || a.id - b.id);
-      this.l10Bars.length = Math.min(this.l10Bars.length, Math.max(0, l4InfectedBarCap - mandatory));
+      this.l10Bars.length = Math.min(this.l10Bars.length, Math.max(0, infectedBarCap - mandatory));
       for (const target of this.l10Bars) this.l4BarIds.add(target.id);
     }
     this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
@@ -123,8 +128,8 @@ export class HealthBars extends Group {
       if (sheltered && e.civilian?.survivor) continue;
       if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
       if (l10 && e.faction === 'infected' && !this.l10BarIds.has(e.id)) continue;
-      // Riot/Alpha bars remain mandatory (L4-11/G-24), including healthy threats.
-      if (this.world.scenario === 'L4' && e.faction === 'infected' && !e.combat?.shield && e.archetype !== 'infected.alpha' && !this.l4BarIds.has(e.id)) continue;
+      // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
+      if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
       const size = barSize(width, height, !!e.infected?.pursuit);
