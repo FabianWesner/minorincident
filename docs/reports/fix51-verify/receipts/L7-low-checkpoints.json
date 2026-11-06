@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "7a209c94a752825a8af96010ec762a06e599406f549834880538e359489cc3a1",
+  "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "night-exit",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6903e08fc4f9bd56a33fe54b0acd834c2491ebc80eb0854c5dcaa82f7015f155",
+        "snapshotSha256": "d428f49214c3b53e510327fcd262167c20227fa5bed134c40c4aec1ad2dd4013",
         "damage": 100,
         "expected": {
           "id": "night-exit",
@@ -110,7 +110,7 @@
       "value": {
         "checkpoint": "rocket",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "076f2e989e21a006be2a32feff4e08d7f4c37f5165cec610a8c89518e32f615f",
+        "snapshotSha256": "496dbfe6b41e09f51b349fe189c33be18460159266546c060d5677df72208f53",
         "damage": 100,
         "expected": {
           "id": "rocket",
@@ -205,7 +205,7 @@
       "value": {
         "checkpoint": "corridor",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "f5163d94b72336d79829c538612136377317c48f8cf4a7f685a9f0fbf346fe32",
+        "snapshotSha256": "67052a9be365c4b77166049e48d00b1a929c967307586d1a78009bd6eaee072a",
         "damage": 100,
         "expected": {
           "id": "corridor",
@@ -294,8 +294,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "7dc2eded",
-    "control": "7dc2eded",
+    "observed": "30e28540",
+    "control": "30e28540",
     "identical": true
   }
 }

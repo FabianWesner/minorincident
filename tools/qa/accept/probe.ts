@@ -1,5 +1,7 @@
 import { armyLineVerdict, type ArmyLineVerdict } from '../threat/l3ArmyLine';
 import { l3ArmySeeds } from '../threat/l3ArmySeeds';
+import { extraFollowerPaceSeeds } from '../threat/followerPaceSeeds';
+import type { FollowerPaceSeed } from '../threat/followerPace';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -21,6 +23,7 @@ export interface NativeReceipt {
   nativeStateHash: string | null; error: string | null;
   /** L3-06 army line over seeds 1–3 (complete policy only; tools/qa/threat/l3ArmyLine.ts). */
   l3Army?: ArmyLineVerdict;
+  followerPaceSeeds?: FollowerPaceSeed[];
 }
 function hashFiles(paths: string[]): string {
   const hash = createHash('sha256');
@@ -73,6 +76,9 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
   if (level === 'L3' && policy === 'complete') {
     const army = receipt.threat?.l3Squad?.army ?? null;
     receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!receipt.run?.completed && army !== null, army }, ...await l3ArmySeeds(tier)]);
+  }
+  if ((level === 'L5' || level === 'L7') && policy === 'complete') {
+    receipt.followerPaceSeeds = [{ seed: 1, outcome: receipt.run?.outcome, nativeStateHash: receipt.nativeStateHash ?? undefined, valid: !!receipt.run?.completed && !receipt.error, companions: receipt.observation?.corgi.ids ?? [], phases: receipt.threat?.phases ?? [] }, ...await extraFollowerPaceSeeds(level, tier)];
   }
   return receipt;
 }

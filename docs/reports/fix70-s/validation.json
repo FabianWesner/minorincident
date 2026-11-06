@@ -1,0 +1,79 @@
+{
+  "status": "BLOCKED: quiet shared-host verification window required",
+  "provenance": {
+    "sourceHash": "9de16662e41eb6614f7957f1aa2b2d6c38fd02573fcbcccfa25c29b2bc27b562",
+    "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+    "revision": "544b523189e5ca450bbb586461acbdab62bc3317"
+  },
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exit": 0,
+      "rawLog": "test-results/fix70-s/typecheck-final.log",
+      "rawLogSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c"
+    },
+    {
+      "command": "npm run lint",
+      "exit": 0,
+      "rawLog": "test-results/fix70-s/lint-final.log",
+      "rawLogSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    },
+    {
+      "command": "npm test",
+      "exit": 0,
+      "rawLog": "test-results/fix70-s/test-final.log",
+      "rawLogSha256": "976fc0fb1c16fe43409a6ba364343747c5d74f904c6b1da365fd3ec464e0d276"
+    }
+  ],
+  "unit": {
+    "passed": 107,
+    "files": 27,
+    "budgetCases": 150,
+    "budgetFiles": 43,
+    "seconds": 63.8
+  },
+  "acceptance": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L5",
+        "--reuse",
+        "--skip-browser"
+      ],
+      "exit": 1,
+      "log": "test-results/fix70-s/accept-L5.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L7",
+        "--reuse",
+        "--skip-browser"
+      ],
+      "exit": 1,
+      "log": "test-results/fix70-s/accept-L7.log"
+    }
+  ],
+  "threat": {
+    "status": "NOT VERIFIED",
+    "attempts": 4,
+    "latest": "validation/threat-attempt-4.json",
+    "completeCandidateRun": "validation/threat-attempt-2.json",
+    "completeCandidateFinding": "Rejected detour candidate: one L7 wait flag; not the final motion repair."
+  },
+  "codeCommits": {
+    "rule": "09bf2e1",
+    "finalMotion": "886e189",
+    "parallelScheduling": "e8c23d9",
+    "staleReceiptGuard": "70dd70f"
+  },
+  "next": "Pause foreign heavy QA/browser jobs, wait for host load <6, then run full npm run qa:threat alone within its unchanged 600-second budget. Do not claim goal complete until all ten levels finish with 0 flags."
+}

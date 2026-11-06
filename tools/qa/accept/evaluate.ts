@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import type { NativeReceipt } from './probe';
 import type { PhaseReceipt } from '../threat/observer';
 import { median } from '../threat/observer';
+import { followerPaceVerdict } from '../threat/followerPace';
 
 export type Verdict = 'PASS' | 'FAIL' | 'NOT CHECKED';
 export interface Clause {
@@ -56,9 +57,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const groupMedian = median(humans.map(follower => follower.median));
       return humans.map(follower => ({ phase: row.key, id: follower.id, samples: follower.samples, median: follower.median, groupMedian, ratio: groupMedian ? follower.median / groupMedian : null }));
     });
-    add('G-13', 'each observed follower median versus its phase group median', paces, 'every ratio ≥0.95; ≥10 walking samples/follower', paces.length ? paces.every(pace => pace.ratio !== null && pace.ratio >= .95) : undefined);
+    const multiSeed = receipt.level === 'L5' || receipt.level === 'L7';
+    const paceVerdict = multiSeed ? followerPaceVerdict(receipt.followerPaceSeeds ?? [], { stepsOnly: true, humansOnly: true }) : null;
+    const paceValues = multiSeed ? paceVerdict : paces;
+    const pacePass = multiSeed ? paceVerdict?.pass : paces.length ? paces.every(pace => pace.ratio !== null && pace.ratio >= .95) : undefined;
+    add('G-13', 'each observed follower median versus its phase group median', paceValues, 'every ratio ≥0.95; ≥10 walking samples/follower', pacePass);
     const escortRow = { L5: 'L5-08', L6: 'L6-08', L7: 'L7-09' }[receipt.level as 'L5' | 'L6' | 'L7'];
-    if (escortRow) add(escortRow, 'observed human follower pace versus phase group median', paces, 'every ratio≥0.95; bar pixels and absolute formation remain open', paces.length ? paces.every(pace => pace.ratio !== null && pace.ratio >= .95) : undefined);
+    if (escortRow) add(escortRow, 'observed human follower pace versus phase group median', paceValues, 'every ratio≥0.95; bar pixels and absolute formation remain open', pacePass);
     const wait = threat?.followerWait;
     add('G-13', 'stationary far-follower time upper bound', wait ?? null, 'actual waiting ≤10%; a bound above 10% is inconclusive', wait?.upperBoundPercent != null && wait.upperBoundPercent <= 10 ? true : undefined);
   }

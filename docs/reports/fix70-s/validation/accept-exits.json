@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L5",
+      "--reuse",
+      "--skip-browser"
+    ],
+    "exit": 1,
+    "log": "test-results/fix70-s/accept-L5.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L7",
+      "--reuse",
+      "--skip-browser"
+    ],
+    "exit": 1,
+    "log": "test-results/fix70-s/accept-L7.log"
+  }
+]

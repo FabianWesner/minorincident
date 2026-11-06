@@ -10,6 +10,7 @@ import { afterEach, expect, test } from 'vitest';
 import { backoffAdmission, classifyQuietProcesses } from '../../tools/browser-pool/host';
 import { evidenceIsArchivedOrMatches, loadReviews, validateReview, type ReviewDecision } from '../../tools/qa/accept/reviews';
 import { armyLineVerdict } from '../../tools/qa/threat/l3ArmyLine';
+import { followerPaceVerdict } from '../../tools/qa/threat/followerPace';
 import { focusedCriteria } from '../../tools/qa/threat/criteria';
 import type { LevelReceipt } from '../../tools/qa/threat-audit';
 
@@ -79,10 +80,29 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const seeds = (...army: (number | null)[]) => army.map((n, i) => ({ seed: i + 1, valid: n !== null, army: n }));
   for (const [label, army, pass] of [['lane 3/0/0', [3, 0, 0], true], ['two over', [3, 3, 0], false], ['one valid', [1, null, null], undefined], ['two valid, one over', [3, null, 2], false], ['all within', [2, 2, 1], true]] as const)
     expect(armyLineVerdict(seeds(...army)).pass, label).toBe(pass);
+  // G-13/L7-09: vote per follower and phase over seeds 1–3.
+  const seed = (n: number, slow: number[] = [], valid = true) => ({ seed: n, valid, companions: [], phases: [{ key: 'step/corridor', followerMedian: 4, followerSpeeds: [60, 63, 64].map(id => ({ id, samples: 12, median: slow.includes(id) ? 3.76 : 4 })) }] });
+  const one = seed(1, [60]), two = seed(2), three = seed(3);
+  expect(followerPaceVerdict([one, two, three]).pass).toBe(true);
+  expect(followerPaceVerdict([one, seed(2, [60]), three]).flags).toEqual(['step/corridor:SLOW_FOLLOWER:60']);
+  expect(followerPaceVerdict([one, seed(2, [63]), three]).pass).toBe(true); // different people cannot combine
+  const otherPhase = seed(2, [60]); otherPhase.phases[0].key = 'step/boarding';
+  expect(followerPaceVerdict([one, otherPhase, three]).flags).toEqual([]); // different phases cannot combine
+  expect(followerPaceVerdict([one, seed(2, [60], false), three]).pass).toBe(true);
+  expect(followerPaceVerdict([one, seed(2, [], false), seed(3, [], false)]).pass).toBeUndefined();
+  two.phases[0].followerSpeeds[0].samples = 9; three.phases[0].followerMedian = 0;
+  const missing = followerPaceVerdict([one, two, three], { required: { phase: 'step/corridor', ids: [60] } });
+  expect(missing.flags).toContain('step/corridor:FOLLOWER_PACE_UNOBSERVED:60');
+  expect(missing.rows.find(row => row.id === 60)?.measured).toBe(1);
+  const boundary = [seed(1), seed(2), seed(3)];
+  boundary.forEach(row => { row.phases[0].followerSpeeds[0].median = 3.8; });
+  expect(followerPaceVerdict(boundary).pass).toBe(true);
+  expect(followerPaceVerdict([one, one, three]).pass).toBeUndefined(); // a duplicate cannot vote twice
   const l3 = (army: (number | null)[]) => ({ level: 'L3', observation: { phases: [], waves: [], l3Squad: { initial: 4, army: army[0], losses: [{ id: 30, cause: 'bite', tick: 1 }] } }, passiveObservation: { phases: [], waves: [] }, l3Army: armyLineVerdict(seeds(...army)) }) as unknown as LevelReceipt;
   expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
   expect(focusedCriteria([l3([3, 3, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
 });
+
 
 // Exercise the real runner with a tiny catalog subprocess; no browser is launched.
 function gateFixture() {

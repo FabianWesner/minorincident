@@ -1,0 +1,200 @@
+{
+  "sourceHash": "91c7f7caae465fef2d57708d13254960795f51b7459fa4077f4f5ea468c61ff3",
+  "observerHash": "6a2da92d8dfc94bcf62c3a9031ad10506f0d0bc0a70f2b33caabebcd9cebec09",
+  "revision": "479a75c6bab6530bb816b3794a85aa49de46e76c",
+  "controls": [
+    {
+      "level": "L5",
+      "tier": "low",
+      "seed": 2,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "a1715e85",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L5-low-full-observer.json.gz"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "seed": 3,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "f18749f1",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L5-low-full-observer.json.gz"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "seed": 2,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "10a5dde1",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L5-high-full-observer.json.gz"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "seed": 3,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "c22290ed",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L5-high-full-observer.json.gz"
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "seed": 2,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "71f8443d",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L7-low-full-observer.json.gz"
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "seed": 3,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "fb8729fb",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L7-low-full-observer.json.gz"
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "seed": 2,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "776d7e2c",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L7-high-full-observer.json.gz"
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "seed": 3,
+      "policy": "complete",
+      "identical": true,
+      "nativeStateHash": "947be543",
+      "fullObserverReceipt": "docs/reports/fix70-s/before/L7-high-full-observer.json.gz"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "seed": 2,
+      "policy": "passive",
+      "identical": true,
+      "fullAndPaceOnly": [
+        {
+          "phases": [
+            {
+              "key": "step/emerge",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 2,
+                  "median": 3.220366478809235
+                }
+              ],
+              "followerMedian": null
+            },
+            {
+              "key": "phase/cellar",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 2,
+                  "median": 3.220366478809235
+                }
+              ],
+              "followerMedian": null
+            },
+            {
+              "key": "phase/emerged",
+              "followerSpeeds": [],
+              "followerMedian": null
+            },
+            {
+              "key": "step/look",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 689,
+                  "median": 1.7838658042588844
+                }
+              ],
+              "followerMedian": 1.7838658042588844
+            },
+            {
+              "key": "phase/search",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 689,
+                  "median": 1.7838658042588844
+                }
+              ],
+              "followerMedian": 1.7838658042588844
+            }
+          ],
+          "hash": "2f103578",
+          "outcome": "tick-budget",
+          "time": 1200
+        },
+        {
+          "phases": [
+            {
+              "key": "step/emerge",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 2,
+                  "median": 3.220366478809235
+                }
+              ],
+              "followerMedian": null
+            },
+            {
+              "key": "phase/cellar",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 2,
+                  "median": 3.220366478809235
+                }
+              ],
+              "followerMedian": null
+            },
+            {
+              "key": "phase/emerged",
+              "followerSpeeds": [],
+              "followerMedian": null
+            },
+            {
+              "key": "step/look",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 689,
+                  "median": 1.7838658042588844
+                }
+              ],
+              "followerMedian": 1.7838658042588844
+            },
+            {
+              "key": "phase/search",
+              "followerSpeeds": [
+                {
+                  "id": 18,
+                  "samples": 689,
+                  "median": 1.7838658042588844
+                }
+              ],
+              "followerMedian": 1.7838658042588844
+            }
+          ],
+          "hash": "2f103578",
+          "outcome": "tick-budget",
+          "time": 1200
+        }
+      ]
+    }
+  ]
+}

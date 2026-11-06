@@ -1,0 +1,41 @@
+{
+  "exit": 124,
+  "complete": false,
+  "cause": "600-second browser reservation lost cooling time and capped actual execution at 463 seconds; the audit was cancelled during L5 extra passive seed 3. No full audit result exists.",
+  "qaBudgetSeconds": 600,
+  "reportedExecutionSeconds": 462.9,
+  "completedLevels": [
+    {
+      "level": "L1",
+      "passiveFlags": [],
+      "wallSeconds": 10.534980416
+    },
+    {
+      "level": "L2",
+      "passiveFlags": [],
+      "wallSeconds": 18.875809832999998
+    },
+    {
+      "level": "L3",
+      "passiveFlags": [],
+      "wallSeconds": 56.54395108300001
+    },
+    {
+      "level": "L4",
+      "passiveFlags": [],
+      "wallSeconds": 115.817636958
+    }
+  ],
+  "rawLog": "test-results/fix70-s/threat-attempt-1.log",
+  "rawLogSha256": "d29dcc4b3976010843bfaef18c3b6ef9eba5931087c147b330429510e7435648",
+  "source": {
+    "sourceHash": "91c7f7caae465fef2d57708d13254960795f51b7459fa4077f4f5ea468c61ff3",
+    "observerHash": "d818bff229c838cd19a054a5bf262893cdc58e111e1dc897f44fd0fa2fe58d5a",
+    "revision": "479a75c6bab6530bb816b3794a85aa49de46e76c"
+  },
+  "concurrentForeignQa": {
+    "pid": 61338,
+    "worktree": "fix68-g",
+    "observation": "A separate unwrapped native threat process was verified live after cancellation; its elapsed time overlapped the attempted gate."
+  }
+}
