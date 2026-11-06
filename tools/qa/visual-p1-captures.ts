@@ -10,8 +10,8 @@ import { measureCourierShare } from '../scenelab/run';
 import { createHash } from 'node:crypto';
 
 const flag = (key: string) => { const i = process.argv.indexOf(`--${key}`); return i < 0 ? undefined : process.argv[i + 1]; };
-const out = 'test-results/visual-p1-1102/captures'; mkdirSync(out, { recursive: true });
-const baseline = 'e73c51a31';
+const out = process.env.VISUAL_P1_OUT ?? 'test-results/visual-p1-1102/captures'; mkdirSync(out, { recursive: true });
+const baseline = flag('phase') === 'after' ? 'HEAD' : 'e73c51a31';
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const sourceDiff = createHash('sha256').update(execFileSync('git', ['diff', 'HEAD', '--', 'src'])).digest('hex');
 const changed = execFileSync('git', ['diff', '--name-only', baseline, '--', 'src'], { encoding: 'utf8' }).trim().split('\n').filter(p => /\.(ts|css)$/.test(p));
@@ -71,7 +71,7 @@ try {
           await s.page.evaluate(async ({ level, item, tier }) => {
             const a = window.__SS__!; a.settings.set({ quality: tier });
             await a.loadLevel(level, { seed: 1, progression: `${level}-default` as import('../../src/sim/progression/Campaign').ProgressionPreset });
-            a.missions.begin(); a.pause(); a.cheats.god(true); a.inspect.enable(false);
+            a.missions.begin(); a.pause(); a.cheats.god(true); (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game.inspect?.enable(false);
             const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
             game.view.settings({ cameraShake: false, cheapDof: false });
             const p = item === 'bounds-l7' ? { x: 286.8, z: 15 } : item === 'vehicle-l2' ? { x: -70.5, z: 36.7 } : item === 'canopy-l8' ? { x: 105.9, z: -1 } : { x: -73.8, z: 42.7 };
@@ -93,7 +93,7 @@ try {
           const spec: SceneSpec = { name: item, seed: 1, ground: 'asphalt', size: 100, time: item === 'canopy-l8' ? 'L8-zoo' : item === 'mailbox-l1' ? 'L1' : 'L4', actors: [{ id: 'courier', kind: 'courier', at: [35, 30], look: { model: 'female' } }], camera: { mode: 'game', target: 'courier', zoom: .5 }, expect: { consoleErrors: 0, courierVisibleShareMin: .85 } };
           if (item === 'canopy-l8' || item === 'mailbox-l1') spec.props = [{ id: 'cover', asset: item === 'canopy-l8' ? 'prop.street-tree' : 'prop.mailbox-blue', at: [36.2, 31.2], yaw: 0 }];
           await s.load(spec);
-          await s.page.evaluate(() => window.__SS__!.inspect.enable(false));
+          await s.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game.inspect?.enable(false));
           if (item.startsWith('parts-l4')) await s.page.evaluate(async item => {
             const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
             game.world.entities.create({ kind: 'setpiece', archetype: item.endsWith('bus') ? 'veh.evac-bus' : 'veh.military-apc', faction: 'neutral', transform: { x: 37, y: .7, z: 32, yaw: Math.PI / 2 }, health: { current: 1000, max: 1000 } });

@@ -25,3 +25,5 @@ G-12: fresh shared follower-bar matrix PASS (140 group-size identity/count sampl
 G-24: fresh shared Alpha/zoo health-bar matrix PASS (four backend/quality cells; 20 state captures reviewed).
 
 G-09: measured FAIL. Authored L4 hold suppresses the ring (`waypoint=false`), persisting beyond2s at both qualities and requested zooms1/1.5. Other objective starts remain open.
+
+G-07: named L7 perimeter/L2 fire-engine/L8 canopy fixtures rerun at low/high and zoom0.5/1.5: all12 cells show the heroine, visible share1.0. All captures reviewed. Full physical near-fence/horde/corpse occlusion coverage remains open.
