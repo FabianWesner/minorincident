@@ -1,182 +1,27 @@
 {
   "row": "L1-14",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "350f8587d73410b8442b52345f687660efa2d6f0",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "6924e69c716aeea5e73f112f0a2354a44c58f53d",
   "clauses": [
     {
-      "clause": "\u2265 6 infected near the garage after the pickup, all from refuge doors (visible \u2264 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
+      "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "verdict": "PASS",
-      "note": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+      "note": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L1-14-refresh-ledger.json.gz",
-      "sha256": "97c3b2eb4377fab6d08a7b32796ca6dd59cd9e27abcb57cf66edd447f1cb75cf",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+      "file": "docs/reports/sweep-a3/L1-14-measurements.json",
+      "sha256": "32e687e55816eef4921c04a44b61b47d67a9f72e36bea5f6cdb48e7a0e52083a",
+      "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-14-refresh-measurement.json",
-      "sha256": "2a4ee6f27f0b46b7a4162e9a2c54edc0f1665e4b8872c7cee7b0de536226d675",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L1-14-garage-browser.json.gz",
-      "sha256": "faa1ffae31b633fb1427a4972daed6e2a66224073596965675c424f1b29e1843",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/garage-photos.json",
-      "sha256": "afaa24ebb9a594b9a001d0bba6d4fcdb4f65be4a02e1b902b51323d805de0042",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-01.jpg",
-      "sha256": "a122d151f597e9e0e54078de6bff459f4805ebc2a3e99396abf5b46c290b7c02",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-02.jpg",
-      "sha256": "c08796f010bd37e77011444e63f86810464bf12cd1179e1defdbcf9b5b4e5f2f",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-03.jpg",
-      "sha256": "bb299cae29b2118770c549dc3fa506193e9b5c2b6310ec4dea055e0e81e675b2",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-04.jpg",
-      "sha256": "624a1cd9adbbcf1f2abe47e27dd06a6a8eacf90437d6329687ab78640f14b6aa",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-05.jpg",
-      "sha256": "23300114f45e56252c3bd4da874f00d6dfd8c9a6c59ea50d0439f9839142d85d",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-06.jpg",
-      "sha256": "a2efbb4185e542695c2b7f50ccecf28327970e5d7db94fbad21ce1c3636a9500",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-07.jpg",
-      "sha256": "2c3d520886339c66b706da80ad88e5402be62828199ad601438118993cafb511",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-08.jpg",
-      "sha256": "a12e168b6579688c84cb74240816a5449d6eb264f7e02702503c213d74e9e705",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-09.jpg",
-      "sha256": "7639830c2f8086822979646266c907308d30bfa88acfd3f11733fbc71d4f80d5",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-10.jpg",
-      "sha256": "be2ce4789cae96b31862cb136fd47a4ff5bc7f48029a3a8fbe7f0bf3eb861a60",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-11.jpg",
-      "sha256": "6f39862ed15f434d389f811bc642e0638b380b5f6897c8dcba3aeb3ec958f2bd",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-12.jpg",
-      "sha256": "6302fb92319ffb1d27894c227083ac0c23ff2f80f9b07cb5cd76c554c6cbd490",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-13.jpg",
-      "sha256": "2f2e12c7c8374d5afb7acb56b5457d98ab47fa31506369b44abb915e65119441",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-14.jpg",
-      "sha256": "465dc9596f88f6c3144b2d589ab2707ffb922ae0ad658ebfeab20a12c4c9e470",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L1-14-garage-door-browser.json.gz",
-      "sha256": "679b68dde63e8a7e574d60c62363e5833abfa7f831c64333abc00b69896319a0",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/garage-door-photos.json",
-      "sha256": "2305144195fcc23d38f588a91e350ba8a2339d17da30fa60a85ae98b0651e67a",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-01.jpg",
-      "sha256": "6b36d80481da5396959a2d804834bc4d580c8ecf985a20ea4f2efc47f10096a1",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-02.jpg",
-      "sha256": "faad2f9b4205011375de34eb21ea22714413e0f9de30ea9e6701bf6071bc548d",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-03.jpg",
-      "sha256": "b99f821a949854f7f7b5e134d6833adfdf0f49f9cc3061d01dc0d1b4bc260054",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-04.jpg",
-      "sha256": "b3ac364675d6cf1f06f733377d063c2eb1906077160a13664bc66950a9bd4341",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-05.jpg",
-      "sha256": "916d8674c78a73f94e1b72b4a1058608b26e08df89bddbcd5f4e45cc195503f3",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L1-14-garage-door-final-browser.json.gz",
-      "sha256": "1c884f5fe6eee423fb1d301d7570bed83c4406b885695aa8617c8b5253dae801",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/garage-door-final-photos.json",
-      "sha256": "96aae8a6fb19e50c742fd303c00d75c7e18440907fb79116e0ec501df7d298a6",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-final-01.jpg",
-      "sha256": "d330c757d1b8bf017cce3e80d9c4c97772aaa9f2db664399609b02929e48838c",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-final-02.jpg",
-      "sha256": "1d2e1429c657a9d95334a307dd781aa25a4eb5f7cb6b84717e488c52e7ea2470",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-final-03.jpg",
-      "sha256": "b6a2240035879941b71d457b8f143958dd01e9ab12983e7e7a5e5c73932789a8",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-final-04.jpg",
-      "sha256": "3af356b71b8b2895ac8f8e73d343ccdbbb63f88bb38acbb99007c59ff5bf76a9",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/garage-door-final-05.jpg",
-      "sha256": "341fde381c8907a2ccca8b10023132a3c07c97efcea66669a6a5db154c42f376",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
-    },
-    {
-      "file": "docs/reports/sweep-a2/L1-14-image-review.json",
-      "sha256": "9cc3cf77dc70a70df07f97bad44696652818ce998e4dd830f8e32bf41cb1ccc2",
-      "what": "Fresh150s every-tick native observation after ordinary pickup:10 actual residents, each first admitted within0.9m of refuge door; maximum3 actual courier chase/bite pursuers within20m. All10 living waiting residents remain17.382m low/17.499m high back, including36000 final60s stability samples each. All96 frames personally inspected; final20 camera-only doorstep images show successive green infected emerging through open porch door onto grass/by bin. Production follow .5/1.5 alone crops that door; excluded preliminary inspection race retained. Eight baseline/fault controls pass. Courier protection after pickup is mechanical observation only."
+      "file": "docs/reports/sweep-a3/L1-14-current-ledger.json.gz",
+      "sha256": "7a2e505b320c93566642c5a5497e2a4a4d40d1a4636577783510f2e28889ccc3",
+      "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
     }
   ],
-  "notes": "No game changes. Native source unchanged; first native command completed trajectories but failed reading sparse historical baseline; exact git object restored and full probe rerun successfully. Camera-only inspection disclosed, no fake mortal or unassisted-navigation claim."
+  "notes": "Scripted sim criterion: actual admission and nonhidden flags qualify emergence location; no screenshot appearance claim. Courier-target pursuit is distinguished from valid attacks on civilians."
 }
