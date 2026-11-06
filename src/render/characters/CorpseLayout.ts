@@ -125,6 +125,8 @@ export class CorpseLayout {
   private readonly candidateNumbers = new Float64Array(8);
   private readonly deferred = new Map<number, DeferredPose>();
   private remainingMs = Infinity;
+  private searchDeadline = Infinity;
+  private search: { body: EntitySnapshot; deadAt: number; prone?: number; x: number; z: number; iterator: Generator<void, RestingPose | EntitySnapshot['transform']> } | undefined;
   private revision = -1;
   private epilogue = false;
   private readonly scriptedVehicles: EntitySnapshot[] = [];
@@ -132,12 +134,22 @@ export class CorpseLayout {
   private readonly parkedVehicles: VehicleFootprint[] = [];
   constructor(private readonly world: SimWorld) {}
   /** Keep a landing wave or cure reflow out of one render update. A search
-   * finishes atomically; later bodies retain their last pose until next frame. */
-  beginFrame(budgetMs = 2): void { this.remainingMs = budgetMs; }
+   * yields between candidate roots; deferred bodies retain their last pose. */
+  beginFrame(budgetMs = 2): void {
+    this.remainingMs = budgetMs;
+    const active = this.search, body = active?.body;
+    if (active && body && (this.world.entities.get(body.id) !== body || body.health.current > 0 || body.hidden
+      || body.transform.x !== active.x || body.transform.z !== active.z || body.corpseThrown && body.corpseBlast)) this.search = undefined;
+  }
   /** Explicit asset/screenshot readiness also waits for presentation settling. */
   settleAll(): void {
     const remaining = this.remainingMs; this.remainingMs = Infinity;
-    try { for (const p of this.deferred.values()) this.place(p.body, p.deadAt, p.prone); }
+    try {
+      while (this.deferred.size) {
+        const p = this.search ?? this.deferred.values().next().value!;
+        this.place(p.body, p.deadAt, p.prone);
+      }
+    }
     finally { this.remainingMs = remaining; }
   }
   audit() {
@@ -159,7 +171,7 @@ export class CorpseLayout {
   place(e: EntitySnapshot, deadAt = e.infected?.deadAt ?? 0, prone?: number): RestingPose | EntitySnapshot['transform'] {
     const epilogue = this.world.missions?.def.id === 'L10' && !!this.world.missions.state.cureFront;
     if (epilogue !== this.epilogue) {
-      this.epilogue = epilogue;
+      this.epilogue = epilogue; this.search = undefined;
       for (const [id, pose] of this.bodies) this.deferred.set(id, pose);
       this.bodies.clear(); this.spatial.reset();
       this.neighborPoses.fill(undefined); this.layerPoses.fill(undefined);
@@ -177,21 +189,28 @@ export class CorpseLayout {
     // The simulation clears corpseBlast on landing; settle exactly once then.
     if (e.corpseThrown && e.corpseBlast) return { ...e.transform, y: e.transform.y - .7 };
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
+    if (this.search?.body === e && (this.search.deadAt !== deadAt || this.search.x !== e.transform.x || this.search.z !== e.transform.z)) this.search = undefined;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z
-      && (!player || pointDistanceSquared(player.x, player.z, previous.ax, previous.az, previous.bx, previous.bz) >= .95 ** 2)) { this.deferred.delete(e.id); return previous; }
-    if (this.remainingMs <= 0) {
-      let pending = this.deferred.get(e.id);
-      if (!pending || pending.body !== e || pending.deadAt !== deadAt) {
-        pending = { ...(previous ?? e.transform), y: previous?.y ?? e.transform.y - .7, yaw: previous?.yaw ?? e.transform.yaw + corpseYaw(e.id), body: e, deadAt, prone };
-        this.deferred.set(e.id, pending);
-      }
-      return pending;
-    }
+      && (!player || pointDistanceSquared(player.x, player.z, previous.ax, previous.az, previous.bx, previous.bz) >= .95 ** 2)) { if (this.search?.body === e) this.search = undefined; this.deferred.delete(e.id); return previous; }
+    if (this.remainingMs <= 0 || this.search && this.search.body !== e) return this.defer(e, deadAt, prone, previous);
     const start = performance.now();
-    try { return this.settle(e, deadAt, prone, epilogue); }
-    finally { this.remainingMs -= performance.now() - start; }
+    this.searchDeadline = start + this.remainingMs;
+    this.search ??= { body: e, deadAt, prone, x: e.transform.x, z: e.transform.z, iterator: this.settle(e, deadAt, prone, epilogue) };
+    try {
+      const result = this.search.iterator.next();
+      if (result.done) { this.search = undefined; return result.value; }
+      return this.defer(e, deadAt, prone, previous);
+    } finally { this.remainingMs -= performance.now() - start; }
   }
-  private settle(e: EntitySnapshot, deadAt: number, prone: number | undefined, epilogue: boolean): RestingPose | EntitySnapshot['transform'] {
+  private defer(e: EntitySnapshot, deadAt: number, prone: number | undefined, previous: RestingPose | undefined): DeferredPose {
+    let pending = this.deferred.get(e.id);
+    if (!pending || pending.body !== e || pending.deadAt !== deadAt) {
+      pending = { ...(previous ?? e.transform), y: previous?.y ?? e.transform.y - .7, yaw: previous?.yaw ?? e.transform.yaw + corpseYaw(e.id), body: e, deadAt, prone };
+      this.deferred.set(e.id, pending);
+    }
+    return pending;
+  }
+  private *settle(e: EntitySnapshot, deadAt: number, prone: number | undefined, epilogue: boolean): Generator<void, RestingPose | EntitySnapshot['transform']> {
     const player = this.world.entities.get(1)?.transform;
     let feet = e.transform.y - .7;
     const support = this.world.districts, nav = this.world.infected?.nav;
@@ -297,6 +316,7 @@ export class CorpseLayout {
           if (!best || candidate.y < best.y - .001) { Object.assign(this.bestScratch, candidate); best = this.bestScratch; }
         }
         if (best && best.y <= feet + .05) break;
+        if (performance.now() >= this.searchDeadline) yield;
       }
       if (best && best.y <= feet + .05) break;
     }
@@ -305,6 +325,7 @@ export class CorpseLayout {
     if (!best) for (let i = 0; i < 80 && !best; i++) {
       const angle = initialYaw + i * Math.PI * 2 / 80;
       best = evaluateCandidate(state, e.transform.x + Math.cos(angle), e.transform.z + Math.sin(angle), angle + Math.PI / 2, false);
+      if (!best && performance.now() >= this.searchDeadline) yield;
     }
     if (!best) {
       best = evaluateCandidate(state, e.transform.x, e.transform.z, initialYaw + .7, false);
