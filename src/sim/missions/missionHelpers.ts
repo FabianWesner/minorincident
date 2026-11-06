@@ -9,11 +9,16 @@ import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 /** A large corpse is a physical body outside the static route grid. Find a
  * swept, body-clear step around it before asking the ordinary route to resume. */
 export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): Point[] | undefined {
+  const bodies = [...world.entities.iterate()].filter(body => solidLargeCorpse(body) && !body.hidden && Math.abs(body.transform.y - e.transform.y) <= 1.2);
+  return bodyDetour(world, e, goal, bodies);
+}
+
+/** The same swept local route also lets a follower pass a living collision witness. */
+export function bodyDetour(world: SimWorld, e: EntitySnapshot, goal: Point, bodies: EntitySnapshot[]): Point[] | undefined {
   const dx = goal.x - e.transform.x, dz = goal.z - e.transform.z, length2 = dx * dx + dz * dz;
   if (length2 < .01) return;
   const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
-  const bodies = [...world.entities.iterate()].filter(body => solidLargeCorpse(body) && !body.hidden && Math.abs(body.transform.y - e.transform.y) <= 1.2);
-  const clearOfCorpses = (from: Point, to: Point) => bodies.every(body => {
+  const clearOfBodies = (from: Point, to: Point) => bodies.every(body => {
     const x = to.x - from.x, z = to.z - from.z, length = x * x + z * z;
     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;
     return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + actorRadius(body);
@@ -33,7 +38,7 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
         const probe = { ...e, transform: { ...e.transform, ...from }, contactExempt: e.id };
         if (!world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || !world.infected!.nav.visible(from, at, actorRadius(e)) || world.solids.sweep(probe, { x: x / length, z: z / length }, length) < length - .01) break;
         path.push(at); travelled += length;
-        if (clearOfCorpses(at, goal)) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
+        if (clearOfBodies(at, goal)) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
         from = at;
       }
     }
