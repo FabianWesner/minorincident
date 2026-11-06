@@ -1,0 +1,348 @@
+{
+  "row": "G-13 (L5 high tier)",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+  "receiptSha256": "3213544a5c4dbbfcd0c885be9ce746357677edf6c6c2360f6d41d9241660b21e",
+  "nativeStateHash": "147553b8",
+  "measurement": "Production followerPaceVerdict, stepsOnly:true and humansOnly:true, matching acceptance evaluate.ts; unchanged0.95 floor and two-of-three valid seed rule. Scope is L5 high only.",
+  "verdict": {
+    "rows": [
+      {
+        "phase": "step/look",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 137,
+            "median": 4.366413559282058,
+            "groupMedian": 4.299462525080636,
+            "ratio": 1.015571954357287
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 137,
+            "median": 4.26728611684063,
+            "groupMedian": 4.133922737569598,
+            "ratio": 1.0322607333850264
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 128,
+            "median": 4.447189613994879,
+            "groupMedian": 4.4131743157392656,
+            "ratio": 1.0077076715810431
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 114,
+            "median": 4.248401266832439,
+            "groupMedian": 4.299462525080636,
+            "ratio": 0.9881238043243
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 112,
+            "median": 4.074405861892231,
+            "groupMedian": 4.133922737569598,
+            "ratio": 0.985602808892273
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 108,
+            "median": 4.379159017483652,
+            "groupMedian": 4.4131743157392656,
+            "ratio": 0.9922923284189569
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 84,
+            "median": 4.1813167335282415,
+            "groupMedian": 4.299462525080636,
+            "ratio": 0.9725207997829499
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 80,
+            "median": 4.18653567595033,
+            "groupMedian": 4.133922737569598,
+            "ratio": 1.0127271218454517
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 77,
+            "median": 4.4685986731327905,
+            "groupMedian": 4.4131743157392656,
+            "ratio": 1.0125588416473508
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.350523783328833,
+            "groupMedian": 4.299462525080636,
+            "ratio": 1.0118761956757
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 46,
+            "median": 4.081309799188867,
+            "groupMedian": 4.133922737569598,
+            "ratio": 0.9872728781545483
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 46,
+            "median": 3.947744963831267,
+            "groupMedian": 4.4131743157392656,
+            "ratio": 0.8945363770816669
+          }
+        ],
+        "measured": 3,
+        "failures": 1,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 43,
+            "median": 4.5075446978873766,
+            "groupMedian": 4.334128315527339,
+            "ratio": 1.0400118246935053
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 53,
+            "median": 4.49451681927172,
+            "groupMedian": 4.488608584218187,
+            "ratio": 1.0013162731707785
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 48,
+            "median": 4.438829657084955,
+            "groupMedian": 4.45702301071411,
+            "ratio": 0.995918048081551
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 44,
+            "median": 4.227657311177811,
+            "groupMedian": 4.334128315527339,
+            "ratio": 0.975434274991793
+          },
+          {
+            "seed": 2,
+            "valid": false,
+            "samples": 2,
+            "median": 0,
+            "groupMedian": 4.488608584218187,
+            "ratio": 0
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 48,
+            "median": 4.472469647675428,
+            "groupMedian": 4.45702301071411,
+            "ratio": 1.0034656848134251
+          }
+        ],
+        "measured": 2,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 43,
+            "median": 4.281412292159527,
+            "groupMedian": 4.334128315527339,
+            "ratio": 0.9878369952317856
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 51,
+            "median": 4.482700349164654,
+            "groupMedian": 4.488608584218187,
+            "ratio": 0.9986837268292214
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 49,
+            "median": 4.45702301071411,
+            "groupMedian": 4.45702301071411,
+            "ratio": 1
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 46,
+            "median": 4.334128315527339,
+            "groupMedian": 4.334128315527339,
+            "ratio": 1
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 53,
+            "median": 4.403027735481363,
+            "groupMedian": 4.488608584218187,
+            "ratio": 0.9809337688659858
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 49,
+            "median": 4.405982088719927,
+            "groupMedian": 4.45702301071411,
+            "ratio": 0.9885482031680144
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 29,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 43,
+            "median": 4.518719555006736,
+            "groupMedian": 4.334128315527339,
+            "ratio": 1.042590164859237
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 51,
+            "median": 4.50057627338474,
+            "groupMedian": 4.488608584218187,
+            "ratio": 1.0026662358595115
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 47,
+            "median": 4.5001998469131905,
+            "groupMedian": 4.45702301071411,
+            "ratio": 1.009687371165751
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      }
+    ],
+    "flags": [],
+    "pass": true
+  },
+  "waiting": {
+    "escortTicks": 13338,
+    "stationaryFarTicks": 0,
+    "upperBoundPercent": 0,
+    "followers": [
+      {
+        "id": 18,
+        "escortTicks": 13283,
+        "stationaryFarTicks": 0
+      },
+      {
+        "id": 31,
+        "escortTicks": 10568,
+        "stationaryFarTicks": 0
+      },
+      {
+        "id": 30,
+        "escortTicks": 8768,
+        "stationaryFarTicks": 0
+      },
+      {
+        "id": 32,
+        "escortTicks": 6897,
+        "stationaryFarTicks": 0
+      },
+      {
+        "id": 28,
+        "escortTicks": 4789,
+        "stationaryFarTicks": 0
+      },
+      {
+        "id": 29,
+        "escortTicks": 2743,
+        "stationaryFarTicks": 0
+      }
+    ]
+  }
+}

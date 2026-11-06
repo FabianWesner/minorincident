@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L6",
   "tier": "high",
-  "sourceHash": "3672ac05f7405fcb7ccbdd6d041cd482ca9157dd9a2a8a45b07428af33ca1ac8",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -216,15 +216,15 @@
       "value": {
         "checkpoint": "gate-90",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4d4069478882b6f25495717b0f9ecb642813b91bb7eead2712fd9398130fec4b",
+        "snapshotSha256": "7b7d16dfe3c5e597f3cc6edd85c9d6e27abeac92e097169d45b69f6c3287ae7f",
         "damage": 100,
         "expected": {
           "id": "gate-90",
           "anchor": {
             "x": 92.4,
-            "y": 1.4787455797195435,
+            "y": 1.535697102546692,
             "z": 17.3,
-            "yaw": 0.11719376829284796
+            "yaw": 0.10675508260622214
           },
           "gates": {},
           "racks": {
@@ -276,7 +276,7 @@
         "observed": {
           "id": "gate-90",
           "position": {
-            "x": 92.65,
+            "x": 92.4,
             "z": 17.3
           },
           "gates": {},
@@ -299,7 +299,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0.25,
+        "positionError": 0,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -315,15 +315,15 @@
       "value": {
         "checkpoint": "mid-tunnel",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "764805a03f159dcf7421fdc37167afc790417c0e1dcfb3ba498fa7dd590f2f6e",
+        "snapshotSha256": "d8d7957c93d8f21a5c1bd7b200c6ce22227c679bd075c18ae682c6c74e81df07",
         "damage": 100,
         "expected": {
           "id": "mid-tunnel",
           "anchor": {
-            "x": 150.0408477783203,
+            "x": 150.07546997070312,
             "y": 1.2699999809265137,
-            "z": 15.20235538482666,
-            "yaw": -0.4252780595496035
+            "z": 15.133886337280273,
+            "yaw": -0.48310289727520644
           },
           "gates": {},
           "racks": {
@@ -340,9 +340,6 @@
           },
           "followers": [
             16,
-            17,
-            18,
-            19,
             20,
             22,
             23,
@@ -375,8 +372,8 @@
         "observed": {
           "id": "mid-tunnel",
           "position": {
-            "x": 150.0408477783203,
-            "z": 15.20235538482666
+            "x": 150.07546997070312,
+            "z": 15.133886337280273
           },
           "gates": {},
           "racks": {
@@ -414,7 +411,7 @@
       "value": {
         "checkpoint": "gate-150",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "00167487a707e0426e09ba0a281fe3b2c56f38b9fdfacb381be70ce4b4e4c28b",
+        "snapshotSha256": "26b2b719af77b2012cc66965bf74b875220e6bc927ce7e75bdde02e380599d94",
         "damage": 100,
         "expected": {
           "id": "gate-150",
@@ -422,7 +419,7 @@
             "x": 152.4,
             "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": -0.2379436442543705
+            "yaw": 4.918996823702863
           },
           "gates": {},
           "racks": {
@@ -439,9 +436,6 @@
           },
           "followers": [
             16,
-            17,
-            18,
-            19,
             20,
             22,
             23,
@@ -513,15 +507,15 @@
       "value": {
         "checkpoint": "gate-210",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "77117ab3c798f68dcd81864cdc723a396c902853671c96d8a1dc591a23f1c0a5",
+        "snapshotSha256": "9b31bbce2a0f80c3d147081cce716b2720878607cb714c4ce989f1acf0887472",
         "damage": 100,
         "expected": {
           "id": "gate-210",
           "anchor": {
             "x": 212.4,
-            "y": 1.5148499011993408,
+            "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": 4.891341582726632
+            "yaw": -0.6120274702891386
           },
           "gates": {},
           "racks": {
@@ -538,9 +532,6 @@
           },
           "followers": [
             16,
-            17,
-            18,
-            19,
             20,
             22,
             23,
@@ -548,6 +539,7 @@
             25,
             26,
             27,
+            28,
             29,
             30,
             32,
@@ -611,15 +603,15 @@
       "value": {
         "checkpoint": "exit-platform",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6ae0bfd5fd36299cbb022fcd64df7678be44e610e8a42a3fd9284199589ee474",
+        "snapshotSha256": "86622018e17c350f4886986ef076634c063ef9cac22ea93b11d0480480c97953",
         "damage": 100,
         "expected": {
           "id": "exit-platform",
           "anchor": {
-            "x": 247.93699645996094,
+            "x": 247.13059997558594,
             "y": 1.3200000524520874,
-            "z": 14.963676452636719,
-            "yaw": 6.2655799394671865
+            "z": 14.998435974121094,
+            "yaw": -0.0005451145787876561
           },
           "gates": {},
           "racks": {
@@ -636,9 +628,6 @@
           },
           "followers": [
             16,
-            17,
-            18,
-            19,
             20,
             22,
             23,
@@ -646,6 +635,7 @@
             25,
             26,
             27,
+            28,
             29,
             30,
             32,
@@ -670,8 +660,8 @@
         "observed": {
           "id": "exit-platform",
           "position": {
-            "x": 247.93699645996094,
-            "z": 14.963676452636719
+            "x": 247.13059997558594,
+            "z": 14.998435974121094
           },
           "gates": {},
           "racks": {
@@ -703,8 +693,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "7d2bd834",
-    "control": "7d2bd834",
+    "observed": "51053774",
+    "control": "51053774",
     "identical": true
   }
 }

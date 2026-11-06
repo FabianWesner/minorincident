@@ -1,0 +1,993 @@
+{
+  "gameCommit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "method": "Current-source full-rate read-only native complete routes. Every war tick checks the nearest20 living admitted infected; membership changes retain exact models/positions. Per-edge scheduled quotas are matched to real admitted actors within540ticks. Both complete hashes match independent current-source qa:accept controls.",
+  "tiers": [
+    {
+      "tier": "low",
+      "finalHash": "18e71cbb",
+      "canonicalHash": "18e71cbb",
+      "gameplayHash": "17026cfd",
+      "peak": 80,
+      "mixChecks": 10679,
+      "minimumLooks": 4,
+      "firstFourLookSample": {
+        "tick": 4328,
+        "looks": 4,
+        "actors": [
+          {
+            "id": 253,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.464881335070682,
+            "z": 0.24400016727079565
+          },
+          {
+            "id": 164,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -20.60717819580209,
+            "z": -0.8528835563238527
+          },
+          {
+            "id": 191,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -18.72425849211199,
+            "z": 0.7616175471294372
+          },
+          {
+            "id": 209,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -18.187976171041214,
+            "z": 1.455538953730752
+          },
+          {
+            "id": 178,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.744534515342334,
+            "z": -0.6079219221603
+          },
+          {
+            "id": 188,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.723762567973488,
+            "z": 5.108987115372524
+          },
+          {
+            "id": 175,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.042342765482292,
+            "z": -1.6511294075290341
+          },
+          {
+            "id": 221,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.48548673191338,
+            "z": 1.906713295366483
+          },
+          {
+            "id": 268,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -18.435735688764606,
+            "z": -0.35857935182607015
+          },
+          {
+            "id": 260,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.040868514047848,
+            "z": 3.5422344824819736
+          },
+          {
+            "id": 272,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -16.97374889981463,
+            "z": 2.6372382412722377
+          },
+          {
+            "id": 255,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.284769047206208,
+            "z": -1.3903849672208688
+          },
+          {
+            "id": 165,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.144656869900363,
+            "z": 5.906651740579372
+          },
+          {
+            "id": 205,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.715529108541595,
+            "z": 4.777001202789812
+          },
+          {
+            "id": 186,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.17185234561269,
+            "z": 0.5183205301870052
+          },
+          {
+            "id": 226,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.802486188101437,
+            "z": 1.3501208715504014
+          },
+          {
+            "id": 229,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.520069968391137,
+            "z": -0.3229228060604815
+          },
+          {
+            "id": 174,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.345919656502666,
+            "z": -2.3856680624054394
+          },
+          {
+            "id": 267,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -15.941042754847292,
+            "z": 3.4430270676695343
+          },
+          {
+            "id": 282,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.88903832088548,
+            "z": 6.796031127664626
+          }
+        ]
+      },
+      "escapeGapWindows": 18,
+      "collapseQuotaWindows": 56,
+      "missedQuotaWindows": 23,
+      "firstMiss": {
+        "tick": 28009,
+        "expectedPerEdge": 2,
+        "actual": {
+          "0": 1,
+          "1": 1,
+          "2": 1
+        }
+      },
+      "saturationSampleBeforeFirstMiss": {
+        "tick": 27960,
+        "count": 79,
+        "reserved": 1,
+        "pendingTurns": 0,
+        "characters": 89,
+        "collapsePend": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "player": {
+          "x": -16.586458206176758,
+          "y": 0.7099999785423279,
+          "z": -10.974562644958496,
+          "yaw": -4.050253756904346
+        }
+      },
+      "firstWindow": {
+        "tick": 12889,
+        "expectedPerEdge": 2,
+        "actual": {
+          "0": 2,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "collapseQuotas": [
+        {
+          "tick": 12889,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 13429,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 3
+          }
+        },
+        {
+          "tick": 13969,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 14509,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 15049,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 15589,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 3,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16129,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16669,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 3
+          }
+        },
+        {
+          "tick": 17209,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 17749,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 18289,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 18829,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 19369,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 19909,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 20449,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 20989,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 21529,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 22069,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 22609,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 23149,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 23689,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 24229,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "2": 2
+          }
+        },
+        {
+          "tick": 24769,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 25309,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 2,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 25849,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 2,
+            "4": 2,
+            "5": 2
+          }
+        },
+        {
+          "tick": 26389,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 26929,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 27469,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 28009,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 28549,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "tick": 29089,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "tick": 29629,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 3,
+            "4": 3,
+            "5": 2
+          }
+        },
+        {
+          "tick": 30169,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 30709,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 2,
+            "6": 2
+          }
+        },
+        {
+          "tick": 31249,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 2,
+            "6": 3
+          }
+        },
+        {
+          "tick": 31789,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 32329,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 3,
+            "2": 2,
+            "3": 2
+          }
+        },
+        {
+          "tick": 32869,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 0
+          }
+        },
+        {
+          "tick": 33409,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 0,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 33949,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 34489,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "5": 1,
+            "6": 3
+          }
+        },
+        {
+          "tick": 35029,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 2,
+            "1": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 35569,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          }
+        },
+        {
+          "tick": 36109,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 36649,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 4,
+            "3": 2,
+            "4": 2
+          }
+        },
+        {
+          "tick": 37189,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 1,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 37729,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 38269,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "5": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 38809,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 39349,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "2": 1
+          }
+        },
+        {
+          "tick": 39889,
+          "expectedPerEdge": 2,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 0
+          }
+        },
+        {
+          "tick": 40429,
+          "expectedPerEdge": 2,
+          "actual": {
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "tick": 40969,
+          "expectedPerEdge": 2,
+          "actual": {
+            "3": 1,
+            "4": 1,
+            "5": 1
+          }
+        },
+        {
+          "tick": 41509,
+          "expectedPerEdge": 2,
+          "actual": {
+            "4": 1,
+            "5": 1,
+            "6": 0
+          }
+        },
+        {
+          "tick": 42049,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 1,
+            "5": 0,
+            "6": 1
+          }
+        },
+        {
+          "tick": 42589,
+          "expectedPerEdge": 2,
+          "actual": {
+            "0": 0,
+            "1": 0,
+            "6": 0
+          }
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "finalHash": "86ab19e8",
+      "canonicalHash": "86ab19e8",
+      "gameplayHash": "1995724f",
+      "peak": 120,
+      "mixChecks": 10715,
+      "minimumLooks": 4,
+      "firstFourLookSample": {
+        "tick": 7580,
+        "looks": 4,
+        "actors": [
+          {
+            "id": 430,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.618710500328007,
+            "z": -3.2154361804710674
+          },
+          {
+            "id": 441,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -18.219986091139617,
+            "z": -2.421013928342845
+          },
+          {
+            "id": 440,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -19.131487016775708,
+            "z": -2.4204301822434715
+          },
+          {
+            "id": 443,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -17.607328550696803,
+            "z": -1.8321326321255949
+          },
+          {
+            "id": 436,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -18.4676290218934,
+            "z": -1.4829644438353375
+          },
+          {
+            "id": 361,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -20.025943411450605,
+            "z": -1.9509913137799706
+          },
+          {
+            "id": 442,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -18.670080611541955,
+            "z": -0.39603549200127375
+          },
+          {
+            "id": 435,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -20.71278953488517,
+            "z": -1.2368703508462247
+          },
+          {
+            "id": 372,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -17.431545857018143,
+            "z": -0.35366840202187166
+          },
+          {
+            "id": 392,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -19.599210475499667,
+            "z": -6.773196376835639
+          },
+          {
+            "id": 343,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -15.601127459068062,
+            "z": -5.635158765900102
+          },
+          {
+            "id": 432,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -21.03138202408108,
+            "z": -0.377667419236506
+          },
+          {
+            "id": 438,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -17.307192274079057,
+            "z": 0.573241785296591
+          },
+          {
+            "id": 434,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -19.253637161053124,
+            "z": -7.617553282820976
+          },
+          {
+            "id": 387,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -16.441633997370676,
+            "z": 0.28632957233695855
+          },
+          {
+            "id": 360,
+            "archetype": "infected.firefighter",
+            "model": "npc.firefighter-alive",
+            "x": -15.654720995283478,
+            "z": -0.17791347724989076
+          },
+          {
+            "id": 410,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -16.357983008396815,
+            "z": -7.520891768856445
+          },
+          {
+            "id": 453,
+            "archetype": "infected.firefighter",
+            "model": "infected.firefighter",
+            "x": -21.889535377745897,
+            "z": -0.05701797851740203
+          },
+          {
+            "id": 409,
+            "archetype": "infected.riot",
+            "model": "infected.riot",
+            "x": -18.570635730298694,
+            "z": -8.215119712568029
+          },
+          {
+            "id": 337,
+            "archetype": "infected.hazmat",
+            "model": "infected.hazmat",
+            "x": -14.381805908005068,
+            "z": -6.173423992474115
+          }
+        ]
+      },
+      "escapeGapWindows": 2,
+      "collapseQuotaWindows": 9,
+      "missedQuotaWindows": 5,
+      "firstMiss": {
+        "tick": 15085,
+        "expectedPerEdge": 3,
+        "actual": {
+          "4": 3,
+          "5": 3,
+          "6": 0
+        }
+      },
+      "saturationSampleBeforeFirstMiss": {
+        "tick": 15060,
+        "count": 120,
+        "reserved": 44,
+        "pendingTurns": 0,
+        "characters": 136,
+        "collapsePend": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "player": {
+          "x": 48.4892463684082,
+          "y": 0.7099999785423279,
+          "z": -19.398082733154297,
+          "yaw": 1.570198912641864
+        }
+      },
+      "firstWindow": {
+        "tick": 12925,
+        "expectedPerEdge": 3,
+        "actual": {
+          "0": 3,
+          "1": 3,
+          "2": 3
+        }
+      },
+      "collapseQuotas": [
+        {
+          "tick": 12925,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "1": 3,
+            "2": 3
+          }
+        },
+        {
+          "tick": 13465,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 3,
+            "2": 3,
+            "3": 3
+          }
+        },
+        {
+          "tick": 14005,
+          "expectedPerEdge": 3,
+          "actual": {
+            "2": 3,
+            "3": 3,
+            "4": 3
+          }
+        },
+        {
+          "tick": 14545,
+          "expectedPerEdge": 3,
+          "actual": {
+            "3": 3,
+            "4": 3,
+            "5": 3
+          }
+        },
+        {
+          "tick": 15085,
+          "expectedPerEdge": 3,
+          "actual": {
+            "4": 3,
+            "5": 3,
+            "6": 0
+          }
+        },
+        {
+          "tick": 15625,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "5": 3,
+            "6": 2
+          }
+        },
+        {
+          "tick": 16165,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 3,
+            "1": 1,
+            "6": 1
+          }
+        },
+        {
+          "tick": 16705,
+          "expectedPerEdge": 3,
+          "actual": {
+            "0": 1,
+            "1": 0,
+            "2": 2
+          }
+        },
+        {
+          "tick": 17245,
+          "expectedPerEdge": 3,
+          "actual": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          }
+        }
+      ]
+    }
+  ]
+}

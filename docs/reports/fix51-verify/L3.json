@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "85db2688bab69ba8b444eff36475ecb78def83fa58c32dee8c04409b9fb6561c",
-  "observerHash": "776d002a65f523d5788bf8af20dd37363e1322599008866c36f94f93fef4781c",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T13:46:49.124Z",
+  "generatedAt": "2026-11-06T20:35:19.879Z",
   "policies": [
     {
       "tier": "low",
@@ -557,7 +557,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -919,7 +919,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1060,7 +1060,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1332,7 +1332,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1407,7 +1407,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1567,7 +1567,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3478,7 +3478,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3566,7 +3566,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -3654,16 +3654,16 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
   "rows": [
     {
       "id": "L3-01",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); low/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS); high/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); high/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS) Manual review PASS (FRESH, Codex sweep-a3): All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); low/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS); high/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); high/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS) Manual review PASS (STALE, Codex sweep-a3): All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -3836,8 +3836,8 @@
           }
         ],
         "notes": "Courier damage suppressed solely to keep 600-shot count/UI observation running. Camera requested0.5/1/1.5 for final shots is actually yard-locked1; no zoom-extreme coverage claimed.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -4487,14 +4487,14 @@
         ],
         "notes": "Current source PO-owned measured failure recorded only, as instructed. No game/spec/criteria tuning or PO decision fabricated.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L3-03",
-      "status": "PASS",
+      "status": "FAIL",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 23.483365949119374 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 149.56114686951435 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.57894736842105 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 298.94736842105266 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (FRESH, Codex sweep-a3): Reviewed all14 exact-source numeric clauses: bounded-path reachable minimum100% for low complete/stationary and high complete;95% high stationary (required≥90%). Passive first actual player windup2.95s low,2.4167s high (required≤10s). Player attacks/min are23.4834/149.5611 low complete/stationary and31.5789/298.9474 high complete/stationary, all≥4 with positive player-target windups. Passive defend windows28.4833/14.25s extend beyond10s. High attack rate has no upper bound in this criterion; no target adjustment is made. Requalified prior FAIL: Native low complete step/defend: 25.90 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive defend: first attack 6.10 s, 5.50/min, last reach 9/9 = 100%.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 23.483365949119374 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 149.56114686951435 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.57894736842105 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 298.94736842105266 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (STALE, Codex sweep-a3): Reviewed all14 exact-source numeric clauses: bounded-path reachable minimum100% for low complete/stationary and high complete;95% high stationary (required≥90%). Passive first actual player windup2.95s low,2.4167s high (required≤10s). Player attacks/min are23.4834/149.5611 low complete/stationary and31.5789/298.9474 high complete/stationary, all≥4 with positive player-target windups. Passive defend windows28.4833/14.25s extend beyond10s. High attack rate has no upper bound in this criterion; no target adjustment is made. Open prior FAIL: Native low complete step/defend: 25.90 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive defend: first attack 6.10 s, 5.50/min, last reach 9/9 = 100%.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -4697,7 +4697,7 @@
         ],
         "method": "Current-head passive native defend window, real attack events and independent path queries. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
-      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L3-03",
         "status": "PASS",
@@ -4719,8 +4719,8 @@
           }
         ],
         "notes": "Current low/high complete and stationary native InputFrame route observations use actual infected.attack events, player targets and independently bounded nav-path queries. No visual or performance claim. Fresh exact-criterion PASS closes the historical rate failure. All14 native clauses rerun and requalified on the final constant-width-ring game source.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -5090,9 +5090,9 @@
     },
     {
       "id": "L3-05",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "Manual review PASS (FRESH, Codex sweep-a3): All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling. Low attack framing visibly widens with the yard/east gate in view. The exact1.5 multiplier and high counterpart are not fully instrumented here.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review PASS (STALE, Codex sweep-a3): All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling. Low attack framing visibly widens with the yard/east gate in view. The exact1.5 multiplier and high counterpart are not fully instrumented here.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/sweep-a3/L3-05-camera-measurements.json",
@@ -5148,15 +5148,15 @@
           }
         ],
         "notes": "",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":31,\"samples\":20,\"within3to6\":20,\"minM\":4.153436653198363,\"medianM\":4.38632285721454,\"maxM\":4.918941595084811},{\"id\":32,\"samples\":20,\"within3to6\":20,\"minM\":3.8428412273744765,\"medianM\":4.386336376347121,\"maxM\":5.292343323711613},{\"id\":33,\"samples\":20,\"within3to6\":19,\"minM\":5.039442021567916,\"medianM\":5.314123378540392,\"maxM\":6.141181316260594}] (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (FRESH, Codex sweep-a3): Current-source low calm samples show member33 outside the unchanged3–6m range once:19/20 within, median5.3141m, maximum6.1412m. Members31/32 are20/20 within, medians4.3863/4.3863m and maxima4.9189/5.2923m. High has no calm surviving-member samples and is unqualified for spacing. Low seed1 also reaches the army with3 officers, above the literal≤2 criterion, although the automated three-seed aggregate labels2/3 seeds as PASS; that aggregate does not establish the absolute per-run bound. Initial squads4/4; high three seeds end0/0/0. This is a measured FAIL; no target, cap, population, controller or checker changed. Moving-fire/teleport clauses are not newly inferred from these numbers.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":31,\"samples\":20,\"within3to6\":20,\"minM\":4.153436653198363,\"medianM\":4.38632285721454,\"maxM\":4.918941595084811},{\"id\":32,\"samples\":20,\"within3to6\":20,\"minM\":3.8428412273744765,\"medianM\":4.386336376347121,\"maxM\":5.292343323711613},{\"id\":33,\"samples\":20,\"within3to6\":19,\"minM\":5.039442021567916,\"medianM\":5.314123378540392,\"maxM\":6.141181316260594}] (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex sweep-a3): Current-source low calm samples show member33 outside the unchanged3–6m range once:19/20 within, median5.3141m, maximum6.1412m. Members31/32 are20/20 within, medians4.3863/4.3863m and maxima4.9189/5.2923m. High has no calm surviving-member samples and is unqualified for spacing. Low seed1 also reaches the army with3 officers, above the literal≤2 criterion, although the automated three-seed aggregate labels2/3 seeds as PASS; that aggregate does not establish the absolute per-run bound. Initial squads4/4; high three seeds end0/0/0. This is a measured FAIL; no target, cap, population, controller or checker changed. Moving-fire/teleport clauses are not newly inferred from these numbers.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -5522,15 +5522,15 @@
           }
         ],
         "notes": "Fresh both-tier fixtures and mortal native routes/seeds1–3. The concrete low spacing and seed1 army-count counterexamples suffice for FAIL; absent high calm samples remain unqualified rather than treated as a pass.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L3-07",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":122,\"officerKills\":27,\"playerKills\":26,\"damage\":22,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS); high/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":31,\"officerKills\":3,\"playerKills\":0,\"damage\":0,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS) Manual review PASS (FRESH, Codex sweep-a3): Personally inspected2 fresh full-size moving pistol-hit frames plus34 uninterrupted route frames. Officers visibly aim/fire at infected in yard and fallback; actual moving hits after fallback at ticks2117low and1959high, source31/30, speed1.4886/1.3208m/s. Exact-current whole-segment mortal fixture records122/31officer hits, damage22/0HP, zero deaths and completion. This combines whole-window damage ledger with visible squad combat; no kill-share target reintroduced.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":122,\"officerKills\":27,\"playerKills\":26,\"damage\":22,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS); high/controlled-fixture mortal segment1 officers land hits and player damage: {\"completed\":true,\"officerHits\":31,\"officerKills\":3,\"playerKills\":0,\"damage\":0,\"deaths\":0,\"outcome\":\"complete\"} (target officers land at least one hit; player damage<100HP; PASS) Manual review PASS (STALE, Codex sweep-a3): Personally inspected2 fresh full-size moving pistol-hit frames plus34 uninterrupted route frames. Officers visibly aim/fire at infected in yard and fallback; actual moving hits after fallback at ticks2117low and1959high, source31/30, speed1.4886/1.3208m/s. Exact-current whole-segment mortal fixture records122/31officer hits, damage22/0HP, zero deaths and completion. This combines whole-window damage ledger with visible squad combat; no kill-share target reintroduced.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -5619,8 +5619,8 @@
           }
         ],
         "notes": "Moving-hit run is ordinary mortal native route; tour captures suppress courier damage and do not qualify damage limit. P: PO to inspect dense muzzle/impact sparkle in attack10s frame.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7367,7 +7367,7 @@
         ],
         "notes": "No game changes. Numeric trajectory/frustum review; no image or performance-timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7529,9 +7529,9 @@
     },
     {
       "id": "L3-12",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":8458,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); low/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3125,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":9505,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3979,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS) Manual review FAIL (FRESH, Codex sweep-a3): Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":8458,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); low/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3125,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":9505,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3979,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS) Manual review FAIL (STALE, Codex sweep-a3): Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -7654,8 +7654,8 @@
           }
         ],
         "notes": "Only fresh strict-pixel trial qualifies. Earlier metadata-assisted trials explicitly rejected in readability-rejected.json. Low-tier counterexample; high-tier manual route not run.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7731,7 +7731,7 @@
         ],
         "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -7910,14 +7910,14 @@
         ],
         "notes": "No game changes; courier damage protection qualifies mechanics/presentation, not mortality or physical keyboard/alternate zoom coverage. Civilian groups stand beside evacuation buses; no fabricated seated-passenger census.",
         "freshness": "STALE",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L3-15",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "Manual review PASS (FRESH, Codex sweep-a3): All18 shared handgun/horde captures inspected, including high600-shot frame at full resolution. Courier remains identifiable as gold outlined central silhouette through packed infected. Final living census84low/187high;82low/185high drawn and projected in camera, each exceeding80. Silhouette is visible among the horde rather than inferred from foreground boolean alone. Courier remains visible in reviewed street contacts. The dedicated80-infected occlusion fixture was not repeated.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review PASS (STALE, Codex sweep-a3): All18 shared handgun/horde captures inspected, including high600-shot frame at full resolution. Courier remains identifiable as gold outlined central silhouette through packed infected. Final living census84low/187high;82low/185high drawn and projected in camera, each exceeding80. Silhouette is visible among the horde rather than inferred from foreground boolean alone. Courier remains visible in reviewed street contacts. The dedicated80-infected occlusion fixture was not repeated.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/sweep-a3/L3-01-current-ledger.json.gz",
@@ -7967,15 +7967,15 @@
           }
         ],
         "notes": "P: PO to inspect gold courier contour among tightly overlapping bodies. Actual yard zoom1; requested limits do not override it. Stationary physical handgun firing, count-only courier protection.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L3-16",
       "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, Codex sweep-a3): Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed. Open prior FAIL: Late-afternoon light is present, but the reviewed checkpoint street frame at tick5257 / low / zoom1.5 contains zero identifiable smoke columns, below >=2 in every street frame. Street damage-type variety is not fully audited.",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, Codex sweep-a3): Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed. Open prior FAIL: Late-afternoon light is present, but the reviewed checkpoint street frame at tick5257 / low / zoom1.5 contains zero identifiable smoke columns, below >=2 in every street frame. Street damage-type variety is not fully audited.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-a3/L3-16-current-ledger.json.gz",
@@ -8025,8 +8025,8 @@
           }
         ],
         "notes": "Static poses explicitly controlled relocation; moving-x samples are ordinary native complete route with courier protection. P: inspect smoke in close street framing; wide-frame improvement does not close every-frame requirement.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "10e01ad8c1073f575580ef08ad216e6b736557dc"
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ]

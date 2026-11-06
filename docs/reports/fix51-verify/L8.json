@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L8",
-  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
-  "observerHash": "ea49ce91d81ad2a43879aaf1af1f46cc9c82d1b22324c40e30ffe1b32f7a228b",
+  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T06:43:40.518Z",
+  "generatedAt": "2026-11-06T20:52:15.014Z",
   "policies": [
     {
       "tier": "low",
@@ -481,7 +481,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -812,7 +812,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -953,14 +953,14 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":32,\"median\":4.499500272431499,\"groupMedian\":4.499249875103136,\"ratio\":1.0000556531278133},{\"phase\":\"step/escape\",\"id\":356,\"samples\":29,\"median\":4.699992022891085,\"groupMedian\":4.499249875103136,\"ratio\":1.0446168035473575},{\"phase\":\"step/escape\",\"id\":357,\"samples\":29,\"median\":4.583754967693903,\"groupMedian\":4.499249875103136,\"ratio\":1.0187820403259622},{\"p… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":1940,\"stationaryFarTicks\":95,\"upperBoundPercent\":4.896907216494846,\"followers\":[{\"id\":354,\"escortTicks\":987,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1094,\"stationaryFarTicks\":0},{\"id\":356,\"escortTicks\":1155,\"stationaryFarTicks\":43},{\"id\":357,\"escortTicks\":1216,\"stationaryFarTicks\":1},{\"id\":358,\"escortTicks\":1277,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1346,\"stationary… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":30,\"median\":4.668403664263435,\"groupMedian\":4.519324061461051,\"ratio\":1.032987146036655},{\"phase\":\"step/escape\",\"id\":356,\"samples\":30,\"median\":4.699852455087711,\"groupMedian\":4.519324061461051,\"ratio\":1.0399458837586206},{\"phase\":\"step/escape\",\"id\":357,\"samples\":30,\"median\":4.538649945387711,\"groupMedian\":4.519324061461051,\"ratio\":1.0042762775281957},{\"ph… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":2223,\"stationaryFarTicks\":76,\"upperBoundPercent\":3.4188034188034186,\"followers\":[{\"id\":354,\"escortTicks\":970,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1203,\"stationaryFarTicks\":72},{\"id\":356,\"escortTicks\":1291,\"stationaryFarTicks\":19},{\"id\":357,\"escortTicks\":1383,\"stationaryFarTicks\":0},{\"id\":358,\"escortTicks\":1474,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1564,\"stationa… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (FRESH, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":32,\"median\":4.499500272431499,\"groupMedian\":4.499249875103136,\"ratio\":1.0000556531278133},{\"phase\":\"step/escape\",\"id\":356,\"samples\":29,\"median\":4.699992022891085,\"groupMedian\":4.499249875103136,\"ratio\":1.0446168035473575},{\"phase\":\"step/escape\",\"id\":357,\"samples\":29,\"median\":4.583754967693903,\"groupMedian\":4.499249875103136,\"ratio\":1.0187820403259622},{\"p… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":1940,\"stationaryFarTicks\":95,\"upperBoundPercent\":4.896907216494846,\"followers\":[{\"id\":354,\"escortTicks\":987,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1094,\"stationaryFarTicks\":0},{\"id\":356,\"escortTicks\":1155,\"stationaryFarTicks\":43},{\"id\":357,\"escortTicks\":1216,\"stationaryFarTicks\":1},{\"id\":358,\"escortTicks\":1277,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1346,\"stationary… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":30,\"median\":4.668403664263435,\"groupMedian\":4.519324061461051,\"ratio\":1.032987146036655},{\"phase\":\"step/escape\",\"id\":356,\"samples\":30,\"median\":4.699852455087711,\"groupMedian\":4.519324061461051,\"ratio\":1.0399458837586206},{\"phase\":\"step/escape\",\"id\":357,\"samples\":30,\"median\":4.538649945387711,\"groupMedian\":4.519324061461051,\"ratio\":1.0042762775281957},{\"ph… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":2223,\"stationaryFarTicks\":76,\"upperBoundPercent\":3.4188034188034186,\"followers\":[{\"id\":354,\"escortTicks\":970,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1203,\"stationaryFarTicks\":72},{\"id\":356,\"escortTicks\":1291,\"stationaryFarTicks\":19},{\"id\":357,\"escortTicks\":1383,\"stationaryFarTicks\":0},{\"id\":358,\"escortTicks\":1474,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1564,\"stationa… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
@@ -975,6 +975,7 @@
         "docs/reports/fix68-g/G-13-final-source.json",
         "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
         "docs/reports/fix68-g/threat-final/manifest.json",
+        "docs/reports/fix68-g/L3-retirement-fix.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -1376,7 +1377,7 @@
         "status": "PASS",
         "reviewer": "fix68-g/Codex",
         "date": "2026-11-06",
-        "commit": "d485990ec401ff306ff18a53b21b702b96cec8c2",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
@@ -1432,23 +1433,31 @@
           },
           {
             "file": "docs/reports/fix68-g/G-13-final-source.json",
-            "sha256": "4745a9359b95895dd5bb178230a7b73e69fd5bd8ea975a622699fa1c3469effc",
+            "sha256": "288c720cfb683f40371aa07e34c7404e8ef15aa982ea2f4843f1a4a24e1b31c5",
             "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
             "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
-            "sha256": "fdbf3218bfdd5da05edcdf741163015873c1db642fa3444f52b03ab69705c2ff",
+            "sha256": "2074090064937eeb357bf9e167ac16cedf424dd902835343cb48efd45f04b4e1",
             "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
           },
           {
             "file": "docs/reports/fix68-g/threat-final/manifest.json",
             "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
             "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+            "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+            "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
           }
         ],
-        "notes": "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval.",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "notes": [
+          "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1523,7 +1532,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -1699,7 +1708,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2756,7 +2765,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2844,7 +2853,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
@@ -2932,7 +2941,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     }
   ],
@@ -3143,13 +3152,18 @@
       "id": "L8-03",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS) Manual review PASS (STALE, Codex sweep-c5): Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30§5.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+        "docs/reports/sweep-c5/L8-03/native.json.gz",
+        "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
+        "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
+        "docs/reports/sweep-c5/L8-03/review.json",
+        "docs/reports/sweep-c5/L8-03/coverage-proof.json"
       ],
       "expected": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
       "checks": [
@@ -3428,19 +3442,85 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+      "review": {
+        "tag": "O",
+        "instruction": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+        "clause": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+      },
+      "reviewDecision": {
+        "row": "L8-03",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "d28e01013453088a4f784b51684e5ebd6c1490ca",
+        "clauses": [
+          {
+            "clause": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+            "verdict": "PASS",
+            "note": "Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30§5.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L8-03/native.json.gz",
+            "sha256": "3bf50f44a9516676875d3a1d823bc03bf41e549676e6fe2561875f1fde1ba87e",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
+            "sha256": "7bbd402e8f64bfb9601139aca232f3f179d6a11c5c9e5108396a6b8ed8c3753b",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
+            "sha256": "fbe9d2c112d6d0f0e5a9068eb868d3a8f1d6742a177e3ed20f8c0bb0a967ad78",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/review.json",
+            "sha256": "232c928e3feb21709e3bd9d824f650ad11232455c6c5baecd609603eff5cdd1c",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-03/coverage-proof.json",
+            "sha256": "7310d85b2fce5664bce85adc5fce26d1e05328be95cc3923e4b2cc887ce672b2",
+            "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+          }
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+      }
     },
     {
       "id": "L8-04",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); low/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); low/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS) Manual review PASS (STALE, Codex sweep-c5): Current fullnative complete/stationary ledgers and exactcanonicalcontrols retain tick3600breach,4insideoutlets min78.90377m separation, first3/6packet/outlet and simultaneousfirstordinaryadmissions. Fresh8physicalrealWASDcases(oneperoutlet/tier) use exactqualifiedphysicalL7campaign low1/high4; eachwalkswithin0.65m ofobservationpointbefore3540, ordinaryAI/physics; courieronlyprotected. All4doorsopen3600;12/24queuedpacketactorscreated3600, eachbegins0.9mbehinddoor; firstadmittedactorperdoor3600, queuedlowlast3648/highlast3678, not all24admittedat3600. Allfirstactualadmissionsremainbehindthreshold; subsequent3ticksamplesmax0.210803m emergingmovement, no discontinuousapronbirth. All96pairedzoompanels personallyinspected/rawSHAverified/deleted. Wideoutlets0/2 visiblyshowclosedemptydoor/apron, thenopenleaves/walkinginfectedcolumn; outlets1/3doorfaceshiddenbyroof, groupswalkoutfrombehindbuildingandadvancecontinuously. Tightcrops excludeentrance; no thresholdpixelclaimfromthem. Submissiondrawnflagsare notproofagainstdepthocclusion; pixelreviewplusadmission/trajectorydatajointlyqualifynopopin. Everyphysicalcase691samples0..3840with3tickdensewindow3540on, zeroerrors; no camerafacingpostponement. Seventeenactualconsumerfaultsreject, exactoriginalbytesrestored. No game/criteria/count/timer change.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+        "docs/reports/sweep-c5/L8-04/high-0-review.json",
+        "docs/reports/sweep-c5/L8-04/high-1-review.json",
+        "docs/reports/sweep-c5/L8-04/high-2-review.json",
+        "docs/reports/sweep-c5/L8-04/high-3-review.json",
+        "docs/reports/sweep-c5/L8-04/low-0-review.json",
+        "docs/reports/sweep-c5/L8-04/low-1-review.json",
+        "docs/reports/sweep-c5/L8-04/low-2-review.json",
+        "docs/reports/sweep-c5/L8-04/low-3-review.json",
+        "docs/reports/sweep-c5/L8-04/high-0-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/high-1-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/high-2-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/high-3-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/low-0-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/low-1-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/low-2-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/low-3-physical.json.gz",
+        "docs/reports/sweep-c5/L8-04/native-observation.json.gz",
+        "docs/reports/sweep-c5/L8-04/coverage-proof.json"
       ],
       "expected": "Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in.",
       "checks": [
@@ -3543,7 +3623,120 @@
         ],
         "method": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses."
       },
-      "remaining": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses."
+      "remaining": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses.",
+      "review": {
+        "tag": "O",
+        "instruction": "Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in.",
+        "clause": "Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in."
+      },
+      "reviewDecision": {
+        "row": "L8-04",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "b90a929375ede59689c1369aca6386f2d9f0aa52",
+        "clauses": [
+          {
+            "clause": "Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in.",
+            "verdict": "PASS",
+            "note": "Current fullnative complete/stationary ledgers and exactcanonicalcontrols retain tick3600breach,4insideoutlets min78.90377m separation, first3/6packet/outlet and simultaneousfirstordinaryadmissions. Fresh8physicalrealWASDcases(oneperoutlet/tier) use exactqualifiedphysicalL7campaign low1/high4; eachwalkswithin0.65m ofobservationpointbefore3540, ordinaryAI/physics; courieronlyprotected. All4doorsopen3600;12/24queuedpacketactorscreated3600, eachbegins0.9mbehinddoor; firstadmittedactorperdoor3600, queuedlowlast3648/highlast3678, not all24admittedat3600. Allfirstactualadmissionsremainbehindthreshold; subsequent3ticksamplesmax0.210803m emergingmovement, no discontinuousapronbirth. All96pairedzoompanels personallyinspected/rawSHAverified/deleted. Wideoutlets0/2 visiblyshowclosedemptydoor/apron, thenopenleaves/walkinginfectedcolumn; outlets1/3doorfaceshiddenbyroof, groupswalkoutfrombehindbuildingandadvancecontinuously. Tightcrops excludeentrance; no thresholdpixelclaimfromthem. Submissiondrawnflagsare notproofagainstdepthocclusion; pixelreviewplusadmission/trajectorydatajointlyqualifynopopin. Everyphysicalcase691samples0..3840with3tickdensewindow3540on, zeroerrors; no camerafacingpostponement. Seventeenactualconsumerfaultsreject, exactoriginalbytesrestored. No game/criteria/count/timer change."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-0-review.json",
+            "sha256": "191278f7aed724e6dd3bdb9cc90973e5a603db1b4b385577aa10129059841782",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-1-review.json",
+            "sha256": "13527d1d0e69797cd329192809d23379580164d18fb4b3238d7e1efbbde25bcd",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-2-review.json",
+            "sha256": "01125dcba9afc1fa40285a36fe49ba6b8430c4689f00443e7852086870e72ff8",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-3-review.json",
+            "sha256": "fa52f03c5eb4ba27e19ba60f9e557feeacef21864635923563598af4cf818774",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-0-review.json",
+            "sha256": "b64278abd8796c99b93342602df6e5ef09e3c8f5f0bbec5a8cf30c07df8516e7",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-1-review.json",
+            "sha256": "a0c4b4db40e9ae2d5a0eb8961b29936e04b78ae6c7a5d5fefc42113c34a726eb",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-2-review.json",
+            "sha256": "f5e9ab4aead80059c2778e7bf5db4f71065085ba029af4236604b33fede11baf",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-3-review.json",
+            "sha256": "e7c6ee834e76a54fcc8eefeae0352f586e9524e3875d0abb494d7345e0977f8b",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-0-physical.json.gz",
+            "sha256": "ed5dacf9ba47cfcdf1a60e82741eadab2f0b779af46e4e3161cdcd6d04032c75",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-1-physical.json.gz",
+            "sha256": "bfc17b2455376c09ee107b36f3277a28eeafe3b4c18d8b399d095ec0bbe2d4d4",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-2-physical.json.gz",
+            "sha256": "649ca69c8d319772afb1ce93fba6eab83bf270b1da6432b79331495c851d84b3",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/high-3-physical.json.gz",
+            "sha256": "b5fc3090a6636950b89a8e7e2d36892485ba8739c51ac18df71b600a49bf7a8d",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-0-physical.json.gz",
+            "sha256": "e703edee4ce0757e25f0e42e5fdee71748a8618c77f6228865dd429669cf621b",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-1-physical.json.gz",
+            "sha256": "58016d87da9d84511a52ffcf05b2e1e5e98dfe08a5d8eb5ec700142fad8d79ff",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-2-physical.json.gz",
+            "sha256": "e42b9c0da27d06efe543d04e1bb478a534ee675c9400e4f63e15db080015c479",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/low-3-physical.json.gz",
+            "sha256": "eea349b16d0fda6190f9b1b83327ca235242a7f53eae5587fe2765ab0af3fea1",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/native-observation.json.gz",
+            "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-04/coverage-proof.json",
+            "sha256": "071238936f2ade37603ca25629dd7c6e750de27a88338a7728b28b8e80f48c06",
+            "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+          }
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+      }
     },
     {
       "id": "L8-05",
@@ -3884,25 +4077,27 @@
         ],
         "notes": "Exact unchanged numerical criterion reviewed against all four current-source receipts. Historical FAIL is requalified. No game, checker, target, timer or cap changes.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L8-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c4): Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes. Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, Codex sweep-c5): Current low/high1.25m-radius navigation finds separate north/south interior paths, explicit6m gate crossings and external paths to unchanged APC for allfive enclosures. Inserted gate slab blocks each crossing; sixteen semantic checker faults reject. Fresh shared-pool headless Metal physical WASD walks from actual carried L7 campaigns with low1/high4 humans reach all46 goals per tier within0.65m, no actor/position/objective writes; only courier protected, normal actors/colliders/outbreak continue. Nonempty physical markers are always exit at fixed APC(96.71,76.275). Personally inspected all44 original-size frames at both PO zooms: continuous pavement and open/fallen fence crossings in wide views, courier beyond each gate; final gold ring/yellow arrow at lit APC, objective1m. Close views supplement courier visibility, while wide views establish gate geometry. This qualifies paths/marker only, not boarding or escort success. Raw images deleted after hashing. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix55-c/L8-enclosure-paths.json",
-        "docs/reports/fix55-c/L8-05-native.json",
-        "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
-        "docs/reports/sweep-c4/L8-07-low-review.json",
-        "docs/reports/sweep-c4/L8-07-low-seed.json",
-        "docs/reports/sweep-c4/L8-07-high-physical.json.gz",
-        "docs/reports/sweep-c4/L8-07-high-review.json",
-        "docs/reports/sweep-c4/L8-07-high-seed.json",
-        "tools/qa/accept/sweep-c4-l8-paths.mjs"
+        "docs/reports/sweep-c5/L8-07/low-physical.json.gz",
+        "docs/reports/sweep-c5/L8-07/high-review.json",
+        "docs/reports/sweep-c5/L8-07/high-physical.json.gz",
+        "docs/reports/sweep-c5/L8-07/low-review.json",
+        "docs/reports/sweep-c5/L8-07/native-marker.json.gz",
+        "docs/reports/sweep-c5/L8-07/seed-provenance.json",
+        "docs/reports/sweep-c5/L8-07/low-campaign.json.gz",
+        "docs/reports/sweep-c5/L8-07/physical-audit.json",
+        "docs/reports/sweep-c5/L8-07/high-campaign.json.gz",
+        "docs/reports/sweep-c5/L8-07/native-paths.json",
+        "docs/reports/sweep-c5/L8-07/checker-controls.json"
       ],
       "expected": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
       "checks": [],
@@ -3923,79 +4118,111 @@
       "reviewDecision": {
         "row": "L8-07",
         "status": "PASS",
-        "reviewer": "Codex sweep-c4",
-        "date": "2026-11-05",
-        "commit": "ddeaceb079344d72dc9cbd40ac55613c0484073d",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "a84a47a37cfa51f4561273586d43742466eb857d",
         "clauses": [
           {
             "clause": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
             "verdict": "PASS",
-            "note": "Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes."
+            "note": "Current low/high1.25m-radius navigation finds separate north/south interior paths, explicit6m gate crossings and external paths to unchanged APC for allfive enclosures. Inserted gate slab blocks each crossing; sixteen semantic checker faults reject. Fresh shared-pool headless Metal physical WASD walks from actual carried L7 campaigns with low1/high4 humans reach all46 goals per tier within0.65m, no actor/position/objective writes; only courier protected, normal actors/colliders/outbreak continue. Nonempty physical markers are always exit at fixed APC(96.71,76.275). Personally inspected all44 original-size frames at both PO zooms: continuous pavement and open/fallen fence crossings in wide views, courier beyond each gate; final gold ring/yellow arrow at lit APC, objective1m. Close views supplement courier visibility, while wide views establish gate geometry. This qualifies paths/marker only, not boarding or escort success. Raw images deleted after hashing."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix55-c/L8-enclosure-paths.json",
-            "sha256": "71349a3a0193d11618b2dad8d1b91414c3f18d298b8fff649adc7821364e71d8",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-physical.json.gz",
+            "sha256": "46cbf37326a43ffd6cf2f2879e6158d84ca14e7689d6496625c11065310a3eeb",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/fix55-c/L8-05-native.json",
-            "sha256": "586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-review.json",
+            "sha256": "938f2e867356b0ec12f1455f59ce9040383aa5d7aabc33b09c6156736dbf535b",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
-            "sha256": "46f61ea7d851653b32c7097c54746984a3995f37c08d8159ad7fc0544196b1f9",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-physical.json.gz",
+            "sha256": "12bd17915f57cc7cb23aa10052d0ffd3263c4b8cca09474f0cb4738861c8de34",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-review.json",
-            "sha256": "8625d7836c48c81da0909f2edc168668f3be3909baf728aa30ba80661f8f0f6f",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-review.json",
+            "sha256": "3b33301eb29592aaf9225f6bb1ed2ec7df8b8fd24061956a2e6cc778a718cca6",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-low-seed.json",
-            "sha256": "1e70c61ea48e2de5013eaa49d902e04d6a9261293fcf13258aa7c971f276c1c0",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/native-marker.json.gz",
+            "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-physical.json.gz",
-            "sha256": "890757af8638c6b6972f05dfe1d70a022e6d10141fe38d3804cb47b395b1b241",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/seed-provenance.json",
+            "sha256": "62486db5009dd3b8f4400fef1bc7f78fe913165e2e1cd01cbeb032c8ecb63dbe",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-review.json",
-            "sha256": "b25727e754fb7cb92d3a66e0f6655f9a58362f1dbb6a5df1422596daccf474eb",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/low-campaign.json.gz",
+            "sha256": "7d18800b3477b35fc377b3209b4e906913ff9e783fcfa8d027ec9ab0ba7198c7",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "docs/reports/sweep-c4/L8-07-high-seed.json",
-            "sha256": "36c0314863c07536c448c68bc262cbca01be20c62bd8c1b51e0ffcb9d7650b20",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/physical-audit.json",
+            "sha256": "8b8a3d0e562641785179b49c7f57812080f9265daffff23196e52fbf2f3a148f",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           },
           {
-            "file": "tools/qa/accept/sweep-c4-l8-paths.mjs",
-            "sha256": "5bd0733e7fa060e336e9cd98ec54cc7db7b93b5849fed5a16af760b5a15e4e2e",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "file": "docs/reports/sweep-c5/L8-07/high-campaign.json.gz",
+            "sha256": "5c876daa169912a68450a7c99a0544116be98477e1e59a15c60353c502de1a67",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/native-paths.json",
+            "sha256": "00da053fb7572276339a383e5b6411b6b7f6fa82a838afea91692897dbbdd7d0",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/checker-controls.json",
+            "sha256": "1f4550e1fab5535892c2b4da33db9329d0a3c8cc1ccd100b974dbe64138fce6d",
+            "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
           }
         ],
-        "notes": "Path capability and fixed APC destination only; no successful human escort or boarding claim. Both physical runs terminal and contexts released.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L8-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex sweep-c3): Current source8765679a low physical route atx34.0358,z78.8733, tick7819. Personally inspected all four low/high render and zoom0.5/1.5 frames: the courier is only a head/goggles inside a large green canopy shape; her body, backpack and weapon disappear. This fails player readability. The route later reaches its reservation cap and does not qualify L8 completion; that does not undo this actual rendered counterexample. Animal snarl/wounds and moving zebra legs remain unmeasured in this row. No small proven game fix is claimed. Courier is100% visible in all four current canopy fixture cells. Interior infected-animal wounds/snarl and zebra-leg moving strips are not qualified.",
+      "value": "Manual review PASS (STALE, Codex sweep-c5): Current source43b485e8: personally reviewed all80 final animal panels, eight exact canopy panels,32 earlier four-biter panels and12 exploratory panels; raw SHA256 verified before deletion, full-size sheets retained ignored. Actual L8 world/render path and night lighting, low/high and POzooms0.5/1.5. Explicit zero-survivor presentation fixture prevents follower fire; all30locals and8original animals retained, courier protected only. Physical WASD approach, one ordinary60HP runner, normal bite/same-ID conversion, short physical movement. No targetHP/AI/faction/cap/timer changes. Lion shows open black snarl/large pale fangs and red eyes; gorilla chest and elephant shoulder show dark red wounds with pale slash marks. Fine lion wound pixels are uncertain in frontal mane views, not claimed. All species have distinguishable hostile silhouettes/red bars/attack cues; flamingo close crop clips selected bird, wide views show it separately from healthy pink neighbors. Zebra legs remain continuous and attached through walking/kick poses at both POzooms, no detached feet/tearing observed; overlaps/cropped heads explicit. Courier face, launcher and pale/red boots stand out in animal views; actual carried campaign1/4human canopy repro at34.0357933,78.8729248 tick7824 (0.000376m from old point) shows face/fullbody/launcher/boots amid natural infected crowd. Historical canopy failure not reproduced. Observer foot arrays may have2or4 points depending species/LOD; no assumption of4feet as pixel oracle. Corrected recorder follows whichever original zebra actually converts; first attempt selected healthy neighbor and is preserved as inconclusive, not failed game evidence. Fourteen bound evidence clauses pass; fifteen semantic faults reject with exact restoration. No game/criteria change. Courier is100% visible in all four current canopy fixture cells. Interior infected-animal wounds/snarl and zebra-leg moving strips are not qualified.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-c3/L8-08/canopy-counterexamples.jpg",
-        "docs/reports/sweep-c3/L8-route/low-review/review.json",
-        "docs/reports/sweep-c3/L8-route/L7-L8-carried-low-input.json",
-        "docs/reports/sweep-c3/L8-route/worker.ts"
+        "docs/reports/sweep-c5/L8-08/animals-high-elephant-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-high-elephant.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-high-flamingo-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-high-flamingo.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-high-gorilla-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-high-gorilla.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-high-lion-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-high-lion.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-high-zebra-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-high-zebra.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-low-elephant-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-low-elephant.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-low-flamingo-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-low-flamingo.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-low-gorilla-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-low-gorilla.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-low-lion-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-low-lion.json.gz",
+        "docs/reports/sweep-c5/L8-08/animals-low-zebra-review.json",
+        "docs/reports/sweep-c5/L8-08/animals-low-zebra.json.gz",
+        "docs/reports/sweep-c5/L8-08/canopy-review.json",
+        "docs/reports/sweep-c5/L8-08/coverage-proof.json",
+        "docs/reports/sweep-c5/L8-08/high-canopy.json.gz",
+        "docs/reports/sweep-c5/L8-08/high-postbreach-canopy.json.gz",
+        "docs/reports/sweep-c5/L8-08/low-canopy.json.gz",
+        "docs/reports/sweep-c5/L8-08/low-postbreach-canopy.json.gz",
+        "docs/reports/sweep-c5/L8-08/postbreach-canopy-review.json"
       ],
       "expected": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
       "checks": [],
@@ -4017,51 +4244,181 @@
       },
       "reviewDecision": {
         "row": "L8-08",
-        "status": "FAIL",
-        "reviewer": "Codex sweep-c3",
-        "date": "2026-11-05",
-        "commit": "3a44a56cd66e67a19080dff2220bf216c29b3a72",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "8468ed548cec95789124d313c38ff0ae9a88b73e",
         "clauses": [
           {
             "clause": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
-            "verdict": "FAIL",
-            "note": "Current source8765679a low physical route atx34.0358,z78.8733, tick7819. Personally inspected all four low/high render and zoom0.5/1.5 frames: the courier is only a head/goggles inside a large green canopy shape; her body, backpack and weapon disappear. This fails player readability. The route later reaches its reservation cap and does not qualify L8 completion; that does not undo this actual rendered counterexample. Animal snarl/wounds and moving zebra legs remain unmeasured in this row. No small proven game fix is claimed."
+            "verdict": "PASS",
+            "note": "Current source43b485e8: personally reviewed all80 final animal panels, eight exact canopy panels,32 earlier four-biter panels and12 exploratory panels; raw SHA256 verified before deletion, full-size sheets retained ignored. Actual L8 world/render path and night lighting, low/high and POzooms0.5/1.5. Explicit zero-survivor presentation fixture prevents follower fire; all30locals and8original animals retained, courier protected only. Physical WASD approach, one ordinary60HP runner, normal bite/same-ID conversion, short physical movement. No targetHP/AI/faction/cap/timer changes. Lion shows open black snarl/large pale fangs and red eyes; gorilla chest and elephant shoulder show dark red wounds with pale slash marks. Fine lion wound pixels are uncertain in frontal mane views, not claimed. All species have distinguishable hostile silhouettes/red bars/attack cues; flamingo close crop clips selected bird, wide views show it separately from healthy pink neighbors. Zebra legs remain continuous and attached through walking/kick poses at both POzooms, no detached feet/tearing observed; overlaps/cropped heads explicit. Courier face, launcher and pale/red boots stand out in animal views; actual carried campaign1/4human canopy repro at34.0357933,78.8729248 tick7824 (0.000376m from old point) shows face/fullbody/launcher/boots amid natural infected crowd. Historical canopy failure not reproduced. Observer foot arrays may have2or4 points depending species/LOD; no assumption of4feet as pixel oracle. Corrected recorder follows whichever original zebra actually converts; first attempt selected healthy neighbor and is preserved as inconclusive, not failed game evidence. Fourteen bound evidence clauses pass; fifteen semantic faults reject with exact restoration. No game/criteria change."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c3/L8-08/canopy-counterexamples.jpg",
-            "sha256": "7d7d45ed3883433a91773c7726823d5d82e46c8d2a820184c908751b293f8c9a",
-            "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-elephant-review.json",
+            "sha256": "39dbe18b74130f430807a4565f56be884962dca3921a39d04a67b83c98c70d9f",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-route/low-review/review.json",
-            "sha256": "cd338f6b757ef12893f2ff41462e6f78fe9731f072098df44b85d66eea9bc7b2",
-            "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-elephant.json.gz",
+            "sha256": "b3f2d868790a1f59d34da828d384f53a4937b4cbe4d2bd3c5a783c1b841bd1ba",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-route/L7-L8-carried-low-input.json",
-            "sha256": "18094f101c97ef77e8e24a73693e6183778ee93a2cc6167c1a39733bbfce8e3c",
-            "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-flamingo-review.json",
+            "sha256": "67959b3b01a0cc73e59fab093eb9f06e2cec311db18ec28bcf47a3d5398628ea",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-route/worker.ts",
-            "sha256": "ae9a0a1fb331f0202fcb79c12dff0449015a603729054312a20e873dea68fd3c",
-            "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-flamingo.json.gz",
+            "sha256": "67e5246dc064fa03742d69fca5bb1d3e0b1f4f3d90907b83f078b0da35017f7a",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-gorilla-review.json",
+            "sha256": "c2e3a90b4f374774575ff25a6128d54b1aaa61f165583638d3ef5dec750910ec",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-gorilla.json.gz",
+            "sha256": "a6b577080270566192395b2584a44149c947cb34c637ead0a71c32874408f1bb",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-lion-review.json",
+            "sha256": "037aa42c7f6f486d5eb581c563f7eddfcaba2ae64aeb44f2dd0a6c8e3ca928f5",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-lion.json.gz",
+            "sha256": "8795feb7f0be00f2c8d0c32872a7b2faf09e8d0c17861c1866e4477f92d79471",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-zebra-review.json",
+            "sha256": "d3631b5c4f9c683679152900c0fd455e6a537cb08aaf201062a77e27d2b091df",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-high-zebra.json.gz",
+            "sha256": "d9cc3a5210ca918315fc8871c15ee327a6ec9c8d233127e4202d7d67aad56d17",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-elephant-review.json",
+            "sha256": "fc43c5dc77b9aefcefb2ce3be7bb0808a7a2b6ee7f5ae91f0001bee984ea81f0",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-elephant.json.gz",
+            "sha256": "a61750ea3a5a9646565562d35eb7e45541b6a231c74e6f3b7c9fb4ed0fc31d10",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-flamingo-review.json",
+            "sha256": "f7ac0ad6532cd0d67f3e1a6dc3a1b26a98d2946b5b5cf5e14cc132f70dfe2aec",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-flamingo.json.gz",
+            "sha256": "4939bd69ec691ad6af2fc0777aa918de0779207e8be19ac62972901ec7db0dea",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-gorilla-review.json",
+            "sha256": "9b9cc5c7f7d667046d3612c773cb784488fc66089116d5a1361f7ee6c553c546",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-gorilla.json.gz",
+            "sha256": "86aa4e44331e6e4535821b700e42356bb1c71896b695f9aa379eaf14cacba2ba",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-lion-review.json",
+            "sha256": "5b1465fbdcf446a216884b27c6d5e6f2de48bd554332b7cd47eecabd248f1778",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-lion.json.gz",
+            "sha256": "d2576e19653abefc56049c2d9e306a2da113b5bd3224f946c53649290b818640",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-zebra-review.json",
+            "sha256": "f140a5c8634775f3f4446b9b3d460ff56e37c94b03a28691462015b20463a5de",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/animals-low-zebra.json.gz",
+            "sha256": "a999a6cd97be8fa49d501c78560f078f3116ca851957ddaba24276d10cea0583",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/canopy-review.json",
+            "sha256": "86e535e39956b53634439d83b099fbf8b0fc281aa62b7a132d5c7443ed337199",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/coverage-proof.json",
+            "sha256": "e250ca4e646284b4c1ba1e1dce2a790b7d898f175a69503a258ad68ed2c629f6",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/high-canopy.json.gz",
+            "sha256": "9e32aa03d2a811a5fefa23bc3d4e248838854715f5f45b75dddf42a500302ba5",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/high-postbreach-canopy.json.gz",
+            "sha256": "a8b8c33b1a56fde629f74192cc344e1e614b3c4abecebad3ee423072cc71f696",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/low-canopy.json.gz",
+            "sha256": "1c3b10aac6a429e99190cee248c4219c11ceab97b2387eb7418b490e88283a83",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/low-postbreach-canopy.json.gz",
+            "sha256": "f5911f9bbfb741ed6028672c409835527514b76b8b66fee7705dcaac389642a5",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-08/postbreach-canopy-review.json",
+            "sha256": "de24f6666d36a2192d86b88424606ead20cd716767323611eb4ea7dcfb8d1636",
+            "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
           }
         ],
-        "notes": "Shared pooled headless Metal WebGL2; actual movement and ordinary actors, protected courier requested; camera/quality photos are presentation overrides only. Any failed clause fails the compound row; no PASS for unmeasured clauses.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a1ec11d15e9ea33396cbe8b3f77e5c7bd5202fa5"
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
       }
     },
     {
       "id": "L8-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Actual high route boards12 survivors and visibly reports6/13 during the wait; APC has no firing action in the run. Every missing-member guidance/physical boarding clause is not fully tracked.",
+      "value": "Manual review PASS (STALE, Codex sweep-c5): Fresh read-only canonical low/high boarding observers cover1221/1426 consecutive ticks with unchanged final native state, all13 native passenger identities seated and no departure with a waiter. Exact current physical WASD L7→L8 runs separately carry human289 plus corgi308 low and humans32/31/389/30 plus corgi408 high; every identity is seated in the actual departure transport. Actual physical artifacts and all75 original playthrough frames were personally reviewed for prior L8-02; current fixed-APC close/wide frames show plain hatch/grilles without a gun. New production SurvivorRadar+production CSS replay of every native waiting snapshot measures7658/10084 human samples,216 internal doorway samples per tier and zero missing external pins; corgi stays within4.961m during native wait and is actually seated in both physical runs. Personally inspected both DOM replay captures: clustered blue pins visible, explicitly DOM-only, not3D renders. Actual transport has unarmed body variant and no weapon/loadout/mount/turret components. Twelve semantic faults reject; all original native/physical/review bytes restored exactly. Raw replay captures deleted after hashes; original physical captures already deleted. Actual high route boards12 survivors and visibly reports6/13 during the wait; APC has no firing action in the run. Every missing-member guidance/physical boarding clause is not fully tracked.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-c5/L8-09/L8-09-radar-replay.json",
+        "docs/reports/sweep-c5/L8-09/low-boarding-samples.json.gz",
+        "docs/reports/sweep-c5/L8-09/low-physical-input.json.gz",
+        "docs/reports/sweep-c5/L8-09/high-physical-review.json.gz",
+        "docs/reports/sweep-c5/L8-09/low-late-input-completion.json.gz",
+        "docs/reports/sweep-c5/L8-09/high-physical-input.json.gz",
+        "docs/reports/sweep-c5/L8-09/high-boarding-samples.json.gz",
+        "docs/reports/sweep-c5/L8-09/high-late-input-completion.json.gz",
+        "docs/reports/sweep-c5/L8-09/L8-09-coverage-proof.json",
+        "docs/reports/sweep-c5/L8-09/high-late-input-acceptance-ledger.json.gz",
+        "docs/reports/sweep-c5/L8-09/L8-09-boarding-native.json",
+        "docs/reports/sweep-c5/L8-09/low-late-input-acceptance-ledger.json.gz",
+        "docs/reports/sweep-c5/L8-09/low-physical-review.json.gz",
+        "docs/reports/sweep-c5/L8-07/low-review.json",
+        "docs/reports/sweep-c5/L8-07/high-review.json"
+      ],
       "expected": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
       "checks": [],
       "historical": {
@@ -4074,15 +4431,122 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
+        "clause": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun."
+      },
+      "reviewDecision": {
+        "row": "L8-09",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "5fd61b3df717036c627c87253d2f9512867dc39f",
+        "clauses": [
+          {
+            "clause": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
+            "verdict": "PASS",
+            "note": "Fresh read-only canonical low/high boarding observers cover1221/1426 consecutive ticks with unchanged final native state, all13 native passenger identities seated and no departure with a waiter. Exact current physical WASD L7→L8 runs separately carry human289 plus corgi308 low and humans32/31/389/30 plus corgi408 high; every identity is seated in the actual departure transport. Actual physical artifacts and all75 original playthrough frames were personally reviewed for prior L8-02; current fixed-APC close/wide frames show plain hatch/grilles without a gun. New production SurvivorRadar+production CSS replay of every native waiting snapshot measures7658/10084 human samples,216 internal doorway samples per tier and zero missing external pins; corgi stays within4.961m during native wait and is actually seated in both physical runs. Personally inspected both DOM replay captures: clustered blue pins visible, explicitly DOM-only, not3D renders. Actual transport has unarmed body variant and no weapon/loadout/mount/turret components. Twelve semantic faults reject; all original native/physical/review bytes restored exactly. Raw replay captures deleted after hashes; original physical captures already deleted."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L8-09/L8-09-radar-replay.json",
+            "sha256": "1a0cccd4029f966bc8a41a3c574d6080749d76d15e30e26ad76590040b38d0b6",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/low-boarding-samples.json.gz",
+            "sha256": "9c9dd8dba9fee1799dd1bb384d6784151384913ee13a3c7c1760727e651718bc",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/low-physical-input.json.gz",
+            "sha256": "4ac9ea3a249d680a70c51bb9bad3308a37a3136714e0b8e589562f26af388a72",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/high-physical-review.json.gz",
+            "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/low-late-input-completion.json.gz",
+            "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/high-physical-input.json.gz",
+            "sha256": "21986630379983a8fdac10c6fd1cda846cb93732f4c05242b75d9be062ae6223",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/high-boarding-samples.json.gz",
+            "sha256": "d66ef0dfe7b31c47add145f1990803cd82a8cc7614492bc4180b4464fde119bb",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/high-late-input-completion.json.gz",
+            "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/L8-09-coverage-proof.json",
+            "sha256": "b17d1d82a3ccca755c11ed14110f3db09068f4823c161396f1d68da113446fe0",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/high-late-input-acceptance-ledger.json.gz",
+            "sha256": "e5d86326c2632e9c30e83db36366e10d02f323d395aac123f4c437162e0bb2ae",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/L8-09-boarding-native.json",
+            "sha256": "ea736883adefa9e8d22a21a179112b223a0e9cba008d10a23b518e6debcabe82",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/low-late-input-acceptance-ledger.json.gz",
+            "sha256": "f461a5c1457b0ee8b0fbba6dd523b457c84d14626558fd726cc67645faaf1985",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-09/low-physical-review.json.gz",
+            "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
+            "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/low-review.json",
+            "sha256": "3b33301eb29592aaf9225f6bb1ed2ec7df8b8fd24061956a2e6cc778a718cca6",
+            "what": "Personally inspected current wide/close fixed-APC frames show plain hatch/grilles with no gun; other enclosure frames are path evidence, not boarding witnesses."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-07/high-review.json",
+            "sha256": "938f2e867356b0ec12f1455f59ce9040383aa5d7aabc33b09c6156736dbf535b",
+            "what": "Personally inspected current wide/close fixed-APC frames show plain hatch/grilles with no gun; other enclosure frames are path evidence, not boarding witnesses."
+          }
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+      }
     },
     {
       "id": "L8-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, Codex sweep-c5): Fresh shared-pool headless Metal WebGL2 diagnostics, one tier at a time, use exact unmodified qualified physical L7/L8 campaign saves and the same continueCampaign path/method as tools/perf/campaign-handover-time.ts. Outgoing L8 is constructed normally and kept fully resident for6s; timer includes campaign cloning/settings, outgoing teardown, incoming L9 load through first frame. Low3833.7ms, high3709.6ms; no errors or remaining loading card. Incoming live APC ID700/800 exactly matches the actual physical departure save at980/930 out of1000HP, driver1 active, same seated humans/corgi. The reconstructed initial outgoing hull is not used as the damage witness. Personally inspected allfour final original-size frames: outgoing L8 sanctuary/briefing context, incoming L9 same unarmed APC with courier in cab, lit headlights and correct Armor display. No frame profiler, actor/HP/objective writes or performance-budget changes. Earlier native predeparture Resume attempts are explicitly rejected: low produced repeated null-navigation errors, high prototype8.9871s; these are archived, not admitted as this physical-save diagnostic. Exact6000ms synthetic boundary accepts and26 negative controls reject; no fabricated control data used as game evidence. Raw captures deleted after hashes. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-c5/L8-10/low-handover.json",
+        "docs/reports/sweep-c5/L8-10/high-handover.json",
+        "docs/reports/sweep-c5/L8-10/checker-controls.json",
+        "docs/reports/sweep-c5/L8-10/exploration/README.md",
+        "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
+        "docs/reports/fix51-r10c/L7-L8-carried-low/review.json",
+        "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
+        "docs/reports/fix51-r10c/L7-L8-carried-high/review.json"
+      ],
       "expected": "L8 → L9 handover ≤ 6 s inside the same APC (durability kept).",
       "checks": [],
       "historical": {
@@ -4093,7 +4557,70 @@
         "evidence": [],
         "method": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds."
       },
-      "remaining": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds."
+      "remaining": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds.",
+      "review": {
+        "tag": "O",
+        "instruction": "L8 → L9 handover ≤ 6 s inside the same APC (durability kept).",
+        "clause": "L8 → L9 handover ≤ 6 s inside the same APC (durability kept)."
+      },
+      "reviewDecision": {
+        "row": "L8-10",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "8c10e2cc6487151a24969dcea563c60d08e73f56",
+        "clauses": [
+          {
+            "clause": "L8 → L9 handover ≤ 6 s inside the same APC (durability kept).",
+            "verdict": "PASS",
+            "note": "Fresh shared-pool headless Metal WebGL2 diagnostics, one tier at a time, use exact unmodified qualified physical L7/L8 campaign saves and the same continueCampaign path/method as tools/perf/campaign-handover-time.ts. Outgoing L8 is constructed normally and kept fully resident for6s; timer includes campaign cloning/settings, outgoing teardown, incoming L9 load through first frame. Low3833.7ms, high3709.6ms; no errors or remaining loading card. Incoming live APC ID700/800 exactly matches the actual physical departure save at980/930 out of1000HP, driver1 active, same seated humans/corgi. The reconstructed initial outgoing hull is not used as the damage witness. Personally inspected allfour final original-size frames: outgoing L8 sanctuary/briefing context, incoming L9 same unarmed APC with courier in cab, lit headlights and correct Armor display. No frame profiler, actor/HP/objective writes or performance-budget changes. Earlier native predeparture Resume attempts are explicitly rejected: low produced repeated null-navigation errors, high prototype8.9871s; these are archived, not admitted as this physical-save diagnostic. Exact6000ms synthetic boundary accepts and26 negative controls reject; no fabricated control data used as game evidence. Raw captures deleted after hashes."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L8-10/low-handover.json",
+            "sha256": "59a9493aa2a615a0f9e16c7af9cdf3ea59b9d49c3f889ce35f4030910d1b41f2",
+            "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-10/high-handover.json",
+            "sha256": "2cb373a9f3de3d3a59384842686d9ca920ddd56e902e8b152f5eef7769e7e7c6",
+            "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-10/checker-controls.json",
+            "sha256": "d1355c8265fed8d3be6fc7aeb7b3b6cd1c520df49f93a99b3f57b3de60406f01",
+            "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L8-10/exploration/README.md",
+            "sha256": "b50f2ded25aaa0d1b44da977f9978011d590613e4720b29dab62ecf9bc38aa6f",
+            "what": "Explicitly rejected native Resume setup: low navigation errors, high8.9871s prototype result, archived unchanged without qualifying this row."
+          },
+          {
+            "file": "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
+            "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
+            "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+          },
+          {
+            "file": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json",
+            "sha256": "ddc2ec3ebbe183a8491b4c1c86d16b26b6c52563fa09fb026762cf4ef3a18217",
+            "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+          },
+          {
+            "file": "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
+            "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
+            "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+          },
+          {
+            "file": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json",
+            "sha256": "8d2364bb307e03bfad09541b4d95d63aa64a7693b30a371bb12e8170b3048558",
+            "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+          }
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+      }
     },
     {
       "id": "L8-11",

@@ -1,26 +1,26 @@
 {
   "row": "L4-13",
   "status": "FAIL",
-  "reviewer": "Codex/fix71-b",
+  "reviewer": "Codex/fix73-b",
   "date": "2026-11-06",
-  "commit": "454ef66f7c7ae8513749ac490cbab2ab420182af",
+  "commit": "166205b9600ebef710ec16709af5e36648170bc0",
   "clauses": [
     {
-      "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets \u2265 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
+      "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "verdict": "FAIL",
-      "note": "Final six-role source first9s window meets actual quotas on distinct authored edges: low2/2/2 at tick12889; high3/3/3 at12925. Both independent canonical complete hashes match the read-only admission observer. Later saturation remains: low23/56 windows miss quota, first at28009 with1/1/1 instead2each; high5/9 miss, first at15085 edge6 admits0/3. Caps remain80/120, escape windows40s, clocks9s, pending demand retained. Whole row FAIL. Mortal routes finish but are difficult: low24deaths/719s, high6deaths/302s."
+      "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L4-release-native.json",
-      "sha256": "1ceff5eb440f704146b6154987337caf7a1140ee41766942aab397b10109613e",
-      "what": "Final six-role source first9s window meets actual quotas on distinct authored edges: low2/2/2 at tick12889; high3/3/3 at12925. Both independent canonical complete hashes match the read-only admission observer. Later saturation remains: low23/56 windows miss quota, first at28009 with1/1/1 instead2each; high5/9 miss, first at15085 edge6 admits0/3. Caps remain80/120, escape windows40s, clocks9s, pending demand retained. Whole row FAIL. Mortal routes finish but are difficult: low24deaths/719s, high6deaths/302s."
+      "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
+      "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c",
+      "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
     },
     {
-      "file": "docs/reports/fix71-b/L4-release-native.json.gz",
-      "sha256": "0e87b569a3585b973ba8278539cc4efdc2e10428381b71615d69a9cd8b202eb8",
-      "what": "Full per-edge actual actor admission ledger, scheduled quotas, source coordinates, every-tick look membership, population snapshots and independent canonical hash controls."
+      "file": "docs/reports/fix73-b/L4-look-equivalence.json",
+      "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a",
+      "what": "Deep equality proves all collapse quota/admission/population data unchanged by appearance-only fix."
     }
   ]
 }
