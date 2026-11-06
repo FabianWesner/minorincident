@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L10",
   "tier": "low",
-  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
   "fixtureHash": "0427e288815117909f71fd1216afd443715bd0573e98531a512d70d1bd1d21c6",
   "errors": [],
   "checks": [
@@ -11,9 +11,9 @@
       "clause": "continuous physical epilogue control and final camera pullback",
       "tier": "low",
       "policy": "physical-epilogue",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
-        "valid": true,
+        "valid": false,
         "continuous": true,
         "control": true,
         "pull": true,
@@ -27,10 +27,10 @@
       "clause": "actual cure front mortality immunity and all species fixture",
       "tier": "low",
       "policy": "physical-epilogue",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
         "mortality": true,
-        "allSpecies": true,
+        "allSpecies": false,
         "touched": 3,
         "immune": 5
       },
@@ -42,10 +42,10 @@
       "clause": "reviewed actual mist title credits and menu sequence",
       "tier": "low",
       "policy": "physical-epilogue",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
-        "seen": true,
-        "visual": true
+        "seen": false,
+        "visual": false
       },
       "target": "Every actual frame personally inspected at both zooms, visible mist, title, middle credits and menu, no skip.",
       "receipt": "docs/reports/sweep-c6/L10-14/review.json"

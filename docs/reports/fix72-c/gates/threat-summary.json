@@ -1,0 +1,75 @@
+{
+  "command": "npm run qa:threat",
+  "exitCode": 0,
+  "runAlone": true,
+  "admissionLoad": [
+    4.09033203125,
+    3.74462890625,
+    4.81005859375
+  ],
+  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "revision": "65591f560f941723828035ca104b8b4985351bed",
+  "seconds": 295.503071792,
+  "flags": [],
+  "levels": [
+    {
+      "level": "L1",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L2",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L3",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L4",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L5",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L6",
+      "flags": [
+        "wave/l6.breach1:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+        "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/entry-5@5982:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L7",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L8",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L9",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L10",
+      "flags": [],
+      "passiveFlags": []
+    }
+  ],
+  "receipt": {
+    "file": "docs/reports/fix72-c/gates/threat-audit.json.gz",
+    "sha256": "a975e34a2df2874f19b86fa7a9dcfb02f8590b821a1f985803f673842596d015"
+  },
+  "log": "\n> qa:threat\n> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n[qa:threat] L2: skilled and passive native routes, seed=1, low population\n[qa:threat] L1: skilled and passive native routes, seed=1, low population\n[qa:threat] L1: skilled complete, passive complete, 0 passive flags (16.8s)\n[qa:threat] 16.8s; 1 fail flags; test-results/qa-threat/L1/README.md\n[qa:threat] L3: skilled and passive native routes, seed=1, low population\n[qa:threat] L2: skilled complete, passive complete, 0 passive flags (27.3s)\n[qa:threat] 27.3s; 1 fail flags; test-results/qa-threat/L2/README.md\n[qa:threat] L4: skilled and passive native routes, seed=1, low population\n[qa:threat] L3 army line over seeds 1\u20133: {\"seeds\":[{\"seed\":1,\"valid\":true,\"army\":3},{\"seed\":2,\"valid\":true,\"army\":0},{\"seed\":3,\"valid\":true,\"army\":0}],\"measured\":3,\"within\":2,\"pass\":true}\n[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (70.4s)\n[qa:threat] 70.4s; 1 fail flags; test-results/qa-threat/L3/README.md\n[qa:threat] L5: skilled and passive native routes, seed=1, low population\n[qa:threat] L4: high-tier native hold census through the line break\n[qa:follower-pace] L5 low/complete seed 2\n[qa:follower-pace] L5 low/complete seed 3\n[qa:threat] L4 high hold: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":61,\"peakAlive\":97,\"peakPlazaAlive\":92,\"minPlazaAliveAfter45Seconds\":65,\"samplesAfter45Seconds\":8711,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":7.916666666666667,\"lineBreakAfterTurnSeconds\":189.18333333333334}\n[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (149.8s)\n[qa:threat] 149.8s; 1 fail flags; test-results/qa-threat/L4/README.md\n[qa:threat] L6: skilled and passive native routes, seed=1, low population\n[qa:follower-pace] L5 low/passive seed 2\n[qa:threat] L6: skilled complete, passive tick-budget, 0 passive flags (6.2s)\n[qa:threat] 6.2s; 1 fail flags; test-results/qa-threat/L6/README.md\n[qa:threat] L7: skilled and passive native routes, seed=1, low population\n[qa:follower-pace] L7 low/complete seed 2\n[qa:follower-pace] L7 low/complete seed 3\n[qa:follower-pace] L7 low/passive seed 2\n[qa:follower-pace] L7 low/passive seed 3\n[qa:threat] L7 follower pace over seeds 1\u20133: skilled 0, passive 0 flags\n[qa:threat] L7: skilled complete, passive complete, 0 passive flags (35.3s)\n[qa:threat] 35.3s; 1 fail flags; test-results/qa-threat/L7/README.md\n[qa:threat] L8: skilled and passive native routes, seed=1, low population\n[qa:follower-pace] L5 low/passive seed 3\n[qa:threat] L8: skilled complete, passive complete, 0 passive flags (19.7s)\n[qa:threat] 19.7s; 1 fail flags; test-results/qa-threat/L8/README.md\n[qa:threat] L9: skilled and passive native routes, seed=1, low population\n[qa:threat] L9: skilled complete, passive complete, 0 passive flags (7.7s)\n[qa:threat] 7.7s; 1 fail flags; test-results/qa-threat/L9/README.md\n[qa:threat] L10: skilled and passive native routes, seed=1, low population\n[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (35.6s)\n[qa:threat] 35.6s; 1 fail flags; test-results/qa-threat/L10/README.md\n[qa:threat] L5 follower pace over seeds 1\u20133: skilled 0, passive 0 flags\n[qa:threat] L5: skilled complete, passive tick-budget, 0 passive flags (206.8s)\n[qa:threat] 206.8s; 1 fail flags; test-results/qa-threat/L5/README.md\n[qa:threat] 295.5s; 0 fail flags; test-results/qa-threat/README.md\n[test-budget] qa-threat: 301.2 s (budget 600 s)\n"
+}

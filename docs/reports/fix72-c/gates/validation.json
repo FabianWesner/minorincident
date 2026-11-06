@@ -1,0 +1,41 @@
+{
+  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
+  "commands": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": ""
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "log": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "sha256": "9745b2929b04c252749bb5d01ef7a814063c2a445161f9c3f1e8ccd8c8676aa0",
+      "log": "\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fix72-c\n\n\n Test Files  27 passed (27)\n      Tests  107 passed (107)\n   Start at  14:15:47\n   Duration  20.17s (tests 90%, transform 5%, import 5%, setup 1%)\n\n[test-budget] test: 22.5 s (budget 240 s)\n"
+    },
+    {
+      "command": "npm run build:qa",
+      "exitCode": 0,
+      "sha256": "e0fbc2dcdd15ab012e6f9b91d11dded3a3fdbb9ea7e47ba9c3ab0836b9116fec",
+      "log": "\n> build:qa\n> NODE_ENV=production VITE_QA_HOOKS=1 sh tools/build-cached.sh\n\nvite v6.4.3 building for production...\ntransforming...\n\u2713 651 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/preview/index.html                             1.81 kB \u2502 gzip:     0.75 kB\ndist/index.html                                     2.90 kB \u2502 gzip:     0.95 kB\ndist/build/civilianBakeData-uWj8tNGM.js             4.05 kB\ndist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB\ndist/build/civilianBake.worker-4Zs1HaAU.js         28.80 kB\ndist/build/basis_transcoder-o4Hde_L7.js            57.53 kB\ndist/build/three.module-CwjGdtFU.js               206.12 kB\ndist/build/civilianSource-BtQC5jWP.js             410.02 kB\ndist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB \u2502 gzip:   244.57 kB\ndist/build/prefetch.worker-D70UVNYZ.js          1,064.81 kB\ndist/build/prepareCivilianGeometry-1mQkWvTK.js  1,971.78 kB\ndist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB \u2502 gzip: 1,171.17 kB\ndist/build/index-ri5EUQ-C.css                      42.27 kB \u2502 gzip:     9.00 kB\ndist/build/lookViewpoints-BX-OEann.js               0.23 kB \u2502 gzip:     0.16 kB\ndist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB \u2502 gzip:     0.40 kB\ndist/build/three.module-9IIMrrY9.js                 1.10 kB \u2502 gzip:     0.64 kB\ndist/build/preload-helper-BlTxHScW.js               1.11 kB \u2502 gzip:     0.65 kB\ndist/build/controls-BD2KGrGS.js                     1.40 kB \u2502 gzip:     0.75 kB\ndist/build/crowdProbe-DcHILI4p.js                   1.53 kB \u2502 gzip:     0.88 kB\ndist/build/worldLook-o3T_90Bf.js                    1.96 kB \u2502 gzip:     0.88 kB\ndist/build/DebugInfo-B5ZzDjfp.js                    2.70 kB \u2502 gzip:     1.19 kB\ndist/build/crowd-BrhzdB90.js                        3.10 kB \u2502 gzip:     1.59 kB\ndist/build/lookPatch-BJ2Iw5hk.js                    5.68 kB \u2502 gzip:     2.83 kB\ndist/build/probe-DKgptAsS.js                        7.52 kB \u2502 gzip:     3.05 kB\ndist/build/footSoles-BhQAeefw.js                   10.41 kB \u2502 gzip:     3.52 kB\ndist/build/index-CyB3JqLs.js                       12.43 kB \u2502 gzip:     4.50 kB\ndist/build/Inspection-nnlJoE4G.js                  12.86 kB \u2502 gzip:     4.41 kB\ndist/build/MotionLab-DiY0BGrH.js                   18.38 kB \u2502 gzip:     7.93 kB\ndist/build/LevelFiveBot-D-K3Utzc.js                23.10 kB \u2502 gzip:     6.82 kB\ndist/build/survivor-CsRktIYI.js                    24.55 kB \u2502 gzip:    10.00 kB\ndist/build/index-DdBL7IlV.js                       28.31 kB \u2502 gzip:     7.74 kB\ndist/build/LevelSixSubway-COVrtD78.js              29.54 kB \u2502 gzip:    11.09 kB\ndist/build/testApi-jcj8adx6.js                     37.41 kB \u2502 gzip:    13.61 kB\ndist/build/Physics-B0FQ1kOy.js                     81.00 kB \u2502 gzip:    28.12 kB\ndist/build/light-anchors-DQGCSUUw.js               90.38 kB \u2502 gzip:     6.79 kB\ndist/build/Pickups-CUO4tbJr.js                     99.57 kB \u2502 gzip:    34.14 kB\ndist/build/SceneLab-Bcxwe-gd.js                   104.86 kB \u2502 gzip:    36.04 kB\ndist/build/PropSystem-C60Rkwml.js                 138.69 kB \u2502 gzip:    46.97 kB\ndist/build/Debug-C5mqunPp.js                      155.77 kB \u2502 gzip:    33.00 kB\ndist/build/registry-Bd0lGnSR.js                   211.17 kB \u2502 gzip:    71.81 kB\ndist/build/rapier-ykuY6d4E.js                     212.13 kB \u2502 gzip:    36.15 kB\ndist/build/l6-BtMAbZs1.js                         281.66 kB \u2502 gzip:    86.87 kB\ndist/build/three-core-DHyOKRez.js                 307.37 kB \u2502 gzip:    82.33 kB\ndist/build/WeatherView-UxKD23i8.js                364.36 kB \u2502 gzip:    42.27 kB\ndist/build/three-webgpu-DhgMgiIh.js               688.68 kB \u2502 gzip:   192.06 kB\ndist/build/wreck-roofs-GAckelu8.js                755.61 kB \u2502 gzip:   253.19 kB\ndist/build/install-DFAO2PxV.js                  1,067.01 kB \u2502 gzip:   198.86 kB\ndist/build/index-BePfjNY9.js                    1,362.89 kB \u2502 gzip:   426.26 kB\ndist/build/character-clips-CGKWtM3S.js          1,939.70 kB \u2502 gzip:   341.80 kB\n\u2713 built in 10.32s\n"
+    },
+    {
+      "command": "npm run qa:accept -- --level L10 --reuse --skip-browser",
+      "exitCode": 1,
+      "sha256": "8e1db570dd4459ce76a08df7b6e3685c4345e1d1bf52c42f261d547b8c628c88",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L10 --reuse --skip-browser\n\n[qa:accept] L10 low/complete: reuse matching receipt\n[qa:accept] L10 low/stationary: reuse matching receipt\n[qa:accept] L10 high/complete: reuse matching receipt\n[qa:accept] L10 high/stationary: reuse matching receipt\n[qa:accept] L10 low/fixtures: 16 clauses, 0 errors\n[qa:accept] L10 high/fixtures: 16 clauses, 0 errors\n[qa:accept] L10 low/checkpoints: 27 clauses; control identical; 0 errors\n[qa:accept] L10 high/checkpoints: 27 clauses; control identical; 0 errors\n[qa:accept] L10: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L10.json\n"
+    },
+    {
+      "command": "npm run qa:accept -- --level L7 --reuse --skip-browser",
+      "exitCode": 1,
+      "sha256": "f157f56ac8b07afd4bd3ab70a5ce225313f0282a30bb00f1868d0b29f1fbec6e",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L7 --reuse --skip-browser\n\n[qa:accept] L7 low/complete: reuse matching receipt\n[qa:accept] L7 low/stationary: reuse matching receipt\n[qa:accept] L7 high/complete: reuse matching receipt\n[qa:accept] L7 high/stationary: reuse matching receipt\n[qa:accept] L7 low/fixtures: 8 clauses, 0 errors\n[qa:accept] L7 high/fixtures: 8 clauses, 0 errors\n[qa:accept] L7 low/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L7 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L7: 2 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L7.json\n"
+    }
+  ]
+}

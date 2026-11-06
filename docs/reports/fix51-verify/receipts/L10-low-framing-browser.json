@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L10",
   "tier": "low",
-  "sourceHash": "8f5d6d4a3480e30bcfd432736bd575d75e684e8353be800dc849c9ccd251cedb",
+  "sourceHash": "cd41f28453411f1dfcf4651b96a6c02ac24ae54b659d43b42bd06e92243b48f1",
   "fixtureHash": "452f26f45b8af10385697619b1e6edaedace1ca5169a163f65193920b41beae2",
   "errors": [],
   "observations": {
@@ -16,9 +16,9 @@
       "clause": "physical five-region road framing matrix",
       "tier": "low",
       "policy": "physical-framing",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
-        "valid": true,
+        "valid": false,
         "roadMatrix": true
       },
       "target": "Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.",
@@ -29,9 +29,9 @@
       "clause": "production road and finale maximal zoom clamp",
       "tier": "low",
       "policy": "physical-framing",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
-        "cap": true,
+        "cap": false,
         "cells": 14,
         "maximum": 2
       },
@@ -43,10 +43,10 @@
       "clause": "reviewed night road verges clothing and natural ground-slam telegraph",
       "tier": "low",
       "policy": "physical-framing",
-      "status": "PASS",
+      "status": "NOT CHECKED",
       "value": {
         "slam": true,
-        "seen": true,
+        "seen": false,
         "firstSlamTick": 453,
         "startDistance": 3.4142223699859016
       },
