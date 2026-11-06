@@ -326,6 +326,9 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
+    // Resolve the authored interaction radius before warming its buffers.
+    // The first gameplay sync must not replace the torus that was just warmed.
+    this.marker?.update();
     // Instantiate L9's resident pet/escort before warming, including its own
     // skinned shadow bindings. Their first update can request an escort model.
     if (this.world.scenario === 'L9') this.npcs?.update(this.camera);
