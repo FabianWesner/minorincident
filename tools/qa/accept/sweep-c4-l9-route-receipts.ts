@@ -10,15 +10,15 @@ type Hit = { type: string; source?: string; targetId: number; contactId: number 
 type Route = { tier: string; mode: string; errors: string[]; setup: { before: number; after: number; backend: string; quality: string }; captures: Capture[]; commands: { keys: string[] }[]; samples: { phase: string; hp: number; position: { x: number; z: number } }[]; result: { phase: string; preCrashDurability: number; inputs: { drive?: { throttle: number } }[]; events: Hit[] } };
 type Proof = { sourceHash: string; browserHash: string; toolSha256: string; rows: Route[] };
 
-export function sweepC4L9RouteReceipts(sourceHash: string, browserHash: string): { path: string; receipt: FixtureReceipt }[] {
-  const reviewPath = 'docs/reports/sweep-c4/L9-04-review.json';
+export function sweepC4L9RouteReceipts(sourceHash: string, browserHash: string, evidenceRoot = 'docs/reports/sweep-c4'): { path: string; receipt: FixtureReceipt }[] {
+  const reviewPath = `${evidenceRoot}/L9-04-review.json`;
   if (!existsSync(reviewPath)) return [];
   const review = JSON.parse(readFileSync(reviewPath, 'utf8')) as { sourceHash: string; browserHash: string; producer: Capture; proofs: Capture[]; captures: (Capture & { seen: string })[]; sheets: Capture[] };
   const sha = (data: Buffer) => createHash('sha256').update(data).digest('hex');
   if (review.sourceHash !== sourceHash || review.browserHash !== browserHash || !review.producer || !existsSync(review.producer.file) || sha(readFileSync(review.producer.file)) !== review.producer.sha256) return [];
   const results = [];
   for (const tier of ['low', 'high'] as const) {
-    const proofPath = `docs/reports/sweep-c4/L9-04-${tier}-physical.json.gz`;
+    const proofPath = `${evidenceRoot}/L9-04-${tier}-physical.json.gz`;
     if (!existsSync(proofPath)) continue;
     const bytes = readFileSync(proofPath), proof = JSON.parse(gunzipSync(bytes).toString()) as Proof;
     if (proof.sourceHash !== sourceHash || proof.browserHash !== browserHash || proof.toolSha256 !== review.producer.sha256 || !review.proofs.some(file => file.file === proofPath && file.sha256 === sha(bytes))) continue;
@@ -32,7 +32,7 @@ export function sweepC4L9RouteReceipts(sourceHash: string, browserHash: string):
       const events = row.result.events.filter(event => event.type === 'vehicle.durability-hit' && ['contact', 'attack'].includes(event.source ?? ''));
       return new Set(events.map(event => `${event.source}/${event.targetId}/${event.contactId}/${event.attackId}`)).size === events.length && events.every(event => event.after === Math.max(0, event.before - 10));
     });
-    const path = `${reportRoot}/receipts/L9-${tier}-sweep-c4-routes.json`;
+    const path = `${reportRoot}/receipts/L9-${tier}-${evidenceRoot.split('/').at(-1)}-routes.json`;
     const receipt: FixtureReceipt = { version: 1, level: 'L9', tier, sourceHash, fixtureHash: sha(readFileSync(new URL(import.meta.url))), errors: [...safe.errors, ...shortcut.errors], observations: { proofPath, reviewPath }, checks: [
       { id: 'L9-04', clause: 'physical matched safe route retains more durability than shortcut', tier, policy: 'real-input-webgl2', value: { validPair: pair, safe: safe.result.preCrashDurability, shortcut: shortcut.result.preCrashDurability }, target: 'same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater', status: !pair ? 'NOT CHECKED' : safe.result.preCrashDurability > shortcut.result.preCrashDurability ? 'PASS' : 'FAIL', receipt: proofPath },
       { id: 'L9-04', clause: 'physical route contact and attack billing', tier, policy: 'real-input-webgl2', value: hits, target: 'nonempty actual hit ledger; ten damage per unique contact/attack transaction', status: !pair || !hits.length ? 'NOT CHECKED' : billing ? 'PASS' : 'FAIL', receipt: proofPath },
