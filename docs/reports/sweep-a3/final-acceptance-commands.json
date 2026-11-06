@@ -1,0 +1,56 @@
+[
+  {
+    "level": "L1",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L1",
+      "--tier",
+      "both",
+      "--policy",
+      "both",
+      "--skip-browser",
+      "--reuse"
+    ],
+    "exitCode": 1
+  },
+  {
+    "level": "L2",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L2",
+      "--tier",
+      "both",
+      "--policy",
+      "both",
+      "--skip-browser",
+      "--reuse"
+    ],
+    "exitCode": 1
+  },
+  {
+    "level": "L3",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L3",
+      "--tier",
+      "both",
+      "--policy",
+      "both",
+      "--skip-browser",
+      "--reuse"
+    ],
+    "exitCode": 1
+  }
+]
