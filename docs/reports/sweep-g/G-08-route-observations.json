@@ -80,6 +80,60 @@
       "mismatchesBeyond1M": []
     },
     {
+      "route": "G-25-audited-L10-high-webgl2",
+      "batch": "-batch1",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-high-webgl2-batch1-observations.json.gz",
+        "sha256": "6cb16082d9bb526e951af3a55794add7c5ca311c916a7cbd2ed3359e7059485a"
+      },
+      "stepMarkerPoints": {
+        "residential-fringe": [
+          [
+            767,
+            25
+          ]
+        ],
+        "industrial-area": [
+          [
+            1257,
+            25
+          ]
+        ],
+        "military-zone": [
+          [
+            1857,
+            25
+          ]
+        ],
+        "research-campus": [
+          [
+            2467,
+            -5
+          ]
+        ]
+      },
+      "distanceSamples": 367,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L10-high-webgl2",
+      "batch": "-batch2",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L10-high-webgl2-batch2-observations.json.gz",
+        "sha256": "5a46b13248a75b6298a1bd94019de75aaa215c78d2f41dce2235ae903fab6d7f"
+      },
+      "stepMarkerPoints": {
+        "research-campus": [
+          [
+            2467,
+            -5
+          ]
+        ]
+      },
+      "distanceSamples": 269,
+      "mismatchesBeyond1M": []
+    },
+    {
       "route": "G-25-audited-L10-low-webgl2",
       "batch": "-batch1",
       "evidence": {
@@ -922,6 +976,54 @@
       "mismatchesBeyond1M": []
     },
     {
+      "route": "G-25-audited-L9-high-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L9-high-webgl2-observations.json.gz",
+        "sha256": "a8dac9a51a37a76a4866ce22a5cf360a6b0e95a5fa1ee5eae0ec8c012f3066aa"
+      },
+      "stepMarkerPoints": {
+        "approach": [
+          [
+            470,
+            0
+          ]
+        ],
+        "reach-outskirts": [
+          [
+            547,
+            0
+          ]
+        ]
+      },
+      "distanceSamples": 125,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-audited-L9-low-webgl2",
+      "batch": "",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-audited-L9-low-webgl2-observations.json.gz",
+        "sha256": "aba758518e4cf98506760d723d36952be99d7c01f109fc322e26ce78b6e6a744"
+      },
+      "stepMarkerPoints": {
+        "approach": [
+          [
+            470,
+            0
+          ]
+        ],
+        "reach-outskirts": [
+          [
+            547,
+            0
+          ]
+        ]
+      },
+      "distanceSamples": 88,
+      "mismatchesBeyond1M": []
+    },
+    {
       "route": "G-25-final-L6-high-webgl2",
       "batch": "",
       "evidence": {
@@ -1105,6 +1207,182 @@
             "z": 13.551844596862793,
             "hp": 100,
             "weapon": "weapon.army-mg"
+          }
+        }
+      ]
+    },
+    {
+      "route": "G-25-retry-L10-high-webgl2",
+      "batch": "-batch2",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-retry-L10-high-webgl2-batch2-observations.json.gz",
+        "sha256": "813397c4405c37422983f068c591bc0c11d5adb8d352be9b4422679703de4342"
+      },
+      "stepMarkerPoints": {
+        "research-campus": [
+          [
+            2467,
+            -5
+          ]
+        ],
+        "research": [
+          [
+            2707,
+            41.25
+          ]
+        ],
+        "cure": [
+          [
+            2713,
+            41
+          ]
+        ],
+        "research-exit": [
+          [
+            2807,
+            45
+          ]
+        ],
+        "destroyed-corridor": [
+          [
+            2937,
+            -5
+          ]
+        ],
+        "dispersal-complex": [
+          [
+            3697,
+            -25
+          ]
+        ]
+      },
+      "distanceSamples": 409,
+      "mismatchesBeyond1M": []
+    },
+    {
+      "route": "G-25-retry-L10-high-webgl2",
+      "batch": "-batch3",
+      "evidence": {
+        "file": "docs/reports/sweep-g/G-08-G-25-retry-L10-high-webgl2-batch3-observations.json.gz",
+        "sha256": "0a874d7337b39b320c8082fbc7b7774881aeeaa944b28d4bc07da00b4cd684d2"
+      },
+      "stepMarkerPoints": {
+        "dispersal-complex": [
+          [
+            3697,
+            -25
+          ]
+        ],
+        "install": [
+          [
+            4006.5,
+            -39
+          ]
+        ],
+        "hold": [
+          [
+            4002,
+            -27
+          ]
+        ],
+        "mega": [
+          [
+            3999.352,
+            -15.351
+          ],
+          [
+            4000.958,
+            -14.649
+          ],
+          [
+            4005.58,
+            -14.507
+          ],
+          [
+            4008.02,
+            -14.352
+          ],
+          [
+            4012.093,
+            -13.979
+          ],
+          [
+            4015.385,
+            -8.913
+          ],
+          [
+            4015.444,
+            -12.152
+          ],
+          [
+            4018.472,
+            -8.224
+          ]
+        ],
+        "release": [
+          [
+            4002,
+            -27
+          ]
+        ]
+      },
+      "distanceSamples": 278,
+      "mismatchesBeyond1M": [
+        {
+          "tick": 17806,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 12\u00a0m",
+          "shownM": 12,
+          "directM": 14.955848603470145,
+          "roundingErrorM": 3,
+          "marker": {
+            "x": 4000.9583246893453,
+            "y": 0.7,
+            "z": -14.648640862941576
+          },
+          "player": {
+            "x": 4015.908935546875,
+            "z": -14.252860069274902,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 18070,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 11\u00a0m",
+          "shownM": 11,
+          "directM": 14.552072299415654,
+          "roundingErrorM": 4,
+          "marker": {
+            "x": 4008.0198764128945,
+            "y": 0.7,
+            "z": -14.351512597020347
+          },
+          "player": {
+            "x": 4022.342041015625,
+            "z": -11.775001525878906,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          }
+        },
+        {
+          "tick": 18196,
+          "step": "mega",
+          "text": "Kill the Mega Alpha \u00b7 5\u00a0m",
+          "shownM": 5,
+          "directM": 8.23493497553823,
+          "roundingErrorM": 3,
+          "marker": {
+            "x": 4012.093444533423,
+            "y": 0.7,
+            "z": -13.978738565680786
+          },
+          "player": {
+            "x": 4019.326171875,
+            "z": -10.041504859924316,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
           }
         }
       ]

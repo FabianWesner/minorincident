@@ -37,7 +37,7 @@ if row == 'G-21':
           'rows': rows})
 elif row in ('G-08', 'G-14'):
     for receipt in sorted(root.glob('G-25-*webgl2.json')):
-        if 'audited' not in receipt.name and 'final-L6' not in receipt.name:
+        if 'audited' not in receipt.name and 'final-L6' not in receipt.name and 'retry' not in receipt.name:
             continue
         data = json.loads(receipt.read_text())
         if data['sourceHash'] != source:
