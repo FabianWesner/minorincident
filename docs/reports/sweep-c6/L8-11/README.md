@@ -1,0 +1,5 @@
+# L8-11 — current physical sanctuary/mixed battle capture
+
+Both qualities use actual physically progressed L7 campaign saves, normal L8 Begin, physical WASD tour, live NPCs and natural outbreak/conversion. No actor/enemy/HP/timer/count edits. Courier protection only; standing in a crowd qualifies visual capability, not mortal survival or a competent escape policy. Elephant remains the original entity and naturally converts near runners/Alphas. Paired actual zoom0.5/1.5,6/12tick motion strip with actual sidestep.
+
+All56frames personally reviewed and hashes verified before deleting raw JPGs. Derived Opus sheets remain in test-results/sweep-c6/L8-11/opus-low.jpg and opus-high.jpg. Entry has warm lamps, intact paths/fences and healthy civilians; elephant enclosure ground is nearly black and sparse, battle HP bars overlap heavily. No Opus stunning pass claimed. Scheduler NOTE requests the exact required decision: **Opus: is L8 stunning, at least7/10, across the strong sanctuary and subsequent natural human/animal mixed battle?** Row remains pending that judgment.
