@@ -1,0 +1,48 @@
+{
+  "row": "L2-02",
+  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "checks": [
+    {
+      "id": "L2-02",
+      "clause": "native no-axe completion (rack pixels remain open)",
+      "value": {
+        "outcome": "complete",
+        "axe": false,
+        "protected": true
+      },
+      "target": "complete without collecting axe; rack pixels remain open",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-02",
+      "clause": "native no-axe completion (rack pixels remain open)",
+      "value": {
+        "outcome": "complete",
+        "axe": false,
+        "protected": true
+      },
+      "target": "complete without collecting axe; rack pixels remain open",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "90007362adef3ba98bec2dfced510d8b7af7bbd5f001d4a3cba327a8ce366fe0",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "7bd8032a73ed2bb3fcc6d4972a4844e0bea62860db2e15480a770407ee6ed6fa",
+      "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e"
+    }
+  ]
+}
