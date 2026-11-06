@@ -1016,6 +1016,143 @@
       },
       "target": "at least4 distinct infected looks in every20-infected sample",
       "receipt": "docs/reports/sweep-b/L4-12-proof.json"
+    },
+    {
+      "id": "L4-08",
+      "clause": "actual Alpha admission directions and line hits",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "pass": true,
+        "actualAdmissions": [
+          {
+            "id": 278,
+            "tick": 2329,
+            "at": {
+              "x": -46,
+              "y": 0.7,
+              "z": 21,
+              "yaw": 0.5554937352655437
+            },
+            "anchor": "l4-alpha-west-slot",
+            "offscreen": true,
+            "playerDistance": 30.667787474541136,
+            "bearingDegrees": 148.17255342332692
+          },
+          {
+            "id": 322,
+            "tick": 3889,
+            "at": {
+              "x": -24,
+              "y": 0.7,
+              "z": -37.4,
+              "yaw": -1.3992323404389209
+            },
+            "anchor": "l4-alpha-nw",
+            "offscreen": true,
+            "playerDistance": 40.262080831948,
+            "bearingDegrees": -99.82989233463745
+          },
+          {
+            "id": 427,
+            "tick": 7009,
+            "at": {
+              "x": -5.8826834323650905,
+              "y": 0.83,
+              "z": 41.676120467488715,
+              "yaw": 1.8506967595228738
+            },
+            "anchor": "l4-alpha-south",
+            "offscreen": true,
+            "playerDistance": 45.901003541985936,
+            "bearingDegrees": 73.9628865208015
+          },
+          {
+            "id": 446,
+            "tick": 7489,
+            "at": {
+              "x": -18,
+              "y": 0.7,
+              "z": -38.4,
+              "yaw": -1.5466464333973808
+            },
+            "anchor": "l4-alpha-north",
+            "offscreen": true,
+            "playerDistance": 35.89164378248132,
+            "bearingDegrees": -91.38368696736852
+          },
+          {
+            "id": 464,
+            "tick": 7969,
+            "at": {
+              "x": 13.208658283817455,
+              "y": 0.7,
+              "z": -2.5380602337443565,
+              "yaw": -2.960279085476603
+            },
+            "anchor": "l4-alpha-east",
+            "offscreen": true,
+            "playerDistance": 31.618925634621483,
+            "bearingDegrees": -10.388502221343588
+          },
+          {
+            "id": 503,
+            "tick": 9169,
+            "at": {
+              "x": -23,
+              "y": 0.7,
+              "z": 42.6,
+              "yaw": 1.4204248987877621
+            },
+            "anchor": "l4-alpha-sw",
+            "offscreen": true,
+            "playerDistance": 44.26190288581808,
+            "bearingDegrees": 98.61564818416412
+          },
+          {
+            "id": 542,
+            "tick": 10249,
+            "at": {
+              "x": -39.2,
+              "z": -35,
+              "y": 0.83,
+              "yaw": -1.0420676422826194
+            },
+            "anchor": "l4-alpha-west",
+            "offscreen": true,
+            "playerDistance": 36.535456594829746,
+            "bearingDegrees": -120.2939221300575
+          },
+          {
+            "id": 555,
+            "tick": 10849,
+            "at": {
+              "x": 13.208658283817455,
+              "y": 0.7,
+              "z": -2.5380602337443565,
+              "yaw": -2.960279085476603
+            },
+            "anchor": "l4-alpha-ne",
+            "offscreen": true,
+            "playerDistance": 26.913456240979883,
+            "bearingDegrees": -10.388502221343588
+          }
+        ],
+        "actualAlphaLineDamageSources": [
+          278,
+          322,
+          446,
+          464,
+          503,
+          542
+        ],
+        "observedHash": "6f55579b",
+        "canonicalHash": "6f55579b"
+      },
+      "target": "6low/8high; at least6 actual source directions, staggered offscreen; at least3 same-ID Alphas damage a line",
+      "receipt": "docs/reports/sweep-b/L4-08-proof.json"
     }
   ],
   "observations": {

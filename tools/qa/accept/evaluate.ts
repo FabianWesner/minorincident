@@ -687,6 +687,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L5-04', [{ clause: 'living Alphas have body-clear routes after actual cellar exit', policy: 'controlled-fixture' }]],
   ['L6-03', [{ clause: 'actual first breach bang clock and six shelter-floor arrivals', policy: 'controlled-fixture' }]],
   ['L4-06', ['first physical breach level clock', 'living infected at first breach', 'sustained plaza living minimum after +45 s'].map(clause => ({ clause, policy: 'stationary' }))],
+  ['L4-08', [{ clause: 'actual Alpha admission directions and line hits', policy: 'controlled-fixture' }]],
   ['L4-03', [{ clause: 'actual MG pickup klaxon and attack start share simulation tick', policy: 'real-input-webgl2' }]],
   ['L4-04', ['complete', 'stationary'].flatMap(policy => ['soldiers at turn', 'civilian census at turn excluding soldiers', 'actual armed civilian share at turn', 'every war tick observed from turn through line break', 'war living infected plus reserved slots and pending turns', 'war living character identity census'].map(clause => ({ clause, policy })))],
   ['L4-09', [
