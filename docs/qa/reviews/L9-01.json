@@ -1,0 +1,46 @@
+{
+  "row": "L9-01",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "50080fc8ac54013f74633b12b95d3536e11119ae",
+  "clauses": [
+    {
+      "clause": "Driving control \u2264 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+      "verdict": "PASS",
+      "note": "Current qualified physical L8 campaign payload restored through ordinary continueCampaign9; IDs700/800, HP980/930 unchanged, human roster1/4 plus same corgi. Actual physical W acceptedtick0, vehicle motiontick1 (0.016667s) bothtiers; no loading overlay/story lock. First30ticks individually sampled, then6tick samples through930 with physical right/left turns, no cheats/actor writes. All28pairedPOzoom panels personally reviewed, rawSHAverified/deleted. Courier seated in cab, rear/side420/600 frames show pale/red boots within cab floor; no visible lower limbs through exterior hull. Corgi is legitimately seated/hidden aboard in closed troop bay, HUD hiding, no corgi render copy or visible dog standing through the hull (Q137). This is a no-visible-penetration verdict, not a claim the seated corgi is physically outside transport. All181samples/tier maintain hidden seated lifecycle; production VehicleView explicitly omits companion occupant copy. No game change. Sixteen semantic faults reject with exact restoration."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c5/L9-01/coverage-proof.json",
+      "sha256": "cf13feeb61860278e9767142358d8077382a439bc617b88f25c05797b999c7b8",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-01/high-arrival.json.gz",
+      "sha256": "12e0b32bfa5f30da5ea79840a2c6328c28d722af3f057a6e4e1a952b1111e1bf",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-01/high-review.json",
+      "sha256": "1bc23bc7a4fe7f22668d339d178c7941fe0d0b3cd7e20e2151e9489f7d6b70fe",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-01/low-arrival.json.gz",
+      "sha256": "2e4594d96d7b67c05be403180c6dc3565ff9d096aca2da9638db1d1c5bef65fe",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-01/low-review.json",
+      "sha256": "4c7bbf5d244202d5a0b16eb738891b9c8bbf5799e9b2a9e937db43d4a2d817c8",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-01/producer.mjs",
+      "sha256": "d91032fb81e281b57416143984593ebe5b493acf37a7df1f48cdf84a4c95d1b4",
+      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+    }
+  ]
+}

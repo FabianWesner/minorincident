@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "431013dc92a8341006a871dcb552c23fcfb064ba1a84cbe3fbcc9914fb812dfe",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T06:10:58.228Z",
+  "generatedAt": "2026-11-06T07:05:27.654Z",
   "policies": [
     {
       "tier": "low",
@@ -138,6 +138,13 @@
       "policy": "real-input-browser",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-arrival-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-low-countryside-browser.json"
     },
     {
@@ -153,6 +160,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-low-road-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-arrival-browser.json"
     },
     {
       "tier": "high",
@@ -2221,12 +2235,18 @@
   "rows": [
     {
       "id": "L9-01",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native first drive input and movement: {\"firstDrive\":0,\"firstMotion\":2} (target drive and movement within30ticks of Begin; PASS); high/controlled-fixture native first drive input and movement: {\"firstDrive\":0,\"firstMotion\":2} (target drive and movement within30ticks of Begin; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture native first drive input and movement: {\"firstDrive\":0,\"firstMotion\":2} (target drive and movement within30ticks of Begin; PASS); high/controlled-fixture native first drive input and movement: {\"firstDrive\":0,\"firstMotion\":2} (target drive and movement within30ticks of Begin; PASS); low/real-input-webgl2 physical carried start control and reviewed occupants: {\"exactPayload\":true,\"carry\":true,\"control\":true,\"firstInputTick\":0,\"firstMotionTick\":1,\"hidden\":true,\"seated\":true,\"seen\":true,\"carId\":700,\"hp\":980,\"passengerIds\":[289,308],\"errors\":[]} (target exact physical L8 payload; throttle available tick0 and firstmotion≤30ticks; normal seated driver/corgi lifecycle and14 reviewed paired-zoom cab frames, exact O-review supplies visible no-clipping judgement; PASS); high/real-input-webgl2 physical carried start control and reviewed occupants: {\"exactPayload\":true,\"carry\":true,\"control\":true,\"firstInputTick\":0,\"firstMotionTick\":1,\"hidden\":true,\"seated\":true,\"seen\":true,\"carId\":800,\"hp\":930,\"passengerIds\":[30,31,32,389,408],\"errors\":[]} (target exact physical L8 payload; throttle available tick0 and firstmotion≤30ticks; normal seated driver/corgi lifecycle and14 reviewed paired-zoom cab frames, exact O-review supplies visible no-clipping judgement; PASS) Manual review PASS (FRESH, Codex sweep-c5): Current qualified physical L8 campaign payload restored through ordinary continueCampaign9; IDs700/800, HP980/930 unchanged, human roster1/4 plus same corgi. Actual physical W acceptedtick0, vehicle motiontick1 (0.016667s) bothtiers; no loading overlay/story lock. First30ticks individually sampled, then6tick samples through930 with physical right/left turns, no cheats/actor writes. All28pairedPOzoom panels personally reviewed, rawSHAverified/deleted. Courier seated in cab, rear/side420/600 frames show pale/red boots within cab floor; no visible lower limbs through exterior hull. Corgi is legitimately seated/hidden aboard in closed troop bay, HUD hiding, no corgi render copy or visible dog standing through the hull (Q137). This is a no-visible-penetration verdict, not a claim the seated corgi is physically outside transport. All181samples/tier maintain hidden seated lifecycle; production VehicleView explicitly omits companion occupant copy. No game change. Sixteen semantic faults reject with exact restoration.",
+      "automatedComplete": true,
       "receipt": [
-        "docs/reports/fix55-c/L9-native.json"
+        "docs/reports/fix55-c/L9-native.json",
+        "docs/reports/sweep-c5/L9-01/low-review.json",
+        "docs/reports/sweep-c5/L9-01/high-review.json",
+        "docs/reports/sweep-c5/L9-01/coverage-proof.json",
+        "docs/reports/sweep-c5/L9-01/high-arrival.json.gz",
+        "docs/reports/sweep-c5/L9-01/low-arrival.json.gz",
+        "docs/reports/sweep-c5/L9-01/producer.mjs"
       ],
       "expected": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
       "checks": [
@@ -2257,6 +2277,63 @@
           "status": "PASS",
           "receipt": "docs/reports/fix55-c/L9-native.json",
           "level": "L9"
+        },
+        {
+          "id": "L9-01",
+          "clause": "physical carried start control and reviewed occupants",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "exactPayload": true,
+            "carry": true,
+            "control": true,
+            "firstInputTick": 0,
+            "firstMotionTick": 1,
+            "hidden": true,
+            "seated": true,
+            "seen": true,
+            "carId": 700,
+            "hp": 980,
+            "passengerIds": [
+              289,
+              308
+            ],
+            "errors": []
+          },
+          "target": "exact physical L8 payload; throttle available tick0 and firstmotion≤30ticks; normal seated driver/corgi lifecycle and14 reviewed paired-zoom cab frames, exact O-review supplies visible no-clipping judgement",
+          "receipt": "docs/reports/sweep-c5/L9-01/low-review.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-01",
+          "clause": "physical carried start control and reviewed occupants",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "exactPayload": true,
+            "carry": true,
+            "control": true,
+            "firstInputTick": 0,
+            "firstMotionTick": 1,
+            "hidden": true,
+            "seated": true,
+            "seen": true,
+            "carId": 800,
+            "hp": 930,
+            "passengerIds": [
+              30,
+              31,
+              32,
+              389,
+              408
+            ],
+            "errors": []
+          },
+          "target": "exact physical L8 payload; throttle available tick0 and firstmotion≤30ticks; normal seated driver/corgi lifecycle and14 reviewed paired-zoom cab frames, exact O-review supplies visible no-clipping judgement",
+          "receipt": "docs/reports/sweep-c5/L9-01/high-review.json",
+          "level": "L9"
         }
       ],
       "historical": {
@@ -2269,7 +2346,60 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+        "clause": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+      },
+      "reviewDecision": {
+        "row": "L9-01",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c5",
+        "date": "2026-11-06",
+        "commit": "50080fc8ac54013f74633b12b95d3536e11119ae",
+        "clauses": [
+          {
+            "clause": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+            "verdict": "PASS",
+            "note": "Current qualified physical L8 campaign payload restored through ordinary continueCampaign9; IDs700/800, HP980/930 unchanged, human roster1/4 plus same corgi. Actual physical W acceptedtick0, vehicle motiontick1 (0.016667s) bothtiers; no loading overlay/story lock. First30ticks individually sampled, then6tick samples through930 with physical right/left turns, no cheats/actor writes. All28pairedPOzoom panels personally reviewed, rawSHAverified/deleted. Courier seated in cab, rear/side420/600 frames show pale/red boots within cab floor; no visible lower limbs through exterior hull. Corgi is legitimately seated/hidden aboard in closed troop bay, HUD hiding, no corgi render copy or visible dog standing through the hull (Q137). This is a no-visible-penetration verdict, not a claim the seated corgi is physically outside transport. All181samples/tier maintain hidden seated lifecycle; production VehicleView explicitly omits companion occupant copy. No game change. Sixteen semantic faults reject with exact restoration."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/sweep-c5/L9-01/coverage-proof.json",
+            "sha256": "cf13feeb61860278e9767142358d8077382a439bc617b88f25c05797b999c7b8",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-01/high-arrival.json.gz",
+            "sha256": "12e0b32bfa5f30da5ea79840a2c6328c28d722af3f057a6e4e1a952b1111e1bf",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-01/high-review.json",
+            "sha256": "1bc23bc7a4fe7f22668d339d178c7941fe0d0b3cd7e20e2151e9489f7d6b70fe",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-01/low-arrival.json.gz",
+            "sha256": "2e4594d96d7b67c05be403180c6dc3565ff9d096aca2da9638db1d1c5bef65fe",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-01/low-review.json",
+            "sha256": "4c7bbf5d244202d5a0b16eb738891b9c8bbf5799e9b2a9e937db43d4a2d817c8",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          },
+          {
+            "file": "docs/reports/sweep-c5/L9-01/producer.mjs",
+            "sha256": "d91032fb81e281b57416143984593ebe5b493acf37a7df1f48cdf84a4c95d1b4",
+            "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "e1f1e8d40a0796a1a3f5c13b16bb643fa557f985"
+      }
     },
     {
       "id": "L9-02",
