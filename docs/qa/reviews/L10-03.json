@@ -1,46 +1,26 @@
 {
   "row": "L10-03",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c6",
+  "status": "PASS",
+  "reviewer": "Codex fix72-c",
   "date": "2026-11-06",
-  "commit": "cd87b9587866301d7ac17c115cfa3d5f56be356c",
+  "commit": "65591f560f941723828035ca104b8b4985351bed",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
-      "verdict": "FAIL",
-      "note": "Fresh same-tick native admission census on current game sourceHash 8f5d6d4a. No required species/count witness exists at low industrial (peak 23 total, only 3 dogs and no Alpha; target \u226516 with 2\u20134 dogs and 1 Alpha), low research campus (peak 38 total, only 1 dog and 1 Alpha; target \u226535 with 2\u20134 dogs and 1\u20132 Alphas), high industrial (peak 32 total, no Alpha; target \u226525 with 2\u20134 dogs and 1 Alpha), or high destroyed corridor (peak 97, only 1 dog and 2 Alphas; target 3\u20135 dogs and 2\u20133 Alphas). Other region/tier witnesses were found. Counts and species are sampled on the same admitted-local tick; upper bounds are never violated. Game edits tried in this lane caused the competent low route to time out, so no spawn/count/timer tweak has a clear safe cause. Retained as measured FAIL without changing targets."
+      "verdict": "PASS",
+      "note": "All12 current-source same-tick local count/species witnesses pass, zero upper-bound violations, all74 boundary/separated-peak controls rejected. Both complete policies finish with final hashes matching the independent census. All54 checkpoint replay checks pass. Canonical military regular groups10\u201318 and corridor groups20\u201332 pass unchanged bounds. Both actual handgun pickups tick3497 precede first admitted fringe dog tick4950; zero premature ticks. Stationary policies retain normal Mega-hold tick-budget outcome and no fresh failing clauses."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L10-03/simultaneous-census.json",
-      "sha256": "89221179c4150140ff098b731497cb7acd9774543079b024af46a73f14dbdb16",
-      "what": "Fresh current-source low/high tick-by-tick local admitted census; all six regions, count/species witnesses and contiguous intervals. Four required compositions have no same-tick witness."
+      "file": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+      "sha256": "598eed09534d526d797d7e30af310ba91c408bcf64b6ed4451dd5b74a5b5c2c0",
+      "what": "Every admitted-local tick represented, all12 joint witnesses, no upper violations; independent native final hashes match."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-03/fringe-dogs.json",
-      "sha256": "156275dd30348ae358ffa9e58d4144b627d6a77a9bc027fdae8e312733cae596",
-      "what": "Fresh handgun-before-dogs timing with unchanged native controls, or90 separate-peak/composition boundary fault rejections."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-03/peak-boundary-controls.json",
-      "sha256": "326b678d668a65d62a3e88bbdd8182b3abcc879369ccc09d876af997065a9fc4",
-      "what": "Fresh handgun-before-dogs timing with unchanged native controls, or90 separate-peak/composition boundary fault rejections."
-    },
-    {
-      "file": "docs/reports/sweep-c6/L10-03/prior/simultaneous-census.json",
-      "sha256": "d5f56a3a47a128dcacd9f7fdeec09a2289117fc2315e6475c6394de463da6340",
-      "what": "Every tick represented by contiguous count intervals; same-tick admitted local population/species witnesses, four failing region/tier combinations, all native controls identical."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-03/L10-low-complete.json.gz",
-      "sha256": "f00ad5e969b0f8e5830c8c15dd96c00f2861142bba22ba9ad3097becca61bed0",
-      "what": "Immutable current-source canonical competent-route population, species and group peak ledger; final state hash matches the simultaneous census."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-03/L10-high-complete.json.gz",
-      "sha256": "6d4f38d0d0bde45a4a54ffdb8b4a7bad5b6cd8fe599e5a12c8a80b191e803d70",
-      "what": "Immutable current-source canonical competent-route population, species and group peak ledger; final state hash matches the simultaneous census."
+      "file": "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json",
+      "sha256": "137a7f4d0099c7c5fb6a325225e824a1de3c410a94eb0132d8887ebe5b1dd525",
+      "what": "Actual handgun pickup before every admitted fringe dog, both tiers, zero premature ticks."
     }
   ]
 }

@@ -750,6 +750,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L10-13', [{ clause: 'release transaction observed prerequisites', policy: 'complete' }, { clause: 'release predicate missing-prerequisite matrix', policy: 'controlled-fixture' }]],
   ['L10-02', ['actual Mega introduction time', 'Mega distance on introduction', 'actual Mega roar and impact introduction events', 'Mega introduction actual body-clear route'].map(clause => ({ clause, policy: 'complete' }))],
   ['L10-03', [
+    { clause: 'same-tick regional count and species composition', policy: 'complete' },
     { clause: 'residential dogs follow actual handgun pickup', policy: 'complete' },
     ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor', 'dispersal-complex'].map(region => ({ clause: `${region} normal local concurrent peak bound`, policy: 'complete' })),
     ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor'].flatMap(region => [

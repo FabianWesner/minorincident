@@ -114,6 +114,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'G-24': source.expected,
     'L7-08': source.expected,
     'L10-08': source.expected,
+    'L10-03': source.expected,
     'L10-12': source.expected,
     'L10-14': source.expected,
     'L7-06': source.expected,
