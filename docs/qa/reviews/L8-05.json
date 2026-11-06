@@ -1,32 +1,31 @@
 {
   "row": "L8-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "366f273fffbe8baf57bf44abd82a11e6c2cd479d",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "aba3d73f52d5e16d522b4c353e36cd5e57b7014e",
   "clauses": [
     {
       "clause": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5\u20133.5 s keeping id/species; 3\u20135 Alphas over the run; concurrent \u2264 200 / 100.",
       "verdict": "PASS",
-      "note": "Both tiers admit5Alphas on ordinary competent route. Four canonical policies preserve final control hashes; maxima80/92 low and109/199 high stay within100/200. Actual native damage plus unprotected local ordinary-runner fixtures cover civilian,soldier,staff,animal. All five real healthy animal targets receive successful outbreak.bite and convert with same ID/species after2.533\u20133.25s. Explicit extra local threat setup changes neither target health/AI/faction nor timers/caps; protected courier only. Six temporary evaluator faults reject missingstaff,early/late turn,wrongspecies,wrongID,missingbite; exact bytes restored."
+      "note": "Both canonical native policies/tiers remeasured with read-only observations; all four final state hashes equal controls. Five actual Alpha admissions on every route. Natural competent routes hit civilians/soldiers/animals; high stationary also hits staff, while low staff capability is established by explicitly declared local-threat fixtures (four ordinary60HP runners around existing healthy NPCs, no target HP/AI/faction changes). Every five-species fixture target is actually bitten and converts under the same ID to its corresponding infected archetype in2.5\u20133.5s; low species times2.7167/3.25/2.7333/3/3.1667s, high2.5333/2.9167/2.8667/3.2167/2.55s. Fixture peaks77/144; natural admitted peaks80/92 low and108/199 high remain within100/200. Six actual consumer faults reject staff absence, timing outside2.5\u20133.5, changed ID/species and missing actual bite. Qualifies the original native/capability contract, without claiming the competent route naturally turns every species or attacks staff."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix55-c/L8-05-native.json",
-      "sha256": "586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042",
-      "what": "Current-source event/census measurements or negative-control results from unchanged producers; no rendered-appearance verdict."
+      "file": "docs/reports/sweep-c5/L8-05/L8-05-native.json.gz",
+      "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
+      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
     },
     {
-      "file": "docs/reports/fix55-c/L8-bite-fixtures.json",
-      "sha256": "dd9bd20250bde58bbcd22ec0d1c3a1d9243aa9e635c848c182488fe1aaed3ee5",
-      "what": "Current-source event/census measurements or negative-control results from unchanged producers; no rendered-appearance verdict."
+      "file": "docs/reports/sweep-c5/L8-05/L8-bite-fixtures.json.gz",
+      "sha256": "54fd410a7ce0705e6f569280837fd977bef5967c69f68ac7f3b1e489e9c8f726",
+      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
     },
     {
-      "file": "docs/reports/fix55-c/L8-05-bite-fault-proof.json",
-      "sha256": "cbdbe62306f5a66a8373cafd92b3a2903fb733bea757a17f1ef7a51f7d8058b0",
-      "what": "Current-source event/census measurements or negative-control results from unchanged producers; no rendered-appearance verdict."
+      "file": "docs/reports/sweep-c5/L8-05/L8-05-bite-fault-proof.json.gz",
+      "sha256": "63db9526eb147829a020cea7ba473d3e1256edbfc8cb28f51508a4cd0e7b4ab9",
+      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
     }
-  ],
-  "notes": "Numeric systemic bite/conversion/capability row. Does not qualify rendered enemy recognition or free-play likelihood of each species turning."
+  ]
 }

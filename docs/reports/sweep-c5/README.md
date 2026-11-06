@@ -13,6 +13,7 @@ Current source fingerprint: `43b485e825dc3b7e6afda4f35772460115ce094858019c8637f
 | L7-05 | current PASS; fresh exact-criterion review closes historical failure; all14 low/high complete/stationary checks pass |
 | L8-01 | current PASS; actual low1/high4 roster, full HP, unchanged arsenal and selected rocket; eleven semantic fault controls reject |
 | L8-02 | current PASS; fresh physical low/high handover, tick3600 breach, all75 captures reviewed; eight coverage controls reject faults |
+| L8-05 | current PASS; full native outbreak controls, five Alpha admissions, same-ID/species2.5–3.5s bite fixtures and six semantic fault controls |
 | L8-06 | requalified current source; breach attacks 5.24/min, first attack 1.97 s, 100% reachability |
 | L9-08 | existing current PASS |
 | L10-01 | existing current PASS |
@@ -37,7 +38,6 @@ These are the `qa:accept` currentStatus values. The separate status field preser
 | L7-12 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1. |
 | L8-03 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. |
 | L8-04 | NOT CHECKED | Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses. |
-| L8-05 | NOT CHECKED | NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak. |
 | L8-07 | NOT CHECKED | NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review. |
 | L8-08 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents). |
 | L8-09 | NOT CHECKED | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure. |
@@ -78,4 +78,4 @@ Row-specific commits:
 - Initial sandbox restrictions prevented access to the shared browser pool and Git index writes. On the 2026-11-06 continuation, the pool became reachable and the slim-worktree command succeeded; physical handover qualification resumed. Required visual reviews are still in progress.
 - `sh tools/ops/slim-worktree.sh <path> --no-assets` succeeded on continuation after filesystem access changed.
 
-Open current rows: 32. Current PASS rows listed above: 15. No game code was changed. Perf work was not performed.
+Open current rows: 31. Current PASS rows listed above: 16. No game code was changed. Perf work was not performed.

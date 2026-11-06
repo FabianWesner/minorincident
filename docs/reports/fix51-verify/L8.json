@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T04:14:42.680Z",
+  "generatedAt": "2026-11-06T04:28:05.537Z",
   "policies": [
     {
       "tier": "low",
@@ -3146,10 +3146,11 @@
       "id": "L8-03",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/complete initial zoo staff identities: 4 (target at least4 staff; PASS); low/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); low/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); low/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); low/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); low/stationary initial zoo staff identities: 4 (target at least4 staff; PASS); high/complete initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/complete initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/complete initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/complete initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/complete initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/complete initial zoo staff identities: 4 (target at least4 staff; PASS); high/stationary initial human civilians excluding soldiers and animals: 36 (target 20 ≤ value ≤ Infinity; PASS); high/stationary initial soldiers: 6 (target 6 ≤ value ≤ Infinity; PASS); high/stationary initial zoo animals: 8 (target 8 ≤ value ≤ Infinity; PASS); high/stationary initial animal species: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary initial zebras: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary initial flamingos: 3 (target 3 ≤ value ≤ Infinity; PASS); high/stationary initial zoo staff identities: 4 (target at least4 staff; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+        "docs/reports/fix55-c/L8-05-native.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
@@ -3224,6 +3225,17 @@
         },
         {
           "id": "L8-03",
+          "clause": "initial zoo staff identities",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "at least4 staff",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-03",
           "clause": "initial human civilians excluding soldiers and animals",
           "level": "L8",
           "tier": "low",
@@ -3290,6 +3302,17 @@
         },
         {
           "id": "L8-03",
+          "clause": "initial zoo staff identities",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 4,
+          "target": "at least4 staff",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-03",
           "clause": "initial human civilians excluding soldiers and animals",
           "level": "L8",
           "tier": "high",
@@ -3356,6 +3379,17 @@
         },
         {
           "id": "L8-03",
+          "clause": "initial zoo staff identities",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "at least4 staff",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-03",
           "clause": "initial human civilians excluding soldiers and animals",
           "level": "L8",
           "tier": "high",
@@ -3419,6 +3453,17 @@
           "value": 3,
           "target": "3 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        },
+        {
+          "id": "L8-03",
+          "clause": "initial zoo staff identities",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 4,
+          "target": "at least4 staff",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
         }
       ],
       "historical": {
@@ -3437,10 +3482,11 @@
       "id": "L8-04",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); low/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); low/complete actual first packet per tunnel outlet: [{\"outlet\":0,\"count\":3},{\"outlet\":1,\"count\":3},{\"outlet\":2,\"count\":3},{\"outlet\":3,\"count\":3}] (target at least3 outlets, each 3 initial infected; PASS); low/complete first ordinary visible actor outlet start window: [3600,3600,3600,3600] (target all first outlet actors visible within60ticks; PASS); low/complete actual tunnel outlet separation: [202.9,124.08547457297328,138.6052127446872,166.04579187681932,78.9037705055975,152.1092041922513] (target at least3 outlets; every pair at least20m; PASS); low/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); low/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); low/stationary actual first packet per tunnel outlet: [{\"outlet\":0,\"count\":3},{\"outlet\":1,\"count\":3},{\"outlet\":2,\"count\":3},{\"outlet\":3,\"count\":3}] (target at least3 outlets, each 3 initial infected; PASS); low/stationary first ordinary visible actor outlet start window: [3600,3600,3600,3600] (target all first outlet actors visible within60ticks; PASS); low/stationary actual tunnel outlet separation: [202.9,124.08547457297328,138.6052127446872,166.04579187681932,78.9037705055975,152.1092041922513] (target at least3 outlets; every pair at least20m; PASS); high/complete breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/complete distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/complete actual first packet per tunnel outlet: [{\"outlet\":0,\"count\":6},{\"outlet\":1,\"count\":6},{\"outlet\":2,\"count\":6},{\"outlet\":3,\"count\":6}] (target at least3 outlets, each 6 initial infected; PASS); high/complete first ordinary visible actor outlet start window: [3600,3600,3600,3600] (target all first outlet actors visible within60ticks; PASS); high/complete actual tunnel outlet separation: [202.9,124.08547457297328,138.6052127446872,166.04579187681932,78.9037705055975,152.1092041922513] (target at least3 outlets; every pair at least20m; PASS); high/stationary breach active-sim clock: 3600 (target 3599 ≤ value ≤ 3601; PASS); high/stationary distinct tunnel outlets: 4 (target 3 ≤ value ≤ Infinity; PASS); high/stationary actual first packet per tunnel outlet: [{\"outlet\":0,\"count\":6},{\"outlet\":1,\"count\":6},{\"outlet\":2,\"count\":6},{\"outlet\":3,\"count\":6}] (target at least3 outlets, each 6 initial infected; PASS); high/stationary first ordinary visible actor outlet start window: [3600,3600,3600,3600] (target all first outlet actors visible within60ticks; PASS); high/stationary actual tunnel outlet separation: [202.9,124.08547457297328,138.6052127446872,166.04579187681932,78.9037705055975,152.1092041922513] (target at least3 outlets; every pair at least20m; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+        "docs/reports/fix55-c/L8-05-native.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
@@ -3471,6 +3517,68 @@
         },
         {
           "id": "L8-04",
+          "clause": "actual first packet per tunnel outlet",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "outlet": 0,
+              "count": 3
+            },
+            {
+              "outlet": 1,
+              "count": 3
+            },
+            {
+              "outlet": 2,
+              "count": 3
+            },
+            {
+              "outlet": 3,
+              "count": 3
+            }
+          ],
+          "target": "at least3 outlets, each 3 initial infected",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "first ordinary visible actor outlet start window",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            3600,
+            3600,
+            3600,
+            3600
+          ],
+          "target": "all first outlet actors visible within60ticks",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual tunnel outlet separation",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            202.9,
+            124.08547457297328,
+            138.6052127446872,
+            166.04579187681932,
+            78.9037705055975,
+            152.1092041922513
+          ],
+          "target": "at least3 outlets; every pair at least20m",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "L8-04",
           "clause": "breach active-sim clock",
           "level": "L8",
           "tier": "low",
@@ -3489,6 +3597,68 @@
           "status": "PASS",
           "value": 4,
           "target": "3 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual first packet per tunnel outlet",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "outlet": 0,
+              "count": 3
+            },
+            {
+              "outlet": 1,
+              "count": 3
+            },
+            {
+              "outlet": 2,
+              "count": 3
+            },
+            {
+              "outlet": 3,
+              "count": 3
+            }
+          ],
+          "target": "at least3 outlets, each 3 initial infected",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "first ordinary visible actor outlet start window",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            3600,
+            3600,
+            3600,
+            3600
+          ],
+          "target": "all first outlet actors visible within60ticks",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual tunnel outlet separation",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            202.9,
+            124.08547457297328,
+            138.6052127446872,
+            166.04579187681932,
+            78.9037705055975,
+            152.1092041922513
+          ],
+          "target": "at least3 outlets; every pair at least20m",
           "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
         },
         {
@@ -3511,6 +3681,68 @@
           "status": "PASS",
           "value": 4,
           "target": "3 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual first packet per tunnel outlet",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "outlet": 0,
+              "count": 6
+            },
+            {
+              "outlet": 1,
+              "count": 6
+            },
+            {
+              "outlet": 2,
+              "count": 6
+            },
+            {
+              "outlet": 3,
+              "count": 6
+            }
+          ],
+          "target": "at least3 outlets, each 6 initial infected",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "first ordinary visible actor outlet start window",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            3600,
+            3600,
+            3600,
+            3600
+          ],
+          "target": "all first outlet actors visible within60ticks",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual tunnel outlet separation",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            202.9,
+            124.08547457297328,
+            138.6052127446872,
+            166.04579187681932,
+            78.9037705055975,
+            152.1092041922513
+          ],
+          "target": "at least3 outlets; every pair at least20m",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
         },
         {
@@ -3533,6 +3765,68 @@
           "status": "PASS",
           "value": 4,
           "target": "3 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual first packet per tunnel outlet",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "outlet": 0,
+              "count": 6
+            },
+            {
+              "outlet": 1,
+              "count": 6
+            },
+            {
+              "outlet": 2,
+              "count": 6
+            },
+            {
+              "outlet": 3,
+              "count": 6
+            }
+          ],
+          "target": "at least3 outlets, each 6 initial infected",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "first ordinary visible actor outlet start window",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            3600,
+            3600,
+            3600,
+            3600
+          ],
+          "target": "all first outlet actors visible within60ticks",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-04",
+          "clause": "actual tunnel outlet separation",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            202.9,
+            124.08547457297328,
+            138.6052127446872,
+            166.04579187681932,
+            78.9037705055975,
+            152.1092041922513
+          ],
+          "target": "at least3 outlets; every pair at least20m",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
         }
       ],
@@ -3550,12 +3844,14 @@
     },
     {
       "id": "L8-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual admitted Alphas over observed route: 5 (target 3 ≤ value ≤ 5; PASS); low/complete concurrent cap: 80 (target 0 ≤ value ≤ 100; PASS); low/stationary concurrent cap: 92 (target 0 ≤ value ≤ 100; PASS); high/complete actual admitted Alphas over observed route: 5 (target 3 ≤ value ≤ 5; PASS); high/complete concurrent cap: 109 (target 0 ≤ value ≤ 200; PASS); high/stationary concurrent cap: 199 (target 0 ≤ value ≤ 200; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual admitted Alphas over observed route: 5 (target 3 ≤ value ≤ 5; PASS); low/complete concurrent cap: 80 (target 0 ≤ value ≤ 100; PASS); low/complete actual infected hits on civilian: [{\"tick\":4449,\"attackId\":5,\"actionId\":\"alpha.ground-slam\",\"sourceId\":449,\"targetId\":369,\"position\":{\"x\":-32.275909176283605,\"z\":-60.81566244545036,\"y\":0.7,\"yaw\":-21.339212643800387},\"direction\":{\"x\":-0.6678142430593229,\"z\":0.7443279766118588},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"civilian\"},{\"tick\":5196,\"attackId\":21,\"actionId\":\"alpha.ground-slam\",\"sourc… (full values in JSON) (target at least one landed infected hit on civilian during the full observed outbreak; PASS); low/complete actual infected hits on soldier: [{\"tick\":4569,\"attackId\":7,\"actionId\":\"alpha.charge\",\"sourceId\":456,\"targetId\":391,\"position\":{\"x\":26.654548747774232,\"z\":64.06061083945224,\"y\":0.82,\"yaw\":0.011338283572578366},\"direction\":{\"x\":-0.9999357223514285,\"z\":0.011338040638798088},\"knockback\":0,\"amount\":30,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"soldier\"},{\"tick\":4716,\"attackId\":11,\"actionId\":\"alpha.ground-slam\",\"sourceId\"… (full values in JSON) (target at least one landed infected hit on soldier during the full observed outbreak; PASS); low/complete actual infected hits on staff: [] (target at least one landed infected hit on staff during the full observed outbreak; NOT CHECKED); low/complete actual infected hits on animal: [{\"tick\":5190,\"attackId\":19,\"actionId\":\"alpha.ground-slam\",\"sourceId\":435,\"targetId\":399,\"position\":{\"x\":-59.08623172321563,\"z\":32.6091788511896,\"y\":0.7,\"yaw\":5.695182703632075},\"direction\":{\"x\":0.5056337573485844,\"z\":-0.8627482271378788},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"animal\"},{\"tick\":5790,\"attackId\":26,\"actionId\":\"alpha.ground-slam\",\"sourceId\":4… (full values in JSON) (target at least one landed infected hit on animal during the full observed outbreak; PASS); low/complete unprotected local-threat victim class coverage: {\"classes\":[{\"kind\":\"civilian\",\"canonical\":3,\"localFixture\":1},{\"kind\":\"soldier\",\"canonical\":4,\"localFixture\":0},{\"kind\":\"staff\",\"canonical\":0,\"localFixture\":4},{\"kind\":\"animal\",\"canonical\":2,\"localFixture\":5}],\"fixturePeak\":77,\"fixtureCap\":100} (target landed damage or successful production outbreak.bite on civilian/soldier/staff/animal; NPCs unprotected and ordinary stats; canonical damage plus explicit local-threat capability fixtures; PASS); low/complete all five same-ID species convert after actual bites: [{\"species\":\"lion\",\"target\":{\"kind\":\"lion\",\"id\":397,\"archetype\":\"animal.lion\",\"species\":\"lion\",\"hp\":100,\"position\":{\"x\":-57.996833423603775,\"z\":-30.664555615735853,\"y\":0.7,\"yaw\":-16.295965871496477},\"attackers\":[{\"id\":455,\"position\":{\"x\":-56.89683342360377,\"y\":0.7,\"z\":-30.664555615735853,\"yaw\":0},\"hp\":60},{\"id\":456,\"position\":{\"x\":-57.996833423603775,\"y\":0.7,\"z\":-29.564555615735852,\"yaw\":0},\"hp\":6… (full values in JSON) (target all five actual healthy targets bitten, sameID/species,2.5–3.5s from first bite/stagger start; unchanged caps; PASS); low/complete observed same-ID animal turn timing and species: [] (target observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive; NOT CHECKED); low/stationary concurrent cap: 92 (target 0 ≤ value ≤ 100; PASS); low/stationary actual infected hits on civilian: [{\"tick\":4449,\"attackId\":7,\"actionId\":\"alpha.ground-slam\",\"sourceId\":449,\"targetId\":369,\"position\":{\"x\":-32.275909176283605,\"z\":-60.81566244545036,\"y\":0.7,\"yaw\":-21.339212643800387},\"direction\":{\"x\":-0.6678142430593229,\"z\":0.7443279766118588},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"civilian\"},{\"tick\":4587,\"attackId\":9,\"actionId\":\"alpha.ground-slam\",\"source… (full values in JSON) (target at least one landed infected hit on civilian during the full observed outbreak; PASS); low/stationary actual infected hits on soldier: [{\"tick\":4587,\"attackId\":9,\"actionId\":\"alpha.ground-slam\",\"sourceId\":456,\"targetId\":391,\"position\":{\"x\":26.79671544449219,\"z\":64.20413710213401,\"y\":0.82,\"yaw\":2.6376819227985524},\"direction\":{\"x\":0.9976222343990232,\"z\":0.068919354558067},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"soldier\"},{\"tick\":5666,\"attackId\":191,\"actionId\":\"alpha.ground-slam\",\"sourceId\":… (full values in JSON) (target at least one landed infected hit on soldier during the full observed outbreak; PASS); low/stationary actual infected hits on staff: [] (target at least one landed infected hit on staff during the full observed outbreak; NOT CHECKED); low/stationary actual infected hits on animal: [{\"tick\":7204,\"attackId\":385,\"actionId\":\"alpha.ground-slam\",\"sourceId\":435,\"targetId\":399,\"position\":{\"x\":-59.981036576188686,\"z\":31.94873672853468,\"y\":0.7,\"yaw\":5.7562429720120365},\"direction\":{\"x\":0.10101193879211585,\"z\":-0.9948852135907226},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"animal\"},{\"tick\":7804,\"attackId\":566,\"actionId\":\"alpha.ground-slam\",\"sourc… (full values in JSON) (target at least one landed infected hit on animal during the full observed outbreak; PASS); low/stationary observed same-ID animal turn timing and species: [{\"id\":397,\"startTick\":9877,\"endTick\":10037,\"seconds\":2.6666666666666665,\"initial\":{\"id\":397,\"archetype\":\"animal.lion\",\"species\":\"lion\",\"victimClass\":\"animal\",\"variant\":\"inf.lion\"},\"finalArchetype\":\"infected.lion\",\"finalVariant\":\"inf.lion\"}] (target observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive; PASS); high/complete actual admitted Alphas over observed route: 5 (target 3 ≤ value ≤ 5; PASS); high/complete concurrent cap: 109 (target 0 ≤ value ≤ 200; PASS); high/complete actual infected hits on civilian: [{\"tick\":4449,\"attackId\":5,\"actionId\":\"alpha.ground-slam\",\"sourceId\":473,\"targetId\":369,\"position\":{\"x\":-32.26988641958202,\"z\":-60.80779617565581,\"y\":0.7,\"yaw\":-21.33435753714111},\"direction\":{\"x\":-0.6656862444071756,\"z\":0.7462317495303118},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"civilian\"},{\"tick\":5049,\"attackId\":16,\"actionId\":\"alpha.ground-slam\",\"sourceI… (full values in JSON) (target at least one landed infected hit on civilian during the full observed outbreak; PASS); high/complete actual infected hits on soldier: [{\"tick\":4570,\"attackId\":7,\"actionId\":\"alpha.charge\",\"sourceId\":480,\"targetId\":391,\"position\":{\"x\":26.661421188822636,\"z\":64.05579920262547,\"y\":0.82,\"yaw\":0.010451690007601438},\"direction\":{\"x\":-0.9999453815851947,\"z\":0.010451499721998894},\"knockback\":0,\"amount\":30,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"soldier\"},{\"tick\":4717,\"attackId\":10,\"actionId\":\"alpha.ground-slam\",\"sourceId\"… (full values in JSON) (target at least one landed infected hit on soldier during the full observed outbreak; PASS); high/complete actual infected hits on staff: [] (target at least one landed infected hit on staff during the full observed outbreak; NOT CHECKED); high/complete actual infected hits on animal: [{\"tick\":5535,\"attackId\":24,\"actionId\":\"alpha.ground-slam\",\"sourceId\":459,\"targetId\":399,\"position\":{\"x\":-58.18606582183871,\"z\":33.22060477620686,\"y\":0.7,\"yaw\":2.5492838581829673},\"direction\":{\"x\":-0.5203155733619271,\"z\":0.8539740652484997},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"animal\"}] (target at least one landed infected hit on animal during the full observed outbreak; PASS); high/complete unprotected local-threat victim class coverage: {\"classes\":[{\"kind\":\"civilian\",\"canonical\":2,\"localFixture\":1},{\"kind\":\"soldier\",\"canonical\":4,\"localFixture\":0},{\"kind\":\"staff\",\"canonical\":0,\"localFixture\":4},{\"kind\":\"animal\",\"canonical\":1,\"localFixture\":5}],\"fixturePeak\":144,\"fixtureCap\":200} (target landed damage or successful production outbreak.bite on civilian/soldier/staff/animal; NPCs unprotected and ordinary stats; canonical damage plus explicit local-threat capability fixtures; PASS); high/complete all five same-ID species convert after actual bites: [{\"species\":\"lion\",\"target\":{\"kind\":\"lion\",\"id\":397,\"archetype\":\"animal.lion\",\"species\":\"lion\",\"hp\":100,\"position\":{\"x\":-57.996833423603775,\"z\":-30.664555615735853,\"y\":0.7,\"yaw\":-16.295965871496477},\"attackers\":[{\"id\":479,\"position\":{\"x\":-56.89683342360377,\"y\":0.7,\"z\":-30.664555615735853,\"yaw\":0},\"hp\":60},{\"id\":480,\"position\":{\"x\":-57.996833423603775,\"y\":0.7,\"z\":-29.564555615735852,\"yaw\":0},\"hp\":6… (full values in JSON) (target all five actual healthy targets bitten, sameID/species,2.5–3.5s from first bite/stagger start; unchanged caps; PASS); high/complete observed same-ID animal turn timing and species: [] (target observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive; NOT CHECKED); high/stationary concurrent cap: 199 (target 0 ≤ value ≤ 200; PASS); high/stationary actual infected hits on civilian: [{\"tick\":4449,\"attackId\":28,\"actionId\":\"alpha.ground-slam\",\"sourceId\":473,\"targetId\":369,\"position\":{\"x\":-32.26988641958202,\"z\":-60.80779617565581,\"y\":0.7,\"yaw\":-21.33435753714111},\"direction\":{\"x\":-0.6656862444071756,\"z\":0.7462317495303118},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"civilian\"},{\"tick\":4710,\"attackId\":31,\"actionId\":\"alpha.ground-slam\",\"source… (full values in JSON) (target at least one landed infected hit on civilian during the full observed outbreak; PASS); high/stationary actual infected hits on soldier: [{\"tick\":6759,\"attackId\":581,\"actionId\":\"alpha.charge\",\"sourceId\":473,\"targetId\":389,\"position\":{\"x\":-27.29234592387635,\"z\":-64.13431651934634,\"y\":0.82,\"yaw\":0.037805647179470936},\"direction\":{\"x\":0.9658235264807331,\"z\":0.25920053182106073},\"knockback\":0,\"amount\":30,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"soldier\"},{\"tick\":6904,\"attackId\":602,\"actionId\":\"alpha.ground-slam\",\"sourceI… (full values in JSON) (target at least one landed infected hit on soldier during the full observed outbreak; PASS); high/stationary actual infected hits on staff: [{\"type\":\"outbreak.bite\",\"tick\":9076,\"sourceId\":485,\"targetId\":395,\"position\":{\"x\":14.795670131790423,\"z\":85.2499994358787},\"turns\":true,\"successfulBite\":true,\"victimClass\":\"staff\"}] (target at least one landed infected hit on staff during the full observed outbreak; PASS); high/stationary actual infected hits on animal: [{\"tick\":8036,\"attackId\":1212,\"actionId\":\"alpha.ground-slam\",\"sourceId\":459,\"targetId\":399,\"position\":{\"x\":-57.53253054143851,\"z\":33.69284616602831,\"y\":0.7,\"yaw\":15.106650527174404},\"direction\":{\"x\":0.21576893197589997,\"z\":0.9764444520780378},\"knockback\":0,\"amount\":25,\"damageType\":\"melee\",\"type\":\"combat.hit\",\"victimClass\":\"animal\"},{\"tick\":8636,\"attackId\":1728,\"actionId\":\"alpha.ground-slam\",\"sourc… (full values in JSON) (target at least one landed infected hit on animal during the full observed outbreak; PASS); high/stationary observed same-ID animal turn timing and species: [] (target observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive; NOT CHECKED)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+        "docs/reports/fix55-c/L8-05-native.json",
+        "docs/reports/fix55-c/L8-bite-fixtures.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
@@ -3586,6 +3882,705 @@
         },
         {
           "id": "L8-05",
+          "clause": "actual infected hits on civilian",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4449,
+              "attackId": 5,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 449,
+              "targetId": 369,
+              "position": {
+                "x": -32.275909176283605,
+                "z": -60.81566244545036,
+                "y": 0.7,
+                "yaw": -21.339212643800387
+              },
+              "direction": {
+                "x": -0.6678142430593229,
+                "z": 0.7443279766118588
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5196,
+              "attackId": 21,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 449,
+              "targetId": 369,
+              "position": {
+                "x": -32.098590547047465,
+                "z": -61.0237727045969,
+                "y": 0.7,
+                "yaw": -25.800034624521295
+              },
+              "direction": {
+                "x": -0.7854995560856446,
+                "z": -0.6188622200371058
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5388,
+              "attackId": 23,
+              "actionId": "alpha.charge",
+              "sourceId": 449,
+              "targetId": 369,
+              "position": {
+                "x": -33.39723891440502,
+                "z": -61.58461653622991,
+                "y": 0.82,
+                "yaw": -25.968367957854635
+              },
+              "direction": {
+                "x": -0.8482772887721834,
+                "z": -0.5295523027551797
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            }
+          ],
+          "target": "at least one landed infected hit on civilian during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on soldier",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4569,
+              "attackId": 7,
+              "actionId": "alpha.charge",
+              "sourceId": 456,
+              "targetId": 391,
+              "position": {
+                "x": 26.654548747774232,
+                "z": 64.06061083945224,
+                "y": 0.82,
+                "yaw": 0.011338283572578366
+              },
+              "direction": {
+                "x": -0.9999357223514285,
+                "z": 0.011338040638798088
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4716,
+              "attackId": 11,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 391,
+              "position": {
+                "x": 18.99099639817893,
+                "z": 64.14750609421196,
+                "y": 0.82,
+                "yaw": 0.01133828491996309
+              },
+              "direction": {
+                "x": -0.9999357223361517,
+                "z": 0.011338041986099829
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4782,
+              "attackId": 12,
+              "actionId": "infected.alpha",
+              "sourceId": 456,
+              "targetId": 391,
+              "position": {
+                "x": 18.99099639817893,
+                "z": 64.14750609421196,
+                "y": 0.82,
+                "yaw": 0.01133828491996309
+              },
+              "direction": {
+                "x": -0.9999357223361517,
+                "z": 0.011338041986099829
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4842,
+              "attackId": 13,
+              "actionId": "infected.alpha",
+              "sourceId": 456,
+              "targetId": 391,
+              "position": {
+                "x": 18.902295949756596,
+                "z": 64.14851184826786,
+                "y": 0.82,
+                "yaw": 0.01133828491996309
+              },
+              "direction": {
+                "x": -0.9999357223361519,
+                "z": 0.011338041986073293
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            }
+          ],
+          "target": "at least one landed infected hit on soldier during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on staff",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "at least one landed infected hit on staff during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on animal",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 5190,
+              "attackId": 19,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -59.08623172321563,
+                "z": 32.6091788511896,
+                "y": 0.7,
+                "yaw": 5.695182703632075
+              },
+              "direction": {
+                "x": 0.5056337573485844,
+                "z": -0.8627482271378788
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 5790,
+              "attackId": 26,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -52.86947640372832,
+                "z": 30.69744012796682,
+                "y": 0.7,
+                "yaw": 3.3182416223539737
+              },
+              "direction": {
+                "x": -0.32128671399321296,
+                "z": -0.9469819678385875
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            }
+          ],
+          "target": "at least one landed infected hit on animal during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "unprotected local-threat victim class coverage",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "classes": [
+              {
+                "kind": "civilian",
+                "canonical": 3,
+                "localFixture": 1
+              },
+              {
+                "kind": "soldier",
+                "canonical": 4,
+                "localFixture": 0
+              },
+              {
+                "kind": "staff",
+                "canonical": 0,
+                "localFixture": 4
+              },
+              {
+                "kind": "animal",
+                "canonical": 2,
+                "localFixture": 5
+              }
+            ],
+            "fixturePeak": 77,
+            "fixtureCap": 100
+          },
+          "target": "landed damage or successful production outbreak.bite on civilian/soldier/staff/animal; NPCs unprotected and ordinary stats; canonical damage plus explicit local-threat capability fixtures",
+          "receipt": "docs/reports/fix55-c/L8-bite-fixtures.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "all five same-ID species convert after actual bites",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "species": "lion",
+              "target": {
+                "kind": "lion",
+                "id": 397,
+                "archetype": "animal.lion",
+                "species": "lion",
+                "hp": 100,
+                "position": {
+                  "x": -57.996833423603775,
+                  "z": -30.664555615735853,
+                  "y": 0.7,
+                  "yaw": -16.295965871496477
+                },
+                "attackers": [
+                  {
+                    "id": 455,
+                    "position": {
+                      "x": -56.89683342360377,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 456,
+                    "position": {
+                      "x": -57.996833423603775,
+                      "y": 0.7,
+                      "z": -29.564555615735852,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 457,
+                    "position": {
+                      "x": -59.096833423603776,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 458,
+                    "position": {
+                      "x": -57.996833423603775,
+                      "y": 0.7,
+                      "z": -31.764555615735855,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 397,
+                "kind": "lion",
+                "start": 3682,
+                "end": 3845,
+                "seconds": 2.716666666666667,
+                "archetype": "infected.lion"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3682,
+                "sourceId": 458,
+                "targetId": 397,
+                "position": {
+                  "x": -58.138342911417766,
+                  "z": -30.774056670949822
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "lion"
+              }
+            },
+            {
+              "species": "gorilla",
+              "target": {
+                "kind": "gorilla",
+                "id": 398,
+                "archetype": "animal.gorilla",
+                "species": "gorilla",
+                "hp": 100,
+                "position": {
+                  "x": 62.003166576396225,
+                  "z": -30.664555615735853,
+                  "y": 0.7,
+                  "yaw": -16.295965871496477
+                },
+                "attackers": [
+                  {
+                    "id": 459,
+                    "position": {
+                      "x": 63.10316657639623,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 460,
+                    "position": {
+                      "x": 62.003166576396225,
+                      "y": 0.7,
+                      "z": -29.564555615735852,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 461,
+                    "position": {
+                      "x": 60.903166576396224,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 462,
+                    "position": {
+                      "x": 62.003166576396225,
+                      "y": 0.7,
+                      "z": -31.764555615735855,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 398,
+                "kind": "gorilla",
+                "start": 3678,
+                "end": 3873,
+                "seconds": 3.25,
+                "archetype": "infected.gorilla"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3678,
+                "sourceId": 462,
+                "targetId": 398,
+                "position": {
+                  "x": 61.895053389356,
+                  "z": -30.747108477850087
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "gorilla"
+              }
+            },
+            {
+              "species": "elephant",
+              "target": {
+                "kind": "elephant",
+                "id": 399,
+                "archetype": "animal.elephant",
+                "species": "elephant",
+                "hp": 100,
+                "position": {
+                  "x": -57.99683342360377,
+                  "z": 33.33544438426415,
+                  "y": 0.7,
+                  "yaw": 2.553590050042228
+                },
+                "attackers": [
+                  {
+                    "id": 463,
+                    "position": {
+                      "x": -56.396833423603766,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 464,
+                    "position": {
+                      "x": -57.99683342360377,
+                      "y": 0.7,
+                      "z": 34.93544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 465,
+                    "position": {
+                      "x": -59.59683342360377,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 466,
+                    "position": {
+                      "x": -57.99683342360377,
+                      "y": 0.7,
+                      "z": 31.73544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 399,
+                "kind": "elephant",
+                "start": 3675,
+                "end": 3839,
+                "seconds": 2.7333333333333334,
+                "archetype": "infected.elephant"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3675,
+                "sourceId": 463,
+                "targetId": 399,
+                "position": {
+                  "x": -58.08740475465123,
+                  "z": 33.26263664055924
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "elephant"
+              }
+            },
+            {
+              "species": "zebra",
+              "target": {
+                "kind": "zebra",
+                "id": 400,
+                "archetype": "animal.zebra",
+                "species": "zebra",
+                "hp": 100,
+                "position": {
+                  "x": 62.00316657639623,
+                  "z": 33.33544438426415,
+                  "y": 0.7,
+                  "yaw": 2.553590050042228
+                },
+                "attackers": [
+                  {
+                    "id": 467,
+                    "position": {
+                      "x": 63.45671996698951,
+                      "y": 0.7,
+                      "z": 33.68899777485743,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 468,
+                    "position": {
+                      "x": 62.00316657639623,
+                      "y": 0.7,
+                      "z": 34.43544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 469,
+                    "position": {
+                      "x": 60.90316657639623,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 470,
+                    "position": {
+                      "x": 62.00316657639623,
+                      "y": 0.7,
+                      "z": 32.23544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 400,
+                "kind": "zebra",
+                "start": 3685,
+                "end": 3865,
+                "seconds": 3,
+                "archetype": "infected.zebra"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3685,
+                "sourceId": 470,
+                "targetId": 400,
+                "position": {
+                  "x": 61.84453847013401,
+                  "z": 33.213709591652474
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "zebra"
+              }
+            },
+            {
+              "species": "flamingo",
+              "target": {
+                "kind": "flamingo",
+                "id": 402,
+                "archetype": "animal.flamingo",
+                "species": "flamingo",
+                "hp": 100,
+                "position": {
+                  "x": -7.996833423603811,
+                  "z": -30.664555615735864,
+                  "y": 0.7,
+                  "yaw": -10.01278056431694
+                },
+                "attackers": [
+                  {
+                    "id": 471,
+                    "position": {
+                      "x": -6.896833423603811,
+                      "y": 0.7,
+                      "z": -30.664555615735864,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 472,
+                    "position": {
+                      "x": -7.996833423603811,
+                      "y": 0.7,
+                      "z": -29.564555615735863,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 473,
+                    "position": {
+                      "x": -9.096833423603812,
+                      "y": 0.7,
+                      "z": -30.664555615735864,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 474,
+                    "position": {
+                      "x": -7.996833423603811,
+                      "y": 0.7,
+                      "z": -31.764555615735866,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 402,
+                "kind": "flamingo",
+                "start": 3685,
+                "end": 3875,
+                "seconds": 3.1666666666666665,
+                "archetype": "infected.flamingo"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3685,
+                "sourceId": 474,
+                "targetId": 402,
+                "position": {
+                  "x": -8.263976143553219,
+                  "z": -30.9009016778328
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "flamingo"
+              }
+            }
+          ],
+          "target": "all five actual healthy targets bitten, sameID/species,2.5–3.5s from first bite/stagger start; unchanged caps",
+          "receipt": "docs/reports/fix55-c/L8-bite-fixtures.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "observed same-ID animal turn timing and species",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
           "clause": "concurrent cap",
           "level": "L8",
           "tier": "low",
@@ -3594,6 +4589,882 @@
           "value": 92,
           "target": "0 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on civilian",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4449,
+              "attackId": 7,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 449,
+              "targetId": 369,
+              "position": {
+                "x": -32.275909176283605,
+                "z": -60.81566244545036,
+                "y": 0.7,
+                "yaw": -21.339212643800387
+              },
+              "direction": {
+                "x": -0.6678142430593229,
+                "z": 0.7443279766118588
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 4587,
+              "attackId": 9,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 355,
+              "position": {
+                "x": 20.61604754871179,
+                "z": 63.35535617525129,
+                "y": 0.82,
+                "yaw": -2.816502859198152
+              },
+              "direction": {
+                "x": -0.9836533207099233,
+                "z": -0.18007260940059977
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 4587,
+              "attackId": 9,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 356,
+              "position": {
+                "x": 20.792390487779834,
+                "z": 64.53994215382414,
+                "y": 0.82,
+                "yaw": 1.0848018581781183
+              },
+              "direction": {
+                "x": -0.9898044617208521,
+                "z": 0.14243288790688002
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 4587,
+              "attackId": 9,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 357,
+              "position": {
+                "x": 20.910979456663007,
+                "z": 65.57005201162944,
+                "y": 0.82,
+                "yaw": -0.7428179885235423
+              },
+              "direction": {
+                "x": -0.9114496860860617,
+                "z": 0.41141155760821757
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 357,
+              "position": {
+                "x": 20.821662742039898,
+                "z": 66.09620735832397,
+                "y": 0.82,
+                "yaw": 1.176335739481945
+              },
+              "direction": {
+                "x": 0.361065836575861,
+                "z": 0.9325403270946375
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 358,
+              "position": {
+                "x": 18.326737178725374,
+                "z": 64.45778019985764,
+                "y": 0.82,
+                "yaw": -2.2438763368818258
+              },
+              "direction": {
+                "x": -0.7263007093589713,
+                "z": 0.687377101440436
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 361,
+              "position": {
+                "x": 17.75783892111047,
+                "z": 64.02605877298018,
+                "y": 0.82,
+                "yaw": -1.7930953199883157
+              },
+              "direction": {
+                "x": -0.9140023441801394,
+                "z": 0.4057089040595608
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 362,
+              "position": {
+                "x": 17.184963730431416,
+                "z": 64.94227523941038,
+                "y": 0.82,
+                "yaw": -0.2860434736859473
+              },
+              "direction": {
+                "x": -0.8160392359150467,
+                "z": 0.5779965098918733
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 363,
+              "position": {
+                "x": 17.74564089970478,
+                "z": 65.81880454432492,
+                "y": 0.82,
+                "yaw": -1.6575291661592042
+              },
+              "direction": {
+                "x": -0.5912883362799047,
+                "z": 0.8064602305007619
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 364,
+              "position": {
+                "x": 16.064986467553076,
+                "z": 63.42633705157536,
+                "y": 0.82,
+                "yaw": 2.967352277968604
+              },
+              "direction": {
+                "x": -0.9974902226081409,
+                "z": 0.07080434874470151
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 365,
+              "position": {
+                "x": 17.068440120473902,
+                "z": 64.21281541163985,
+                "y": 0.82,
+                "yaw": -3.218681075119054
+              },
+              "direction": {
+                "x": -0.9290001910368904,
+                "z": 0.37007924158674615
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 366,
+              "position": {
+                "x": 17.26314431995644,
+                "z": 66.34510821561909,
+                "y": 0.82,
+                "yaw": -0.9306820245190552
+              },
+              "direction": {
+                "x": -0.606900732772972,
+                "z": 0.7947776422117256
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6259,
+              "attackId": 275,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 376,
+              "position": {
+                "x": 18.54730886913589,
+                "z": 66.98099260707981,
+                "y": 0.7,
+                "yaw": 1.2799456291457245
+              },
+              "direction": {
+                "x": -0.286767297348871,
+                "z": 0.9580002699223128
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7464,
+              "sourceId": 411,
+              "targetId": 376,
+              "position": {
+                "x": 18.161434949182606,
+                "z": 66.83843688769986
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7567,
+              "sourceId": 419,
+              "targetId": 384,
+              "position": {
+                "x": -20.97141469041534,
+                "z": -64.72895493432402
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7584,
+              "sourceId": 421,
+              "targetId": 369,
+              "position": {
+                "x": -32.34713103096065,
+                "z": -61.11505185831731
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7657,
+              "sourceId": 411,
+              "targetId": 355,
+              "position": {
+                "x": 24.007308410886218,
+                "z": 66.73053890652545
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7795,
+              "attackId": 563,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 358,
+              "position": {
+                "x": 19.296740080757935,
+                "z": 64.69317143739055,
+                "y": 0.82,
+                "yaw": -2.5524731472047564
+              },
+              "direction": {
+                "x": 0.993709608794458,
+                "z": 0.11198755908387917
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7795,
+              "attackId": 563,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 360,
+              "position": {
+                "x": 12.38389094959256,
+                "z": 61.88782525947198,
+                "y": 0.82,
+                "yaw": 0.9824702493525335
+              },
+              "direction": {
+                "x": -0.7823122653461312,
+                "z": -0.6228864418888923
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7795,
+              "attackId": 563,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 362,
+              "position": {
+                "x": 17.625805560383025,
+                "z": 64.38797259927416,
+                "y": 0.82,
+                "yaw": -0.4511660691719177
+              },
+              "direction": {
+                "x": 0.9981221530812321,
+                "z": 0.06125493880892695
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7795,
+              "attackId": 563,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 366,
+              "position": {
+                "x": 18.499766834592112,
+                "z": 64.31711803022743,
+                "y": 0.82,
+                "yaw": -2.2287500432710465
+              },
+              "direction": {
+                "x": 0.9997610095756038,
+                "z": 0.021861466839383004
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7853,
+              "sourceId": 411,
+              "targetId": 364,
+              "position": {
+                "x": 32.51946565199742,
+                "z": 65.54973508296727
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 8216,
+              "attackId": 621,
+              "actionId": "alpha.charge",
+              "sourceId": 456,
+              "targetId": 360,
+              "position": {
+                "x": 9.10835579550191,
+                "z": 54.52580625941052,
+                "y": 0.7,
+                "yaw": 1.6366314829332302
+              },
+              "direction": {
+                "x": 0.25582514487460595,
+                "z": -0.9667230706101344
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8390,
+              "sourceId": 463,
+              "targetId": 362,
+              "position": {
+                "x": 20.052032586144875,
+                "z": 68.786184416963
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8426,
+              "sourceId": 469,
+              "targetId": 356,
+              "position": {
+                "x": 24.44642785020628,
+                "z": 61.63404362842565
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8457,
+              "sourceId": 438,
+              "targetId": 357,
+              "position": {
+                "x": 23.680471699543943,
+                "z": 68.58875542769832
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8490,
+              "sourceId": 427,
+              "targetId": 365,
+              "position": {
+                "x": 24.909986712697492,
+                "z": 62.09575625873958
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8565,
+              "sourceId": 484,
+              "targetId": 361,
+              "position": {
+                "x": 26.60280469128606,
+                "z": 68.26207320732813
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8744,
+              "sourceId": 362,
+              "targetId": 366,
+              "position": {
+                "x": 18.229223173934223,
+                "z": 67.3022338061187
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8770,
+              "sourceId": 463,
+              "targetId": 358,
+              "position": {
+                "x": 24.89107871909792,
+                "z": 66.83009629632738
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9067,
+              "sourceId": 366,
+              "targetId": 363,
+              "position": {
+                "x": 13.168919757810054,
+                "z": 71.68097718494391
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9330,
+              "sourceId": 480,
+              "targetId": 360,
+              "position": {
+                "x": 24.209676169717305,
+                "z": 66.7874279132267
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9532,
+              "sourceId": 526,
+              "targetId": 359,
+              "position": {
+                "x": 18.70016516592932,
+                "z": 78.15066118344458
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            }
+          ],
+          "target": "at least one landed infected hit on civilian during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on soldier",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4587,
+              "attackId": 9,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 456,
+              "targetId": 391,
+              "position": {
+                "x": 26.79671544449219,
+                "z": 64.20413710213401,
+                "y": 0.82,
+                "yaw": 2.6376819227985524
+              },
+              "direction": {
+                "x": 0.9976222343990232,
+                "z": 0.068919354558067
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 5666,
+              "attackId": 191,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 449,
+              "targetId": 389,
+              "position": {
+                "x": -25.315683950575718,
+                "z": -62.158491210055935,
+                "y": 0.82,
+                "yaw": -2.1836058450354288
+              },
+              "direction": {
+                "x": 0.575168012195491,
+                "z": -0.8180353034845669
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 5762,
+              "attackId": 211,
+              "actionId": "infected.alpha",
+              "sourceId": 449,
+              "targetId": 389,
+              "position": {
+                "x": -25.315683950575718,
+                "z": -62.158491210055935,
+                "y": 0.82,
+                "yaw": -2.183605845035429
+              },
+              "direction": {
+                "x": 0.57516801219549,
+                "z": -0.8180353034845675
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 5822,
+              "attackId": 221,
+              "actionId": "infected.alpha",
+              "sourceId": 449,
+              "targetId": 389,
+              "position": {
+                "x": -25.55905220715949,
+                "z": -62.624472140805615,
+                "y": 0.82,
+                "yaw": -2.183605845035429
+              },
+              "direction": {
+                "x": 0.6004789768908237,
+                "z": -0.7996405431893442
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 6028,
+              "attackId": 245,
+              "actionId": "alpha.charge",
+              "sourceId": 449,
+              "targetId": 389,
+              "position": {
+                "x": -25.37188470585302,
+                "z": -65.6939813919817,
+                "y": 0.82,
+                "yaw": -2.1097635072457974
+              },
+              "direction": {
+                "x": 0.5105908249808733,
+                "z": -0.8598238246555808
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            }
+          ],
+          "target": "at least one landed infected hit on soldier during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on staff",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "at least one landed infected hit on staff during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on animal",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 7204,
+              "attackId": 385,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -59.981036576188686,
+                "z": 31.94873672853468,
+                "y": 0.7,
+                "yaw": 5.7562429720120365
+              },
+              "direction": {
+                "x": 0.10101193879211585,
+                "z": -0.9948852135907226
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 7804,
+              "attackId": 566,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -51.99049875055929,
+                "z": 32.167315739724785,
+                "y": 0.7,
+                "yaw": 3.0958201008882074
+              },
+              "direction": {
+                "x": 0.7914224196901921,
+                "z": -0.6112696243162433
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 8404,
+              "attackId": 665,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -60.16343528299235,
+                "z": 32.0630463378855,
+                "y": 0.7,
+                "yaw": 5.698774828301315
+              },
+              "direction": {
+                "x": -0.9029606557235007,
+                "z": 0.4297232297832939
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 9004,
+              "attackId": 870,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 435,
+              "targetId": 399,
+              "position": {
+                "x": -58.587570292169985,
+                "z": 31.887814870173617,
+                "y": 0.7,
+                "yaw": 9.503900275051574
+              },
+              "direction": {
+                "x": -0.6707941071280845,
+                "z": -0.7416436245544324
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9877,
+              "sourceId": 550,
+              "targetId": 397,
+              "position": {
+                "x": -56.978629860979346,
+                "z": -29.9857532406529
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "animal"
+            }
+          ],
+          "target": "at least one landed infected hit on animal during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "observed same-ID animal turn timing and species",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 397,
+              "startTick": 9877,
+              "endTick": 10037,
+              "seconds": 2.6666666666666665,
+              "initial": {
+                "id": 397,
+                "archetype": "animal.lion",
+                "species": "lion",
+                "victimClass": "animal",
+                "variant": "inf.lion"
+              },
+              "finalArchetype": "infected.lion",
+              "finalVariant": "inf.lion"
+            }
+          ],
+          "target": "observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
         },
         {
           "id": "L8-05",
@@ -3619,6 +5490,661 @@
         },
         {
           "id": "L8-05",
+          "clause": "actual infected hits on civilian",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4449,
+              "attackId": 5,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 473,
+              "targetId": 369,
+              "position": {
+                "x": -32.26988641958202,
+                "z": -60.80779617565581,
+                "y": 0.7,
+                "yaw": -21.33435753714111
+              },
+              "direction": {
+                "x": -0.6656862444071756,
+                "z": 0.7462317495303118
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5049,
+              "attackId": 16,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 473,
+              "targetId": 369,
+              "position": {
+                "x": -22.00639970017761,
+                "z": -48.12038930595558,
+                "y": 0.82,
+                "yaw": -22.6618004278893
+              },
+              "direction": {
+                "x": -0.2678029169844537,
+                "z": -0.9634737140444559
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            }
+          ],
+          "target": "at least one landed infected hit on civilian during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on soldier",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4570,
+              "attackId": 7,
+              "actionId": "alpha.charge",
+              "sourceId": 480,
+              "targetId": 391,
+              "position": {
+                "x": 26.661421188822636,
+                "z": 64.05579920262547,
+                "y": 0.82,
+                "yaw": 0.010451690007601438
+              },
+              "direction": {
+                "x": -0.9999453815851947,
+                "z": 0.010451499721998894
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4717,
+              "attackId": 10,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 391,
+              "position": {
+                "x": 18.99087073306164,
+                "z": 64.13597233583533,
+                "y": 0.82,
+                "yaw": 0.010451688347322014
+              },
+              "direction": {
+                "x": -0.9999453816025475,
+                "z": 0.010451498061806402
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4783,
+              "attackId": 13,
+              "actionId": "infected.alpha",
+              "sourceId": 480,
+              "targetId": 391,
+              "position": {
+                "x": 18.99087073306164,
+                "z": 64.13597233583533,
+                "y": 0.82,
+                "yaw": 0.010451688347322014
+              },
+              "direction": {
+                "x": -0.9999453816025475,
+                "z": 0.010451498061806402
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 4843,
+              "attackId": 14,
+              "actionId": "infected.alpha",
+              "sourceId": 480,
+              "targetId": 391,
+              "position": {
+                "x": 18.902169427802974,
+                "z": 64.1368994479927,
+                "y": 0.82,
+                "yaw": 0.010451688347322014
+              },
+              "direction": {
+                "x": -0.9999453816025473,
+                "z": 0.010451498061813155
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            }
+          ],
+          "target": "at least one landed infected hit on soldier during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on staff",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "at least one landed infected hit on staff during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on animal",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 5535,
+              "attackId": 24,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 459,
+              "targetId": 399,
+              "position": {
+                "x": -58.18606582183871,
+                "z": 33.22060477620686,
+                "y": 0.7,
+                "yaw": 2.5492838581829673
+              },
+              "direction": {
+                "x": -0.5203155733619271,
+                "z": 0.8539740652484997
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            }
+          ],
+          "target": "at least one landed infected hit on animal during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "unprotected local-threat victim class coverage",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "classes": [
+              {
+                "kind": "civilian",
+                "canonical": 2,
+                "localFixture": 1
+              },
+              {
+                "kind": "soldier",
+                "canonical": 4,
+                "localFixture": 0
+              },
+              {
+                "kind": "staff",
+                "canonical": 0,
+                "localFixture": 4
+              },
+              {
+                "kind": "animal",
+                "canonical": 1,
+                "localFixture": 5
+              }
+            ],
+            "fixturePeak": 144,
+            "fixtureCap": 200
+          },
+          "target": "landed damage or successful production outbreak.bite on civilian/soldier/staff/animal; NPCs unprotected and ordinary stats; canonical damage plus explicit local-threat capability fixtures",
+          "receipt": "docs/reports/fix55-c/L8-bite-fixtures.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "all five same-ID species convert after actual bites",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "species": "lion",
+              "target": {
+                "kind": "lion",
+                "id": 397,
+                "archetype": "animal.lion",
+                "species": "lion",
+                "hp": 100,
+                "position": {
+                  "x": -57.996833423603775,
+                  "z": -30.664555615735853,
+                  "y": 0.7,
+                  "yaw": -16.295965871496477
+                },
+                "attackers": [
+                  {
+                    "id": 479,
+                    "position": {
+                      "x": -56.89683342360377,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 480,
+                    "position": {
+                      "x": -57.996833423603775,
+                      "y": 0.7,
+                      "z": -29.564555615735852,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 481,
+                    "position": {
+                      "x": -59.096833423603776,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 482,
+                    "position": {
+                      "x": -57.996833423603775,
+                      "y": 0.7,
+                      "z": -31.764555615735855,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 397,
+                "kind": "lion",
+                "start": 3676,
+                "end": 3828,
+                "seconds": 2.533333333333333,
+                "archetype": "infected.lion"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3676,
+                "sourceId": 479,
+                "targetId": 397,
+                "position": {
+                  "x": -58.10544820584361,
+                  "z": -30.750732703940027
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "lion"
+              }
+            },
+            {
+              "species": "gorilla",
+              "target": {
+                "kind": "gorilla",
+                "id": 398,
+                "archetype": "animal.gorilla",
+                "species": "gorilla",
+                "hp": 100,
+                "position": {
+                  "x": 62.003166576396225,
+                  "z": -30.664555615735853,
+                  "y": 0.7,
+                  "yaw": -16.295965871496477
+                },
+                "attackers": [
+                  {
+                    "id": 483,
+                    "position": {
+                      "x": 63.10316657639623,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 484,
+                    "position": {
+                      "x": 62.003166576396225,
+                      "y": 0.7,
+                      "z": -29.564555615735852,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 485,
+                    "position": {
+                      "x": 60.903166576396224,
+                      "y": 0.7,
+                      "z": -30.664555615735853,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 486,
+                    "position": {
+                      "x": 62.003166576396225,
+                      "y": 0.7,
+                      "z": -31.764555615735855,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 398,
+                "kind": "gorilla",
+                "start": 3684,
+                "end": 3859,
+                "seconds": 2.9166666666666665,
+                "archetype": "infected.gorilla"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3684,
+                "sourceId": 486,
+                "targetId": 398,
+                "position": {
+                  "x": 61.86236950331417,
+                  "z": -30.770289864702146
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "gorilla"
+              }
+            },
+            {
+              "species": "elephant",
+              "target": {
+                "kind": "elephant",
+                "id": 399,
+                "archetype": "animal.elephant",
+                "species": "elephant",
+                "hp": 100,
+                "position": {
+                  "x": -57.99683342360377,
+                  "z": 33.33544438426415,
+                  "y": 0.7,
+                  "yaw": 2.553590050042228
+                },
+                "attackers": [
+                  {
+                    "id": 487,
+                    "position": {
+                      "x": -56.396833423603766,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 488,
+                    "position": {
+                      "x": -57.99683342360377,
+                      "y": 0.7,
+                      "z": 34.93544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 489,
+                    "position": {
+                      "x": -59.59683342360377,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 490,
+                    "position": {
+                      "x": -57.99683342360377,
+                      "y": 0.7,
+                      "z": 31.73544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 399,
+                "kind": "elephant",
+                "start": 3675,
+                "end": 3847,
+                "seconds": 2.8666666666666667,
+                "archetype": "infected.elephant"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3675,
+                "sourceId": 487,
+                "targetId": 399,
+                "position": {
+                  "x": -58.08740475465123,
+                  "z": 33.26263664055924
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "elephant"
+              }
+            },
+            {
+              "species": "zebra",
+              "target": {
+                "kind": "zebra",
+                "id": 400,
+                "archetype": "animal.zebra",
+                "species": "zebra",
+                "hp": 100,
+                "position": {
+                  "x": 62.00316657639623,
+                  "z": 33.33544438426415,
+                  "y": 0.7,
+                  "yaw": 2.553590050042228
+                },
+                "attackers": [
+                  {
+                    "id": 491,
+                    "position": {
+                      "x": 63.45671996698951,
+                      "y": 0.7,
+                      "z": 33.68899777485743,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 492,
+                    "position": {
+                      "x": 62.00316657639623,
+                      "y": 0.7,
+                      "z": 34.43544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 493,
+                    "position": {
+                      "x": 60.90316657639623,
+                      "y": 0.7,
+                      "z": 33.33544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 494,
+                    "position": {
+                      "x": 62.00316657639623,
+                      "y": 0.7,
+                      "z": 32.23544438426415,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 400,
+                "kind": "zebra",
+                "start": 3676,
+                "end": 3869,
+                "seconds": 3.216666666666667,
+                "archetype": "infected.zebra"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3676,
+                "sourceId": 494,
+                "targetId": 400,
+                "position": {
+                  "x": 61.894551794156406,
+                  "z": 33.24926729605998
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "zebra"
+              }
+            },
+            {
+              "species": "flamingo",
+              "target": {
+                "kind": "flamingo",
+                "id": 402,
+                "archetype": "animal.flamingo",
+                "species": "flamingo",
+                "hp": 100,
+                "position": {
+                  "x": -7.996833423603811,
+                  "z": -30.664555615735864,
+                  "y": 0.7,
+                  "yaw": -10.01278056431694
+                },
+                "attackers": [
+                  {
+                    "id": 495,
+                    "position": {
+                      "x": -6.896833423603811,
+                      "y": 0.7,
+                      "z": -30.664555615735864,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 496,
+                    "position": {
+                      "x": -7.996833423603811,
+                      "y": 0.7,
+                      "z": -29.564555615735863,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 497,
+                    "position": {
+                      "x": -9.096833423603812,
+                      "y": 0.7,
+                      "z": -30.664555615735864,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  },
+                  {
+                    "id": 498,
+                    "position": {
+                      "x": -7.996833423603811,
+                      "y": 0.7,
+                      "z": -31.764555615735866,
+                      "yaw": 0
+                    },
+                    "hp": 60
+                  }
+                ]
+              },
+              "turn": {
+                "id": 402,
+                "kind": "flamingo",
+                "start": 3687,
+                "end": 3840,
+                "seconds": 2.55,
+                "archetype": "infected.flamingo"
+              },
+              "bite": {
+                "type": "outbreak.bite",
+                "tick": 3687,
+                "sourceId": 498,
+                "targetId": 402,
+                "position": {
+                  "x": -8.27896923980172,
+                  "z": -30.914656935637748
+                },
+                "turns": true,
+                "successfulBite": true,
+                "kind": "flamingo"
+              }
+            }
+          ],
+          "target": "all five actual healthy targets bitten, sameID/species,2.5–3.5s from first bite/stagger start; unchanged caps",
+          "receipt": "docs/reports/fix55-c/L8-bite-fixtures.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "observed same-ID animal turn timing and species",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
           "clause": "concurrent cap",
           "level": "L8",
           "tier": "high",
@@ -3627,6 +6153,892 @@
           "value": 199,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on civilian",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 4449,
+              "attackId": 28,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 473,
+              "targetId": 369,
+              "position": {
+                "x": -32.26988641958202,
+                "z": -60.80779617565581,
+                "y": 0.7,
+                "yaw": -21.33435753714111
+              },
+              "direction": {
+                "x": -0.6656862444071756,
+                "z": 0.7462317495303118
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 4710,
+              "attackId": 31,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 357,
+              "position": {
+                "x": 21.118484566916976,
+                "z": 65.66422137486686,
+                "y": 0.82,
+                "yaw": 2.3508793786540743
+              },
+              "direction": {
+                "x": -0.33496506279212573,
+                "z": -0.9422305485966093
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5225,
+              "attackId": 121,
+              "actionId": "alpha.charge",
+              "sourceId": 473,
+              "targetId": 369,
+              "position": {
+                "x": -32.094443691936526,
+                "z": -61.05815331152221,
+                "y": 0.7,
+                "yaw": -25.926468803970458
+              },
+              "direction": {
+                "x": -0.12473681494412615,
+                "z": -0.9921898643896716
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 356,
+              "position": {
+                "x": 19.702326851425664,
+                "z": 67.68586175752392,
+                "y": 0.7,
+                "yaw": -1.626296846520401
+              },
+              "direction": {
+                "x": 0.9998560232437015,
+                "z": 0.016968582241609707
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 357,
+              "position": {
+                "x": 18.69831397843213,
+                "z": 66.6213679923314,
+                "y": 0.82,
+                "yaw": 3.337949381347129
+              },
+              "direction": {
+                "x": 0.049607736590059445,
+                "z": -0.9987687782817459
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 359,
+              "position": {
+                "x": 17.374082443379173,
+                "z": 65.48021156687278,
+                "y": 0.82,
+                "yaw": -3.2163210697779547
+              },
+              "direction": {
+                "x": -0.5027131986900313,
+                "z": -0.8644532606583406
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 360,
+              "position": {
+                "x": 18.786095138009806,
+                "z": 69.00571658063068,
+                "y": 0.7,
+                "yaw": -1.2951961745402298
+              },
+              "direction": {
+                "x": 0.1039087819454751,
+                "z": 0.9945868313197233
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 363,
+              "position": {
+                "x": 19.362500826442528,
+                "z": 69.4278082640694,
+                "y": 0.7,
+                "yaw": -1.9811356477452469
+              },
+              "direction": {
+                "x": 0.3769293133314538,
+                "z": 0.9262420270919901
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 366,
+              "position": {
+                "x": 17.900098049808605,
+                "z": 64.0650153516594,
+                "y": 0.82,
+                "yaw": 1.2526846358546813
+              },
+              "direction": {
+                "x": -0.20281437767318164,
+                "z": -0.979217201753033
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 5725,
+              "attackId": 262,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 376,
+              "position": {
+                "x": 18.003614996255763,
+                "z": 66.78934258339856,
+                "y": 0.7,
+                "yaw": -0.9417763524145403
+              },
+              "direction": {
+                "x": -0.5904145080242601,
+                "z": -0.807100185054167
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6325,
+              "attackId": 362,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 365,
+              "position": {
+                "x": 6.590101497425472,
+                "z": 71.52250057934268,
+                "y": 0.7,
+                "yaw": -1.584192245862112
+              },
+              "direction": {
+                "x": -0.9762581712501935,
+                "z": 0.21661020997918784
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 6904,
+              "attackId": 602,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 473,
+              "targetId": 384,
+              "position": {
+                "x": -21.64452423333494,
+                "z": -64.47785796851306,
+                "y": 0.82,
+                "yaw": 23.82245591849406
+              },
+              "direction": {
+                "x": -0.25757435959642017,
+                "z": -0.966258479537693
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7000,
+              "attackId": 611,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 361,
+              "position": {
+                "x": 9.771259481407618,
+                "z": 76.69450588075219,
+                "y": 0.7,
+                "yaw": -1.7002128717226341
+              },
+              "direction": {
+                "x": -0.9866844241774592,
+                "z": 0.1626463866355354
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7000,
+              "attackId": 611,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 480,
+              "targetId": 365,
+              "position": {
+                "x": 8.137770815745135,
+                "z": 75.75212538234065,
+                "y": 0.7,
+                "yaw": 2.7069368768022355
+              },
+              "direction": {
+                "x": -0.9756680123259883,
+                "z": -0.21925311793416924
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7235,
+              "attackId": 634,
+              "actionId": "alpha.charge",
+              "sourceId": 473,
+              "targetId": 384,
+              "position": {
+                "x": -22.133343251226098,
+                "z": -71.69191511526557,
+                "y": 0.7,
+                "yaw": 23.484716599973996
+              },
+              "direction": {
+                "x": 0.060904675367543695,
+                "z": -0.9981435871248056
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7453,
+              "sourceId": 437,
+              "targetId": 363,
+              "position": {
+                "x": 19.987377494720672,
+                "z": 58.687005414496475
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7461,
+              "sourceId": 417,
+              "targetId": 365,
+              "position": {
+                "x": 17.999921497150908,
+                "z": 64.9520215228477
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7566,
+              "sourceId": 411,
+              "targetId": 362,
+              "position": {
+                "x": 18.0994858004598,
+                "z": 65.93309974262739
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7590,
+              "sourceId": 437,
+              "targetId": 364,
+              "position": {
+                "x": 19.132883329063386,
+                "z": 58.20126321326839
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7642,
+              "sourceId": 443,
+              "targetId": 376,
+              "position": {
+                "x": 18.20870131418533,
+                "z": 62.736994107928574
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7646,
+              "sourceId": 435,
+              "targetId": 359,
+              "position": {
+                "x": 22.149711207736914,
+                "z": 52.2822074606124
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "tick": 7746,
+              "attackId": 960,
+              "actionId": "alpha.charge",
+              "sourceId": 473,
+              "targetId": 384,
+              "position": {
+                "x": -21.47908113758334,
+                "z": -64.13984325182162,
+                "y": 0.82,
+                "yaw": 20.21448066909699
+              },
+              "direction": {
+                "x": -0.1580450837290367,
+                "z": 0.9874318971499156
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7791,
+              "sourceId": 411,
+              "targetId": 366,
+              "position": {
+                "x": 20.190683152481903,
+                "z": 74.41270005012757
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 7911,
+              "sourceId": 417,
+              "targetId": 386,
+              "position": {
+                "x": 4.700063650380084,
+                "z": 76.44999071176716
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8019,
+              "sourceId": 362,
+              "targetId": 361,
+              "position": {
+                "x": 6.009987125780045,
+                "z": 70.79773922596263
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8160,
+              "sourceId": 435,
+              "targetId": 355,
+              "position": {
+                "x": 26.50852904706152,
+                "z": 60.47789591900738
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8235,
+              "sourceId": 431,
+              "targetId": 369,
+              "position": {
+                "x": -32.19308689537721,
+                "z": -60.87642386047311
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8507,
+              "sourceId": 431,
+              "targetId": 384,
+              "position": {
+                "x": -21.159673321877246,
+                "z": -65.0898828907574
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8625,
+              "sourceId": 447,
+              "targetId": 360,
+              "position": {
+                "x": 26.968092137033892,
+                "z": 69.7790508291465
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8627,
+              "sourceId": 508,
+              "targetId": 358,
+              "position": {
+                "x": 23.49179845015738,
+                "z": 56.48339855916736
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8741,
+              "sourceId": 516,
+              "targetId": 356,
+              "position": {
+                "x": 22.853291625528882,
+                "z": 63.47415138461034
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8893,
+              "sourceId": 485,
+              "targetId": 371,
+              "position": {
+                "x": 21.81561209871802,
+                "z": 85.24999999934842
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 8911,
+              "sourceId": 435,
+              "targetId": 357,
+              "position": {
+                "x": 29.844122991981173,
+                "z": 67.50959237084166
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9213,
+              "sourceId": 485,
+              "targetId": 385,
+              "position": {
+                "x": 13.462547077902656,
+                "z": 85.24999999999952
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9342,
+              "sourceId": 485,
+              "targetId": 380,
+              "position": {
+                "x": 11.561808576875116,
+                "z": 85.24999669110805
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 9635,
+              "sourceId": 478,
+              "targetId": 378,
+              "position": {
+                "x": 60.06762247586412,
+                "z": -0.034918351361858106
+              },
+              "turns": false,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 10727,
+              "sourceId": 360,
+              "targetId": 374,
+              "position": {
+                "x": -23.521522257604637,
+                "z": 39.47273864413589
+              },
+              "turns": false,
+              "successfulBite": true,
+              "victimClass": "civilian"
+            }
+          ],
+          "target": "at least one landed infected hit on civilian during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on soldier",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 6759,
+              "attackId": 581,
+              "actionId": "alpha.charge",
+              "sourceId": 473,
+              "targetId": 389,
+              "position": {
+                "x": -27.29234592387635,
+                "z": -64.13431651934634,
+                "y": 0.82,
+                "yaw": 0.037805647179470936
+              },
+              "direction": {
+                "x": 0.9658235264807331,
+                "z": 0.25920053182106073
+              },
+              "knockback": 0,
+              "amount": 30,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 6904,
+              "attackId": 602,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 473,
+              "targetId": 389,
+              "position": {
+                "x": -20.097161867483795,
+                "z": -62.203326557596135,
+                "y": 0.82,
+                "yaw": 2.8793983002830523
+              },
+              "direction": {
+                "x": 0.9658235263550751,
+                "z": 0.25920053228928336
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 6970,
+              "attackId": 610,
+              "actionId": "infected.alpha",
+              "sourceId": 473,
+              "targetId": 389,
+              "position": {
+                "x": -20.097161867483795,
+                "z": -62.203326557596135,
+                "y": 0.82,
+                "yaw": 2.8793983002830523
+              },
+              "direction": {
+                "x": 0.9658235263550751,
+                "z": 0.25920053228928336
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            },
+            {
+              "tick": 7030,
+              "attackId": 614,
+              "actionId": "infected.alpha",
+              "sourceId": 473,
+              "targetId": 389,
+              "position": {
+                "x": -20.011487380643388,
+                "z": -62.18033387623494,
+                "y": 0.82,
+                "yaw": 2.8793983002830523
+              },
+              "direction": {
+                "x": 0.9658235263550811,
+                "z": 0.2592005322892605
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "soldier"
+            }
+          ],
+          "target": "at least one landed infected hit on soldier during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on staff",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "outbreak.bite",
+              "tick": 9076,
+              "sourceId": 485,
+              "targetId": 395,
+              "position": {
+                "x": 14.795670131790423,
+                "z": 85.2499994358787
+              },
+              "turns": true,
+              "successfulBite": true,
+              "victimClass": "staff"
+            }
+          ],
+          "target": "at least one landed infected hit on staff during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "actual infected hits on animal",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 8036,
+              "attackId": 1212,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 459,
+              "targetId": 399,
+              "position": {
+                "x": -57.53253054143851,
+                "z": 33.69284616602831,
+                "y": 0.7,
+                "yaw": 15.106650527174404
+              },
+              "direction": {
+                "x": 0.21576893197589997,
+                "z": 0.9764444520780378
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 8636,
+              "attackId": 1728,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 459,
+              "targetId": 399,
+              "position": {
+                "x": -57.51991199130941,
+                "z": 31.15968724103561,
+                "y": 0.7,
+                "yaw": 9.800238884767792
+              },
+              "direction": {
+                "x": 0.999662349771464,
+                "z": -0.025984350086072056
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 9236,
+              "attackId": 2329,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 459,
+              "targetId": 399,
+              "position": {
+                "x": -50.915898114124346,
+                "z": 34.896864819197624,
+                "y": 0.7,
+                "yaw": 9.160908780525371
+              },
+              "direction": {
+                "x": 0.7838340900215919,
+                "z": 0.620970304700654
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "tick": 9836,
+              "attackId": 2967,
+              "actionId": "alpha.ground-slam",
+              "sourceId": 459,
+              "targetId": 399,
+              "position": {
+                "x": -48.563436287005885,
+                "z": 39.59850932503923,
+                "y": 0.7,
+                "yaw": 8.070700643707035
+              },
+              "direction": {
+                "x": -0.9862742859258421,
+                "z": 0.1651152110541914
+              },
+              "knockback": 0,
+              "amount": 25,
+              "damageType": "melee",
+              "type": "combat.hit",
+              "victimClass": "animal"
+            },
+            {
+              "type": "outbreak.bite",
+              "tick": 10101,
+              "sourceId": 700,
+              "targetId": 397,
+              "position": {
+                "x": -58.82864509331919,
+                "z": -31.21909672887946
+              },
+              "turns": false,
+              "successfulBite": true,
+              "victimClass": "animal"
+            }
+          ],
+          "target": "at least one landed infected hit on animal during the full observed outbreak",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "observed same-ID animal turn timing and species",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "observed completed turns retain species and ID;2.5–3.5s; empty coverage is inconclusive",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
         }
       ],
       "historical": {
@@ -3637,7 +7049,7 @@
         "evidence": [],
         "method": "NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak."
       },
-      "remaining": "NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L8-06",
@@ -3890,11 +7302,12 @@
       "id": "L8-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c4): Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes. Not measured by this batch run.",
+      "value": "low/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS); high/complete native escape marker remains fixed at APC: [{\"tick\":3600,\"marker\":\"exit\",\"anchor\":{\"x\":96.71,\"z\":76.275,\"radius\":2,\"yaw\":0}}] (target every nonempty marker is exit at the unchanged APC anchor; PASS) Manual review PASS (STALE, Codex sweep-c4): Both tiers:1.25m-radius navigation independently crosses north/south gate from enclosure interior and reaches APC; slab negative control blocks every crossing. Actual WASD then reaches all46 points per tier, including both exits of all five enclosures and APC, within0.65m;4041/4068 physical commands, zero page errors. All nonempty markers remain exit at identical APC anchor. All44 frames at zoom0.5/1.5 personally inspected: continuous pavement and open/fallen gate crossings, courier beyond each gate, final destination ring at lit APC. Raw hashes verified and images deleted. Courier protected; normal NPC/collider/outbreak state and exact actual L7 empty-human-roster campaign, no teleports/skips/count changes.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix55-c/L8-enclosure-paths.json",
         "docs/reports/fix55-c/L8-05-native.json",
+        "docs/reports/fix55-c/L8-enclosure-paths.json",
+        "docs/reports/sweep-c5/historical/L8-05-native-586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042.json",
         "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
         "docs/reports/sweep-c4/L8-07-low-review.json",
         "docs/reports/sweep-c4/L8-07-low-seed.json",
@@ -3904,7 +7317,52 @@
         "tools/qa/accept/sweep-c4-l8-paths.mjs"
       ],
       "expected": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L8-07",
+          "clause": "native escape marker remains fixed at APC",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 3600,
+              "marker": "exit",
+              "anchor": {
+                "x": 96.71,
+                "z": 76.275,
+                "radius": 2,
+                "yaw": 0
+              }
+            }
+          ],
+          "target": "every nonempty marker is exit at the unchanged APC anchor",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-07",
+          "clause": "native escape marker remains fixed at APC",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tick": 3600,
+              "marker": "exit",
+              "anchor": {
+                "x": 96.71,
+                "z": 76.275,
+                "radius": 2,
+                "yaw": 0
+              }
+            }
+          ],
+          "target": "every nonempty marker is exit at the unchanged APC anchor",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        }
+      ],
       "historical": {
         "id": "L8-07",
         "level": "L8",
@@ -3939,9 +7397,9 @@
             "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
           },
           {
-            "file": "docs/reports/fix55-c/L8-05-native.json",
+            "file": "docs/reports/sweep-c5/historical/L8-05-native-586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042.json",
             "sha256": "586cc171c27bc6288467d4c544650d24fd33af5938394e1632860f790ebc1042",
-            "what": "Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
+            "what": "Exact original reviewed bytes archived when the shared receipt was refreshed by sweep-c5. This remains historical evidence, with unchanged digest, source identity and review decision. Current-source width/marker probe or actual physical paths, input samples, seed chain, and personally inspected SHA256 image review."
           },
           {
             "file": "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
@@ -4058,11 +7516,206 @@
       "id": "L8-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Actual high route boards12 survivors and visibly reports6/13 during the wait; APC has no firing action in the run. Every missing-member guidance/physical boarding clause is not fully tracked.",
+      "value": "low/complete every living native group identity seated: [{\"id\":355,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":356,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":357,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":358,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":359,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":360,\"hp\":100,\"infected\":false,\"passengerOf\":406,… (full values in JSON) (target nonempty living group; each passengerOf is the departure APC; PASS); high/complete every living native group identity seated: [{\"id\":355,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":356,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":357,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":358,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":359,\"hp\":100,\"infected\":false,\"passengerOf\":406,\"hidden\":true},{\"id\":360,\"hp\":100,\"infected\":false,\"passengerOf\":406,… (full values in JSON) (target nonempty living group; each passengerOf is the departure APC; PASS)",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix55-c/L8-05-native.json"
+      ],
       "expected": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L8-09",
+          "clause": "every living native group identity seated",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 355,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 356,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 357,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 358,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 359,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 360,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 361,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 362,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 363,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 364,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 365,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 366,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            }
+          ],
+          "target": "nonempty living group; each passengerOf is the departure APC",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        },
+        {
+          "id": "L8-09",
+          "clause": "every living native group identity seated",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "id": 355,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 356,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 357,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 358,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 359,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 360,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 361,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 362,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 363,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 364,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 365,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            },
+            {
+              "id": 366,
+              "hp": 100,
+              "infected": false,
+              "passengerOf": 406,
+              "hidden": true
+            }
+          ],
+          "target": "nonempty living group; each passengerOf is the departure APC",
+          "receipt": "docs/reports/fix55-c/L8-05-native.json"
+        }
+      ],
       "historical": {
         "id": "L8-09",
         "level": "L8",
