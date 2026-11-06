@@ -1,87 +1,32 @@
 {
   "row": "L2-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "fc3db4c520b48535939f393042ca5408bcc421dc",
+  "reviewer": "Codex sweep-a3",
+  "date": "2026-11-06",
+  "commit": "4acfba61d9e4c6327b7f1909a8ae2a6d4d54c636",
   "clauses": [
     {
-      "clause": "Truck route 15\u201325 s with player + 6 firefighters seated; all 7 out \u2264 4 s after arrival; control \u2264 0.5 s. Fire-engine crew visible, never hiding the courier.",
+      "clause": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
       "verdict": "PASS",
-      "note": "Fresh40-frame route matrix personally inspected: open cab exposes helmeted crew and courier hair/teal backpack without hull occlusion, including both zoom limits and both renderers/qualities. Native24.3167s ride,1459 seated ticks,7 distinct IDs,0 unseated ticks,all7 out0.8167s,control0.0167s. Arrival framing crops some crew; numeric complete roster supplies census."
+      "note": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L2-03-browser-ledger.json.gz",
-      "sha256": "e749a850b58fe58bab8b433c5010b3e928e386ef642afd796004720e7c631161",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
+      "file": "docs/reports/sweep-a3/L2-03-clauses.json",
+      "sha256": "e93369df72c2342e47203c04f8250d01690a675be124af17140b1d895d99bff4",
+      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-03-native-clauses.json",
-      "sha256": "8b225b7b52a4b52e24940097572132568b17fe3f8c3aaaaccd992e7e1f79b22a",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
+      "file": "docs/reports/sweep-a3/L2-03-images.json",
+      "sha256": "ef0a244f9aab4d30eb012ae953473aed288445d1851e637326bc08259a4fdc20",
+      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     },
     {
-      "file": "docs/reports/sweep-a2/L2-03-image-review.json",
-      "sha256": "c7eb6af7d941826fdeee1258628f6c304e1cfe0cbc7de6b40ac0eecc3b477aff",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/ride-photos.json",
-      "sha256": "704f00465b0fa551d551a34e369926128a2e094892f354e023ed424a86d263c4",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-01.jpg",
-      "sha256": "28d0ccb30436e489185786e2541b4b7e1f692f318f87f7e7a92bb5502e7acda6",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-02.jpg",
-      "sha256": "51f2a6fc91c2bc8e12e19a3c7d708c7c14e47f272a622417417fdb9b3a5fe753",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-03.jpg",
-      "sha256": "cc70aa50b67544aba94b8bc861d9ff917f5c06dcbcdd9baff8c6fdffc164dda2",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-04.jpg",
-      "sha256": "201b6344a3a218253487418d31560924e6b7d9fc06f1954ca98578e5fd2ba865",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-05.jpg",
-      "sha256": "cf4365ed55e69ea65b8d3b22112d2228dc6f7384ea5903ca8b7338becdb88f33",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-06.jpg",
-      "sha256": "70d28ca876a2d826e50d3f79997232323a4c0ac55edf1fae3a93472ea2511dba",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-07.jpg",
-      "sha256": "565c9df200614bd20aa6be0c96d42b477be24a0878ed541783545f7f37c90143",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-08.jpg",
-      "sha256": "8a66eb501067ba113535a6c6c580d93b2f5500935a66145d6fb0f3a32a1c357d",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-09.jpg",
-      "sha256": "38fa42044a17ce1cde79ac5b16ad3b1345d40cbc7ee0e3496ff25cb4530559c3",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/ride-10.jpg",
-      "sha256": "83bbdca8e095e020711b6ee98a15825178895054490fad33349f084ac324df4b",
-      "what": "Current same-tick full-HUD ride matrix, native complete seven-person clocks and all40 personally inspected frame observations."
+      "file": "docs/reports/sweep-a3/L2-03-ledger.json.gz",
+      "sha256": "83d213c751561e9d836338cf8bdb7aeec01674951413f128abbbe3b0391ef6a2",
+      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
     }
   ],
-  "notes": "No game changes. Ordinary native no-axe InputFrame route. Fixed simulation clocks, no performance timing. s0 sampled13ticks after departure."
+  "notes": "Pooled headless real level and ordinary no-axe InputFrame route; full HUD/production follow camera. No relocation, actor injection, protection or objective skips. Controlled on-foot hull-occlusion poses belong to G-07 and are not inferred from the seated ride frames."
 }
