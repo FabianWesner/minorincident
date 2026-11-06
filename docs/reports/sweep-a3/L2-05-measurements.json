@@ -1,0 +1,389 @@
+{
+  "sourceHash": "1f5444ba8e17b9011ad9170973452840806c87dc52f994c38b43b29dcdc78b5e",
+  "native": [
+    {
+      "tier": "low",
+      "expected": 20,
+      "identities": 20,
+      "closedTicks": 240,
+      "minExposed": 20,
+      "minInside": 20,
+      "panicClips": [
+        "npc-glance",
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press"
+      ],
+      "doorsOpenAt": 3489,
+      "firstOut": 3489,
+      "firstOutSeconds": 0
+    },
+    {
+      "tier": "high",
+      "expected": 30,
+      "identities": 30,
+      "closedTicks": 240,
+      "minExposed": 30,
+      "minInside": 30,
+      "panicClips": [
+        "npc-glance",
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press"
+      ],
+      "doorsOpenAt": 3489,
+      "firstOut": 3489,
+      "firstOutSeconds": 0
+    }
+  ],
+  "browser": [
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "tick": 3270,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press",
+        "npc-glance"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3270
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "tick": 3330,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-bang",
+        "npc-glance",
+        "npc-hug",
+        "npc-cower",
+        "npc-plead"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3330
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "tick": 3390,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-glance",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-bang"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3390
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "tick": 3270,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press",
+        "npc-glance"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3270
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "tick": 3330,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-bang",
+        "npc-glance",
+        "npc-hug",
+        "npc-cower",
+        "npc-plead",
+        "npc-press"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3330
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "tick": 3390,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-glance",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-bang",
+        "npc-press"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3390
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "low",
+      "tick": 3270,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press",
+        "npc-glance"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3270
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "low",
+      "tick": 3330,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-bang",
+        "npc-glance",
+        "npc-hug",
+        "npc-cower",
+        "npc-plead"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3330
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "low",
+      "tick": 3390,
+      "actors": 20,
+      "drawn": 20,
+      "clips": [
+        "npc-glance",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-bang"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3390
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "high",
+      "tick": 3270,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-bang",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-press",
+        "npc-glance"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3270
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3270
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "high",
+      "tick": 3330,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-bang",
+        "npc-glance",
+        "npc-hug",
+        "npc-cower",
+        "npc-plead",
+        "npc-press"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3330
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3330
+        }
+      ]
+    },
+    {
+      "backend": "webgl",
+      "tier": "high",
+      "tick": 3390,
+      "actors": 30,
+      "drawn": 30,
+      "clips": [
+        "npc-glance",
+        "npc-plead",
+        "npc-hug",
+        "npc-cower",
+        "npc-bang",
+        "npc-press"
+      ],
+      "captures": [
+        {
+          "inspectionScale": null,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 0.5,
+          "tick": 3390
+        },
+        {
+          "inspectionScale": 1.5,
+          "tick": 3390
+        }
+      ]
+    }
+  ]
+}
