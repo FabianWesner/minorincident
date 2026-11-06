@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "289917b183f336a36236fca86fc6da81bd0d424e7365929ea53783d555bed95b",
+  "sourceHash": "29a9274cced01b9795c57e79596e84cd71ec376d271611f4e21e6dbeb2695fe5",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -178,7 +178,7 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "d2e4ef97489ef8ed778829de525bdc2451a10ff09252a0671425a47ada1a3722",
+        "snapshotSha256": "394f24f918efabe6f62be3c81bda611037e074d8a24ff4b27acf93a1e071dcba",
         "damage": 100,
         "expected": {
           "id": "line-1",
@@ -186,7 +186,7 @@
             "x": -20,
             "y": 0.7099999785423279,
             "z": -2,
-            "yaw": 1.3024875117419104
+            "yaw": -0.6185034389633004
           },
           "gates": {},
           "racks": {
@@ -214,7 +214,7 @@
             140
           ],
           "removedPickups": [
-            126
+            127
           ],
           "cure": false
         },
@@ -256,15 +256,15 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "3449900300f27ebea33ac8dc4e7dc56f161da20d1a7237a05d46ee240e27e0a6",
+        "snapshotSha256": "254c4b5ae1d2f7a8e05c150ca147587884a4c5be5d210ec83adae03ee31b009f",
         "damage": 100,
         "expected": {
           "id": "nests",
           "anchor": {
-            "x": -9.8,
+            "x": -11,
             "y": 0.7099999785423279,
-            "z": -16.5,
-            "yaw": -0.730897827884266
+            "z": 16,
+            "yaw": 1.5611768523785743
           },
           "gates": {},
           "racks": {
@@ -277,6 +277,7 @@
           },
           "followers": [],
           "pickups": [
+            128,
             129,
             130,
             131,
@@ -291,15 +292,15 @@
             140
           ],
           "removedPickups": [
-            126
+            127
           ],
           "cure": false
         },
         "observed": {
           "id": "nests",
           "position": {
-            "x": -9.8,
-            "z": -16.5
+            "x": -11,
+            "z": 16
           },
           "gates": {},
           "racks": {
@@ -333,7 +334,7 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "23898958b57fe719241bea9ab767af3aca7219142d035b76eed23b73c50314b7",
+        "snapshotSha256": "fc1c77516707d80758f0d13a42182d4818c1482a387b92cd74b42b9563a4e94d",
         "damage": 100,
         "expected": {
           "id": "armor",
@@ -341,7 +342,7 @@
             "x": -11,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": 3.0206025231023377
+            "yaw": -1.9862633730062687
           },
           "gates": {},
           "racks": {
@@ -354,6 +355,7 @@
           },
           "followers": [],
           "pickups": [
+            128,
             129,
             130,
             131,
@@ -368,7 +370,7 @@
             140
           ],
           "removedPickups": [
-            126
+            127
           ],
           "cure": false
         },
@@ -410,7 +412,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "1bf56172626e9da6243a9b32dab041d5a7d68f17ceac31964927bc4fce250300",
+        "snapshotSha256": "6376997c3ed87f8b841244b7a0aca5773d2428577109cf3a01dd0a5288e27aef",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -418,7 +420,7 @@
             "x": -4,
             "y": 0.7049999833106995,
             "z": 16,
-            "yaw": -3.0997890374079575
+            "yaw": -2.7634606999253224
           },
           "gates": {},
           "racks": {
@@ -431,6 +433,7 @@
           },
           "followers": [],
           "pickups": [
+            128,
             129,
             130,
             131,
@@ -445,7 +448,7 @@
             140
           ],
           "removedPickups": [
-            126
+            127
           ],
           "cure": false
         },
@@ -481,8 +484,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "be55888c",
-    "control": "be55888c",
+    "observed": "a8e9c87d",
+    "control": "a8e9c87d",
     "identical": true
   }
 }

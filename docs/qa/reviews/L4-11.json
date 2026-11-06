@@ -1,26 +1,26 @@
 {
   "row": "L4-11",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
+  "reviewer": "Codex/fix67-b",
   "date": "2026-11-06",
-  "commit": "c8689cd3d6556c63fb205d17235aa0c63c53f442",
+  "commit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf",
   "clauses": [
     {
-      "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill \u2264 6 s (measured 3.7 s), flank \u2264 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
+      "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
       "verdict": "FAIL",
-      "note": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage\u2192incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal\u22646s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+      "note": "Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-11-proof.json",
-      "sha256": "f3c509b3a759f45695c781bc46dcdc47930ad528725dab2b16f1b9f4c10d2bdd",
-      "what": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage\u2192incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal\u22646s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+      "file": "docs/reports/sweep-b/L4-11-recheck.json",
+      "sha256": "7e8c96b6764ad28747da4f75e58506b5942864de5a2e9d27129518cdb8631398",
+      "what": "Current-source low/high mortal duels across0.9–26m; frontal TTK and first-hit-to-kill are under6s from1.6–26m, and the courier survives every duel."
     },
     {
-      "file": "docs/reports/sweep-b/L4-riot-duels.json.gz",
-      "sha256": "392a62b193c72e112ca2aa9a3051f6e0dbd9b948da6f9c26481416d203d693f5",
-      "what": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage\u2192incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal\u22646s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+      "file": "docs/reports/sweep-b/L4-riot-duels.json",
+      "sha256": "0f86da3b69ef71b5c0e5d1d594e3adb46612f8f80d3f92d3c6726cfc5fb118dd",
+      "what": "Underlying production combat ledger with hit ticks, actual damage, player health, riot health, and measured completion time."
     }
   ]
 }

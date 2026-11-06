@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L4",
-  "sourceHash": "289917b183f336a36236fca86fc6da81bd0d424e7365929ea53783d555bed95b",
+  "sourceHash": "29a9274cced01b9795c57e79596e84cd71ec376d271611f4e21e6dbeb2695fe5",
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T03:27:16.609Z",
+  "generatedAt": "2026-11-06T03:53:53.780Z",
   "policies": [
     {
       "tier": "low",
@@ -24,7 +24,7 @@
     {
       "tier": "high",
       "policy": "complete",
-      "outcome": "tick-budget",
+      "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
     },
@@ -163,7 +163,7 @@
       "id": "G-05",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 80 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 80 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 104 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 98 (target 0 ≤ value ≤ 200; PASS)",
+      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 80 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 80 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 107 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 100 (target 0 ≤ value ≤ 200; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -202,7 +202,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 104,
+          "value": 107,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -213,7 +213,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 98,
+          "value": 100,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         }
@@ -272,7 +272,7 @@
       "id": "G-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":5626,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.769230769230774,\"z\":20,\"samples\":329,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":5957,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":1814,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":2355,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":5871,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":2358,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":5853,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":6368,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":2644,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":5962,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":1905,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":2835,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":6203,\"maxDisplacement\":0},{\"id\":\"l4-breach-south\",\"x\":-17.7692307692307… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l4-plaza\",\"x\":-17,\"z\":3,\"samples\":1828,\"maxDisplacement\":0},{\"id\":\"l4-quartermaster\",\"x\":-23.2,\"z\":0.6,\"samples\":140,\"maxDisplacement\":0},{\"id\":\"l4-breach-west\",\"x\":-31.200000000000003,\"z\":6.105882352941178,\"samples\":2356,\"maxDisplacement\":0},{\"id\":\"l4-breach-north\",\"x\":-20.923076923076927,\"z\":-9.2,\"samples\":8684,\"maxDisplacement\":0},{\"id\":\"l4-cellar-door\",\"x\":-79.29999999999998… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -309,28 +309,28 @@
                 "id": "l4-breach-west",
                 "x": -31.200000000000003,
                 "z": 6.105882352941178,
-                "samples": 5626,
-                "maxDisplacement": 0
-              },
-              {
-                "id": "l4-breach-south",
-                "x": -17.769230769230774,
-                "z": 20,
-                "samples": 329,
+                "samples": 6368,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2,
-                "samples": 4365,
+                "samples": 2644,
+                "maxDisplacement": 0
+              },
+              {
+                "id": "l4-breach-south",
+                "x": -17.769230769230774,
+                "z": 20,
+                "samples": 2028,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-cellar-door",
                 "x": -79.29999999999998,
                 "z": -45.2801,
-                "samples": 4296,
+                "samples": 5931,
                 "maxDisplacement": 0
               },
               {
@@ -369,40 +369,40 @@
                 "z": 6.105882352941178
               },
               {
-                "tick": 7955,
-                "step": "hold",
-                "marker": "l4-breach-south",
-                "x": -17.769230769230774,
-                "z": 20
-              },
-              {
-                "tick": 8284,
+                "tick": 8697,
                 "step": "hold",
                 "marker": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2
               },
               {
-                "tick": 12649,
+                "tick": 11341,
+                "step": "hold",
+                "marker": "l4-breach-south",
+                "x": -17.769230769230774,
+                "z": 20
+              },
+              {
+                "tick": 13369,
                 "step": "hide",
                 "marker": "l4-cellar-door",
                 "x": -79.29999999999998,
                 "z": -45.2801
               },
               {
-                "tick": 16945,
+                "tick": 19300,
                 "step": "bar",
                 "marker": "l4-brace",
                 "x": 74.6,
                 "z": -1.7999999999999998
               },
               {
-                "tick": 17015,
+                "tick": 19370,
                 "step": "wait",
                 "marker": null
               },
               {
-                "tick": 17435,
+                "tick": 19790,
                 "step": "",
                 "marker": null
               }
@@ -438,21 +438,21 @@
                 "id": "l4-breach-west",
                 "x": -31.200000000000003,
                 "z": 6.105882352941178,
-                "samples": 5957,
+                "samples": 5962,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2,
-                "samples": 1814,
+                "samples": 1905,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-south",
                 "x": -17.769230769230774,
                 "z": 20,
-                "samples": 3269,
+                "samples": 3173,
                 "maxDisplacement": 0
               },
               {
@@ -491,14 +491,14 @@
                 "z": 6.105882352941178
               },
               {
-                "tick": 8286,
+                "tick": 8291,
                 "step": "hold",
                 "marker": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2
               },
               {
-                "tick": 10100,
+                "tick": 10196,
                 "step": "hold",
                 "marker": "l4-breach-south",
                 "x": -17.769230769230774,
@@ -543,35 +543,35 @@
                 "id": "l4-breach-west",
                 "x": -31.200000000000003,
                 "z": 6.105882352941178,
-                "samples": 2355,
+                "samples": 2835,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2,
-                "samples": 5871,
+                "samples": 6203,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-south",
                 "x": -17.769230769230774,
                 "z": 20,
-                "samples": 2535,
+                "samples": 2002,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-cellar-door",
                 "x": -79.29999999999998,
                 "z": -45.2801,
-                "samples": 58646,
+                "samples": 5536,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-brace",
                 "x": 74.6,
                 "z": -1.7999999999999998,
-                "samples": 175,
+                "samples": 70,
                 "maxDisplacement": 0
               }
             ],
@@ -603,39 +603,42 @@
                 "z": 6.105882352941178
               },
               {
-                "tick": 4684,
+                "tick": 5164,
                 "step": "hold",
                 "marker": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2
               },
               {
-                "tick": 10555,
+                "tick": 11367,
                 "step": "hold",
                 "marker": "l4-breach-south",
                 "x": -17.769230769230774,
                 "z": 20
               },
               {
-                "tick": 13090,
+                "tick": 13369,
                 "step": "hide",
                 "marker": "l4-cellar-door",
                 "x": -79.29999999999998,
                 "z": -45.2801
               },
               {
-                "tick": 22067,
+                "tick": 18905,
                 "step": "bar",
                 "marker": "l4-brace",
                 "x": 74.6,
                 "z": -1.7999999999999998
               },
               {
-                "tick": 22242,
-                "step": "hide",
-                "marker": "l4-cellar-door",
-                "x": -79.29999999999998,
-                "z": -45.2801
+                "tick": 18975,
+                "step": "wait",
+                "marker": null
+              },
+              {
+                "tick": 19395,
+                "step": "",
+                "marker": null
               }
             ]
           },
@@ -669,21 +672,14 @@
                 "id": "l4-breach-west",
                 "x": -31.200000000000003,
                 "z": 6.105882352941178,
-                "samples": 2358,
+                "samples": 2356,
                 "maxDisplacement": 0
               },
               {
                 "id": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2,
-                "samples": 5853,
-                "maxDisplacement": 0
-              },
-              {
-                "id": "l4-breach-south",
-                "x": -17.769230769230774,
-                "z": 20,
-                "samples": 2829,
+                "samples": 8684,
                 "maxDisplacement": 0
               },
               {
@@ -722,18 +718,11 @@
                 "z": 6.105882352941178
               },
               {
-                "tick": 4687,
+                "tick": 4685,
                 "step": "hold",
                 "marker": "l4-breach-north",
                 "x": -20.923076923076927,
                 "z": -9.2
-              },
-              {
-                "tick": 10540,
-                "step": "hold",
-                "marker": "l4-breach-south",
-                "x": -17.769230769230774,
-                "z": 20
               },
               {
                 "tick": 13369,
@@ -781,7 +770,7 @@
       "id": "G-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":10395,\"id\":84,\"item\":null,\"collector\":null,\"distance\":0.004239981526974148,\"shelf\":false,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":3945,\"id\":127,\"item\":null,\"collector\":null,\"distance\":0.8698730625943031,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":5329,\"id\":128,\"item\":null,\"collector\":null,\"distance\":0.07499996529373479,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":17789,\"id\":133,\"item\":null,\"collector\":null,\"distance\":0.8819384169154907,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":20453,\"id\":132,\"item… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":6297,\"id\":85,\"item\":null,\"collector\":null,\"distance\":0.891314018127269,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":15412,\"id\":97,\"item\":null,\"collector\":null,\"distance\":0.8842949205536546,\"shelf\":false,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":4078,\"id\":126,\"item\":null,\"collector\":null,\"distance\":0.8520861915173823,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":14846,\"id\":139,\"item\":null,\"collector\":null,\"distance\":0.8981898954865942,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":15307,\"id\":138,\"item\":null,\"collector\":null,\"distance\":0.07500168648592523,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":16925,\"id\":134,\"ite… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -802,11 +791,21 @@
           "status": "PASS",
           "value": [
             {
-              "tick": 10395,
-              "id": 84,
+              "tick": 6297,
+              "id": 85,
               "item": null,
               "collector": null,
-              "distance": 0.004239981526974148,
+              "distance": 0.891314018127269,
+              "shelf": false,
+              "interact": false,
+              "speed": 0
+            },
+            {
+              "tick": 15412,
+              "id": 97,
+              "item": null,
+              "collector": null,
+              "distance": 0.8842949205536546,
               "shelf": false,
               "interact": false,
               "speed": 0
@@ -835,41 +834,41 @@
           "status": "PASS",
           "value": [
             {
-              "tick": 3945,
-              "id": 127,
+              "tick": 4078,
+              "id": 126,
               "item": null,
               "collector": null,
-              "distance": 0.8698730625943031,
+              "distance": 0.8520861915173823,
               "shelf": false,
               "interact": false,
               "speed": 0
             },
             {
-              "tick": 5329,
-              "id": 128,
+              "tick": 14846,
+              "id": 139,
               "item": null,
               "collector": null,
-              "distance": 0.07499996529373479,
+              "distance": 0.8981898954865942,
               "shelf": false,
               "interact": false,
               "speed": 0
             },
             {
-              "tick": 17789,
-              "id": 133,
+              "tick": 15307,
+              "id": 138,
               "item": null,
               "collector": null,
-              "distance": 0.8819384169154907,
+              "distance": 0.07500168648592523,
               "shelf": false,
               "interact": false,
               "speed": 0
             },
             {
-              "tick": 20453,
-              "id": 132,
+              "tick": 16925,
+              "id": 134,
               "item": null,
               "collector": null,
-              "distance": 0.8474289589905892,
+              "distance": 0.8306712428147457,
               "shelf": false,
               "interact": false,
               "speed": 0
@@ -1150,7 +1149,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -1279,14 +1278,14 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":13666,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":29,\"escortTicks\":13666,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":66980,\"stationaryFarTicks\":305,\"upperBoundPercent\":0.45535980889817856,\"followers\":[{\"id\":29,\"escortTicks\":66980,\"stationaryFarTicks\":305}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":16035,\"stationaryFarTicks\":309,\"upperBoundPercent\":1.9270346117867165,\"followers\":[{\"id\":29,\"escortTicks\":16035,\"stationaryFarTicks\":309}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":15472,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":29,\"escortTicks\":15472,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -1314,14 +1313,14 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 13666,
-            "stationaryFarTicks": 0,
-            "upperBoundPercent": 0,
+            "escortTicks": 16035,
+            "stationaryFarTicks": 309,
+            "upperBoundPercent": 1.9270346117867165,
             "followers": [
               {
                 "id": 29,
-                "escortTicks": 13666,
-                "stationaryFarTicks": 0
+                "escortTicks": 16035,
+                "stationaryFarTicks": 309
               }
             ]
           },
@@ -1347,14 +1346,14 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 66980,
-            "stationaryFarTicks": 305,
-            "upperBoundPercent": 0.45535980889817856,
+            "escortTicks": 15472,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": 0,
             "followers": [
               {
                 "id": 29,
-                "escortTicks": 66980,
-                "stationaryFarTicks": 305
+                "escortTicks": 15472,
+                "stationaryFarTicks": 0
               }
             ]
           },
@@ -1542,7 +1541,7 @@
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":17435} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14712} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":71910} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14712} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":19790} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14712} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":19395} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[29],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14712} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -1566,7 +1565,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 17435
+            "samples": 19790
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
@@ -1604,7 +1603,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 71910
+            "samples": 19395
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
@@ -1712,7 +1711,7 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e8fbd90e21760adee6e371bdb19ecfe2168c58daad0915ae8a2511a225cd63ab\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"8eff6c62b5b48cc6adc63c22a1906e22ed2d1d9075ebabfd8259ae61d7bee735\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"f484e77a42a151e6794175b62f51015516cdd00c2d1923db2355719a1e1bf7f5\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7099999785423279,\"z\":-2,\"yaw\":-2.184008541375224},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,9… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"70c15db4e443af15154e15726d37e806ed6d8a28a4a459a652beb2d68c0aeb3e\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-3.0616409404101588},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"90880bca2deecebeacd33c97c64d287b74998c64339d5793c773cc10788b9019\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":1.5012830575081637},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[85,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"2baa3499412845855653054fb755868c248e7fbea618b075eda4dade0c0d02df\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-2.8556139303291976},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[85,86,87,88,89,90… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6d35bd1ce094f27535019183d6057320f0e2cb57846068eb6d2111cd5dc39015\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"26e7ae5a7160221018d1c6c00771d3b321e18234a13ca00f53363e6cd8d3813a\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[127,128,129,130,131,132,133,13… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"d2e4ef97489ef8ed778829de525bdc2451a10ff09252a0671425a47ada1a3722\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7099999785423279,\"z\":-2,\"yaw\":1.3024875117419104},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[128,129,130,131,132,133,1… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"3449900300f27ebea33ac8dc4e7dc56f161da20d1a7237a05d46ee240e27e0a6\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-9.8,\"y\":0.7099999785423279,\"z\":-16.5,\"yaw\":-0.730897827884266},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"23898958b57fe719241bea9ab767af3aca7219142d035b76eed23b73c50314b7\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7049999833106995,\"z\":16,\"yaw\":3.0206025231023377},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,135… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"1bf56172626e9da6243a9b32dab041d5a7d68f17ceac31964927bc4fce250300\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7049999833106995,\"z\":16,\"yaw\":-3.0997890374079575},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,1… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e8fbd90e21760adee6e371bdb19ecfe2168c58daad0915ae8a2511a225cd63ab\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"8eff6c62b5b48cc6adc63c22a1906e22ed2d1d9075ebabfd8259ae61d7bee735\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"cc931db3a856e6f4667a21683a04cceaa34fc0f30500d3652b10e03755083938\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7049990296363831,\"z\":-2,\"yaw\":-1.308298601416261},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,9… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"3d3949f7c33f00c2b238b124f99d4c7caa8cb2de69d724ec1768b49f90db3bfd\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-9.8,\"y\":0.7099999785423279,\"z\":-6.5,\"yaw\":2.730453527449571},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,9… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"740568fd0951fff1641efde1b856bdd0ba626bcc1ba1db82afeff441aba826e1\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7049999833106995,\"z\":16,\"yaw\":3.0795793383942636},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"c2a7813dc7bf9f585e6f53f1013ff7ca584a932530107b104a9b328b3a09cd9f\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":1.5667899602518003},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6d35bd1ce094f27535019183d6057320f0e2cb57846068eb6d2111cd5dc39015\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"26e7ae5a7160221018d1c6c00771d3b321e18234a13ca00f53363e6cd8d3813a\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[127,128,129,130,131,132,133,13… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"394f24f918efabe6f62be3c81bda611037e074d8a24ff4b27acf93a1e071dcba\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7099999785423279,\"z\":-2,\"yaw\":-0.6185034389633004},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[128,129,130,131,132,133,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"254c4b5ae1d2f7a8e05c150ca147587884a4c5be5d210ec83adae03ee31b009f\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":1.5611768523785743},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[128,129,130,131,132,133,134… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"fc1c77516707d80758f0d13a42182d4818c1482a387b92cd74b42b9563a4e94d\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7049999833106995,\"z\":16,\"yaw\":-1.9862633730062687},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[128,129,130,131,132,133,13… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"6376997c3ed87f8b841244b7a0aca5773d2428577109cf3a01dd0a5288e27aef\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7049999833106995,\"z\":16,\"yaw\":-2.7634606999253224},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[128,129,130,131,1… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json",
@@ -1894,15 +1893,15 @@
           "value": {
             "checkpoint": "line-1",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "f484e77a42a151e6794175b62f51015516cdd00c2d1923db2355719a1e1bf7f5",
+            "snapshotSha256": "cc931db3a856e6f4667a21683a04cceaa34fc0f30500d3652b10e03755083938",
             "damage": 100,
             "expected": {
               "id": "line-1",
               "anchor": {
                 "x": -20,
-                "y": 0.7099999785423279,
+                "y": 0.7049990296363831,
                 "z": -2,
-                "yaw": -2.184008541375224
+                "yaw": -1.308298601416261
               },
               "gates": {},
               "racks": {
@@ -1974,15 +1973,15 @@
           "value": {
             "checkpoint": "nests",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "70c15db4e443af15154e15726d37e806ed6d8a28a4a459a652beb2d68c0aeb3e",
+            "snapshotSha256": "3d3949f7c33f00c2b238b124f99d4c7caa8cb2de69d724ec1768b49f90db3bfd",
             "damage": 100,
             "expected": {
               "id": "nests",
               "anchor": {
-                "x": -11,
+                "x": -9.8,
                 "y": 0.7099999785423279,
-                "z": 16,
-                "yaw": -3.0616409404101588
+                "z": -6.5,
+                "yaw": 2.730453527449571
               },
               "gates": {},
               "racks": {
@@ -1996,7 +1995,6 @@
               "followers": [],
               "pickups": [
                 84,
-                85,
                 86,
                 87,
                 88,
@@ -2018,8 +2016,8 @@
             "observed": {
               "id": "nests",
               "position": {
-                "x": -11,
-                "z": 16
+                "x": -9.8,
+                "z": -6.5
               },
               "gates": {},
               "racks": {
@@ -2054,15 +2052,15 @@
           "value": {
             "checkpoint": "armor",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "90880bca2deecebeacd33c97c64d287b74998c64339d5793c773cc10788b9019",
+            "snapshotSha256": "740568fd0951fff1641efde1b856bdd0ba626bcc1ba1db82afeff441aba826e1",
             "damage": 100,
             "expected": {
               "id": "armor",
               "anchor": {
                 "x": -11,
-                "y": 0.7099999785423279,
+                "y": 0.7049999833106995,
                 "z": 16,
-                "yaw": 1.5012830575081637
+                "yaw": 3.0795793383942636
               },
               "gates": {},
               "racks": {
@@ -2075,7 +2073,7 @@
               },
               "followers": [],
               "pickups": [
-                85,
+                84,
                 86,
                 87,
                 88,
@@ -2133,7 +2131,7 @@
           "value": {
             "checkpoint": "line-break",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "2baa3499412845855653054fb755868c248e7fbea618b075eda4dade0c0d02df",
+            "snapshotSha256": "c2a7813dc7bf9f585e6f53f1013ff7ca584a932530107b104a9b328b3a09cd9f",
             "damage": 100,
             "expected": {
               "id": "line-break",
@@ -2141,7 +2139,7 @@
                 "x": -4,
                 "y": 0.7099999785423279,
                 "z": 16,
-                "yaw": -2.8556139303291976
+                "yaw": 1.5667899602518003
               },
               "gates": {},
               "racks": {
@@ -2154,7 +2152,7 @@
               },
               "followers": [],
               "pickups": [
-                85,
+                84,
                 86,
                 87,
                 88,
@@ -2377,7 +2375,7 @@
           "value": {
             "checkpoint": "line-1",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "d2e4ef97489ef8ed778829de525bdc2451a10ff09252a0671425a47ada1a3722",
+            "snapshotSha256": "394f24f918efabe6f62be3c81bda611037e074d8a24ff4b27acf93a1e071dcba",
             "damage": 100,
             "expected": {
               "id": "line-1",
@@ -2385,7 +2383,7 @@
                 "x": -20,
                 "y": 0.7099999785423279,
                 "z": -2,
-                "yaw": 1.3024875117419104
+                "yaw": -0.6185034389633004
               },
               "gates": {},
               "racks": {
@@ -2413,7 +2411,7 @@
                 140
               ],
               "removedPickups": [
-                126
+                127
               ],
               "cure": false
             },
@@ -2456,15 +2454,15 @@
           "value": {
             "checkpoint": "nests",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "3449900300f27ebea33ac8dc4e7dc56f161da20d1a7237a05d46ee240e27e0a6",
+            "snapshotSha256": "254c4b5ae1d2f7a8e05c150ca147587884a4c5be5d210ec83adae03ee31b009f",
             "damage": 100,
             "expected": {
               "id": "nests",
               "anchor": {
-                "x": -9.8,
+                "x": -11,
                 "y": 0.7099999785423279,
-                "z": -16.5,
-                "yaw": -0.730897827884266
+                "z": 16,
+                "yaw": 1.5611768523785743
               },
               "gates": {},
               "racks": {
@@ -2477,6 +2475,7 @@
               },
               "followers": [],
               "pickups": [
+                128,
                 129,
                 130,
                 131,
@@ -2491,15 +2490,15 @@
                 140
               ],
               "removedPickups": [
-                126
+                127
               ],
               "cure": false
             },
             "observed": {
               "id": "nests",
               "position": {
-                "x": -9.8,
-                "z": -16.5
+                "x": -11,
+                "z": 16
               },
               "gates": {},
               "racks": {
@@ -2534,7 +2533,7 @@
           "value": {
             "checkpoint": "armor",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "23898958b57fe719241bea9ab767af3aca7219142d035b76eed23b73c50314b7",
+            "snapshotSha256": "fc1c77516707d80758f0d13a42182d4818c1482a387b92cd74b42b9563a4e94d",
             "damage": 100,
             "expected": {
               "id": "armor",
@@ -2542,7 +2541,7 @@
                 "x": -11,
                 "y": 0.7049999833106995,
                 "z": 16,
-                "yaw": 3.0206025231023377
+                "yaw": -1.9862633730062687
               },
               "gates": {},
               "racks": {
@@ -2555,6 +2554,7 @@
               },
               "followers": [],
               "pickups": [
+                128,
                 129,
                 130,
                 131,
@@ -2569,7 +2569,7 @@
                 140
               ],
               "removedPickups": [
-                126
+                127
               ],
               "cure": false
             },
@@ -2612,7 +2612,7 @@
           "value": {
             "checkpoint": "line-break",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "1bf56172626e9da6243a9b32dab041d5a7d68f17ceac31964927bc4fce250300",
+            "snapshotSha256": "6376997c3ed87f8b841244b7a0aca5773d2428577109cf3a01dd0a5288e27aef",
             "damage": 100,
             "expected": {
               "id": "line-break",
@@ -2620,7 +2620,7 @@
                 "x": -4,
                 "y": 0.7049999833106995,
                 "z": 16,
-                "yaw": -3.0997890374079575
+                "yaw": -2.7634606999253224
               },
               "gates": {},
               "racks": {
@@ -2633,6 +2633,7 @@
               },
               "followers": [],
               "pickups": [
+                128,
                 129,
                 130,
                 131,
@@ -2647,7 +2648,7 @@
                 140
               ],
               "removedPickups": [
-                126
+                127
               ],
               "cure": false
             },
@@ -2696,7 +2697,7 @@
       "id": "G-22",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete announcement cohort war-0@1969: {\"seconds\":257.76666666666665,\"spawned\":24,\"firstAttackSeconds\":34.483333333333334,\"flags\":[\"WAVE_FIRST_ATTACK_OVER_20_SECONDS\"]} (target ≥3 admitted cohort members; real player windup within20 s; FAIL); high/complete announcement cohort breach-south: {\"seconds\":1022.5833333333334,\"spawned\":30,\"firstAttackSeconds\":77.41666666666667,\"flags\":[\"WAVE_FIRST_ATTACK_OVER_20_SECONDS\"]} (target ≥3 admitted cohort members; real player windup within20 s; FAIL); high/stationary announcement cohort breach-north: {\"seconds\":167.08333333333334,\"spawned\":45,\"firstAttackSeconds\":null,\"flags\":[\"WAVE_NO_ATTACK_WITHIN_20_SECONDS\"]} (target ≥3 admitted cohort members; real player windup within20 s; FAIL)",
+      "value": "low/complete announcement cohort breach-south: {\"seconds\":140.81666666666666,\"spawned\":25,\"firstAttackSeconds\":25.266666666666666,\"flags\":[\"WAVE_FIRST_ATTACK_OVER_20_SECONDS\"]} (target ≥3 admitted cohort members; real player windup within20 s; FAIL); high/stationary announcement cohort breach-north: {\"seconds\":167.11666666666667,\"spawned\":55,\"firstAttackSeconds\":23.266666666666666,\"flags\":[\"WAVE_FIRST_ATTACK_OVER_20_SECONDS\"]} (target ≥3 admitted cohort members; real player windup within20 s; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -2712,14 +2713,12 @@
           "level": "L4",
           "tier": "low",
           "policy": "complete",
-          "status": "FAIL",
+          "status": "PASS",
           "value": {
-            "seconds": 257.76666666666665,
+            "seconds": 297.01666666666665,
             "spawned": 24,
-            "firstAttackSeconds": 34.483333333333334,
-            "flags": [
-              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
-            ]
+            "firstAttackSeconds": 16.766666666666666,
+            "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
@@ -2732,25 +2731,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 237.86666666666667,
-            "spawned": 174,
-            "firstAttackSeconds": 9.033333333333333,
-            "flags": []
-          },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
-          "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
-        },
-        {
-          "id": "G-22",
-          "clause": "announcement cohort breach-south",
-          "level": "L4",
-          "tier": "low",
-          "policy": "complete",
-          "status": "PASS",
-          "value": {
-            "seconds": 158,
-            "spawned": 67,
-            "firstAttackSeconds": 18.833333333333332,
+            "seconds": 277.1166666666667,
+            "spawned": 243,
+            "firstAttackSeconds": 10.9,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2764,10 +2747,28 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 152.51666666666668,
-            "spawned": 59,
-            "firstAttackSeconds": 15.3,
+            "seconds": 184.88333333333333,
+            "spawned": 70,
+            "firstAttackSeconds": 6.183333333333334,
             "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort breach-south",
+          "level": "L4",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "seconds": 140.81666666666666,
+            "spawned": 25,
+            "firstAttackSeconds": 25.266666666666666,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
@@ -2782,7 +2783,7 @@
           "value": {
             "seconds": 212.38333333333333,
             "spawned": 24,
-            "firstAttackSeconds": 9.333333333333334,
+            "firstAttackSeconds": 9.35,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2797,8 +2798,8 @@
           "status": "PASS",
           "value": {
             "seconds": 192.48333333333332,
-            "spawned": 75,
-            "firstAttackSeconds": 8.783333333333333,
+            "spawned": 94,
+            "firstAttackSeconds": 8.816666666666666,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2812,9 +2813,9 @@
           "policy": "stationary",
           "status": "PASS",
           "value": {
-            "seconds": 107.1,
-            "spawned": 10,
-            "firstAttackSeconds": 11.55,
+            "seconds": 107.01666666666667,
+            "spawned": 22,
+            "firstAttackSeconds": 13.4,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2828,9 +2829,9 @@
           "policy": "stationary",
           "status": "PASS",
           "value": {
-            "seconds": 76.86666666666666,
-            "spawned": 9,
-            "firstAttackSeconds": 5.383333333333334,
+            "seconds": 75.26666666666667,
+            "spawned": 11,
+            "firstAttackSeconds": 6.666666666666667,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2844,9 +2845,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 1165.6833333333334,
+            "seconds": 290.43333333333334,
             "spawned": 48,
-            "firstAttackSeconds": 12.316666666666666,
+            "firstAttackSeconds": 17.716666666666665,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2860,9 +2861,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 1145.7833333333333,
-            "spawned": 196,
-            "firstAttackSeconds": 11.283333333333333,
+            "seconds": 270.53333333333336,
+            "spawned": 183,
+            "firstAttackSeconds": 18,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2876,9 +2877,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 1120.4333333333334,
-            "spawned": 57,
-            "firstAttackSeconds": 17.05,
+            "seconds": 237.18333333333334,
+            "spawned": 94,
+            "firstAttackSeconds": 3.533333333333333,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2890,14 +2891,12 @@
           "level": "L4",
           "tier": "high",
           "policy": "complete",
-          "status": "FAIL",
+          "status": "PASS",
           "value": {
-            "seconds": 1022.5833333333334,
-            "spawned": 30,
-            "firstAttackSeconds": 77.41666666666667,
-            "flags": [
-              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
-            ]
+            "seconds": 133.8,
+            "spawned": 18,
+            "firstAttackSeconds": 8.683333333333334,
+            "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
@@ -2927,8 +2926,8 @@
           "status": "PASS",
           "value": {
             "seconds": 192.48333333333332,
-            "spawned": 78,
-            "firstAttackSeconds": 13.7,
+            "spawned": 92,
+            "firstAttackSeconds": 14.45,
             "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
@@ -2942,28 +2941,12 @@
           "policy": "stationary",
           "status": "FAIL",
           "value": {
-            "seconds": 167.08333333333334,
-            "spawned": 45,
-            "firstAttackSeconds": null,
+            "seconds": 167.11666666666667,
+            "spawned": 55,
+            "firstAttackSeconds": 23.266666666666666,
             "flags": [
-              "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
             ]
-          },
-          "target": "≥3 admitted cohort members; real player windup within20 s",
-          "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
-        },
-        {
-          "id": "G-22",
-          "clause": "announcement cohort breach-south",
-          "level": "L4",
-          "tier": "high",
-          "policy": "stationary",
-          "status": "PASS",
-          "value": {
-            "seconds": 69.53333333333333,
-            "spawned": 13,
-            "firstAttackSeconds": 6.466666666666667,
-            "flags": []
           },
           "target": "≥3 admitted cohort members; real player windup within20 s",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
@@ -3216,7 +3199,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -3348,17 +3331,17 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     }
   ],
   "rows": [
     {
       "id": "L4-01",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "high/complete convoy duration: 183.01666666666668 (target 20 ≤ value ≤ 35; FAIL)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); low/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS); high/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); high/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
@@ -3430,8 +3413,8 @@
           "level": "L4",
           "tier": "high",
           "policy": "complete",
-          "status": "FAIL",
-          "value": 183.01666666666668,
+          "status": "PASS",
+          "value": 30.483333333333334,
           "target": "20 ≤ value ≤ 35",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -3562,7 +3545,7 @@
         "evidence": [],
         "method": "NEXT: Record actual real-input convoy start/stop/control ticks, five vehicle IDs and bus parking bounds at the plaza."
       },
-      "remaining": "NEXT: Record actual real-input convoy start/stop/control ticks, five vehicle IDs and bus parking bounds at the plaza."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L4-02",
@@ -3687,7 +3670,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -3761,10 +3744,10 @@
     },
     {
       "id": "L4-04",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/complete civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/complete war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war-phase concurrent character cap: 113 (target 0 ≤ value ≤ 120; PASS); low/complete every war tick observed from turn through line break: {\"ticks\":10680,\"firstTick\":1969,\"lastTick\":12648,\"turnAt\":1969,\"lineBreakAt\":12649} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/complete actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/complete war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war living character identity census: 114 (target 0 ≤ value ≤ 120; PASS); low/stationary soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/stationary civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/stationary war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war-phase concurrent character cap: 115 (target 0 ≤ value ≤ 120; PASS); low/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/stationary actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/stationary war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war living character identity census: 116 (target 0 ≤ value ≤ 120; PASS); high/complete soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/complete civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/complete war-phase concurrent infected cap: 92 (target 0 ≤ value ≤ 120; PASS); high/complete war-phase concurrent character cap: 161 (target 0 ≤ value ≤ 190; PASS); high/complete every war tick observed from turn through line break: {\"ticks\":11121,\"firstTick\":1969,\"lastTick\":13089,\"turnAt\":11121,\"lineBreakAt\":22242} (target one contiguous observation per simulation tick from turn through the tick before collapse; NOT CHECKED); high/complete actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/complete war living infected plus reserved slots and pending turns: 108 (target 0 ≤ value ≤ 120; PASS); high/complete war living character identity census: 161 (target 0 ≤ value ≤ 190; PASS); high/stationary soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/stationary civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/stationary war-phase concurrent infected cap: 98 (target 0 ≤ value ≤ 120; PASS); high/stationary war-phase concurrent character cap: 161 (target 0 ≤ value ≤ 190; PASS); high/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/stationary actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/stationary war living infected plus reserved slots and pending turns: 112 (target 0 ≤ value ≤ 120; PASS); high/stationary war living character identity census: 161 (target 0 ≤ value ≤ 190; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/complete civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/complete war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war-phase concurrent character cap: 114 (target 0 ≤ value ≤ 120; PASS); low/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/complete actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/complete war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war living character identity census: 115 (target 0 ≤ value ≤ 120; PASS); low/stationary soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/stationary civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/stationary war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war-phase concurrent character cap: 114 (target 0 ≤ value ≤ 120; PASS); low/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/stationary actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/stationary war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war living character identity census: 115 (target 0 ≤ value ≤ 120; PASS); high/complete soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/complete civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/complete war-phase concurrent infected cap: 96 (target 0 ≤ value ≤ 120; PASS); high/complete war-phase concurrent character cap: 162 (target 0 ≤ value ≤ 190; PASS); high/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/complete actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/complete war living infected plus reserved slots and pending turns: 110 (target 0 ≤ value ≤ 120; PASS); high/complete war living character identity census: 162 (target 0 ≤ value ≤ 190; PASS); high/stationary soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/stationary civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/stationary war-phase concurrent infected cap: 98 (target 0 ≤ value ≤ 120; PASS); high/stationary war-phase concurrent character cap: 164 (target 0 ≤ value ≤ 190; PASS); high/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/stationary actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/stationary war living infected plus reserved slots and pending turns: 112 (target 0 ≤ value ≤ 120; PASS); high/stationary war living character identity census: 164 (target 0 ≤ value ≤ 190; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
@@ -3813,7 +3796,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 113,
+          "value": 114,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -3825,11 +3808,11 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "ticks": 10680,
+            "ticks": 11400,
             "firstTick": 1969,
-            "lastTick": 12648,
+            "lastTick": 13368,
             "turnAt": 1969,
-            "lineBreakAt": 12649
+            "lineBreakAt": 13369
           },
           "target": "one contiguous observation per simulation tick from turn through the tick before collapse",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
@@ -3863,7 +3846,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 114,
+          "value": 115,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -3907,7 +3890,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 115,
+          "value": 114,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -3957,7 +3940,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 116,
+          "value": 115,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -3990,7 +3973,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 92,
+          "value": 96,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -4001,7 +3984,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 161,
+          "value": 162,
           "target": "0 ≤ value ≤ 190",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -4011,13 +3994,13 @@
           "level": "L4",
           "tier": "high",
           "policy": "complete",
-          "status": "NOT CHECKED",
+          "status": "PASS",
           "value": {
-            "ticks": 11121,
+            "ticks": 11400,
             "firstTick": 1969,
-            "lastTick": 13089,
-            "turnAt": 11121,
-            "lineBreakAt": 22242
+            "lastTick": 13368,
+            "turnAt": 1969,
+            "lineBreakAt": 13369
           },
           "target": "one contiguous observation per simulation tick from turn through the tick before collapse",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
@@ -4040,7 +4023,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 108,
+          "value": 110,
           "target": "0 ≤ value ≤ 120",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -4051,7 +4034,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 161,
+          "value": 162,
           "target": "0 ≤ value ≤ 190",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -4095,7 +4078,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 161,
+          "value": 164,
           "target": "0 ≤ value ≤ 190",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         },
@@ -4145,7 +4128,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 161,
+          "value": 164,
           "target": "0 ≤ value ≤ 190",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         }
@@ -4158,13 +4141,13 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L4 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Scale: 18–22 soldiers, 60–70 civilians (40 + 24) high, ≥ 40 % armed; low 50 %; infected ≤ 120 / 60, characters ≤ 190 / 95."
       },
-      "remaining": "NEXT: Extend the existing L4 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Scale: 18–22 soldiers, 60–70 civilians (40 + 24) high, ≥ 40 % armed; low 50 %; infected ≤ 120 / 60, characters ≤ 190 / 95."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L4-05",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); low/stationary separated directions and group limit: {\"tier\":\"low\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":58,\"peakAlive\":80,\"peakPlazaAlive\":80,\"minPlazaAliveAfter45Seconds\":67,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":9.683333333333334,\"lineBreakAfterTurnSeconds\":… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS); high/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); high/stationary separated directions and group limit: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":61,\"peakAlive\":98,\"peakPlazaAlive\":91,\"minPlazaAliveAfter45Seconds\":64,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":7.716666666666667,\"lineBreakAfterTurnSeconds\"… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both tiers contain actual one-body street cohorts, below unchanged2–5 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
+      "value": "low/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); low/stationary separated directions and group limit: {\"tier\":\"low\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":64,\"peakAlive\":80,\"peakPlazaAlive\":79,\"minPlazaAliveAfter45Seconds\":65,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":9.7,\"lineBreakAfterTurnSeconds\":190} (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS); high/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); high/stationary separated directions and group limit: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":62,\"peakAlive\":98,\"peakPlazaAlive\":91,\"minPlazaAliveAfter45Seconds\":70,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":7.716666666666667,\"lineBreakAfterTurnSeconds\"… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both tiers contain actual one-body street cohorts, below unchanged2–5 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
@@ -4197,10 +4180,10 @@
             "holdComplete": true,
             "firstBreachLevelSeconds": 52.71666666666667,
             "firstBreachAfterTurnSeconds": 19.9,
-            "aliveAtFirstBreach": 58,
+            "aliveAtFirstBreach": 64,
             "peakAlive": 80,
-            "peakPlazaAlive": 80,
-            "minPlazaAliveAfter45Seconds": 67,
+            "peakPlazaAlive": 79,
+            "minPlazaAliveAfter45Seconds": 65,
             "samplesAfter45Seconds": 8892,
             "arrivalEdges": [
               0,
@@ -4212,7 +4195,7 @@
             ],
             "threeDirectionsAtLeast60Degrees": true,
             "maxGroupAtOneSourcePerTick": 5,
-            "firstAttackSeconds": 9.683333333333334,
+            "firstAttackSeconds": 9.7,
             "lineBreakAfterTurnSeconds": 190
           },
           "target": "≥3 directions ≥60° apart; ≤5 at one source/tick",
@@ -4241,10 +4224,10 @@
             "holdComplete": true,
             "firstBreachLevelSeconds": 52.71666666666667,
             "firstBreachAfterTurnSeconds": 19.9,
-            "aliveAtFirstBreach": 61,
+            "aliveAtFirstBreach": 62,
             "peakAlive": 98,
             "peakPlazaAlive": 91,
-            "minPlazaAliveAfter45Seconds": 64,
+            "minPlazaAliveAfter45Seconds": 70,
             "samplesAfter45Seconds": 8892,
             "arrivalEdges": [
               0,
@@ -4298,15 +4281,15 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "L4-06",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/stationary living infected at first breach: 58 (target 60 ≤ value ≤ Infinity; FAIL) Manual review FAIL (STALE, Codex/sweep-b): Both-tier passive census measured: first physical breach52.7167s; low58 alive fails unchanged minimum60, high65 passes. Sustained post45s plaza minima65/72 pass minimum40. No tuning or criterion change; whole row FAIL on low breach census.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/stationary first physical breach level clock: 52.71666666666667 (target 30 ≤ value ≤ 60; PASS); low/stationary living infected at first breach: 64 (target 60 ≤ value ≤ Infinity; PASS); low/stationary sustained plaza living minimum after +45 s: 65 (target 40 ≤ value ≤ Infinity; PASS); high/stationary first physical breach level clock: 52.71666666666667 (target 30 ≤ value ≤ 60; PASS); high/stationary living infected at first breach: 62 (target 60 ≤ value ≤ Infinity; PASS); high/stationary sustained plaza living minimum after +45 s: 70 (target 40 ≤ value ≤ Infinity; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both-tier passive census measured: first physical breach52.7167s; low58 alive fails unchanged minimum60, high65 passes. Sustained post45s plaza minima65/72 pass minimum40. No tuning or criterion change; whole row FAIL on low breach census.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
@@ -4331,8 +4314,8 @@
           "level": "L4",
           "tier": "low",
           "policy": "stationary",
-          "status": "FAIL",
-          "value": 58,
+          "status": "PASS",
+          "value": 64,
           "target": "60 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -4343,7 +4326,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 67,
+          "value": 65,
           "target": "40 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -4365,7 +4348,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 61,
+          "value": 62,
           "target": "60 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         },
@@ -4376,7 +4359,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 64,
+          "value": 70,
           "target": "40 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         }
@@ -4392,7 +4375,7 @@
         ],
         "method": "Current-head high-tier native hold census, 8,731 post-45 s observations; level-clock criterion uses 45 +/-15 s. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
       },
-      "remaining": "Current-head high-tier native hold census, 8,731 post-45 s observations; level-clock criterion uses 45 +/-15 s. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L4-06",
         "status": "FAIL",
@@ -4415,14 +4398,14 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "L4-07",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":178,\"playerWindups\":546,\"groupWindups\":0,\"attacksPerMinute\":184.04494382022472} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 94.82758620689656 (target 90 ≤ value ≤ 100; PASS); low/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":12529,\"samples\":79,\"minimumPercent\":98.71794871794873,\"worstTick\":10729,\"blockedIds\":[418]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED); low/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2681,\"groupWindups\":0,\"attacksPerMinute\":846.6315789473684} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":9.333333333333334,\"windowSeconds\":190} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 846.6315789473684 (target 6 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 98.55072463768117 (target 90 ≤ value ≤ 100; PASS); low/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":100,\"worstTick\":13249,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":185.35,\"playerWindups\":342,\"groupWindups\":0,\"attacksPerMinute\":110.70946857297005} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 95.91836734693877 (target 90 ≤ value ≤ 100; PASS); high/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13009,\"samples\":83,\"minimumPercent\":87.34177215189874,\"worstTick\":11809,\"blockedIds\":[316,434,498,544,575,576,583,584,596,597]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED); high/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2244,\"groupWindups\":0,\"attacksPerMinute\":708.6315789473684} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":7.366666666666666,\"windowSeconds\":190} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 708.6315789473684 (target 6 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":100,\"worstTick\":13249,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both-tier complete/passive policies retain actual windup and bounded-path ledgers. High complete minimum reachable share89.1892% fails90%; low complete96%, passive98.63/98.68% pass. Passive first attacks9.333/7.367s pass10s. The stronger no-permanent-trap clause remains unproven (blocked IDs retained); FAIL is established independently by high complete reachability.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 80 (target 90 ≤ value ≤ 100; FAIL) Manual review FAIL (STALE, Codex/sweep-b): Both-tier complete/passive policies retain actual windup and bounded-path ledgers. High complete minimum reachable share89.1892% fails90%; low complete96%, passive98.63/98.68% pass. Passive first attacks9.333/7.367s pass10s. The stronger no-permanent-trap clause remains unproven (blocked IDs retained); FAIL is established independently by high complete reachability.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -4441,10 +4424,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 178,
-            "playerWindups": 546,
+            "seconds": 190,
+            "playerWindups": 504,
             "groupWindups": 0,
-            "attacksPerMinute": 184.04494382022472
+            "attacksPerMinute": 159.1578947368421
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
@@ -4455,8 +4438,8 @@
           "level": "L4",
           "tier": "low",
           "policy": "complete",
-          "status": "PASS",
-          "value": 94.82758620689656,
+          "status": "FAIL",
+          "value": 80,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -4469,12 +4452,15 @@
           "status": "NOT CHECKED",
           "value": {
             "firstTick": 3169,
-            "lastTick": 12529,
-            "samples": 79,
-            "minimumPercent": 98.71794871794873,
-            "worstTick": 10729,
+            "lastTick": 13249,
+            "samples": 85,
+            "minimumPercent": 95,
+            "worstTick": 12049,
             "blockedIds": [
-              418
+              381,
+              445,
+              484,
+              501
             ]
           },
           "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
@@ -4489,9 +4475,9 @@
           "status": "PASS",
           "value": {
             "seconds": 190,
-            "playerWindups": 2681,
+            "playerWindups": 3361,
             "groupWindups": 0,
-            "attacksPerMinute": 846.6315789473684
+            "attacksPerMinute": 1061.3684210526317
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
@@ -4504,7 +4490,7 @@
           "policy": "stationary",
           "status": "PASS",
           "value": {
-            "seconds": 9.333333333333334,
+            "seconds": 9.35,
             "windowSeconds": 190
           },
           "target": "≤10 s",
@@ -4517,7 +4503,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 846.6315789473684,
+          "value": 1061.3684210526317,
           "target": "6 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -4528,7 +4514,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 98.55072463768117,
+          "value": 98.61111111111111,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
         },
@@ -4558,10 +4544,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 185.35,
-            "playerWindups": 342,
+            "seconds": 190,
+            "playerWindups": 475,
             "groupWindups": 0,
-            "attacksPerMinute": 110.70946857297005
+            "attacksPerMinute": 150
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
@@ -4573,7 +4559,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 95.91836734693877,
+          "value": 96.42857142857143,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
@@ -4586,21 +4572,15 @@
           "status": "NOT CHECKED",
           "value": {
             "firstTick": 3169,
-            "lastTick": 13009,
-            "samples": 83,
-            "minimumPercent": 87.34177215189874,
-            "worstTick": 11809,
+            "lastTick": 13249,
+            "samples": 85,
+            "minimumPercent": 94.9367088607595,
+            "worstTick": 13129,
             "blockedIds": [
-              316,
-              434,
-              498,
-              544,
-              575,
-              576,
-              583,
-              584,
-              596,
-              597
+              610,
+              617,
+              618,
+              635
             ]
           },
           "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
@@ -4615,9 +4595,9 @@
           "status": "PASS",
           "value": {
             "seconds": 190,
-            "playerWindups": 2244,
+            "playerWindups": 1879,
             "groupWindups": 0,
-            "attacksPerMinute": 708.6315789473684
+            "attacksPerMinute": 593.3684210526316
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
@@ -4643,7 +4623,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 708.6315789473684,
+          "value": 593.3684210526316,
           "target": "6 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         },
@@ -4654,7 +4634,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 100,
+          "value": 98.79518072289156,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
         },
@@ -4664,14 +4644,17 @@
           "level": "L4",
           "tier": "high",
           "policy": "stationary",
-          "status": "PASS",
+          "status": "NOT CHECKED",
           "value": {
             "firstTick": 3169,
             "lastTick": 13249,
             "samples": 85,
-            "minimumPercent": 100,
-            "worstTick": 13249,
-            "blockedIds": []
+            "minimumPercent": 97.53086419753086,
+            "worstTick": 9649,
+            "blockedIds": [
+              408,
+              409
+            ]
           },
           "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
@@ -4710,7 +4693,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -4816,17 +4799,18 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "L4-09",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete line1 actual beat after first turn: 62 (target 50 ≤ value ≤ 62; PASS); low/complete nests actual beat after first turn: 121.18333333333334 (target 110 ≤ value ≤ 124; PASS); low/complete armor actual beat after first turn: 170 (target 170 ≤ value ≤ 182; PASS); low/complete fallback after third line break: 8 (target 8 ≤ value ≤ 8; PASS); low/controlled-fixture native camera beat duration and half-second input gate: [{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"… (full values in JSON) (target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS); high/controlled-fixture native camera beat duration and half-second input gate: [{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"… (full values in JSON) (target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete line1 actual beat after first turn: 62 (target 50 ≤ value ≤ 62; PASS); low/complete nests actual beat after first turn: 124 (target 110 ≤ value ≤ 124; PASS); low/complete armor actual beat after first turn: 182 (target 170 ≤ value ≤ 182; PASS); low/complete fallback after third line break: 8 (target 8 ≤ value ≤ 8; PASS); high/complete line1 actual beat after first turn: 53.46666666666667 (target 50 ≤ value ≤ 62; PASS); high/complete nests actual beat after first turn: 111.41666666666667 (target 110 ≤ value ≤ 124; PASS); high/complete armor actual beat after first turn: 182 (target 170 ≤ value ≤ 182; PASS); high/complete fallback after third line break: 8 (target 8 ≤ value ≤ 8; PASS); low/controlled-fixture native camera beat duration and half-second input gate: [{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"… (full values in JSON) (target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS); high/controlled-fixture native camera beat duration and half-second input gate: [{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"… (full values in JSON) (target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L4-high-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L4-high-fixtures.json"
       ],
@@ -4850,7 +4834,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 121.18333333333334,
+          "value": 124,
           "target": "110 ≤ value ≤ 124",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -4861,7 +4845,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 170,
+          "value": 182,
           "target": "170 ≤ value ≤ 182",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -4875,6 +4859,50 @@
           "value": 8,
           "target": "8 ≤ value ≤ 8",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+        },
+        {
+          "id": "L4-09",
+          "clause": "line1 actual beat after first turn",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 53.46666666666667,
+          "target": "50 ≤ value ≤ 62",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "id": "L4-09",
+          "clause": "nests actual beat after first turn",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 111.41666666666667,
+          "target": "110 ≤ value ≤ 124",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "id": "L4-09",
+          "clause": "armor actual beat after first turn",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 182,
+          "target": "170 ≤ value ≤ 182",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "id": "L4-09",
+          "clause": "fallback after third line break",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 8,
+          "target": "8 ≤ value ≤ 8",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         },
         {
           "id": "L4-09",
@@ -5029,13 +5057,13 @@
         "evidence": [],
         "method": "NEXT: Retain native line/nest/armour/fallback event ticks in a full L4 hold; exercise real camera-skip input after 0.5 seconds."
       },
-      "remaining": "Native line/fallback clocks and isolated production camera duration/skip gates are measured at both qualities."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L4-10",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Current-source native evidence clears every ordinary and forced tank impact from registered live actors at both tiers and retains the 8–12 s cadence and canonical route hashes. The previous fuel-truck clearance defect is resolved. The current-source renderer capture/review needed to close the wall, orbit/withdrawal, and full spectacle clauses could not run because the sandbox rejected the local Vite bind (EPERM), so this exact-criterion row remains open.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (STALE, Codex/fix67-b): Current-source native evidence clears every ordinary and forced tank impact from registered live actors at both tiers and retains the 8–12 s cadence and canonical route hashes. The previous fuel-truck clearance defect is resolved. The current-source renderer capture/review needed to close the wall, orbit/withdrawal, and full spectacle clauses could not run because the sandbox rejected the local Vite bind (EPERM), so this exact-criterion row remains open.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -5128,21 +5156,21 @@
             "what": "Historical baseline counterexample that motivated the relocated fuel truck; the current-source recheck supersedes its measured distance but not its old visual evidence."
           }
         ],
-        "freshness": "FRESH",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "freshness": "STALE",
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "L4-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":36,\"seconds\":3.7,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,10.519999999999754],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":36,\"seconds\":3.7,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,10.519999999999754],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (STALE, Codex/sweep-b): Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage→incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal≤6s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
-        "docs/reports/sweep-b/L4-11-proof.json",
-        "docs/reports/sweep-b/L4-riot-duels.json.gz"
+        "docs/reports/sweep-b/L4-11-recheck.json",
+        "docs/reports/sweep-b/L4-riot-duels.json"
       ],
       "expected": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
       "checks": [
@@ -5154,33 +5182,14 @@
             "flank": false,
             "initialHp": 225,
             "endHp": 0,
-            "hitCount": 36,
-            "seconds": 3.7,
+            "hitCount": 21,
+            "seconds": 2.183333333333333,
             "hpAmounts": [
               2.52,
               2.52,
               2.52,
               2.52,
               2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
               14,
               14,
               14,
@@ -5192,7 +5201,11 @@
               14,
               14,
               14,
-              10.519999999999754
+              14,
+              14,
+              14,
+              14,
+              2.399999999999949
             ],
             "isolatedAI": true
           },
@@ -5249,33 +5262,14 @@
             "flank": false,
             "initialHp": 225,
             "endHp": 0,
-            "hitCount": 36,
-            "seconds": 3.7,
+            "hitCount": 21,
+            "seconds": 2.183333333333333,
             "hpAmounts": [
               2.52,
               2.52,
               2.52,
               2.52,
               2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
-              2.52,
               14,
               14,
               14,
@@ -5287,7 +5281,11 @@
               14,
               14,
               14,
-              10.519999999999754
+              14,
+              14,
+              14,
+              14,
+              2.399999999999949
             ],
             "isolatedAI": true
           },
@@ -5353,30 +5351,30 @@
       "reviewDecision": {
         "row": "L4-11",
         "status": "FAIL",
-        "reviewer": "Codex/sweep-b",
+        "reviewer": "Codex/fix67-b",
         "date": "2026-11-06",
-        "commit": "c8689cd3d6556c63fb205d17235aa0c63c53f442",
+        "commit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf",
         "clauses": [
           {
             "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
             "verdict": "FAIL",
-            "note": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage→incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal≤6s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+            "note": "Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?"
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-b/L4-11-proof.json",
-            "sha256": "f3c509b3a759f45695c781bc46dcdc47930ad528725dab2b16f1b9f4c10d2bdd",
-            "what": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage→incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal≤6s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+            "file": "docs/reports/sweep-b/L4-11-recheck.json",
+            "sha256": "7e8c96b6764ad28747da4f75e58506b5942864de5a2e9d27129518cdb8631398",
+            "what": "Current-source low/high mortal duels across0.9–26m; frontal TTK and first-hit-to-kill are under6s from1.6–26m, and the courier survives every duel."
           },
           {
-            "file": "docs/reports/sweep-b/L4-riot-duels.json.gz",
-            "sha256": "392a62b193c72e112ca2aa9a3051f6e0dbd9b948da6f9c26481416d203d693f5",
-            "what": "Live one-riot mortal MG duels at both tiers:0.9/1.6/3/6/20/26m, no AI disable or god protection. Courier survives every duel (point blank89HP, all others100HP). Front shots chip2.52HP at normal frontal ranges. At20m actual first damage→incapacitation is9.40s (fight9.93s), at26m12.70s (fight13.97s), exceeding the unchanged frontal≤6s criterion; the original6m isolated3.7s result remains valid for that narrower case. The counterexample closes FAIL across tested ranges; visible chips/recoil, always-shown bars, flank and perceived effectiveness remain separate. P: PO: does firing at a riot infected feel effective? Review the perceived hit feedback only; HP chips, recoil, TTK, bars and the full-health duel retain objective checks."
+            "file": "docs/reports/sweep-b/L4-riot-duels.json",
+            "sha256": "0f86da3b69ef71b5c0e5d1d594e3adb46612f8f80d3f92d3c6726cfc5fb118dd",
+            "what": "Underlying production combat ledger with hit ticks, actual damage, player health, riot health, and measured completion time."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "freshness": "FRESH",
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -5428,7 +5426,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -5484,17 +5482,18 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
       "id": "L4-14",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete live fire count at end of route: 4 (target 4 ≤ value ≤ Infinity; PASS); low/complete shattered window ledger at end of route: 11 (target 10 ≤ value ≤ Infinity; PASS); low/complete legacy scorch controller field (not maintained as renderer decal census): 0 (target actual scorch decals≥6; renderer census required; NOT CHECKED)",
+      "value": "low/complete live fire count at end of route: 4 (target 4 ≤ value ≤ Infinity; PASS); low/complete shattered window ledger at end of route: 12 (target 10 ≤ value ≤ Infinity; PASS); low/complete legacy scorch controller field (not maintained as renderer decal census): 0 (target actual scorch decals≥6; renderer census required; NOT CHECKED); high/complete live fire count at end of route: 4 (target 4 ≤ value ≤ Infinity; PASS); high/complete shattered window ledger at end of route: 14 (target 10 ≤ value ≤ Infinity; PASS); high/complete legacy scorch controller field (not maintained as renderer decal census): 0 (target actual scorch decals≥6; renderer census required; NOT CHECKED)",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+        "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L4-high-complete.json"
       ],
       "expected": "Live damage at cellar entry: ≥ 4 fires, ≥ 2 burning vehicles, ≥ 10 shattered windows, ≥ 6 scorch decals.",
       "checks": [
@@ -5516,7 +5515,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 11,
+          "value": 12,
           "target": "10 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
         },
@@ -5530,6 +5529,39 @@
           "value": 0,
           "target": "actual scorch decals≥6; renderer census required",
           "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+        },
+        {
+          "id": "L4-14",
+          "clause": "live fire count at end of route",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 4,
+          "target": "4 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "id": "L4-14",
+          "clause": "shattered window ledger at end of route",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 14,
+          "target": "10 ≤ value ≤ Infinity",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "id": "L4-14",
+          "clause": "legacy scorch controller field (not maintained as renderer decal census)",
+          "level": "L4",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": 0,
+          "target": "actual scorch decals≥6; renderer census required",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
         }
       ],
       "historical": {
@@ -5608,7 +5640,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -5691,7 +5723,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -5749,7 +5781,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     },
     {
@@ -5805,7 +5837,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "c9b7527a6e29a2f723658d77382359d554650b3d"
+        "latestRelevantCommit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf"
       }
     }
   ]

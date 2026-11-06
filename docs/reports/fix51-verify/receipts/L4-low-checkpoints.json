@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "289917b183f336a36236fca86fc6da81bd0d424e7365929ea53783d555bed95b",
+  "sourceHash": "29a9274cced01b9795c57e79596e84cd71ec376d271611f4e21e6dbeb2695fe5",
   "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -178,15 +178,15 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "f484e77a42a151e6794175b62f51015516cdd00c2d1923db2355719a1e1bf7f5",
+        "snapshotSha256": "cc931db3a856e6f4667a21683a04cceaa34fc0f30500d3652b10e03755083938",
         "damage": 100,
         "expected": {
           "id": "line-1",
           "anchor": {
             "x": -20,
-            "y": 0.7099999785423279,
+            "y": 0.7049990296363831,
             "z": -2,
-            "yaw": -2.184008541375224
+            "yaw": -1.308298601416261
           },
           "gates": {},
           "racks": {
@@ -257,15 +257,15 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "70c15db4e443af15154e15726d37e806ed6d8a28a4a459a652beb2d68c0aeb3e",
+        "snapshotSha256": "3d3949f7c33f00c2b238b124f99d4c7caa8cb2de69d724ec1768b49f90db3bfd",
         "damage": 100,
         "expected": {
           "id": "nests",
           "anchor": {
-            "x": -11,
+            "x": -9.8,
             "y": 0.7099999785423279,
-            "z": 16,
-            "yaw": -3.0616409404101588
+            "z": -6.5,
+            "yaw": 2.730453527449571
           },
           "gates": {},
           "racks": {
@@ -279,7 +279,6 @@
           "followers": [],
           "pickups": [
             84,
-            85,
             86,
             87,
             88,
@@ -301,8 +300,8 @@
         "observed": {
           "id": "nests",
           "position": {
-            "x": -11,
-            "z": 16
+            "x": -9.8,
+            "z": -6.5
           },
           "gates": {},
           "racks": {
@@ -336,15 +335,15 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "90880bca2deecebeacd33c97c64d287b74998c64339d5793c773cc10788b9019",
+        "snapshotSha256": "740568fd0951fff1641efde1b856bdd0ba626bcc1ba1db82afeff441aba826e1",
         "damage": 100,
         "expected": {
           "id": "armor",
           "anchor": {
             "x": -11,
-            "y": 0.7099999785423279,
+            "y": 0.7049999833106995,
             "z": 16,
-            "yaw": 1.5012830575081637
+            "yaw": 3.0795793383942636
           },
           "gates": {},
           "racks": {
@@ -357,7 +356,7 @@
           },
           "followers": [],
           "pickups": [
-            85,
+            84,
             86,
             87,
             88,
@@ -414,7 +413,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "2baa3499412845855653054fb755868c248e7fbea618b075eda4dade0c0d02df",
+        "snapshotSha256": "c2a7813dc7bf9f585e6f53f1013ff7ca584a932530107b104a9b328b3a09cd9f",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -422,7 +421,7 @@
             "x": -4,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": -2.8556139303291976
+            "yaw": 1.5667899602518003
           },
           "gates": {},
           "racks": {
@@ -435,7 +434,7 @@
           },
           "followers": [],
           "pickups": [
-            85,
+            84,
             86,
             87,
             88,
@@ -486,8 +485,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "74c33a4b",
-    "control": "74c33a4b",
+    "observed": "146891dc",
+    "control": "146891dc",
     "identical": true
   }
 }
