@@ -318,10 +318,10 @@ export class CorpseLayout {
     // L4-17 (fix70-v): a war piles hundreds of bodies on the same spot; stacking them in the 1 m
     // search ring built a 2-3 m mound. A spot already tall (> 2 layers) keeps searching outward in
     // wider 0.3 m rings (to 5.5 m) for a free footprint, so piles spread sideways. Bodies are never removed.
-    // Prefer a genuinely ground-level footprint before accepting a pile.
+    // L4 prefers a genuinely ground-level footprint before accepting a pile.
     // A 45 cm root lift still added enough body height to produce visibly
     // tall stacks in the L4 plaza; keep searching outward for free ground.
-    const mound = feet + .05;
+    const mound = feet + (this.world.scenario === 'L4' ? .05 : .45);
     for (let ring = 0; ring <= (epilogue ? 22 : startsOnVehicle ? 30 : 20); ring++) {
       if (ring > (epilogue ? 10 : 5) && !startsOnVehicle && best && best.y <= mound) break;
       const distance = epilogue ? ring * .4 : startsOnVehicle || ring <= 5 ? ring * .2 : 1 + (ring - 5) * .3, samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
