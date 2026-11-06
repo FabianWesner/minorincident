@@ -173,7 +173,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       }
       const squad = threat?.l3Squad;
       if (competent) {
-        number('L3-06', 'initial squad count', squad?.initial, 3, 4); number('L3-06', 'squad remaining at army arrival', squad?.army, 0, 2);
+        number('L3-06', 'initial squad count', squad?.initial, 3, 4); const army = receipt.l3Army;
+        add('L3-06', 'squad remaining at army arrival (seeds 1–3)', army ?? { seed1: squad?.army ?? null }, '≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2', army?.pass);
         add('L3-06', 'logged squad-loss causes', squad?.losses ?? null, 'each loss bite, kill, or separation', squad ? squad.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause)) : undefined);
         number('L3-11', 'competent player attack rate on checkpoint route', phase('step/checkpoint')?.attacksPerMinute, 3, 25);
       }

@@ -17,7 +17,8 @@ export function focusedCriteria(levels: LevelReceipt[]): CriterionRow[] {
     add(id, row?.firstAttackSeconds === null || !row ? 'not measured' : `${row.firstAttackSeconds.toFixed(2)} s`, '≤10 s', row && row.firstAttackSeconds !== null && row.firstAttackSeconds <= 10);
   }
   const squad = l3?.observation?.l3Squad;
-  add('L3-06 squad counts/losses', '—', '3–4 at fallback; ≤2 at army; every loss a bite/kill/separation', squad && squad.initial !== null && squad.initial >= 3 && squad.initial <= 4 && squad.army !== null && squad.army <= 2 && squad.losses.every(q => ['bite', 'kill', 'separated'].includes(q.cause)), squad ? `${squad.initial} → ${squad.army}; ${squad.losses.map(q => q.cause).join(', ')}` : 'not measured');
+  const army = l3?.l3Army;
+  add('L3-06 squad counts/losses', '—', '3–4 at fallback; ≤2 at army (seeds 1–3: ≥2 valid, ≥2 of them ≤2); every loss a bite/kill/separation', squad && squad.initial !== null && squad.initial >= 3 && squad.initial <= 4 && squad.losses.every(q => ['bite', 'kill', 'separated'].includes(q.cause)) ? army?.pass : squad ? false : undefined, squad ? `${squad.initial} → army ${army ? army.seeds.map(q => `s${q.seed}:${q.valid ? q.army : 'invalid'}`).join('/') : 'not measured'} (${army?.within ?? 0}/${army?.measured ?? 0} ≤2); ${squad.losses.map(q => q.cause).join(', ')}` : 'not measured');
   const route = l3?.observation?.phases.find(p => p.key === 'step/checkpoint');
   add('L3-11 native competent rate', '—', '3–25 player attacks/min', route && route.attacksPerMinute >= 3 && route.attacksPerMinute <= 25, route ? `${route.attacksPerMinute.toFixed(2)}/min; ${l3!.run?.damageTaken} damage; ${l3!.run?.deaths} deaths` : 'not measured');
   const hold = l4?.highHold;

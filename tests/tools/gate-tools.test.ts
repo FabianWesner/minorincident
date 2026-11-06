@@ -9,6 +9,9 @@ import { promisify } from 'node:util';
 import { afterEach, expect, test } from 'vitest';
 import { backoffAdmission, classifyQuietProcesses } from '../../tools/browser-pool/host';
 import { evidenceIsArchivedOrMatches, loadReviews, validateReview, type ReviewDecision } from '../../tools/qa/accept/reviews';
+import { armyLineVerdict } from '../../tools/qa/threat/l3ArmyLine';
+import { focusedCriteria } from '../../tools/qa/threat/criteria';
+import type { LevelReceipt } from '../../tools/qa/threat-audit';
 
 const exec = promisify(execFile), dirs: string[] = [];
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
@@ -72,6 +75,13 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect(evidenceIsArchivedOrMatches(evidenceFile, digest)).toBe(true);
   writeFileSync(evidenceFile, 'changed capture');
   expect(evidenceIsArchivedOrMatches(evidenceFile, digest)).toBe(false);
+  // L3-06 army line (fix66-a/fix67-a): one rule over seeds 1-3 for the battery fixture, qa:accept and qa:threat.
+  const seeds = (...army: (number | null)[]) => army.map((n, i) => ({ seed: i + 1, valid: n !== null, army: n }));
+  for (const [label, army, pass] of [['lane 3/0/0', [3, 0, 0], true], ['two over', [3, 3, 0], false], ['one valid', [1, null, null], undefined], ['two valid, one over', [3, null, 2], false], ['all within', [2, 2, 1], true]] as const)
+    expect(armyLineVerdict(seeds(...army)).pass, label).toBe(pass);
+  const l3 = (army: (number | null)[]) => ({ level: 'L3', observation: { phases: [], waves: [], l3Squad: { initial: 4, army: army[0], losses: [{ id: 30, cause: 'bite', tick: 1 }] } }, passiveObservation: { phases: [], waves: [] }, l3Army: armyLineVerdict(seeds(...army)) }) as unknown as LevelReceipt;
+  expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
+  expect(focusedCriteria([l3([3, 3, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
 });
 
 // Exercise the real runner with a tiny catalog subprocess; no browser is launched.

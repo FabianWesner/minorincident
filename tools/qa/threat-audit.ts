@@ -11,12 +11,16 @@ import { renderReport } from './threat/report';
 import { stateHash } from '../../src/sim/world/stateHash';
 import { L4HoldCensus } from './threat/l4-hold';
 import { focusedCriteria } from './threat/criteria';
+import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
+import { l3ArmySeeds } from './threat/l3ArmySeeds';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
   observation: ReturnType<ThreatObserver['finish']> | null; flags: string[]; wallSeconds: number; nativeStateHash: string | null;
   passiveRun: LevelReport | null; passiveObservation: ReturnType<ThreatObserver['finish']> | null; passiveFlags: string[];
   highHold?: ReturnType<L4HoldCensus['finish']>;
+  /** L3-06 army line over seeds 1–3 (tools/qa/threat/l3ArmyLine.ts). */
+  l3Army?: ArmyLineVerdict;
 }
 export interface AuditReceipt {
   revision: string; mainRevision: string; sourceMatchesMain: boolean | null; seed: number; policy: string; tier: string;
@@ -122,6 +126,11 @@ for (const level of selected) {
     await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality: 'high', passive: true,
       beforeBegin: world => { census = new L4HoldCensus(world); }, beforeDispose: () => { receipt.highHold = census!.finish(); } });
     console.log(`[qa:threat] L4 high hold: ${JSON.stringify(receipt.highHold)}`);
+  }
+  if (level === 'L3') {
+    const army = observation?.l3Squad?.army ?? null;
+    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!run?.completed && army !== null, army }, ...await l3ArmySeeds('low')]);
+    console.log(`[qa:threat] L3 army line over seeds 1–3: ${JSON.stringify(receipt.l3Army)}`);
   }
   receipt.wallSeconds = (performance.now() - start) / 1000;
   for (const row of focusedCriteria([receipt])) if (row.verdict === 'FAIL') passiveFlags.push(`criterion/${row.id}:FAIL`);
